@@ -9,6 +9,10 @@ Keep it synchronized after every material change. Generated reports remain the n
 truth; if regeneration disagrees with a count below, investigate the diff and update this file
 rather than preserving a stale literal.
 
+## Model selection policy (2026-09-30)
+
+The repository's Codex instructions, Claude Code instructions, and operational runbook now select the latest available model in each named tier family from current provider metadata before each run. CLI examples use resolved model identifiers instead of pinned versions. Effort levels and the independent cross-provider review requirement are unchanged; historical review evidence retains the exact model that performed the work.
+
 ## Pinned baseline
 
 These pins and generated counts are the reproducible handoff baseline. Verify operational inputs against the configured checkouts and generated artifacts before continuing. The `pinmame-dotnet` and legacy managed-integration revisions below are historical provenance for already-migrated compatibility fixtures and do not require local checkouts during routine game curation. Fetch either exact revision only when changing or revalidating that migration. If an operational pinned input changes, stop, produce a reviewed catalog/source diff, update every affected hash and count, update this ledger, and include the scope change in the mandatory high-tier model review and maintainer PR review; never let an upstream checkout drift silently.

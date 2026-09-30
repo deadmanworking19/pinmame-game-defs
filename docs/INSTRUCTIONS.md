@@ -28,7 +28,7 @@ Tool names above are conventional, not mandatory installation paths. Locate an e
 
 Do not treat an installed executable as proof that an agent CLI works. For every provider intended for the contribution, run its version and doctor commands, verify authentication, and make a small non-interactive call using each required model alias. Run `codex --version` and `codex doctor` for Codex; run `claude --version` and `claude doctor` for Claude Code. If an applicable CLI cannot authenticate, select the named model, read the required files, or return output, fix it before delegating work or starting review. Record genuine provider unavailability rather than pretending that an inaccessible model performed a review.
 
-Use PowerShell here-strings or prompt files for substantial prompts so shell expansion and quoting do not alter the instructions. Resolve and validate `$worktree` first. Codex models use `xhigh` reasoning for this project; Claude models use `high` effort. Typical non-interactive worker calls are:
+Use PowerShell here-strings or prompt files for substantial prompts so shell expansion and quoting do not alter the instructions. Resolve and validate `$worktree` first. Resolve the latest available model in each required family from current provider model metadata and verify it through the CLI before use; never copy a version from an earlier run. Set `$latestTerraModel` and `$latestSolModel` below to those resolved model identifiers, not the literal string `latest`. Codex models use `xhigh` reasoning for this project; Claude models use `high` effort. Typical non-interactive worker calls are:
 
 ```powershell
 $prompt = @'
@@ -36,7 +36,7 @@ Read docs/INSTRUCTIONS.md, then perform only the bounded task described below.
 Report uncertainty and do not guess.
 '@
 
-$prompt | codex exec -C $worktree -m gpt-5.6-terra -c 'model_reasoning_effort="xhigh"' -s workspace-write -
+$prompt | codex exec -C $worktree -m $latestTerraModel -c 'model_reasoning_effort="xhigh"' -s workspace-write -
 
 Push-Location -LiteralPath $worktree
 try {
@@ -46,7 +46,7 @@ try {
 }
 ```
 
-Select latest gpt sol, gpt terra, or gpt luna with Codex's `-m` option and `opus`, `sonnet`, or `haiku` with Claude Code's `--model` option. Run a reviewer without edit permission: use `codex review` against the intended base or a Codex read-only sandbox, and use Claude Code with `--permission-mode plan`. Typical review calls are:
+Select the latest GPT Sol, GPT Terra, or GPT Luna with Codex's `-m` option using the resolved identifier. Use the unversioned `opus`, `sonnet`, or `haiku` alias with Claude Code's `--model` option and verify that it resolves to the latest available model in that family. Do not substitute another family when the required tier is unavailable. Run a reviewer without edit permission: use `codex review` against the intended base or a Codex read-only sandbox, and use Claude Code with `--permission-mode plan`. Typical review calls are:
 
 ```powershell
 $reviewPrompt = @'
@@ -54,7 +54,7 @@ Perform an independent read-only review of the exact contribution tree.
 Report only discrete, actionable findings; do not edit files.
 '@
 
-$reviewPrompt | codex -C $worktree review -c 'model="gpt-6-sol"' -c 'model_reasoning_effort="xhigh"' --base master -
+$reviewPrompt | codex -C $worktree -m $latestSolModel review -c 'model_reasoning_effort="xhigh"' --base master -
 
 Push-Location -LiteralPath $worktree
 try {
@@ -368,13 +368,13 @@ Use `PINMAME_ROM_LIBRARY_ROOT` as the user's authorized existing read-only ROM c
 
 ## Model and tool allocation
 
-Be conscious of model cost while matching capability to judgment. Use these current tier assignments; verify that the exact model or alias is available through its CLI before relying on it, and update this table when a provider supersedes a listed model.
+Be conscious of model cost while matching capability to judgment. These tier assignments always mean the latest available model in the named family. Resolve current provider model metadata at the start of each run, verify that the selected identifier or alias works through its CLI, and record the actual resolved model in that run's evidence. Keep this policy unversioned; historical evidence records the model that actually performed the work.
 
 | Tier | OpenAI through Codex CLI | Anthropic through Claude Code CLI | Default role |
 | --- | --- | --- | --- |
-| High | `gpt-6-sol` at `xhigh` | `opus` at `high` effort | difficult curation, escalation, promotion decisions, and independent final review |
-| Mid | `gpt-5.6-terra` at `xhigh` | `sonnet` at `high` effort | structured research, implementation, spatial mapping, and test work with clear evidence |
-| Low | `gpt-6-luna` at `xhigh` | `haiku` at `high` effort | bounded mechanical extraction, OCR cleanup, inventories, hashes, and report generation |
+| High | Latest GPT Sol at `xhigh` | Latest Opus (`opus`) at `high` effort | difficult curation, escalation, promotion decisions, and independent final review |
+| Mid | Latest GPT Terra at `xhigh` | Latest Sonnet (`sonnet`) at `high` effort | structured research, implementation, spatial mapping, and test work with clear evidence |
+| Low | Latest GPT Luna at `xhigh` | Latest Haiku (`haiku`) at `high` effort | bounded mechanical extraction, OCR cleanup, inventories, hashes, and report generation |
 
 ### Low tier: mechanical and low-judgment work
 
