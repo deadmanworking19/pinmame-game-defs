@@ -70,6 +70,12 @@ class ChampionPubTests(unittest.TestCase):
 			self.assertEqual("coil", self.solenoids[n]["kind"])
 		self.assertEqual("unused", self.solenoids[32]["availability"])
 		self.assertEqual("unused", self.solenoids[50]["availability"])
+		for n in (29, 30, 31):
+			self.assertEqual(["internal.wpc-state"], self.solenoids[n]["roles"])
+		for n in (32, 50):
+			self.assertEqual(["internal.unused.wpc-output"], self.solenoids[n]["roles"])
+			self.assertEqual("virtual", self.solenoids[n]["spatial"]["reason"])
+		self.assertIn("constant zero", self.solenoids[32]["physical"]["notes"])
 
 	def test_rom_contract_and_unfitted_upper_button_states(self) -> None:
 		self.assertTrue(self.switches[38]["normally_closed"])

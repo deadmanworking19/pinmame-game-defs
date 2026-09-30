@@ -2295,7 +2295,10 @@
       "physical": {
         "notes": "Public logical state exported from the WPC J111 solenoid-D bits, rather than a second fitted coil."
       },
-      "spatial_reason": "virtual"
+      "spatial_reason": "virtual",
+      "roles": [
+        "internal.wpc-state"
+      ]
     },
     "30": {
       "kind": "virtual",
@@ -2304,7 +2307,10 @@
       "physical": {
         "notes": "Public logical state exported from the WPC J111 solenoid-D bits, rather than a second fitted coil."
       },
-      "spatial_reason": "virtual"
+      "spatial_reason": "virtual",
+      "roles": [
+        "internal.wpc-state"
+      ]
     },
     "31": {
       "kind": "virtual",
@@ -2313,16 +2319,22 @@
       "physical": {
         "notes": "PinMAME fast-flip flag at RAM 0x81; meaningful virtual controller state."
       },
-      "spatial_reason": "virtual"
+      "spatial_reason": "virtual",
+      "roles": [
+        "internal.wpc-state"
+      ]
     },
     "32": {
       "kind": "virtual",
       "label": "Constant-Zero Solenoid Position",
       "availability": "unused",
       "physical": {
-        "notes": "core_getSol returns zero for public 32."
+        "notes": "core_getSol returns constant zero for public 32."
       },
-      "spatial_reason": "unused"
+      "spatial_reason": "virtual",
+      "roles": [
+        "internal.unused.wpc-output"
+      ]
     },
     "33": {
       "kind": "coil",
@@ -2600,7 +2612,10 @@
       "physical": {
         "notes": "No fitted output at this exported address."
       },
-      "spatial_reason": "unused"
+      "spatial_reason": "virtual",
+      "roles": [
+        "internal.unused.wpc-output"
+      ]
     }
   },
   "lamps": {
