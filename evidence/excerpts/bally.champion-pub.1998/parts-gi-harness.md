@@ -81,4 +81,4 @@ Retained Bally_1998_The_Champion_Pub_Parts_List.txt SHA-256 b6d17f1bf44899a2c053
 2274    ...4     03-9454           "cable tie 4"" long"                              1
 ```
 
-H-22227 playfield cable contains brown/orange GI pairs. H-22231-1 insert cable contains yellow/green/violet pairs. The insert panel has42 #555 bulbs. Together with board J105/J106 labels and the known-working UpdateGI, this independently resolves the reversed physical-location and bulb columns on printed2-55; the original literal table remains separately retained.
+H-22227 playfield cable contains brown/orange GI pairs. H-22231-1 insert cable contains yellow/green/violet pairs. The insert panel has 42 #555 bulbs. Together with board J105/J106 labels and the known-working UpdateGI, this independently resolves the reversed physical-location and bulb columns on printed 2-55; the original literal table remains separately retained.

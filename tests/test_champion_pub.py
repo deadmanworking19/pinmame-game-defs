@@ -184,6 +184,19 @@ class ChampionPubTests(unittest.TestCase):
 				if raw.get("path", "").startswith("gameitems/Primitive."):
 					self.fail("Stored primitive offset used instead of world mesh")
 
+	def test_note_one_applies_only_to_explicit_factory_assembly_markers(self) -> None:
+		table = (ROOT / curator.EXCERPT_PREFIX / "manual-switch-locations.md").read_text(encoding="utf-8")
+		marked = set()
+		for line in table.splitlines():
+			cells = [cell.strip() for cell in line.split("|")[1:-1]]
+			if len(cells) == 4 and cells[0].isdigit() and "SEE NOTE 1" in cells[1]:
+				marked.add(int(cells[0]))
+		self.assertEqual({28, 37, 41, 46, 47, 48, 61, 62, 64, 65, 74, 75, 78}, marked)
+		sentence = "Note 1 identifies a complete mechanism rather than a switch assembly."
+		for address in curator.MATRIX_ADDRESSES:
+			self.assertEqual(address in marked, sentence in self.facts["switches"][str(address)]["note"], address)
+			self.assertEqual(address in marked, sentence in self.switches[address]["physical"]["notes"], address)
+
 	def test_partial_gate_and_schema(self) -> None:
 		self.assertEqual([], validate_against_schema(self.definition, ROOT / "schemas/machine.schema.json", "Champion Pub"))
 		self.assertEqual([], validate_machine(self.definition, ROOT))

@@ -1,8 +1,8 @@
 # Retained Champion Pub coordinate decisions
 
-VPX SHA-256 e1a52381d34b086667f55b1feefcf77c6865f15dc4292ef0b540bdf8ba049560. Exact bounds0,0,970,2100. Each point keeps its exact extracted JSON SHA or exported world-space OBJ SHA. A validated contact or insert point is distinct from an observed assembly/fixture projection.
+VPX SHA-256 e1a52381d34b086667f55b1feefcf77c6865f15dc4292ef0b540bdf8ba049560. Exact bounds 0, 0, 970, 2100. Each point keeps its exact extracted JSON SHA or exported world-space OBJ SHA. A validated contact or insert point is distinct from an observed assembly/fixture projection.
 
-World-space export SHA-256 a3af01801adc3f8badfee5a6a501909433202368581a13cea45fc714a7007cf0; 44122125bytes. Command: vpxtool export obj <retained Champion Pub (1998).vpx> --units vpu --output-dir <external world-geometry>. OBJ X/Y are retained VPX player-view X/Y; exporter negates vertical Z only. Independent flipper pivots, RopePopper and scoop capture controls reconcile the assembly footprints.
+World-space export SHA-256 a3af01801adc3f8badfee5a6a501909433202368581a13cea45fc714a7007cf0; 44,122,125 bytes. Command: vpxtool export obj <retained Champion Pub (1998).vpx> --units vpu --output-dir <external world-geometry>. OBJ X/Y are retained VPX player-view X/Y; exporter negates vertical Z only. Independent flipper pivots, RopePopper and scoop capture controls reconcile the assembly footprints.
 
 | Binding | Status | Object | Raw X | Raw Y | Method / hash |
 | --- | --- | --- | ---: | ---: | --- |
@@ -167,4 +167,4 @@ World-space export SHA-256 a3af01801adc3f8badfee5a6a501909433202368581a13cea45fc
 | pinmame.output.solenoid:23 | observed (world_mesh_assembly) | Primitive_SpotlightAssembly | 284.8189 | 88.664826 | world-space axis-aligned mesh bounds midpoint in exported vpu; a3af01801adc3f8badfee5a6a501909433202368581a13cea45fc714a7007cf0 |
 | pinmame.output.solenoid:24 | observed (world_mesh_assembly) | Primitive_SpotlightAssembly1 | 718.91953 | 31.240502749999997 | world-space axis-aligned mesh bounds midpoint in exported vpu; a3af01801adc3f8badfee5a6a501909433202368581a13cea45fc714a7007cf0 |
 
-All drawing checks use PDF119/printed2-45 lamp,PDF121/2-47 solenoid andPDF126/2-52 switch topology. Callout circles do not supply coordinates. A world-space mesh center is a footprint projection, not automatically a bulb socket or hidden sensor. Exact remaining blockers are retained per public address in the machine-specific spatial audit.
+All drawing checks use PDF 119/printed 2-45 lamp, PDF 121/2-47 solenoid and PDF 126/2-52 switch topology. Callout circles do not supply coordinates. A world-space mesh center is a footprint projection, not automatically a bulb socket or hidden sensor. Exact remaining blockers are retained per public address in the machine-specific spatial audit.

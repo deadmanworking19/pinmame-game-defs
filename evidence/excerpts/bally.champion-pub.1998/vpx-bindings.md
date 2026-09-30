@@ -1,6 +1,6 @@
 # Retained Champion Pub script bindings
 
-Embedded script SHA-256: 0060c3892e5b35d154d2fb5325284658787121b81111e6ba3d267d6d8bc66a6c; cGameName=cp_16. Version1.2 mfuegemann. Known-working table is runtime-causality evidence; the factory manual controls physical construction.
+Embedded script SHA-256: 0060c3892e5b35d154d2fb5325284658787121b81111e6ba3d267d6d8bc66a6c; cGameName=cp_16. Version 1.2 mfuegemann. Known-working table is runtime-causality evidence; the factory manual controls physical construction.
 
 ## Live script statements
 
@@ -288,4 +288,4 @@ vpmMapLights AllLights is live at script.vbs:607. Retained installed companion c
 | 123 | LED107 | 1 |
 | 124 | LED108 | 1 |
 
-Address100 is a bound helper timer, outside the public lamp matrix; it is not an additional ROM lamp. Several insert addresses have multiple lightmap helpers, which are not extra physical bulbs. LED names LED91 etc are not their TimerInterval bindings.
+Address 100 is a bound helper timer, outside the public lamp matrix; it is not an additional ROM lamp. Several insert addresses have multiple lightmap helpers, which are not extra physical bulbs. LED names LED91 etc are not their TimerInterval bindings.
