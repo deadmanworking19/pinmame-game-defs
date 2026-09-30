@@ -267,6 +267,8 @@ export interface MachineDetail {
 	knowledgeHeadings: { id: string, text: string }[]
 	/** Leading `Label: **value**` lines, lifted out of the note's prose. */
 	knowledgeSummary: { label: string, value: string }[]
+	/** Existing completion-blocker prose, rendered from a report or knowledge note. */
+	completionNotes: { html: string, path: string } | null
 	catalogDrivers: CatalogDriver[]
 	/** Same as `MachineSummary.updated`. */
 	updated: number | null
@@ -288,6 +290,7 @@ export interface MachineSummary {
 	year: number | null
 	status: CoverageStatus
 	completionScore: number
+	missing: string[]
 	platform: string | null
 	drivers: number
 	switches: number

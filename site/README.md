@@ -12,7 +12,7 @@ The site renders the canonical machine-definition catalog and keeps its facts di
 | --- | --- |
 | `/` | Overview, coverage at a glance, entry points |
 | `/machines` | Browse every physical machine, filter by coverage, manufacturer, platform and hardware (kicker, drop target bank, diverter, DMD size…) |
-| `/machines/<slug>` | The reference page: wiring setup, switch/lamp maps, device tables, mechanisms, direct wiring, recreation notes, ROM sets, evidence |
+| `/machines/<slug>` | The reference page: wiring setup, switch/lamp maps, device tables, mechanisms, direct wiring, recreation notes, ROM sets, evidence, missing data |
 | `/roms` | Look up any of the ~2 900 driver IDs and follow it to its machine |
 | `/platforms` · `/platforms/<slug>` | Controller profiles: legal address ranges, transports, normalisation rules |
 | `/families/<slug>` | One title, all its editions, with a side-by-side comparison of what differs |
@@ -22,6 +22,13 @@ The site renders the canonical machine-definition catalog and keeps its facts di
 | `/about` | Why the project exists, how evidence-backed AI curation works, and how to contribute spare inference |
 
 `⌘K` / `Ctrl K` (or `/`) opens a search across every machine **and** every ROM set.
+
+Each machine page ends with **Missing data**. The unmet requirements come from
+`coverage.missing`, with readable descriptions of the evidence needed. Where a
+curation report or recreation note records completion blockers, the section renders
+that prose and links to its source. It also lists unvalidated device locations and
+the resolution paths of unresolved conflicts. Complete definitions show an empty
+state; this presentation never changes their coverage or completion score.
 
 ## Stack
 

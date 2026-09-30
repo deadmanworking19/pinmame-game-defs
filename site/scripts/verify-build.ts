@@ -9,6 +9,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { MAX_DMD_TITLE_CHARS, OG_HEIGHT, OG_WIDTH, wrapDmdTitle } from './og-card'
+import { COMPLETION_REQUIREMENTS } from '../app/utils/completion'
 
 const projectRoot = resolve(fileURLToPath(import.meta.url), '../..')
 const outRoot = join(projectRoot, '.output', 'public')
@@ -49,6 +50,37 @@ const invalid: string[] = []
 const statusColumn = machines.columns.indexOf('status')
 const curatedMachines = statusColumn >= 0 ? machines.rows.filter(row => Number(row[statusColumn]) > 0) : []
 if (statusColumn < 0) invalid.push('data/machines.json has no status column for social-card generation.')
+
+// Missing requirements must be visible on the built page, not only shipped in JSON.
+const missingColumn = machines.columns.indexOf('missing')
+if (missingColumn < 0) invalid.push('data/machines.json has no missing-requirements column.')
+for (const row of machines.rows) {
+	const pagePath = join(outRoot, 'machines', row[0], 'index.html')
+	if (!existsSync(pagePath)) continue
+	const html = readFileSync(pagePath, 'utf8')
+	const section = /<section\b[^>]*\bid="missing-data"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1]
+	if (!section?.includes('Missing data')) {
+		invalid.push(`Machine ${row[0]} has no rendered Missing data section.`)
+		continue
+	}
+	if (Number(row[statusColumn]) === 2) {
+		if (!section.includes('No missing data.')) invalid.push(`Complete machine ${row[0]} has no Missing data empty state.`)
+	} else {
+		for (const key of (row[missingColumn] ?? []) as string[]) {
+			const requirement = COMPLETION_REQUIREMENTS[key]
+			if (!requirement || !section.includes(requirement.label) || !section.includes(requirement.description)) {
+				invalid.push(`Machine ${row[0]} does not explain missing requirement ${key}.`)
+			}
+		}
+		const detailPath = join(outRoot, 'data', 'machines', `${row[0]}.json`)
+		if (existsSync(detailPath)) {
+			const detail = JSON.parse(readFileSync(detailPath, 'utf8'))
+			if (detail.completionNotes?.html && !section.includes(detail.completionNotes.html)) {
+				invalid.push(`Machine ${row[0]} omits its recorded completion blockers.`)
+			}
+		}
+	}
+}
 
 // The client-only indexes must survive too, or search and the ROM table break.
 for (const asset of [

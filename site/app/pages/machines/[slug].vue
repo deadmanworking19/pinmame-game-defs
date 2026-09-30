@@ -113,6 +113,7 @@ const sections = computed(() => {
 		{ id: 'roms', label: 'ROM sets', icon: 'lucide:disc-3', show: true, count: detail.value.catalogDrivers?.length ?? detail.value.drivers.length },
 		{ id: 'memory-maps', label: 'Memory maps', icon: 'lucide:memory-stick', show: !!memoryMaps.value, count: memoryMaps.value?.maps.length },
 		{ id: 'sources', label: 'Evidence', icon: 'lucide:library-big', show: detail.value.sources.length > 0, count: detail.value.sources.length },
+		{ id: 'missing-data', label: 'Missing data', icon: 'lucide:clipboard-list', show: true, count: detail.value.coverage.missing.length },
 	]
 	return items.filter(item => item.show)
 })
@@ -312,6 +313,7 @@ const opdbUrl = computed(() =>
 				:definition-path="definitionPath"
 				:subject="name"
 			/>
+			<MissingDataPanel class="mx-auto mt-10 max-w-3xl" :status="status" :missing="summary?.missing ?? []" />
 		</template>
 
 		<!-- ── full definition ────────────────────────────────────────────── -->
@@ -570,7 +572,7 @@ const opdbUrl = computed(() =>
 					:knowledge-path="detail.knowledgePath"
 					:subject="name"
 					:hint="detail.coverage.missing.length
-						? `This definition still has ${detail.coverage.missing.length} unmet requirement${detail.coverage.missing.length === 1 ? '' : 's'}, listed under Coverage above. Fixes belong in the definition itself — editing on GitHub forks it for you and opens the pull request.`
+						? `This definition still has ${detail.coverage.missing.length} unmet requirement${detail.coverage.missing.length === 1 ? '' : 's'}, listed under Missing data below. Fixes belong in the definition itself — editing on GitHub forks it for you and opens the pull request.`
 						: null"
 				/>
 
@@ -621,6 +623,14 @@ const opdbUrl = computed(() =>
 						</NuxtLink>
 					</div>
 				</section>
+
+				<MissingDataPanel
+					:status="detail.coverage.status"
+					:missing="detail.coverage.missing"
+					:notes="detail.completionNotes"
+					:devices="[...detail.inputs, ...detail.outputs]"
+					:conflicts="detail.conflicts"
+				/>
 			</div>
 		</div>
 	</div>

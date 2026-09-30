@@ -70,7 +70,7 @@ jobs:
         env:
           PINBALL_MEMORY_MAPS_ROOT: ${{ github.workspace }}/.external/pinball-memory-maps
           PINBALL_MEMORY_MAPS_COMMIT: ${{ env.PINBALL_MEMORY_MAPS_COMMIT }}
-        run: npm run data && npm run typecheck
+        run: npm test && npm run data && npm run typecheck
 
       - name: Build static site
         env:

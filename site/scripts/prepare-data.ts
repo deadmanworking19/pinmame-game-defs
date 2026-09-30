@@ -18,6 +18,7 @@ import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { marked, Renderer } from 'marked'
 import { enrichConflict } from './conflicts.ts'
+import { extractCompletionNotes } from './completion-notes.ts'
 import { loadPinballMemoryMaps, type MemoryMapSummary } from './memory-maps.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -258,6 +259,22 @@ function renderControllerNotes(notes: string | undefined, format: string | undef
 	return `<p>${escapeHtml(notes).replace(/\r?\n/g, '<br>\n')}</p>\n`
 }
 
+/** The report's completion decision takes precedence over a general knowledge note. */
+function completionNotes(definitionPath: string, knowledgePath?: string) {
+	const reportPath = definitionPath.replace(/^machines\/(?:partial|author-ready|stubs)\//, 'reports/spatial/').replace(/\.json$/, '.md')
+	for (const path of [reportPath, knowledgePath]) {
+		if (!path || !existsSync(join(defsRoot, path))) continue
+		const body = extractCompletionNotes(readFileSync(join(defsRoot, path), 'utf8'))
+		if (body) return {
+			path,
+			// The same restricted Markdown renderer used for controller notes:
+			// escape raw HTML and permit only http(s) or relative links/images.
+			html: marked.parse(body, { async: false, renderer: controllerNotesRenderer }) as string,
+		}
+	}
+	return null
+}
+
 type Knowledge = {
 	html: string
 	headings: { id: string, text: string }[]
@@ -490,6 +507,7 @@ type MachineRow = [
 	// Unix seconds of the last commit to the definition or its knowledge note;
 	// null when uncommitted or when the build had no full git history.
 	updated: number | null,
+	missing: string[],
 ]
 
 const STATUS_CODE = { stub: 0, partial: 1, author_ready: 2 } as const
@@ -514,6 +532,7 @@ const toRow = (m: MachineIndexEntry): MachineRow => [
 	m.completionScore,
 	memoryMapsByMachine.get(m.id)?.length ?? 0,
 	m.updated,
+	m.missing,
 ]
 
 const machineIndex: MachineIndexEntry[] = []
@@ -621,6 +640,7 @@ for (const [machineId, { path, doc }] of definitions) {
 			knowledgeHtml: knowledge?.html ?? null,
 			knowledgeHeadings: knowledge?.headings ?? [],
 			knowledgeSummary: knowledge?.summary ?? [],
+			completionNotes: status === 'author_ready' ? null : completionNotes(repoPath(path), doc.knowledge?.path),
 			catalogDrivers,
 			updated: entry.updated,
 			...(memoryMaps && memoryMapsByMachine.has(machineId)
@@ -1107,7 +1127,7 @@ for (const machine of machineIndex) {
 
 writeOut('site.json', site)
 writeOut('machines.json', {
-	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore', 'memoryMaps', 'updated'],
+	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore', 'memoryMaps', 'updated', 'missing'],
 	rows: machineIndex.map(toRow),
 })
 writeOut('platforms.json', platformIndex)

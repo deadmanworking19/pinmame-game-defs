@@ -13,6 +13,17 @@ rather than preserving a stale literal.
 
 The repository's Codex instructions, Claude Code instructions, and operational runbook now select the latest available model in each named tier family from current provider metadata before each run. CLI examples use resolved model identifiers instead of pinned versions. Effort levels and the independent cross-provider review requirement are unchanged; historical review evidence retains the exact model that performed the work.
 
+## Machine-page missing data (2026-09-30)
+
+The reference site now ends every machine page with a navigable **Missing data** section.
+It renders `coverage.missing` as readable evidence requirements, includes existing completion
+decisions from matching spatial reports or blocker sections in recreation notes, lists device
+locations still needing evidence or validation, and shows unresolved conflicts' resolution paths.
+Author-ready pages explicitly state that no data is missing; stub pages retain their canonical
+missing requirements in the browse index. These are derived presentation fields only: definitions,
+coverage scores, catalog counts and promotion decisions are unchanged. The build verifier checks
+that every generated machine page renders its requirements and recorded completion blockers.
+
 ## Pinned baseline
 
 These pins and generated counts are the reproducible handoff baseline. Verify operational inputs against the configured checkouts and generated artifacts before continuing. The `pinmame-dotnet` and legacy managed-integration revisions below are historical provenance for already-migrated compatibility fixtures and do not require local checkouts during routine game curation. Fetch either exact revision only when changing or revalidating that migration. If an operational pinned input changes, stop, produce a reviewed catalog/source diff, update every affected hash and count, update this ledger, and include the scope change in the mandatory high-tier model review and maintainer PR review; never let an upstream checkout drift silently.

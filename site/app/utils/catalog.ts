@@ -250,6 +250,7 @@ export function decodeMachineRows(index: { rows: any[][] }): MachineSummary[] {
 		// the same thing to every consumer, so both decode to zero.
 		memoryMaps: row[15] ?? 0,
 		updated: row[16] ?? null,
+		missing: row[17] ?? [],
 	}))
 }
 
