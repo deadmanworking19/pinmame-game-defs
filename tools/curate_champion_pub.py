@@ -252,7 +252,7 @@ def spatial_report(definition: dict[str, Any], data: dict[str, Any]) -> dict[str
 
 def report_markdown(report: dict[str, Any]) -> str:
 	lines = ["# The Champion Pub (1998) spatial audit", "", report["promotion_decision"], "",
-		f"Coordinates use the retained table's {report['bounds']['right']} × {report['bounds']['bottom']} bounds. Each placement retains its exact object or reproducible factory measurement in the JSON audit.", "",
+		f"Coordinates use the retained table's {report['bounds']['right'] - report['bounds']['left']} × {report['bounds']['bottom'] - report['bounds']['top']} bounds. Each placement retains its exact object or reproducible factory measurement in the JSON audit.", "",
 		"| Device | Public binding | Placement state | Blocker |", "| --- | --- | --- | --- |"]
 	for row in report["devices"]:
 		binding = row["binding"]
