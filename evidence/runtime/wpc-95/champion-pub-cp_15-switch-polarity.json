@@ -1,0 +1,423 @@
+{
+  "driver_ids": [
+    "cp_15"
+  ],
+  "extractor": {
+    "id": "tools/champion_pub_mech_probe.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.champion-pub.1998"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/champion_pub_mech_probe.py --library <pinned-libpinmame> --game cp_15 --rom-path <read-only-rom-root> --work-dir <new-empty-isolated-state> --scenario <exact-hashed-scenario> --dmd-dir <external-dmd-dir> --output <external-run.json> --feedback-stop-step 7. For cp_15 change only the scenario game field from cp_16 to cp_15, retaining the separate scenario hash. The English DMD reader validates MAIN MENU, MAIN MENU T TESTS, TEST MENU T1 SWITCH EDGES and DIAGNOSTIC SWITCH EDGES before stimuli. Host model script is pinned by SHA-256 in attribution and raw trace.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+    },
+    "game": "cp_15",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 diagnostic entered",
+          "label": "Start T.1 at the diagnostic-title checkpoint",
+          "nonzero_pixels": 501,
+          "pixel_sha256": "2a6cf45877e177acd0fcb5a991d32d4526482d88e418c1cc604248bd2ad93b60"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "Normalized opto control 32 raw 1 prime",
+          "nonzero_pixels": 459,
+          "pixel_sha256": "757cb93d67a6c79eb32fb818643afc8125f06196f17bf951173f9b3e8367c2bb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "Normalized opto control 32 raw 0",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "3c3177a0c071aab32bc0e383fc3edb668630c1d4df1ae2416e3252c36818d9ec"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TROUGH BALL 1 / T.1 LAST SW 32",
+          "label": "Normalized opto control 32 raw 1 active",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "dd91459cb06b5e5128a8f58ac662461834086737706c694225d8234174e36109"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLING / T.1 LAST SW 52",
+          "label": "Ordinary switch control 52 raw 1 active",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "8fba7e96bb353cac196a38b56a69abbc280f5fb7945f91be27fd921fdc15857d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 52",
+          "label": "Ordinary switch control 52 raw 0 inactive",
+          "nonzero_pixels": 786,
+          "pixel_sha256": "dae00021bbf5cdf318e4ba74e72b268a3b03f95667df3c85d1d289b9d1346498"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLING / T.1 LAST SW 52",
+          "label": "Ordinary switch control 52 raw 1 repeat",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "8fba7e96bb353cac196a38b56a69abbc280f5fb7945f91be27fd921fdc15857d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SLING / T.1 LAST SW 52 (38 inactive; previous active switch persists)",
+          "label": "Right jab 38 raw 1 inactive",
+          "nonzero_pixels": 773,
+          "pixel_sha256": "835b93b57aae5373ede8cfa63a3e631cccec87d3c71f8d61a26883ec5d1f5a54"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT JAB MADE / T.1 LAST SW 38",
+          "label": "Right jab 38 raw 0 active",
+          "nonzero_pixels": 811,
+          "pixel_sha256": "4dea5d6cf3c18f78993137ced8515ccc7f8737d739b818e4fdb62896d8657166"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38",
+          "label": "Right jab 38 raw 1 release",
+          "nonzero_pixels": 795,
+          "pixel_sha256": "c135bd9a5a8c4dd8f611669095df9ffc73ad93405b2569cc308ca260a31413a8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38",
+          "label": "Rope cam 64 raw 1 prime",
+          "nonzero_pixels": 795,
+          "pixel_sha256": "c135bd9a5a8c4dd8f611669095df9ffc73ad93405b2569cc308ca260a31413a8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38",
+          "label": "Rope cam 64 raw 0",
+          "nonzero_pixels": 788,
+          "pixel_sha256": "b4c5d6336e62892b1be2ea3c4d34dc62dafec770e94df5ea3158a60e83fbfd44"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROPE CAM / T.1 LAST SW 64",
+          "label": "Rope cam 64 raw 1 active",
+          "nonzero_pixels": 729,
+          "pixel_sha256": "52785839deb01a48b4a0706565a40ca0b2750610d30df3fbef1c2cac64fefe32"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROPE CAM / T.1 LAST SW 64",
+          "label": "Left scoop 61 raw 1 prime",
+          "nonzero_pixels": 729,
+          "pixel_sha256": "52785839deb01a48b4a0706565a40ca0b2750610d30df3fbef1c2cac64fefe32"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROPE CAM / T.1 LAST SW 64 (61 inactive; previous active switch persists)",
+          "label": "Left scoop 61 raw 0",
+          "nonzero_pixels": 722,
+          "pixel_sha256": "5efa12972dc0373e282fd08531c7c3a4b31c0d00e76dc818b44aeab94afa5b6c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SCOOP UP / T.1 LAST SW 61",
+          "label": "Left scoop 61 raw 1 active",
+          "nonzero_pixels": 784,
+          "pixel_sha256": "7c29a13508dc9fd18f1da7e852611e4cefe88fff2c6f02c2dcfed2b455df57e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SCOOP UP / T.1 LAST SW 61",
+          "label": "Right scoop 62 raw 1 prime",
+          "nonzero_pixels": 784,
+          "pixel_sha256": "7c29a13508dc9fd18f1da7e852611e4cefe88fff2c6f02c2dcfed2b455df57e9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT SCOOP UP / T.1 LAST SW 61 (62 inactive; previous active switch persists)",
+          "label": "Right scoop 62 raw 0",
+          "nonzero_pixels": 777,
+          "pixel_sha256": "9b12efc3c00745e1eba7c86aafbee5561e65878f411430a758a558a37ea59137"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT SCOOP UP / T.1 LAST SW 62",
+          "label": "Right scoop 62 raw 1 active",
+          "nonzero_pixels": 807,
+          "pixel_sha256": "6a42b68b0ba06f38aaf57bbf4197ba13357f644126bfb7268bd7fc73b7980013"
+        }
+      ],
+      "runs": {
+        "cp15-checkpoint-polarity": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 2,
+              "matched_text": "MAIN MENU"
+            },
+            {
+              "after_service_pulses": 2,
+              "matched_text": "MAIN MENU T TESTS"
+            },
+            {
+              "after_service_pulses": 1,
+              "matched_text": "TEST MENU T1 SWITCH EDGES"
+            },
+            {
+              "after_service_pulses": 2,
+              "matched_text": "DIAGNOSTIC SWITCH EDGES"
+            }
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        16,
+        25,
+        27,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 30,
+        "boot_wait_s": 12,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 32
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          },
+          {
+            "state": 1,
+            "switch": 35
+          },
+          {
+            "state": 0,
+            "switch": 41
+          },
+          {
+            "state": 1,
+            "switch": 46
+          },
+          {
+            "state": 1,
+            "switch": 47
+          },
+          {
+            "state": 1,
+            "switch": 48
+          },
+          {
+            "state": 1,
+            "switch": 61
+          },
+          {
+            "state": 1,
+            "switch": 62
+          },
+          {
+            "state": 1,
+            "switch": 64
+          }
+        ],
+        "name": "cp15-checkpoint-polarity",
+        "nvram_initialization": "New empty isolated state directory; boot12s, Escape and25s power-up checks. No previous NVRAM or separate initialization run was reused.",
+        "retained_from": "external:pinmame-review-artifacts/bally.champion-pub.1998/session-20260930-resumed/harness/cp15-checkpoint-polarity/run.json",
+        "scenario_path": "external:pinmame-review-artifacts/bally.champion-pub.1998/session-20260930-resumed/cp15-checkpoint-polarity.json",
+        "scenario_sha256": "6b6412ade3faa231333e3727b096fed2bcfb54cf3def2c058468d7d216ff07fa",
+        "self_test_pulses": 0,
+        "sha256": "83143fe47503da31a924efe737f7bd5a63176d9a8e45b6520989f3ef66310162",
+        "snapshot_count": 31,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          32,
+          33,
+          34,
+          35,
+          38,
+          41,
+          46,
+          47,
+          48,
+          52,
+          61,
+          62,
+          64,
+          116,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "0dd876174011ac929932fc1c57a7907b152a81574985f4838e3a4c73d41e13e2"
+  },
+  "source": {
+    "attribution": "Locally generated with authorized ROMs. English T.1 DMD captions visually checked against native snapshots; cp_15 sensor snapshots 7 through 24 have identical pixel SHA-256 to the independently inspected cp_16 snapshots. Public writes/readback are host stimuli, never ROM evidence. 32 (normalized opto) and 52 (ordinary switch) are active-high controls; right jab38 is active-low; rope64 and scoop61/62 active-high. Synthetic motor model only establishes boot; feedback was suspended before step7 and no host feedback events follow. Model script SHA-256 b8e2be1ddfb7151bb6da33ea34caf5e524fc006b3585e3abc7db331d9e630701; VPX embedded script SHA-256 0060c3892e5b35d154d2fb5325284658787121b81111e6ba3d267d6d8bc66a6c. No physical cam sizes/speeds, hardware quantities, GI assignment or other variants are proved. Upper button steps25-30 can cause automatic lower-flipper EOS captions and are excluded from these polarity observations. Exact external directory manifest cp15-checkpoint-polarity/manifest.json SHA-256 70d31ce67419b99e1bf7dc4945b29aa191327dfc4b365c85ec24fc0707ceac6f, files-array digest 47046545ddc18e656f8e7385415fb1cd86c44e3b51e660d6b5c3eb2930bf1647; contains raw trace, copied scenario, DMD images and isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/bally.champion-pub.1998/session-20260930-resumed/harness/cp15-checkpoint-polarity/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "83143fe47503da31a924efe737f7bd5a63176d9a8e45b6520989f3ef66310162"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
