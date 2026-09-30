@@ -21,7 +21,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.sam": 8,
 	"pinmame.stern-mpu200": 23,
 	"pinmame.system-11": 24,
-	"pinmame.wpc-95": 6,
+	# The Champion Pub is now declared by its dedicated curator.
+	"pinmame.wpc-95": 5,
 	"pinmame.wpc-dcs": 3,
 	"pinmame.wpc-fliptronic": 6,
 	# The Shadow (curated 2026-09-26) now declares its platform from the curated definition.

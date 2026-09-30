@@ -69,7 +69,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 63 | 1999 | South Park | Sega | partial | 13% |
 | 64 | 1999 | Harley Davidson | Stern | partial | 13% |
 | 65 | 1998 | Cactus Canyon | Bally | author_ready | 100% |
-| 66 | 1998 | Champion Pub | Bally | partial | 19% |
+| 66 | 1998 | The Champion Pub | Bally | partial | 88% |
 | 67 | 1998 | Godzilla | Sega | partial | 19% |
 | 68 | 1998 | Golden Cue | Sega | partial | 13% |
 | 69 | 1998 | Lost In Space | Sega | partial | 13% |

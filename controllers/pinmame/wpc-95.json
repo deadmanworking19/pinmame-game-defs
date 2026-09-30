@@ -150,6 +150,14 @@
         {
           "minimum": 101,
           "maximum": 108
+        },
+        {
+          "minimum": 111,
+          "maximum": 118
+        },
+        {
+          "minimum": 121,
+          "maximum": 128
         }
       ],
       "transports": {
@@ -161,7 +169,7 @@
           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
         }
       },
-      "notes": "#### Matrix conversion\n\nPinMAME applies `wpc_sw2m`/`wpc_m2sw` conversion to lamps. `ChangedLamps` therefore reports public matrix addresses `11-88` rather than sequential indices `1-64`, where the left digit is the drive column and the right digit is the return row.\n\n#### Auxiliary columns\n\nA driver may declare additional lamp columns through `core_tGameData lampCol`; `wpc_m2sw` continues the same column-times-ten notation.\n\n| Auxiliary column | Public addresses |\n| --- | --- |\n| First | `91-98` |\n| Second | `101-108` |\n\nAttack From Mars is the WPC-95 example with `lampCol=2` for its 16-LED chase board. A definition declares only the columns its own machine populates.",
+      "notes": "#### Matrix conversion\n\nPinMAME applies `wpc_sw2m`/`wpc_m2sw` conversion to lamps. `ChangedLamps` therefore reports public matrix addresses `11-88` rather than sequential indices `1-64`, where the left digit is the drive column and the right digit is the return row.\n\n#### Auxiliary columns\n\nA driver may declare additional lamp columns through `core_tGameData lampCol`; `wpc_m2sw` continues the same column-times-ten notation.\n\n| Auxiliary column | Public addresses |\n| --- | --- |\n| First | `91-98` |\n| Second | `101-108` |\n| Third | `111-118` |\n| Fourth | `121-128` |\n\nAttack From Mars declares `lampCol=2` for its chase board. The Champion Pub declares `lampCol=4`; its four 4094 parallel callbacks populate internal columns 10, 8, 11 and 9, exposed as public columns 11, 9, 12 and 10. The exported auxiliary bits and the fitted LED board's emitter count are separate facts. A machine definition enumerates its own declared columns and gives each address an explicit disposition.",
       "notes_format": "markdown"
     },
     {
@@ -188,6 +196,11 @@
     }
   ],
   "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "locator": "src/wpc/sims/wpc/prelim/cp.c cpGameData lampCol=4, parallel_0_out/parallel_1_out/parallel_2_out/parallel_3_out internal lampMatrix columns 10/8/11/9; src/wpc/wpc.c wpc_m2sw public column-times-ten conversion"
+    },
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
