@@ -131,6 +131,41 @@ class ChampionPubTests(unittest.TestCase):
 		self.assertIn("31-3066.1", self.facts["knowledge"])
 		self.assertNotIn("\ufffd", self.facts["knowledge"])
 
+	def test_gi_roles_follow_verified_factory_harness(self) -> None:
+		gi = group(self.definition, "outputs", "pinmame.output.gi")
+		for n in (0, 1):
+			self.assertEqual("playfield", gi[n]["physical"]["location"])
+			self.assertNotIn("cabinet.backbox", gi[n].get("roles", []))
+		for n in (2, 3, 4):
+			self.assertEqual("insert panel/backbox", gi[n]["physical"]["location"])
+			self.assertEqual(["cabinet.backbox"], gi[n]["roles"])
+			self.assertEqual("cabinet_or_service", gi[n]["spatial"]["reason"])
+
+	def test_leaf_construction_requires_exact_component_evidence(self) -> None:
+		for n in (25, 51, 52, 53, 54, 74, 78, 111, 113):
+			self.assertEqual("leaf", self.switches[n]["physical"]["switch_type"])
+			self.assertIn("manual.champion-pub.parts", self.switches[n]["provenance"]["source_refs"])
+		for n in (55, 56):
+			self.assertEqual("leaf", self.switches[n]["physical"]["switch_type"])
+			self.assertEqual("A-17795-6", self.switches[n]["physical"]["assembly_part_number"])
+			self.assertIn("manual.williams.green-16-9932.target-blades", self.switches[n]["provenance"]["source_refs"])
+			self.assertFalse(self.switches[n]["normally_closed"])
+			self.assertTrue(self.switches[n]["pulse"])
+		self.assertEqual("unknown", self.switches[77]["physical"]["switch_type"])
+		self.assertEqual("unused", self.switches[77]["availability"])
+		self.assertNotIn("input_semantics", self.definition["coverage"]["missing"])
+		parts = (ROOT / curator.EXCERPT_PREFIX / "parts-contact-blades.md").read_text(encoding="utf-8")
+		for part in ("06-1-20", "06-2V-14", "06-36-10", "06-35-8", "06-68D-8", "06-13G-14", "06-73-2"):
+			self.assertIn(part, parts)
+		eos = (ROOT / curator.EXCERPT_PREFIX / "manual-eos-construction.md").read_text(encoding="utf-8")
+		self.assertIn("longer EOS blade straight", eos)
+		self.assertIn("shorter blade", eos)
+		catalog = (ROOT / curator.EXCERPT_PREFIX / "green-catalog-target-blades.md").read_text(encoding="utf-8")
+		self.assertIn("Blade Switches Used On Stationary Target Assemblies", catalog)
+		self.assertIn("| SW-1A-178-6 | A-17795-6 Oblong, Yellow |", catalog)
+		self.assertIn("| | A-18606-5 Round, White |", catalog)
+		self.assertIn("| | A-17795-4 Oblong, Red |", catalog)
+
 	def test_source_hashes_and_exact_normalization(self) -> None:
 		for source in self.definition["sources"]:
 			for excerpt in source.get("excerpts", []):
