@@ -1,0 +1,31 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "cp_16",
+  "notes": "Run with tools/champion_pub_mech_probe.py --feedback-stop-step 7 in new empty isolated state. Display checkpoints verify T.1. Holding both lower flipper buttons stabilizes PinMAME's automatic lower EOS feedback before testing public116/118, otherwise the EOS edge can replace the upper button's diagnostic caption. Direct upper button readback is only host stimulus; the ROM's UR/UL FLIPPER BUT and LAST SW F6/F8 captions establish that the ROM reads these inputs. This does not prove upper flipper hardware is fitted. No keyboard or built-in simulator controls are enabled.",
+  "initial_switches": [
+    {"switch": 22, "state": 0}, {"switch": 32, "state": 1},
+    {"switch": 33, "state": 1}, {"switch": 34, "state": 1},
+    {"switch": 35, "state": 1}, {"switch": 41, "state": 0},
+    {"switch": 46, "state": 1}, {"switch": 47, "state": 1},
+    {"switch": 48, "state": 1}, {"switch": 61, "state": 1},
+    {"switch": 62, "state": 1}, {"switch": 64, "state": 1}
+  ],
+  "watch_switches": [22, 111, 112, 113, 114, 115, 116, 117, 118],
+  "actions": [
+    {"type": "wait", "seconds": 12, "label": "Fresh NVRAM boot stabilization"},
+    {"type": "pulse", "switch": 5, "hold_ms": 200, "settle_s": 25, "label": "Escape clears bookkeeping; allow power-up checks"},
+    {"type": "pulse_until_display", "switch": 8, "texts": ["MAIN MENU"], "max_pulses": 4, "hold_ms": 200, "settle_s": 2, "label": "Enter main menu checkpoint"},
+    {"type": "pulse_until_display", "switch": 7, "texts": ["MAIN MENU T TESTS"], "max_pulses": 8, "hold_ms": 200, "settle_s": 1, "label": "Select Tests display checkpoint"},
+    {"type": "pulse_until_display", "switch": 8, "texts": ["TEST MENU T1 SWITCH EDGES"], "max_pulses": 2, "hold_ms": 200, "settle_s": 1, "label": "Enter T.1 menu checkpoint"},
+    {"type": "pulse_until_display", "switch": 8, "texts": ["DIAGNOSTIC SWITCH EDGES"], "max_pulses": 2, "hold_ms": 200, "settle_s": 1, "label": "Enter diagnostic-title checkpoint"},
+    {"type": "set_switch", "switch": 112, "state": 1, "settle_s": 2, "label": "Hold lower right button; stabilize generated right EOS"},
+    {"type": "set_switch", "switch": 114, "state": 1, "settle_s": 2, "label": "Hold lower left button; stabilize generated left EOS"},
+    {"type": "set_switch", "switch": 116, "state": 1, "settle_s": 2, "label": "Upper right input 116 raw 1"},
+    {"type": "set_switch", "switch": 116, "state": 0, "settle_s": 2, "label": "Upper right input 116 raw 0"},
+    {"type": "set_switch", "switch": 116, "state": 1, "settle_s": 2, "label": "Upper right input 116 raw 1 repeat"},
+    {"type": "set_switch", "switch": 118, "state": 1, "settle_s": 2, "label": "Upper left input 118 raw 1"},
+    {"type": "set_switch", "switch": 118, "state": 0, "settle_s": 2, "label": "Upper left input 118 raw 0"},
+    {"type": "set_switch", "switch": 118, "state": 1, "settle_s": 2, "label": "Upper left input 118 raw 1 repeat"}
+  ]
+}

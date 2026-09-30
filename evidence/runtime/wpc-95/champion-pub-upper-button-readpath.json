@@ -1,0 +1,263 @@
+{
+  "driver_ids": [
+    "cp_16"
+  ],
+  "extractor": {
+    "id": "tools/champion_pub_mech_probe.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.champion-pub.1998"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/champion_pub_mech_probe.py --library <pinned-libpinmame> --game cp_16 --rom-path <read-only-rom-root> --work-dir <new-empty-isolated-state> --scenario tools/harness-scenarios/wpc-95/cp-upper-button-readpath.json --dmd-dir <external-dmd-dir> --output <external-run.json> --feedback-stop-step 7. Lower flipper buttons112/114 are held during the upper116/118 probes so automatic lowerEOS edges cannot replace the upper button caption.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+    },
+    "game": "cp_16",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "UR FLIPPER BUT / T.1 LAST SW F6 / BLK-YEL ORN",
+          "label": "Upper right input 116 raw 1",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "88f5724a1bc97129dc51a9ba36a1cd7291c8953d1461271d7b75880ec869a3a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F6",
+          "label": "Upper right input 116 raw 0",
+          "nonzero_pixels": 745,
+          "pixel_sha256": "85fb5363683ac4657d26da9c301e9de3f94e9578f9b37be47752c24fda046a26"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "UR FLIPPER BUT / T.1 LAST SW F6 / BLK-YEL ORN",
+          "label": "Upper right input 116 raw 1 repeat",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "88f5724a1bc97129dc51a9ba36a1cd7291c8953d1461271d7b75880ec869a3a0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            37,
+            38,
+            41,
+            42,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "UL FLIPPER BUT / T.1 LAST SW F8 / BLK-BLU ORN",
+          "label": "Upper left input 118 raw 1",
+          "nonzero_pixels": 775,
+          "pixel_sha256": "3a0d9e789d2368d0ce76bf4d5d7f4c8480e2d501ac82c012fd18c4d17d02ddb8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F8",
+          "label": "Upper left input 118 raw 0",
+          "nonzero_pixels": 761,
+          "pixel_sha256": "3f93b755fd0c6184561d5ef91fa43b014a70882f56e8d53ba97037b4dc40a4c9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "UL FLIPPER BUT / T.1 LAST SW F8 / BLK-BLU ORN",
+          "label": "Upper left input 118 raw 1 repeat",
+          "nonzero_pixels": 775,
+          "pixel_sha256": "3a0d9e789d2368d0ce76bf4d5d7f4c8480e2d501ac82c012fd18c4d17d02ddb8"
+        }
+      ],
+      "runs": {
+        "checkpoint-upper-buttons": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 2,
+              "matched_text": "MAIN MENU"
+            },
+            {
+              "after_service_pulses": 2,
+              "matched_text": "MAIN MENU T TESTS"
+            },
+            {
+              "after_service_pulses": 1,
+              "matched_text": "TEST MENU T1 SWITCH EDGES"
+            },
+            {
+              "after_service_pulses": 2,
+              "matched_text": "DIAGNOSTIC SWITCH EDGES"
+            }
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        25,
+        27,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 14,
+        "boot_wait_s": 12,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 32
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          },
+          {
+            "state": 1,
+            "switch": 35
+          },
+          {
+            "state": 0,
+            "switch": 41
+          },
+          {
+            "state": 1,
+            "switch": 46
+          },
+          {
+            "state": 1,
+            "switch": 47
+          },
+          {
+            "state": 1,
+            "switch": 48
+          },
+          {
+            "state": 1,
+            "switch": 61
+          },
+          {
+            "state": 1,
+            "switch": 62
+          },
+          {
+            "state": 1,
+            "switch": 64
+          }
+        ],
+        "name": "checkpoint-upper-buttons",
+        "nvram_initialization": "New empty isolated state directory; boot12s, Escape and25s power-up checks. No previous NVRAM or separate initialization run was reused.",
+        "retained_from": "external:pinmame-review-artifacts/bally.champion-pub.1998/session-20260930-resumed/harness/checkpoint-upper-buttons/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/cp-upper-button-readpath.json",
+        "scenario_sha256": "0685a2aeb47dd2cd28c4d49ebf5af1a0fa8678602d9eae407324109a60784348",
+        "self_test_pulses": 0,
+        "sha256": "57b286f51d23ff499adc5bfd004175bef930149dedb5ccf26aee4f4bb93d31da",
+        "snapshot_count": 15,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          32,
+          33,
+          34,
+          35,
+          41,
+          46,
+          47,
+          48,
+          61,
+          62,
+          64,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8850f6e6b34ca5f776364ca0bcec432a6b108b6fa4fbda734f9832b19c0e4c4e"
+  },
+  "source": {
+    "attribution": "Fresh isolated cp_16 English T.1 run; all four service display checkpoints passed. Synthetic VPX-derived motor feedback stops before step7; lower button112 and114 are then held at1 to stabilize PinMAME automatic lower EOS111/113. Upper116raw1 shows UR FLIPPER BUT / LAST SW F6; raw0 clears its caption; repeat1 restores it. Upper118raw1 shows UL FLIPPER BUT / LAST SW F8; raw0 clears; repeat1 restores. Native DMD snapshots9-14 visually inspected. Direct public readback is host stimulus only. This proves ROM reachability and active levels under these conditions, not fitted upper flippers or physical contacts. Probe SHA-256 b8e2be1ddfb7151bb6da33ea34caf5e524fc006b3585e3abc7db331d9e630701; retained VPX script SHA-256 0060c3892e5b35d154d2fb5325284658787121b81111e6ba3d267d6d8bc66a6c. Exact external directory manifest SHA-256 35dc3c6f34c269ae6a70541f5e32ccdf6f2350c9f849ee428699e4deab266a49, canonical files-array digest 52bb6daadc07df028bd2a28406af491c9524a11344da9e9e30abe6a02e9765ac; algorithm and all DMD/state/trace/scenario file hashes are retained in that manifest. No ROM bytes are copied.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/bally.champion-pub.1998/session-20260930-resumed/harness/checkpoint-upper-buttons/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "57b286f51d23ff499adc5bfd004175bef930149dedb5ccf26aee4f4bb93d31da"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
