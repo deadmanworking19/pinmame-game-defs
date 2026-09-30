@@ -7622,24 +7622,27 @@
           "value": "49"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 49,
         "group": "pinmame.output.solenoid"
       },
       "id": "virtual.solenoid-49",
       "kind": "virtual",
-      "label": "Simulator Ball Shooter State",
+      "label": "Disabled Manual Shooter State",
       "physical": {
-        "notes": "Simulator-only shooter release channel, consumed by cpSimData's stShooter state; no additional physical actuator."
+        "notes": "cpSimData.manShooter is FALSE, so sim_getSol leaves the manual shooter release output at constant zero. The stShooter state uses sLaunch (public 1), not public 49; there is no additional physical actuator."
       },
       "provenance": {
         "source_refs": [
-          "manual.champion-pub.operations",
-          "pinmame.core.champion-pub"
+          "pinmame.core.champion-pub",
+          "pinmame.sim.champion-pub"
         ],
         "status": "validated"
       },
+      "roles": [
+        "internal.unused.wpc-output"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -13977,6 +13980,27 @@
       "original_filename": "Bally_1998_The_Champion_Pub_Service_Bulletin_107.pdf",
       "sha256": "02dfc39aed6b121f877d93003bed7c31671689d2cfba400221e2b9140fba360a",
       "uri": "https://www.ipdb.org/files/4358/Bally_1998_The_Champion_Pub_Service_Bulletin_107.pdf"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "excerpt.champion-pub.disabled-manual-shooter",
+          "locator": "Complete cpSimData configuration, launch/state rows, manual-shooter update branch and sim_getSol output reader",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.champion-pub.1998/pinmame-disabled-manual-shooter.md",
+          "reviewed": false,
+          "sha256": "2cd542584398062a8ec25bc9e9bc4d9940ab3eb15dace8ab0e05755be7aeab83",
+          "transcribed_by": "GPT Sol curator; literal pinned source regions checked directly"
+        }
+      ],
+      "id": "pinmame.sim.champion-pub",
+      "kind": "pinmame_sim",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/sim.c:102–116 manual shooter update and 238–243 sim_getSol; src/wpc/sim.h sShooterRel; cp.c:118 sLaunch, 145 Shooter state, 278–288 cpSimData manual-shooter FALSE",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "20579da60adf58538d5b8c93a0bf22bd8c6d4e3ea6657234cd371293bd05c405",
+      "uri": "https://github.com/vpinball/pinmame"
     }
   ]
 }

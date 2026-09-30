@@ -177,7 +177,8 @@ def outputs(data: dict[str, Any]) -> list[dict[str, Any]]:
 	for address in range(1, 51):
 		row = data["public_solenoids"][str(address)]
 		item = device(row["kind"], row["label"], "output.solenoid", address,
-			identifier=f"{row['kind']}.solenoid-{address}", availability=row["availability"], physical=copy.deepcopy(row["physical"]))
+			identifier=f"{row['kind']}.solenoid-{address}", availability=row["availability"], physical=copy.deepcopy(row["physical"]),
+			refs=tuple(row.get("source_refs", (MANUAL, CORE))))
 		if row.get("wiring"):
 			item["wiring"] = row["wiring"]
 		if row.get("roles"):

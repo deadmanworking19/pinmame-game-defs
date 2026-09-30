@@ -76,6 +76,14 @@ class ChampionPubTests(unittest.TestCase):
 			self.assertEqual(["internal.unused.wpc-output"], self.solenoids[n]["roles"])
 			self.assertEqual("virtual", self.solenoids[n]["spatial"]["reason"])
 		self.assertIn("constant zero", self.solenoids[32]["physical"]["notes"])
+		shooter = self.solenoids[49]
+		self.assertEqual(("virtual", "unused"), (shooter["kind"], shooter["availability"]))
+		self.assertEqual(["internal.unused.wpc-output"], shooter["roles"])
+		self.assertEqual("virtual", shooter["spatial"]["reason"])
+		self.assertIn("manShooter is FALSE", shooter["physical"]["notes"])
+		self.assertIn("constant zero", shooter["physical"]["notes"])
+		self.assertIn("sLaunch (public 1)", shooter["physical"]["notes"])
+		self.assertIn("pinmame.sim.champion-pub", shooter["provenance"]["source_refs"])
 
 	def test_rom_contract_and_unfitted_upper_button_states(self) -> None:
 		self.assertTrue(self.switches[38]["normally_closed"])
