@@ -241,10 +241,23 @@ class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
 		for label, address in (("solenoid test up to 12", 12), ("flasher test up to 24", 24)):
 			fired = {item["number"] for item in steps[label]["transitions"]["solenoids"] if any(item["states"])}
 			self.assertEqual({address}, fired, label)
-		hashes = {snap["label"]: snap["displays"][0]["pixel_sha256"] for snap in run["snapshots"] if snap["displays"]}
-		summary = {item["label"]: item["pixel_sha256"] for item in runtime["observations"]["diagnostic_snapshots"]}
-		self.assertEqual(hashes["solenoid test up to 12"], summary["T.4 SOLENOID TEST at solenoid 12"])
-		self.assertEqual(hashes["flasher test up to 24"], summary["T.5 FLASHER TEST at flasher 24"])
+		raw_frames = {snap["label"]: (snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in run["snapshots"] if snap["displays"]}
+		summary = {item["label"]: (item["pixel_sha256"], item["nonzero_pixels"]) for item in runtime["observations"]["diagnostic_snapshots"]}
+		# Every summary frame is the raw frame of the step it names.
+		raw_label = {
+			"game identification": "Enter 2 (game identification)",
+			"T.4 SOLENOID TEST at solenoid 11": "solenoid test up to 11",
+			"T.4 SOLENOID TEST at solenoid 12": "solenoid test up to 12",
+			"T.4 SOLENOID TEST at solenoid 13": "solenoid test up to 13",
+			"T.5 FLASHER TEST started at flasher 17 (name line dimmed mid-blink)": "Enter 6 (start T.5 at flasher 17)",
+			"T.5 FLASHER TEST wrapped back to flasher 17 (name and number in their blink-off phase)": "flasher test up, wrapping to 17",
+			"T.5 FLASHER TEST at flasher 23": "flasher test up to 23",
+			"T.5 FLASHER TEST at flasher 24": "flasher test up to 24",
+			"T.5 FLASHER TEST at flasher 25": "flasher test up to 25",
+		}
+		self.assertEqual(set(raw_label), set(summary))
+		for label, frame in summary.items():
+			self.assertEqual(raw_frames[raw_label[label]], frame, label)
 
 
 if __name__ == "__main__":
