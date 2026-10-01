@@ -134,7 +134,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 188 | Xenon | `bally.xenon.1980` | 19% |
 | 189 | Catacomb | `stern.catacomb.1981` | 19% |
 | 190 | Transporter the Rescue | `bally.transporter-the-rescue.1989` | 19% |
-| 191 | Skateball | `bally.skateball.1980` | 13% |
+| 191 | Skateball | `bally.skateball.1980` | 19% |
 | 192 | Phantom of the Opera | `data-east.phantom-of-the-opera.1990` | 19% |
 | 193 | Haunted House | `gottlieb.haunted-house.1982` | 19% |
 | 195 | Cyclone | `williams.cyclone.1988` | 19% |

@@ -54,6 +54,17 @@ NBA_FASTBREAK_COIN_NOTE = (
 	"not match what the ROM reads at those matrix positions."
 )
 
+SKATEBALL_IN_PLAY = {
+	"id": "runtime.skateball.skatebll.switch-2-and-19-in-play",
+	"uri": "internal:evidence/runtime/by35/skateball-skatebll-switch-2-and-19-in-play.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of skatebll from empty NVRAM (scenario "
+		"tools/harness-scenarios/by35/skatebll-switch-2-and-19-in-play.json) that plays one three-ball game. Public 19 "
+		"rises during the start press, stays raised through all three balls and two right flipper button presses, and "
+		"drops at game over. With center drop targets 3 and 4 down, pressing public 2 fires the center bank reset (10)."
+	),
+}
+
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
 		"path": "machines/partial/bally/black-rose-1992.json",
@@ -217,6 +228,44 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"flipper-enable relay (19) raised, so it does not tilt. The ROM reads 2 as a member of the 1-4 drop-target "
 			"bank, and the platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives "
 			"from the cabinet input port."
+		),
+	},
+	{
+		"path": "machines/partial/bally/skateball-1980.json",
+		"machine_id": "bally.skateball.1980",
+		"conflict_id": "conflict.pinmame-input-switch-2-none",
+		"binding": {"group": "pinmame.input.switch", "device": 2},
+		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"label": "Center Drop Target 1 (Left)",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
+		"source": SKATEBALL_IN_PLAY,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
+			"file's 'Center Drop Target 1 (Left)'. In a skatebll gameplay run, closing center drop targets 3 and 4 scores "
+			"and fires nothing; pressing public 2 after them makes the ROM fire the center drop-target bank reset (10) "
+			"while the flipper-enable relay (19) stays raised, so the ROM does not tilt and reads 2 as the bank member that "
+			"completes it. The platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives "
+			"from the cabinet input port."
+		),
+	},
+	{
+		"path": "machines/partial/bally/skateball-1980.json",
+		"machine_id": "bally.skateball.1980",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
+		"label": "Flipper Enable Relay",
+		"kind": "relay",
+		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_flipper_upper_right"}],
+		"source": SKATEBALL_IN_PLAY,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'ROM Started' (alias c_game_on) against the game file's "
+			"'Upper Right Flipper' (alias c_flipper_upper_right). In a skatebll gameplay run public 19 rises during the "
+			"start press, stays raised through three balls and through two presses of the right flipper button switch "
+			"(32), and drops when the game ends; it never follows a flipper. The BY35 controller profile, after "
+			"lisy35.c, names 19 continuous bit 2, the flipper-enable relay, which is what the trace shows. The flipper "
+			"alias is dropped and c_game_on stays, because the relay is held for exactly the game."
 		),
 	},
 	*[

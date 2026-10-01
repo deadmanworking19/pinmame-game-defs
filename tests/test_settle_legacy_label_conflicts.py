@@ -29,24 +29,38 @@ ROM_NAMES = {
 PAIRED = {
 	("runtime.red-and-ted-s-road-show.rs-l6.ted-test", 19): (20, "MOUTH OPEN / T.17 06 RUNNING"),
 }
-# Settlements read from scoring in play: the bank's other members and the raw step that closes each, the step that
-# closes the address, the points every closure scores, and the relay that drops if the ROM tilts.
+# Settlements read from a drop-target bank in play: the bank's other members and the raw step that closes each, the
+# step that closes the address, and the relay that drops if the ROM tilts. Each closure must score. "points" requires
+# every closure to score the same; "award" requires the address's closure to light lamps no member's closure lit;
+# "reset" names the bank reset coil that only the address's closure fires.
 BANKS = {
 	("runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play", 2): {
 		"members": {1: "drop target 1 down", 3: "drop target 3 down", 4: "drop target 4 down"},
 		"step": "public 2 closed",
-		"points": 5000,
 		"relay": 19,
+		"points": 5000,
+		"award": True,
+	},
+	("runtime.skateball.skatebll.switch-2-and-19-in-play", 2): {
+		"members": {3: "center drop target 3 down", 4: "center drop target 4 down"},
+		"step": "public 2 closed fires 10",
+		"relay": 19,
+		"reset": 10,
 	},
 }
 SEVEN_SEGMENT = {0: "", 63: "0", 6: "1", 91: "2", 79: "3", 102: "4", 109: "5", 125: "6", 7: "7", 127: "8", 111: "9"}
-# Settlements read from a gameplay timeline: the raw step in which the address changes, and its new state, in order.
+# Settlements read from a gameplay timeline: each raw step in which the address changes, and its states there, in order.
 TIMELINES = {
 	("runtime.diner.diner-l4.game-on-23", 23): [
-		("start button raises game-on", 1),
-		("ball 1: plumb-bob tilt 3 drops game-on", 0),
-		("checkpoint: game-on rises for ball 2", 1),
-		("checkpoint: game over drops game-on", 0),
+		("start button raises game-on", [1]),
+		("ball 1: plumb-bob tilt 3 drops game-on", [0]),
+		("checkpoint: game-on rises for ball 2", [1]),
+		("checkpoint: game over drops game-on", [0]),
+	],
+	("runtime.skateball.skatebll.switch-2-and-19-in-play", 19): [
+		("boot", [1, 0, 1, 0]),
+		("start button changes 19", [1]),
+		("checkpoint: game over changes 19", [0]),
 	],
 }
 
@@ -55,16 +69,16 @@ def load_json(path: Path) -> dict:
 	return json.loads(path.read_text(encoding="utf-8"))
 
 
-def timeline_mismatches(run: dict, address: int, timeline: list[tuple[str, int]]) -> list[str]:
+def timeline_mismatches(run: dict, address: int, timeline: list[tuple[str, list[int]]]) -> list[str]:
 	"""Every change of the address must happen in the listed step, in the listed direction, in the listed order."""
 	steps = {step["label"]: step for step in run["steps"]}
 	problems = []
 	states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address]
-	if states != [state for _, state in timeline]:
+	if states != [state for _, listed in timeline for state in listed]:
 		problems.append(f"transitions {states}")
-	for label, state in timeline:
+	for label, listed in timeline:
 		changed = [item["states"] for item in steps[label]["transitions"]["solenoids"] if item["number"] == address]
-		if changed != [[state]]:
+		if changed != [listed]:
 			problems.append(f"{label}: {changed}")
 	return problems
 
@@ -119,16 +133,21 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
 				if bank:
-					# Every member and the address score the same, and only the address's closure says the ROM did not tilt.
+					# Every closure keeps the relay raised, and the address's closure says the ROM did not tilt.
 					closures = {item["input_address"]: item for item in observations["named_action_observations"] if item["input_kind"] == "switch"}
 					for number in [*bank["members"], address]:
-						self.assertIn(f"rises by {bank['points']:,}", closures[number]["label"])
+						self.assertIn("rises by", closures[number]["label"])
+						if "points" in bank:
+							self.assertIn(f"rises by {bank['points']:,}", closures[number]["label"])
 						self.assertIn(bank["relay"], closures[number]["active_solenoid_addresses"])
+					for number in bank["members"]:
+						self.assertEqual([], closures[number]["transitioned_solenoid_addresses"])
+					self.assertEqual([bank["reset"]] if "reset" in bank else [], closures[address]["transitioned_solenoid_addresses"])
 					self.assertIn("does not tilt", closures[address]["label"])
 				elif timeline:
-					# One named action per change of the address, each listing it among its transitions.
+					# Named actions report the address's changes; numeric and alphanumeric displays leave no frames.
 					changes = [item for item in observations["named_action_observations"] if address in item["transitioned_solenoid_addresses"]]
-					self.assertEqual(len(timeline), len(changes))
+					self.assertTrue(changes)
 					self.assertNotIn("diagnostic_snapshots", observations)
 				elif paired:
 					partner, text = paired
@@ -200,15 +219,25 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					self.assertEqual(sorted(positions), positions)
 					previous = score(list(raw_steps)[positions[0] - 1])
 					for label in labels:
-						self.assertEqual(bank["points"], score(label) - previous, label)
+						self.assertGreater(score(label), previous, label)
+						if "points" in bank:
+							self.assertEqual(bank["points"], score(label) - previous, label)
 						previous = score(label)
 						self.assertIn(bank["relay"], by_label[label]["active_solenoids"])
-						self.assertEqual([], raw_steps[label]["transitions"]["solenoids"])
-					# The address's closure lights lamps that no member's closure lit.
-					award = lit(bank["step"])
-					self.assertTrue(award)
 					for label in bank["members"].values():
-						self.assertFalse(award & lit(label), label)
+						self.assertEqual([], raw_steps[label]["transitions"]["solenoids"], label)
+					fired = raw_steps[bank["step"]]["transitions"]["solenoids"]
+					if "reset" in bank:
+						# Only the address's closure completes the bank, so only it fires the reset.
+						self.assertEqual([bank["reset"]], [item["number"] for item in fired if 1 in item["states"]])
+					else:
+						self.assertEqual([], fired)
+					if bank.get("award"):
+						# The address's closure lights lamps that no member's closure lit.
+						award = lit(bank["step"])
+						self.assertTrue(award)
+						for label in bank["members"].values():
+							self.assertFalse(award & lit(label), label)
 					# The relay stays raised from the start of play until the ball drains.
 					rises = [event["time_s"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == bank["relay"] and event["state"]]
 					drops = [event["time_s"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == bank["relay"] and not event["state"]]
@@ -299,19 +328,19 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not set")
 		for (source_id, address), timeline in TIMELINES.items():
 			with self.subTest(source=source_id):
-				(settlement,) = [item for item in tool.SETTLEMENTS if item["source"]["id"] == source_id]
+				settlement = next(item for item in tool.SETTLEMENTS if item["source"]["id"] == source_id)
 				evidence = load_json(ROOT / settlement["source"]["uri"][len("internal:"):])
 				raw = evidence["runtime"]["raw_runs"][-1]
 				run = load_json(Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):])
 				self.assertEqual([], timeline_mismatches(run, address, timeline))
 				# The checkpoints accept either direction, so the check must catch a rise where a drop belongs.
-				label, state = timeline[-1]
+				label, listed = timeline[-1]
 				reversed_step = json.loads(json.dumps(run))
 				for step in reversed_step["steps"]:
 					if step["label"] == label:
 						for item in step["transitions"]["solenoids"]:
 							if item["number"] == address:
-								item["states"] = [1 - state]
+								item["states"] = [1 - state for state in listed]
 				self.assertTrue(timeline_mismatches(reversed_step, address, timeline))
 				reversed_event = json.loads(json.dumps(run))
 				(last,) = [event for event in reversed_event["events"] if event["event"] == "solenoid" and event["number"] == address][-1:]

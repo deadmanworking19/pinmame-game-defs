@@ -562,7 +562,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 556 | 1980 | Frontier | Bally | partial | 19% |
 | 557 | 1980 | Mystic | Bally | partial | 19% |
 | 558 | 1980 | Nitro Ground Shaker | Bally | partial | 19% |
-| 559 | 1980 | Skateball | Bally | partial | 13% |
+| 559 | 1980 | Skateball | Bally | partial | 19% |
 | 560 | 1980 | Space Invaders | Bally | partial | 19% |
 | 561 | 1980 | Xenon | Bally | partial | 19% |
 | 562 | 1980 | Pinball Lizard | Game Plan | partial | 13% |

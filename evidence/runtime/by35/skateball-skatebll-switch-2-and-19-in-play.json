@@ -1,0 +1,184 @@
+{
+  "driver_ids": [
+    "skatebll"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.skateball.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game skatebll --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by35/skatebll-switch-2-and-19-in-play.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level; the snapshot after each step records the score displays (seven-segment values, decoded here as digits with the comma bit masked) and the active outputs. Public 19 is BY35 continuous bit 2, which the controller profile and lisy35.c name the flipper-enable relay.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "skatebll",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "start button (public 6) after two coins: the ROM starts a game, serves the ball (7), resets the drop-target banks (8, 9, 10) and raises public 19, which was 0 in attract mode",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            8,
+            9,
+            10,
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "center drop target 3 (public 3) closed: the score rises by 5,000 to 5,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "center drop target 4 (public 4) closed: the score rises by 5,000 to 10,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 pressed for 500 ms while center drop targets 3 and 4 are held down: the ROM fires the center drop-target bank reset (10), which neither of the other two closures fired, the score rises by 15,000 to 25,000, and public 19 stays raised, so the ROM does not tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "right flipper button switch (public 32) pressed twice for 400 ms in play: public 19 stays raised and does not change with the button",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "ball 3 drains to the outhole (public 8 closed): the ROM ends the game and drops public 19, which had stayed raised since the start press through all three balls; transitioned_solenoid_addresses covers this step and the checkpoint that waits for 19",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            18,
+            19
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 23,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "skatebll-switch-2-and-19-in-play",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/skateball-1980/harness/switch-2-and-19-in-play/skatebll/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/skatebll-switch-2-and-19-in-play.json",
+        "scenario_sha256": "72010209ea64452f5fdc7e326f64f42e229091bc73309e43ad5b66cfb76ad74c",
+        "self_test_pulses": 0,
+        "sha256": "cba4dc8631c8d3d9e005ae2648b21a16b6f2f6b0510ba38280211cc0942684aa",
+        "snapshot_count": 24,
+        "watch_switches": [
+          2,
+          3,
+          4,
+          6,
+          8,
+          11,
+          30,
+          32
+        ]
+      }
+    ],
+    "rom_archive_sha256": "c6ff7304c36a862b2974860645435b2a9785038e8b297e70a546aa85af45b4f5"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Scores are the harness's seven-segment values for player 1's display, read as digits. The ROM also pulses 19 twice during its power-up output check, before the scenario's first input. The raw trace has no DMD frames. Exact external directory manifest skatebll/manifest.json SHA-256 10ed36a56c8a7c263ee2eb658ba11a53f4216540343bff00d7ec43e30faf6a5b (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/skateball-1980/harness/switch-2-and-19-in-play/skatebll",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "cba4dc8631c8d3d9e005ae2648b21a16b6f2f6b0510ba38280211cc0942684aa"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

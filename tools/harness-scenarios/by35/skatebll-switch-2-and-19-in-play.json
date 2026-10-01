@@ -1,0 +1,196 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 15.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin 1",
+      "settle_s": 1.0,
+      "switch": 11,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin 2",
+      "settle_s": 1.0,
+      "switch": 11,
+      "type": "pulse"
+    },
+    {
+      "addresses": [
+        19
+      ],
+      "channel": "solenoid",
+      "hold_ms": 150,
+      "label": "start button changes 19",
+      "max_pulses": 1,
+      "settle_s": 3.0,
+      "switch": 6,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "ball 1: ball leaves the outhole",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "center drop target 3 down",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 3,
+      "type": "set_switch"
+    },
+    {
+      "label": "center drop target 4 down",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 4,
+      "type": "set_switch"
+    },
+    {
+      "addresses": [
+        10
+      ],
+      "channel": "solenoid",
+      "hold_ms": 500,
+      "label": "public 2 closed fires 10",
+      "max_pulses": 1,
+      "settle_s": 2.0,
+      "switch": 2,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "center drop target 3 reset up",
+      "settle_s": 0.2,
+      "state": 0,
+      "switch": 3,
+      "type": "set_switch"
+    },
+    {
+      "label": "center drop target 4 reset up",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 4,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 400,
+      "label": "right flipper button 32",
+      "settle_s": 1.0,
+      "switch": 32,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 400,
+      "label": "right flipper button 32 again",
+      "settle_s": 1.0,
+      "switch": 32,
+      "type": "pulse"
+    },
+    {
+      "label": "ball 1: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        7
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: ball release serves ball 2",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 2: ball leaves the outhole",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 2: star rollover 30",
+      "settle_s": 1.0,
+      "switch": 30,
+      "type": "pulse"
+    },
+    {
+      "label": "ball 2: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        7
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: ball release serves ball 3",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 3: ball leaves the outhole",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 3: star rollover 30",
+      "settle_s": 1.0,
+      "switch": 30,
+      "type": "pulse"
+    },
+    {
+      "label": "ball 3: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "active_only": false,
+      "addresses": [
+        19
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: game over changes 19",
+      "timeout_s": 20.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "game over",
+      "seconds": 3.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 8
+    }
+  ],
+  "notes": "Boot a Skateball ROM from empty NVRAM with the ball in the outhole (public 8 closed) and PinMAME's built-in mechanisms disabled; the scenario names no game. Coin up and start a game: the start press must change public 19. Let the ball leave the outhole, hold center drop-target switches 3 and 4 down, then press public 2, the address the legacy platform file calls Ball Roll Tilt and the game file Center Drop Target 1 (Left): the press must make the ROM fire the center bank reset (10), after which 3 and 4 are released as the bank would raise them. Press the right flipper button switch (32) twice, then play out three balls, each drain requiring the ball release (7) and the last requiring a change at 19. Checkpoints accept a transition in either direction, so directions are read from the trace.",
+  "version": 1,
+  "watch_switches": [
+    2,
+    3,
+    4,
+    8,
+    32
+  ]
+}

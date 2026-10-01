@@ -1,24 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Center Drop Target 1 (Left)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal skatebll ROM holding public switch 2 to see whether the ROM registers a tilt, and pulsing the drop-target bank reset coil at public solenoid 10 to see whether 2 clears with the rest of its bank -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
-      "id": "conflict.pinmame-input-switch-2-none",
-      "path": "binding:pinmame.input.switch/2/None",
-      "source_refs": [
-        "legacy.game.skateball",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Upper Right Flipper'. Resolution path: this machine's own printed Bally Solenoid Identification Table, no copy of which is currently retained, or a boot-and-play LibPinMAME trace against a legal skatebll ROM observing whether public 19 holds continuously for the duration of a game like a flipper-enable relay or pulses with the upper right flipper; pinned core.h gives BY17/BY35 fifteen pulsed outputs and four hold outputs at 17-20 and no game-on address anywhere, and which device each hold output carries is a per-game question on this platform. Unresolved.",
-      "id": "conflict.pinmame-output-solenoid-19-none",
-      "path": "binding:pinmame.output.solenoid/19/None",
-      "source_refs": [
-        "legacy.game.skateball",
-        "legacy.platform.bally"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.bally"
@@ -46,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -217,25 +197,25 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "002"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_ball_roll_tilt"
         }
       ],
       "binding": {
         "device": 2,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.ball-roll-tilt",
+      "id": "device.center-drop-target-1-left",
       "kind": "switch",
-      "label": "Ball Roll Tilt",
+      "label": "Center Drop Target 1 (Left)",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game file's 'Center Drop Target 1 (Left)'. In a skatebll gameplay run, closing center drop targets 3 and 4 scores and fires nothing; pressing public 2 after them makes the ROM fire the center drop-target bank reset (10) while the flipper-enable relay (19) stays raised, so the ROM does not tilt and reads 2 as the bank member that completes it. The platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives from the cabinet input port."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.skateball",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.skateball.skatebll.switch-2-and-19-in-play"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -3399,25 +3379,25 @@
         {
           "namespace": "vpe-legacy.coil",
           "value": "c_game_on"
-        },
-        {
-          "namespace": "vpe-legacy.coil",
-          "value": "c_flipper_upper_right"
         }
       ],
       "binding": {
         "device": 19,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.game-on",
-      "kind": "coil",
-      "label": "ROM Started",
+      "id": "device.flipper-enable-relay",
+      "kind": "relay",
+      "label": "Flipper Enable Relay",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'ROM Started' (alias c_game_on) against the game file's 'Upper Right Flipper' (alias c_flipper_upper_right). In a skatebll gameplay run public 19 rises during the start press, stays raised through three balls and through two presses of the right flipper button switch (32), and drops when the game ends; it never follows a flipper. The BY35 controller profile, after lisy35.c, names 19 continuous bit 2, the flipper-enable relay, which is what the trace shows. The flipper alias is dropped and c_game_on stays, because the relay is held for exactly the game."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.skateball",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.skateball.skatebll.switch-2-and-19-in-play"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -3510,6 +3490,15 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.skateball.skatebll.switch-2-and-19-in-play",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of skatebll from empty NVRAM (scenario tools/harness-scenarios/by35/skatebll-switch-2-and-19-in-play.json) that plays one three-ball game. Public 19 rises during the start press, stays raised through all three balls and two right flipper button presses, and drops at game over. With center drop targets 3 and 4 down, pressing public 2 fires the center bank reset (10).",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by35/skateball-skatebll-switch-2-and-19-in-play.json"
     }
   ]
 }

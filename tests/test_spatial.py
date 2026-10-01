@@ -515,7 +515,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Red and Ted's Road Show's "TED" test settles its only (legacy solenoid-19) conflict, removing one more.
 		# Diner's gameplay run settles its only (legacy solenoid-23) conflict, removing one more.
 		# Harlem Globetrotters' gameplay run settles its only (legacy switch-2) conflict, removing one more.
-		self.assertEqual(40, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Skateball's gameplay run settles both of its (legacy switch-2 and solenoid-19) conflicts, removing one more.
+		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
