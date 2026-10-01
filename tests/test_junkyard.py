@@ -401,19 +401,18 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		for address in (45, 46, 47, 48):
 			self.assertEqual("validated", self.solenoids[address]["spatial"]["status"], address)
 
-	def test_scoop_coils_are_at_the_scoop_mechanism_not_the_crane(self) -> None:
+	def test_scoop_coils_are_at_the_scoop_mechanism_not_the_top_left_lane(self) -> None:
 		# Solenoids 5 (Scoop Down) and 21 (Scoop Up) must sit at the scoop mechanism beside their own
-		# sensors (switch 73), not at the crane (which is where switch 44 / Power Crane sit).
+		# sensors (switch 73), not at the top-left lane switch 44, whose position once leaked into this slot.
 		scoop_73 = self.switches[73]["spatial"]["placements"][0]
-		crane_44 = self.switches[44]["spatial"]["placements"][0]
+		lane_44 = self.switches[44]["spatial"]["placements"][0]
 		for address in (5, 21):
 			placement = self.solenoids[address]["spatial"]["placements"][0]
 			dx = abs(placement["x"] - scoop_73["x"])
 			dy = abs(placement["y"] - scoop_73["y"])
 			self.assertLess(dx, 0.15, address)
 			self.assertLess(dy, 0.15, address)
-			# And clearly far from the crane's switch 44 (which had leaked into this slot).
-			self.assertGreater(abs(placement["x"] - crane_44["x"]), 0.3, address)
+			self.assertGreater(abs(placement["x"] - lane_44["x"]), 0.3, address)
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_pos = _positions(self.switches)
@@ -438,7 +437,7 @@ class JunkyardDefinitionTests(unittest.TestCase):
 			{
 				"mechanism.trough", "mechanism.shooter-lane", "mechanism.crane",
 				"mechanism.refrigerator-popper", "mechanism.bus-diverter", "mechanism.dog",
-				"mechanism.scoop", "mechanism.toaster-gun", "mechanism.car-targets",
+				"mechanism.scoop", "mechanism.toaster-gun",
 				"mechanism.three-banks", "mechanism.slingshots", "mechanism.spinner",
 				"mechanism.lower-flippers",
 			},
@@ -463,6 +462,45 @@ class JunkyardDefinitionTests(unittest.TestCase):
 			and "cabinet.knocker" not in device.get("roles", [])
 		}
 		self.assertEqual(set(), physical - set(owners))
+
+	def test_crane_is_the_arm_switch_and_the_wrecking_ball_target_arc(self) -> None:
+		# The Moving Crane Assembly (2-20) carries switch 28's micro mini switch and the one A-20099
+		# coil; the Wreck Ball Target Assembly (2-29) wires exactly the five car targets. The arm only
+		# lifts and drops, so 15/38 (red standup targets) and 44 (a lane switch) are not its sensors.
+		crane = {item["id"]: item for item in self.definition["mechanisms"]}["mechanism.crane"]
+		arc = {"switch.matrix-46", "switch.matrix-47", "switch.matrix-48", "switch.matrix-53", "switch.matrix-54"}
+		self.assertEqual("toy", crane["kind"])
+		self.assertEqual(["device.power-crane", "device.hold-crane"], crane["actuators"])
+		self.assertEqual({"switch.matrix-28"} | arc, set(crane["sensors"]))
+		positions = {position["id"]: position for position in crane["positions"]}
+		self.assertEqual(["switch.matrix-28"], positions["down"]["sensors"])
+		self.assertEqual(["switch.matrix-28"], positions["up"]["sensors"])
+		self.assertEqual(arc, {sensor for key, position in positions.items() if key.startswith("swing-") for sensor in position["sensors"]})
+		sensed = {sensor for mechanism in self.definition["mechanisms"] for sensor in mechanism["sensors"]}
+		for address in (15, 38, 44):
+			self.assertNotIn(f"switch.matrix-{address}", sensed, address)
+			self.assertIn("not a crane position switch", self.switches[address]["physical"]["notes"], address)
+		for address in (15, 38):
+			self.assertEqual("A-18530-4", self.switches[address]["physical"]["part_number"], address)
+			self.assertIn("Red Standup Target", self.switches[address]["physical"]["notes"], address)
+		self.assertEqual("5647-12693-31", self.switches[28]["physical"]["part_number"])
+		self.assertIn("Moving Crane Assembly A-21523", self.switches[28]["physical"]["notes"])
+		for address in (46, 47, 48, 53, 54):
+			self.assertIn("Wreck Ball Target Assembly A-21247", self.switches[address]["physical"]["notes"], address)
+		# The Power Crane coil sits at the crane arm's mount, not at the CraneHole kickout far top left.
+		(placement,) = self.solenoids[3]["spatial"]["placements"]
+		self.assertEqual((0.539391, 0.038179), (placement["x"], placement["y"]))
+		self.assertIn("PCraneArm", self.solenoids[3]["physical"]["notes"])
+		excerpts = {
+			excerpt["id"]
+			for source in self.definition["sources"]
+			for excerpt in source.get("excerpts", [])
+		}
+		for name in (
+			"wrecking-ball-back-panel-parts", "wreck-ball-target-assembly", "upper-playfield-parts",
+			"upper-playfield-parts-drawing", "switch-locations-crane-area",
+		):
+			self.assertIn(f"excerpt-junkyard.{name}", excerpts)
 
 	def test_relationships_use_proven_causality_only(self) -> None:
 		relationships = {item["id"]: item for item in self.definition["relationships"]}
@@ -521,7 +559,9 @@ class JunkyardDefinitionTests(unittest.TestCase):
 
 			digest = hashlib.sha256(path.read_bytes()).hexdigest()
 			self.assertEqual(excerpt["sha256"], digest, excerpt["id"])
-			self.assertFalse(excerpt["reviewed"], excerpt["id"])
+			# Vision-worker transcriptions stay unreviewed until a curator checks them; the crane-page
+			# excerpts were read by the curator from the native render.
+			self.assertEqual(excerpt["method"] == "manual", excerpt["reviewed"], excerpt["id"])
 			if "image" in excerpt:
 				image_path = ROOT / excerpt["image"]
 				self.assertTrue(image_path.is_file(), excerpt["image"])

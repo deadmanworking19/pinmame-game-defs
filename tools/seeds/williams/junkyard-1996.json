@@ -763,7 +763,7 @@
       "label": "Top Left Crane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 1, return row 5.",
+        "notes": "Printed switch-matrix drive column 1, return row 5. A red standup target: part A-18530-4 is item 24 (Red Standup Target) of the Upper Playfield Parts list (2-30), whose drawing calls it out twice on the target arc around the top of the centre channel, and the Switch Locations drawing puts 15 at the top of that arc, left of the channel. Neither crane parts list (2-20, 2-29) includes it, so it is a playfield target, not a crane position switch; the retained table models it as a hit target (switch15_Hit pulses it).",
         "part_number": "A-18530-4",
         "switch_type": "microswitch"
       },
@@ -1346,7 +1346,7 @@
       "label": "Crane Down",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 2, return row 8.",
+        "notes": "Printed switch-matrix drive column 2, return row 8. The Micro Mini Switch (5647-12693-31, sub-item 1 m) of the Moving Crane Assembly A-21523 on the Wrecking Ball & Back Panel Assembly parts list, 2-20); the Switch Locations drawing runs its leader to the crane mount on the top rail. It reports the crane arm lowered: the retained script sets it when the arm finishes dropping and clears it when the arm reaches the top.",
         "part_number": "5647-12693-31",
         "switch_type": "microswitch"
       },
@@ -1784,7 +1784,7 @@
       "label": "Top Right Crane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 3, return row 8.",
+        "notes": "Printed switch-matrix drive column 3, return row 8. A red standup target: part A-18530-4 is item 24 (Red Standup Target) of the Upper Playfield Parts list (2-30), whose drawing calls it out twice on the target arc around the top of the centre channel, and the Switch Locations drawing puts 38 at the top of that arc, right of the channel. Neither crane parts list (2-20, 2-29) includes it, so it is a playfield target, not a crane position switch; the retained table models it as a hit target (switch38_Hit pulses it).",
         "part_number": "A-18530-4",
         "switch_type": "microswitch"
       },
@@ -1993,7 +1993,7 @@
       "label": "Past Crane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, and no inversion is needed. In the ROM's own T.1 SWITCH EDGES test (hash-pinned runs runtime.junkyard.jy-12.switch-edges, runtime.junkyard.jy-11.switch-edges, runtime.junkyard.jy-03.switch-edges) the top display line names PAST CRANE after public 44 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for RAMP EXIT (45, an ordinary switch) and PAST SPINNER (41, the same A-16908/A-16909 opto pair, normalized by the mask). The ROM therefore treats public 44 = 1 as active, and a recreation drives it as the known-working table does (switch44_Hit calls vpmTimer.PulseSw 44) and never inverts it. normally_closed is false: on WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the public level unchanged outside the inversion mask, so the matrix contact is closed exactly when the ROM reads the switch active and open when it is not actuated. The part identity fixes the opto construction, not the matrix contact's normal state; no retained source shows why this pair's contact rests open while 41-43's rest closed.",
+        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, and no inversion is needed. In the ROM's own T.1 SWITCH EDGES test (hash-pinned runs runtime.junkyard.jy-12.switch-edges, runtime.junkyard.jy-11.switch-edges, runtime.junkyard.jy-03.switch-edges) the top display line names PAST CRANE after public 44 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for RAMP EXIT (45, an ordinary switch) and PAST SPINNER (41, the same A-16908/A-16909 opto pair, normalized by the mask). The ROM therefore treats public 44 = 1 as active, and a recreation drives it as the known-working table does (switch44_Hit calls vpmTimer.PulseSw 44) and never inverts it. normally_closed is false: on WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the public level unchanged outside the inversion mask, so the matrix contact is closed exactly when the ROM reads the switch active and open when it is not actuated. The part identity fixes the opto construction, not the matrix contact's normal state; no retained source shows why this pair's contact rests open while 41-43's rest closed. The Switch Locations drawing runs its leader to a switch body on the lane at the top left, between the large round assembly and the target arc, and the retained table models it as a lane trigger (Switch44, on the CentreLane surface) before the CraneHole kickout. No retained source ties it to the crane arm, so it is not a crane position switch.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -2110,7 +2110,7 @@
       "label": "Car Target 1 (Left)",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 6.",
+        "notes": "Printed switch-matrix drive column 4, return row 6. One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of targets around the hanging wrecking ball that registers its swing; that drawing's wire labels give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. The retained table models the same arc: a hidden pendulum below the apron strikes walls SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the visible wrecking ball. Its placement is the car toy on that target (P_Car primitive).",
         "part_number": "SW-1A-210-1",
         "switch_type": "microswitch"
       },
@@ -2167,7 +2167,7 @@
       "label": "Car Target 2",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 7.",
+        "notes": "Printed switch-matrix drive column 4, return row 7. One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of targets around the hanging wrecking ball that registers its swing; that drawing's wire labels give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. The retained table models the same arc: a hidden pendulum below the apron strikes walls SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the visible wrecking ball. Its placement is the car toy on that target (P_Car primitive).",
         "part_number": "SW-1A-210-2",
         "switch_type": "microswitch"
       },
@@ -2224,7 +2224,7 @@
       "label": "Car Target 3",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 8.",
+        "notes": "Printed switch-matrix drive column 4, return row 8. One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of targets around the hanging wrecking ball that registers its swing; that drawing's wire labels give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. The retained table models the same arc: a hidden pendulum below the apron strikes walls SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the visible wrecking ball. Its placement is the car toy on that target (P_Car primitive).",
         "part_number": "SW-1A-210-3",
         "switch_type": "microswitch"
       },
@@ -2395,7 +2395,7 @@
       "label": "Car Target 4",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 3.",
+        "notes": "Printed switch-matrix drive column 5, return row 3. One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of targets around the hanging wrecking ball that registers its swing; that drawing's wire labels give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. The retained table models the same arc: a hidden pendulum below the apron strikes walls SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the visible wrecking ball. Its placement is the car toy on that target (P_Car primitive).",
         "part_number": "SW-1A-210-4",
         "switch_type": "microswitch"
       },
@@ -2451,7 +2451,7 @@
       "label": "Car Target 5 (Right)",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 4.",
+        "notes": "Printed switch-matrix drive column 5, return row 4. One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of targets around the hanging wrecking ball that registers its swing; that drawing's wire labels give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. The retained table models the same arc: a hidden pendulum below the apron strikes walls SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the visible wrecking ball. Its placement is the car toy on that target (P_Car primitive).",
         "part_number": "SW-1A-210-5",
         "switch_type": "microswitch"
       },
@@ -4868,49 +4868,85 @@
         "device.power-crane",
         "device.hold-crane"
       ],
-      "assembly_part_number": "A-21523",
-      "behavior": "Solenoid 3 (Power Crane) drives the crane arm that raises and swings the wrecking-ball head across the top of the playfield; solenoid 15 (Hold Crane) holds the mechanism against gravity. The retained script's SolPowerCrane/SolHoldCrane handlers steer the Wrecker ball along the crane track while switch 15 (Top Left Crane) and 44 (Past Crane) report the arm's positional limits and switch 28 (Crane Down) reports the lowered position.",
+      "assembly_part_number": "A-21523 / A-21247",
+      "behavior": "The Moving Crane Assembly A-21523 (Wrecking Ball & Back Panel Assembly parts list, 2-20) is a crane arm on an axle at the crane mount, lifted through a plunger by one A-20099 coil assembly, with the wrecking ball hanging from the arm on a cable assembly (A-21326). The solenoid table prints that coil part for both solenoid 3 (Power Crane, high power) and solenoid 15 (Hold Crane, low power). The retained script lifts the arm, and the wrecking ball with it, while solenoid 3 is on, keeps it up while solenoid 15 is on and lets it drop when both are off. Switch 28 (Crane Down), the assembly's micro mini switch, is closed while the arm is down and open while it is up. The wrecking ball swings freely when the game ball strikes it, and its swing is registered by the Wreck Ball Target Assembly A-21247 (2-29), an arc of five target switches around it wired as 46, 47, 48, 53 and 54; the retained table models the swing with a hidden pendulum that strikes walls SWCar1-SWCar5. The arm only lifts and drops: no switch reports a left or right position. Switches 15 and 38 (Top Left/Right Crane) are red standup targets beside the centre channel and 44 (Past Crane) is a lane switch at the top left; none of them is part of this mechanism.",
       "id": "mechanism.crane",
-      "kind": "motorized",
-      "label": "Crane mechanism with wrecking ball",
+      "kind": "toy",
+      "label": "Crane arm and wrecking ball",
       "positions": [
         {
-          "description": "Crane head at the left stop.",
-          "id": "left",
-          "label": "Top Left Crane position",
-          "sensors": [
-            "switch.matrix-15"
-          ]
-        },
-        {
-          "description": "Crane head past the right stop.",
-          "id": "right",
-          "label": "Past Crane position",
-          "sensors": [
-            "switch.matrix-44"
-          ]
-        },
-        {
-          "description": "Crane head lowered.",
+          "description": "Arm lowered and wrecking ball low; switch 28 closed.",
           "id": "down",
-          "label": "Crane Down position",
+          "label": "Arm down",
           "sensors": [
             "switch.matrix-28"
+          ]
+        },
+        {
+          "description": "Arm lifted by solenoid 3 and held by solenoid 15; switch 28 open.",
+          "id": "up",
+          "label": "Arm up",
+          "sensors": [
+            "switch.matrix-28"
+          ]
+        },
+        {
+          "description": "Target switch on the wrecking-ball arc.",
+          "id": "swing-46",
+          "label": "Wrecking ball against Car Target 1 (Left)",
+          "sensors": [
+            "switch.matrix-46"
+          ]
+        },
+        {
+          "description": "Target switch on the wrecking-ball arc.",
+          "id": "swing-47",
+          "label": "Wrecking ball against Car Target 2",
+          "sensors": [
+            "switch.matrix-47"
+          ]
+        },
+        {
+          "description": "Target switch on the wrecking-ball arc.",
+          "id": "swing-48",
+          "label": "Wrecking ball against Car Target 3",
+          "sensors": [
+            "switch.matrix-48"
+          ]
+        },
+        {
+          "description": "Target switch on the wrecking-ball arc.",
+          "id": "swing-53",
+          "label": "Wrecking ball against Car Target 4",
+          "sensors": [
+            "switch.matrix-53"
+          ]
+        },
+        {
+          "description": "Target switch on the wrecking-ball arc.",
+          "id": "swing-54",
+          "label": "Wrecking ball against Car Target 5 (Right)",
+          "sensors": [
+            "switch.matrix-54"
           ]
         }
       ],
       "provenance": {
         "source_refs": [
-          "vpx-script.junkyard-mfuegemann",
           "manual.williams.junkyard.1996",
+          "vpx-script.junkyard-mfuegemann",
+          "vpx-table.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
         ],
         "status": "validated"
       },
       "sensors": [
-        "switch.matrix-15",
         "switch.matrix-28",
-        "switch.matrix-44"
+        "switch.matrix-46",
+        "switch.matrix-47",
+        "switch.matrix-48",
+        "switch.matrix-53",
+        "switch.matrix-54"
       ]
     },
     {
@@ -5087,70 +5123,6 @@
       "sensors": [
         "switch.matrix-11",
         "switch.matrix-12"
-      ]
-    },
-    {
-      "actuators": [],
-      "assembly_part_number": "SW-1A-210",
-      "behavior": "Five standup targets (Car Target 1-5) sit at the top of the playfield above the crane track (SW-1A-210-1 through -5); they are hit targets, not a resettable drop bank.",
-      "id": "mechanism.car-targets",
-      "kind": "other",
-      "label": "Car drop-target bank",
-      "positions": [
-        {
-          "description": "First car target.",
-          "id": "car-1",
-          "label": "Car Target 1 (Left)",
-          "sensors": [
-            "switch.matrix-46"
-          ]
-        },
-        {
-          "description": "Second car target.",
-          "id": "car-2",
-          "label": "Car Target 2",
-          "sensors": [
-            "switch.matrix-47"
-          ]
-        },
-        {
-          "description": "Third car target.",
-          "id": "car-3",
-          "label": "Car Target 3",
-          "sensors": [
-            "switch.matrix-48"
-          ]
-        },
-        {
-          "description": "Fourth car target.",
-          "id": "car-4",
-          "label": "Car Target 4",
-          "sensors": [
-            "switch.matrix-53"
-          ]
-        },
-        {
-          "description": "Fifth car target.",
-          "id": "car-5",
-          "label": "Car Target 5 (Right)",
-          "sensors": [
-            "switch.matrix-54"
-          ]
-        }
-      ],
-      "provenance": {
-        "source_refs": [
-          "vpx-script.junkyard-mfuegemann",
-          "manual.williams.junkyard.1996"
-        ],
-        "status": "validated"
-      },
-      "sensors": [
-        "switch.matrix-46",
-        "switch.matrix-47",
-        "switch.matrix-48",
-        "switch.matrix-53",
-        "switch.matrix-54"
       ]
     },
     {
@@ -5533,7 +5505,7 @@
       "label": "Power Crane",
       "physical": {
         "assembly_part_number": "A-21523",
-        "notes": "Printed solenoid/flasher table entry 03 (High Power). Retained script callback/driver: SolPowerCrane (Wrecker ball chain/crane drive). Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object. Note the manual's Solenoid Locations drawing places the Power Crane callout top-right-of-center at the crane assembly; the retained table's CraneHole kicker sits at the far left, so this is a projection onto the crane mechanism rather than the drawn callout point.",
+        "notes": "Printed solenoid/flasher table entry 03 (High Power). Retained script callback/driver: SolPowerCrane (Wrecker ball chain/crane drive). Projected onto the crane arm's mount (Primitive PCraneArm, its stored position, 513.5/82.5 in table units; the arm mesh hangs off that pivot and the position is not a zeroed baked-mesh origin). The coil is the A-20099 Coil Assembly of the Moving Crane Assembly A-21523, which also carries the crane mount, arm and plunger (Wrecking Ball & Back Panel Assembly parts list, 2-20); the manual's Solenoid Locations drawing puts the Power Crane callout at that assembly on the top edge, right of center. The arm primitive is a render toy with no collision object, so this is a projection onto the assembly, not an observed coil position.",
         "part_number": "A-20099"
       },
       "provenance": {
@@ -5557,8 +5529,8 @@
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.100972,
-            "y": 0.068166
+            "x": 0.539391,
+            "y": 0.038179
           }
         ],
         "status": "validated"
@@ -12267,12 +12239,66 @@
           "reviewed": false,
           "sha256": "8216b87751a54358b91014bba29dc70b2404c4700aaa359a74ec5379ebf36f1e",
           "transcribed_by": "vision worker (sonnet) transcribed from the rendered page"
+        },
+        {
+          "id": "excerpt-junkyard.wrecking-ball-back-panel-parts",
+          "locator": "PDF page 96, printed 2-20, A-21385 Wrecking Ball & Back Panel Assembly parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.junkyard.1996/wrecking-ball-back-panel-parts.md",
+          "reviewed": true,
+          "sha256": "5021574af638a6f4b55b0c29377036371cd885549a8b901f002af8ec166850d5",
+          "transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render"
+        },
+        {
+          "id": "excerpt-junkyard.wreck-ball-target-assembly",
+          "image": "evidence/excerpts/williams.junkyard.1996/wreck-ball-target-assembly.webp",
+          "image_derivation": "Junk_Yard_Operations_Manual.pdf page 105, crop box 0.08,0.13,0.89,0.57, scanned page rendered at its native resolution (embedded image xref 952, 1696px across 8.48in), rendered at 200 dpi, grayscale, 1375x968 WebP quality 80",
+          "image_sha256": "929f4a24b7b719d7d98f218a2afe8fa7bed805ac40ff0ffaa59d59352cef3436",
+          "locator": "PDF page 105, printed 2-29, A-21247 Wreck Ball Target Assembly drawing and parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.junkyard.1996/wreck-ball-target-assembly.md",
+          "reviewed": true,
+          "sha256": "91a6031b588d569a7bfbaf0746c4f948769e6caeb04d01adfeab4d747d8bbae3",
+          "transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render"
+        },
+        {
+          "id": "excerpt-junkyard.upper-playfield-parts",
+          "locator": "PDF page 106, printed 2-30, Upper Playfield Parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts.md",
+          "reviewed": true,
+          "sha256": "e1d3d56792778fd8282767275b91f8a77c8e8e70d3ba096cc8391e6274f44046",
+          "transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render"
+        },
+        {
+          "id": "excerpt-junkyard.upper-playfield-parts-drawing",
+          "image": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts-drawing.webp",
+          "image_derivation": "Junk_Yard_Operations_Manual.pdf page 107, crop box 0.22,0.1,0.79,0.355, scanned page rendered at its native resolution (embedded image xref 970, 1696px across 8.48in), rendered at 200 dpi, grayscale, 967x561 WebP quality 80",
+          "image_sha256": "6c96f42926077508d03f255878bdf627e194d43abe3613b31d0857327d3ad0ec",
+          "locator": "PDF page 107, printed 2-31, Upper Playfield Parts drawing, top of playfield",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts-drawing.md",
+          "reviewed": true,
+          "sha256": "189b7f72b93ae3cab3f29bac58ea2f969ed101d3d4b6684417b7984c3fc7717e",
+          "transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render"
+        },
+        {
+          "id": "excerpt-junkyard.switch-locations-crane-area",
+          "image": "evidence/excerpts/williams.junkyard.1996/switch-locations-crane-area.webp",
+          "image_derivation": "Junk_Yard_Operations_Manual.pdf page 111, crop box 0.47,0.105,0.92,0.3, scanned page rendered at its native resolution (embedded image xref 1006, 1696px across 8.48in), rendered at 200 dpi, grayscale, 764x429 WebP quality 80",
+          "image_sha256": "d56e1f1e668dc5e442971a527255ba345f8b7bb160114d0ad9db37803112c2b5",
+          "locator": "PDF page 111, printed 2-35, Switch Locations drawing, top of playfield",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.junkyard.1996/switch-locations-crane-area.md",
+          "reviewed": true,
+          "sha256": "a9b817530727d83e6ca3750e715bccff253214ce566451d78c2d2bcbd437365f",
+          "transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render"
         }
       ],
       "id": "manual.williams.junkyard.1996",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "146-page Williams Junk Yard Operations Manual (16-50052-101, JANUARY 1997 FINAL), a scanned document with a usable OCR text layer. Printed pages 2-34 through 2-39 carry the switch matrix, switch locations, lamp matrix, lamp locations, solenoid/flasher table, and solenoid/flashlamp locations pages; the loose front-matter page (PDF page 2) duplicates the Solenoid/Flasher Table with the DIP switch chart and EPROM jumper settings; Section 3 repeats the tables at 3-2 through 3-5. Section 2-40 through 2-43 carry the general illumination and flipper circuit tables.",
+      "locator": "146-page Williams Junk Yard Operations Manual (16-50052-101, JANUARY 1997 FINAL), a scanned document with a usable OCR text layer. Printed pages 2-34 through 2-39 carry the switch matrix, switch locations, lamp matrix, lamp locations, solenoid/flasher table, and solenoid/flashlamp locations pages; the loose front-matter page (PDF page 2) duplicates the Solenoid/Flasher Table with the DIP switch chart and EPROM jumper settings; Section 3 repeats the tables at 3-2 through 3-5. Section 2-40 through 2-43 carry the general illumination and flipper circuit tables. Printed pages 2-20 (Wrecking Ball & Back Panel Assembly), 2-29 (Wreck Ball Target Assembly) and 2-30/2-31 (Upper Playfield Parts list and drawing) carry the crane and target assemblies.",
       "original_filename": "Williams_Junk_Yard.PDF",
       "rights": "NOASSERTION",
       "sha256": "08819a08990c61070c4a3a99a4d5f00d9d082b6d00477ffaf9b0a58fddce3fe1",

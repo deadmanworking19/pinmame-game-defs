@@ -117,6 +117,48 @@ OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44}
 # public 44 = 1 as active, so the unnormalized address is correct and its matrix contact rests open.
 NORMALIZED_OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43}
 
+# What each switch around the crane is, from the manual's crane parts lists (2-20, 2-29), the Upper
+# Playfield Parts list and drawing (2-30, 2-31) and the Switch Locations drawing (2-35). Only 28 and the
+# five wrecking-ball targets belong to the crane mechanism.
+WRECKING_BALL_TARGETS = (46, 47, 48, 53, 54)
+CRANE_AREA_NOTES = {
+	28: (
+		"The Micro Mini Switch (5647-12693-31, sub-item 1 m) of the Moving Crane Assembly A-21523 on the "
+		"Wrecking Ball & Back Panel Assembly parts list, 2-20); the Switch Locations drawing runs its leader "
+		"to the crane mount on the top rail. It reports the crane arm lowered: the retained script sets it "
+		"when the arm finishes dropping and clears it when the arm reaches the top."
+	),
+	15: (
+		"A red standup target: part A-18530-4 is item 24 (Red Standup Target) of the Upper Playfield Parts "
+		"list (2-30), whose drawing calls it out twice on the target arc around the top of the centre "
+		"channel, and the Switch Locations drawing puts 15 at the top of that arc, left of the channel. "
+		"Neither crane parts list (2-20, 2-29) includes it, so it is a playfield target, not a crane "
+		"position switch; the retained table models it as a hit target (switch15_Hit pulses it)."
+	),
+	38: (
+		"A red standup target: part A-18530-4 is item 24 (Red Standup Target) of the Upper Playfield Parts "
+		"list (2-30), whose drawing calls it out twice on the target arc around the top of the centre "
+		"channel, and the Switch Locations drawing puts 38 at the top of that arc, right of the channel. "
+		"Neither crane parts list (2-20, 2-29) includes it, so it is a playfield target, not a crane "
+		"position switch; the retained table models it as a hit target (switch38_Hit pulses it)."
+	),
+	44: (
+		"The Switch Locations drawing runs its leader to a switch body on the lane at the top left, between "
+		"the large round assembly and the target arc, and the retained table models it as a lane trigger "
+		"(Switch44, on the CentreLane surface) before the CraneHole kickout. No retained source ties it to "
+		"the crane arm, so it is not a crane position switch."
+	),
+}
+for _address in WRECKING_BALL_TARGETS:
+	CRANE_AREA_NOTES[_address] = (
+		"One of the five target switches of the Wreck Ball Target Assembly A-21247 (2-29), an arc of "
+		"targets around the hanging wrecking ball that registers its swing; that drawing's wire labels "
+		"give exactly 46-48 and 53-54, the five switches the Switch Locations page footnotes ABOVE CRANE. "
+		"The retained table models the same arc: a hidden pendulum below the apron strikes walls "
+		"SWCar1-SWCar5, which pulse 46, 47, 48, 53 and 54, and the script copies its swing onto the "
+		"visible wrecking ball. Its placement is the car toy on that target (P_Car primitive)."
+	)
+
 # Pulsed switches from the retained known-working script (vpmTimer.PulseSw / Controller.Switch setters).
 PULSED_SWITCHES = {12, 16, 17, 18, 26, 27, 28, 41, 42, 44, 45, 46, 47, 48, 51, 52, 61, 62, 63, 64, 65, 66, 72, 73, 76, 77, 78}
 
@@ -405,7 +447,7 @@ UNRESOLVED_SWITCHES = {28, 42}
 
 SOLENOID_POSITIONS = {
 	1: [(0.955817, 0.956156)], 2: [(0.080396, 0.466650)],
-	3: [(0.100972, 0.068166)], 5: [(0.635057, 0.366176)],
+	3: [(0.539391, 0.038179)], 5: [(0.635057, 0.366176)],
 	6: [(0.784861, 0.124993)], 9: [(0.869354, 0.866385)],
 	10: [(0.226610, 0.725648)], 11: [(0.686888, 0.728451)],
 	16: [(0.927521, 0.277521)],
@@ -436,11 +478,13 @@ SOLENOID_PROJECTIONS = {
 	    "script's SolFlash24 handler re-textures.",
 	26: "Placed at the dog/scoop flasher primitive (P_DogScoopFlasher, table object center), which the "
 	    "script's SolFlash26 handler re-textures as the red dome flasher at the scoop.",
-	3: "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane "
-	    "arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object. Note the "
-	    "manual's Solenoid Locations drawing places the Power Crane callout top-right-of-center at the crane "
-	    "assembly; the retained table's CraneHole kicker sits at the far left, so this is a projection onto the "
-	    "crane mechanism rather than the drawn callout point.",
+	3: "Projected onto the crane arm's mount (Primitive PCraneArm, its stored position, 513.5/82.5 in table "
+	    "units; the arm mesh hangs off that pivot and the position is not a zeroed baked-mesh origin). The "
+	    "coil is the A-20099 Coil Assembly of the Moving Crane Assembly A-21523, which also carries the crane "
+	    "mount, arm and plunger (Wrecking Ball & Back Panel Assembly parts list, 2-20); the manual's Solenoid "
+	    "Locations drawing puts the Power Crane callout at that assembly on the top edge, right of center. The "
+	    "arm primitive is a render toy with no collision object, so this is a projection onto the assembly, not "
+	    "an observed coil position.",
 	16: "Projected onto the dog-house spike object (Primitive Spike, table object center): solenoid 16 (Move "
 	    "Dog) drives the spike arm that the retained script's SpikeTimer animates.",
 }
@@ -635,7 +679,9 @@ def source_records() -> list[dict[str, Any]]:
 				"switch locations, lamp matrix, lamp locations, solenoid/flasher table, and solenoid/flashlamp "
 				"locations pages; the loose front-matter page (PDF page 2) duplicates the Solenoid/Flasher Table "
 				"with the DIP switch chart and EPROM jumper settings; Section 3 repeats the tables at 3-2 through "
-				"3-5. Section 2-40 through 2-43 carry the general illumination and flipper circuit tables."
+				"3-5. Section 2-40 through 2-43 carry the general illumination and flipper circuit tables. Printed "
+				"pages 2-20 (Wrecking Ball & Back Panel Assembly), 2-29 (Wreck Ball Target Assembly) and 2-30/2-31 "
+				"(Upper Playfield Parts list and drawing) carry the crane and target assemblies."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.",
@@ -694,6 +740,72 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "model",
 					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
 					"reviewed": False,
+				},
+				{
+					"id": "excerpt-junkyard.wrecking-ball-back-panel-parts",
+					"locator": "PDF page 96, printed 2-20, A-21385 Wrecking Ball & Back Panel Assembly parts list",
+					"path": "evidence/excerpts/williams.junkyard.1996/wrecking-ball-back-panel-parts.md",
+					"sha256": "5021574af638a6f4b55b0c29377036371cd885549a8b901f002af8ec166850d5",
+					"method": "manual",
+					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt-junkyard.wreck-ball-target-assembly",
+					"locator": "PDF page 105, printed 2-29, A-21247 Wreck Ball Target Assembly drawing and parts list",
+					"path": "evidence/excerpts/williams.junkyard.1996/wreck-ball-target-assembly.md",
+					"sha256": "91a6031b588d569a7bfbaf0746c4f948769e6caeb04d01adfeab4d747d8bbae3",
+					"image": "evidence/excerpts/williams.junkyard.1996/wreck-ball-target-assembly.webp",
+					"image_sha256": "929f4a24b7b719d7d98f218a2afe8fa7bed805ac40ff0ffaa59d59352cef3436",
+					"image_derivation": (
+						"Junk_Yard_Operations_Manual.pdf page 105, crop box 0.08,0.13,0.89,0.57, scanned page rendered "
+						"at its native resolution (embedded image xref 952, 1696px across 8.48in), rendered at 200 dpi, "
+						"grayscale, 1375x968 WebP quality 80"
+					),
+					"method": "manual",
+					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt-junkyard.upper-playfield-parts",
+					"locator": "PDF page 106, printed 2-30, Upper Playfield Parts list",
+					"path": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts.md",
+					"sha256": "e1d3d56792778fd8282767275b91f8a77c8e8e70d3ba096cc8391e6274f44046",
+					"method": "manual",
+					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt-junkyard.upper-playfield-parts-drawing",
+					"locator": "PDF page 107, printed 2-31, Upper Playfield Parts drawing, top of playfield",
+					"path": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts-drawing.md",
+					"sha256": "189b7f72b93ae3cab3f29bac58ea2f969ed101d3d4b6684417b7984c3fc7717e",
+					"image": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts-drawing.webp",
+					"image_sha256": "6c96f42926077508d03f255878bdf627e194d43abe3613b31d0857327d3ad0ec",
+					"image_derivation": (
+						"Junk_Yard_Operations_Manual.pdf page 107, crop box 0.22,0.1,0.79,0.355, scanned page rendered "
+						"at its native resolution (embedded image xref 970, 1696px across 8.48in), rendered at 200 dpi, "
+						"grayscale, 967x561 WebP quality 80"
+					),
+					"method": "manual",
+					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt-junkyard.switch-locations-crane-area",
+					"locator": "PDF page 111, printed 2-35, Switch Locations drawing, top of playfield",
+					"path": "evidence/excerpts/williams.junkyard.1996/switch-locations-crane-area.md",
+					"sha256": "a9b817530727d83e6ca3750e715bccff253214ce566451d78c2d2bcbd437365f",
+					"image": "evidence/excerpts/williams.junkyard.1996/switch-locations-crane-area.webp",
+					"image_sha256": "d56e1f1e668dc5e442971a527255ba345f8b7bb160114d0ad9db37803112c2b5",
+					"image_derivation": (
+						"Junk_Yard_Operations_Manual.pdf page 111, crop box 0.47,0.105,0.92,0.3, scanned page rendered "
+						"at its native resolution (embedded image xref 1006, 1696px across 8.48in), rendered at 200 dpi, "
+						"grayscale, 764x429 WebP quality 80"
+					),
+					"method": "manual",
+					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"reviewed": True,
 				},
 			],
 		},
@@ -866,6 +978,8 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += " Physical part 5643-15190-00 is a permanently closed link used to prove the matrix is connected."
 			if address == 22:
 				notes += " Closed while the coin door is closed."
+			if address in CRANE_AREA_NOTES:
+				notes += " " + CRANE_AREA_NOTES[address]
 			physical["notes"] = notes
 
 			extra: dict[str, Any] = {
@@ -1405,22 +1519,34 @@ def mechanisms() -> list[dict[str, Any]]:
 		),
 		mechanism(
 			"mechanism.crane",
-			"Crane mechanism with wrecking ball",
-			"motorized",
+			"Crane arm and wrecking ball",
+			"toy",
 			[output_id("Power Crane"), output_id("Hold Crane")],
-			[sw(15), sw(28), sw(44)],
-			"Solenoid 3 (Power Crane) drives the crane arm that raises and swings the wrecking-ball head across "
-			"the top of the playfield; solenoid 15 (Hold Crane) holds the mechanism against gravity. The "
-			"retained script's SolPowerCrane/SolHoldCrane handlers steer the Wrecker ball along the crane track "
-			"while switch 15 (Top Left Crane) and 44 (Past Crane) report the arm's positional limits and switch "
-			"28 (Crane Down) reports the lowered position.",
+			[sw(28)] + [sw(address) for address in WRECKING_BALL_TARGETS],
+			"The Moving Crane Assembly A-21523 (Wrecking Ball & Back Panel Assembly parts list, 2-20) is a crane "
+			"arm on an axle at the crane mount, lifted through a plunger by one A-20099 coil assembly, with the "
+			"wrecking ball hanging from the arm on a cable assembly (A-21326). The solenoid table prints that "
+			"coil part for both solenoid 3 (Power Crane, high power) and solenoid 15 (Hold Crane, low power). "
+			"The retained script lifts the arm, and the wrecking ball with it, while solenoid 3 is on, keeps it "
+			"up while solenoid 15 is on and lets it drop when both are off. Switch 28 (Crane Down), the "
+			"assembly's micro mini switch, is closed while the arm is down and open while it is up. The "
+			"wrecking ball swings freely when the game ball strikes it, and its swing is registered by the "
+			"Wreck Ball Target Assembly A-21247 (2-29), an arc of five target switches around it wired as 46, "
+			"47, 48, 53 and 54; the retained table models the swing with a hidden pendulum that strikes walls "
+			"SWCar1-SWCar5. The arm only lifts and drops: no switch reports a left or right position. Switches "
+			"15 and 38 (Top Left/Right Crane) are red standup targets beside the centre channel and 44 (Past "
+			"Crane) is a lane switch at the top left; none of them is part of this mechanism.",
 			[
-				("left", "Top Left Crane position", [sw(15)], "Crane head at the left stop."),
-				("right", "Past Crane position", [sw(44)], "Crane head past the right stop."),
-				("down", "Crane Down position", [sw(28)], "Crane head lowered."),
+				("down", "Arm down", [sw(28)], "Arm lowered and wrecking ball low; switch 28 closed."),
+				("up", "Arm up", [sw(28)], "Arm lifted by solenoid 3 and held by solenoid 15; switch 28 open."),
+				("swing-46", "Wrecking ball against Car Target 1 (Left)", [sw(46)], "Target switch on the wrecking-ball arc."),
+				("swing-47", "Wrecking ball against Car Target 2", [sw(47)], "Target switch on the wrecking-ball arc."),
+				("swing-48", "Wrecking ball against Car Target 3", [sw(48)], "Target switch on the wrecking-ball arc."),
+				("swing-53", "Wrecking ball against Car Target 4", [sw(53)], "Target switch on the wrecking-ball arc."),
+				("swing-54", "Wrecking ball against Car Target 5 (Right)", [sw(54)], "Target switch on the wrecking-ball arc."),
 			],
-			VPX_SCRIPT_SOURCE, MANUAL_SOURCE, CORE_SOURCE,
-			assembly_part_number="A-21523",
+			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE, CORE_SOURCE,
+			assembly_part_number="A-21523 / A-21247",
 		),
 		mechanism(
 			"mechanism.refrigerator-popper",
@@ -1498,24 +1624,6 @@ def mechanisms() -> list[dict[str, Any]]:
 			],
 			VPX_SCRIPT_SOURCE, MANUAL_SOURCE,
 			assembly_part_number="A-18530-6",
-		),
-		mechanism(
-			"mechanism.car-targets",
-			"Car drop-target bank",
-			"other",
-			[],
-			[sw(46), sw(47), sw(48), sw(53), sw(54)],
-			"Five standup targets (Car Target 1-5) sit at the top of the playfield above the crane track "
-			"(SW-1A-210-1 through -5); they are hit targets, not a resettable drop bank.",
-			[
-				("car-1", "Car Target 1 (Left)", [sw(46)], "First car target."),
-				("car-2", "Car Target 2", [sw(47)], "Second car target."),
-				("car-3", "Car Target 3", [sw(48)], "Third car target."),
-				("car-4", "Car Target 4", [sw(53)], "Fourth car target."),
-				("car-5", "Car Target 5 (Right)", [sw(54)], "Fifth car target."),
-			],
-			VPX_SCRIPT_SOURCE, MANUAL_SOURCE,
-			assembly_part_number="SW-1A-210",
 		),
 		mechanism(
 			"mechanism.three-banks",

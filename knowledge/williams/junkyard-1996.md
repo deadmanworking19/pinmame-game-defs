@@ -117,9 +117,11 @@ this address was withdrawn.
 
 The same runs show one incidental difference between ROM revisions. The
 production ROMs (`jy_11`, `jy_12`) print GRN-WHT as the column-4 wire colour
-in the T.1 display, while the `jy_03` prototype prints GRN-YEL. GRN-YEL matches
-the Green-Yellow column-4 drive wire in the (not yet visually reviewed)
-switch-matrix transcription. The definition keeps the manual's colour.
+in the T.1 display, while the `jy_03` prototype prints GRN-YEL. The manual
+prints both. The (not yet visually reviewed) switch-matrix transcription gives
+column 4 as Green-Yellow, while the Wreck Ball Target Assembly drawing (2-29)
+labels the column wire of car targets 46-48 GRN-WHT. The definition keeps the
+switch-matrix page's colour.
 
 ## Mechanisms
 
@@ -129,10 +131,35 @@ switch-matrix transcription. The definition keeps the manual's colour.
   `SolTrough` event.
 - **Shooter lane and auto plunger** (A-21022): the `Autoplunger` handler pulls
   back and fires `Auto_Plunger` only when switch 18 is active.
-- **Crane with wrecking ball** (A-21523): solenoid 3 (Power Crane) drives the
-  arm, solenoid 15 (Hold Crane) holds it; switches 15 (Top Left Crane), 38
-  (Top Right Crane), 44 (Past Crane), and 28 (Crane Down) report the head's
-  positional limits.
+- **Crane arm and wrecking ball** (A-21523 with A-21247): the Moving Crane
+  Assembly (2-20) is an arm on an axle at the crane mount, lifted through a
+  plunger by one A-20099 coil assembly, the coil part the solenoid table prints
+  for both solenoid 3 (Power Crane, high power) and solenoid 15 (Hold Crane, low
+  power). The wrecking ball hangs from the arm on a cable assembly (A-21326).
+  The retained script lifts the arm, and the ball with it, while solenoid 3 is
+  on, holds it up while solenoid 15 is on, and drops it when both are off.
+  Switch 28 (Crane Down) is the assembly's micro mini switch
+  (5647-12693-31): closed with the arm down, open with it up.
+  - The arm only lifts and drops. No switch reports a left or right position.
+  - The wrecking ball swings freely when the game ball hits it. The swing is
+    registered by the Wreck Ball Target Assembly (2-29), an arc of five target
+    switches around the ball. Its wire labels are exactly car targets 46, 47,
+    48, 53 and 54, the five switches the Switch Locations page footnotes ABOVE
+    CRANE. The car toys sit on those targets.
+  - The retained table models the arc with a hidden pendulum below the apron
+    that strikes walls `SWCar1`-`SWCar5`. The script copies the pendulum's
+    swing onto the visible ball.
+  - Switches 15 (Top Left Crane) and 38 (Top Right Crane) are not crane
+    sensors. Their part, A-18530-4, is the Red Standup Target of the Upper
+    Playfield Parts list (2-30, item 24, called out twice on its drawing).
+    The Switch Locations drawing puts them at the top of the target arc,
+    either side of the centre channel.
+  - Switch 44 (Past Crane) is not a crane sensor either. The Switch Locations
+    drawing runs its leader to a switch on the top-left lane, and the
+    retained table models it as a lane trigger before the `CraneHole`
+    kickout.
+  - The Power Crane coil is placed at the crane arm's mount (`PCraneArm`),
+    where the solenoid-location drawing puts it.
 - **Refrigerator popper** (A-21216): `bsFridgePopper` uses switch 37 as the
   entry and switches 36/43 as the internal ball-stack array; solenoid 2 ejects.
 - **Bus ramp diverter** (A-21409-1): solenoid 6 rotates a diverter flap
@@ -143,8 +170,9 @@ switch-matrix transcription. The definition keeps the manual's colour.
 - **Fork-lift scoop** (A-21220): solenoid 5 (Scoop Down) and solenoid 21
   (Scoop Up) lower/raise the fork arms; switches 73 (Scoop Made) and 72 (state)
   report the scoop.
-- **Car targets** (SW-1A-210): five **standup** targets at the top of the
-  playfield (46-48, 53-54); there is no resettable drop mechanism.
+- **Car targets** (SW-1A-210): 46-48 and 53-54 are the wrecking-ball target
+  arc described under the crane above. They are struck by the swinging
+  wrecking ball, and there is no resettable drop mechanism.
 - **Three-bank target clusters** (A-21349-1 / A-21351): four clusters of three
   **standup** targets (56-58, 61-63, 64-66, 76-78); no bank is solenoid-reset.
 - **Slingshots** (B-9362-R-3): left (solenoid 10, switch 51) and right
