@@ -146,7 +146,13 @@ Exploratory LibPinMAME runs (pinned library 3.7.0, SHA-256 `deb2c99f…`) of `ea
 - stepping through every Id/Au/Ad status item wraps back to Id without reaching the diagnostic
   tests.
 
-Black Knight 2000, Police Force, Jokerz and Whirlwind behave the same way in this harness, so this
-is a harness/platform limitation, not an Elvira fact. The runs are retained under the working root
-as diagnostics and are not cited as evidence. The special-solenoid mapping above comes from static
+Black Knight 2000, Police Force, Jokerz and Whirlwind behave the same way in this harness. The stop
+is the ROM waiting on its factory adjustments, not a harness limit: a fresh System 11B ROM leaves it
+through its last adjustment (the Earthshaker recipe in the ledger, run on `eatpm_l4` too), and on
+2026-10-01 an `eatpm_l4` booted from the NVRAM a first 30 s run had written came straight up in attract
+mode and accepted coins and Credit. The early runs are retained under the working root as diagnostics
+and are not cited as evidence. A first flip-up probe from such NVRAM, kept as a diagnostic under the
+working root's `review-artifacts/elvira-and-the-party-monsters-1989/harness/flip-up-probe-2026-10-01/`,
+saw the reset coil (22) fire only at game start, whether 53/54 were pulsed or held or 55/56 were held for 10 s; deciding the switch roles
+needs a run that completes both targets and collects the award. The special-solenoid mapping above comes from static
 source analysis, which settles it without a trace.

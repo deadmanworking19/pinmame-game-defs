@@ -1543,9 +1543,12 @@ def conflicts() -> list[dict[str, Any]]:
 				"known-working script instead holds 53/54 closed from the hit until solenoid 22 fires and only "
 				"pulses 55/56 once; the pinned corpus v1.03 script is the same lineage. The table plays, but the "
 				"ROM may tolerate either pattern. Resolution path: the ROM's Switch Levels test (test 06) on a real "
-				"machine with a target flipped shows which address stays closed, or a gameplay harness trace once "
-				"the libpinmame System 11B boot stall is resolved, or static analysis of the L-4 game ROMs' switch "
-				"handlers."
+				"machine with a target flipped shows which address stays closed, or a gameplay harness trace that "
+				"completes both targets and collects the award at the eject hole while watching when the ROM fires "
+				"22, or static analysis of the L-4 game ROMs' switch handlers. The System 11B boot stop that once "
+				"blocked the harness route is lifted (see the runtime-harness notes); a first 2026-10-01 probe from "
+				"initialized NVRAM saw 22 fire only at game start, whether 53/54 were pulsed or held or 55/56 held "
+				"for 10 s, which does not decide the roles."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORPUS_SCRIPT_SOURCE],
 		},
