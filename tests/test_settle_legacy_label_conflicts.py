@@ -66,7 +66,9 @@ ALPHA_NAMES = {
 	("runtime.special-force.specforc.solenoid-test", 19): ("FLIPPER", "QO7 J6-8-9"),
 }
 BTC = "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play"
+SPECTRUM = "runtime.spectrum.spectru4.flipper-buttons-and-saucer-7"
 BTC_TILT = {"tilt bob 15 #1": ([], None, True), "tilt bob 15 #2": ([19], None, False)}
+SPECTRUM_TILT = {"tilt bob 15 #1": ([19], None, False)}
 # Settlements read from gameplay: for each raw step, the solenoids that change in it, the score change it causes
 # (None: not checked), and whether the flipper-enable relay 19 is raised after it. Controls are steps of other inputs.
 PLAY = {
@@ -87,6 +89,17 @@ PLAY = {
 		"ball 1: public 16 pulsed": ([], 3000, True),
 		"ball 2: public 16 held": ([], 3000, True),
 		**BTC_TILT,
+	},
+	(SPECTRUM, 2): {
+		"public 2 to 1 with the ball on the saucer": ([], 0, True),
+		"public 2 back to 0": ([], 0, True),
+		"public 1 to 1 with the ball on the saucer": ([5], 0, True),
+		"public 2 held at 1 in play": ([], 0, True),
+		**SPECTRUM_TILT,
+	},
+	(SPECTRUM, 7): {
+		"public 7 closed in play": ([1], 10000, True),
+		**SPECTRUM_TILT,
 	},
 }
 # Settlements read from a gameplay timeline: each raw step in which the address changes, and its states there, in order.

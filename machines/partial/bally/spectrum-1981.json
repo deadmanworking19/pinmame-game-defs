@@ -1,24 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Left Flipper Button'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, which would also show whether the left flipper button is given a matrix address on this machine at all, or a LibPinMAME gameplay-harness trace against a legal spectrum ROM holding public switch 2 during play to see whether the ROM registers a tilt rather than reporting a playfield device -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
-      "id": "conflict.pinmame-input-switch-2-none",
-      "path": "binding:pinmame.input.switch/2/None",
-      "source_refs": [
-        "legacy.game.spectrum",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Top Saucer Kicker'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
-      "id": "conflict.pinmame-input-switch-7-none",
-      "path": "binding:pinmame.input.switch/7/None",
-      "source_refs": [
-        "legacy.game.spectrum",
-        "legacy.platform.bally"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.bally"
@@ -46,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -224,25 +204,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "002"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_ball_roll_tilt"
         }
       ],
       "binding": {
         "device": 2,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.ball-roll-tilt",
+      "id": "switch.left-flipper-button",
       "kind": "switch",
-      "label": "Ball Roll Tilt",
+      "label": "Left Flipper Button",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game file's 'Left Flipper Button'. The known-working VPW table writes public 2 from the left flipper key and public 1 from the right one. In a spectru4 gameplay run raising public 1 kicks the drain-saucer ball into play while raising public 2 kicks nothing, and holding 2 at 1 for 3 s in play leaves public 19, the flipper-enable relay, raised, while one tilt-bob (15) closure drops it. The platform alias is dropped. The run does not settle the button's polarity: the ROM launches when public 1 rises, and the table writes 1 and 2 low on key down and high on key up."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.spectrum",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.spectrum.spectru4.flipper-buttons-and-saucer-7",
+          "vpx-script.spectrum-vpw-1-0-1"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -302,25 +283,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "007"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_tilt"
         }
       ],
       "binding": {
         "device": 7,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.tilt",
+      "id": "switch.top-saucer-kicker",
       "kind": "switch",
-      "label": "Tilt",
+      "label": "Top Saucer Kicker",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Top Saucer Kicker'. The known-working VPW table writes public 7 from the top kicker sw7, which its solenoid 1 and 2 callbacks kick out. In a spectru4 gameplay run closing public 7 fires the top kicker (1) and scores 10,000, and public 19 stays raised. The platform alias is dropped: the run's tilt bob is public 15, as the table's vpmNudge.TiltSwitch is."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.spectrum",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.spectrum.spectru4.flipper-buttons-and-saucer-7",
+          "vpx-script.spectrum-vpw-1-0-1"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -2016,6 +1998,26 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.spectrum.spectru4.flipper-buttons-and-saucer-7",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of spectru4 from empty NVRAM (scenario tools/harness-scenarios/by35/spectru4-flipper-buttons-and-saucer-7.json) that starts a game. With the drain saucer switch 8 closed, raising public 2 does nothing, and raising public 1 kicks the saucer (5) 0.1 s later. Closing public 7 fires the top kicker (1) and scores 10,000. Public 19 stays raised while public 2 is held at 1 and drops when the tilt bob (15) closes.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by35/spectrum-spectru4-flipper-buttons-and-saucer-7.json"
+    },
+    {
+      "attribution": "VPW (Visual Pinball Workshop) table authors; pinned copy in sverrewl/vpxtable_scripts",
+      "id": "vpx-script.spectrum-vpw-1-0-1",
+      "kind": "vpx_script",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Line 58 runs cGameName spectru4; line 98 sets HandleKeyboard=0 and line 114 vpmNudge.TiltSwitch = 15. Lines 345-346 write public 1 False for the right flipper key and public 2 False for the left on KeyDown, and lines 362-363 write them True on KeyUp. Lines 538-548 write public 7 from the top kicker sw7, which the top-kicker callbacks on solenoids 1 and 2 (lines 372-373) kick out. Line 385 binds SolCallback(19) to vpmNudge.SolGameOn.",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "a75ff1364624bd79469b547591b9448751a9e86c0d66854acfb47e474220e583",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Spectrum%20%28Bally%201981%29%20VPW%20v1.0.1.vbs"
     }
   ]
 }

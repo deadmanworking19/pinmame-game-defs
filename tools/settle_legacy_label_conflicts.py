@@ -201,6 +201,37 @@ BEAT_THE_CLOCK_VPW = {
 	"known_working": True,
 }
 
+SPECTRUM_IN_PLAY = {
+	"id": "runtime.spectrum.spectru4.flipper-buttons-and-saucer-7",
+	"uri": "internal:evidence/runtime/by35/spectrum-spectru4-flipper-buttons-and-saucer-7.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of spectru4 from empty NVRAM (scenario "
+		"tools/harness-scenarios/by35/spectru4-flipper-buttons-and-saucer-7.json) that starts a game. With the drain "
+		"saucer switch 8 closed, raising public 2 does nothing, and raising public 1 kicks the saucer (5) 0.1 s later. "
+		"Closing public 7 fires the top kicker (1) and scores 10,000. Public 19 stays raised while public 2 is held at "
+		"1 and drops when the tilt bob (15) closes."
+	),
+}
+SPECTRUM_VPW = {
+	"id": "vpx-script.spectrum-vpw-1-0-1",
+	"kind": "vpx_script",
+	"uri": (
+		"https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/"
+		"Spectrum%20%28Bally%201981%29%20VPW%20v1.0.1.vbs"
+	),
+	"revision": VPXTABLE_SCRIPTS_REVISION,
+	"sha256": "a75ff1364624bd79469b547591b9448751a9e86c0d66854acfb47e474220e583",
+	"locator": (
+		"Line 58 runs cGameName spectru4; line 98 sets HandleKeyboard=0 and line 114 vpmNudge.TiltSwitch = 15. Lines "
+		"345-346 write public 1 False for the right flipper key and public 2 False for the left on KeyDown, and lines "
+		"362-363 write them True on KeyUp. Lines 538-548 write public 7 from the top kicker sw7, which the top-kicker "
+		"callbacks on solenoids 1 and 2 (lines 372-373) kick out. Line 385 binds SolCallback(19) to vpmNudge.SolGameOn."
+	),
+	"license": "NOASSERTION",
+	"attribution": VPW_ATTRIBUTION,
+	"known_working": True,
+}
+
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
 		"path": "machines/partial/bally/black-rose-1992.json",
@@ -597,6 +628,47 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"gameplay run a pulse and a 3 s hold of public 16 each score 3,000 and the game continues with public 19 raised, "
 			"so the ROM does not read it as a slam. by6803 leaves public 16 an ordinary matrix switch and writes Slam Tilt "
 			"to public 14."
+		),
+	},
+	{
+		"path": "machines/partial/bally/spectrum-1981.json",
+		"machine_id": "bally.spectrum.1981",
+		"conflict_id": "conflict.pinmame-input-switch-2-none",
+		"binding": {"group": "pinmame.input.switch", "device": 2},
+		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"id": "switch.left-flipper-button",
+		"label": "Left Flipper Button",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
+		"source": SPECTRUM_IN_PLAY,
+		"extra_sources": [SPECTRUM_VPW],
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
+			"file's 'Left Flipper Button'. The known-working VPW table writes public 2 from the left flipper key and public "
+			"1 from the right one. In a spectru4 gameplay run raising public 1 kicks the drain-saucer ball into play while "
+			"raising public 2 kicks nothing, and holding 2 at 1 for 3 s in play leaves public 19, the flipper-enable relay, "
+			"raised, while one tilt-bob (15) closure drops it. The platform alias is dropped. The run does not settle the button's polarity: the ROM launches when public "
+			"1 rises, and the table writes 1 and 2 low on key down and high on key up."
+		),
+	},
+	{
+		"path": "machines/partial/bally/spectrum-1981.json",
+		"machine_id": "bally.spectrum.1981",
+		"conflict_id": "conflict.pinmame-input-switch-7-none",
+		"binding": {"group": "pinmame.input.switch", "device": 7},
+		"from": {"id": "switch.tilt", "label": "Tilt"},
+		"id": "switch.top-saucer-kicker",
+		"label": "Top Saucer Kicker",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_tilt"}],
+		"source": SPECTRUM_IN_PLAY,
+		"extra_sources": [SPECTRUM_VPW],
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Top Saucer "
+			"Kicker'. The known-working VPW table writes public 7 from the top kicker sw7, which its solenoid 1 and 2 "
+			"callbacks kick out. In a spectru4 gameplay run closing public 7 fires the top kicker (1) and scores 10,000, "
+			"and public 19 stays raised. The platform alias is dropped: the "
+			"run's tilt bob is public 15, as the table's vpmNudge.TiltSwitch is."
 		),
 	},
 ]

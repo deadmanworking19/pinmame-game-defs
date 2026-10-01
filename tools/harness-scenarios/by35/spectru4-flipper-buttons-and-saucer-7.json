@@ -1,0 +1,152 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Spectrum rev. 4 (spectru4): coin up and start with direct writes (keyboard handling off). Close the drain-saucer switch 8 and wait for its kick; with 8 still closed, raise public 2 and then public 1 one at a time. Then open 8, close public 7, hold public 2 at 1 in play, and close the tilt bob (15) as a tilt control.",
+  "initial_switches": [],
+  "watch_switches": [
+    1,
+    2,
+    7,
+    8,
+    15
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 15.0,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 300,
+      "settle_s": 3.0,
+      "label": "credit button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball drains into the drain saucer"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        5
+      ],
+      "active_only": true,
+      "timeout_s": 5.0,
+      "label": "checkpoint: the drain saucer kicks"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "ball still on the drain saucer switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "public 2 to 1 with the ball on the saucer"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "public 2 back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "public 1 to 1 with the ball on the saucer"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "public 1 back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball leaves the drain saucer"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "public 7 closed in play"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "public 7 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "public 2 held at 1 in play"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "public 2 back to 0 in play"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "tilt bob 15 #1"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "tilt bob 15 #2"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "tilt bob 15 #3"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "after the tilt"
+    }
+  ]
+}

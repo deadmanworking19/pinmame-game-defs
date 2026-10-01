@@ -518,7 +518,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Skateball's gameplay run settles both of its (legacy switch-2 and solenoid-19) conflicts, removing one more.
 		# Special Force's service tests settle all four of its legacy label conflicts, removing one more.
 		# Beat the Clock's gameplay run settles its three legacy switch conflicts, removing one more.
-		self.assertEqual(37, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Spectrum's gameplay run settles both of its legacy switch conflicts, removing one more.
+		self.assertEqual(36, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

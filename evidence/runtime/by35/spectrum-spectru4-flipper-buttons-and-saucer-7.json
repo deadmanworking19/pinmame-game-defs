@@ -1,0 +1,216 @@
+{
+  "driver_ids": [
+    "spectru4"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.spectrum.1981"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game spectru4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by35/spectru4-flipper-buttons-and-saucer-7.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level; the snapshot after each step records player 1's seven-segment score (decoded here as digits) and the active outputs. Public 19 is BY35 continuous bit 2, which the controller profile and lisy35.c name the flipper-enable relay.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "spectru4",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "credit button: public 6 pressed after two coins on public 11: the ROM starts a game and raises public 19, the flipper-enable relay",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            5,
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "checkpoint: the drain saucer kicks: the drain saucer switch (public 8) went to 1 in the step before: the ROM kicks the drain saucer (5) 0.5 s later; transitioned_solenoid_addresses covers the checkpoint step that waits for 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2,
+            8
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 to 1 with the ball on the saucer: held 3 s with public 8 still at 1: no solenoid changes, so the ROM does not launch the ball, and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2,
+            8
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 back to 0: held 3 s with public 8 still at 1: no solenoid changes; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1,
+            8
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "public 1 to 1 with the ball on the saucer: with public 8 still at 1, the ROM kicks the drain saucer (5) 0.1 s after public 1 rises, the address the table binds to the right flipper key; the previous kick was 9.0 s earlier, the drain saucer's first",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "public 7 closed in play: the ROM fires the top kicker (1) and the score rises by 10,000 to 10,000; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 held at 1 in play: held 3 s: no solenoid changes and public 19 stays raised, so the ROM does not tilt",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "tilt bob 15 #1: the ROM tilts and drops public 19",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        5,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 20,
+        "initial_switches": [],
+        "name": "spectru4-flipper-buttons-and-saucer-7",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and sends no keyboard input: after a 15 s boot wait it coins up and starts a game with direct switch writes",
+        "retained_from": "external:pinmame-review-artifacts/spectrum-1981/harness/flipper-buttons-and-saucer-7/spectru4/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/spectru4-flipper-buttons-and-saucer-7.json",
+        "scenario_sha256": "4a6a7467adeb94f7c089f3d0880e610975b7c120de85bd6d8d06f1c0dc35ae65",
+        "self_test_pulses": 0,
+        "sha256": "7f9880feca861fce36e08a6e39366faf31728d65ed90791b1e5cfd8122c2317c",
+        "snapshot_count": 21,
+        "watch_switches": [
+          1,
+          2,
+          6,
+          7,
+          8,
+          11,
+          15
+        ]
+      }
+    ],
+    "rom_archive_sha256": "42f4d4d9997aefa4e0e46d1fa18599221ad85af4cc1fc68f15fa6185717484bd"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Scores are the harness's seven-segment values for player 1's display, read as digits. Exact external directory manifest spectru4/manifest.json SHA-256 316f4103798359018136777f2403b1e75005ccf3e5a373c0ab85706b31471ab0 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the rendered display frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/spectrum-1981/harness/flipper-buttons-and-saucer-7/spectru4",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "7f9880feca861fce36e08a6e39366faf31728d65ed90791b1e5cfd8122c2317c"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
