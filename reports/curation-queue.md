@@ -172,7 +172,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 166 | 1993 | White Water | Williams | partial | 94% |
 | 167 | 1992 | Al's Garage Band goes on a World Tour | Alvin G | partial | 13% |
 | 168 | 1992 | U.S.A. Football | Alvin G | partial | 13% |
-| 169 | 1992 | Black Rose | Bally | partial | 13% |
+| 169 | 1992 | Black Rose | Bally | partial | 19% |
 | 170 | 1992 | Creature from the Black Lagoon | Bally | partial | 81% |
 | 171 | 1992 | Doctor Who | Bally | partial | 13% |
 | 172 | 1992 | The Addams Family | Bally | author_ready | 100% |
