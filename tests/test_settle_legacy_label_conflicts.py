@@ -116,6 +116,45 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					pulsed = [label for label, step in raw_steps.items() if {t["number"] for t in step["transitions"]["solenoids"] if any(t["states"])} == {address}]
 					self.assertTrue(any(by_label[label]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"] for label in pulsed))
 
+	def test_the_tool_refuses_the_wrong_device_and_inconsistent_coverage(self) -> None:
+		settlement = tool.SETTLEMENTS[0]
+		settled = load_json(ROOT / settlement["path"])
+		binding = settlement["binding"]
+
+		# Swapping the settled device with its neighbour's binding puts another device at the address.
+		swapped = json.loads(json.dumps(settled))
+		(target,) = [item for item in swapped["outputs"] if item["binding"] == binding]
+		(neighbour,) = [item for item in swapped["outputs"] if item["binding"] == {**binding, "device": binding["device"] - 1}]
+		target["binding"], neighbour["binding"] = neighbour["binding"], target["binding"]
+		with self.assertRaisesRegex(RuntimeError, "expected"):
+			tool.settle(swapped, settlement)
+
+		# A device that kept the settled id but whose public-number alias names another address.
+		aliased = json.loads(json.dumps(settled))
+		(target,) = [item for item in aliased["outputs"] if item["binding"] == binding]
+		target["aliases"] = [{**alias, "value": "18"} if alias["namespace"] == "pinmame.coil" else alias for alias in target["aliases"]]
+		with self.assertRaisesRegex(RuntimeError, "aliases"):
+			tool.settle(aliased, settlement)
+
+		# An unsettled record whose device is no longer the one import-legacy wrote.
+		renamed = json.loads(json.dumps(settled))
+		renamed["conflicts"].append({"id": settlement["conflict_id"], "path": f"binding:{binding['group']}/{binding['device']}/None", "description": "x", "source_refs": []})
+		renamed["coverage"]["missing"].append("unresolved_conflicts")
+		with self.assertRaisesRegex(RuntimeError, "expected"):
+			tool.settle(renamed, settlement)
+
+		# A conflict recorded on another binding is not this settlement's.
+		misplaced = json.loads(json.dumps(renamed))
+		misplaced["conflicts"][-1]["path"] = f"binding:{binding['group']}/18/None"
+		with self.assertRaisesRegex(RuntimeError, "is not on"):
+			tool.settle(misplaced, settlement)
+
+		# An unresolved conflict remaining while coverage.missing omits it.
+		inconsistent = json.loads(json.dumps(settled))
+		inconsistent["conflicts"].append({"id": "conflict.other", "path": "binding:pinmame.output.solenoid/18/None", "description": "x", "source_refs": []})
+		with self.assertRaisesRegex(RuntimeError, "omits unresolved_conflicts"):
+			tool.settle(inconsistent, settlement)
+
 	def test_the_tool_check_mode_passes(self) -> None:
 		import subprocess
 

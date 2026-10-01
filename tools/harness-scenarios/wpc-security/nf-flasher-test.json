@@ -83,6 +83,16 @@
       "type": "pulse"
     },
     {
+      "active_only": true,
+      "addresses": [
+        17
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: T.5 pulses flasher 17",
+      "timeout_s": 5.0,
+      "type": "wait_until_output"
+    },
+    {
       "hold_ms": 150,
       "label": "T.5 step 1",
       "settle_s": 2.5,
@@ -95,6 +105,16 @@
       "settle_s": 2.5,
       "switch": 7,
       "type": "pulse"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        19
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: T.5 step 2 pulses flasher 19",
+      "timeout_s": 5.0,
+      "type": "wait_until_output"
     },
     {
       "hold_ms": 150,
@@ -181,7 +201,7 @@
       "switch": 22
     }
   ],
-  "notes": "Boot a No Fear ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game. Leave the fresh-NVRAM loop with Escape, open the wpc-security service menu, start T.5 FLASHER TEST and step it with Up until it wraps. In repeat mode the ROM pulses the selected output and prints its own name and wire colours for it, so each step pairs a printed name with the public address PinMAME published.",
+  "notes": "Boot a No Fear ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game. Leave the fresh-NVRAM loop with Escape, open the wpc-security service menu, start T.5 FLASHER TEST and step it with Up until it wraps. In repeat mode the ROM pulses the selected output and prints its own name and wire colours for it, so each step pairs a printed name with the public address PinMAME published. Two output checkpoints make a missed menu edge fail the run: T.5 must pulse 17 after it starts, and 19 after the second Up.",
   "version": 1,
   "watch_switches": [
     22

@@ -9,9 +9,13 @@ address is, this tool rewrites that one device from the run, drops the conflict,
 keeps `coverage.missing` honest.
 
 Every settlement below names its retained evidence. Several settlements may cite one run; a device
-keeps its id unless the settlement gives a new one. The tool edits only the listed device, conflict,
-source list and coverage; everything else in the record is left as `import-legacy` wrote it. Run
-with --check to verify that every listed record already matches what the tool would write.
+keeps its id unless the settlement gives a new one. A settlement names the id and label
+`import-legacy` gave the device, and the tool refuses a device that carries neither those nor the
+settled ones, or whose public-number aliases name another address. The tool edits only the listed
+device, conflict, source list and coverage; everything else in the record is left as
+`import-legacy` wrote it, and a record whose `coverage.missing` omits `unresolved_conflicts` while
+one remains is refused. Run with --check to verify that every listed record already matches what
+the tool would write.
 """
 
 from __future__ import annotations
@@ -56,6 +60,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"machine_id": "bally.black-rose.1992",
 		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
 		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
 		"label": "Right Bottom Flasher",
 		"kind": "flasher",
 		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
@@ -81,6 +86,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"machine_id": "williams.no-fear-dangerous-sports.1995",
 		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
 		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
 		"label": "Flasher: No Fear",
 		"kind": "flasher",
 		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
@@ -108,6 +114,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"machine_id": "bally.nba-fastbreak.1997",
 			"conflict_id": f"conflict.pinmame-input-switch-{number}-none",
 			"binding": {"group": "pinmame.input.switch", "device": number},
+			"from": {"id": f"switch.coin-{number}", "label": f"Coin Button {number}"},
 			"id": f"switch.coin-{number}",
 			"label": name.title(),
 			"kind": "switch",
@@ -126,6 +133,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"machine_id": "bally.nba-fastbreak.1997",
 		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
 		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
 		"label": "Flasher — Upper Left",
 		"kind": "flasher",
 		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
@@ -163,7 +171,23 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 		raise RuntimeError(f"{settlement['path']}: expected one device at {settlement['binding']}, found {len(matches)}")
 	device = matches[0]
 	source = settlement["source"]
-	device["id"] = settlement.get("id", f"device.{slug(settlement['label'])}")
+	group, number = settlement["binding"]["group"], settlement["binding"]["device"]
+	target_id = settlement.get("id", f"device.{slug(settlement['label'])}")
+	pending = [conflict for conflict in result["conflicts"] if conflict["id"] == settlement["conflict_id"]]
+	if pending:
+		# Unsettled: the conflict must sit on this binding and the device must still be the imported one.
+		if [conflict["path"] for conflict in pending] != [f"binding:{group}/{number}/None"]:
+			raise RuntimeError(f"{settlement['path']}: {settlement['conflict_id']} is not on {group}/{number}")
+		expected = (settlement["from"]["id"], settlement["from"]["label"])
+	else:
+		expected = (target_id, settlement["label"])
+	if (device["id"], device["label"]) != expected:
+		raise RuntimeError(f"{settlement['path']}: the device at {group}/{number} is {device['id']} ({device['label']!r}), expected {expected}")
+	namespace = "pinmame.coil" if group == "pinmame.output.solenoid" else "pinmame.switch"
+	numbers = {alias["value"] for alias in device.get("aliases", []) if alias["namespace"] == namespace}
+	if numbers != {str(number)}:
+		raise RuntimeError(f"{settlement['path']}: the device at {group}/{number} carries {namespace} aliases {sorted(numbers)}")
+	device["id"] = target_id
 	device["label"] = settlement["label"]
 	device["kind"] = settlement["kind"]
 	device["aliases"] = [alias for alias in device.get("aliases", []) if alias not in settlement["drop_aliases"]]
@@ -192,11 +216,9 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 	unresolved = [conflict for conflict in result["conflicts"] if conflict.get("status", "unresolved") == "unresolved"]
 	if not unresolved:
 		result["coverage"]["missing"] = [item for item in result["coverage"]["missing"] if item != "unresolved_conflicts"]
+	elif "unresolved_conflicts" not in result["coverage"]["missing"]:
+		raise RuntimeError(f"{settlement['path']}: {len(unresolved)} unresolved conflict(s) remain but coverage.missing omits unresolved_conflicts")
 	return result
-
-
-def canonical(document: dict[str, Any]) -> bytes:
-	return (json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
 
 def main() -> int:
