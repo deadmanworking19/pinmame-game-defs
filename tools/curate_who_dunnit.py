@@ -18,6 +18,7 @@ from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
 from pinmame_game_defs.workspace import resolve_working_root
+import drawing_callouts
 
 ROOT = Path(__file__).resolve().parents[1]
 MID = "bally.who-dunnit.1995"
@@ -29,6 +30,7 @@ GI_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-gi-candidates.json"
 GEOMETRY_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-geometry.json"
 KNOWLEDGE_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-knowledge.md"
 DRAWING_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-drawing.json"
+CALLOUT_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-callouts.json"
 DRAWING_REVIEW = "session-20261001/drawing-reconciliation"
 KNOWLEDGE = ROOT / "knowledge/bally/who-dunnit-1995.md"
 REPORT = ROOT / "reports/spatial/bally/who-dunnit-1995.json"
@@ -58,6 +60,7 @@ TABLE_SRC = "vpx-table.who-dunnit-ninuzzu-2018"
 EXTRACTION_SRC = "vpx-extraction.who-dunnit-ninuzzu-2018"
 GEOMETRY_SRC = "vpx-measurement.who-dunnit-2018"
 DRAWING_SRC = "manual-drawing-reconciliation.who-dunnit-2026-10-01"
+CALLOUT_SRC = "drawing-callouts.who-dunnit-2026-10-01"
 CORE_SRC = f"pinmame.core.{PIN[:12]}"
 CORE_ARTIFACTS = {
     "src/wpc/sims/wpc/prelim/wd.c": (CORE_SRC, "ef33ac1bdae145166c00d4dadcb95e5b10f883cc88da01c7577b5ee09775f6e1",
@@ -425,8 +428,11 @@ def source_records() -> list[dict[str, Any]]:
         {"id":GEOMETRY_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-geometry.json",
          "sha256":sha(GEOMETRY_SEED),"locator":"47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned. Two candidates (switch 37 sw37, flasher 14 Flasherlight6) are superseded by factory-drawing measurements. The register's terra fit.json is rejected as a drawing reconciliation: its control pixels were computed from the VPX coordinates through its own frame formula, not read from the drawing.",
          "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
+        {"id":CALLOUT_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-callouts.json",
+         "sha256":sha(CALLOUT_SEED),"locator":"2026-10-01 factory location-drawing callout check of PDF 125, 127 and 129 (printed 2-43, 2-45, 2-47): every callout transcribed independently on the retained 300 dpi renders, verifier corrections recorded with their reasons, per-page control and callout fits; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). Reads, overlays and generator are retained under review-artifacts with a pinned manifest.",
+         "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
         {"id":DRAWING_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-drawing.json",
-         "sha256":sha(DRAWING_SEED),"locator":"2026-10-01 factory drawing reconciliation: per-page least-squares affine fits of PDF 127 (2-45) and PDF 129 (2-47) from eight control features read by eye on the retained 300 dpi renders (RMS about 6-7 VPU), measured leader-end device symbols for switch 37 and flasher 14, and identity checks of every placed lamp, switch and coil anchor on PDF 125/127/129. Crops, overlays, fit script and fits are retained externally under review-artifacts/"+MID+"/"+DRAWING_REVIEW+" with a pinned manifest.",
+         "sha256":sha(DRAWING_SEED),"locator":"2026-10-01 factory drawing reconciliation: per-page least-squares affine fits of PDF 127 (2-45) and PDF 129 (2-47) from eight control features read by eye on the retained 300 dpi renders (RMS about 6-7 VPU), measured leader-end device symbols for switch 37 and flasher 14, and overlay identity checks on PDF 125/127/129, which the 2026-10-01 drawing callout check supersedes for placement validation. Crops, overlays, fit script and fits are retained externally under review-artifacts/"+MID+"/"+DRAWING_REVIEW+" with a pinned manifest.",
          "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
         {"id":RUNTIME_SRC,"kind":"runtime_scenario","uri":"external:review-artifacts/bally.who-dunnit.1995/session-20260930/terra-runtime/traces/06-switch-edges-115-112-114.json",
          "sha256":RUNTIME_SHA,
@@ -764,7 +770,7 @@ def build() -> dict[str,Any]:
     candidates=spatial_candidates()
     geometry=geometry_candidates()
     drawing=drawing_measurements()
-    return {"format":"pinmame-machine-definition","schema_version":2,
+    definition={"format":"pinmame-machine-definition","schema_version":2,
             "machine":{"id":MID,"name":"WHO dunnit","manufacturer":"Bally","year":1995,
                        "kind":"physical_pinball","ipdb_id":3685,"opdb_id":"G50kj-MDqpv",
                        "playfield":{"width":953,"height":2128,"units":"vpx","provenance":prov(TABLE_SRC,EXTRACTION_SRC)}},
@@ -803,6 +809,9 @@ def build() -> dict[str,Any]:
                          {"id":"conflict.lower-flipper-coil-part","path":"outputs[id=solenoid.45|solenoid.46|solenoid.47|solenoid.48].physical.part_number",
                           "description":"PDF 98–99 (printed 2-16–2-17) A-14876-R-5/A-15849-L-4 assembly item 12 and PDF 128–129 (printed 2-46–2-47) lower-flipper tables print FL-15411. PDF 137 (printed 3-5) duplicate lower-flipper table instead prints FL-11541 for both sides. These are conflicting original readings within one manual, not independent document families; no applicable factory correction establishes which part was fitted. Assembly identities, winding wiring, printed circuits 29–32/public outputs 45–48 and causal ROM bindings remain separately supported. No structured physical coil part number is selected. Resolution path: obtain an applicable factory correction or inspect a documented original lower-flipper coil/assembly before selecting either part number.",
                           "source_refs":[FLIPPER_PART_SRC,DUPLICATE_TABLE_SRC],"status":"unresolved"}]}
+    # Factory location-drawing callouts promote the table placements they confirm.
+    drawing_callouts.apply_to_definition(definition,load_json(CALLOUT_SEED),CALLOUT_SRC)
+    return definition
 
 
 def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
@@ -823,6 +832,9 @@ def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
             "geometry_seed_sha256":sha(GEOMETRY_SEED),"geometry_register_sha256":geometry["terra_register_sha256"],
             "world_obj_sha256":geometry["world_obj_sha256"],
             "drawing_seed_sha256":sha(DRAWING_SEED),
+            "drawing_callout_check":drawing_callouts.summary(load_json(CALLOUT_SEED),
+                drawing_callouts.evaluate(load_json(CALLOUT_SEED),drawing_callouts.placements_of(definition)),
+                "tools/seeds/bally/who-dunnit-1995-callouts.json",sha(CALLOUT_SEED)),
             "evidence_paths":{"table":f"vpx-sources/bally/who-dunnit-1995/{TABLE_NAME}",
                               "extracted":"vpx-sources/bally/who-dunnit-1995/extracted",
                               "extraction_manifest":"vpx-sources/bally/who-dunnit-1995/extracted.manifest.json",
@@ -835,12 +847,12 @@ def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
                               "drawing_review":f"review-artifacts/{MID}/{DRAWING_REVIEW}"},
             "bounds":{"left":0,"top":0,"right":953,"bottom":2128},
             "transform":"x=object_x/953; y=object_y/2128; player view, rear y=0, apron y=1; values rounded to six decimals",
-            "projection_classes":{"switch":"Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate only; cabinet, EOS and always-closed positions use controlled not_applicable.",
-                                  "lamp":"Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded. Every placed playfield lamp lands on its own printed PDF 125 lamp symbol or leader end (identity check); socket-level precision is not measured.",
+            "projection_classes":{"switch":"Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate, and validated where drawing_callout_check agrees; cabinet, EOS and always-closed positions use controlled not_applicable.",
+                                  "lamp":"Exact LNN VPX Light centre, candidate, and validated where drawing_callout_check agrees. L16/L17/L18 glow helpers are excluded.",
                                   "gi":"Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown. All five strings' table wiring/bulb/location claims and backbox exclusions remain candidate: the board layout shows J120/J121, but PDF 158–159 omits J112–J127 pin destinations and supplies no branch/placement corroboration.",
                                   "actuator":"Named VPX mechanism anchor or visible effect projection only. No projection is called a hidden winding, motor body or physical bulb centre.",
-                                  "flasher_and_coil":"45 devices use 46 candidate VPX mechanism projections; flasher 14 uses the factory drawing instead. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
-                                  "manual_drawing":"PDF 127 and PDF 129 have separate least-squares affine fits from eight control features read by eye on the native renders (RMS about 6-7 VPU, leave-one-out at most about 20 VPU). They confirm the identity of every placed switch and coil/flasher anchor and supply two candidate coordinates: switch 37 and flasher 14, whose leaders end at a ramp bracket the table does not model there. No balloon centre is used as a device coordinate. The earlier terra fit.json (session-20260930) is rejected: its control pixels were computed from the VPX coordinates through its own frame formula and sit 10-17 px from the drawn symbols, so its sub-VPU residuals reconcile nothing.",
+                                  "flasher_and_coil":"45 devices use 46 VPX mechanism projections, validated where their own PDF 129 callout reaches the anchor within 0.07 under drawing_callout_check and candidate otherwise; flasher 14 uses the factory drawing instead. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
+                                  "manual_drawing":"PDF 127 and PDF 129 have separate least-squares affine fits from eight control features read by eye on the native renders (RMS about 6-7 VPU, leave-one-out at most about 20 VPU). Their overlay identity checks are superseded by drawing_callout_check, which reads every callout and decides validation; they supply two candidate coordinates: switch 37 and flasher 14, whose leaders end at a ramp bracket the table does not model there. No balloon centre is used as a device coordinate. The earlier terra fit.json (session-20260930) is rejected: its control pixels were computed from the VPX coordinates through its own frame formula and sit 10-17 px from the drawn symbols, so its sub-VPU residuals reconcile nothing.",
                                   "factory_drawing_measurement":"Candidate coordinate measured on a factory location drawing at the device symbol where a leader ends, through that page's independently read fit; used only where no retained table object sits at the factory position."},
             "candidate_placements":candidates,"candidate_by_class":by_class,"without_placements":missing,
             "projected_device_ids":projected,"geometry_candidates":geometry["candidates"],
@@ -855,7 +867,7 @@ def report_markdown(report:dict[str,Any]) -> str:
     return (f"# WHO dunnit spatial blockers\n\nRetained VPX SHA-256 `{TABLE_SHA}`; script `{SCRIPT_SHA}`; "
             f"{FILE_COUNT}-file extraction manifest `{MANIFEST_SHA}`; manual `{MANUAL_SHA}`.\n\n"
             f"Bounds: `left=0 top=0 right=953 bottom=2128`. {report['transform']}.\n\n"
-            f"{len(report['candidate_placements'])} devices have VPX candidates; {len(report['without_placements'])} used devices lack even a candidate. "
+            f"{len(report['candidate_placements'])} devices keep candidate placements after the drawing callout check; {len(report['without_placements'])} used devices lack even a candidate. "
             f"The {len(report['projected_device_ids'])} newly projected mechanism/actuator devices remain physically unplaced: a shared assembly anchor is not a hidden contact, coil, or bulb centre. "
             "Backbox flasher branches and the complete G.I. socket census remain unmeasured.\n\n"
             "## Retained registers and projection classes\n\n"
@@ -873,6 +885,12 @@ def report_markdown(report:dict[str,Any]) -> str:
                     for item in report["drawing_reconciliation"]["measurements"])+
             "".join(f"- {key}: {text}\n" for key,text in report["drawing_reconciliation"]["identity_checks"].items())+
             f"- Rejected: {report['drawing_reconciliation']['rejected_fit']['reason']}\n\n"
+            "## Drawing callout check\n\n"+report["drawing_callout_check"]["rule"]+" "
+            f"It validates {report['drawing_callout_check']['validated']} of the {report['drawing_callout_check']['checked']} table placements it checks "
+            f"([seed](../../../{report['drawing_callout_check']['seed']})); the rest keep their candidate status:\n\n"+
+            "".join(f"- `{pid}`: callout {item['label']} on {item['page']}"+
+                    (f", {max(item['control_offset'],item['callout_offset']):.3f} normalized away.\n" if "control_offset" in item else f", {item['reason']}.\n")
+                    for pid,item in report["drawing_callout_check"]["not_validated"].items())+"\n"
             "## Unresolved physical geometry\n\n"+"\n".join(f"- {item}" for item in report["unresolved_geometry"])+"\n\n"
             "## Missing placements\n\n"+
             ("\n".join(f"- `{name}`" for name in report["without_placements"])+"\n" if report["without_placements"] else
@@ -1033,6 +1051,8 @@ def verify_external() -> None:
             if result["failure"] is not None or result["handle_mechanics"]!=0:
                 raise RuntimeError(f"WHO dunnit ROM diagnostic failed or enabled simulation: {key}")
         verify_opto_evidence(sol_runtime)
+    drawing_callouts.verify_retained(load_json(CALLOUT_SEED),ROOT,Path(manual_root) if manual_root else None,
+                                     Path(review_root) if review_root else None)
 
 
 def check() -> None:

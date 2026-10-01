@@ -79,7 +79,7 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual(shaded, markers)
         self.assertEqual("constant", self.switches[24]["kind"])
         self.assertTrue(self.switches[24]["constant_active"])
-        self.assertEqual("candidate", self.switches[115]["spatial"]["status"])
+        self.assertEqual("validated", self.switches[115]["spatial"]["status"])  # PDF 127 F5 reaches the spinner
         self.assertEqual((0.837256, 0.356449), (self.switches[115]["spatial"]["placements"][0]["x"],
                                                    self.switches[115]["spatial"]["placements"][0]["y"]))
         self.assertIn(curator.RUNTIME_SRC, self.switches[115]["provenance"]["source_refs"])
@@ -409,6 +409,32 @@ class WhoDunnitTests(unittest.TestCase):
                     data = (ROOT / excerpt["path"]).read_bytes()
                     self.assertEqual(hashlib.sha256(data).hexdigest(), excerpt["sha256"])
         curator.check()
+
+    def test_drawing_callout_check_decides_every_placement_status(self) -> None:
+        seed=read(curator.CALLOUT_SEED)
+        decisions=curator.drawing_callouts.evaluate(seed,curator.drawing_callouts.placements_of(self.definition))
+        self.assertEqual({"switch.37.factory-drawing","output.14.factory-drawing"},set(seed["excluded_checks"]))
+        checked=0
+        for device in self.definition["inputs"]+self.definition["outputs"]:
+            notes=(device.get("physical") or {}).get("notes") or ""
+            for placement in (device.get("spatial") or {}).get("placements") or []:
+                decision=decisions["placements"].get(placement["id"])
+                status=placement["provenance"]["status"]
+                if decision is None:
+                    self.assertEqual("candidate",status,placement["id"])
+                    continue
+                checked+=1
+                self.assertEqual("validated" if decision["agrees"] else "candidate",status,placement["id"])
+                self.assertEqual(decision["agrees"],curator.CALLOUT_SRC in placement["provenance"]["source_refs"])
+                self.assertEqual(not decision["agrees"],"stays candidate" in notes,placement["id"])
+        self.assertEqual(len(seed["checks"]),checked)
+        report=read(ROOT/"reports/spatial/bally/who-dunnit-1995.json")
+        self.assertEqual(curator.drawing_callouts.summary(seed,decisions,"tools/seeds/bally/who-dunnit-1995-callouts.json",
+                                                          curator.sha(curator.CALLOUT_SEED)),report["drawing_callout_check"])
+        # G.I. strings have no drawing callouts and are never checked.
+        located=[d for d in self.definition["outputs"] if d["kind"]=="gi" and (d.get("spatial") or {}).get("placements")]
+        self.assertTrue(located)
+        self.assertTrue(all(d["spatial"]["status"]=="candidate" for d in located))
 
     def test_factory_drawing_measurements(self) -> None:
         drawing=read(curator.DRAWING_SEED)
