@@ -104,7 +104,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 98 | 1996 | Io Moon | Sleic (Spain) | partial | 13% |
 | 99 | 1996 | Gun Shot | Spinball (Spain) | partial | 6% |
 | 100 | 1996 | Verne's World | Spinball (Spain) | partial | 13% |
-| 101 | 1996 | Junk Yard | Williams | partial | 81% |
+| 101 | 1996 | Junk Yard | Williams | partial | 88% |
 | 102 | 1996 | Phantom Haus (0.4 Prototype) | Williams | partial | 13% |
 | 103 | 1996 | Tales of the Arabian Nights | Williams | partial | 94% |
 | 104 | 1996 | Ticket Tac Toe (1.0) | Williams | partial | 13% |

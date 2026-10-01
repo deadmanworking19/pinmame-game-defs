@@ -93,11 +93,33 @@ The switch matrix (2-34) shades column 3 rows 1-7 as "OPTO, TYPICALLY CLOSED".
 Pinned PinMAME's `jyGameData` inverted-switch mask
 (`{0x00,0x00,0x00,0x7f,0x07,0x00,...}`) normalizes column 3 rows 1-7
 (31-37) and column 4 rows 1-3 (41-43). That matches the manual on ten of the
-eleven opto addresses. The single disagreement is **switch 44 (Past Crane)**:
+eleven opto addresses. The exception is **switch 44 (Past Crane)**:
 opto-constructed per the manual but **not** normalized by PinMAME (column 4
-row 4 is outside the mask's `0x07`). This is the same family of conflict as
-Monster Bash's Dracula-position optos and Indiana Jones's captive-ball opto,
-and is recorded as `conflict.junkyard.past-crane-opto-not-normalized`.
+row 4 is outside the mask's `0x07`).
+
+The ROM's own T.1 SWITCH EDGES test shows that the mask is right. Hash-pinned
+LibPinMAME runs of `jy_12`, `jy_11` and the `jy_03` prototype, each from empty
+NVRAM, set public 45 (Ramp Exit, an ordinary switch), 41 (Past Spinner, the
+same A-16908/A-16909 opto pair, normalized) and 44 to 1 and then 0. Each level
+was held for two seconds. In all three runs the top display line names
+PAST CRANE after 44 goes to 1 and returns to SWITCH EDGES after it goes to 0,
+just as it does for both controls
+(`evidence/runtime/wpc-95/junkyard-jy_*-switch-edges.json`). The ROM therefore
+reads public 44 = 1 as active. A recreation drives it as the known-working
+table does (`switch44_Hit` calls `vpmTimer.PulseSw 44`) and never inverts it.
+
+Outside the inversion mask the WPC-95 security PIC passes the public level
+through unchanged, so 44's matrix contact rests open (`normally_closed:
+false`), while the masked optos 31-37 and 41-43 rest closed. The shared part
+number fixes opto construction, not the contact's rest state. No retained
+source shows the circuit difference behind it. The earlier conflict record for
+this address was withdrawn.
+
+The same runs show one incidental difference between ROM revisions. The
+production ROMs (`jy_11`, `jy_12`) print GRN-WHT as the column-4 wire colour
+in the T.1 display, while the `jy_03` prototype prints GRN-YEL. GRN-YEL matches
+the Green-Yellow column-4 drive wire in the (not yet visually reviewed)
+switch-matrix transcription. The definition keeps the manual's colour.
 
 ## Mechanisms
 
@@ -139,10 +161,8 @@ the themed toy complex.
 
 ## Unresolved
 
-The past-crane opto polarity conflict (switch 44) is the one open polarity
-question; a LibPinMAME gameplay-harness trace of the public idle state of
-switch 44 on a legal `jy_11`/`jy_12` ROM is the concrete resolution path.
-Several crane/trough/sewer mechanism-internal sensors are documented
+No switch-polarity question remains open. The lamp-86 (Gen. Crane) plane
+conflict is unresolved. Several crane/trough/sewer mechanism-internal sensors are documented
 projections onto the mechanism's real kicker rather than surveyed
 coordinates.
 
@@ -154,3 +174,9 @@ coordinates.
   mfuegemann, SHA-256 `8ff2c1c8ae3457a4b88ff2207bc506d07435b049343301ded4dbf8e855bef07f`.
 - Pinned PinMAME `8371478a7640f1896dcdf565aed340dc5df989ba`,
   `src/wpc/sims/wpc/prelim/jy.c`.
+- T.1 SWITCH EDGES runs of `jy_12`, `jy_11` and `jy_03` on the pinned-revision
+  library (`pinmame64.dll`, SHA-256
+  `deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c`) with
+  scenario `tools/harness-scenarios/wpc-95/jy-switch-edges-44.json`, summarized
+  in `evidence/runtime/wpc-95/junkyard-jy_12-switch-edges.json`,
+  `junkyard-jy_11-switch-edges.json` and `junkyard-jy_03-switch-edges.json`.

@@ -1,0 +1,142 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Escape out of the fresh-NVRAM loop",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 1 (game identification)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 2 (main menu)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 1",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up 2 (T. TESTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 3 (tests menu)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 4 (start T.1)",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "label": "45 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 45,
+      "type": "set_switch"
+    },
+    {
+      "label": "45 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 45,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "41 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 41,
+      "type": "set_switch"
+    },
+    {
+      "label": "44 -> 1",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "44 -> 0",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "44 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "44 -> 0 again",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 44,
+      "type": "set_switch"
+    },
+    {
+      "label": "45 -> 1 again",
+      "settle_s": 2.0,
+      "state": 1,
+      "switch": 45,
+      "type": "set_switch"
+    },
+    {
+      "label": "45 -> 0 again",
+      "settle_s": 2.0,
+      "state": 0,
+      "switch": 45,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot a Junk Yard ROM from an empty NVRAM with the coin door open (public 22 released); the scenario names no game, so one byte-identical file serves every jy_* driver it is run against (jy_12, jy_11 and the jy_03 prototype). Navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public edge separately, holding each level for 2 s: 45 (Ramp Exit, an ordinary switch), 41 (Past Spinner, a printed A-16908/A-16909 opto that jyGameData's inverted-switch mask normalizes) and 44 (Past Crane, the same printed opto pair, not normalized). The ROM's top display line names a switch while it reads it as active, so the edge that brings the name up shows which public level the ROM treats as active.",
+  "version": 1,
+  "watch_switches": [
+    41,
+    44,
+    45
+  ]
+}

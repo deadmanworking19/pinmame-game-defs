@@ -1,16 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "Switch 44 (Past Crane) is opto-constructed per the manual's Switch Locations parts list (2-35), which prints an A-16908 (LED) / A-16909 (PHOTO TRANS) opto pair for item 44 as it does for items 41-43 -- but pinned PinMAME's jyGameData inverted-switch mask ({0x00,0x00,0x00,0x7f,0x07,0x00,0x00,...}) covers column 4 rows 1-3 (0x07, switches 41-43) and leaves row 4 (switch 44) uninverted. The other ten opto addresses (31-37, 41-43) all agree between the manual and the emulator; this is the sole polarity disagreement, of the same family as Monster Bash's Dracula-position optos and Indiana Jones's captive-ball opto. Resolution path: a LibPinMAME gameplay-harness trace of a legal jy_11/jy_12 ROM observing the public idle state of switch 44 and its transitions as the crane passes, or a later corrected upstream mask.",
-      "id": "conflict.junkyard.past-crane-opto-not-normalized",
-      "path": "inputs[binding.device=44]",
-      "source_refs": [
-        "manual.williams.junkyard.1996",
-        "pinmame.core.8371478a7640"
-      ],
-      "status": "unresolved"
-    },
-    {
       "description": "Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as \"located on the insert panel\", but the same page's playfield line drawing runs a leader from a margin badge 86 into the on-playfield crane mechanism at the top of the playfield. The retained table models a Lamp86 Light object on the playfield, which agrees with the drawing's crane placement but not with the insert-panel footnote. The transcription records both facts without picking a side. The definition places lamp 86 on the playfield from the retained table and notes the conflict. Resolution path: a photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on.",
       "id": "conflict.junkyard.lamp-86-plane",
       "path": "outputs[binding.device=86]",
@@ -31,14 +21,13 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
       "spatial_placement": "candidate",
       "variant_coverage": "validated"
     },
     "missing": [
-      "polarity",
       "spatial_placement",
       "unresolved_conflicts"
     ],
@@ -2002,9 +1991,9 @@
       "id": "switch.matrix-44",
       "kind": "switch",
       "label": "Past Crane",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, so the printed A-16908/A-16909 opto pair is not inverted by the emulator.",
+        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, and no inversion is needed. In the ROM's own T.1 SWITCH EDGES test (hash-pinned runs runtime.junkyard.jy-12.switch-edges, runtime.junkyard.jy-11.switch-edges, runtime.junkyard.jy-03.switch-edges) the top display line names PAST CRANE after public 44 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly as it behaves for RAMP EXIT (45, an ordinary switch) and PAST SPINNER (41, the same A-16908/A-16909 opto pair, normalized by the mask). The ROM therefore treats public 44 = 1 as active, and a recreation drives it as the known-working table does (switch44_Hit calls vpmTimer.PulseSw 44) and never inverts it. normally_closed is false: on WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r returns coreGlobals.swMatrix), which holds the public level unchanged outside the inversion mask, so the matrix contact is closed exactly when the ROM reads the switch active and open when it is not actuated. The part identity fixes the opto construction, not the matrix contact's normal state; no retained source shows why this pair's contact rests open while 41-43's rest closed.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -2012,7 +2001,10 @@
         "source_refs": [
           "manual.williams.junkyard.1996",
           "pinmame.core.8371478a7640",
-          "vpx-script.junkyard-mfuegemann"
+          "vpx-script.junkyard-mfuegemann",
+          "runtime.junkyard.jy-12.switch-edges",
+          "runtime.junkyard.jy-11.switch-edges",
+          "runtime.junkyard.jy-03.switch-edges"
         ],
         "status": "validated"
       },
@@ -12316,6 +12308,33 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 bb9b127b90d2e892f18707933288e15a080819e7d27cefaf787ee04379adbdbc; 1008 files, 299118752 bytes, produced with vpxtool from the retained table.",
       "uri": "external:pinmame-vpx-sources/williams/junkyard-1996/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.junkyard.jy-12.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of jy_12 from empty NVRAM (scenario tools/harness-scenarios/wpc-95/jy-switch-edges-44.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 45, 41, 44, 44 again and 45 again to 1 and then 0, two seconds each. The ROM's top line names RAMP EXIT, PAST SPINNER or PAST CRANE after the switch is set to 1 and returns to SWITCH EDGES after it is set to 0, for the unnormalized opto 44 exactly as for the normalized opto 41 and the ordinary switch 45.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-95/junkyard-jy_12-switch-edges.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.junkyard.jy-11.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of jy_11 from empty NVRAM (scenario tools/harness-scenarios/wpc-95/jy-switch-edges-44.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 45, 41, 44, 44 again and 45 again to 1 and then 0, two seconds each. The ROM's top line names RAMP EXIT, PAST SPINNER or PAST CRANE after the switch is set to 1 and returns to SWITCH EDGES after it is set to 0, for the unnormalized opto 44 exactly as for the normalized opto 41 and the ordinary switch 45.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-95/junkyard-jy_11-switch-edges.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.junkyard.jy-03.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of jy_03 from empty NVRAM (scenario tools/harness-scenarios/wpc-95/jy-switch-edges-44.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 45, 41, 44, 44 again and 45 again to 1 and then 0, two seconds each. The ROM's top line names RAMP EXIT, PAST SPINNER or PAST CRANE after the switch is set to 1 and returns to SWITCH EDGES after it is set to 0, for the unnormalized opto 44 exactly as for the normalized opto 41 and the ordinary switch 45.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-95/junkyard-jy_03-switch-edges.json"
     }
   ]
 }

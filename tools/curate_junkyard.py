@@ -35,6 +35,11 @@ MANUAL_SOURCE = "manual.williams.junkyard.1996"
 VPX_TABLE_SOURCE = "vpx-table.junkyard-mfuegemann"
 VPX_SCRIPT_SOURCE = "vpx-script.junkyard-mfuegemann"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.junkyard-mfuegemann"
+RUNTIME_SOURCES = {
+	"jy_12": "runtime.junkyard.jy-12.switch-edges",
+	"jy_11": "runtime.junkyard.jy-11.switch-edges",
+	"jy_03": "runtime.junkyard.jy-03.switch-edges",
+}
 
 TABLE_SHA256 = "8ff2c1c8ae3457a4b88ff2207bc506d07435b049343301ded4dbf8e855bef07f"
 SCRIPT_SHA256 = "b583aed396fea3cf6e2f862fdb51989aa01a99e624bbae8b30e8aeba7eeb4033"
@@ -108,7 +113,8 @@ UNUSED_MATRIX_ADDRESSES = {23, 25, 55, 75, 81, 82, 83, 84, 85, 86, 87, 88}
 OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44}
 # The subset of opto addresses that PinMAME's jyGameData inverted-switch mask actually normalizes
 # (column 3 = 0x7f covers rows 1-7 = 31-37; column 4 = 0x07 covers rows 1-3 = 41-43). Switch 44
-# (Past Crane) is opto-constructed but NOT in this set -- the one polarity conflict.
+# (Past Crane) is opto-constructed but NOT in this set; the ROM's own T.1 SWITCH EDGES test reads
+# public 44 = 1 as active, so the unnormalized address is correct and its matrix contact rests open.
 NORMALIZED_OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43}
 
 # Pulsed switches from the retained known-working script (vpmTimer.PulseSw / Controller.Switch setters).
@@ -740,6 +746,24 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+	] + [
+		{
+			"id": source_id,
+			"kind": "runtime_scenario",
+			"uri": f"internal:evidence/runtime/wpc-95/junkyard-{game}-switch-edges.json",
+			"revision": PINMAME_REVISION,
+			"locator": (
+				f"One hash-pinned LibPinMAME harness run of {game} from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-95/jy-switch-edges-44.json) that opens the ROM's T.1 SWITCH EDGES "
+				"test and sets public 45, 41, 44, 44 again and 45 again to 1 and then 0, two seconds each. The "
+				"ROM's top line names RAMP EXIT, PAST SPINNER or PAST CRANE after the switch is set to 1 and "
+				"returns to SWITCH EDGES after it is set to 0, for the unnormalized opto 44 exactly as for the "
+				"normalized opto 41 and the ordinary switch 45."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		}
+		for game, source_id in RUNTIME_SOURCES.items()
 	]
 
 def _device(identifier: str, label: str, kind: str, group: str, address: int, availability: str, refs: tuple[str, ...], **extra: Any) -> dict[str, Any]:
@@ -819,8 +843,20 @@ def input_devices() -> list[dict[str, Any]]:
 					"PinMAME's jyGameData inverted-switch mask normalizes this address, so the public "
 					"switch state is already normalized and must not be inverted again."
 				) if address in NORMALIZED_OPTO_SWITCHES else (
-					"PinMAME's jyGameData inverted-switch mask does NOT normalize this address, so the "
-					"printed A-16908/A-16909 opto pair is not inverted by the emulator."
+					"PinMAME's jyGameData inverted-switch mask does NOT normalize this address, and no "
+					"inversion is needed. In the ROM's own T.1 SWITCH EDGES test (hash-pinned runs "
+					f"{', '.join(RUNTIME_SOURCES.values())}) the top display line names PAST CRANE "
+					"after public 44 is set to 1 and is back to SWITCH EDGES after it is set to 0, exactly "
+					"as it behaves for RAMP EXIT (45, an ordinary switch) and PAST SPINNER (41, the same "
+					"A-16908/A-16909 opto pair, normalized by the mask). The ROM therefore treats public "
+					"44 = 1 as active, and a recreation drives it as the known-working table does "
+					"(switch44_Hit calls vpmTimer.PulseSw 44) and never inverts it. normally_closed is "
+					"false: on WPC-95 the CPU reads the matrix through the security PIC (wpc.c wpc_pic_r "
+					"returns coreGlobals.swMatrix), which holds the public level unchanged outside the "
+					"inversion mask, so the matrix contact is closed exactly when the ROM reads the switch "
+					"active and open when it is not actuated. The part identity fixes the opto "
+					"construction, not the matrix contact's normal state; no retained source shows why "
+					"this pair's contact rests open while 41-43's rest closed."
 				)
 				notes += (
 					" Printed on the switch-locations parts list with an LED/photo-transistor opto pair and "
@@ -850,10 +886,12 @@ def input_devices() -> list[dict[str, Any]]:
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				availability = "used"
-				extra["normally_closed"] = address in OPTO_SWITCHES
+				extra["normally_closed"] = address in NORMALIZED_OPTO_SWITCHES
 				if address in PULSED_SWITCHES:
 					extra["pulse"] = True
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+				if address in OPTO_SWITCHES - NORMALIZED_OPTO_SWITCHES:
+					refs += tuple(RUNTIME_SOURCES.values())
 				if address in {13, 14, 21, 22}:
 					role = {13: "cabinet.start", 14: "cabinet.tilt", 21: "cabinet.slam-tilt", 22: "cabinet.coin-door"}[address]
 					extra["roles"] = [role]
@@ -1616,12 +1654,12 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1642,24 +1680,6 @@ def build() -> dict[str, Any]:
 		"sources": source_records(),
 		"knowledge": {"path": "knowledge/williams/junkyard-1996.md", "status": "complete"},
 		"conflicts": [
-			{
-				"id": "conflict.junkyard.past-crane-opto-not-normalized",
-				"status": "unresolved",
-				"description": (
-					"Switch 44 (Past Crane) is opto-constructed per the manual's Switch Locations parts list "
-					"(2-35), which prints an A-16908 (LED) / A-16909 (PHOTO TRANS) opto pair for item 44 as it "
-					"does for items 41-43 -- but pinned PinMAME's jyGameData inverted-switch mask "
-					"({0x00,0x00,0x00,0x7f,0x07,0x00,0x00,...}) covers column 4 rows 1-3 (0x07, switches 41-43) "
-					"and leaves row 4 (switch 44) uninverted. The other ten opto addresses (31-37, 41-43) all "
-					"agree between the manual and the emulator; this is the sole polarity disagreement, of the "
-					"same family as Monster Bash's Dracula-position optos and Indiana Jones's captive-ball opto. "
-					"Resolution path: a LibPinMAME gameplay-harness trace of a legal jy_11/jy_12 ROM observing "
-					"the public idle state of switch 44 and its transitions as the crane passes, or a later "
-					"corrected upstream mask."
-				),
-				"path": "inputs[binding.device=44]",
-				"source_refs": ["manual.williams.junkyard.1996", "pinmame.core.8371478a7640"],
-			},
 			{
 				"id": "conflict.junkyard.lamp-86-plane",
 				"status": "unresolved",
@@ -1726,7 +1746,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
 		"blockers": [
-			"Switch 44 (Past Crane) polarity remains unresolved and the crane-related sensors carry "
+			"Lamp 86 (Gen. Crane) sits on a disputed physical plane, and the crane-related sensors carry "
 			"documented projections rather than surveyed coordinates; several GI and flasher devices sit on "
 			"backbox/insert-panel circuits with no playfield placement. See the promotion decision.",
 		],
@@ -1785,7 +1805,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"but the flashers themselves are placed at their script-bound playfield primitives.",
 		],
 		"unresolved": [
-			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"},
 			{"group": "pinmame.output.lamp", "address": 86, "reason": "physical plane disputed (manual insert-panel footnote vs playfield-crane drawing); see conflict.junkyard.lamp-86-plane"},
 		],
 	}
@@ -1797,8 +1816,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']} spatial-report format; spatial coverage itself is `candidate`. The "
 		"definition remains `partial` at "
-		"`machines/partial/williams/junkyard-1996.json` because the past-crane opto polarity conflict is "
-		"unresolved and several mechanism-internal sensors carry documented projections.",
+		"`machines/partial/williams/junkyard-1996.json` because the lamp-86 plane conflict is unresolved "
+		"and several mechanism-internal sensors carry documented projections.",
 		"",
 		"The matching source is the retained known-working `Junk Yard (Williams 1996).vpx` (v1.3 by "
 		f"mfuegemann) at SHA-256 `{TABLE_SHA256}`. The retained `vpxtool` extraction produced the embedded "
@@ -1818,8 +1837,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"because the retained script's cvpmBallStack helpers model ball sensing purely as an internal switch "
 		"array. Those addresses are explicit documented projections onto the real kicker object that carries "
 		"the mechanism's exit/entry point.",
-		"- Switch 44 (Past Crane) is the single polarity disagreement: opto-constructed per the manual but "
-		"not normalized by jyGameData's mask. Recorded as a first-class unresolved conflict.",
+		"- Switch 44 (Past Crane) is opto-constructed per the manual but not normalized by jyGameData's "
+		"mask. The ROM's own T.1 SWITCH EDGES test settles that as correct: in hash-pinned jy_12, jy_11 "
+		"and jy_03 runs it reads public 44 = 1 as active, like the normalized opto 41 and the ordinary "
+		"switch 45, so no conflict is recorded and a recreation never inverts it.",
 		"- GI addresses 2-4 are backbox/cabinet circuits with controlled `not_applicable` spatial records. "
 		"Of the playfield flashers, only the backbox-only flasher 18 carries a controlled "
 		"`cabinet_or_service` record; the flashers 25 (Shooter), 27 (Dog House) and 28 (Cars) and the "
@@ -1836,9 +1857,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Junk Yard is a deterministic partial. The past-crane opto polarity question and the trough/crane "
-		"projections must be resolved before promotion; a LibPinMAME harness trace of the public idle state "
-		"of switch 44 on a legal jy_11/jy_12 ROM is the concrete next step. Before any promotion, a "
+		"Junk Yard is a deterministic partial. The lamp-86 plane conflict and the trough/crane projections "
+		"must be resolved before promotion. Before any promotion, a "
 		"vision-capable curator must also visually re-check the six manual transcriptions (recorded "
 		"`reviewed: false` / `method: model`) against the rendered pages, since the manual-derived device "
 		"labels and wiring rest on those unchecked transcriptions.",

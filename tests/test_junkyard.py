@@ -23,6 +23,12 @@ DRIVER_IDS = {"jy_12", "jy_12c", "jy_11", "jy_03"}
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {23, 25, 55, 75, 81, 82, 83, 84, 85, 86, 87, 88}
 OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44}
+RUNTIME_SOURCES = {
+	"jy_12": "runtime.junkyard.jy-12.switch-edges",
+	"jy_11": "runtime.junkyard.jy-11.switch-edges",
+	"jy_03": "runtime.junkyard.jy-03.switch-edges",
+}
+PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -64,12 +70,12 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["polarity", "spatial_placement", "unresolved_conflicts"],
+			["spatial_placement", "unresolved_conflicts"],
 			self.definition["coverage"]["missing"],
 		)
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
 			self.assertIn(state, {"validated", "not_applicable", "candidate", "conflicted"}, dimension)
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("williams.junkyard.1996", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(1996, self.definition["machine"]["year"])
@@ -80,7 +86,7 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertEqual("0x80", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual(2, len(self.definition["conflicts"]))
+		self.assertEqual(1, len(self.definition["conflicts"]))
 
 	def test_the_stale_author_ready_artifact_is_gone_and_the_stub_is_superseded(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -107,11 +113,13 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			self.assertEqual("used", self.switches[address]["availability"], address)
 
-	def test_printed_opto_polarity_matches_pinmames_mask_for_ten_of_eleven(self) -> None:
+	def test_only_the_masked_optos_rest_closed(self) -> None:
+		# A masked opto the ROM reads active at public 1 rests closed; the unmasked opto 44, which the
+		# ROM's T.1 SWITCH EDGES test also reads active at public 1, rests open like an ordinary switch.
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			switch = self.switches[address]
-			self.assertEqual(address in OPTO_ADDRESSES, switch["normally_closed"], address)
-			if address in OPTO_ADDRESSES and address != 44:
+			self.assertEqual(address in OPTO_ADDRESSES - {44}, switch["normally_closed"], address)
+			if address in OPTO_ADDRESSES:
 				self.assertEqual("opto", switch["physical"]["switch_type"], address)
 		self.assertEqual("constant", self.switches[24]["kind"])
 		self.assertTrue(self.switches[24]["constant_active"])
@@ -121,7 +129,7 @@ class JunkyardDefinitionTests(unittest.TestCase):
 	def test_the_inverted_switch_mask_normalizes_31_37_and_41_43_but_not_44(self) -> None:
 		# jyGameData's inverted-switch mask: column 3 = 0x7f (rows 1-7 = 31-37), column 4 = 0x07
 		# (rows 1-3 = 41-43). Re-derive in code; switch 44 (Past Crane) is the one opto the mask
-		# does not cover, recorded as a first-class unresolved conflict.
+		# does not cover, and the ROM's own switch-edges test shows that needs no inversion.
 		mask = (0x00, 0x00, 0x00, 0x7f, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 		normalized = set()
 		for column in range(1, 9):
@@ -134,18 +142,110 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertEqual("opto", self.switches[44]["physical"]["switch_type"])
 		self.assertEqual("A-16908 (LED) / A-16909 (PHOTO TRANS)", self.switches[44]["physical"]["part_number"])
 
-	def test_the_past_crane_opto_conflict_is_first_class_and_has_a_resolution_path(self) -> None:
-		conflicts = self.definition["conflicts"]
-		self.assertEqual(2, len(conflicts))
-		by_id = {c["id"]: c for c in conflicts}
-		conflict = by_id["conflict.junkyard.past-crane-opto-not-normalized"]
-		self.assertEqual("unresolved", conflict["status"])
-		self.assertIn("switch 44", conflict["description"])
-		self.assertIn("Resolution path:", conflict["description"])
-		self.assertTrue(conflict["source_refs"])
-		lamp_conflict = by_id["conflict.junkyard.lamp-86-plane"]
+	def test_the_past_crane_conflict_is_withdrawn_on_the_roms_switch_edges_test(self) -> None:
+		(lamp_conflict,) = self.definition["conflicts"]
+		self.assertEqual("conflict.junkyard.lamp-86-plane", lamp_conflict["id"])
 		self.assertEqual("unresolved", lamp_conflict["status"])
 		self.assertIn("Resolution path:", lamp_conflict["description"])
+		switch = self.switches[44]
+		self.assertFalse(switch["normally_closed"])
+		self.assertEqual("validated", switch["provenance"]["status"])
+		self.assertLessEqual(set(RUNTIME_SOURCES.values()), set(switch["provenance"]["source_refs"]))
+		notes = switch["physical"]["notes"]
+		self.assertIn("T.1 SWITCH EDGES", notes)
+		self.assertIn("never inverts it", notes)
+		self.assertIn("normally_closed is false", notes)
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		for game, source_id in RUNTIME_SOURCES.items():
+			self.assertEqual("runtime_scenario", sources[source_id]["kind"], game)
+			self.assertEqual(f"internal:evidence/runtime/wpc-95/junkyard-{game}-switch-edges.json", sources[source_id]["uri"])
+		for address in OPTO_ADDRESSES - {44}:
+			self.assertFalse(set(RUNTIME_SOURCES.values()) & set(self.switches[address]["provenance"]["source_refs"]), address)
+
+	def test_switch_edges_evidence_shows_44_active_at_public_one_like_its_controls(self) -> None:
+		import hashlib
+
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-95" / "jy-switch-edges-44.json"
+		self.assertNotIn("game", load_json(scenario))
+		scenario_sha256 = hashlib.sha256(scenario.read_bytes()).hexdigest()
+		rom_hashes = set()
+		edge_frames: dict[str, list[str]] = {}
+		for game in RUNTIME_SOURCES:
+			with self.subTest(game=game):
+				evidence = load_json(ROOT / "evidence" / "runtime" / "wpc-95" / f"junkyard-{game}-switch-edges.json")
+				self.assertEqual(game, evidence["runtime"]["game"])
+				self.assertEqual([game], evidence["driver_ids"])
+				self.assertEqual(["williams.junkyard.1996"], evidence["machine_ids"])
+				self.assertEqual(PINNED_LIBRARY_SHA256, evidence["runtime"]["emulator"]["sha256"])
+				rom_hashes.add(evidence["runtime"]["rom_archive_sha256"])
+				(raw,) = evidence["runtime"]["raw_runs"]
+				self.assertEqual(scenario_sha256, raw["scenario_sha256"])
+				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+				observations = evidence["runtime"]["observations"]["named_action_observations"]
+				self.assertEqual([45, 45, 41, 41, 44, 44, 44, 44, 45, 45], [item["input_address"] for item in observations])
+				for item in observations:
+					# Host-written levels are stimulus, never ROM observations.
+					self.assertEqual([], item["observed_switch_addresses"])
+					address = item["input_address"]
+					if item["host_stimulus_switch_addresses"]:
+						self.assertEqual([address], item["host_stimulus_switch_addresses"])
+						self.assertIn(f"reads public {address} = 1 as active", item["label"])
+					else:
+						self.assertIn("returns to SWITCH EDGES", item["label"])
+				snapshots = evidence["runtime"]["observations"]["diagnostic_snapshots"]
+				self.assertEqual(12, len(snapshots))
+				self.assertTrue(snapshots[0]["interpreted_text"].startswith("JUNK YARD / 50052 REV."))
+				self.assertEqual("SWITCH EDGES / T.1", snapshots[1]["interpreted_text"])
+				by_level: dict[tuple[int, int], set[str]] = {}
+				for snapshot, item in zip(snapshots[2:], observations, strict=True):
+					address = item["input_address"]
+					state = 1 if item["host_stimulus_switch_addresses"] else 0
+					self.assertIn(f"public {address} (", snapshot["label"])
+					self.assertIn(f"was set to {state}", snapshot["label"])
+					top = {45: "RAMP EXIT", 41: "PAST SPINNER", 44: "PAST CRANE"}[address] if state else "SWITCH EDGES"
+					self.assertTrue(snapshot["interpreted_text"].startswith(f"{top} / T.1 LAST SW {address} / "), snapshot["label"])
+					by_level.setdefault((address, state), set()).add(snapshot["pixel_sha256"])
+				for key, hashes in by_level.items():
+					# A repeated level draws the identical frame; a menu left blinking would not.
+					self.assertEqual(1, len(hashes), key)
+				for address in (41, 44, 45):
+					self.assertTrue(by_level[(address, 1)].isdisjoint(by_level[(address, 0)]), address)
+				edge_frames[game] = [snapshot["pixel_sha256"] for snapshot in snapshots[1:]]
+				self._check_retained_run(game, raw, snapshots)
+		self.assertEqual(3, len(rom_hashes))
+		# The two production ROMs print identical T.1 pages; the prototype's wire caption differs.
+		self.assertEqual(edge_frames["jy_12"], edge_frames["jy_11"])
+		self.assertTrue(set(edge_frames["jy_03"][1:]).isdisjoint(edge_frames["jy_12"][1:]))
+
+	def _check_retained_run(self, game: str, raw: dict[str, object], snapshots: list[dict[str, object]]) -> None:
+		import hashlib
+
+		import build_external_evidence_manifest as manifest
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		# The canonical directory manifest covers the raw trace, scenario copy, DMD frames and state.
+		digest = manifest.check_manifest(path.parent, game)
+		self.assertIn(f"{game}/manifest.json SHA-256 {digest}", load_json(ROOT / "evidence" / "runtime" / "wpc-95" / f"junkyard-{game}-switch-edges.json")["source"]["attribution"])
+		run = load_json(path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual(game, run["game"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		raw_frames = []
+		for snap in run["snapshots"]:
+			if snap["label"] in {"Enter 1 (game identification)", "Enter 4 (start T.1)"} or " -> " in snap["label"]:
+				raw_frames.append((snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]))
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual({41: 0, 44: 0, 45: 0} | {address: state}, {a: levels[a] for a in (41, 44, 45)}, snap["label"])
+		# Every summary snapshot is the raw frame of the step it names, in order.
+		self.assertEqual(raw_frames, [(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots])
 
 	def test_flipper_positions_lower_fitted_upper_unfitted_spinner_on_f5(self) -> None:
 		for address in (111, 112, 113, 114, 115):
@@ -398,8 +498,9 @@ class JunkyardDefinitionTests(unittest.TestCase):
 			"08819a08990c61070c4a3a99a4d5f00d9d082b6d00477ffaf9b0a58fddce3fe1",
 			sources["manual.williams.junkyard.1996"]["sha256"],
 		)
+		runtime = {source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"}
+		self.assertEqual(set(RUNTIME_SOURCES.values()), runtime)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])

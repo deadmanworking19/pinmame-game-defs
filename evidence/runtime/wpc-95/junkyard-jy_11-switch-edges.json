@@ -1,0 +1,322 @@
+{
+  "driver_ids": [
+    "jy_11"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.junkyard.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game jy_11 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/jy-switch-edges-44.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "jy_11",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "JUNK YARD / 50052 REV. 1.1",
+          "label": "game identification screen after the first Enter",
+          "nonzero_pixels": 271,
+          "pixel_sha256": "276525055feeee0800e43934c0f2939eb40b062b2289ae321a4ddbf10f4132e4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0",
+          "nonzero_pixels": 459,
+          "pixel_sha256": "96aa5d395f48cd6992c688629c81982899c98c383e106a9f29763feded7170c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP EXIT / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 1",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "4717c0b2ebbd87dff5b2fcbc3273c17b3aea97e4312e77102f00042507a5939e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 0",
+          "nonzero_pixels": 783,
+          "pixel_sha256": "7c7c522bd747b3ae10602a64057a221405942ed7b51f11ee238b44fe8330af5d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PAST SPINNER / T.1 LAST SW 41 / WHT-BRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (opto normalized by jyGameData's mask) was set to 1",
+          "nonzero_pixels": 773,
+          "pixel_sha256": "8878f69e5c21b1dc9595bbd2a44b0fbec46ac0b36207c874a7467695a384875e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 41 (opto normalized by jyGameData's mask) was set to 0",
+          "nonzero_pixels": 780,
+          "pixel_sha256": "d2140f327a10952d96226d40831a7711fab55209a969378780b4ad70b3487066"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PAST CRANE / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 44 (printed opto, not normalized by jyGameData's mask) was set to 1",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "45ffc9686b5a760d1701c2667540b48adbf4b1d6169c92d74da5de4e6862639f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 44 (printed opto, not normalized by jyGameData's mask) was set to 0",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "eeadf12ec8d62e835e08c6c42495d89c0788ec87b2aee1013398263fe433227a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PAST CRANE / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 44 (printed opto, not normalized by jyGameData's mask) was set to 1 again",
+          "nonzero_pixels": 748,
+          "pixel_sha256": "45ffc9686b5a760d1701c2667540b48adbf4b1d6169c92d74da5de4e6862639f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 44 / WHT-YEL GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 44 (printed opto, not normalized by jyGameData's mask) was set to 0 again",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "eeadf12ec8d62e835e08c6c42495d89c0788ec87b2aee1013398263fe433227a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP EXIT / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 1 again",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "4717c0b2ebbd87dff5b2fcbc3273c17b3aea97e4312e77102f00042507a5939e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 45 / WHT-GRN GRN-WHT",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 0 again",
+          "nonzero_pixels": 783,
+          "pixel_sha256": "7c7c522bd747b3ae10602a64057a221405942ed7b51f11ee238b44fe8330af5d"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (RAMP EXIT), so the ROM reads public 45 = 1 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (opto normalized by jyGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (PAST SPINNER), so the ROM reads public 41 = 1 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 (opto normalized by jyGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 (printed opto, not normalized by jyGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it (PAST CRANE), so the ROM reads public 44 = 1 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 (printed opto, not normalized by jyGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 (printed opto, not normalized by jyGameData's mask) set to 1 again inside T.1 SWITCH EDGES: the ROM's top line names it (PAST CRANE), so the ROM reads public 44 = 1 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 (printed opto, not normalized by jyGameData's mask) set to 0 again inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 1 again inside T.1 SWITCH EDGES: the ROM's top line names it (RAMP EXIT), so the ROM reads public 45 = 1 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 0 again inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES, so the ROM reads public 0 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 18,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "jy-11-switch-edges-44",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/junkyard-1996/harness/jy_11/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/jy-switch-edges-44.json",
+        "scenario_sha256": "82cb7deede57af3ea055d970d24f0883b9fddd60e72cbc82fcee91869928bf02",
+        "self_test_pulses": 0,
+        "sha256": "998e69c100d166f29e5f512b30fac1cb075fda08f10745db9075e5a1bc2bf741",
+        "snapshot_count": 19,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          41,
+          44,
+          45
+        ]
+      }
+    ],
+    "rom_archive_sha256": "570f46a9ea272b5633c82ec2c4c60a969bb8bd3d0c6deab2d7577fbaf575410c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest jy_11/manifest.json SHA-256 e534ec3f37bbf32ed82f19d63c2d3aa48f00ac8fbed0ae73f388221e520ba627 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/junkyard-1996/harness/jy_11",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "998e69c100d166f29e5f512b30fac1cb075fda08f10745db9075e5a1bc2bf741"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
