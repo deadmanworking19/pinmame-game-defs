@@ -302,6 +302,12 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         self.assertIn(f"torp_e21/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
         run = json.loads(path.read_text(encoding="utf-8"))
         self.assertIsNone(run["failure"])
+        # The summary and the raw run agree on driver, library and scenario.
+        self.assertEqual("torp_e21", evidence["runtime"]["game"])
+        self.assertEqual(evidence["runtime"]["game"], run["game"])
+        self.assertEqual("deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c", run["library_sha256"])
+        self.assertEqual(evidence["runtime"]["emulator"]["sha256"], run["library_sha256"])
+        self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
         lit = sorted({event["number"] for event in run["events"] if event["event"] == "lamp" and event["state"]})
         self.assertEqual(evidence["runtime"]["observations"]["lamp_addresses_seen"], lit)
 

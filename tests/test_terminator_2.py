@@ -237,6 +237,11 @@ class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
 		run = json.loads(path.read_text(encoding="utf-8"))
 		self.assertIsNone(run["failure"])
 		self.assertEqual(self.LIBRARY_SHA256, run["library_sha256"])
+		# The summary and the raw run agree on driver, library and scenario.
+		self.assertEqual("t2_l8", run["game"])
+		self.assertEqual(runtime["game"], run["game"])
+		self.assertEqual(runtime["emulator"]["sha256"], run["library_sha256"])
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
 		steps = {step["label"]: step for step in run["steps"]}
 		for label, address in (("solenoid test up to 12", 12), ("flasher test up to 24", 24)):
 			fired = {item["number"] for item in steps[label]["transitions"]["solenoids"] if any(item["states"])}

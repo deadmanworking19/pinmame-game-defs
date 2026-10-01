@@ -798,6 +798,10 @@ class SwitchTestEvidenceTests(unittest.TestCase):
 		run = load_json(path)
 		self.assertIsNone(run["failure"])
 		self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+		# The summary and the raw run agree on driver, library and scenario.
+		self.assertEqual(game, run["game"])
+		self.assertEqual(evidence["runtime"]["game"], run["game"])
+		self.assertEqual(evidence["runtime"]["emulator"]["sha256"], run["library_sha256"])
 		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
 		return run
 

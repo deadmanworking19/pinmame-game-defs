@@ -426,6 +426,10 @@ class AvengersSwitchTestEvidenceTests(unittest.TestCase):
 				run = load_json(run_path)
 				self.assertIsNone(run["failure"])
 				self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+				# The summary and the raw run agree on driver, library and scenario.
+				self.assertEqual(runtime["game"], run["game"])
+				self.assertEqual(runtime["emulator"]["sha256"], run["library_sha256"])
+				self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
 				by_label = {snap["label"]: snap for snap in run["snapshots"]}
 				expected = [by_label["booted"], by_label["Select 5: switch test"]]
 				for label in ("hold 47", "hold 58", "hold 61", "hold 58 again", "hold 61 again", "hold 48"):
