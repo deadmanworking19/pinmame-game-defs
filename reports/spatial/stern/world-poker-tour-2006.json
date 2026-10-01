@@ -1,65 +1,146 @@
 {
   "coordinates": "x=(raw_x-0)/952, y=(raw_y-0)/2250; six-decimal repository helper values; player view, y rear to apron",
+  "drawing_reconciliation": {
+    "affine": {
+      "formula": "raw = a*u + b*v + c on 200 dpi render pixels",
+      "raw_x": [
+        1.26362823,
+        -0.021883123,
+        -204.874811683
+      ],
+      "raw_y": [
+        -0.02263555,
+        1.404107777,
+        -439.509992554
+      ]
+    },
+    "controls": [
+      {
+        "object": "Bumper1b",
+        "pixel": [
+          531,
+          522.5
+        ],
+        "raw_vpu": [
+          445.463,
+          278.064
+        ],
+        "residual_vpu": 10.1
+      },
+      {
+        "object": "Bumper2b",
+        "pixel": [
+          685,
+          525
+        ],
+        "raw_vpu": [
+          657.877,
+          284.632
+        ],
+        "residual_vpu": 9.0
+      },
+      {
+        "object": "Bumper3b",
+        "pixel": [
+          607.5,
+          652.5
+        ],
+        "raw_vpu": [
+          549.115,
+          464.67
+        ],
+        "residual_vpu": 1.9
+      },
+      {
+        "object": "LeftFlipper",
+        "pixel": [
+          405,
+          1683
+        ],
+        "raw_vpu": [
+          275.449,
+          1916.37
+        ],
+        "residual_vpu": 5.7
+      },
+      {
+        "object": "RightFlipper",
+        "pixel": [
+          660,
+          1690
+        ],
+        "raw_vpu": [
+          586.699,
+          1916.37
+        ],
+        "residual_vpu": 5.8
+      }
+    ],
+    "method": "Independent visual reconciliation, 2026-10-01. Control pixels were read by eye on gridded native crops of the 200 dpi renders (bumper ring centres, lower flipper pivot circles); pixel-to-VPU least-squares affine; every placed switch, lamp and coil anchor was then overlaid and visually confirmed beside its own printed number box. Identity check only: drawing points are not used as coordinates.",
+    "renders": {
+      "command": "pdftoppm 23.05.0 -r 200 -png -f N -l N World_Poker_Tour_Manual.pdf; the three pages place the same playfield art at the same position, so one fit serves all three",
+      "pdf_page_11": {
+        "locator": "PDF p.11 / DR.9 Coil & Flash Lamp Locations",
+        "pixels": [
+          1700,
+          2200
+        ],
+        "sha256": "06a102fdffe391f9e3b46849d4ea5d653c4f8a76f2f72f88e965e62ccdc45a28"
+      },
+      "pdf_page_7": {
+        "locator": "PDF p.7 / DR.5 Switch Locations",
+        "pixels": [
+          1700,
+          2200
+        ],
+        "sha256": "e68de9ffbef019bac632f196989d4aa69cac43a8174970899a40c0d8b3fa7266"
+      },
+      "pdf_page_9": {
+        "locator": "PDF p.9 / DR.7 Lamp Locations",
+        "pixels": [
+          1700,
+          2200
+        ],
+        "sha256": "2785bc1bd8db3fc3f9990d8726cc09726b087e5d2b8026cf5fefcbe93be36086"
+      }
+    },
+    "result": "All 34 previously placed switches and 72 lamps, and the new spinner, bumper, sling, shooter-VUK and coil/flasher anchors, sit beside their own factory number boxes. The card-display centres are pinned separately to their 5x7 LED blocks.",
+    "retained_artifacts": {
+      "directory": "review-artifacts/stern.world-poker-tour.2006/session-20261001/drawing-reconciliation",
+      "manifest_sha256": "2693ccc2faee80416e583148a8b557df5c3a84e5aca42463d8df1f4f16c0ed87"
+    }
+  },
+  "embedded_script_sha256": "1b5b833d6dd2657a52eeed69ad556a7bfa066171cabf2526f1e1aa33daa77f0c",
   "extraction_manifest_sha256": "e15aefc9e7a736528882c6e6b89cf051103d4edbbcf73f7ce7c0a21d9c7dccfd",
   "format": "pinmame-spatial-blockers",
-  "located_observations": 120,
+  "located_observations": 149,
   "machine_id": "stern.world-poker-tour.2006",
   "manual_sha256": "4cf31702805e75d37aef1c0c1624426000fec6cabf71a47e27691f5d5f8b6d01",
   "missing_spatial_ids": [
-    "switch.3-shooter-lane-vuk",
-    "switch.8-right-orbit-spinner",
     "switch.14-lower-right-10-point",
     "switch.18-trough-4-left",
     "switch.19-trough-3",
     "switch.20-trough-2",
     "switch.21-trough-1-right",
     "switch.22-trough-stacking-opto",
-    "switch.26-left-slingshot",
-    "switch.27-right-slingshot",
-    "switch.30-left-bumper",
-    "switch.31-right-bumper",
-    "switch.32-bottom-bumper",
     "switch.41-lower-left-10-point",
     "switch.54-left-ramp-made",
-    "switch.d10-left-flipper-eos",
-    "switch.d12-right-flipper-eos",
-    "switch.d14-upper-left-flipper-eos",
-    "switch.d16-upper-right-flipper-eos",
-    "coil.1-trough-up-kicker",
-    "coil.2-auto-launch",
-    "coil.3-shooter-lane-vuk",
-    "coil.5-lower-left-drop-reset",
-    "coil.6-upper-left-drop-reset",
-    "coil.7-middle-drop-reset",
-    "coil.8-right-drop-reset",
-    "coil.9-left-bumper",
-    "coil.10-right-bumper",
-    "coil.11-bottom-bumper",
-    "coil.13-upper-playfield-left-flipper",
-    "coil.14-upper-playfield-right-flipper",
-    "coil.15-left-flipper",
-    "coil.16-right-flipper",
-    "coil.17-left-slingshot",
-    "coil.18-right-slingshot",
-    "coil.20-left-ramp-up-post",
-    "coil.21-bumper-eject",
-    "coil.22-left-slingshot-flasher",
-    "coil.23-right-slingshot-flasher",
     "coil.24-optional-coil",
-    "coil.25-left-spinner-flasher",
-    "coil.31-right-vuk-flasher",
     "lamp.3-deal-again",
     "gi.aggregate"
   ],
   "projection_classes": {
     "cabinet_or_service": "not applicable",
-    "exact_named_vpx_object_center": "observed only",
-    "manual_drawing_projection": "not used",
+    "coil_mechanism_anchor": "observed effect anchor on the script-bound bumper, sling wall, flipper pivot, kicker, shooter-lane trigger (Q2 shares SW23) or post; not a winding or coil-body centre",
+    "drop_bank_midpoint_projection": "Q5-Q8 effect anchor at the mean of the bank's four target faces; the reset coil body is not modelled",
+    "exact_named_vpx_object_center": "observed only: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
+    "flasher_bulb_light": "observed emitter on the bulb-size script light f22b/f23b/F25a/f31b at the factory DR.9 flasher; larger-falloff glow lights and Flasher sprites are excluded",
+    "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 drawings are an identity cross-check only (drawing_reconciliation)",
     "virtual_or_unused": "not applicable"
   },
   "promotion": "partial",
-  "reason": "Unresolved SW54/SW56 and Q32 fitment, GI/flasher/socket and mechanism geometry; fourteen card-display block centres are located as observed.",
-  "source_seed_sha256": "9636073a7cfab8bedbe4cca1e480fc1b598ce873a0926c50ae856807fcfbd333",
+  "reason": "Unresolved SW54/SW56 and Q32 fitment; GI, trough sensors 18-22, Deal Again lamp 3 and SW14/SW41 have no retained table object; coil anchors are mechanism projections, not coil bodies; fourteen card-display block centres are located as observed.",
+  "source_seed_sha256": "247355c0313417b0afff34747c727b0ccfbd70d76409481473833720509bb781",
   "table_sha256": "baa4e6e2ec618ed667afc397dea2ee6cdc5c444f811395b42dd537cfec98c443",
   "unresolved_conflict_ids": [
     "conflict.sw54-fitment",

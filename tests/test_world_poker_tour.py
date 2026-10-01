@@ -77,7 +77,8 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         self.assertTrue(all(not switches[i]["normally_closed"] for i in (84, 82, 88, 86)))
         for i in (83, 81, 87, 85):
             self.assertEqual("flipper assembly", switches[i]["physical"]["location"])
-            self.assertNotIn("spatial", switches[i])
+            self.assertEqual(("not_applicable", "internal_nonvisual"),
+                             (switches[i]["spatial"]["status"], switches[i]["spatial"]["reason"]))
         for i in (84, 82, 88, 86):
             self.assertEqual("cabinet", switches[i]["physical"]["location"])
             self.assertEqual("cabinet_or_service", switches[i]["spatial"]["reason"])
@@ -124,13 +125,57 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
         audit = load(AUDIT)
         self.assertEqual("pinmame-spatial-blockers", audit["format"])
         self.assertEqual(self.spatial["table_manifest_sha256"], audit["extraction_manifest_sha256"])
-        self.assertIn("coil.22-left-slingshot-flasher", audit["missing_spatial_ids"])
-        self.assertIn("lamp.3-deal-again", audit["missing_spatial_ids"])
-        self.assertTrue({"switch.d10-left-flipper-eos", "switch.d12-right-flipper-eos",
-                         "switch.d14-upper-left-flipper-eos", "switch.d16-upper-right-flipper-eos"}
-                        <= set(audit["missing_spatial_ids"]))
+        self.assertEqual(["switch.14-lower-right-10-point", "switch.18-trough-4-left", "switch.19-trough-3",
+                          "switch.20-trough-2", "switch.21-trough-1-right", "switch.22-trough-stacking-opto",
+                          "switch.41-lower-left-10-point", "switch.54-left-ramp-made", "coil.24-optional-coil",
+                          "lamp.3-deal-again", "gi.aggregate"], audit["missing_spatial_ids"])
         self.assertEqual({"conflict.sw54-fitment", "conflict.q32-coil"},
                          set(audit["unresolved_conflict_ids"]))
+        self.assertEqual(5, len(audit["drawing_reconciliation"]["controls"]))
+        self.assertTrue(all(c["residual_vpu"] <= 12 for c in audit["drawing_reconciliation"]["controls"]))
+
+    def test_script_bound_mechanism_anchors(self) -> None:
+        objects = self.spatial["objects"]
+        # SW43 is bound through its Spinner; the same-numbered trigger has no handler.
+        self.assertNotIn("sw43", objects)
+        switches = address_map(self.definition["inputs"], "pinmame.input.switch")
+        expected = {3: "LaneKicker", 8: "sw8s", 26: "LeftSlingShot", 27: "RightSlingShot",
+                    30: "Bumper1b", 31: "Bumper2b", 32: "Bumper3b", 43: "sw43s"}
+        for number, name in expected.items():
+            placement = switches[number]["spatial"]["placements"][0]
+            self.assertEqual(("sensor", objects[name][0], objects[name][1]), (placement["role"], placement["x"], placement["y"]))
+        coils = address_map(self.definition["outputs"], "pinmame.output.solenoid")
+        anchors = {1: "BallRelease", 2: "sw23", 3: "LaneKicker", 9: "Bumper1b", 10: "Bumper2b", 11: "Bumper3b",
+                   13: "UpLeftFlipper", 14: "UpRightFlipper", 15: "LeftFlipper", 16: "RightFlipper",
+                   17: "LeftSlingShot", 18: "RightSlingShot", 20: "LeftPost", 21: "sw49",
+                   22: "f22b", 23: "f23b", 25: "F25a", 31: "f31b"}
+        for number, name in anchors.items():
+            placement = coils[number]["spatial"]["placements"][0]
+            role = "emitter" if coils[number]["kind"] == "flasher" else "effect"
+            self.assertEqual((role, objects[name][0], objects[name][1]), (placement["role"], placement["x"], placement["y"]))
+        for number, targets in {5: (33, 34, 35, 36), 6: (37, 38, 39, 40), 7: (10, 11, 12, 13), 8: (4, 5, 6, 7)}.items():
+            placement = coils[number]["spatial"]["placements"][0]
+            self.assertEqual((round(sum(objects[f"sw{t}"][0] for t in targets) / 4, 6),
+                              round(sum(objects[f"sw{t}"][1] for t in targets) / 4, 6)),
+                             (placement["x"], placement["y"]))
+        for number in (4, 12, 19, 26, 27, 28, 29, 30, 32):
+            self.assertEqual("not_applicable", coils[number]["spatial"]["status"])
+        ids = [p["id"] for group in ("inputs", "outputs", "displays") for item in self.definition[group]
+               for p in item.get("spatial", {}).get("placements", [])]
+        self.assertEqual(len(ids), len(set(ids)))
+
+    @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX root not configured")
+    def test_seed_objects_recompute_from_extraction(self) -> None:
+        base = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / "stern/world-poker-tour-2006/wpt-062018a"
+        for name, (x, y, kind, relative) in self.spatial["objects"].items():
+            item = load(base / relative)[kind]
+            if kind == "Wall":
+                points = [(p["x"], p["y"]) for p in item["drag_points"]]
+                raw = (sum(p[0] for p in points) / len(points), sum(p[1] for p in points) / len(points))
+            else:
+                point = item.get("center") or item.get("position")
+                raw = (point["x"], point["y"])
+            self.assertEqual((name, round(raw[0] / 952, 6), round(raw[1] / 2250, 6)), (item["name"], x, y))
 
     def test_excerpt_and_scenario_integrity(self) -> None:
         sources = {s["id"]: s for s in self.definition["sources"]}
@@ -255,18 +300,34 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
                 path = session / filename
                 path.write_text(json.dumps(trace), encoding="utf-8")
                 trace_hashes.append(hashlib.sha256(path.read_bytes()).hexdigest())
+            # Fixture drawing-reconciliation directory with its own manifest.
+            spatial = json.loads(json.dumps(self.spatial))
+            drawing_dir = review_root / spatial["drawing_reconciliation"]["retained_artifacts"]["directory"].split("review-artifacts/", 1)[1]
+            drawing_dir.mkdir(parents=True)
+            for render in ("wpt200_sw-007.png", "wpt200_lamp-009.png", "wpt200_coil-011.png"):
+                (drawing_dir / render).write_bytes(render.encode("ascii"))
+            for key, render in (("pdf_page_7", "wpt200_sw-007.png"), ("pdf_page_9", "wpt200_lamp-009.png"), ("pdf_page_11", "wpt200_coil-011.png")):
+                spatial["drawing_reconciliation"]["renders"][key]["sha256"] = hashlib.sha256((drawing_dir / render).read_bytes()).hexdigest()
+            manifest_spec = importlib.util.spec_from_file_location("wpt_manifest", ROOT / "tools/build_external_evidence_manifest.py")
+            manifest_module = importlib.util.module_from_spec(manifest_spec)
+            manifest_spec.loader.exec_module(manifest_module)
+            spatial["drawing_reconciliation"]["retained_artifacts"]["manifest_sha256"] = manifest_module.write_manifest(drawing_dir, "wpt_140a")
             with patch.dict(os.environ, {"PINMAME_REVIEW_ARTIFACTS_ROOT": str(review_root)}, clear=True), \
                     patch.multiple(curator, ROOT=checkout, PINNED_LIBRARY_SHA256=native_hash,
                                    PINNED_SWITCH_TRACE_SHA256=trace_hashes[0], PINNED_COIL_TRACE_SHA256=trace_hashes[1]):
-                curator.verify_external(self.seed, self.spatial)
+                curator.verify_external(self.seed, spatial)
                 missing_frame = session / "coil-sweep-frames/39.pgm"
                 missing_frame.unlink()
                 with self.assertRaisesRegex(ValueError, "missing retained DMD frames"):
-                    curator.verify_external(self.seed, self.spatial)
+                    curator.verify_external(self.seed, spatial)
                 missing_frame.write_bytes(b"P5\n1 1\n255\n\0")
+                (drawing_dir / "wpt200_lamp-009.png").write_bytes(b"tampered")
+                with self.assertRaisesRegex(ValueError, "wrong drawing reconciliation file"):
+                    curator.verify_external(self.seed, spatial)
+                (drawing_dir / "wpt200_lamp-009.png").write_bytes(b"wpt200_lamp-009.png")
                 native.write_bytes(b"wrong native library")
                 with self.assertRaisesRegex(ValueError, "wrong verified pinned native"):
-                    curator.verify_external(self.seed, self.spatial)
+                    curator.verify_external(self.seed, spatial)
 
     @unittest.skipUnless(os.environ.get("PINMAME_MANUALS_ROOT"), "retained manual root not configured")
     def test_retained_manual_and_bulletin(self) -> None:

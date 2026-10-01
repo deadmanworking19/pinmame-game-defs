@@ -97,6 +97,23 @@ LAMP_COLUMN_WIRES = ["RED-BRN", "RED-BLK", "RED-ORG", "RED-YEL", "RED-GRN", "RED
 LAMP_COLUMN_PINS = ["J12-P1", "J12-P2", "J12-P3", "J12-P4", "J12-P5", "J12-P6", "J12-P7", "J12-P9", "J12-P10", "J12-P11"]
 LAMP_RETURN_WIRES = ["YEL-BRN", "YEL-RED", "YEL-ORG", "YEL-BLK", "YEL-GRN", "YEL-BLU", "YEL-VIO", "YEL-GRY"]
 LAMP_RETURN_PINS = ["J13-P9", "J13-P8", "J13-P7", "J13-P6", "J13-P5", "J13-P4", "J13-P3", "J13-P1"]
+# Table objects the embedded script binds to an address but that are not named
+# swN/lN. Each was confirmed beside its own factory DR.5/DR.9 number box
+# (spatial seed drawing_reconciliation). SW43/SW8 bind through their Spinner
+# objects; the same-numbered sw43 trigger has no handler.
+SWITCH_OBJECTS = {3: "LaneKicker", 8: "sw8s", 26: "LeftSlingShot", 27: "RightSlingShot",
+                  30: "Bumper1b", 31: "Bumper2b", 32: "Bumper3b", 43: "sw43s"}
+# Coil effect anchors are the script-bound mechanism object, never a winding
+# centre; flashers use the bulb-size (smallest-falloff) script light at the
+# factory flasher position, not its glow/halo helpers or Flasher sprite.
+COIL_OBJECTS = {1: "BallRelease", 2: "sw23", 3: "LaneKicker", 9: "Bumper1b", 10: "Bumper2b",
+                11: "Bumper3b", 13: "UpLeftFlipper", 14: "UpRightFlipper", 15: "LeftFlipper",
+                16: "RightFlipper", 17: "LeftSlingShot", 18: "RightSlingShot", 20: "LeftPost",
+                21: "sw49", 22: "f22b", 23: "f23b", 25: "F25a", 31: "f31b"}
+# Each drop-target reset coil lifts one whole bank; its anchor is the mean of
+# that bank's four target faces (the factory DR.9 box sits at the bank middle).
+DROP_BANKS = {5: (33, 34, 35, 36), 6: (37, 38, 39, 40), 7: (10, 11, 12, 13), 8: (4, 5, 6, 7)}
+EMBEDDED_SCRIPT_SHA256 = "1b5b833d6dd2657a52eeed69ad556a7bfa066171cabf2526f1e1aa33daa77f0c"
 
 
 def sha(path: Path) -> str:
@@ -119,16 +136,29 @@ def na(reason: str, *refs: str) -> dict:
     return {"status": "not_applicable", "reason": reason, "provenance": prov(*refs)}
 
 
-def placed(name: str, role: str, objects: dict, *refs: str) -> dict | None:
+def placed(name: str, role: str, objects: dict, *refs: str, ident: str | None = None) -> dict | None:
     object_data = objects.get(name)
     if object_data is None:
         return None
     return {
         "status": "observed",
         "placements": [{
-            "id": f"placement.{slug(name)}", "role": role, "space": "playfield",
+            "id": ident or f"placement.{slug(name)}", "role": role, "space": "playfield",
             "x": object_data[0], "y": object_data[1],
             "provenance": prov(TABLE, *refs, status="observed"),
+        }],
+    }
+
+
+def bank_midpoint(n: int, objects: dict) -> dict:
+    targets = [objects[f"sw{t}"] for t in DROP_BANKS[n]]
+    return {
+        "status": "observed",
+        "placements": [{
+            "id": f"placement.coil-{n}.bank-midpoint", "role": "effect", "space": "playfield",
+            "x": round(sum(t[0] for t in targets) / len(targets), 6),
+            "y": round(sum(t[1] for t in targets) / len(targets), 6),
+            "provenance": prov(TABLE, MANUAL, MANUAL_ASSEMBLY, status="observed"),
         }],
     }
 
@@ -204,7 +234,7 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
         elif cabinet or n in {55, 56, 57, 58, 59, 60, 61, 62, 63}:
             item["spatial"] = na("cabinet_or_service", MANUAL, *([MANUAL_ASSEMBLY] if n == 56 else []))
         elif n != 54:
-            name = f"sw{n}"
+            name = SWITCH_OBJECTS.get(n, f"sw{n}")
             candidate = placed(name, "sensor", spatial, MANUAL)
             if candidate:
                 item["spatial"] = candidate
@@ -225,8 +255,8 @@ def input_records(seed: dict, spatial: dict, switch_rows: list[list[str]]) -> li
             "provenance": prov(MANUAL, CORE),
         }
         if d in {10, 12, 14, 16}:
-            dedicated.pop("spatial")
-            dedicated["physical"]["notes"] = "Factory p.6 identifies a flipper-assembly EOS contact under the playfield; its exact physical contact position is not established by the retained VPX geometry."
+            dedicated["spatial"] = na("internal_nonvisual", MANUAL)
+            dedicated["physical"]["notes"] = "Factory p.6 identifies a flipper-assembly EOS contact under the playfield. Like other curated EOS contacts it is classified internal_nonvisual; its flipper's coil anchor is the flipper pivot."
         elif kind == "unknown" and availability != "unused":
             dedicated["physical"]["notes"] = "Factory dedicated chart names a coin or ticket sensing circuit; it does not establish its contact construction as a cabinet pushbutton."
         elif d in {9, 11, 13, 15}:
@@ -285,6 +315,11 @@ def output_records(seed: dict, spatial: dict, coil_rows: list[list[str]], lamp_r
         }
         if on_backpanel and not optional:
             item["spatial"] = na("cabinet_or_service", MANUAL)
+        elif n in COIL_OBJECTS:
+            item["spatial"] = placed(COIL_OBJECTS[n], "emitter" if flash else "effect", spatial, MANUAL,
+                                     ident=f"placement.coil-{n}.{slug(COIL_OBJECTS[n])}")
+        elif n in DROP_BANKS:
+            item["spatial"] = bank_midpoint(n, spatial)
         result.append(item)
     for n in range(33, 67):
         availability = "used" if n == 33 else "unused"
@@ -372,7 +407,7 @@ def sources(seed: dict, spatial: dict) -> list[dict]:
         {"id": CORE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": seed["pinmame_revision"], "locator": "src/wpc/sam.c WPT INITGAME, LED board and SAM I/O; src/wpc/core.c", "excerpts": [excerpt("wpt-core-topology", SOURCE_EXCERPT, "sam.c 923-1009, 1373-1398, 2361-2378, 2448; core.c 2117-2163"), excerpt("wpt-card-display-routing", MINI_EXCERPT, "sam.c 923-1009 and 2361-2378")]},
         {"id": CATALOG, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": seed["pinmame_revision"], "locator": "46 wpt_ drivers pinned native catalog"},
         {"id": SCRIPT, "kind": "vpx_script", "uri": "external:source-checkouts/vpxtable_scripts/World Poker Tour (Stern 2006) v.2.3.1.vbs", "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e", "sha256": "d44738c5fa4693a8b096f226399f3ea2f81c985a1e780c33d012acf7d2bc390a", "locator": "controller switch, solenoid and ball-routing callbacks", "known_working": True, "license": "NOASSERTION", "attribution": "VPX table script authors", "excerpts": [excerpt("wpt-script-routing", SOURCE_EXCERPT, "v2.3.1 lines 304-307, 539-574, 735-767, 910-911, 1094, 2649-2664")]},
-        {"id": TABLE, "kind": "vpx_table", "uri": "external:vpx-sources/stern/world-poker-tour-2006/wpt-062018a/wpt 062018a.vpx", "sha256": spatial["table_sha256"], "locator": "vpxtool v0.33.3 extraction; 952x2250 VPU; object centres and extraction manifest " + spatial["table_manifest_sha256"], "license": "NOASSERTION", "attribution": "VPX table author", "excerpts": [{"id": "wpt-table-object-centres", "locator": "vpxtool gameitems named lN/swN/ScoopTrigger and Dn", "path": SPATIAL_PATH.relative_to(ROOT).as_posix(), "sha256": sha(SPATIAL_PATH), "method": "mixed", "transcribed_by": "GPT Luna; GPT-6-Sol review", "reviewed": False}, excerpt("wpt-card-display-centres", MINI_EXCERPT, "script.vbs lines 1318-1389; Light.D18 through Light.D473 centres")]},
+        {"id": TABLE, "kind": "vpx_table", "uri": "external:vpx-sources/stern/world-poker-tour-2006/wpt-062018a/wpt 062018a.vpx", "sha256": spatial["table_sha256"], "locator": "vpxtool v0.33.3 extraction; 952x2250 VPU; object centres and extraction manifest " + spatial["table_manifest_sha256"], "license": "NOASSERTION", "attribution": "VPX table author", "excerpts": [{"id": "wpt-table-object-centres", "locator": "vpxtool gameitems named lN/swN/ScoopTrigger and Dn, plus the script-bound spinners, bumpers, slings, flippers, kickers, post and flasher bulb lights; drawing_reconciliation records the factory DR.5/7/9 check", "path": SPATIAL_PATH.relative_to(ROOT).as_posix(), "sha256": sha(SPATIAL_PATH), "method": "mixed", "transcribed_by": "GPT Luna; GPT-6-Sol review", "reviewed": False}, excerpt("wpt-card-display-centres", MINI_EXCERPT, "script.vbs lines 1318-1389; Light.D18 through Light.D473 centres")]},
         {"id": TABLE_OLD, "kind": "vpx_table", "uri": "external:vpx-sources/stern/world-poker-tour-2006/world-poker-tour-stern-2006/World Poker Tour (Stern 2006).vpx", "sha256": "92a9720af51c825c9603d9dc78acc2423b7f86c907e1c4a6e92393156a22d9b8", "locator": "Alternate 952x2250 VPX, wpt_140a, extraction manifest 368e8262d51e6db70f8f05a8919f008d8d0a92340d29b1527ff8e9c700ada9e6; embedded script ad1b9829 comments Q13/Q14 for SAM fastflips but its lower callbacks rotate the upper flippers", "license": "NOASSERTION", "attribution": "VPX table author", "excerpts": [excerpt("wpt-alternate-table", SOURCE_EXCERPT, "alternate table/script comparison")]},
         {"id": RUNTIME, "kind": "service_diagnostic", "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-switch-test-pinned-frames-run.json", "revision": seed["pinmame_revision"], "sha256": PINNED_SWITCH_TRACE_SHA256, "locator": "Verified pinned native DLL SHA-256 " + PINNED_LIBRARY_SHA256 + "; fresh wpt_140a ROM Switch Test: SW3/21/63 public level 1 reports SHOOTER LANE VUK, TROUGH #1 (R), JAIL BARS UP; committed scenario SHA-256 84ebcccc31bb7942bbefac737d3b88fa0bc1f786ae6c3e501ec861954961ec5a"},
         {"id": RUNTIME_COIL, "kind": "service_diagnostic", "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-coil-diagnostic-pinned-frames-run.json", "revision": seed["pinmame_revision"], "sha256": PINNED_COIL_TRACE_SHA256, "locator": "Verified pinned native DLL SHA-256 " + PINNED_LIBRARY_SHA256 + "; fresh wpt_140a Single Coil Test DMD sweep: displayed Q1-23 and Q25-32 labels, Q24 skipped; actions after Q24 are offset from host labels; Q32 ORG/BLK-GRY; next AUX1 selector is diagnostic #33, distinct from public synthetic game-on 33", "excerpts": [excerpt("wpt-coil-diagnostic", DIAG_EXCERPT, "V14.0 Single Coil Test DMD sweep")]},
@@ -400,6 +435,9 @@ def build(seed: dict, spatial: dict) -> dict:
     assert len(seed["switch_labels"]) == 64 and len(seed["dedicated_labels"]) == 24
     assert len(seed["lamp_labels"]) == 80 and len(seed["coil_labels"]) == 32
     assert all(spatial["bounds"][k] == v for k, v in {"left":0,"top":0,"right":952,"bottom":2250}.items())
+    mapped = set(SWITCH_OBJECTS.values()) | set(COIL_OBJECTS.values()) | {f"sw{t}" for bank in DROP_BANKS.values() for t in bank}
+    assert mapped <= set(spatial["objects"]), sorted(mapped - set(spatial["objects"]))
+    assert "sw43" not in spatial["objects"], "the unbound sw43 trigger must not stand for the SW43 spinner"
     catalog_drivers = [d for d in json.loads((ROOT/"catalog/pinmame.json").read_text(encoding="utf-8"))["drivers"] if d["id"].startswith("wpt_")]
     assert len(catalog_drivers) == 46 and all(d["root_driver"] == "wpt_140a" for d in catalog_drivers)
     drivers = []
@@ -481,14 +519,14 @@ The factory chart enumerates Q22/Q23 and Q25–Q31 as nine flashers, five on the
 
 ## Spatial and authority limits
 
-The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded only where its name and factory placement agree in broad region. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points include the apron Deal Again lamp 3, GI bulbs, flasher sockets, trough sensors, all four flipper EOS contacts and part of the ball mechanism; no guessed coordinates were filled. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
+The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded where its name and factory placement agree. Switches the table's embedded script binds through differently named objects use those objects: the SW8/SW43 orbit spinners `sw8s`/`sw43s` (the same-numbered `sw43` trigger has no handler), pop bumpers `Bumper1b`–`Bumper3b` for SW30–32, sling walls for SW26/27 and the shooter-VUK capture kicker `LaneKicker` for SW3. Coil anchors are the script-bound mechanism objects (bumpers, sling walls, flipper pivots, `BallRelease`, `LaneKicker`, eject popper `sw49`, `LeftPost`; Q2 shares the SW23 shooter-lane point), never a winding centre; Q5–Q8 drop-bank resets use the mean of their bank's four target faces. Flashers Q22/Q23/Q25/Q31 sit on the bulb-size script lights `f22b`/`f23b`/`F25a`/`f31b`, not their larger glow lights or Flasher sprites. Every placed switch, lamp and coil anchor was overlaid on the factory DR.5/DR.7/DR.9 location drawings through an independently read five-control fit and sits beside its own printed number box. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points are the Deal Again lamp 3, SW14/SW41 and the trough sensors (no table objects), SW54 (fitment conflict) and GI bulbs; no guessed coordinates were filled. The four flipper EOS contacts are classified internal_nonvisual. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
 
 ## Concrete blockers
 
 - SW54 has two physically separate manual assemblies and two VPX assertions. Q32's chart/schematic and its specific assembly drawing name different coils. ROM and board schematic settle Q32's orange J6-P10 supply against the chart's brown error, but an installed-coil inspection must settle its part. Confirm factory wiring or inspect installed assemblies.
 - Most switch factory contact polarity, especially optos, is not established by the sampled active-high ROM test; a wiring/ROM inversion trace must settle physical normally-closed claims.
 - The fourteen playfield card-display centres are now recorded as observed, with manual, PinMAME and VPX source roles separated. Original-machine mounting measurements would improve dimensional accuracy but do not make these modelled centres cabinet displays.
-- VPX light/trigger coordinates are modelled centres, not all bulb sockets or sensor contacts. GI, flashers, trough, and complex assemblies require further measured placements before author readiness.
+- VPX light/trigger coordinates are modelled centres, not all bulb sockets or sensor contacts, and coil anchors are mechanism projections. GI, the trough sensors, Deal Again lamp 3 and SW14/SW41 require measured placements before author readiness.
 
 ## Evidence
 
@@ -509,8 +547,16 @@ def audit(definition: dict, spatial: dict) -> dict:
         "source_seed_sha256": sha(SPATIAL_PATH), "manual_sha256": definition["sources"][0]["sha256"],
         "located_observations": sum("placements" in x.get("spatial", {}) for group in ("inputs","outputs","displays") for x in definition[group]),
         "missing_spatial_ids": missing, "unresolved_conflict_ids": unresolved,
-        "projection_classes": {"exact_named_vpx_object_center": "observed only", "manual_drawing_projection": "not used", "cabinet_or_service": "not applicable", "virtual_or_unused": "not applicable"},
-        "reason": "Unresolved SW54/SW56 and Q32 fitment, GI/flasher/socket and mechanism geometry; fourteen card-display block centres are located as observed.",
+        "projection_classes": {
+            "exact_named_vpx_object_center": "observed only: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
+            "coil_mechanism_anchor": "observed effect anchor on the script-bound bumper, sling wall, flipper pivot, kicker, shooter-lane trigger (Q2 shares SW23) or post; not a winding or coil-body centre",
+            "flasher_bulb_light": "observed emitter on the bulb-size script light f22b/f23b/F25a/f31b at the factory DR.9 flasher; larger-falloff glow lights and Flasher sprites are excluded",
+            "drop_bank_midpoint_projection": "Q5-Q8 effect anchor at the mean of the bank's four target faces; the reset coil body is not modelled",
+            "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 drawings are an identity cross-check only (drawing_reconciliation)",
+            "cabinet_or_service": "not applicable", "virtual_or_unused": "not applicable"},
+        "embedded_script_sha256": EMBEDDED_SCRIPT_SHA256,
+        "drawing_reconciliation": spatial["drawing_reconciliation"],
+        "reason": "Unresolved SW54/SW56 and Q32 fitment; GI, trough sensors 18-22, Deal Again lamp 3 and SW14/SW41 have no retained table object; coil anchors are mechanism projections, not coil bodies; fourteen card-display block centres are located as observed.",
     }
 
 
@@ -562,6 +608,19 @@ def verify_external(seed: dict, spatial: dict) -> None:
                     raise ValueError("missing retained DMD frames")
             except ValueError as exc:
                 raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: {target}: {exc}") from exc
+        retained = spatial["drawing_reconciliation"]["retained_artifacts"]
+        drawing_dir = Path(value) / retained["directory"].split("review-artifacts/", 1)[1]
+        manifest = drawing_dir / "manifest.json"
+        if not manifest.is_file() or sha(manifest) != retained["manifest_sha256"]:
+            raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: missing or wrong drawing reconciliation manifest {manifest}")
+        for entry in json.loads(manifest.read_text(encoding="utf-8"))["files"]:
+            if sha(drawing_dir / entry["path"]) != entry["sha256"]:
+                raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: wrong drawing reconciliation file {entry['path']}")
+        for render in spatial["drawing_reconciliation"]["renders"].values():
+            if isinstance(render, dict):
+                name = {"PDF p.7": "wpt200_sw-007.png", "PDF p.9": "wpt200_lamp-009.png", "PDF p.11": "wpt200_coil-011.png"}[render["locator"].split(" /")[0]]
+                if sha(drawing_dir / name) != render["sha256"]:
+                    raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: wrong retained render {name}")
         native = Path(value).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"
         if not native.is_file() or sha(native) != PINNED_LIBRARY_SHA256:
             raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: missing or wrong verified pinned native library {native}")
