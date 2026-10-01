@@ -103,9 +103,13 @@ LAMP_RETURN_PINS = ["J13-P9", "J13-P8", "J13-P7", "J13-P6", "J13-P5", "J13-P4", 
 # objects; the same-numbered sw43 trigger has no handler.
 SWITCH_OBJECTS = {3: "LaneKicker", 8: "sw8s", 26: "LeftSlingShot", 27: "RightSlingShot",
                   30: "Bumper1b", 31: "Bumper2b", 32: "Bumper3b", 43: "sw43s"}
-# Coil effect anchors are the script-bound mechanism object, never a winding
-# centre; flashers use the bulb-size (smallest-falloff) script light at the
-# factory flasher position, not its glow/halo helpers or Flasher sprite.
+# Coil effect anchors are the mechanism object, never a winding centre. Most
+# are the object the coil's own callback drives; the embedded script comments
+# out the Q9-Q11/Q17/Q18 callbacks, so those use the bumper/sling objects whose
+# hit events report the matching switch, and Q2 (PlungerIM, no object) shares
+# the SW23 shooter-lane point (COIL_ANCHOR_NOTES). Flashers use the bulb-size
+# (smallest-falloff) script light at the factory flasher position, not its
+# glow/halo helpers or Flasher sprite.
 COIL_OBJECTS = {1: "BallRelease", 2: "sw23", 3: "LaneKicker", 9: "Bumper1b", 10: "Bumper2b",
                 11: "Bumper3b", 13: "UpLeftFlipper", 14: "UpRightFlipper", 15: "LeftFlipper",
                 16: "RightFlipper", 17: "LeftSlingShot", 18: "RightSlingShot", 20: "LeftPost",
@@ -113,6 +117,13 @@ COIL_OBJECTS = {1: "BallRelease", 2: "sw23", 3: "LaneKicker", 9: "Bumper1b", 10:
 # Each drop-target reset coil lifts one whole bank; its anchor is the mean of
 # that bank's four target faces (the factory DR.9 box sits at the bank middle).
 DROP_BANKS = {5: (33, 34, 35, 36), 6: (37, 38, 39, 40), 7: (10, 11, 12, 13), 8: (4, 5, 6, 7)}
+COIL_ANCHOR_NOTES = {
+    **{n: f"Spatial anchor is the {obj} bumper object whose hit event reports SW{sw}; the embedded script comments out SolCallback({n}), so the table binds no object to this coil. Checked beside the factory DR.9 box {n}."
+       for n, obj, sw in ((9, "Bumper1b", 30), (10, "Bumper2b", 31), (11, "Bumper3b", 32))},
+    **{n: f"Spatial anchor is the {obj} wall whose slingshot event reports SW{sw}; the embedded script comments out SolCallback({n}), so the table binds no object to this coil. Checked beside the factory DR.9 box {n}."
+       for n, obj, sw in ((17, "LeftSlingShot", 26), (18, "RightSlingShot", 27))},
+    2: "Spatial anchor shares the SW23 shooter-lane trigger point: the embedded script fires PlungerIM.AutoFire, which has no table object. Checked beside the factory DR.9 box 2.",
+}
 EMBEDDED_SCRIPT_SHA256 = "1b5b833d6dd2657a52eeed69ad556a7bfa066171cabf2526f1e1aa33daa77f0c"
 
 
@@ -318,6 +329,8 @@ def output_records(seed: dict, spatial: dict, coil_rows: list[list[str]], lamp_r
         elif n in COIL_OBJECTS:
             item["spatial"] = placed(COIL_OBJECTS[n], "emitter" if flash else "effect", spatial, MANUAL,
                                      ident=f"placement.coil-{n}.{slug(COIL_OBJECTS[n])}")
+            if n in COIL_ANCHOR_NOTES:
+                item["physical"]["notes"] = (item["physical"].get("notes", "") + " " + COIL_ANCHOR_NOTES[n]).strip()
         elif n in DROP_BANKS:
             item["spatial"] = bank_midpoint(n, spatial)
         result.append(item)
@@ -519,7 +532,7 @@ The factory chart enumerates Q22/Q23 and Q25–Q31 as nine flashers, five on the
 
 ## Spatial and authority limits
 
-The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded where its name and factory placement agree. Switches the table's embedded script binds through differently named objects use those objects: the SW8/SW43 orbit spinners `sw8s`/`sw43s` (the same-numbered `sw43` trigger has no handler), pop bumpers `Bumper1b`–`Bumper3b` for SW30–32, sling walls for SW26/27 and the shooter-VUK capture kicker `LaneKicker` for SW3. Coil anchors are the script-bound mechanism objects (bumpers, sling walls, flipper pivots, `BallRelease`, `LaneKicker`, eject popper `sw49`, `LeftPost`; Q2 shares the SW23 shooter-lane point), never a winding centre; Q5–Q8 drop-bank resets use the mean of their bank's four target faces. Flashers Q22/Q23/Q25/Q31 sit on the bulb-size script lights `f22b`/`f23b`/`F25a`/`f31b`, not their larger glow lights or Flasher sprites. Every placed switch, lamp and coil anchor was overlaid on the factory DR.5/DR.7/DR.9 location drawings through an independently read five-control fit and sits beside its own printed number box. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points are the Deal Again lamp 3, SW14/SW41 and the trough sensors (no table objects), SW54 (fitment conflict) and GI bulbs; no guessed coordinates were filled. The four flipper EOS contacts are classified internal_nonvisual. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
+The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded where its name and factory placement agree. Switches the table's embedded script binds through differently named objects use those objects: the SW8/SW43 orbit spinners `sw8s`/`sw43s` (the same-numbered `sw43` trigger has no handler), pop bumpers `Bumper1b`–`Bumper3b` for SW30–32, sling walls for SW26/27 and the shooter-VUK capture kicker `LaneKicker` for SW3. Coil anchors are mechanism objects, never a winding centre: flipper pivots, `BallRelease`, `LaneKicker`, eject popper `sw49` and `LeftPost` are driven by their coil callbacks, while the bumper and sling coils use the objects whose hit events report SW30–32 and SW26/27 because the embedded script comments out their callbacks, and Q2 shares the SW23 shooter-lane point because `PlungerIM` has no object; Q5–Q8 drop-bank resets use the mean of their bank's four target faces. Flashers Q22/Q23/Q25/Q31 sit on the bulb-size script lights `f22b`/`f23b`/`F25a`/`f31b`, not their larger glow lights or Flasher sprites. Every placed switch, lamp and coil anchor was overlaid on the factory DR.5/DR.7/DR.9 location drawings through an independently read five-control fit and sits beside its own printed number box. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points are the Deal Again lamp 3, SW14/SW41 and the trough sensors (no table objects), SW54 (fitment conflict) and GI bulbs; no guessed coordinates were filled. The four flipper EOS contacts are classified internal_nonvisual. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
 
 ## Concrete blockers
 
@@ -549,7 +562,7 @@ def audit(definition: dict, spatial: dict) -> dict:
         "missing_spatial_ids": missing, "unresolved_conflict_ids": unresolved,
         "projection_classes": {
             "exact_named_vpx_object_center": "observed only: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
-            "coil_mechanism_anchor": "observed effect anchor on the script-bound bumper, sling wall, flipper pivot, kicker, shooter-lane trigger (Q2 shares SW23) or post; not a winding or coil-body centre",
+            "coil_mechanism_anchor": "observed effect anchor on the mechanism object: the object the coil callback drives (flipper pivots, BallRelease, LaneKicker, sw49, LeftPost), or for Q9-Q11/Q17/Q18, whose callbacks the embedded script comments out, the bumper/sling object whose hit event reports the matching switch; Q2 shares the SW23 shooter-lane trigger because PlungerIM has no object; not a winding or coil-body centre",
             "flasher_bulb_light": "observed emitter on the bulb-size script light f22b/f23b/F25a/f31b at the factory DR.9 flasher; larger-falloff glow lights and Flasher sprites are excluded",
             "drop_bank_midpoint_projection": "Q5-Q8 effect anchor at the mean of the bank's four target faces; the reset coil body is not modelled",
             "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 drawings are an identity cross-check only (drawing_reconciliation)",
