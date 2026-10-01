@@ -1,220 +1,51 @@
 # Agent instructions for PinMAME machine definitions
 
-This file is the operational runbook for the agent continuing the physical-machine definition project. It is generic policy: it must not name individual games, quote coverage counts, or pin upstream revisions. The little mutable project state it depends on lives in the short `docs/CURRENT-STATE.md`. Read the schemas, this file, and that ledger before changing a definition, and keep the generated catalog/coverage reports synchronized throughout the work. Task-specific lessons from past curation are in `docs/LESSONS.md`: read the section for a task before starting it, not the whole file.
+This file is the operational runbook for the agent continuing the physical-machine definition project. It is generic policy that every session needs: it must not name individual games, quote coverage counts, or pin upstream revisions. The little mutable project state it depends on lives in the short `docs/CURRENT-STATE.md`, and the rules and lessons for particular tasks live in the topic docs listed below. Read the schemas, this file, and that ledger before changing a definition, read each topic doc before the task it covers, and keep the generated catalog/coverage reports synchronized throughout the work.
 
-## Mandatory prerequisites and discovery
+## Documentation map
 
-Required capabilities are a hard gate, but a command missing from `PATH` or an unset convenience variable is not itself proof that the capability is unavailable. Start in this repository, derive its root with `git rev-parse --show-toplevel`, and inspect `PATH`, common installed-tool locations, workspace-provided runtimes, sibling repositories, and existing project folders. Record the resolved commands, versions, and external roots. If an applicable human-owned tool or read-only input still cannot be resolved, ask the human to provide its executable or folder before declaring that line of work blocked. The three public source repositories managed below are the exception: clone them automatically and report clone/network failures instead of asking the human for checkout paths. Abort only after reasonable discovery plus any applicable human request shows that a required capability or source is genuinely unavailable; do not silently omit the affected evidence or replace it with a weaker source/model. Do not install software or create substitute read-only source folders without contributor approval.
-
-### Tool capabilities and download sources
-
-| Capability | Used for | Installation or download source |
+| File | Holds | Read |
 | --- | --- | --- |
-| Git 2.23 or newer (`git`) | branches, worktrees, pinned filtered clones, exact-state review, commits, and PR preparation | [Git downloads](https://git-scm.com/downloads) |
-| Python 3.13 or newer plus this package's dependencies | deterministic curators, catalog generation, validation, the PinMAME harness, PDF parsing, and tests | [Python downloads](https://www.python.org/downloads/); install this repository with `python -m pip install -e ".[tools]"` in an isolated environment when dependencies are not already available |
-| ripgrep (`rg`) | first-choice source and file discovery | [ripgrep releases](https://github.com/BurntSushi/ripgrep/releases) |
-| `vpxtool` | VPX identity inspection, script/object extraction, and spatial evidence | [vpxtool releases](https://github.com/francisdb/vpxtool/releases); record the exact version in evidence, and use v0.33.3 only when reproducing artifacts explicitly pinned to `vpxtool git:v0.33.3` |
-| An archive extractor capable of RAR and ZIP, normally 7-Zip | inspecting and extracting retained VPX, ROM, and manual archives | [7-Zip downloads](https://www.7-zip.org/download.html) |
-| A working PDF extraction/rendering toolchain, normally Poppler's `pdfinfo`, `pdftotext`, and `pdftoppm` plus the Python dependencies | PDF identity checks, text extraction, and rendered manual pages | [Poppler Windows builds](https://github.com/oschwartz10612/poppler-windows/releases) |
-| OpenAI Codex CLI (`codex`), installed, authenticated, and working non-interactively when OpenAI models are used | running latest gpt sol, gpt terra, or gpt luna workers and reviewers | [Codex CLI documentation](https://developers.openai.com/codex/cli) |
-| Claude Code CLI (`claude`), installed, authenticated, and working non-interactively when Anthropic models are used | running `opus`, `sonnet`, or `haiku` workers and reviewers | [Claude Code setup](https://docs.anthropic.com/en/docs/claude-code/getting-started) and [CLI reference](https://docs.anthropic.com/en/docs/claude-code/cli-usage) |
-| Working CLI access to the model tiers required by the allocation policy below | high-judgment curation, economical delegated extraction, and mandatory pre-submission review | At least one high-tier CLI is mandatory; when another provider's high-tier model is available, its CLI must also work so the final review can be cross-provider |
-| An authenticated interactive browser or working browser automation | Cloudflare-gated IPDB/VPU/VPF research and downloads | [Google Chrome](https://www.google.com/chrome/) or [Puppeteer](https://pptr.dev/guides/installation) |
-| Pinned PinMAME source and a compatible built native library | authoritative driver inventory and runtime-harness traces | [vpinball/pinmame](https://github.com/vpinball/pinmame); if no compatible library can be found, use the concrete CMake preparation and out-of-source build recipe below with a suitable C/C++ toolchain |
+| `docs/INSTRUCTIONS.md` | Policy every session needs: scope, invariants, evidence authority, conflicts, model allocation and the per-game workflow | Always; Claude Code loads it |
+| `docs/CURRENT-STATE.md` | Pinned inputs, the scope-exception pointer, standing priorities and open cross-machine corrections | Always; Claude Code loads it |
+| `docs/pinside-top100.md` | The standing priority list with each record's generated completion score | Always; Claude Code loads it |
+| `docs/SETUP.md` | Prerequisites, tool discovery, agent CLI calls, read-only inputs, the working root, pinned checkouts and the native-library build | When preflight finds something missing or unverified, and before delegating to or reviewing with a model CLI |
+| `docs/IDENTITY.md` | Driver grouping, record splits, OPDB identity, `physical_compatibility` and machine families | Step 2 |
+| `docs/SOURCES.md` | Finding, retaining, reading, weighing and excerpting sources | Step 3, and before writing a conflict |
+| `docs/PLATFORMS.md` | Per-platform read paths, `normally_closed` derivation, flipper columns, special solenoids, address arithmetic and controller-profile notes | Step 4, and before editing `controllers/pinmame/` |
+| `docs/SPATIAL.md` | Placement rules and lessons | Step 5 |
+| `docs/TESTING.md` | Curator, test and manifest lessons | Steps 6 and 7 |
+| `docs/HARNESS.md` | Harness scenarios, runtime evidence and reverse engineering | Before any harness run or Ghidra escalation |
+| `docs/PROJECT-GATES.md` | Project-wide completion gates and the final handoff | Before claiming project-level completion |
+| `docs/archive/` | The frozen pre-compaction ledger | Search it; never read it whole |
 
-Tool names above are conventional, not mandatory installation paths. Locate an existing executable first, run a small version/smoke check, and use its fully qualified path when it is not on `PATH`. For the native library, search the final agent-managed PinMAME checkout and `<working-root>/builds/pinmame` for `pinmame64.dll`, `libpinmame.dll`, `libpinmame.so`, or `libpinmame.dylib`, explicitly excluding every `.incoming-*` tree; use `PINMAME_LIBRARY_PATH` only as an optional disambiguation override. If multiple plausible libraries exist, identify the one built from the pinned revision instead of choosing by filename alone.
+Where new text goes:
 
-### Agent CLI operation
+- A rule every session needs goes in this runbook. Keep it generic and short.
+- A rule for one task goes in that task's topic doc. What a past case taught goes under that doc's
+  **Lessons**, naming the commit or knowledge note it came from.
+- Mutable project state goes in `docs/CURRENT-STATE.md`. Per-game facts go in the game's knowledge
+  note, spatial report and definition.
+- State each rule in one place and link to it elsewhere. If a topic doc disagrees with this runbook,
+  the runbook wins; fix the topic doc in the same change.
 
-Do not treat an installed executable as proof that an agent CLI works. For every provider intended for the contribution, run its version and doctor commands, verify authentication, and make a small non-interactive call using each required model alias. Run `codex --version` and `codex doctor` for Codex; run `claude --version` and `claude doctor` for Claude Code. If an applicable CLI cannot authenticate, select the named model, read the required files, or return output, fix it before delegating work or starting review. Record genuine provider unavailability rather than pretending that an inaccessible model performed a review.
-
-Use PowerShell here-strings or prompt files for substantial prompts so shell expansion and quoting do not alter the instructions. Resolve and validate `$worktree` first. Resolve the latest available model in each required family from current provider model metadata and verify it through the CLI before use; never copy a version from an earlier run. Set `$latestTerraModel` and `$latestSolModel` below to those resolved model identifiers, not the literal string `latest`. Codex models use `xhigh` reasoning for this project; Claude models use `high` effort. Typical non-interactive worker calls are:
-
-```powershell
-$prompt = @'
-Read docs/INSTRUCTIONS.md, then perform only the bounded task described below.
-Report uncertainty and do not guess.
-'@
-
-$prompt | codex exec -C $worktree -m $latestTerraModel -c 'model_reasoning_effort="xhigh"' -s workspace-write -
-
-Push-Location -LiteralPath $worktree
-try {
-	claude -p --model sonnet --effort high --permission-mode acceptEdits $prompt
-} finally {
-	Pop-Location
-}
-```
-
-Select the latest GPT Sol, GPT Terra, or GPT Luna with Codex's `-m` option using the resolved identifier. Use the unversioned `opus`, `sonnet`, or `haiku` alias with Claude Code's `--model` option and verify that it resolves to the latest available model in that family. Do not substitute another family when the required tier is unavailable. Run a reviewer without edit permission: use `codex exec` in a read-only sandbox, because `codex review --base` accepts no custom prompt, and use Claude Code with `--permission-mode plan`. Name the base commit in the prompt. Typical review calls are:
-
-```powershell
-$reviewPrompt = @'
-Perform an independent read-only review of the exact contribution tree: git diff <base>..HEAD.
-Report only discrete, actionable findings; do not edit files.
-'@
-
-$reviewPrompt | codex exec -C $worktree -m $latestSolModel -c 'model_reasoning_effort="xhigh"' -s read-only -o $reviewFindingsPath -
-
-Push-Location -LiteralPath $worktree
-try {
-	claude -p --model opus --effort high --permission-mode plan $reviewPrompt
-} finally {
-	Pop-Location
-}
-```
-
-Start each CLI in the exact game worktree and explicitly grant access only to required external evidence roots. Capture the final response under the sibling working directory's `review-artifacts` folder together with the reviewed commit and tree hashes.
-
-Ghidra is escalation-only rather than part of every game's startup check. When a game reaches the Ghidra escalation described later, [download Ghidra from the NSA project](https://github.com/NationalSecurityAgency/ghidra/releases), verify it launches, and stop that game if it is unavailable; do not replace reverse engineering with speculation.
-
-### Existing read-only inputs
-
-Resolve these inputs from contributor configuration, already mounted storage, or sensible sibling directories. Environment-variable names are portable labels and optional overrides, not a demand that every shell predefine them. An unset variable must never cause immediate refusal. When an applicable input cannot be discovered, ask the human for its location; combine multiple unresolved inputs into one concise request when practical. Treat the resolved contents as read-only during curation.
-
-| Location label | Existing input |
-| --- | --- |
-| Current Git root | This `pinmame-game-defs` checkout, derived from the working directory; no separate root variable is needed |
-| `<working-root>/source-checkouts/pinmame` | Agent-managed pinned `vpinball/pinmame` checkout |
-| `<working-root>/source-checkouts/vpxtable_scripts` | Agent-managed pinned `sverrewl/vpxtable_scripts` corpus |
-| `<working-root>/source-checkouts/vpx-standalone-scripts` | Agent-managed pinned `jsm174/vpx-standalone-scripts` corpus |
-| `PINMAME_EXISTING_VPX_TABLES` | One or more existing VPX table collections as a comma-separated, ordered list; search them from first to last |
-| `PINMAME_ROM_LIBRARY_ROOT` | Existing user-authorized VPinMAME ROM corpus |
-
-For `PINMAME_EXISTING_VPX_TABLES`, split on commas, trim surrounding whitespace, discard empty entries, resolve each path, and preserve the supplied order. If it is unset and local discovery does not find the table collections, ask the human to provide one or more folders in preferred search order. Do not require separate primary/archive variables.
-
-Do not ask the human to provide PinMAME, `vpxtable_scripts`, or `vpx-standalone-scripts` checkouts. Clone and pin them automatically under the working root as described below, then treat their contents as read-only curation inputs. Do not modify, reorganize, rename, or delete the user's other read-only inputs. A source that is irrelevant to the selected game need not block unrelated work. Before treating another applicable source as unavailable, ask the human for its path and allow them to provide it directly even if no environment variable is set. If the human cannot provide a source required to substantiate an authoring-critical claim, keep the game partial or stop only that line of work rather than guessing or refusing unrelated work.
-
-### Writable working directories
-
-The human must not have to declare environment variables for writable locations. Derive the repository root with `git rev-parse --show-toplevel`, take its parent, and use the fixed sibling `pinmame-game-defs-working-dir` as the only curation working root. At initial preflight, validate that exact sibling path and create it and every subfolder below when missing. Reuse existing directories without deleting or replacing their contents. If the path exists as a file or reparse point, stop and ask the contributor instead of choosing another location silently.
-
-| Relative path under `pinmame-game-defs-working-dir` | Writable purpose |
-| --- | --- |
-| `worktrees` | Per-game Git worktrees |
-| `vpx-sources` | Downloaded/retained VPX tables, sidecars, extractions, manifests, and provenance |
-| `manuals` | Downloaded manuals, rendered pages, extracted text, and manual manifest |
-| `review-artifacts` | Retained spatial-analysis and model-review artifacts that do not belong in Git |
-| `roms` | Newly downloaded ROM archives used for authorized local research |
-| `source-checkouts` | Agent-managed pinned upstream Git checkouts |
-| `source-checkouts/.incoming-*` | Incomplete diagnostic clone directories only; enumerate and report them, but never reuse, promote, or search them as source evidence |
-| `builds` | Out-of-source build trees, including the pinned PinMAME native library |
-
-Resolve and create the layout automatically:
-
-```powershell
-$repoRootText = (& git rev-parse --show-toplevel).Trim()
-if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($repoRootText)) { throw 'Cannot resolve the repository root.' }
-$repoRoot = [System.IO.Path]::GetFullPath($repoRootText)
-$repoParent = [System.IO.DirectoryInfo]::new($repoRoot).Parent.FullName
-$workingRoot = [System.IO.Path]::GetFullPath((Join-Path $repoParent 'pinmame-game-defs-working-dir'))
-$expectedWorkingRoot = [System.IO.Path]::GetFullPath((Join-Path $repoParent 'pinmame-game-defs-working-dir'))
-if ($workingRoot -ne $expectedWorkingRoot) { throw 'Unexpected working-root resolution.' }
-
-$workingFolders = [ordered]@{
-	Worktrees = Join-Path $workingRoot 'worktrees'
-	VpxSources = Join-Path $workingRoot 'vpx-sources'
-	Manuals = Join-Path $workingRoot 'manuals'
-	ReviewArtifacts = Join-Path $workingRoot 'review-artifacts'
-	Roms = Join-Path $workingRoot 'roms'
-	SourceCheckouts = Join-Path $workingRoot 'source-checkouts'
-	Builds = Join-Path $workingRoot 'builds'
-}
-
-foreach ($path in @($workingRoot) + $workingFolders.Values) {
-	if (Test-Path -LiteralPath $path) {
-		$item = Get-Item -LiteralPath $path -Force
-		if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { throw "Unsafe working directory: $path" }
-	} else {
-		[void][System.IO.Directory]::CreateDirectory($path)
-	}
-}
-```
-
-Clone the three public source repositories when missing and detach each checkout at its required pinned revision. Clone into a unique incoming sibling first, validate and pin it there, and move it to the final path only after success. At every preflight, enumerate existing `.incoming-*` directories under `source-checkouts`, report their count and exact paths to the human as abandoned diagnostic leftovers that are safe to delete after investigation, and exclude them from every source, evidence, and native-library search. Never reuse or promote one. If cloning or checkout is interrupted, leave that incoming directory for diagnosis; a later run uses a new incoming path and is not blocked by the incomplete clone. Existing final checkout directories must have the expected origin, be completely clean, and contain the pinned commit before reuse. Never reset, clean, overwrite, or delete an unexpected or dirty final checkout; stop and ask the human to inspect it. Configure all managed checkouts with `core.autocrlf=false` and `core.eol=lf` before materializing files so evidence hashes are independent of the contributor's global Git settings; the `vpx-standalone-scripts` repository's own `*.vbs text eol=crlf` attribute still takes precedence. Spot-check any reused checkout that supplies hashed evidence against a known recorded hash instead of trusting a clean Git status. A network failure is a tooling/network blocker, not a reason to ask the human to supply these repositories manually.
-
-```powershell
-$abandonedIncoming = @(Get-ChildItem -LiteralPath $workingFolders.SourceCheckouts -Directory -Force -ErrorAction Stop | Where-Object { $_.Name -like '.incoming-*' })
-if ($abandonedIncoming.Count -gt 0) {
-	Write-Warning "Found $($abandonedIncoming.Count) abandoned incoming checkout(s); never reuse or search these paths:"
-	$abandonedIncoming.FullName | ForEach-Object { Write-Warning $_ }
-}
-
-$checkouts = @(
-	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '8371478a7640f1896dcdf565aed340dc5df989ba' },
-	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
-	@{ Name = 'vpx-standalone-scripts'; Url = 'https://github.com/jsm174/vpx-standalone-scripts.git'; Revision = '15d112648a1b94b9f59eb8b3c335d57283653c50' }
-)
-
-foreach ($checkout in $checkouts) {
-	$path = Join-Path $workingFolders.SourceCheckouts $checkout.Name
-	$newClone = -not (Test-Path -LiteralPath $path)
-	if ($newClone) {
-		$incomingName = ".incoming-$($checkout.Name)-$([System.Guid]::NewGuid().ToString('N'))"
-		$candidatePath = Join-Path $workingFolders.SourceCheckouts $incomingName
-		if (Test-Path -LiteralPath $candidatePath) { throw "Incoming checkout path already exists: $candidatePath" }
-		git clone --filter=blob:none --no-checkout $checkout.Url $candidatePath
-		if ($LASTEXITCODE -ne 0) { throw "Failed to clone $($checkout.Name)." }
-	} else {
-		$candidatePath = $path
-	}
-
-	$item = Get-Item -LiteralPath $candidatePath -Force
-	if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { throw "Unsafe checkout path: $candidatePath" }
-	$origin = "$(git -C $candidatePath remote get-url origin)".Trim()
-	if ($LASTEXITCODE -ne 0 -or $origin -ne $checkout.Url) { throw "Unexpected origin for $($checkout.Name): $origin" }
-	if (-not $newClone -and (git -C $candidatePath status --porcelain)) { throw "Dirty agent-managed checkout: $candidatePath" }
-
-	git -C $candidatePath config --local core.longpaths true
-	if ($LASTEXITCODE -ne 0) { throw "Failed to enable long-path support for $($checkout.Name)." }
-	git -C $candidatePath config --local core.autocrlf false
-	if ($LASTEXITCODE -ne 0) { throw "Failed to disable automatic line-ending conversion for $($checkout.Name)." }
-	git -C $candidatePath config --local core.eol lf
-	if ($LASTEXITCODE -ne 0) { throw "Failed to pin checkout line endings for $($checkout.Name)." }
-	git -C $candidatePath cat-file -e "$($checkout.Revision)^{commit}" 2>$null
-	if ($LASTEXITCODE -ne 0) {
-		git -C $candidatePath fetch --no-tags origin $checkout.Revision
-		if ($LASTEXITCODE -ne 0) { throw "Failed to fetch pinned revision for $($checkout.Name)." }
-	}
-	git -C $candidatePath switch --detach $checkout.Revision
-	$head = "$(git -C $candidatePath rev-parse HEAD)".Trim()
-	if ($LASTEXITCODE -ne 0 -or $head -ne $checkout.Revision -or (git -C $candidatePath status --porcelain)) { throw "Failed to pin $($checkout.Name) cleanly." }
-	if ($checkout.Name -eq 'vpxtable_scripts') {
-		$knownEvidencePath = Join-Path $candidatePath 'Aaron Spinlling (Data East 1992) v1.02.vbs'
-		$knownEvidenceSha256 = '92abfcb92e97fad7abf0658ac5168af54ee6d19be8a7fe58ffc76de420270f40'
-		if (-not (Test-Path -LiteralPath $knownEvidencePath -PathType Leaf) -or (Get-FileHash -LiteralPath $knownEvidencePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $knownEvidenceSha256) { throw "The vpxtable_scripts working-tree bytes do not match the recorded LF-normalized evidence hash: $knownEvidencePath" }
-	}
-
-	if ($newClone) {
-		if (Test-Path -LiteralPath $path) { throw "Final checkout path appeared while cloning: $path" }
-		Move-Item -LiteralPath $candidatePath -Destination $path -ErrorAction Stop
-	}
-}
-```
-
-Build PinMAME under `<working-root>/builds/pinmame` when a compatible native library is not already present. The pinned revision keeps the libpinmame project at `cmake/libpinmame/CMakeLists.txt` and its official workflow copies that file to the checkout root before configuration because its source paths are root-relative. Make the same copy; `/CMakeLists.txt` is gitignored at the pinned revision, so this preparation keeps `git status --porcelain` clean while all generated build output remains outside the checkout. For Windows x64, use the following concrete invocation and adjust `PLATFORM`, `ARCH`, generator, and configuration for the contributor's target platform:
-
-```powershell
-$pinmameCheckout = Join-Path $workingFolders.SourceCheckouts 'pinmame'
-$pinmameBuild = Join-Path $workingFolders.Builds 'pinmame'
-$libPinmameProject = Join-Path $pinmameCheckout 'cmake\libpinmame\CMakeLists.txt'
-$rootProject = Join-Path $pinmameCheckout 'CMakeLists.txt'
-if (-not (Test-Path -LiteralPath $libPinmameProject -PathType Leaf)) { throw "Missing pinned libpinmame CMake project: $libPinmameProject" }
-if (Test-Path -LiteralPath $rootProject) {
-	if (-not (Test-Path -LiteralPath $rootProject -PathType Leaf) -or (Get-FileHash -LiteralPath $rootProject -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $libPinmameProject -Algorithm SHA256).Hash) { throw "Unexpected existing PinMAME root CMakeLists.txt: $rootProject" }
-} else {
-	Copy-Item -LiteralPath $libPinmameProject -Destination $rootProject -ErrorAction Stop
-}
-cmake -S $pinmameCheckout -B $pinmameBuild -DPLATFORM=win -DARCH=x64
-if ($LASTEXITCODE -ne 0) { throw 'PinMAME CMake configuration failed.' }
-cmake --build $pinmameBuild --config Release
-if ($LASTEXITCODE -ne 0) { throw 'PinMAME native-library build failed.' }
-if (git -C $pinmameCheckout status --porcelain) { throw 'PinMAME checkout became dirty during build preparation.' }
-```
-
-These local variables are the canonical writable paths for the task. Do not require the human to persist or export them. When an existing test or tool requires a legacy environment variable such as `PINMAME_VPX_SOURCES_ROOT`, set it from the derived path immediately before invoking that process. Never create replacement copies of the user's missing read-only inputs in the working directory.
+## Preflight
 
 Before beginning a game, confirm the current repository, applicable read-only inputs, writable evidence roots, model tiers, browser access, and the pinned native library needed by that game's gates. Report only genuine unresolved prerequisites; do not fail merely because a tool was installed outside a conventional path.
+
+`docs/SETUP.md` holds the procedure for each check. Read it when something is missing or not yet
+verified in this session. These of its rules apply even without reading it:
+
+- A missing capability is a hard gate, but a command absent from `PATH` or an unset variable is not
+  proof that it is unavailable. Discover before declaring a blocker, and ask the human for an
+  unresolved human-owned tool or read-only input.
+- Clone the three public source repositories yourself; never ask the human for them.
+- Never install software or create substitute read-only source folders without contributor approval,
+  and never modify the user's read-only inputs.
+- All writable state lives under the fixed sibling `pinmame-game-defs-working-dir`; never choose
+  another location silently.
+- Never reuse, promote or search a `.incoming-*` checkout, and never reset, clean or delete an
+  unexpected or dirty managed checkout.
 
 ## Objective and completion standard
 
@@ -228,6 +59,7 @@ The coordinate convention follows VPX/player view in one normalized `playfield` 
 - `y = 0` is the rear/backglass end and `y = 1` is the front/apron end.
 - Record playfield positions for switches, coils/controlled devices, lamps, flashers, and GI emitters. Cabinet/backbox/service devices use a controlled `not_applicable` spatial record rather than invented coordinates.
 - Use one placement per physical emitter or device location. Disclose projections, shared emitters, quantities, uncertainty, and exact source roles. Never present a render helper, lightmap object, primitive origin, or script-only surrogate as an observed physical socket.
+The project-wide completion gates and the final handoff are in `docs/PROJECT-GATES.md`.
 
 ## Pinned baseline and current-state ledger
 
@@ -246,8 +78,8 @@ Record work where its reader will look for it, never in the ledger:
 - coverage counts: the generated catalog and coverage reports, never copied by hand;
 - which games are being worked on: the per-game branches and worktrees themselves (step 1);
 - a curation lesson that generalizes beyond one machine: the general rule here when every session
-  needs it, otherwise in the matching section of `docs/LESSONS.md`, with the machine that produced
-  it named in its knowledge note or commit message.
+  needs it, otherwise in the topic doc for the task it governs, with the machine that produced it
+  named in its knowledge note or commit message.
 
 Update the ledger in the same commit as a change to what it records. The ledger as it stood before
 compaction is frozen under `docs/archive/`; search it for history, but never read it whole or append
@@ -276,13 +108,9 @@ The legacy semantic definitions were in the managed integration's game classes, 
 - Canonical semantic IDs are strings. Controller addresses remain signed numeric binding fields so negative diagnostic IDs are representable. A controller-number change may alter a variant binding without renaming the semantic device.
 - Preserve required legacy numeric and zero-padded switch aliases such as `7`, `07`, and `007` while compatibility requires them. Alias cycles and ambiguous targets are errors.
 - Controller groups have stable IDs scoped by provider authority and direction. Human display names are labels, not identity. Physical `kind` is separate from transport: a flasher routed through a solenoid callback remains a flasher.
-- Controller-group `notes` are literal plain text by default. Set `notes_format` to `markdown` only after rewriting dense technical prose as reviewed GitHub Flavored Markdown with real paragraphs, lists, tables, headings, emphasis, and inline code; nested headings start at level 4 because the platform group is already level 3. Never opt an existing plain string into Markdown mechanically because formulas such as `col*10` can be reinterpreted. Keep short notes plain, preserve every source-backed claim during editorial rewrites, do not embed raw HTML or unsafe link/image URL schemes, and verify the rendered platform page as well as the JSON source.
 - LibPinMAME and Controller Plugin routing are revisioned adapters. Any `ctrl://` URI is derived output, never canonical identity, and the experimental plugin API cannot become the sole representation.
 - PinMAME's public switch state must be consumed exactly as delivered. `controller.inversion_applied_by_emulator` is informational and must never be reapplied as a controller-wide inversion; it does not promise that every public input is active-high. Platform and per-game notes must preserve mixed-level exceptions such as Pinball 2000's raw active-low optos, while `physical.normally_closed` records real hardware construction separately.
-- On System 3 through System 11 and Data East derivatives, keep a factory manual's printed special-solenoid identity, a community chart's coil number, the PIA handler index, `sxx.ssSw` slot, and PinMAME public output address distinct. Derive the public address from the selected `setSSSol` permutation when the PIA drives the circuit, and from the direct `CORE_FIRSTSSSOL + ii` path when `sxx.ssSw[ii]` supplies switch-driven state; Data East's PIA permutation is not sequential. Preserve only identities actually printed by the cited source—never manufacture SP1-SP6 aliases from sequential public numbers. If game-specific secondary evidence maps physical device names directly to public coil numbers and conflicts with the shared-source derivation, it may be retained as a clearly attributed conflicted working mapping, but every affected binding must stay conflicted and require a LibPinMAME trace before resolution.
-- `physical.normally_closed` is a construction fact about the contact the switch matrix sees, never an inference from how an opto beam rests. Where no manual or schematic prints the matrix contact's rest state, derive it from the platform's read path and a runtime proof: on Whitestar, `se.c`'s `switch_r` returns `~core_getSwCol`, so public 1 is the CPU's closed-contact reading, and an opto the known-working script or the ROM treats as active at 1 therefore has a matrix contact that rests open, whatever the beam does. "Not actuated" means the ROM reads the switch inactive: where a mechanism happens to park, or whether a captive ball sits in a beam, does not change the contact's normal state. On the WPC switch-matrix row read the CPU sees `swMatrix` directly (through `core_getSwCol`, or `wpc_pic_r` on security-PIC generations), so a matrix switch outside the inversion mask that the ROM treats as active at public 1 is normally open, and a masked one the ROM treats as active at public 1 is normally closed. The Fliptronic column is read complemented (`WPC_FLIPPERS`/`WPC_FLIPPERSW95` return `~swMatrix`), and a driver can install its own row-read handler for a custom column, so derive those from their own read path. A zero Fliptronic element in a driver's `invSw` therefore does not mean the column is unnormalized; read the generation's flipper-column register handler before calling any 111-118 address unnormalized. A printed "opto, typically closed" halftone marks opto construction; it does not override that derivation for a switch the ROM reads unmasked.
-- An address PinMAME never synthesizes is not thereby unreachable. `core_updateSw` rewrites only the flipper-column bits in `locals.flipMask` and preserves every other bit, so a host write to a flipper-column address outside the mask still reaches the ROM through the driver's own read handler. Before recording such an input as unused or unreadable, check whether the driver's read path consumes the bit and prove what the ROM does with it in a harness run; a fitted cabinet input and an emulator that does not synthesize it are two compatible facts, not a conflict.
-- On a driver whose flippers are cabinet-wired (`FLIP_SWNO(l,r)` without `FLIP_SOL`), PinMAME's `core_updateSw` rewrites matrix switches `l` and `r` on every update from its own flipper switch column (`CORE_FLIPPERSWCOL`, or internal column 15 on the generations `core_updateSw` names in its `flipSwCol` test) and fabricates the synthetic flipper outputs from the same bits. The address a consumer drives is that column's button bit under the platform's switch conversion, never the printed matrix address, and a write to the matrix address is silently overwritten. Enumerate the whole column, mark as used only the positions the ROM can actually reach, derived from the driver's own read path: a static proof that no read handler can select the column is enough to record the other positions unused, while a read path that can consume the bit needs the previous rule's harness run. Say in each copied matrix switch's notes that it cannot be driven directly. The column's public numbering follows the platform's switch conversion, so derive it from the controller profile rather than carrying it across platforms. A known-working script that writes the matrix address itself has a defect with no effect, and that defect belongs in the device note, not in `conflicts`.
+- `physical.normally_closed` is a construction fact about the contact the switch matrix sees, never an inference from how an opto beam rests. Derive it, and every other per-platform question about read paths, flipper columns, special solenoids and synthesized inputs, as `docs/PLATFORMS.md` describes.
 - Treat blank, merged, and omitted printed cells as distinct evidence. Preserve literal spelling, capitalization, wire order, and every authoring-relevant table column in the excerpt, including matrix connector pins and transistor identifiers; mark a genuinely blank cell explicitly and never complete it from a repeated wiring pattern or a sibling game. Keep source-literal color names in the excerpt even when the structured definition normalizes them to wiring abbreviations. If a merged cell applies to multiple normalized rows, say that it was repeated rather than presenting the duplicate as separately printed. A missing legend marking is weaker evidence than a positive construction record: when a matrix leaves a cell unshaded but the same manual's board or assembly page names that switch's part as an opto, record the construction from the assembly page, keep the unshaded cell literally in the excerpt, and explain the omission on the device instead of opening a conflict.
 - Device kind, spatial applicability, and address availability answer separate questions. In particular, a virtual output has no physical playfield device, but it is `used` when PinMAME publishes meaningful runtime state and `unused` when the address is dead, reserved, or constant zero; never normalize availability solely from `kind` or `spatial.reason`. For a physical output, ROM activity alone never makes an address `used`. Record it `unused` only when the machine's own wiring or driver table proves that no load is fitted and the state PinMAME publishes there is explained, for example a proven prototype-only reset pulse. Keep it `unknown` when no source settles the fitment, or when PinMAME can still publish state there that nothing explains, such as a relay-multiplexed or PIA-driven address whose load is unfitted.
 - RGB devices use a parent with explicit channel bindings or uniquely identified channel children. Mirrored/shared bindings must be declared; accidental duplicate numeric IDs are validation failures.
@@ -306,9 +134,7 @@ Rules that matter more than they look:
 - **Cite the game's own document for game-specific facts.** Board-internal wiring is shared between machines that carry the same board, so it may be lifted; which connector branch a harness actually plugs is not, and must come from this game's sheet.
 - **An excerpt is itself an assertion.** It is transcribed by the same party making the claim, so it buys self-consistency, a forcing function to open the page, and reviewability - not independent verification. Record `method` and `transcribed_by`, and set `reviewed` only when a curator has visually checked the transcription against the rendered page. OCR cleanup delegated to the low tier stays candidate evidence until it is checked.
 
-Use a rendered crop only when the fact is a **drawing** - schematic wiring, a connector fan-out, an insert map. A printed table belongs in the transcription, where it is a kilobyte, diffable and greppable; as an image it is forty times the size and cannot be searched. Generate crops with `tools/make_excerpt.py`, which records the page, crop box, dpi and tool so the image can be re-derived, accepts `--rotate 90`, `180`, or `270` for sideways scans, and refuses crops over its `--max-bytes` (100 kB by default); `tests/test_excerpts.py` allows up to 1.5 MB only for page-scale drawings listed in `PAGE_SCALE_DRAWINGS`. Do not threshold to 1-bit: printed shading is itself evidence on some machines, the shaded opto rows of a switch matrix being the obvious case. Grayscale is the default; a colour page whose colours carry meaning is a deliberate exception, and the excerpt should say why.
-
-**Never render at a fixed dpi.** `tools/render_excerpt_image.py` derives the resolution instead, and should be preferred for any new crop. A scanned page is a single embedded raster at whatever the scanner produced - 150, 200, 400, 600, rarely a round number and essentially never 300 - so the tool reads that image's own pixel width against its placed width in points and renders at exactly that. Rendering higher invents pixels and inflates the repository; rendering lower discards the fine print in a connector table, which is usually the reason the crop exists. A born-digital page has no native resolution at all, so there the tool picks a dpi from the smallest type inside the crop and targets a readable glyph height. Record the tool's printed `image_derivation` verbatim: it names the page, the crop box, which case applied and why, and any width cap that reduced the result below native. Crop tightly to the table, block or drawing being cited - a tight crop is the evidence for one claim, where a whole page is a chunk of a copyrighted service manual.
+A printed table belongs in the transcription. Use a rendered crop only when the fact is a drawing, and make it as `docs/SOURCES.md` describes.
 
 Embedding transcribed tables is a different act from redistributing a document. A connector-pin-to-lamp-name table is factual data, and the excerpt is what makes an assertion legible without shipping the manual. The existing prohibitions are unchanged: ROM bytes, whole manuals, and community VPX tables are never committed.
 
@@ -361,21 +187,7 @@ IPDB is useful for identity, dates, model numbers, photos, and manual discovery,
 
 Use the current Git root as the main `master` checkout and integration tree and its sibling `pinmame-game-defs-working-dir` as the external evidence and worktree root. Treat unrelated or user-authored changes in the main checkout as owned by the user; never overwrite, discard, stage, or commit them incidentally.
 
-Search for VPX tables in this order:
-
-1. Each folder in `PINMAME_EXISTING_VPX_TABLES`, in the supplied order
-2. `vpuniverse.com`
-3. `vpforums.org`
-
-Do not spend time searching for a Pro recreation while a Premium or LE version exists; community authors usually recreate the higher tier because there is no extra virtual cost. Finish higher-tier and non-Pro work first. Never derive Pro geometry from a Premium/LE table without an explicit edition overlay and supporting evidence.
-
-Organize retained table artifacts under `<working-root>/vpx-sources/<manufacturer>/<machine-slug>/`. Keep the downloaded `.vpx`, script sidecars, extracted `vpxtool` output, reports, and provenance metadata. Move downloads out of the user's Downloads folder promptly. After a downloaded archive has been safely extracted and its contents verified in the organized source directory, the archive itself may be deleted; do not delete the retained VPX or extraction.
-
-Organize manuals under `<working-root>/manuals/by-machine/<machine-id>/` and keep `<working-root>/manuals/manifest.json` reconciled. Retain original PDFs, hashes, attribution, source page/download URLs, extracted text/tables, and useful rendered reference pages. Manuals are a reusable research archive and must not be discarded after a game is completed.
-
-Use `PINMAME_ROM_LIBRARY_ROOT` as the user's authorized existing read-only ROM corpus. New ROM downloads belong only in `<working-root>/roms/`, never in Downloads or this Git repository. Pass that derived folder explicitly to the harness or analysis tool that needs it. Commit hashes, archive/member metadata, and analysis results only; never commit ROM bytes or modify, redistribute, or delete the user's existing ROMs.
-
-
+Where to search for tables, and how to organize retained tables, manuals and ROMs under the working root, is in `docs/SOURCES.md`.
 
 ## Model and tool allocation
 
@@ -411,6 +223,8 @@ Verify every finding independently, fix valid issues, rerun all affected gates, 
 
 Low-severity fixes can be committed without a re-review.
 
+The CLI calls for workers and reviewers are in `docs/SETUP.md`.
+
 ### Local tools
 
 - Use `rg` and `rg --files` first for source/file discovery.
@@ -433,11 +247,15 @@ The branch and worktree are the claim, so name both after the machine slug. Reco
 
 ### 2. Inventory the physical family and variants
 
+Read `docs/IDENTITY.md` first.
+
 Trace every PinMAME root/clone driver for the physical title. Confirm physical manufacture year, manufacturer, model, IPDB identity, editions, display/controller hardware, language revisions, prototypes, conversions, FreeWPC/community firmware, and whether any driver is virtual-only. Group only firmware compatible with the physical machine. Keep distinct physical editions separate when their playfields or hardware differ, even if they will later share a `machine_family` identifier.
 
 Check that no obsolete stub still claims a driver moved into the curated definition. Regenerate the exact catalog after driver grouping changes and add regression tests for historically confusing identities.
 
 ### 3. Acquire and pin evidence
+
+Read `docs/SOURCES.md` first.
 
 Search local VPX folders before VPU/VPF. Prefer the exact physical edition; a Premium/LE table is not geometry proof for a Pro. Verify that the table script actually runs the expected ROM family. Extract the VPX with `vpxtool`, retain the original and extracted files, and compare the embedded script with any sidecar.
 
@@ -447,6 +265,8 @@ Index the authorized ROM archive and PinMAME sources when needed. A retained ext
 
 ### 4. Build the semantic definition
 
+Read `docs/PLATFORMS.md` before deciding polarity, `normally_closed`, address availability or flipper-column handling, or binding a printed number to a public address.
+
 Start from the existing partial or a deterministic seed. Enumerate all controller inputs, outputs, displays, mechanisms, and driver variants. Give every address a semantic disposition: used, unused, cabinet/service, duplicate/shared, or explicitly unresolved. Preserve matrix ranges and special/direct-switch namespaces exactly; do not silently drop an address because the VPX does not use it.
 
 For each mechanism, document enough knowledge to recreate it: physical topology, moving parts, actuators, sensors and marks, switch/coil causality, ball paths, default/home state, startup behavior, timing clues, reset behavior, jams/failure modes, and edition differences. Keep this prose in `knowledge/<manufacturer>/<machine>.md` even if structured mechanism fields cannot yet express all useful details.
@@ -455,21 +275,13 @@ Relationships must express physical or proven causal behavior, not merely proxim
 
 ### 5. Add normalized spatial evidence
 
-Read the spatial-placement section of `docs/LESSONS.md` first. Use the exact retained VPX table bounds and object coordinates. Normalize with the repository helper; do not hand-round inconsistently. Prefer exact physical object centers or meaningful wall/trigger centroids. Use a documented projection only when no direct physical object exists and the projection is defensible from manual/table geometry. Assign stable placement IDs and roles, enforce unique IDs, keep coordinates in range with at most six decimal places, and align quantity with placements.
-
-When a factory drawing is the only defensible coordinate source, make the measurement reproducible: retain a tight native-resolution crop, identify the exact full-page render and its pixel dimensions, record the playfield-frame corners, state whether each measured point is a device symbol, physical socket, remote callout balloon, or leader endpoint, list the source pixel centers and normalization formula, and round only to the precision the scan supports. Reconcile the manual frame against at least one exact retained-table control point before mixing manual- and VPX-derived placements in one normalized space. A callout's leader tip marks the part the callout names, not a point on it: when a modelled table object lies on or beside that part within the fit's accuracy, the drawing is consistent with the object and does not overrule it. A drawing inset can have its own, non-uniform scale; fit it separately from the main drawing, and treat a point far outside its control cluster as a coarse cross-check, never as a coordinate. Placement provenance must name both the coordinate source and any manual/script source needed to justify a shared anchor.
-
-A retained table object's stored centre is not always a playfield coordinate: collidable primitives are sometimes stored as a local offset with the geometry baked into the mesh. Use the centre of the world-space mesh bounds from `vpxtool export obj --units vpu` for such objects, record the export and its hash, and never take a primitive's `position` field on trust.
-
-A VPX `Flasher` object is usually a glow or reflection sprite, often parked on a cabinet side wall or shared between outputs, and is not evidence of a socket; place a flasher on a script-driven `Light` at a modelled dome or lens, or on a factory drawing. When a primitive's geometry is baked into its mesh, check the mesh-derived position against independently positioned control points in the same table before relying on it.
-
-Take a placement's table object from what the script actually binds, never from its name alone. `vpmMapLights` drives a light from its `TimerInterval`, and only if the light is in the mapped collection, so a light named for one lamp can carry another lamp's number or none. A switch can be bound through a differently named spinner or kicker while a same-numbered trigger has no handler at all, and a lamp-named light can be lit from a solenoid callback. Record any such table defect on the device. When a factory drawing reconciles placements, read its control pixels on the drawing itself and keep the crops. Control pixels that reproduce a frame formula applied to the table coordinates, with sub-pixel residuals, are circular: they reconcile nothing and must not be cited as a check.
-
-Map lamps to physical bulbs, not primitives or lightmap helpers. A lamp or flasher placement names one bulb object's own center: never a centroid of several objects, a reflection, bloom or `F_refl`-style sprite, an insert overlay, or a glow the table paints on the target the bulb lights. When the manual's location drawing puts the bulb somewhere other than the script-bound light, measure it on the drawing and prefer a table object at that spot. Reconcile shared RGB channels and co-located emitters explicitly. For GI, distinguish playfield bulbs, rear-panel bulbs, and coin-door/cabinet bulbs; playfield/rear placements and cabinet quantity may need different treatment. Cabinet/backbox displays require controlled `not_applicable` spatial evidence with PinMAME core and manual/human-review provenance. A display physically fitted to the playfield uses a located display placement only when the manual establishes its physical fitment, PinMAME identifies its callback, and a VPX object or reviewed measurement supports its centre; an emulator rendering flag does not determine cabinet location.
+Read `docs/SPATIAL.md` first; it holds the rules for factory drawings, baked-mesh primitives, VPX flashers, script bindings and lamp bulbs. Use the exact retained VPX table bounds and object coordinates. Normalize with the repository helper; do not hand-round inconsistently. Prefer exact physical object centers or meaningful wall/trigger centroids. Use a documented projection only when no direct physical object exists and the projection is defensible from manual/table geometry. Assign stable placement IDs and roles, enforce unique IDs, keep coordinates in range with at most six decimal places, and align quantity with placements.
 
 Generate a machine-specific spatial audit report listing exact evidence artifacts, hashes, extraction manifest, transformation, every projection class, unresolved records, and promotion decision. When any authoring-critical placement or semantic conflict remains, keep `coverage.status = partial`, name the missing dimensions, and make the blocker concrete.
 
 ### 6. Make generation deterministic
+
+Read `docs/TESTING.md` before writing a curator, test or manifest.
 
 Create or update machine-specific curator scripts and pinned seeds so the canonical definition, knowledge note, and spatial report can be reproduced byte-for-byte. A curator `--check` mode must refuse drift, incomplete inputs, or overwriting an existing author-ready artifact. The seed and promoted artifact should be byte-identical when the workflow intends that invariant.
 
@@ -555,54 +367,15 @@ Keep the live task plan, `catalog/pinmame.json`, `reports/coverage.*`, and `repo
 
 ## Harness and reverse-engineering escalation
 
-Before designing a scenario, read the harness section of `docs/LESSONS.md`. Static source extraction can enumerate controller structure but cannot prove every semantic name or custom mechanism. Use the implemented LibPinMAME gameplay harness for unresolved runtime behavior: boot a legal user-supplied ROM, drive switches, capture lamps/solenoids/displays, preserve NVRAM/reset conditions, and produce content-addressed traces without ROM bytes. Define explicit scenarios and expected causal transitions instead of free-play logs.
+Static source extraction can enumerate controller structure but cannot prove every semantic name or
+custom mechanism. Use the implemented LibPinMAME gameplay harness for unresolved runtime behavior, and
+read `docs/HARNESS.md` before designing a scenario. Whatever the scenario:
 
-Write repeatable action sequences as `pinmame-harness-scenario` JSON validated by `schemas/harness-scenario.schema.json`, retain reusable scenarios under `tools/harness-scenarios/`, and invoke them with `python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario <scenario.json> --output <external-run.json>`. The runner supports direct switch pulses and states, named keyboard inputs, waits, display-driven navigation, output-driven navigation, and output waits. Use named service keys when the emulator input port implements momentary or toggled cabinet behavior; a persistent `set_switch` is not necessarily equivalent to a real service-button edge.
-
-Named key actions enable PinMAME keyboard handling for the entire run. Do not mix them with direct switch actions in a driver-owned cabinet or keyboard-backed matrix range: a driver's `SWITCH_UPDATE` callback may overwrite those direct states. On Pinball 2000, the per-game opto list is driver-owned and refreshed to inactive `1` every frame; an `active_state: 0` pulse can be overwritten between harness writes and is not polarity evidence. Use the platform's named keyboard input, such as `balls_in_trough`, when it owns the intended cabinet stimulus. On a driver with `simData`, keyboard handling also activates PinMAME's built-in simulator and can contaminate the trace with simulated switch activity; use named keys there only when that simulator behavior is deliberate and explicitly accounted for in the evidence.
-
-Treat each driver's input-port declaration as authoritative for cabinet-button behavior. In the Data East alpha path, `DE_COMPORTS` declares the Green service input as toggled while `DE_COMPORTS2` declares it momentary; a scenario label and action sequence must match the selected driver rather than calling every service key momentary. The harness currently rejects public switch addresses outside `-7..120` before entering LibPinMAME because PinMAME's native switch getters/setters do not bounds-check the converted matrix index. Do not widen that conservative envelope until the harness can inspect the selected driver's address converter or LibPinMAME provides a checked API.
-
-A WPC ROM's own switch-edges test settles which public level the ROM treats as active for an address the emulator does not normalize. Set each public level separately and hold it for a couple of seconds, with a normalized opto and an ordinary switch in the same run as controls: the switch's name appears on the top display line after the edge the ROM treats as active and is gone after the release edge. The switch-levels grid shows raw matrix levels and only restates the mask. Together with the inversion mask and the platform read path, that active level fixes `physical.normally_closed` as described above; it does not say which physical event (a blocked or a clear beam) the ROM calls active. On WPC-Fliptronic and later ROMs the top display line reports the ROM's logical state while the switch grid on the left shows raw matrix closures, so read the top line and include a same-generation masked opto as a control.
-
-Never hard-code diagnostic page counts when the ROM can expose a display or output checkpoint. `pulse_until_display` polls throughout the full settle window so it can catch short-lived titles; after detecting a transient test title, use `wait_until_output` to prove the test became active without sending another input that could skip past it. `pulse_until_output` is appropriate only when every additional pulse is safe until the requested transition occurs. Include localized display targets where supported firmware can change language, and fail the run if the expected checkpoint never appears.
-
-Start every evidentiary run with a newly created state directory and a deliberate boot-stabilization interval. Some generations do not reach attract mode on their first power-up from empty CMOS (Williams System 3-7 stop on the game-identification screen); initialize such a state directory with exactly one retained, hashed boot scenario and cite that initialization run beside the evidentiary one. Never reuse NVRAM from exploratory attempts as though it were a clean run. Retain the complete raw JSON, scenario SHA-256, exact LibPinMAME revision and binary SHA-256, ROM archive SHA-256, command template, service language, and a canonical external-directory manifest under the working root. Commit only compact derived evidence and hashes. A transition proves that a public address changed under the recorded conditions; it does not alone prove physical identity, polarity, quantity, or socket location, and failure to observe an address is never proof that it is unused.
-
-When a scenario fails after the ROM starts, the harness still writes a nonzero-exit partial trace containing completed steps, recorded events, a failure block, and a final failure snapshot. Preserve that artifact while correcting the scenario; it is diagnostic evidence, but it is not a successful evidentiary run and must not be cited as one.
-
-A motorized mechanism whose only feedback is a switch the motor itself moves cannot be exercised by a static scenario, because the switch must answer the ROM's own motor outputs. Probe it with a reactive host model instead:
-
-1. Integrate the mechanism's position from the public motor and direction outputs.
-2. Write the feedback switch from an explicitly named candidate pattern.
-3. Drive the ROM's own mechanism service tests, and record the modelled position at every motor stop and actuator pulse.
-
-Run more than one candidate pattern and more than one starting position. Behaviour that is identical across them is the ROM's contract. Behaviour that changes with the starting position suggests the ROM tracks position relative to remembered state rather than an absolute sensor mark; confirm it by also varying the stored state (NVRAM) before claiming memory-based tracking. A pattern the ROM accepts is still a synthetic probe, never a measurement of the physical cam.
-
-When the ROM's service tests display device names, dump them across the switch, lamp, solenoid, and flasher tests: they are machine evidence for labels and orderings. Decode every display attribute bit (for example an alphanumeric period) instead of dropping unknown segment values.
-
-Escalate to Ghidra only for authoring-critical facts still unresolved after manual, VPX script, PinMAME source, ROM strings/data tables, and harness traces. Follow the approach used in the `kiki` project, normally discovered as a sibling of this repository: identify the exact ROM, loader/CPU memory map, entry points, I/O tables, state variables, and mechanism routines; document addresses and confidence; confirm static conclusions with runtime traces when possible. Do not promote speculative decompilation labels to validated physical facts.
-
-## Machine families and edition prose
-
-After the spatial-update backlog, add a stable `machine_family` identifier that groups the editions of one physical title, for example a manufacturer's Pro, Premium, Limited Edition, and Vault builds of the same game. Keep unrelated games in different families even when they share a theme or a licensed name, including cases where two manufacturers released differently titled machines from the same licence. Research and cite concise prose explaining the physical and rules/hardware differences among editions. A family identifier enables navigation and shared evidence; it must not erase edition-specific devices, geometry, mechanisms, or driver compatibility.
-
-## Project-wide curation completion gates
-
-Per-game success is necessary but not sufficient. Keep working until every gate below is proved by current generated artifacts and tests, or until the user explicitly stops the run:
-
-- The exact pinned `PinmameGetGames` result is captured from the resolved native PinMAME library; every in-scope driver appears exactly once, every retained clone parent resolves, every reviewed virtual-only exclusion remains absent, physical-family exceptions are explicit, and catalog regeneration is byte-for-byte deterministic. Environment-dependent ROM availability such as `PinmameGame.found` is local-report data and must not affect canonical hashes.
-- PinMAME structural extraction records controller generation, active groups/counts, remaps, common inputs, emulator normalization, output types, displays, custom ranges, and simulation/mech hook presence with the exact PinMAME revision. Generic generated labels are scaffolding, never validated semantics.
-- Both pinned VPX script corpora are inventoried deterministically, every eligible script is hashed, controller IDs and I/O/mechanism candidates are extracted with exact locators, table revisions are grouped without erasing provenance, conflicts remain first-class, and parser inference never rises above candidate status by itself.
-- The legacy 11-class managed corpus and old JSON corpus remain covered by migration/compatibility fixtures, including numeric and zero-padded aliases, negative diagnostics, platform-specific merge behavior, duplicate/collision cases, direct flipper relationships, and authored mech reverse resolution. The hint migration report explicitly drops all authoring hints, and unresolved semantic device references hard-fail rather than silently becoming controller ID `0`.
-- Schema and semantic validation reject invalid JSON, stale generated files, duplicate or illegal bindings, alias cycles, dangling imports/models, mixed ID types, unsupported transports, illegal re-inversion, ambiguous inheritance, spatial violations, and dishonest promotion. Representative valid artifacts and every known failing fixture are tested.
-- Runtime evidence uses the pinned library and legally supplied ROMs in isolated per-run state. Run manifests pin ROM and emulator hashes, NVRAM initialization, service language, actions, timeouts, normalized observations, and output/display checkpoints. ROM bytes and NVRAM blobs remain external; host input readback is never treated as ROM evidence; wrong-switch, wrong-output, wrong-idle-state, and wrong-mechanism fixtures must fail clearly.
-- Every physical-game record in the generated catalog is `author_ready`, every supported physical/controller variant is accounted for, and the generated completion gate is true. Stubs contribute zero coverage; partials are not publishable as complete entries; the non-game records (the retained diagnostic plus the twelve test-fixture/test-chip/tester/boot-flash drivers classified `diagnostic_software`) remain separately classified.
-- Machine families and cited edition-difference prose are complete without conflating unrelated titles or collapsing edition-specific devices, geometry, mechanisms, or compatibility.
-- All reviewed curation work is integrated on `master`, no required change remains only in a worktree, generated catalogs/reports match the integrated tree, and completed branches/worktrees are safely cleaned.
-
-## Final curation handoff
-
-External contributors submit a focused PR targeting `master` and wait for maintainer review; they do not merge their own contribution. Maintainers perform the final evidence/code review and own integration decisions.
-
-The curation project is complete only when every in-scope physical PinMAME machine resolves to an exact definition and every record is honestly classified. The final handoff must include coverage totals, remaining partial/stub blockers if the user stops early, validation results, branch/commit locations, retained evidence locations, and confirmation that completed worktrees were cleaned.
+- Boot only a legal user-supplied ROM, from a newly created state directory, and never commit ROM
+  bytes or NVRAM.
+- Retain the complete raw trace and its hashes under the working root; commit only compact derived
+  evidence.
+- A transition proves that a public address changed under the recorded conditions, not its physical
+  identity, polarity, quantity or location, and failure to observe an address never proves it unused.
+- Escalate to Ghidra only after manuals, the VPX script, PinMAME source, ROM tables and harness traces
+  fail to settle an authoring-critical fact, as `docs/HARNESS.md` describes.

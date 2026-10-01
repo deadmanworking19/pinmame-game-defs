@@ -930,7 +930,7 @@ SWITCH_LABELS = {
 # (payload byte 14 bit 1), the ROM's Switch Test draws exactly these as a beam icon, and Krellan's
 # hands-on chart sets exactly these names in italic, which the page defines as optos.
 OPTO_SWITCHES = {17, 36, 37, 38, 39, 44, 48, 52, 61}
-# Contact polarity (docs/INSTRUCTIONS.md: normally_closed is a construction fact about the contact the matrix sees, derived
+# Contact polarity (docs/PLATFORMS.md: normally_closed is a construction fact about the contact the matrix sees, derived
 # from the platform's read path and a runtime proof where no manual prints it). capcom.c's io_r returns swMatrix ^ 0xffff for both the switch board and the cabinet port, so a set swMatrix
 # bit is the CPU's closed-contact reading, and core_setSw applies capInvSw11 to the nine optos only; the C1.01 Switch
 # Test icons (service-switch-test.md) draw every non-opto contact closed at public 1. Which level the ROM expects at

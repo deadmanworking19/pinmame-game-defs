@@ -2,7 +2,7 @@
 > stood on 2026-10-01 (master `a7cc0e76`), before it was compacted. It is kept for history: search
 > it with `rg` when you need the story behind a past decision, but never read it whole and never
 > append to it. Per-game knowledge lives in `knowledge/`, spatial reports and commit messages; the
-> current ledger is `docs/CURRENT-STATE.md`, and task-specific lessons are in `docs/LESSONS.md`.
+> current ledger is `docs/CURRENT-STATE.md`; lessons live in the topic docs `docs/INSTRUCTIONS.md` maps.
 
 # Current state
 

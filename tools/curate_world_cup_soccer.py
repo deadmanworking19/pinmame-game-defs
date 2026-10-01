@@ -929,7 +929,7 @@ def input_devices() -> list[dict[str, Any]]:
 	for address, (label, role, switch_type, reason) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
 		# Every Fliptronic input here rests open. The printed "typically closed" shading on the two button
-		# optos only marks opto construction (docs/INSTRUCTIONS.md): the contact the matrix sees follows from the
+		# optos only marks opto construction (docs/PLATFORMS.md): the contact the matrix sees follows from the
 		# complemented WPC_FLIPPERS read plus the harness run, which shows the ROM treats public 1 as pressed.
 		normally_closed = False
 		notes = f"Printed Fliptronic grounded switch F{address - 110}."

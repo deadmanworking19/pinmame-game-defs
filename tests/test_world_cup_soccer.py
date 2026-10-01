@@ -215,7 +215,7 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertFalse(any(action["type"] in {"pulse_key", "set_key"} for action in scenario["actions"]))
 
 	def test_flipper_button_optos_rest_open_despite_the_printed_shading(self) -> None:
-		# docs/INSTRUCTIONS.md: the printed "typically closed" halftone marks opto construction only. The
+		# docs/PLATFORMS.md: the printed "typically closed" halftone marks opto construction only. The
 		# Fliptronic column is read complemented and the ROM treats public 1 as pressed, so the contact the
 		# matrix sees closes only while the button is pressed and rests open.
 		sources = {source["id"]: source for source in self.definition["sources"]}

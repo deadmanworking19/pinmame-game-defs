@@ -13,8 +13,8 @@ It does not hold:
 - coverage counts: read the generated `reports/coverage.md` or the `summary` of
   `catalog/pinmame.json`, never a copied literal;
 - claims: the per-game branch and worktree are the claim (runbook step 1);
-- general rules and lessons: write them into the runbook, or into `docs/LESSONS.md` when they matter
-  only for a particular task.
+- general rules and lessons: write them into the runbook, or into the topic doc for the task they
+  govern (the runbook's documentation map lists them).
 
 The ledger as it stood before this compaction, with every per-game section and review round up to
 2026-10-01, is frozen at `docs/archive/current-state-ledger-until-2026-10-01.md`. Search it with
@@ -67,5 +67,5 @@ entry in the commit that finishes it.
   still `unresolved`, although the runbook's "What is not a conflict" test makes them device notes.
   Mark them `ignored` with a rationale, or settle the affected provenance and remove them.
 - **Out-of-range clamps.** `curate_cirqus_voltaire.py` clamps sole objects that lie 6-8 % beyond the
-  right rail. Check each against the out-of-range lesson in `docs/LESSONS.md`; the record is
+  right rail. Check each against the out-of-range lesson in `docs/SPATIAL.md`; the record is
   `author_ready`.
