@@ -62,6 +62,8 @@ entry in the commit that finishes it.
   normally open, but several WPC records, some of them `author_ready`, still set
   `normally_closed: true` on switch inputs 112 and 114 (archive L452 lists the ones known then).
   Find them by scanning `machines/` for that pair, and correct each through its curator and seed.
+- **Harness-reachable conflicts still open.** A 2026-10-01 pass ran the ROM for every conflict whose resolution path named a harness run; it settled fourteen machines and left these: Spectrum switch 2 (holding it does not tilt; compare its lamp response with switch 1), Elvira's flip-up roles (complete both targets and collect the award), 24's suitcase stepper order (re-derive the S.A.M. key navigation to the Suitcase Motor Test), the STTNG ship-mode mission run, and the ROM half of Judge Dredd's L-1 switch fitment, Scared Stiff's auxiliary lamp columns and Flash Gordon's lamp 100. The full triage is in the working root's `review-artifacts/harness-conflicts-2026-10-01/triage.md`.
+- **Bally 6803 switch conflicts.** Beat the Clock's and Special Force's switch 2/7/16 resolution paths reason from BY35, but both games run on `by6803` (see `docs/PLATFORMS.md`). Re-derive those six conflicts, and run Special Force's solenoid 19 from a game started with the credit key.
 - **Out-of-range clamps.** `curate_cirqus_voltaire.py` clamps sole objects that lie 6-8 % beyond the
   right rail. Check each against the out-of-range lesson in `docs/SPATIAL.md`; the record is
   `author_ready`.
