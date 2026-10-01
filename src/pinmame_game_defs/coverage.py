@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .jsonio import load_json, write_json, write_text
+from .priorities import write_pinside_top100
 
 
 NON_GAME_KINDS = {"diagnostic_software", "system_software"}
@@ -105,4 +106,5 @@ def write_coverage_report(repository_root: Path) -> dict[str, Any]:
 	queue = build_curation_queue(repository_root)
 	write_json(repository_root / "reports" / "curation-queue.json", queue)
 	write_text(repository_root / "reports" / "curation-queue.md", render_curation_queue_markdown(queue))
+	write_pinside_top100(repository_root)
 	return report

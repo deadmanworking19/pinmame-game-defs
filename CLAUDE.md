@@ -2,6 +2,7 @@
 
 @docs/INSTRUCTIONS.md
 @docs/CURRENT-STATE.md
+@docs/pinside-top100.md
 
 ## Model roles
 
