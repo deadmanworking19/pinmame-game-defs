@@ -65,7 +65,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 110 | Pinball Magic | `capcom.pinball-magic.1995` | 19% |
 | 112 | Taxi | `williams.taxi.1988` | 75% |
 | 116 | Tales from the Crypt | `data-east.tales-from-the-crypt.1993` | 19% |
-| 117 | Black Knight 2000 | `williams.black-knight-2000.1989` | 19% |
+| 117 | Black Knight 2000 | `williams.black-knight-2000.1989` | 88% |
 | 117 | Mystery Castle | `alvin-g.mystery-castle.1993` | 13% |
 | 119 | Jurassic Park | `data-east.jurassic-park.1993` | 19% |
 | 120 | Family Guy | `stern.family-guy.2007` | 19% |
