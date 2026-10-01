@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Tilt'. Resolution path: pinned s11.h's S11_GAMEONSOL 23 and core.h's S9/S11 solenoid numbering, which both make public 23 the flipper and switched-solenoid enable line rather than a tilt output, read against this machine's own printed solenoid table, no copy of which is currently retained; a LibPinMAME trace against a legal diner_l4 ROM observing whether public 23 holds for the duration of a game and drops at game over would settle it independently. Unresolved.",
-      "id": "conflict.pinmame-output-solenoid-23-none",
-      "path": "binding:pinmame.output.solenoid/23/None",
-      "source_refs": [
-        "legacy.game.diner",
-        "legacy.platform.system11"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.s11"
@@ -37,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -4388,15 +4377,19 @@
         "device": 23,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.game-on",
-      "kind": "coil",
-      "label": "ROM Started",
+      "id": "device.game-on-special-solenoid-enable",
+      "kind": "virtual",
+      "label": "Game-On / Special-Solenoid Enable",
+      "physical": {
+        "notes": "Legacy import set the legacy platform map's 'ROM Started' (alias c_game_on) against the game file's 'Tilt'. Pinned s11.c publishes public 23 as S11_GAMEONSOL from PIA0 CB2, the flipper and special-solenoid enable, and a diner_l4 gameplay run settles it: 23 is 0 in attract mode, rises during the start press, drops at the third plumb-bob tilt, rises again for ball 2 and drops when ball 3 ends the game. It is the game-on enable, so the c_game_on alias stays; 'Tilt' names an event that drops it. As the System 11 controller profile records, it has no driver-board device of its own."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.diner",
-          "legacy.platform.system11"
+          "legacy.platform.system11",
+          "runtime.diner.diner-l4.game-on-23"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -4793,6 +4786,15 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.diner.diner-l4.game-on-23",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of diner_l4: a factory-settings initialization from empty NVRAM (tools/harness-scenarios/system-11/diner-nvram-init.json), then a three-ball game from a fresh state holding only its .nv file (tools/harness-scenarios/system-11/diner-game-on-23.json). Public 23 is 0 in attract mode, rises during the start press, drops at the third plumb-bob tilt, rises again for ball 2, stays 1 through balls 2 and 3, and drops when ball 3 ends the game.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/system-11/diner-diner_l4-game-on-23.json"
     }
   ]
 }

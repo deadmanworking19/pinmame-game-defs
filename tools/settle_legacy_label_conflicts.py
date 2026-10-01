@@ -4,9 +4,9 @@
 public address differently. On several WPC records the platform file's `ROM Started` (legacy alias
 `c_game_on`) sits on solenoid 19, where no WPC generation has a game-on output, while the game file
 names a flasher there; on others the game file puts playfield sensors on the coin-door switches the
-platform file places at 1-4. When a hash-pinned harness run of the game's own ROM shows what the
-address is, this tool rewrites that one device from the run, drops the conflict, cites the run, and
-keeps `coverage.missing` honest.
+platform file places at 1-4, or, on System 11, calls the game-on line at 23 a tilt output. When a
+hash-pinned harness run of the game's own ROM shows what the address is, this tool rewrites that one
+device from the run, drops the conflict, cites the run, and keeps `coverage.missing` honest.
 
 Every settlement below names its retained evidence. Several settlements may cite one run; a device
 keeps its id unless the settlement gives a new one. A settlement names the id and label
@@ -160,6 +160,35 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"and releases 19 just after 20, and in step 07 MOUTH CLOSED it drives 20 alone. So 19 sets the direction of "
 			"Ted's mouth motor and is set for opening, which is also how rs.c's simulation reads it. No WPC generation "
 			"has a game-on output at 19, so the platform alias is dropped."
+		),
+	},
+	{
+		"path": "machines/partial/williams/diner-1990.json",
+		"machine_id": "williams.diner.1990",
+		"conflict_id": "conflict.pinmame-output-solenoid-23-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 23},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
+		"label": "Game-On / Special-Solenoid Enable",
+		"kind": "virtual",
+		"drop_aliases": [],
+		"source": {
+			"id": "runtime.diner.diner-l4.game-on-23",
+			"uri": "internal:evidence/runtime/system-11/diner-diner_l4-game-on-23.json",
+			"locator": (
+				"Two hash-pinned LibPinMAME harness runs of diner_l4: a factory-settings initialization from empty NVRAM "
+				"(tools/harness-scenarios/system-11/diner-nvram-init.json), then a three-ball game from a fresh state "
+				"holding only its .nv file (tools/harness-scenarios/system-11/diner-game-on-23.json). Public 23 is 0 in "
+				"attract mode, rises during the start press, drops at the third plumb-bob tilt, rises again for ball 2, "
+				"stays 1 through balls 2 and 3, and drops when ball 3 ends the game."
+			),
+		},
+		"note": (
+			"Legacy import set the legacy platform map's 'ROM Started' (alias c_game_on) against the game file's "
+			"'Tilt'. Pinned s11.c publishes public 23 as S11_GAMEONSOL from PIA0 CB2, the flipper and special-solenoid "
+			"enable, and a diner_l4 gameplay run settles it: 23 is 0 in attract mode, rises during the start press, "
+			"drops at the third plumb-bob tilt, rises again for ball 2 and drops when ball 3 ends the game. It is the "
+			"game-on enable, so the c_game_on alias stays; 'Tilt' names an event that drops it. As the System 11 "
+			"controller profile records, it has no driver-board device of its own."
 		),
 	},
 	*[

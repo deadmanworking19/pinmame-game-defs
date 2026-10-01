@@ -513,7 +513,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# NBA Fastbreak's switch-edges and flasher tests settle all four of its legacy label conflicts, removing one more.
 		# Doctor Who's flasher test settles its only (legacy solenoid-19) conflict, removing one more.
 		# Red and Ted's Road Show's "TED" test settles its only (legacy solenoid-19) conflict, removing one more.
-		self.assertEqual(42, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Diner's gameplay run settles its only (legacy solenoid-23) conflict, removing one more.
+		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

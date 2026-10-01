@@ -29,6 +29,15 @@ ROM_NAMES = {
 PAIRED = {
 	("runtime.red-and-ted-s-road-show.rs-l6.ted-test", 19): (20, "MOUTH OPEN / T.17 06 RUNNING"),
 }
+# Settlements read from a gameplay timeline: the raw step in which the address changes, and its new state, in order.
+TIMELINES = {
+	("runtime.diner.diner-l4.game-on-23", 23): [
+		("start button raises game-on", 1),
+		("ball 1: plumb-bob tilt 3 drops game-on", 0),
+		("checkpoint: game-on rises for ball 2", 1),
+		("checkpoint: game over drops game-on", 0),
+	],
+}
 
 
 def load_json(path: Path) -> dict:
@@ -67,15 +76,23 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				runtime = evidence["runtime"]
 				self.assertEqual(PINNED_LIBRARY_SHA256, runtime["emulator"]["sha256"])
 				self.assertEqual([settlement["machine_id"]], evidence["machine_ids"])
-				(raw,) = runtime["raw_runs"]
-				scenario = ROOT / raw["scenario_path"]
-				self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+				# The last raw run is the evidentiary one; any earlier run only initialized its NVRAM.
+				*setup, raw = runtime["raw_runs"]
+				for item in runtime["raw_runs"]:
+					scenario = ROOT / item["scenario_path"]
+					self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), item["scenario_sha256"])
 				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
 				address = settlement["binding"]["device"]
 				paired = PAIRED.get((source["id"], address))
+				timeline = TIMELINES.get((source["id"], address))
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
-				if paired:
+				if timeline:
+					# One named action per change of the address, each listing it among its transitions.
+					changes = [item for item in observations["named_action_observations"] if address in item["transitioned_solenoid_addresses"]]
+					self.assertEqual(len(timeline), len(changes))
+					self.assertNotIn("diagnostic_snapshots", observations)
+				elif paired:
 					partner, text = paired
 					sequence = observations["ordered_solenoid_on_sequence"]
 					self.assertIn(address, sequence)
@@ -95,7 +112,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
 					self.assertTrue(steps)
 					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
-				if not paired:
+				if not paired and not timeline:
 					name = ROM_NAMES[(source["id"], address)]
 					if switch:
 						self.assertTrue(all(f"names it {name} " in item["label"] for item in steps))
@@ -108,11 +125,19 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					continue
 				import build_external_evidence_manifest as manifest
 
-				path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
-				self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
 				game = runtime["game"]
-				digest = manifest.check_manifest(path.parent, game)
-				self.assertIn(f"{game}/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+				for item in runtime["raw_runs"]:
+					retained = Path(root) / item["retained_from"][len("external:pinmame-review-artifacts/"):]
+					self.assertEqual(item["sha256"], hashlib.sha256(retained.read_bytes()).hexdigest())
+					digest = manifest.check_manifest(retained.parent, game)
+					self.assertIn(f"{retained.parent.name}/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+					self.assertEqual(item["scenario_sha256"], load_json(retained)["scenario"]["sha256"])
+				for item in setup:
+					# The evidentiary run started from only the .nv file this run wrote, cited by its hash.
+					written = Path(root) / item["retained_from"][len("external:pinmame-review-artifacts/"):]
+					nv = written.parent / "state" / "nvram" / f"{game}.nv"
+					self.assertIn(f"SHA-256 {hashlib.sha256(nv.read_bytes()).hexdigest()}", raw["nvram_initialization"])
+				path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
 				run = load_json(path)
 				self.assertIsNone(run["failure"])
 				self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
@@ -122,10 +147,16 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
 				by_label = {snap["label"]: snap for snap in run["snapshots"]}
 				raw_steps = {step["label"]: step for step in run["steps"]}
-				for item in runtime["observations"]["diagnostic_snapshots"]:
+				for item in runtime["observations"].get("diagnostic_snapshots", []):
 					matches = [snap for snap in run["snapshots"] if snap["displays"] and snap["displays"][0]["pixel_sha256"] == item["pixel_sha256"]]
 					self.assertTrue(matches, item["label"])
-				if paired:
+				if timeline:
+					states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address]
+					self.assertEqual([state for _, state in timeline], states)
+					for label, state in timeline:
+						changed = [item["states"] for item in raw_steps[label]["transitions"]["solenoids"] if item["number"] == address]
+						self.assertEqual([[state]], changed, label)
+				elif paired:
 					rises = [event for event in run["events"] if event["event"] == "solenoid" and event["state"]]
 					self.assertEqual(observations["ordered_solenoid_on_sequence"], [event["number"] for event in rises][-len(observations["ordered_solenoid_on_sequence"]):])
 					times = {number: [event["time_s"] for event in rises if event["number"] == number] for number in (address, partner)}

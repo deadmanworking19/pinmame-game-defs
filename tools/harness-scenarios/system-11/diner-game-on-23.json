@@ -1,0 +1,357 @@
+{
+  "actions": [
+    {
+      "label": "boot from the initialized NVRAM",
+      "seconds": 30.0,
+      "type": "wait"
+    },
+    {
+      "label": "attract mode",
+      "seconds": 5.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin 1",
+      "settle_s": 1.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin 2",
+      "settle_s": 1.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "addresses": [
+        23
+      ],
+      "channel": "solenoid",
+      "hold_ms": 150,
+      "label": "start button raises game-on",
+      "max_pulses": 1,
+      "settle_s": 1.0,
+      "switch": 3,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        22
+      ],
+      "channel": "solenoid",
+      "label": "ball 1: shooter lane feeder fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 1: ball leaves the trough",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 1: ball in the shooter lane",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 1: ball plunged",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 1: playfield switch 19 (E)",
+      "settle_s": 1.0,
+      "switch": 19,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 1: playfield switch 20 (A)",
+      "settle_s": 1.5,
+      "switch": 20,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 1: plumb-bob tilt 1",
+      "settle_s": 2.0,
+      "switch": 1,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 1: plumb-bob tilt 2",
+      "settle_s": 2.0,
+      "switch": 1,
+      "type": "pulse"
+    },
+    {
+      "addresses": [
+        23
+      ],
+      "channel": "solenoid",
+      "hold_ms": 150,
+      "label": "ball 1: plumb-bob tilt 3 drops game-on",
+      "max_pulses": 1,
+      "settle_s": 2.0,
+      "switch": 1,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "ball 1: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        1
+      ],
+      "channel": "solenoid",
+      "label": "ball 1: outhole kicker fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 1: ball leaves the outhole",
+      "settle_s": 0.2,
+      "state": 0,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 1: ball back in the trough",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        23
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: game-on rises for ball 2",
+      "timeout_s": 10.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 2 starts",
+      "seconds": 1.0,
+      "type": "wait"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        22
+      ],
+      "channel": "solenoid",
+      "label": "ball 2: shooter lane feeder fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 2: ball leaves the trough",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 2: ball in the shooter lane",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 2: ball plunged",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 2: playfield switch 19 (E)",
+      "settle_s": 1.0,
+      "switch": 19,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 2: playfield switch 20 (A)",
+      "settle_s": 1.5,
+      "switch": 20,
+      "type": "pulse"
+    },
+    {
+      "label": "ball 2: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        1
+      ],
+      "channel": "solenoid",
+      "label": "ball 2: outhole kicker fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 2: ball leaves the outhole",
+      "settle_s": 0.2,
+      "state": 0,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 2: ball back in the trough",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 3 starts",
+      "seconds": 1.8,
+      "type": "wait"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        22
+      ],
+      "channel": "solenoid",
+      "label": "ball 3: shooter lane feeder fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 3: ball leaves the trough",
+      "settle_s": 0.3,
+      "state": 0,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 3: ball in the shooter lane",
+      "settle_s": 1.5,
+      "state": 1,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 3: ball plunged",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 14,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 3: playfield switch 19 (E)",
+      "settle_s": 1.0,
+      "switch": 19,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "ball 3: playfield switch 20 (A)",
+      "settle_s": 1.5,
+      "switch": 20,
+      "type": "pulse"
+    },
+    {
+      "label": "ball 3: ball drains to the outhole",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "active_only": true,
+      "addresses": [
+        1
+      ],
+      "channel": "solenoid",
+      "label": "ball 3: outhole kicker fires",
+      "timeout_s": 15.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "ball 3: ball leaves the outhole",
+      "settle_s": 0.2,
+      "state": 0,
+      "switch": 9,
+      "type": "set_switch"
+    },
+    {
+      "label": "ball 3: ball back in the trough",
+      "settle_s": 0.2,
+      "state": 1,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "active_only": false,
+      "addresses": [
+        23
+      ],
+      "channel": "solenoid",
+      "label": "checkpoint: game over drops game-on",
+      "timeout_s": 20.0,
+      "type": "wait_until_output"
+    },
+    {
+      "label": "game over",
+      "seconds": 3.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 11
+    },
+    {
+      "state": 1,
+      "switch": 12
+    },
+    {
+      "state": 1,
+      "switch": 13
+    }
+  ],
+  "notes": "Boot a Diner ROM from a fresh state directory holding only the .nv file written by diner-nvram-init, with three balls in the trough (11-13 closed) and PinMAME's built-in mechanisms disabled; the scenario names no game. Coin up one credit and start a game, then play three balls with a modelled serve and drain: wait for the shooter lane feeder (22), move a ball from the trough to the shooter lane and plunge it, close playfield switches 19 and 20, and drain it to the outhole until the outhole kicker (1) fires. Ball 1 is tilted with three plumb-bob pulses (public 1) before it drains. Public 23 is s11.c's S11_GAMEONSOL; output checkpoints require the start press to raise it, the third tilt pulse to drop it, ball 2 to raise it again and the end of ball 3 to drop it, and every serve and drain to fire its coil, so the run fails closed.",
+  "version": 1,
+  "watch_switches": [
+    1,
+    3,
+    9,
+    11,
+    12,
+    13,
+    14,
+    19,
+    20
+  ]
+}
