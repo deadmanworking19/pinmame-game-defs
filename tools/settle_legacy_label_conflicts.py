@@ -9,7 +9,9 @@ hash-pinned harness run of the game's own ROM shows what the address is, this to
 device from the run, drops the conflict, cites the run, and keeps `coverage.missing` honest.
 
 Every settlement below names its retained evidence. Several settlements may cite one run; a device
-keeps its id unless the settlement gives a new one. A settlement names the id and label
+keeps its id unless the settlement gives a new one. A settlement may also cite complete source records
+in `extra_sources`, such as the game's own manual or a pinned known-working table script that the
+run corroborates; the device cites them after the run. A settlement names the id and label
 `import-legacy` gave the device, and the tool refuses a device that carries neither those nor the
 settled ones, or whose public-number aliases name another address. The tool edits only the listed
 device, conflict, source list and coverage; everything else in the record is left as
@@ -64,6 +66,105 @@ SKATEBALL_IN_PLAY = {
 		"drops at game over. With center drop targets 3 and 4 down, pressing public 2 fires the center bank reset (10)."
 	),
 }
+
+SPECIAL_FORCE_SWITCH_TEST = {
+	"id": "runtime.special-force.specforc.switch-test",
+	"uri": "internal:evidence/runtime/by6803/special-force-specforc-switch-test.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of specforc from empty NVRAM (scenario "
+		"tools/harness-scenarios/by6803/specforc-switch-test.json) that holds public 2 and presses Test: the ROM's "
+		"stuck-switch check opens its Switch Test, which names every closed switch on the alphanumeric displays. It "
+		"names public 2 CHOPPER TOP, 7 RIGHT LAUNCH and 16 RELEASE LEFT, and the controls 5 LEFT LAUNCH, 15 TILT SWITCH "
+		"and 14 SLAM SWITCH."
+	),
+}
+SPECIAL_FORCE_SOLENOID_TEST = {
+	"id": "runtime.special-force.specforc.solenoid-test",
+	"uri": "internal:evidence/runtime/by6803/special-force-specforc-solenoid-test.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of specforc from empty NVRAM (scenario "
+		"tools/harness-scenarios/by6803/specforc-solenoid-test.json) that steps the keypad to SELF TESTING and runs the "
+		"ROM's Solenoid Test, which fires one driver at a time and names it. After public 1-12, 14 and 15 it raises "
+		"public 19 for 1.7 s and shows FLIPPER with the driver Q07."
+	),
+}
+SPECIAL_FORCE_MANUAL = {
+	"id": "manual.special-force.operating-manual",
+	"kind": "manual",
+	"uri": "external:pinmame-manuals/by-machine/bally.special-force.1986/visual-pinball-manuals/Bally_1986_Special_Force_Manual.pdf",
+	"revision": "sha256:3b181618a2b20f1b66e39a687353fbffa78068c50cd020d468ef30bd61ada431",
+	"sha256": "3b181618a2b20f1b66e39a687353fbffa78068c50cd020d468ef30bd61ada431",
+	"locator": (
+		"47-page scanned Bally Midway Special Force Operating Manual, game no. 0E47, form no. 0E47-00300-0100, with "
+		"schematics. PDF page 8 (printed 1-2) describes the coin-door keypad, PDF page 17 (printed 1-9) prints the "
+		"Solenoid and Switch Assembly Identification Tables, and PDF page 45 lists the solenoid driver locations."
+	),
+	"license": "NOASSERTION",
+	"attribution": "Bally Midway Mfg. Co.; copy supplied by the repository maintainer",
+	"original_filename": "Bally_1986_Special_Force_Manual.pdf",
+	"rights": "NOASSERTION",
+	"excerpts": [
+		{
+			"id": "excerpt.special-force.identification-tables",
+			"locator": "PDF page 17, printed page 1-9: SOLENOID IDENTIFICATION TABLE and SWITCH ASSEMBLY IDENTIFICATION TABLE, both transcribed in full",
+			"method": "manual",
+			"path": "evidence/excerpts/bally.special-force.1986/identification-tables.md",
+			"reviewed": True,
+			"sha256": "42eed7abe3e1dc92c65ac3fed97866a48255b2a9c198509d3625e2eb8bbd5b20",
+			"transcribed_by": "curator, read from the rendered page",
+		},
+		{
+			"id": "excerpt.special-force.solenoid-driver-locations",
+			"locator": "PDF page 45, sheet M051-00E47-A012: the SOLENOID DRIVER LOCATIONS table with its footnote and wire colour legend",
+			"method": "manual",
+			"path": "evidence/excerpts/bally.special-force.1986/solenoid-driver-locations.md",
+			"reviewed": True,
+			"sha256": "ada8590b0a121f37578aa2adab3356167cafe63046622c870aab43090c534daa",
+			"transcribed_by": "curator, read from the rendered page",
+		},
+		{
+			"id": "excerpt.special-force.keypad-operation",
+			"locator": "PDF page 8, printed page 1-2: the OPERATION subsection of III. TAILORING & TESTING THE GAME",
+			"method": "manual",
+			"path": "evidence/excerpts/bally.special-force.1986/keypad-operation.md",
+			"reviewed": True,
+			"sha256": "56e4c03a777d15315c35326b776af602c6dcf7c1898ba2463aa99278c5227908",
+			"transcribed_by": "curator, read from the rendered page",
+		},
+	],
+}
+VPM_6803_LIBRARY = {
+	"id": "vpm-script-library.6803-vbs",
+	"kind": "vpx_script",
+	"uri": "external:pinmame-review-artifacts/vpm-script-libs/6803.vbs",
+	"sha256": "472b75fd486282a9533bd5c999d965544cb0803655ecc0f996de01d8a79a38e6",
+	"locator": (
+		"The VPinMAME script library Bally 6803 tables load (LoadVPM ..., \"6803.VBS\", ...), retained from the "
+		"maintainer's working installation together with the core.vbs it executes (SHA-256 "
+		"a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69). Line 21 sets GameOnSolenoid = 19, which "
+		"core.vbs's vpmFlips takes as the flipper-enable solenoid when a table sets UseSolenoids = 2 (lines 2121-2133); "
+		"lines 26-41 put the coin-door keypad on public 1-4, 9-12, 17-20 and 25-28, keypad 0 on 2; lines 42-43 set "
+		"swTilt = 15 and swSlamTilt = 14."
+	),
+	"license": "NOASSERTION",
+	"attribution": "VPinMAME / Visual Pinball script-library maintainers",
+	"original_filename": "6803.vbs",
+	"rights": "NOASSERTION",
+	"acquired_at": "2026-10-01T00:00:00Z",
+	"excerpts": [
+		{
+			"id": "excerpt.special-force.vpm-6803-library",
+			"locator": "6803.vbs lines 17-51 and core.vbs lines 2121-2133, verbatim",
+			"method": "manual",
+			"path": "evidence/excerpts/bally.special-force.1986/vpm-6803-library.md",
+			"reviewed": True,
+			"sha256": "296c5465002e47e1b8f6fbd96175ee757922656aeff059889edddef82dd7a1c7",
+			"transcribed_by": "curator, read from the library files",
+		},
+	],
+}
+SPECIAL_FORCE_MANUAL_SOURCES = [SPECIAL_FORCE_MANUAL]
+SPECIAL_FORCE_LIBRARY_SOURCES = [SPECIAL_FORCE_MANUAL, VPM_6803_LIBRARY]
 
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
@@ -317,6 +418,88 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"output, so the game file's '/ BG Left' is not confirmed by the run."
 		),
 	},
+	{
+		"path": "machines/partial/bally/special-force-1986.json",
+		"machine_id": "bally.special-force.1986",
+		"conflict_id": "conflict.pinmame-input-switch-2-none",
+		"binding": {"group": "pinmame.input.switch", "device": 2},
+		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"id": "switch.chopper-top",
+		"label": "Chopper Top",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
+		"source": SPECIAL_FORCE_SWITCH_TEST,
+		"extra_sources": SPECIAL_FORCE_LIBRARY_SOURCES,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
+			"file's 'Chopper Top'. The game's own Switch Assembly Identification Table prints switch 2 CHOPPER TOP, and the "
+			"ROM's Switch Test names public 2 CHOPPER TOP. The manual says the playfield switches are wired in parallel "
+			"with the coin-door keypad, and PinMAME's by6803 port map and the VPinMAME 6803.vbs library put keypad 0 on "
+			"this matrix position; with PinMAME keyboard handling on, the keypad port overwrites public 2. The platform "
+			"alias is dropped: this game's cabinet tilt is switch 15."
+		),
+	},
+	{
+		"path": "machines/partial/bally/special-force-1986.json",
+		"machine_id": "bally.special-force.1986",
+		"conflict_id": "conflict.pinmame-input-switch-7-none",
+		"binding": {"group": "pinmame.input.switch", "device": 7},
+		"from": {"id": "switch.tilt", "label": "Tilt"},
+		"id": "switch.right-launch-button",
+		"label": "Right Launch Button",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_tilt"}],
+		"source": SPECIAL_FORCE_SWITCH_TEST,
+		"extra_sources": SPECIAL_FORCE_MANUAL_SOURCES,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Right Magna "
+			"Save Button'. The game's own Switch Assembly Identification Table prints switch 7 RIGHT LAUNCH (RT. ORANGE "
+			"P.B.), an orange push button, and the ROM's Switch Test names public 7 RIGHT LAUNCH. by6803 leaves public 7 "
+			"an ordinary matrix switch; the cabinet tilt is switch 15 and the slam switch 14, both named so by the same test. The same table prints switch 5 LEFT LAUNCH "
+			"(LT. ORANGE P.B.), where this record still carries the game file's 'Left Magna Save Button'."
+		),
+	},
+	{
+		"path": "machines/partial/bally/special-force-1986.json",
+		"machine_id": "bally.special-force.1986",
+		"conflict_id": "conflict.pinmame-input-switch-16-none",
+		"binding": {"group": "pinmame.input.switch", "device": 16},
+		"from": {"id": "switch.slam-tilt", "label": "Slam Tilt"},
+		"id": "switch.release-left",
+		"label": "Release Left",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_slam_tilt"}],
+		"source": SPECIAL_FORCE_SWITCH_TEST,
+		"extra_sources": SPECIAL_FORCE_MANUAL_SOURCES,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Slam Tilt' (alias s_slam_tilt) against the game file's "
+			"'Standup Target'. The game's own Switch Assembly Identification Table prints switch 16 RELEASE LEFT (BEHIND "
+			"IN-LINE D.T.), and the ROM's Switch Test names public 16 RELEASE LEFT. by6803 leaves public 16 an ordinary "
+			"matrix switch; the slam switch is 14, which the same test names SLAM SWITCH."
+		),
+	},
+	{
+		"path": "machines/partial/bally/special-force-1986.json",
+		"machine_id": "bally.special-force.1986",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
+		"label": "Flipper Relay",
+		"kind": "relay",
+		"drop_aliases": [],
+		"source": SPECIAL_FORCE_SOLENOID_TEST,
+		"extra_sources": SPECIAL_FORCE_LIBRARY_SOURCES,
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'ROM Started' (alias c_game_on) against the game file's "
+			"'Unused / Empty'. The ROM's Solenoid Test raises public 19 for 1.7 s at the step it names FLIPPER, driver Q07, "
+			"and the manual's Solenoid Driver Locations give Q7 as the FLIPPERS drive, connected through K1, the flipper "
+			"relay; its Solenoid Identification Table ends with 24 FLIPPER (BACKBOX). The test prints the connector as "
+			"J6-8-9 where the printed table gives J9-8 and J6-9. Public 19 is by6803 continuous bit 2, the bit lisy35.c "
+			"calls flipper disable on BY35. The VPinMAME 6803.vbs library makes it GameOnSolenoid, the solenoid core.vbs's "
+			"vpmFlips enables the flippers from when a table sets UseSolenoids = 2, so the c_game_on alias stays. No harness "
+			"run has started a Special Force game yet, so how the ROM drives it in play is unobserved."
+		),
+	},
 ]
 
 
@@ -353,7 +536,9 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 	device["label"] = settlement["label"]
 	device["kind"] = settlement["kind"]
 	device["aliases"] = [alias for alias in device.get("aliases", []) if alias not in settlement["drop_aliases"]]
-	refs = [ref for ref in device["provenance"]["source_refs"] if ref != source["id"]] + [source["id"]]
+	extra = settlement.get("extra_sources", [])
+	cited = [source["id"], *(item["id"] for item in extra)]
+	refs = [ref for ref in device["provenance"]["source_refs"] if ref not in cited] + cited
 	device["provenance"] = {"source_refs": refs, "status": "observed"}
 	device.setdefault("physical", {})["notes"] = settlement["note"]
 	identifiers = [item["id"] for item in result["outputs"] + result["inputs"]]
@@ -369,12 +554,13 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 		"license": "NOASSERTION",
 		"attribution": ATTRIBUTION,
 	}
-	# Replace in place, so that settlements sharing one run leave the source list stable on re-application.
-	positions = [index for index, item in enumerate(result["sources"]) if item["id"] == source["id"]]
-	if positions:
-		result["sources"][positions[0]] = record
-	else:
-		result["sources"].append(record)
+	# Replace in place, so that settlements sharing a source leave the source list stable on re-application.
+	for item in [record, *extra]:
+		positions = [index for index, existing in enumerate(result["sources"]) if existing["id"] == item["id"]]
+		if positions:
+			result["sources"][positions[0]] = item
+		else:
+			result["sources"].append(item)
 	unresolved = [conflict for conflict in result["conflicts"] if conflict.get("status", "unresolved") == "unresolved"]
 	if not unresolved:
 		result["coverage"]["missing"] = [item for item in result["coverage"]["missing"] if item != "unresolved_conflicts"]

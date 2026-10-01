@@ -1,0 +1,87 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Special Force (specforc): from a fresh state directory, press Test (-7) and step the coin-door keypad (A = public 12, Enter = public 1, both wired in parallel with the switch matrix) to SELF TESTING, then Enter through SINGLE LAMPS, ALL LAMPS and DISPLAY TESTS into SOLNOID TESTS, which fires each driver in turn and names it. The run waits for the step that raises public 19 and takes a frame 0.5 s later. Keyboard handling stays off; every input is a direct write.",
+  "initial_switches": [],
+  "watch_switches": [
+    -7,
+    1,
+    12
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 15.0,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Test button"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "keypad A: BOOKKEEPING DATA"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "keypad A: SELF TESTING"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "keypad Enter: SINGLE LAMPS"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "keypad Enter: ALL LAMPS"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "keypad Enter: DISPLAY TESTS"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "keypad Enter: SOLNOID TESTS"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "active_only": true,
+      "timeout_s": 60.0,
+      "label": "checkpoint: the solenoid test raises 19"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "solenoid test with 19 raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "solenoid test after 19"
+    }
+  ]
+}

@@ -332,7 +332,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 326 | 1986 | Black Belt | Bally | partial | 13% |
 | 327 | 1986 | Lady Luck | Bally | partial | 13% |
 | 328 | 1986 | Motordome | Bally | partial | 13% |
-| 329 | 1986 | Special Force | Bally | partial | 13% |
+| 329 | 1986 | Special Force | Bally | partial | 19% |
 | 330 | 1986 | Strange Science | Bally | partial | 13% |
 | 331 | 1986 | L'Hexagone | Christian Tabart (France) | partial | 13% |
 | 332 | 1986 | Kidnap | CICPlay | partial | 6% |

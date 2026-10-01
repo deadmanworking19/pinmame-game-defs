@@ -1,0 +1,118 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Special Force (specforc): from a fresh state directory, hold public 2 (wired in parallel with coin-door keypad 0) and press Test (-7). The ROM's power-on stuck-switch check finds it closed and opens its Switch Test, which names every closed switch. Release 2, then close public 7 and 16 one at a time, with 5, 15 and 14 as controls. Keyboard handling stays off; every input is a direct write.",
+  "initial_switches": [],
+  "watch_switches": [
+    -7,
+    2,
+    5,
+    7,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 15.0,
+      "label": "boot"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "public 2 held closed"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Test button with public 2 held"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "stuck switch test with public 2 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "public 2 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "switch test: public 7 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch test: public 7 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "switch test: public 16 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch test: public 16 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "switch test: public 5 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch test: public 5 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "switch test: public 15 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch test: public 15 open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "switch test: public 14 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch test: public 14 open"
+    }
+  ]
+}

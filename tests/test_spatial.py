@@ -516,7 +516,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Diner's gameplay run settles its only (legacy solenoid-23) conflict, removing one more.
 		# Harlem Globetrotters' gameplay run settles its only (legacy switch-2) conflict, removing one more.
 		# Skateball's gameplay run settles both of its (legacy switch-2 and solenoid-19) conflicts, removing one more.
-		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Special Force's service tests settle all four of its legacy label conflicts, removing one more.
+		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

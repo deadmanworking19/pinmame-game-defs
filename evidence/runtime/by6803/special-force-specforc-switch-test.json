@@ -1,0 +1,886 @@
+{
+  "driver_ids": [
+    "specforc"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.special-force.1986"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game specforc --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by6803/specforc-switch-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 3 s; the snapshot after it records the two 14-character alphanumeric rows as five PinMAME displays (indices 0-1 the top row, 2-4 the bottom), decoded here with the by6803 CORE_SEG98 glyphs. No step changes a solenoid.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "specforc",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "CHOPPER",
+              "segments": [
+                57,
+                118,
+                63,
+                115,
+                115,
+                121,
+                839
+              ],
+              "snapshot_label": "Test button with public 2 held"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "TOP    ",
+              "segments": [
+                769,
+                63,
+                115,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "Test button with public 2 held"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "Test button with public 2 held"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "Test button with public 2 held"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "Test button with public 2 held"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            -7,
+            2
+          ],
+          "input_address": -7,
+          "input_kind": "switch",
+          "label": "Test button (public -7) pressed while the host holds public 2 at 1: the ROM's stuck-switch check opens its Switch Test and names public 2 CHOPPER TOP / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "  ALL  ",
+              "segments": [
+                0,
+                0,
+                119,
+                56,
+                56,
+                0,
+                0
+              ],
+              "snapshot_label": "public 2 released"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "SWITCHS",
+              "segments": [
+                109,
+                830,
+                777,
+                769,
+                57,
+                118,
+                109
+              ],
+              "snapshot_label": "public 2 released"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": " OPEN  ",
+              "segments": [
+                0,
+                63,
+                115,
+                121,
+                775,
+                0,
+                0
+              ],
+              "snapshot_label": "public 2 released"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "public 2 released"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 2 released"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 set to 0 in the Switch Test: the ROM shows ALL SWITCHS / OPEN",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "  RIGHT",
+              "segments": [
+                0,
+                0,
+                839,
+                777,
+                111,
+                118,
+                769
+              ],
+              "snapshot_label": "switch test: public 7 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "LAUNCH ",
+              "segments": [
+                56,
+                119,
+                62,
+                775,
+                57,
+                118,
+                0
+              ],
+              "snapshot_label": "switch test: public 7 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "switch test: public 7 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "switch test: public 7 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 7 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "public 7 set to 1 in the Switch Test: the ROM names it RIGHT LAUNCH / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "RELEASE",
+              "segments": [
+                839,
+                121,
+                56,
+                121,
+                119,
+                109,
+                121
+              ],
+              "snapshot_label": "switch test: public 16 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "LEFT   ",
+              "segments": [
+                56,
+                121,
+                113,
+                769,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 16 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "switch test: public 16 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "switch test: public 16 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 16 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "public 16 set to 1 in the Switch Test: the ROM names it RELEASE LEFT / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "   LEFT",
+              "segments": [
+                0,
+                0,
+                0,
+                56,
+                121,
+                113,
+                769
+              ],
+              "snapshot_label": "switch test: public 5 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "LAUNCH ",
+              "segments": [
+                56,
+                119,
+                62,
+                775,
+                57,
+                118,
+                0
+              ],
+              "snapshot_label": "switch test: public 5 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "switch test: public 5 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "switch test: public 5 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 5 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "public 5 set to 1 in the Switch Test: the ROM names it LEFT LAUNCH / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "   TILT",
+              "segments": [
+                0,
+                0,
+                0,
+                769,
+                777,
+                56,
+                769
+              ],
+              "snapshot_label": "switch test: public 15 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "SWITCH ",
+              "segments": [
+                109,
+                830,
+                777,
+                769,
+                57,
+                118,
+                0
+              ],
+              "snapshot_label": "switch test: public 15 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "switch test: public 15 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "switch test: public 15 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 15 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "public 15 set to 1 in the Switch Test: the ROM names it TILT SWITCH / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "   SLAM",
+              "segments": [
+                0,
+                0,
+                0,
+                109,
+                56,
+                119,
+                823
+              ],
+              "snapshot_label": "switch test: public 14 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "SWITCH ",
+              "segments": [
+                109,
+                830,
+                777,
+                769,
+                57,
+                118,
+                0
+              ],
+              "snapshot_label": "switch test: public 14 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "CLOSED ",
+              "segments": [
+                57,
+                56,
+                63,
+                109,
+                121,
+                783,
+                0
+              ],
+              "snapshot_label": "switch test: public 14 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "switch test: public 14 closed"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "switch test: public 14 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "public 14 set to 1 in the Switch Test: the ROM names it SLAM SWITCH / CLOSED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 15,
+        "initial_switches": [],
+        "name": "specforc-switch-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and sends no keyboard input: after a 15 s boot wait it holds public 2 and pulses the Test switch (-7) with direct writes",
+        "retained_from": "external:pinmame-review-artifacts/special-force-1986/harness/switch-test/specforc/run.json",
+        "scenario_path": "tools/harness-scenarios/by6803/specforc-switch-test.json",
+        "scenario_sha256": "e431322063a1e50526c0b95d7856230fb0ef4b9b3f8879471464d4a7b8bd1832",
+        "self_test_pulses": 1,
+        "sha256": "bc19d5a19e16ac3b53e62dfa0471ea6594e1da8e4bcc6efeee8d1e165b91c08f",
+        "snapshot_count": 16,
+        "watch_switches": [
+          -7,
+          2,
+          5,
+          7,
+          14,
+          15,
+          16
+        ]
+      }
+    ],
+    "rom_archive_sha256": "82a23e6e643749c5aaae55974041091a18f28ad2312232475ffa9f47ca29519c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Display text is decoded from the harness's raw segment values; the ROM's font draws O and 0, and S and 5, alike, and each row's two seven-character modules are joined with a space. Exact external directory manifest specforc/manifest.json SHA-256 a71899c443005def077466636482fbd9c2d0883aee0749668b7270dd3fdf4fb2 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the rendered display frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/special-force-1986/harness/switch-test/specforc",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "bc19d5a19e16ac3b53e62dfa0471ea6594e1da8e4bcc6efeee8d1e165b91c08f"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -49,6 +49,22 @@ BANKS = {
 	},
 }
 SEVEN_SEGMENT = {0: "", 63: "0", 6: "1", 91: "2", 79: "3", 102: "4", 109: "5", 125: "6", 7: "7", 127: "8", 111: "9"}
+# by6803.c CORE_SEG98 glyphs: bits 0-6 are segments a-g, 0x80 the comma, 0x300 the centre bar. The ROM's font draws O
+# and 0, and S and 5, alike.
+BY6803_ALPHA = {
+	0x000: " ", 0x077: "A", 0x34F: "B", 0x039: "C", 0x30F: "D", 0x079: "E", 0x071: "F", 0x06F: "G", 0x076: "H",
+	0x309: "I", 0x01E: "J", 0x038: "L", 0x337: "M", 0x307: "N", 0x03F: "O", 0x073: "P", 0x36B: "Q", 0x347: "R",
+	0x06D: "S", 0x301: "T", 0x03E: "U", 0x30E: "V", 0x33E: "W", 0x040: "-", 0x006: "1", 0x05B: "2", 0x04F: "3",
+	0x066: "4", 0x07D: "6", 0x007: "7", 0x07F: "8", 0x067: "9",
+}
+# Settlements read from a Bally 6803 service test on the alphanumeric displays: the top and bottom rows the ROM shows
+# for the address (displays 0-1 and 2-4, each row's two seven-character modules joined with a space).
+ALPHA_NAMES = {
+	("runtime.special-force.specforc.switch-test", 2): ("CHOPPER TOP", "CLOSED"),
+	("runtime.special-force.specforc.switch-test", 7): ("RIGHT LAUNCH", "CLOSED"),
+	("runtime.special-force.specforc.switch-test", 16): ("RELEASE LEFT", "CLOSED"),
+	("runtime.special-force.specforc.solenoid-test", 19): ("FLIPPER", "QO7 J6-8-9"),
+}
 # Settlements read from a gameplay timeline: each raw step in which the address changes, and its states there, in order.
 TIMELINES = {
 	("runtime.diner.diner-l4.game-on-23", 23): [
@@ -88,6 +104,24 @@ def seven_segment(values: list[int]) -> int:
 	return int("".join(SEVEN_SEGMENT[value & 0x7F] for value in values) or "0")
 
 
+def alpha(values: list[int]) -> str:
+	return "".join(BY6803_ALPHA[value & ~0x80] + ("," if value & 0x80 else "") for value in values)
+
+
+def alpha_rows(responses: list[dict]) -> tuple[str, str]:
+	text = {item["display_index"]: alpha(item["segments"]) for item in responses}
+	top = " ".join(part for part in (text[0].strip(), text[1].strip()) if part)
+	bottom = " ".join(part for part in (text[2].strip(), (text[3] + text[4]).strip()) if part)
+	return top, bottom
+
+
+def alpha_frames(observation: dict) -> dict[str, list[dict]]:
+	frames: dict[str, list[dict]] = {}
+	for item in observation.get("display_responses", []):
+		frames.setdefault(item["snapshot_label"], []).append(item)
+	return frames
+
+
 class LegacyLabelSettlementTests(unittest.TestCase):
 	def test_every_settlement_is_applied_exactly(self) -> None:
 		for settlement in tool.SETTLEMENTS:
@@ -111,6 +145,11 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				self.assertEqual(bool(unresolved), "unresolved_conflicts" in record["coverage"]["missing"])
 				sources = {item["id"]: item for item in record["sources"]}
 				self.assertEqual("runtime_scenario", sources[settlement["source"]["id"]]["kind"])
+				# A manual or known-working script the run corroborates is recorded whole and cited after the run.
+				refs = device["provenance"]["source_refs"]
+				for item in settlement.get("extra_sources", []):
+					self.assertEqual(item, sources[item["id"]])
+					self.assertGreater(refs.index(item["id"]), refs.index(settlement["source"]["id"]))
 
 	def test_each_settlement_is_tied_to_its_rom_run(self) -> None:
 		for settlement in tool.SETTLEMENTS:
@@ -130,9 +169,29 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				paired = PAIRED.get((source["id"], address))
 				timeline = TIMELINES.get((source["id"], address))
 				bank = BANKS.get((source["id"], address))
+				rows = ALPHA_NAMES.get((source["id"], address))
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
-				if bank:
+				if rows:
+					# The service test shows the address's rows in a frame the evidence keeps as raw segments.
+					shown = []
+					for item in observations["named_action_observations"]:
+						for label, responses in alpha_frames(item).items():
+							for response in responses:
+								self.assertEqual(alpha(response["segments"]), response["interpreted_text"])
+							if alpha_rows(responses) == rows:
+								shown.append((item, label))
+					self.assertTrue(shown)
+					for item, _ in shown:
+						if switch:
+							self.assertIn(address, item["host_stimulus_switch_addresses"])
+							self.assertEqual([], item["transitioned_solenoid_addresses"])
+						else:
+							self.assertIn(address, item["transitioned_solenoid_addresses"])
+							self.assertIn(address, item["active_solenoid_addresses"])
+					if not switch:
+						self.assertEqual(1, observations["ordered_solenoid_on_sequence"].count(address))
+				elif bank:
 					# Every closure keeps the relay raised, and the address's closure says the ROM did not tilt.
 					closures = {item["input_address"]: item for item in observations["named_action_observations"] if item["input_kind"] == "switch"}
 					for number in [*bank["members"], address]:
@@ -169,7 +228,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
 					self.assertTrue(steps)
 					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
-				if not paired and not timeline and not bank:
+				if not paired and not timeline and not bank and not rows:
 					name = ROM_NAMES[(source["id"], address)]
 					if switch:
 						self.assertTrue(all(f"names it {name} " in item["label"] for item in steps))
@@ -207,7 +266,25 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				for item in runtime["observations"].get("diagnostic_snapshots", []):
 					matches = [snap for snap in run["snapshots"] if snap["displays"] and snap["displays"][0]["pixel_sha256"] == item["pixel_sha256"]]
 					self.assertTrue(matches, item["label"])
-				if bank:
+				if rows:
+					for item, label in shown:
+						snap = by_label[label]
+						for response in alpha_frames(item)[label]:
+							(display,) = [entry for entry in snap["displays"] if entry["index"] == response["display_index"]]
+							self.assertEqual(display["segments"], response["segments"])
+						if switch:
+							# Only the address is held when the frame is taken; the Test switch was a pulse.
+							held = {entry["number"] for entry in snap["watched_switches"] if entry["state"]}
+							self.assertEqual({address}, held)
+							self.assertEqual([], raw_steps[label]["transitions"]["solenoids"])
+						else:
+							self.assertIn(address, snap["active_solenoids"])
+					if not switch:
+						# After boot the address rises once, in the service test, and drops again.
+						boot = by_label["boot"]["time_s"]
+						states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address and event["time_s"] > boot]
+						self.assertEqual([1, 0], states)
+				elif bank:
 					def score(label: str) -> int:
 						return seven_segment(by_label[label]["displays"][0]["segments"])
 

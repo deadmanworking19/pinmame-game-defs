@@ -1,42 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Chopper Top'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal specforc ROM holding public switch 2 during play to see whether the ROM registers a tilt rather than reporting a playfield device -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
-      "id": "conflict.pinmame-input-switch-2-none",
-      "path": "binding:pinmame.input.switch/2/None",
-      "source_refs": [
-        "legacy.game.specfor",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Right Magna Save Button'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
-      "id": "conflict.pinmame-input-switch-7-none",
-      "path": "binding:pinmame.input.switch/7/None",
-      "source_refs": [
-        "legacy.game.specfor",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Standup Target'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Slam Tilt on switch column 2 bit 7 and SWITCH_UPDATE(by35) rewrites public 16 from the cabinet input port every frame on every BY35 game. Unresolved.",
-      "id": "conflict.pinmame-input-switch-16-none",
-      "path": "binding:pinmame.input.switch/16/None",
-      "source_refs": [
-        "legacy.game.specfor",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Unused / Empty'. Resolution path: this machine's own printed Bally Solenoid Identification Table, no copy of which is currently retained, or a boot-and-play LibPinMAME trace against a legal specforc ROM observing whether public 19 holds continuously for the duration of a game like a flipper-enable relay or never asserts at all; pinned core.h gives BY17/BY35 fifteen pulsed outputs and four hold outputs at 17-20 and no game-on address anywhere, and which device each hold output carries is a per-game question on this platform. Unresolved.",
-      "id": "conflict.pinmame-output-solenoid-19-none",
-      "path": "binding:pinmame.output.solenoid/19/None",
-      "source_refs": [
-        "legacy.game.specfor",
-        "legacy.platform.bally"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.bally"
@@ -64,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -218,25 +180,27 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "002"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_ball_roll_tilt"
         }
       ],
       "binding": {
         "device": 2,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.ball-roll-tilt",
+      "id": "switch.chopper-top",
       "kind": "switch",
-      "label": "Ball Roll Tilt",
+      "label": "Chopper Top",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game file's 'Chopper Top'. The game's own Switch Assembly Identification Table prints switch 2 CHOPPER TOP, and the ROM's Switch Test names public 2 CHOPPER TOP. The manual says the playfield switches are wired in parallel with the coin-door keypad, and PinMAME's by6803 port map and the VPinMAME 6803.vbs library put keypad 0 on this matrix position; with PinMAME keyboard handling on, the keypad port overwrites public 2. The platform alias is dropped: this game's cabinet tilt is switch 15."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.specfor",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.special-force.specforc.switch-test",
+          "manual.special-force.operating-manual",
+          "vpm-script-library.6803-vbs"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -395,25 +359,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "007"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_tilt"
         }
       ],
       "binding": {
         "device": 7,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.tilt",
+      "id": "switch.right-launch-button",
       "kind": "switch",
-      "label": "Tilt",
+      "label": "Right Launch Button",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Right Magna Save Button'. The game's own Switch Assembly Identification Table prints switch 7 RIGHT LAUNCH (RT. ORANGE P.B.), an orange push button, and the ROM's Switch Test names public 7 RIGHT LAUNCH. by6803 leaves public 7 an ordinary matrix switch; the cabinet tilt is switch 15 and the slam switch 14, both named so by the same test. The same table prints switch 5 LEFT LAUNCH (LT. ORANGE P.B.), where this record still carries the game file's 'Left Magna Save Button'."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.specfor",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.special-force.specforc.switch-test",
+          "manual.special-force.operating-manual"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -632,25 +597,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "016"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_slam_tilt"
         }
       ],
       "binding": {
         "device": 16,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.slam-tilt",
+      "id": "switch.release-left",
       "kind": "switch",
-      "label": "Slam Tilt",
+      "label": "Release Left",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Slam Tilt' (alias s_slam_tilt) against the game file's 'Standup Target'. The game's own Switch Assembly Identification Table prints switch 16 RELEASE LEFT (BEHIND IN-LINE D.T.), and the ROM's Switch Test names public 16 RELEASE LEFT. by6803 leaves public 16 an ordinary matrix switch; the slam switch is 14, which the same test names SLAM SWITCH."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.specfor",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.special-force.specforc.switch-test",
+          "manual.special-force.operating-manual"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -4598,15 +4564,21 @@
         "device": 19,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.game-on",
-      "kind": "coil",
-      "label": "ROM Started",
+      "id": "device.flipper-relay",
+      "kind": "relay",
+      "label": "Flipper Relay",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'ROM Started' (alias c_game_on) against the game file's 'Unused / Empty'. The ROM's Solenoid Test raises public 19 for 1.7 s at the step it names FLIPPER, driver Q07, and the manual's Solenoid Driver Locations give Q7 as the FLIPPERS drive, connected through K1, the flipper relay; its Solenoid Identification Table ends with 24 FLIPPER (BACKBOX). The test prints the connector as J6-8-9 where the printed table gives J9-8 and J6-9. Public 19 is by6803 continuous bit 2, the bit lisy35.c calls flipper disable on BY35. The VPinMAME 6803.vbs library makes it GameOnSolenoid, the solenoid core.vbs's vpmFlips enables the flippers from when a table sets UseSolenoids = 2, so the c_game_on alias stays. No harness run has started a Special Force game yet, so how the ROM drives it in play is unobserved."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.specfor",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.special-force.specforc.solenoid-test",
+          "manual.special-force.operating-manual",
+          "vpm-script-library.6803-vbs"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     }
   ],
@@ -4637,6 +4609,88 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.special-force.specforc.switch-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of specforc from empty NVRAM (scenario tools/harness-scenarios/by6803/specforc-switch-test.json) that holds public 2 and presses Test: the ROM's stuck-switch check opens its Switch Test, which names every closed switch on the alphanumeric displays. It names public 2 CHOPPER TOP, 7 RIGHT LAUNCH and 16 RELEASE LEFT, and the controls 5 LEFT LAUNCH, 15 TILT SWITCH and 14 SLAM SWITCH.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by6803/special-force-specforc-switch-test.json"
+    },
+    {
+      "attribution": "Bally Midway Mfg. Co.; copy supplied by the repository maintainer",
+      "excerpts": [
+        {
+          "id": "excerpt.special-force.identification-tables",
+          "locator": "PDF page 17, printed page 1-9: SOLENOID IDENTIFICATION TABLE and SWITCH ASSEMBLY IDENTIFICATION TABLE, both transcribed in full",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.special-force.1986/identification-tables.md",
+          "reviewed": true,
+          "sha256": "42eed7abe3e1dc92c65ac3fed97866a48255b2a9c198509d3625e2eb8bbd5b20",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.special-force.solenoid-driver-locations",
+          "locator": "PDF page 45, sheet M051-00E47-A012: the SOLENOID DRIVER LOCATIONS table with its footnote and wire colour legend",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.special-force.1986/solenoid-driver-locations.md",
+          "reviewed": true,
+          "sha256": "ada8590b0a121f37578aa2adab3356167cafe63046622c870aab43090c534daa",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.special-force.keypad-operation",
+          "locator": "PDF page 8, printed page 1-2: the OPERATION subsection of III. TAILORING & TESTING THE GAME",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.special-force.1986/keypad-operation.md",
+          "reviewed": true,
+          "sha256": "56e4c03a777d15315c35326b776af602c6dcf7c1898ba2463aa99278c5227908",
+          "transcribed_by": "curator, read from the rendered page"
+        }
+      ],
+      "id": "manual.special-force.operating-manual",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "47-page scanned Bally Midway Special Force Operating Manual, game no. 0E47, form no. 0E47-00300-0100, with schematics. PDF page 8 (printed 1-2) describes the coin-door keypad, PDF page 17 (printed 1-9) prints the Solenoid and Switch Assembly Identification Tables, and PDF page 45 lists the solenoid driver locations.",
+      "original_filename": "Bally_1986_Special_Force_Manual.pdf",
+      "revision": "sha256:3b181618a2b20f1b66e39a687353fbffa78068c50cd020d468ef30bd61ada431",
+      "rights": "NOASSERTION",
+      "sha256": "3b181618a2b20f1b66e39a687353fbffa78068c50cd020d468ef30bd61ada431",
+      "uri": "external:pinmame-manuals/by-machine/bally.special-force.1986/visual-pinball-manuals/Bally_1986_Special_Force_Manual.pdf"
+    },
+    {
+      "acquired_at": "2026-10-01T00:00:00Z",
+      "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+      "excerpts": [
+        {
+          "id": "excerpt.special-force.vpm-6803-library",
+          "locator": "6803.vbs lines 17-51 and core.vbs lines 2121-2133, verbatim",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.special-force.1986/vpm-6803-library.md",
+          "reviewed": true,
+          "sha256": "296c5465002e47e1b8f6fbd96175ee757922656aeff059889edddef82dd7a1c7",
+          "transcribed_by": "curator, read from the library files"
+        }
+      ],
+      "id": "vpm-script-library.6803-vbs",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The VPinMAME script library Bally 6803 tables load (LoadVPM ..., \"6803.VBS\", ...), retained from the maintainer's working installation together with the core.vbs it executes (SHA-256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69). Line 21 sets GameOnSolenoid = 19, which core.vbs's vpmFlips takes as the flipper-enable solenoid when a table sets UseSolenoids = 2 (lines 2121-2133); lines 26-41 put the coin-door keypad on public 1-4, 9-12, 17-20 and 25-28, keypad 0 on 2; lines 42-43 set swTilt = 15 and swSlamTilt = 14.",
+      "original_filename": "6803.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "472b75fd486282a9533bd5c999d965544cb0803655ecc0f996de01d8a79a38e6",
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/6803.vbs"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.special-force.specforc.solenoid-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of specforc from empty NVRAM (scenario tools/harness-scenarios/by6803/specforc-solenoid-test.json) that steps the keypad to SELF TESTING and runs the ROM's Solenoid Test, which fires one driver at a time and names it. After public 1-12, 14 and 15 it raises public 19 for 1.7 s and shows FLIPPER with the driver Q07.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by6803/special-force-specforc-solenoid-test.json"
     }
   ]
 }

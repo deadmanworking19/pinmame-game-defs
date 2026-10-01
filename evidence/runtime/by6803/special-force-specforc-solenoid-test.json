@@ -1,0 +1,339 @@
+{
+  "driver_ids": [
+    "specforc"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.special-force.1986"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game specforc --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by6803/specforc-solenoid-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The checkpoint waits for public 19 and the frame 0.5 s later records the two 14-character alphanumeric rows as five PinMAME displays (indices 0-1 the top row, 2-4 the bottom), decoded here with the by6803 CORE_SEG98 glyphs.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "specforc",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "SOLNOID",
+              "segments": [
+                109,
+                63,
+                56,
+                775,
+                63,
+                777,
+                783
+              ],
+              "snapshot_label": "keypad Enter: SOLNOID TESTS"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": " TESTS ",
+              "segments": [
+                0,
+                769,
+                121,
+                109,
+                769,
+                109,
+                0
+              ],
+              "snapshot_label": "keypad Enter: SOLNOID TESTS"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "       ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "keypad Enter: SOLNOID TESTS"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": " ",
+              "segments": [
+                0
+              ],
+              "snapshot_label": "keypad Enter: SOLNOID TESTS"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "      ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "keypad Enter: SOLNOID TESTS"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "FLIPPER",
+              "segments": [
+                113,
+                56,
+                777,
+                115,
+                115,
+                121,
+                839
+              ],
+              "snapshot_label": "solenoid test with 19 raised"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 1,
+              "interpreted_text": "       ",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "solenoid test with 19 raised"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 2,
+              "interpreted_text": "QO7    ",
+              "segments": [
+                875,
+                63,
+                7,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "solenoid test with 19 raised"
+            },
+            {
+              "decoded_segment_positions": [
+                0
+              ],
+              "display_index": 3,
+              "interpreted_text": "J",
+              "segments": [
+                30
+              ],
+              "snapshot_label": "solenoid test with 19 raised"
+            },
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "display_index": 4,
+              "interpreted_text": "6-8-9 ",
+              "segments": [
+                125,
+                64,
+                127,
+                64,
+                103,
+                0
+              ],
+              "snapshot_label": "solenoid test with 19 raised"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "keypad Enter (public 1) at DISPLAY TESTS opens SOLNOID TESTS, which fires one driver at a time and names it; after public 1-12, 14 and 15 it raises public 19 for 1.7 s while it shows FLIPPER / QO7 J6-8-9, then starts again at public 1; transitioned_solenoid_addresses covers the Enter's following three steps",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            19
+          ]
+        }
+      ],
+      "ordered_solenoid_on_sequence": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        19,
+        1
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        19
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 11,
+        "initial_switches": [],
+        "name": "specforc-solenoid-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and sends no keyboard input: after a 15 s boot wait it pulses the Test switch (-7) and the keypad positions A (12) and Enter (1) with direct writes",
+        "retained_from": "external:pinmame-review-artifacts/special-force-1986/harness/solenoid-test/specforc/run.json",
+        "scenario_path": "tools/harness-scenarios/by6803/specforc-solenoid-test.json",
+        "scenario_sha256": "56364f544994e52127edb38651aabb1f540b3f32ff79c434efb5d11c238e5eca",
+        "self_test_pulses": 1,
+        "sha256": "d07c0fce27a7172c9cebabedbb7a887349ee23ecef3164b978ecdcf73f31e562",
+        "snapshot_count": 12,
+        "watch_switches": [
+          -7,
+          1,
+          12
+        ]
+      }
+    ],
+    "rom_archive_sha256": "82a23e6e643749c5aaae55974041091a18f28ad2312232475ffa9f47ca29519c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Display text is decoded from the harness's raw segment values; the ROM's font draws O and 0, and S and 5, alike, so the driver it prints as Q07 decodes as QO7. Exact external directory manifest specforc/manifest.json SHA-256 bbdf92ab3c59ae4fe9841a63a690a67db922a6f72204159c62a648e0f90f9bf3 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the rendered display frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/special-force-1986/harness/solenoid-test/specforc",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "d07c0fce27a7172c9cebabedbb7a887349ee23ecef3164b978ecdcf73f31e562"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
