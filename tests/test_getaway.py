@@ -416,7 +416,7 @@ class GetawayRuntimeEvidenceTests(unittest.TestCase):
 				for address in ROM_NAMES:
 					self.assertTrue(by_level[(address, 1)].isdisjoint(by_level[(address, 0)]), address)
 				edge_frames[game] = [snapshot["pixel_sha256"] for snapshot in snapshots[1:]]
-				self._check_retained_edges(game, raw, snapshots)
+				self._check_retained_edges(game, raw, snapshots, evidence["source"]["attribution"])
 		self.assertEqual(2, len(rom_hashes))
 		# L-5 and L-1 draw identical T.1 pages for every edge.
 		self.assertEqual(edge_frames["gw_l5"], edge_frames["gw_l1"])
@@ -443,9 +443,9 @@ class GetawayRuntimeEvidenceTests(unittest.TestCase):
 		self.assertLess(sequence.index(31), sequence.index(45))
 		self.assertEqual(2, sequence.count(31))
 		self.assertEqual(2, sequence.count(45))
-		self._check_retained_play(raw, observations)
+		self._check_retained_play(raw, observations, evidence["source"]["attribution"])
 
-	def _retained(self, raw: dict[str, object], game: str) -> dict[str, object] | None:
+	def _retained(self, raw: dict[str, object], game: str, attribution: str) -> dict[str, object] | None:
 		import hashlib
 
 		import build_external_evidence_manifest as manifest
@@ -455,7 +455,9 @@ class GetawayRuntimeEvidenceTests(unittest.TestCase):
 			return None
 		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
 		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
-		manifest.check_manifest(path.parent, game)
+		digest = manifest.check_manifest(path.parent, game)
+		# The digest on disk must be the one the summary cites, so a resealed directory cannot pass.
+		self.assertIn(f"{game}/manifest.json SHA-256 {digest}", attribution)
 		run = load_json(path)
 		self.assertIsNone(run["failure"])
 		self.assertEqual(game, run["game"])
@@ -463,8 +465,8 @@ class GetawayRuntimeEvidenceTests(unittest.TestCase):
 		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
 		return run
 
-	def _check_retained_edges(self, game: str, raw: dict[str, object], snapshots: list[dict[str, object]]) -> None:
-		run = self._retained(raw, game)
+	def _check_retained_edges(self, game: str, raw: dict[str, object], snapshots: list[dict[str, object]], attribution: str) -> None:
+		run = self._retained(raw, game, attribution)
 		if run is None:
 			return
 		raw_frames = []
@@ -479,8 +481,8 @@ class GetawayRuntimeEvidenceTests(unittest.TestCase):
 		# Every summary snapshot is the raw frame of the step it names, in order.
 		self.assertEqual(raw_frames, [(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots])
 
-	def _check_retained_play(self, raw: dict[str, object], observations: dict[str, object]) -> None:
-		run = self._retained(raw, "gw_l5")
+	def _check_retained_play(self, raw: dict[str, object], observations: dict[str, object], attribution: str) -> None:
+		run = self._retained(raw, "gw_l5", attribution)
 		if run is None:
 			return
 		events = [e for e in run["events"] if e["event"] == "solenoid"]
