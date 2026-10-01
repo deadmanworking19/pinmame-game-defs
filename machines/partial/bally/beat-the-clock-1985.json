@@ -1,33 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Drop Target 2 (Left Bank)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal beatclck ROM holding public switch 2 to see whether the ROM registers a tilt, and pulsing the drop-target bank reset coil at public solenoid 11 to see whether 2 clears with the rest of its bank -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
-      "id": "conflict.pinmame-input-switch-2-none",
-      "path": "binding:pinmame.input.switch/2/None",
-      "source_refs": [
-        "legacy.game.btc",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Drop Target 6 (Left Bank)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
-      "id": "conflict.pinmame-input-switch-7-none",
-      "path": "binding:pinmame.input.switch/7/None",
-      "source_refs": [
-        "legacy.game.btc",
-        "legacy.platform.bally"
-      ]
-    },
-    {
-      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Wire Trigger'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Slam Tilt on switch column 2 bit 7 and SWITCH_UPDATE(by35) rewrites public 16 from the cabinet input port every frame on every BY35 game. Unresolved.",
-      "id": "conflict.pinmame-input-switch-16-none",
-      "path": "binding:pinmame.input.switch/16/None",
-      "source_refs": [
-        "legacy.game.btc",
-        "legacy.platform.bally"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.bally"
@@ -55,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -217,25 +188,27 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "002"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_ball_roll_tilt"
         }
       ],
       "binding": {
         "device": 2,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.ball-roll-tilt",
+      "id": "switch.drop-target-2-left-bank",
       "kind": "switch",
-      "label": "Ball Roll Tilt",
+      "label": "Drop Target 2 (Left Bank)",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game file's 'Drop Target 2 (Left Bank)'. The known-working VPW table hits public 2 as a drop target and raises it with targets 1, 3, 4, 5 and 7 from solenoid 11, the 1-6 drop target reset. In a beatclck gameplay run public 2 scores 3,000 like the other five, and closing it last completes the bank for a 103,000 award, as closing 7 last does for 53,000; public 19 stays raised, so the ROM does not tilt. The platform alias is dropped: the cabinet tilt is public 15. PinMAME's by6803 port map and the VPinMAME 6803.vbs library also put coin-door keypad 0 on this matrix position, and with PinMAME keyboard handling on the keypad port overwrites public 2; the table runs with HandleKeyboard=0."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.btc",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play",
+          "vpx-script.beat-the-clock-vpw-1-0-5",
+          "vpm-script-library.6803-vbs"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -394,25 +367,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "007"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_tilt"
         }
       ],
       "binding": {
         "device": 7,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.tilt",
+      "id": "switch.drop-target-6-left-bank",
       "kind": "switch",
-      "label": "Tilt",
+      "label": "Drop Target 6 (Left Bank)",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Drop Target 6 (Left Bank)'. The known-working VPW table hits public 7 as the sixth drop target of the bank that solenoid 11 raises with 1-5. In a beatclck gameplay run public 7 scores 3,000 like the other five, and closing it last completes the bank for a 53,000 award, as closing 2 last does for 103,000; public 19 stays raised. by6803 leaves public 7 an ordinary matrix switch; the run's tilt bob is public 15, which drops 19 on its second closure, and the table's vpmNudge.TiltSwitch is 15."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.btc",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play",
+          "vpx-script.beat-the-clock-vpw-1-0-5"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -660,25 +634,26 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "016"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_slam_tilt"
         }
       ],
       "binding": {
         "device": 16,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.slam-tilt",
+      "id": "switch.wire-trigger.16",
       "kind": "switch",
-      "label": "Slam Tilt",
+      "label": "Wire Trigger",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Slam Tilt' (alias s_slam_tilt) against the game file's 'Wire Trigger'. The known-working VPW table writes public 16 from a playfield object, sw16. In a beatclck gameplay run a pulse and a 3 s hold of public 16 each score 3,000 and the game continues with public 19 raised, so the ROM does not read it as a slam. by6803 leaves public 16 an ordinary matrix switch and writes Slam Tilt to public 14."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.btc",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play",
+          "vpx-script.beat-the-clock-vpw-1-0-5"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -4005,6 +3980,49 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of beatclck from empty NVRAM (scenario tools/harness-scenarios/by6803/beatclck-drop-bank-and-switch-16-in-play.json) that plays two balls. Each closure of drop targets 1, 3, 4 and 5 and of public 2, 7 and 16 scores 3,000; the closure that completes the six with 1-5 is worth 53,000 when public 7 closes last on ball 1 and 103,000 when public 2 closes last on ball 2, each with a lamp show. Public 19 stays raised throughout and drops when the tilt bob (15) closes twice.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by6803/beat-the-clock-beatclck-drop-bank-and-switch-16-in-play.json"
+    },
+    {
+      "attribution": "VPW (Visual Pinball Workshop) table authors; pinned copy in sverrewl/vpxtable_scripts",
+      "id": "vpx-script.beat-the-clock-vpw-1-0-5",
+      "kind": "vpx_script",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Line 93 runs cGameName beatclc2 (the flasher-support clone of beatclck, which line 94 comments out); line 324 sets HandleKeyboard=0 and line 342 vpmNudge.TiltSwitch=15. Line 475 binds SolCallback(11), the 1-6 drop target reset, to SolDropUpDTL, which raises drop targets 1, 2, 3, 4, 5 and 7 (lines 512-519); lines 710-715 hit sw1-sw5 and sw7 through DTHit, and lines 2724-2733 build them as drop targets. Lines 747-748 write public 16 from the Hit and UnHit events of the playfield object sw16.",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "9aeca46a17050a0515f882b964cfeb0b51753c14c3e0bdb0397902d02098d2a6",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Beat%20The%20Clock%20%28Bally%201985%29%20VPW%20v1.0.5.vbs"
+    },
+    {
+      "acquired_at": "2026-10-01T00:00:00Z",
+      "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+      "excerpts": [
+        {
+          "id": "excerpt.special-force.vpm-6803-library",
+          "locator": "6803.vbs lines 17-51 and core.vbs lines 2121-2133, verbatim",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.special-force.1986/vpm-6803-library.md",
+          "reviewed": true,
+          "sha256": "296c5465002e47e1b8f6fbd96175ee757922656aeff059889edddef82dd7a1c7",
+          "transcribed_by": "curator, read from the library files"
+        }
+      ],
+      "id": "vpm-script-library.6803-vbs",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The VPinMAME script library Bally 6803 tables load (LoadVPM ..., \"6803.VBS\", ...), retained from the maintainer's working installation together with the core.vbs it executes (SHA-256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69). Line 21 sets GameOnSolenoid = 19, which core.vbs's vpmFlips takes as the flipper-enable solenoid when a table sets UseSolenoids = 2 (lines 2121-2133); lines 26-41 put the coin-door keypad on public 1-4, 9-12, 17-20 and 25-28, keypad 0 on 2; lines 42-43 set swTilt = 15 and swSlamTilt = 14.",
+      "original_filename": "6803.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "472b75fd486282a9533bd5c999d965544cb0803655ecc0f996de01d8a79a38e6",
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/6803.vbs"
     }
   ]
 }

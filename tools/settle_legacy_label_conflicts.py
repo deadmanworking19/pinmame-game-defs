@@ -67,6 +67,9 @@ SKATEBALL_IN_PLAY = {
 	),
 }
 
+VPXTABLE_SCRIPTS_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
+VPW_ATTRIBUTION = "VPW (Visual Pinball Workshop) table authors; pinned copy in sverrewl/vpxtable_scripts"
+
 SPECIAL_FORCE_SWITCH_TEST = {
 	"id": "runtime.special-force.specforc.switch-test",
 	"uri": "internal:evidence/runtime/by6803/special-force-specforc-switch-test.json",
@@ -165,6 +168,38 @@ VPM_6803_LIBRARY = {
 }
 SPECIAL_FORCE_MANUAL_SOURCES = [SPECIAL_FORCE_MANUAL]
 SPECIAL_FORCE_LIBRARY_SOURCES = [SPECIAL_FORCE_MANUAL, VPM_6803_LIBRARY]
+
+BEAT_THE_CLOCK_IN_PLAY = {
+	"id": "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play",
+	"uri": "internal:evidence/runtime/by6803/beat-the-clock-beatclck-drop-bank-and-switch-16-in-play.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of beatclck from empty NVRAM (scenario "
+		"tools/harness-scenarios/by6803/beatclck-drop-bank-and-switch-16-in-play.json) that plays two balls. Each "
+		"closure of drop targets 1, 3, 4 and 5 and of public 2, 7 and 16 scores 3,000; the closure that completes the "
+		"six with 1-5 is worth 53,000 when public 7 closes last on ball 1 and 103,000 when public 2 closes last on ball "
+		"2, each with a lamp show. Public 19 stays raised throughout and drops when the tilt bob (15) closes twice."
+	),
+}
+BEAT_THE_CLOCK_VPW = {
+	"id": "vpx-script.beat-the-clock-vpw-1-0-5",
+	"kind": "vpx_script",
+	"uri": (
+		"https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/"
+		"Beat%20The%20Clock%20%28Bally%201985%29%20VPW%20v1.0.5.vbs"
+	),
+	"revision": VPXTABLE_SCRIPTS_REVISION,
+	"sha256": "9aeca46a17050a0515f882b964cfeb0b51753c14c3e0bdb0397902d02098d2a6",
+	"locator": (
+		"Line 93 runs cGameName beatclc2 (the flasher-support clone of beatclck, which line 94 comments out); line 324 "
+		"sets HandleKeyboard=0 and line 342 vpmNudge.TiltSwitch=15. Line 475 binds SolCallback(11), the 1-6 drop target "
+		"reset, to SolDropUpDTL, which raises drop targets 1, 2, 3, 4, 5 and 7 (lines 512-519); lines 710-715 hit sw1-sw5 "
+		"and sw7 through DTHit, and lines 2724-2733 build them as drop targets. Lines 747-748 write public 16 from the "
+		"Hit and UnHit events of the playfield object sw16."
+	),
+	"license": "NOASSERTION",
+	"attribution": VPW_ATTRIBUTION,
+	"known_working": True,
+}
 
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
@@ -498,6 +533,70 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"calls flipper disable on BY35. The VPinMAME 6803.vbs library makes it GameOnSolenoid, the solenoid core.vbs's "
 			"vpmFlips enables the flippers from when a table sets UseSolenoids = 2, so the c_game_on alias stays. No harness "
 			"run has started a Special Force game yet, so how the ROM drives it in play is unobserved."
+		),
+	},
+	{
+		"path": "machines/partial/bally/beat-the-clock-1985.json",
+		"machine_id": "bally.beat-the-clock.1985",
+		"conflict_id": "conflict.pinmame-input-switch-2-none",
+		"binding": {"group": "pinmame.input.switch", "device": 2},
+		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"id": "switch.drop-target-2-left-bank",
+		"label": "Drop Target 2 (Left Bank)",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
+		"source": BEAT_THE_CLOCK_IN_PLAY,
+		"extra_sources": [BEAT_THE_CLOCK_VPW, VPM_6803_LIBRARY],
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
+			"file's 'Drop Target 2 (Left Bank)'. The known-working VPW table hits public 2 as a drop target and raises it "
+			"with targets 1, 3, 4, 5 and 7 from solenoid 11, the 1-6 drop target reset. In a beatclck gameplay run public 2 "
+			"scores 3,000 like the other five, and closing it last completes the bank for a 103,000 award, as closing 7 "
+			"last does for 53,000; public 19 stays raised, so the ROM does not tilt. The platform alias is dropped: the "
+			"cabinet tilt is public 15. PinMAME's by6803 port map and the VPinMAME 6803.vbs library also put coin-door "
+			"keypad 0 on this matrix position, and with PinMAME keyboard handling on the keypad port overwrites public 2; "
+			"the table runs with HandleKeyboard=0."
+		),
+	},
+	{
+		"path": "machines/partial/bally/beat-the-clock-1985.json",
+		"machine_id": "bally.beat-the-clock.1985",
+		"conflict_id": "conflict.pinmame-input-switch-7-none",
+		"binding": {"group": "pinmame.input.switch", "device": 7},
+		"from": {"id": "switch.tilt", "label": "Tilt"},
+		"id": "switch.drop-target-6-left-bank",
+		"label": "Drop Target 6 (Left Bank)",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_tilt"}],
+		"source": BEAT_THE_CLOCK_IN_PLAY,
+		"extra_sources": [BEAT_THE_CLOCK_VPW],
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Tilt' (alias s_tilt) against the game file's 'Drop Target 6 "
+			"(Left Bank)'. The known-working VPW table hits public 7 as the sixth drop target of the bank that solenoid 11 "
+			"raises with 1-5. In a beatclck gameplay run public 7 scores 3,000 like the other five, and closing it last "
+			"completes the bank for a 53,000 award, as closing 2 last does for 103,000; public 19 stays raised. by6803 "
+			"leaves public 7 an ordinary matrix switch; the run's tilt bob is public 15, which drops 19 on its second "
+			"closure, and the table's vpmNudge.TiltSwitch is 15."
+		),
+	},
+	{
+		"path": "machines/partial/bally/beat-the-clock-1985.json",
+		"machine_id": "bally.beat-the-clock.1985",
+		"conflict_id": "conflict.pinmame-input-switch-16-none",
+		"binding": {"group": "pinmame.input.switch", "device": 16},
+		"from": {"id": "switch.slam-tilt", "label": "Slam Tilt"},
+		"id": "switch.wire-trigger.16",
+		"label": "Wire Trigger",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_slam_tilt"}],
+		"source": BEAT_THE_CLOCK_IN_PLAY,
+		"extra_sources": [BEAT_THE_CLOCK_VPW],
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Slam Tilt' (alias s_slam_tilt) against the game file's "
+			"'Wire Trigger'. The known-working VPW table writes public 16 from a playfield object, sw16. In a beatclck "
+			"gameplay run a pulse and a 3 s hold of public 16 each score 3,000 and the game continues with public 19 raised, "
+			"so the ROM does not read it as a slam. by6803 leaves public 16 an ordinary matrix switch and writes Slam Tilt "
+			"to public 14."
 		),
 	},
 ]

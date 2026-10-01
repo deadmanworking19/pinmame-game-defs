@@ -1,0 +1,378 @@
+{
+  "driver_ids": [
+    "beatclck"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.beat-the-clock.1985"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game beatclck --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by6803/beatclck-drop-bank-and-switch-16-in-play.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level; the snapshot after each step records player 1's seven-segment score (decoded here as digits with the comma bit masked) and the active outputs. Lamp transitions are counted per step from the raw trace: completing the bank changes 71 and 71 lamps, no single closure more than 26.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "beatclck",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            14,
+            17
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "checkpoint: ball release serves ball 1: credit button (public 6) after two coins on public 10: the ROM starts a game, resets both drop banks (10, 11) and fires the ball release (14); transitioned_solenoid_addresses covers the checkpoint step that waits for 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10,
+            11,
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "ball 1 leaves the outhole: public 8 set to 0: public 19 rises, the flipper-enable line",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "ball 1: wire trigger 13: the score rises by 3,000 to 3,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "ball 1: drop target 1 down: the score rises by 3,000 to 6,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "ball 1: drop target 3 down: the score rises by 3,000 to 9,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "ball 1: drop target 4 down: the score rises by 3,000 to 12,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "ball 1: drop target 5 down: the score rises by 3,000 to 15,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "ball 1: public 2 closed: the score rises by 3,000 to 18,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "ball 1: public 7 closed last: the score rises by 53,000 to 71,000 and 71 lamp transitions follow; no solenoid changes and public 19 stays raised, so the ROM does not tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "ball 1: public 16 pulsed: the score rises by 3,000 to 74,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "ball 2: public 7 closed: the score rises by 3,000 to 77,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "ball 2: drop target 1 down: the score rises by 3,000 to 80,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "ball 2: drop target 3 down: the score rises by 3,000 to 83,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "ball 2: drop target 4 down: the score rises by 3,000 to 86,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "ball 2: drop target 5 down: the score rises by 3,000 to 89,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "ball 2: public 2 closed last: the score rises by 103,000 to 192,000 and 71 lamp transitions follow; no solenoid changes and public 19 stays raised, so the ROM does not tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "ball 2: public 16 held: the score rises by 3,000 to 195,000; no solenoid changes and public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "tilt bob 15 #1: the first closure changes no solenoid; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "tilt bob 15 #2: the second closure tilts the ROM, which drops public 19",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        10,
+        11,
+        14,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 41,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "beatclck-drop-bank-and-switch-16-in-play",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and sends no keyboard input: after a 15 s boot wait it coins up and starts a game with direct switch writes",
+        "retained_from": "external:pinmame-review-artifacts/beat-the-clock-1985/harness/drop-bank-and-switch-16/beatclck/run.json",
+        "scenario_path": "tools/harness-scenarios/by6803/beatclck-drop-bank-and-switch-16-in-play.json",
+        "scenario_sha256": "bb3c553b0c1a87f12dc0ec14a58d7c47378f4892829411a5c1ad6afd2c872e9f",
+        "self_test_pulses": 0,
+        "sha256": "25b0c4704427f96a257627459e79f147c7d36888d6e13dd2cb7aeb8b40d759a9",
+        "snapshot_count": 42,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          13,
+          15,
+          16
+        ]
+      }
+    ],
+    "rom_archive_sha256": "19a866162163cbbfa8f1aa4a064013a3a8f59ea782403b27127cb6e177f55116"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Scores are the harness's seven-segment values for player 1's display, read as digits. Exact external directory manifest beatclck/manifest.json SHA-256 0a2e8120715fb8fd28e6f8af9417ed9afab5ecdf110b8b7ca397c296efa8ca0f (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the rendered display frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/beat-the-clock-1985/harness/drop-bank-and-switch-16/beatclck",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "25b0c4704427f96a257627459e79f147c7d36888d6e13dd2cb7aeb8b40d759a9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

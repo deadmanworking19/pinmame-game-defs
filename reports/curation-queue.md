@@ -376,7 +376,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 370 | 1986 | Mexico 86 | Zaccaria | partial | 13% |
 | 371 | 1986 | Mystic Star | Zaccaria | partial | 19% |
 | 372 | 1986 | Zankor | Zaccaria | partial | 13% |
-| 373 | 1985 | Beat The Clock | Bally | partial | 13% |
+| 373 | 1985 | Beat The Clock | Bally | partial | 19% |
 | 374 | 1985 | Cybernaut | Bally | partial | 19% |
 | 375 | 1985 | Eight Ball Champ | Bally | partial | 13% |
 | 376 | 1985 | Fireball Classic | Bally | partial | 19% |

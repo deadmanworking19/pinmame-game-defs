@@ -65,6 +65,30 @@ ALPHA_NAMES = {
 	("runtime.special-force.specforc.switch-test", 16): ("RELEASE LEFT", "CLOSED"),
 	("runtime.special-force.specforc.solenoid-test", 19): ("FLIPPER", "QO7 J6-8-9"),
 }
+BTC = "runtime.beat-the-clock.beatclck.drop-bank-and-switch-16-in-play"
+BTC_TILT = {"tilt bob 15 #1": ([], None, True), "tilt bob 15 #2": ([19], None, False)}
+# Settlements read from gameplay: for each raw step, the solenoids that change in it, the score change it causes
+# (None: not checked), and whether the flipper-enable relay 19 is raised after it. Controls are steps of other inputs.
+PLAY = {
+	(BTC, 2): {
+		"ball 1: drop target 5 down": ([], 3000, True),
+		"ball 1: public 2 closed": ([], 3000, True),
+		"ball 2: drop target 5 down": ([], 3000, True),
+		"ball 2: public 2 closed last": ([], 103000, True),
+		**BTC_TILT,
+	},
+	(BTC, 7): {
+		"ball 1: public 2 closed": ([], 3000, True),
+		"ball 1: public 7 closed last": ([], 53000, True),
+		"ball 2: public 7 closed": ([], 3000, True),
+		**BTC_TILT,
+	},
+	(BTC, 16): {
+		"ball 1: public 16 pulsed": ([], 3000, True),
+		"ball 2: public 16 held": ([], 3000, True),
+		**BTC_TILT,
+	},
+}
 # Settlements read from a gameplay timeline: each raw step in which the address changes, and its states there, in order.
 TIMELINES = {
 	("runtime.diner.diner-l4.game-on-23", 23): [
@@ -170,6 +194,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				timeline = TIMELINES.get((source["id"], address))
 				bank = BANKS.get((source["id"], address))
 				rows = ALPHA_NAMES.get((source["id"], address))
+				play = PLAY.get((source["id"], address))
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
 				if rows:
@@ -191,6 +216,17 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 							self.assertIn(address, item["active_solenoid_addresses"])
 					if not switch:
 						self.assertEqual(1, observations["ordered_solenoid_on_sequence"].count(address))
+				elif play:
+					# Each listed step's observation, found by its label, reports the step's solenoid changes and relay.
+					steps = {}
+					for step, (changed, delta, raised) in play.items():
+						(item,) = [obs for obs in observations["named_action_observations"] if obs["label"].startswith(f"{step}: ")]
+						steps[step] = item
+						self.assertEqual(changed, item["transitioned_solenoid_addresses"], step)
+						self.assertEqual(raised, 19 in item["active_solenoid_addresses"], step)
+						if delta:
+							self.assertIn(f"rises by {delta:,} ", item["label"], step)
+					self.assertTrue(any(item["input_address"] == address for item in steps.values()))
 				elif bank:
 					# Every closure keeps the relay raised, and the address's closure says the ROM did not tilt.
 					closures = {item["input_address"]: item for item in observations["named_action_observations"] if item["input_kind"] == "switch"}
@@ -228,7 +264,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
 					self.assertTrue(steps)
 					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
-				if not paired and not timeline and not bank and not rows:
+				if not paired and not timeline and not bank and not rows and not play:
 					name = ROM_NAMES[(source["id"], address)]
 					if switch:
 						self.assertTrue(all(f"names it {name} " in item["label"] for item in steps))
@@ -284,6 +320,15 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 						boot = by_label["boot"]["time_s"]
 						states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address and event["time_s"] > boot]
 						self.assertEqual([1, 0], states)
+				elif play:
+					labels = list(raw_steps)
+					for step, (changed, delta, raised) in play.items():
+						self.assertEqual(changed, sorted({item["number"] for item in raw_steps[step]["transitions"]["solenoids"]}), step)
+						self.assertEqual(raised, 19 in by_label[step]["active_solenoids"], step)
+						if delta is not None:
+							before = by_label[labels[labels.index(step) - 1]]
+							gained = seven_segment(by_label[step]["displays"][0]["segments"]) - seven_segment(before["displays"][0]["segments"])
+							self.assertEqual(delta, gained, step)
 				elif bank:
 					def score(label: str) -> int:
 						return seven_segment(by_label[label]["displays"][0]["segments"])
