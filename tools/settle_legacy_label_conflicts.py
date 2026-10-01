@@ -134,6 +134,34 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"a game-on output at 19, so the platform alias is dropped."
 		),
 	},
+	{
+		"path": "machines/partial/williams/red-and-ted-s-road-show-1994.json",
+		"machine_id": "williams.red-and-ted-s-road-show.1994",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
+		"label": "Ted Motor Direction",
+		"kind": "coil",
+		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
+		"source": {
+			"id": "runtime.red-and-ted-s-road-show.rs-l6.ted-test",
+			"uri": "internal:evidence/runtime/wpc-security/red-and-ted-s-road-show-rs_l6-ted-test.json",
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of rs_l6 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-security/rs-ted-test.json) that starts T.17 \"TED\" TEST and lets it run two "
+				"cycles. As the display reaches 06 MOUTH OPEN the ROM raises public 19 together with 20, drops 20 about "
+				"0.33 s and 19 about 0.39 s later, and in 07 MOUTH CLOSED drives 20 alone; 19 never rises without 20."
+			),
+		},
+		"note": (
+			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
+			"against the game file's 'Ted Motor Direction'. Pinned rs.c names 19 sTedMotorDrv, and the L-6 ROM's own "
+			"T.17 \"TED\" TEST settles it: in step 06 MOUTH OPEN it raises public 19 together with 20 (Ted Mouth Motor) "
+			"and releases 19 just after 20, and in step 07 MOUTH CLOSED it drives 20 alone. So 19 sets the direction of "
+			"Ted's mouth motor and is set for opening, which is also how rs.c's simulation reads it. No WPC generation "
+			"has a game-on output at 19, so the platform alias is dropped."
+		),
+	},
 	*[
 		{
 			"path": "machines/partial/bally/nba-fastbreak-1997.json",

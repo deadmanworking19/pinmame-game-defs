@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Ted Motor Direction'. Resolution path: pinned rs.c's own sTedMotorDrv 19 definition, which names public 19 for this game specifically, weighed against pinned core.h's WPC solenoid numbering, which puts the game-on state at 29-31 and never at 19, and confirmed by a LibPinMAME trace against a legal rs_l6 ROM observing public 19 while Ted's jaw motor is driven. Unresolved.",
-      "id": "conflict.pinmame-output-solenoid-19-none",
-      "path": "binding:pinmame.output.solenoid/19/None",
-      "source_refs": [
-        "legacy.game.rs",
-        "legacy.platform.wpc"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.wpc"
@@ -37,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -4770,25 +4759,25 @@
         {
           "namespace": "vpe-legacy.coil",
           "value": "019"
-        },
-        {
-          "namespace": "vpe-legacy.coil",
-          "value": "c_game_on"
         }
       ],
       "binding": {
         "device": 19,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.game-on",
+      "id": "device.ted-motor-direction",
       "kind": "coil",
-      "label": "ROM Started",
+      "label": "Ted Motor Direction",
+      "physical": {
+        "notes": "Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, against the game file's 'Ted Motor Direction'. Pinned rs.c names 19 sTedMotorDrv, and the L-6 ROM's own T.17 \"TED\" TEST settles it: in step 06 MOUTH OPEN it raises public 19 together with 20 (Ted Mouth Motor) and releases 19 just after 20, and in step 07 MOUTH CLOSED it drives 20 alone. So 19 sets the direction of Ted's mouth motor and is set for opening, which is also how rs.c's simulation reads it. No WPC generation has a game-on output at 19, so the platform alias is dropped."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.rs",
-          "legacy.platform.wpc"
+          "legacy.platform.wpc",
+          "runtime.red-and-ted-s-road-show.rs-l6.ted-test"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -5254,6 +5243,15 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.red-and-ted-s-road-show.rs-l6.ted-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of rs_l6 from empty NVRAM (scenario tools/harness-scenarios/wpc-security/rs-ted-test.json) that starts T.17 \"TED\" TEST and lets it run two cycles. As the display reaches 06 MOUTH OPEN the ROM raises public 19 together with 20, drops 20 about 0.33 s and 19 about 0.39 s later, and in 07 MOUTH CLOSED drives 20 alone; 19 never rises without 20.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-security/red-and-ted-s-road-show-rs_l6-ted-test.json"
     }
   ]
 }

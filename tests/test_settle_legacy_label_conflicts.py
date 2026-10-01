@@ -24,6 +24,11 @@ ROM_NAMES = {
 	("runtime.nba-fastbreak.nbaf-31.switch-edges", 3): "RIGHT COIN SLOT",
 	("runtime.nba-fastbreak.nbaf-31.flasher-test", 19): "UPPER LEFT",
 }
+# Settlements read from a mechanism test rather than a name: the address, the output it always rises with, and the
+# display text of the step in which it does.
+PAIRED = {
+	("runtime.red-and-ted-s-road-show.rs-l6.ted-test", 19): (20, "MOUTH OPEN / T.17 06 RUNNING"),
+}
 
 
 def load_json(path: Path) -> dict:
@@ -67,22 +72,37 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
 				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
 				address = settlement["binding"]["device"]
-				name = ROM_NAMES[(source["id"], address)]
+				paired = PAIRED.get((source["id"], address))
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
-				if switch:
+				if paired:
+					partner, text = paired
+					sequence = observations["ordered_solenoid_on_sequence"]
+					self.assertIn(address, sequence)
+					# Every rise of the address is immediately followed by its partner's, and the partner also runs alone.
+					self.assertTrue(all(index + 1 < len(sequence) and sequence[index + 1] == partner for index, number in enumerate(sequence) if number == address))
+					self.assertGreater(sequence.count(partner), sequence.count(address))
+					frames = [item for item in observations["diagnostic_snapshots"] if item["interpreted_text"] == text]
+					self.assertTrue(frames)
+					frame = frames[0]
+				elif switch:
 					# A switch is named on the ROM's top line while the host holds it at 1.
 					steps = [item for item in observations["named_action_observations"] if item["host_stimulus_switch_addresses"] == [address]]
 					self.assertTrue(steps)
-					self.assertTrue(all(f"names it {name} " in item["label"] and not item["transitioned_solenoid_addresses"] for item in steps))
+					self.assertTrue(all(not item["transitioned_solenoid_addresses"] for item in steps))
 					frames = [item for item in observations["diagnostic_snapshots"] if f"after public {address} (" in item["label"] and "set to 1" in item["label"]]
 				else:
 					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
 					self.assertTrue(steps)
-					self.assertTrue(any(f"prints {name} " in item["label"] for item in steps))
 					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
-				(frame,) = frames
-				self.assertTrue(frame["interpreted_text"].startswith(f"{name} / "))
+				if not paired:
+					name = ROM_NAMES[(source["id"], address)]
+					if switch:
+						self.assertTrue(all(f"names it {name} " in item["label"] for item in steps))
+					else:
+						self.assertTrue(any(f"prints {name} " in item["label"] for item in steps))
+					(frame,) = frames
+					self.assertTrue(frame["interpreted_text"].startswith(f"{name} / "))
 				root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
 				if not root:
 					continue
@@ -105,7 +125,21 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				for item in runtime["observations"]["diagnostic_snapshots"]:
 					matches = [snap for snap in run["snapshots"] if snap["displays"] and snap["displays"][0]["pixel_sha256"] == item["pixel_sha256"]]
 					self.assertTrue(matches, item["label"])
-				if switch:
+				if paired:
+					rises = [event for event in run["events"] if event["event"] == "solenoid" and event["state"]]
+					self.assertEqual(observations["ordered_solenoid_on_sequence"], [event["number"] for event in rises][-len(observations["ordered_solenoid_on_sequence"]):])
+					times = {number: [event["time_s"] for event in rises if event["number"] == number] for number in (address, partner)}
+					self.assertTrue(times[address])
+					self.assertTrue(set(times[address]) <= set(times[partner]))
+					self.assertTrue(set(times[partner]) - set(times[address]))
+					# The step frame is the snapshot taken right after a step in which the address rose.
+					steps = run["steps"]
+					after = [
+						steps[index + 1]["label"] for index in range(len(steps) - 1)
+						if any(t["number"] == address and any(t["states"]) for t in steps[index]["transitions"]["solenoids"])
+					]
+					self.assertTrue(any(by_label[label]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"] for label in after))
+				elif switch:
 					# The frame that names the switch is the one taken while only it was held at 1.
 					held = by_label[f"{address} -> 1"]
 					self.assertEqual(frame["pixel_sha256"], held["displays"][0]["pixel_sha256"])

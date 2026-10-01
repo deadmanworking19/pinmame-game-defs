@@ -1,0 +1,214 @@
+{
+  "driver_ids": [
+    "rs_l6"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.red-and-ted-s-road-show.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game rs_l6 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/rs-ted-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.17 runs its steps by itself; the frames after each checkpoint read the step names, and ordered_solenoid_on_sequence lists every nonzero solenoid transition from the Enter that starts T.17 to the end of the run.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "rs_l6",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROAD SHOW / 50024 REV. L-6",
+          "label": "game identification",
+          "nonzero_pixels": 294,
+          "pixel_sha256": "586eb69fc352948593fa658aeedd484b75614153e87a70ad905bee262ec7079a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "\"TED\" TEST / T.17",
+          "label": "T.17 \"TED\" TEST started",
+          "nonzero_pixels": 143,
+          "pixel_sha256": "161b45ba9eeac08662b910f1a7cc412b58d399d94333fdec5604c86f25236307"
+        },
+        {
+          "active_solenoid_addresses": [
+            11,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "EYES WIDE / T.17 01 RUNNING",
+          "label": "T.17 step 01 EYES WIDE",
+          "nonzero_pixels": 296,
+          "pixel_sha256": "af65a90e0272a2c332d537ce5e8bd6280df4c4172838cdf697a16d6508593aba"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOUTH OPEN / T.17 06 RUNNING",
+          "label": "T.17 step 06 MOUTH OPEN, first cycle",
+          "nonzero_pixels": 318,
+          "pixel_sha256": "132b8aa0f0974b1dfaed3fcea3445281067a8fe25c3fc67b9202704751143d1d"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOUTH CLOSED / T.17 07 RUNNING",
+          "label": "T.17 step 07 MOUTH CLOSED, first cycle",
+          "nonzero_pixels": 339,
+          "pixel_sha256": "f5e78503c27a92903f7e5e9182efd4e2eb972cd51e22bbe32a199bd0daa66b1a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RUN MOUTH / T.17 08 RUNNING",
+          "label": "T.17 step 08 RUN MOUTH, first cycle",
+          "nonzero_pixels": 304,
+          "pixel_sha256": "18e7f17ccbb645aa2bb8b994fa43ff6630bd934c547bdee9625290925f40422d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOUTH OPEN / T.17 06 RUNNING",
+          "label": "T.17 step 06 MOUTH OPEN, second cycle",
+          "nonzero_pixels": 318,
+          "pixel_sha256": "132b8aa0f0974b1dfaed3fcea3445281067a8fe25c3fc67b9202704751143d1d"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MOUTH CLOSED / T.17 07 RUNNING",
+          "label": "T.17 step 07 MOUTH CLOSED, second cycle",
+          "nonzero_pixels": 339,
+          "pixel_sha256": "f5e78503c27a92903f7e5e9182efd4e2eb972cd51e22bbe32a199bd0daa66b1a"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Enter starts T.17 \"TED\" TEST, which then runs by itself. For the rest of the run the ROM drives Ted's lids and eyes (11, 9, 12, 10, 11) for steps 01-05, then raises 19 and 20 together as the display reaches 06 MOUTH OPEN, drops 20 and 19 about 0.33-0.39 s later, and in 07 MOUTH CLOSED drives 20 alone for about 0.33 s; the cycle repeats. 19 never rises without 20.",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9,
+            10,
+            11,
+            12,
+            19,
+            20
+          ]
+        }
+      ],
+      "ordered_solenoid_on_sequence": [
+        11,
+        9,
+        12,
+        10,
+        11,
+        19,
+        20,
+        20,
+        11,
+        9,
+        12,
+        10,
+        11,
+        19,
+        20,
+        20,
+        11
+      ],
+      "solenoid_addresses_seen": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        17,
+        18,
+        19,
+        20,
+        23,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 52,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "rs-l6-ted-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/red-and-ted-s-road-show-1994/harness/ted-test/rs_l6/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/rs-ted-test.json",
+        "scenario_sha256": "c8adfbf9d04ff4bc4bc441856b7f357e7e46ae145125fc7cdd67ae199cfdabc6",
+        "self_test_pulses": 0,
+        "sha256": "31f8e308676a4d158027101a6aa0daa9b320f1d7afa04ee185904de40509a073",
+        "snapshot_count": 53,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          11,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "2c85f5e624e1e68efa61afc3790a734b3b2137707296f28892e985874750ee8d"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses, guarded by output checkpoints on 19; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. PinMAME's built-in mechanisms were disabled, so Ted's mouth switch (11) never answered the motor. Exact external directory manifest rs_l6/manifest.json SHA-256 d8e512951bff2b744054816b4749e1c8639377b020816396854cbb00509e6aec (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/red-and-ted-s-road-show-1994/harness/ted-test/rs_l6",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "31f8e308676a4d158027101a6aa0daa9b320f1d7afa04ee185904de40509a073"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
