@@ -13,12 +13,16 @@ from pathlib import Path, PureWindowsPath
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import drawing_callouts  # noqa: E402
+
 NAME = "world-poker-tour-2006"
 MACHINE = ROOT / "machines/partial/stern" / f"{NAME}.json"
 AUDIT = ROOT / "reports/spatial/stern" / f"{NAME}.json"
 SCRIPT = ROOT / "tools/curate_world_poker_tour.py"
 SEED = ROOT / "tools/seeds/stern" / f"{NAME}.json"
 SPATIAL = ROOT / "tools/seeds/stern" / f"{NAME}-spatial.json"
+CALLOUTS = ROOT / "tools/seeds/stern" / f"{NAME}-callouts.json"
 
 
 def load(path: Path) -> dict:
@@ -117,7 +121,7 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
             self.assertIn(f"mechanism.{ident}", mechanisms)
         self.assertEqual(2, len([m for m in mechanisms.values() if m["kind"] == "drop_target_bank" and len(m["sensors"]) == 4]))
         lamps = address_map(self.definition["outputs"], "pinmame.output.lamp")
-        self.assertEqual(("observed", 0.448267, 0.525167),
+        self.assertEqual(("validated", 0.448267, 0.525167),
                          (lamps[9]["spatial"]["status"], lamps[9]["spatial"]["placements"][0]["x"], lamps[9]["spatial"]["placements"][0]["y"]))
         for number in (1, 2, 67, 68, 75, 76, 77):
             self.assertEqual("not_applicable", lamps[number]["spatial"]["status"])
@@ -176,6 +180,43 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
                 point = item.get("center") or item.get("position")
                 raw = (point["x"], point["y"])
             self.assertEqual((name, round(raw[0] / 952, 6), round(raw[1] / 2250, 6)), (item["name"], x, y))
+
+    def test_drawing_callout_check_decides_every_placement_status(self) -> None:
+        seed = load(CALLOUTS)
+        decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(self.definition))
+        source = "review.wpt-drawing-callouts-2026-10-01"
+        self.assertIn(source, {s["id"] for s in self.definition["sources"]})
+        checked = 0
+        for device in self.definition["inputs"] + self.definition["outputs"] + self.definition["displays"]:
+            for placement in (device.get("spatial") or {}).get("placements") or []:
+                decision = decisions["placements"].get(placement["id"])
+                status = placement["provenance"]["status"]
+                if decision is None:
+                    self.assertEqual("observed", status, placement["id"])
+                    continue
+                checked += 1
+                self.assertEqual("validated" if decision["agrees"] else "observed", status, placement["id"])
+                self.assertEqual(decision["agrees"], source in placement["provenance"]["source_refs"], placement["id"])
+                notes = (device.get("physical") or {}).get("notes") or ""
+                self.assertEqual(not decision["agrees"], f"draws callout {decision['label']}" in notes, placement["id"])
+        self.assertEqual(len(seed["checks"]), checked)
+        self.assertEqual(drawing_callouts.summary(seed, decisions, f"tools/seeds/stern/{NAME}-callouts.json",
+                                                  hashlib.sha256(CALLOUTS.read_bytes()).hexdigest()),
+                         load(AUDIT)["drawing_callout_check"])
+        # Every page is fitted on independently read controls, never on borrowed ones.
+        for page in seed["pages"].values():
+            self.assertGreaterEqual(len(page["controls"]), 5)
+            self.assertFalse({c["feature"] for c in page["controls"]} & {c["feature"] for c in page["excluded_controls"]})
+
+    @unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review artifacts not configured")
+    def test_drawing_callout_renders_and_reads_are_retained(self) -> None:
+        seed = load(CALLOUTS)
+        roots = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"])
+        self.assertGreater(drawing_callouts.verify_retained(seed, ROOT, None, roots), 3)
+        tampered = json.loads(json.dumps(seed))
+        tampered["pages"]["pdf-9"]["image"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "render missing or changed"):
+            drawing_callouts.verify_retained(tampered, ROOT, None, roots)
 
     def test_excerpt_and_scenario_integrity(self) -> None:
         sources = {s["id"]: s for s in self.definition["sources"]}
@@ -314,7 +355,7 @@ class WorldPokerTourDefinitionTests(unittest.TestCase):
             spatial["drawing_reconciliation"]["retained_artifacts"]["manifest_sha256"] = manifest_module.write_manifest(drawing_dir, "wpt_140a")
             with patch.dict(os.environ, {"PINMAME_REVIEW_ARTIFACTS_ROOT": str(review_root)}, clear=True), \
                     patch.multiple(curator, ROOT=checkout, PINNED_LIBRARY_SHA256=native_hash,
-                                   PINNED_SWITCH_TRACE_SHA256=trace_hashes[0], PINNED_COIL_TRACE_SHA256=trace_hashes[1]):
+                                   PINNED_SWITCH_TRACE_SHA256=trace_hashes[0], PINNED_COIL_TRACE_SHA256=trace_hashes[1]),                     patch.object(curator.drawing_callouts, "verify_retained", lambda *args: 0):
                 curator.verify_external(self.seed, spatial)
                 missing_frame = session / "coil-sweep-frames/39.pgm"
                 missing_frame.unlink()

@@ -1,5 +1,116 @@
 {
   "coordinates": "x=(raw_x-0)/952, y=(raw_y-0)/2250; six-decimal repository helper values; player view, y rear to apron",
+  "drawing_callout_check": {
+    "checked": 135,
+    "limit": 0.07,
+    "not_validated": {
+      "placement.bumper1b": {
+        "callout_offset": 0.0683,
+        "control_offset": 0.0837,
+        "label": "30",
+        "page": "pdf-7"
+      },
+      "placement.coil-14.uprightflipper": {
+        "callout_offset": 0.0981,
+        "control_offset": 0.0825,
+        "label": "14",
+        "page": "pdf-11"
+      },
+      "placement.coil-15.leftflipper": {
+        "callout_offset": 0.1647,
+        "control_offset": 0.1366,
+        "label": "15",
+        "page": "pdf-11"
+      },
+      "placement.coil-16.rightflipper": {
+        "callout_offset": 0.0781,
+        "control_offset": 0.0753,
+        "label": "16",
+        "page": "pdf-11"
+      },
+      "placement.sw43s": {
+        "callout_offset": 0.0885,
+        "control_offset": 0.0454,
+        "label": "43",
+        "page": "pdf-7"
+      },
+      "placement.sw44": {
+        "callout_offset": 0.0745,
+        "control_offset": 0.0203,
+        "label": "44",
+        "page": "pdf-7"
+      }
+    },
+    "pages": {
+      "pdf-11": {
+        "callout_fit_pairs": 19,
+        "callout_loo_max": 0.0669,
+        "callout_pairs": 22,
+        "control_loo_max": 0.0106,
+        "control_rms": 0.0023,
+        "controls": 7,
+        "image": {
+          "path": "stern.world-poker-tour.2006/session-20261001/drawing-reconciliation/wpt200_coil-011.png",
+          "pixels": [
+            1700,
+            2200
+          ],
+          "root": "review_artifacts",
+          "sha256": "06a102fdffe391f9e3b46849d4ea5d653c4f8a76f2f72f88e965e62ccdc45a28"
+        },
+        "locator": "World_Poker_Tour_Manual.pdf PDF 11, printed DR.9: Coil & Flash Lamp Locations drawing"
+      },
+      "pdf-7": {
+        "callout_fit_pairs": 39,
+        "callout_loo_max": 0.0683,
+        "callout_pairs": 41,
+        "control_loo_max": 0.0252,
+        "control_rms": 0.0015,
+        "controls": 5,
+        "image": {
+          "path": "stern.world-poker-tour.2006/session-20261001/drawing-reconciliation/wpt200_sw-007.png",
+          "pixels": [
+            1700,
+            2200
+          ],
+          "root": "review_artifacts",
+          "sha256": "e68de9ffbef019bac632f196989d4aa69cac43a8174970899a40c0d8b3fa7266"
+        },
+        "locator": "World_Poker_Tour_Manual.pdf PDF 7, printed DR.5: Switch Locations drawing"
+      },
+      "pdf-9": {
+        "callout_fit_pairs": 72,
+        "callout_loo_max": 0.045,
+        "callout_pairs": 72,
+        "control_loo_max": 0.0107,
+        "control_rms": 0.0022,
+        "controls": 7,
+        "image": {
+          "path": "stern.world-poker-tour.2006/session-20261001/drawing-reconciliation/wpt200_lamp-009.png",
+          "pixels": [
+            1700,
+            2200
+          ],
+          "root": "review_artifacts",
+          "sha256": "2785bc1bd8db3fc3f9990d8726cc09726b087e5d2b8026cf5fefcbe93be36086"
+        },
+        "locator": "World_Poker_Tour_Manual.pdf PDF 9, printed DR.7: Lamp Locations drawing"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-01",
+      "transcription": "independent Claude Sonnet 5.5 (claude-sonnet-5-5) readers working only from the page renders, without table data",
+      "verification": "Claude Opus 5.5 (claude-opus-5-5) overlaid every page; each read it corrected carries a verifier_note"
+    },
+    "retained_artifacts": {
+      "directory": "stern.world-poker-tour.2006/session-20261001/callout-check",
+      "manifest_sha256": "ad661dae307f1889a79ea8cf42765119f7658fa7b49bc84951225592011cc017"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/stern/world-poker-tour-2006-callouts.json",
+    "seed_sha256": "2a06f3ee5f5738045a8fbbab2bbf23445a68c883488a68941b66ea9859f65353",
+    "validated": 129
+  },
   "drawing_reconciliation": {
     "affine": {
       "formula": "raw = a*u + b*v + c on 200 dpi render pixels",
@@ -133,9 +244,9 @@
     "cabinet_or_service": "not applicable",
     "coil_mechanism_anchor": "observed effect anchor on the mechanism object: the object the coil callback drives (flipper pivots, BallRelease, LaneKicker, sw49, LeftPost), or for Q9-Q11/Q17/Q18, whose callbacks the embedded script comments out, the bumper/sling object whose hit event reports the matching switch; Q2 shares the SW23 shooter-lane trigger because PlungerIM has no object; not a winding or coil-body centre",
     "drop_bank_midpoint_projection": "Q5-Q8 effect anchor at the mean of the bank's four target faces; the reset coil body is not modelled",
-    "exact_named_vpx_object_center": "observed only: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
+    "exact_named_vpx_object_center": "observed, and validated where drawing_callout_check agrees: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
     "flasher_bulb_light": "observed emitter on the bulb-size script light f22b/f23b/F25a/f31b at the factory DR.9 flasher; larger-falloff glow lights and Flasher sprites are excluded",
-    "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 drawings are an identity cross-check only (drawing_reconciliation)",
+    "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 boxes validate table placements (drawing_callout_check) and the earlier five-control overlay remains an identity cross-check (drawing_reconciliation)",
     "virtual_or_unused": "not applicable"
   },
   "promotion": "partial",

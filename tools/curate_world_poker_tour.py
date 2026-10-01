@@ -17,11 +17,14 @@ from pathlib import Path, PureWindowsPath
 
 from pinmame_game_defs.jsonio import canonical_bytes, write_bytes
 
+import drawing_callouts
+
 ROOT = Path(__file__).resolve().parents[1]
 STEM = "world-poker-tour-2006"
 MACHINE = "stern.world-poker-tour.2006"
 SEED_PATH = ROOT / f"tools/seeds/stern/{STEM}.json"
 SPATIAL_PATH = ROOT / f"tools/seeds/stern/{STEM}-spatial.json"
+CALLOUT_PATH = ROOT / f"tools/seeds/stern/{STEM}-callouts.json"
 MANUAL_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-manual-tables.md"
 MECH_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-mechanisms.md"
 SOURCE_EXCERPT = ROOT / f"evidence/excerpts/stern/{STEM}-script-and-core.md"
@@ -61,6 +64,7 @@ RUNTIME_COIL = "runtime.wpt-140a-coil-test"
 SB = "bulletin.stern-wpt-165"
 SB163 = "bulletin.stern-wpt-163"
 SB164 = "bulletin.stern-wpt-164"
+CALLOUTS = "review.wpt-drawing-callouts-2026-10-01"
 PINNED_LIBRARY_SHA256 = "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
 PINNED_SWITCH_TRACE_SHA256 = "b556e88286de5212d1cde8ae326f1436717251486103215fbbff4b82bd57f28f"
 PINNED_COIL_TRACE_SHA256 = "1b31464a14146bdb93f0afa7999cd42e61a3ee725f8a72d260e1ca458489800a"
@@ -426,6 +430,7 @@ def sources(seed: dict, spatial: dict) -> list[dict]:
         {"id": RUNTIME_COIL, "kind": "service_diagnostic", "uri": "external:review-artifacts/stern.world-poker-tour.2006/session-20260930/wpt-coil-diagnostic-pinned-frames-run.json", "revision": seed["pinmame_revision"], "sha256": PINNED_COIL_TRACE_SHA256, "locator": "Verified pinned native DLL SHA-256 " + PINNED_LIBRARY_SHA256 + "; fresh wpt_140a Single Coil Test DMD sweep: displayed Q1-23 and Q25-32 labels, Q24 skipped; actions after Q24 are offset from host labels; Q32 ORG/BLK-GRY; next AUX1 selector is diagnostic #33, distinct from public synthetic game-on 33", "excerpts": [excerpt("wpt-coil-diagnostic", DIAG_EXCERPT, "V14.0 Single Coil Test DMD sweep")]},
         {"id": SB163, "kind": "service_bulletin", "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb163.pdf", "sha256": "da0f791a94e0c02cac1ad7288d41dcbc4da916232be42c8e756e3e70b350ae49", "locator": "Stern Service Bulletin 163, July 24 2006, p.1: unstable CPU/Sound PCB flash can cause resets or endless multiball; replacement 520-5246-00", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-sb163", SERVICE_EXCERPT, "Bulletin 163 p.1")]},
         {"id": SB164, "kind": "service_bulletin", "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb164.pdf", "sha256": "b7d0f5274dd0477f727a8f4fa0d7388821f826f112b2267a3d7b2bfc3c5ecb28", "locator": "Stern Service Bulletin 164, August 22 2006, p.1-2: SAM game-code update and backup procedure with CPU/Sound DIP #8", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-sb164", SERVICE_EXCERPT, "Bulletin 164 pp.1-2")]},
+        {"id": CALLOUTS, "kind": "human_review", "uri": "internal:" + CALLOUT_PATH.relative_to(ROOT).as_posix(), "sha256": sha(CALLOUT_PATH), "locator": "2026-10-01 factory location-drawing callout check of DR.5/DR.7/DR.9 (PDF pp.7, 9, 11): every numbered box transcribed independently on the retained 200 dpi renders, verifier corrections recorded with their reasons, per-page control and callout fits; a table placement whose own box lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). Reads, overlays and generator are retained under review-artifacts with a pinned manifest.", "license": "NOASSERTION", "attribution": "PinMAME game definitions contributors"},
         {"id": SB, "kind": "service_bulletin", "uri": "external:manuals/by-machine/stern.world-poker-tour.2006/sb165.pdf", "sha256": "40cf83f3109c7adcdfffebebaa16022f18597da12ebcbcfcee3b7f601fbe042c", "locator": "Stern Service Bulletin 165, dated September 19 2006: pre-v1.11 drop-target serve auto-launch behavior vs v1.11+", "license": "NOASSERTION", "attribution": "Stern Pinball", "excerpts": [excerpt("wpt-sb165", SERVICE_EXCERPT, "Bulletin 165 p.1")]},
     ]
     records[0]["excerpts"].append(excerpt("wpt-sw56-erratum", ERRATA_EXCERPT, "PDF pp.6-7,116-117; cross-manual tilt-note reconciliation"))
@@ -483,7 +488,7 @@ def build(seed: dict, spatial: dict) -> dict:
             }]},
             "provenance": prov(MANUAL, CORE, TABLE, RUNTIME, status="observed"),
         })
-    return {
+    definition = {
         "format": "pinmame-machine-definition", "schema_version": 2,
         "machine": {"id": MACHINE, "name": "World Poker Tour", "manufacturer": "Stern", "year": 2006, "kind": "physical_pinball", "ipdb_id": 5134, "opdb_id": "G5poe-MQrb5", "playfield": {"width": 952, "height": 2250, "units": "vpx", "provenance": prov(TABLE)}},
         "coverage": {"status": "partial", "missing": ["mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"], "dimensions": {
@@ -501,9 +506,34 @@ def build(seed: dict, spatial: dict) -> dict:
             {"id": "conflict.q32-coil", "path": "outputs.coil.32", "description": "Factory coil chart p.10 and board diagram p.123 print Q32 26-1200 / 090-5044-ND while the specific down-post assembly sheet p.118 prints 25-1240 / 090-5034-ND. The p.10 brown feed is separately resolved as a chart error by p.123 and the ROM's orange board feed. Physical coil fitment remains open. Resolution path: read the installed Q32 coil's sleeve marking or a revision-controlled Stern bill of materials for the down-post assembly.", "source_refs": [MANUAL, MANUAL_ASSEMBLY, RUNTIME_COIL]},
         ],
     }
+    # Factory location-drawing callouts promote the table placements they confirm.
+    drawing_callouts.apply_to_definition(definition, json.loads(CALLOUT_PATH.read_text(encoding="utf-8")), CALLOUTS)
+    return definition
 
 
-def knowledge(seed: dict) -> str:
+CALLOUT_PAGE_KINDS = {"pdf-7": "switch", "pdf-9": "lamp", "pdf-11": "coil"}
+
+
+def callout_check(definition: dict) -> dict:
+    """The drawing callout check's report record, recomputed from the committed seed."""
+    seed = json.loads(CALLOUT_PATH.read_text(encoding="utf-8"))
+    decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(definition))
+    return drawing_callouts.summary(seed, decisions, CALLOUT_PATH.relative_to(ROOT).as_posix(), sha(CALLOUT_PATH))
+
+
+def callout_sentence(check: dict) -> str:
+    rest: dict[str, list[int]] = {}
+    for item in check["not_validated"].values():
+        rest.setdefault(CALLOUT_PAGE_KINDS[item["page"]], []).append(int(item["label"]))
+    parts = [f"{kind}{'es' if kind == 'switch' else 's'} {', '.join(str(n) for n in sorted(numbers))}" for kind, numbers in sorted(rest.items())]
+    return (f"A factory location-drawing callout check validates {check['validated']} of the {check['checked']} table placements it covers: "
+            "every numbered box on DR.5/DR.7/DR.9 was transcribed independently, each page was fitted against its jet-bumper and flipper-pivot "
+            "controls and against its other boxes, and a placement validates when its own box lands within 0.07 normalized under both fits "
+            f"(`{check['seed']}`). The rest stay observed, each with a note on its device: {'; '.join(parts)}. The flipper coils' boxes mark the "
+            "coil bodies under the playfield, away from the pivot anchors.")
+
+
+def knowledge(seed: dict, check: dict) -> str:
     return f"""# World Poker Tour (Stern, 2006)
 
 Coverage: **partial**. The full public address space and factory wiring are recorded and all fourteen playfield card-display blocks are located as observed. SW54 fitment, Q32's installed coil part, sensor contact construction/polarity, and several socket and mechanism placements still prevent author-ready status.
@@ -532,7 +562,7 @@ The factory chart enumerates Q22/Q23 and Q25–Q31 as nine flashers, five on the
 
 ## Spatial and authority limits
 
-The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded where its name and factory placement agree. Switches the table's embedded script binds through differently named objects use those objects: the SW8/SW43 orbit spinners `sw8s`/`sw43s` (the same-numbered `sw43` trigger has no handler), pop bumpers `Bumper1b`–`Bumper3b` for SW30–32, sling walls for SW26/27 and the shooter-VUK capture kicker `LaneKicker` for SW3. Coil anchors are mechanism objects, never a winding centre: flipper pivots, `BallRelease`, `LaneKicker`, eject popper `sw49` and `LeftPost` are driven by their coil callbacks, while the bumper and sling coils use the objects whose hit events report SW30–32 and SW26/27 because the embedded script comments out their callbacks, and Q2 shares the SW23 shooter-lane point because `PlungerIM` has no object; Q5–Q8 drop-bank resets use the mean of their bank's four target faces. Flashers Q22/Q23/Q25/Q31 sit on the bulb-size script lights `f22b`/`f23b`/`F25a`/`f31b`, not their larger glow lights or Flasher sprites. Every placed switch, lamp and coil anchor was overlaid on the factory DR.5/DR.7/DR.9 location drawings through an independently read five-control fit and sits beside its own printed number box. The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points are the Deal Again lamp 3, SW14/SW41 and the trough sensors (no table objects), SW54 (fitment conflict) and GI bulbs; no guessed coordinates were filled. The four flipper EOS contacts are classified internal_nonvisual. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
+The 952×2250 VPX table gives exact stored object centres and six-place normalized coordinates. Each retained `lN` light and `swN` trigger/wall point is recorded where its name and factory placement agree. Switches the table's embedded script binds through differently named objects use those objects: the SW8/SW43 orbit spinners `sw8s`/`sw43s` (the same-numbered `sw43` trigger has no handler), pop bumpers `Bumper1b`–`Bumper3b` for SW30–32, sling walls for SW26/27 and the shooter-VUK capture kicker `LaneKicker` for SW3. Coil anchors are mechanism objects, never a winding centre: flipper pivots, `BallRelease`, `LaneKicker`, eject popper `sw49` and `LeftPost` are driven by their coil callbacks, while the bumper and sling coils use the objects whose hit events report SW30–32 and SW26/27 because the embedded script comments out their callbacks, and Q2 shares the SW23 shooter-lane point because `PlungerIM` has no object; Q5–Q8 drop-bank resets use the mean of their bank's four target faces. Flashers Q22/Q23/Q25/Q31 sit on the bulb-size script lights `f22b`/`f23b`/`F25a`/`f31b`, not their larger glow lights or Flasher sprites. {callout_sentence(check)} The fourteen card-display placements use actual central pixel objects whose 5×7 groups and 2×7 board topology were checked against native mapping and the factory diagram. A rendered glow, lightmap helper, or primitive stored offset is not proof of a physical bulb or sensor seat. Missing points are the Deal Again lamp 3, SW14/SW41 and the trough sensors (no table objects), SW54 (fitment conflict) and GI bulbs; no guessed coordinates were filled. The four flipper EOS contacts are classified internal_nonvisual. Five backpanel flashers and four backpanel matrix lamps are marked outside playfield space.
 
 ## Concrete blockers
 
@@ -561,14 +591,15 @@ def audit(definition: dict, spatial: dict) -> dict:
         "located_observations": sum("placements" in x.get("spatial", {}) for group in ("inputs","outputs","displays") for x in definition[group]),
         "missing_spatial_ids": missing, "unresolved_conflict_ids": unresolved,
         "projection_classes": {
-            "exact_named_vpx_object_center": "observed only: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
+            "exact_named_vpx_object_center": "observed, and validated where drawing_callout_check agrees: lN/swN objects, plus the embedded-script-bound Spinner (SW8, SW43), Bumper (SW30-32), sling Wall drag-point centroid (SW26/27) and shooter-VUK LaneKicker (SW3) objects",
             "coil_mechanism_anchor": "observed effect anchor on the mechanism object: the object the coil callback drives (flipper pivots, BallRelease, LaneKicker, sw49, LeftPost), or for Q9-Q11/Q17/Q18, whose callbacks the embedded script comments out, the bumper/sling object whose hit event reports the matching switch; Q2 shares the SW23 shooter-lane trigger because PlungerIM has no object; not a winding or coil-body centre",
             "flasher_bulb_light": "observed emitter on the bulb-size script light f22b/f23b/F25a/f31b at the factory DR.9 flasher; larger-falloff glow lights and Flasher sprites are excluded",
             "drop_bank_midpoint_projection": "Q5-Q8 effect anchor at the mean of the bank's four target faces; the reset coil body is not modelled",
-            "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 drawings are an identity cross-check only (drawing_reconciliation)",
+            "manual_drawing_projection": "not used for coordinates; factory DR.5/7/9 boxes validate table placements (drawing_callout_check) and the earlier five-control overlay remains an identity cross-check (drawing_reconciliation)",
             "cabinet_or_service": "not applicable", "virtual_or_unused": "not applicable"},
         "embedded_script_sha256": EMBEDDED_SCRIPT_SHA256,
         "drawing_reconciliation": spatial["drawing_reconciliation"],
+        "drawing_callout_check": callout_check(definition),
         "reason": "Unresolved SW54/SW56 and Q32 fitment; GI, trough sensors 18-22, Deal Again lamp 3 and SW14/SW41 have no retained table object; coil anchors are mechanism projections, not coil bodies; fourteen card-display block centres are located as observed.",
     }
 
@@ -637,6 +668,9 @@ def verify_external(seed: dict, spatial: dict) -> None:
         native = Path(value).resolve().parent / "builds/pinmame-8371478/Release/pinmame64.dll"
         if not native.is_file() or sha(native) != PINNED_LIBRARY_SHA256:
             raise ValueError(f"PINMAME_REVIEW_ARTIFACTS_ROOT: missing or wrong verified pinned native library {native}")
+    manuals, reviews = os.environ.get("PINMAME_MANUALS_ROOT"), os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+    drawing_callouts.verify_retained(json.loads(CALLOUT_PATH.read_text(encoding="utf-8")), ROOT,
+                                     Path(manuals) if manuals else None, Path(reviews) if reviews else None)
     if value := os.environ.get("PINMAME_SOURCE_ROOT"):
         checkout = Path(value)
         actual = subprocess.run(["git", "rev-parse", "HEAD"], cwd=checkout, capture_output=True, text=True, check=True).stdout.strip()
@@ -658,7 +692,7 @@ def main() -> None:
     definition = build(seed, spatial)
     artifacts = {
         DEST: canonical_bytes(definition),
-        KNOWLEDGE: knowledge(seed).encode("utf-8"),
+        KNOWLEDGE: knowledge(seed, callout_check(definition)).encode("utf-8"),
         AUDIT: canonical_bytes(audit(definition, spatial)),
     }
     for path, wanted in artifacts.items():
