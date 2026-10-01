@@ -55,6 +55,32 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"game-on output at 19, so the platform alias is dropped."
 		),
 	},
+	{
+		"path": "machines/partial/williams/no-fear-dangerous-sports-1995.json",
+		"machine_id": "williams.no-fear-dangerous-sports.1995",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"label": "Flasher: No Fear",
+		"kind": "flasher",
+		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
+		"source": {
+			"id": "runtime.no-fear.nf-23x.flasher-test",
+			"uri": "internal:evidence/runtime/wpc-security/no-fear-nf_23x-flasher-test.json",
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of nf_23x from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-security/nf-flasher-test.json) that steps T.5 FLASHER TEST through "
+				"flashers 17-28 in repeat mode. At step 19 the ROM pulses public solenoid 19 and prints FLS. NO FEAR "
+				"with the wires BLK-ORN RED-WHT."
+			),
+		},
+		"note": (
+			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
+			"against the game file's 'Flasher: No Fear (x2)'. The 2.3 X ROM's own T.5 FLASHER TEST settles it: it "
+			"pulses public 19 among flashers 17-28 and prints FLS. NO FEAR (BLK-ORN RED-WHT). No WPC generation has a "
+			"game-on output at 19, so the platform alias is dropped. The ROM names one output, not a bulb count: the "
+			"game file's '(x2)' quantity is not confirmed by the run."
+		),
+	},
 ]
 
 

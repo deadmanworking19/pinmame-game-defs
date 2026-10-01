@@ -509,7 +509,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The Getaway's 2026-10-01 harness runs settle both of its conflicts, removing one more.
 		# The Avengers LE and Pro switch tests settle the LE's right-orbit address, removing one more.
 		# Black Rose's flasher test settles its only (legacy solenoid-19) conflict, removing one more.
-		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# No Fear's flasher test settles its only (legacy solenoid-19) conflict, removing one more.
+		self.assertEqual(45, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

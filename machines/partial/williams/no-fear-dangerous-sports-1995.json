@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Flasher: No Fear (x2)'. Resolution path: this machine's own printed Solenoid/Flasher table, no copy of which is currently retained, or a LibPinMAME trace against a legal nf_23x ROM observing whether public 19 pulses like a flasher or holds for the duration of a game; pinned core.h's WPC solenoid numbering puts the standard driver range at 1-28 and the game-on state at 29-31, and wpc.c records that a Fliptronic-or-later board has no game-on relay at all, so no WPC generation places one at 19. Unresolved.",
-      "id": "conflict.pinmame-output-solenoid-19-none",
-      "path": "binding:pinmame.output.solenoid/19/None",
-      "source_refs": [
-        "legacy.game.nf",
-        "legacy.platform.wpc"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.wpc"
@@ -37,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -4026,25 +4015,25 @@
         {
           "namespace": "vpe-legacy.coil",
           "value": "019"
-        },
-        {
-          "namespace": "vpe-legacy.coil",
-          "value": "c_game_on"
         }
       ],
       "binding": {
         "device": 19,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.game-on",
+      "id": "device.flasher-no-fear",
       "kind": "flasher",
-      "label": "ROM Started",
+      "label": "Flasher: No Fear",
+      "physical": {
+        "notes": "Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, against the game file's 'Flasher: No Fear (x2)'. The 2.3 X ROM's own T.5 FLASHER TEST settles it: it pulses public 19 among flashers 17-28 and prints FLS. NO FEAR (BLK-ORN RED-WHT). No WPC generation has a game-on output at 19, so the platform alias is dropped. The ROM names one output, not a bulb count: the game file's '(x2)' quantity is not confirmed by the run."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.nf",
-          "legacy.platform.wpc"
+          "legacy.platform.wpc",
+          "runtime.no-fear.nf-23x.flasher-test"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -4249,6 +4238,15 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.no-fear.nf-23x.flasher-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of nf_23x from empty NVRAM (scenario tools/harness-scenarios/wpc-security/nf-flasher-test.json) that steps T.5 FLASHER TEST through flashers 17-28 in repeat mode. At step 19 the ROM pulses public solenoid 19 and prints FLS. NO FEAR with the wires BLK-ORN RED-WHT.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-security/no-fear-nf_23x-flasher-test.json"
     }
   ]
 }

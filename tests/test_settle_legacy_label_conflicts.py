@@ -17,6 +17,7 @@ PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e
 # The ROM's own printed name for each settled address, as the evidence summary transcribes it.
 ROM_NAMES = {
 	"runtime.black-rose.br-l4.flasher-test": "RIGHT BOTTOM",
+	"runtime.no-fear.nf-23x.flasher-test": "FLS. NO FEAR",
 }
 
 
