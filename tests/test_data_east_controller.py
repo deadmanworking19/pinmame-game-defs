@@ -101,7 +101,8 @@ class DataEastControllerTests(unittest.TestCase):
 		# with resolved identity, and the PinMAME I/O attachment declared their
 		# controller platform from each driver's own CORE_GAMEDEF module.
 		# Guns N' Roses adds its source-verified Data East controller declaration.
-		self.assertEqual(20, len(checked))
+		# Jurassic Park adds its source-verified Data East controller declaration.
+		self.assertEqual(21, len(checked))
 
 
 if __name__ == "__main__":

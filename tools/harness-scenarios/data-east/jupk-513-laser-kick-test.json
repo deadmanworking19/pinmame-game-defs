@@ -1,0 +1,140 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "jupk_513",
+  "notes": "Fresh empty CMOS. In the ROM's LASER KICK TEST a closure of a kicker's switch fires its coil; each candidate switch is closed alone and the solenoid transitions recorded.",
+  "watch_switches": [
+    29,
+    35,
+    37,
+    55,
+    56,
+    61
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "Toggle Green into diagnostic direction"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "LASER KICK TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 40,
+      "label": "Find ROM Laser Kick Test header"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "timeout_s": 8,
+      "active_only": true,
+      "label": "Wait for Laser Kick Test to enable outputs"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 29",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 35",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 37",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 55",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 56",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 61",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 24",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 21",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 60",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 59",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 33",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 1500,
+      "settle_s": 2.0,
+      "label": "Laser Kick Test closure 34",
+      "snapshot_while_held": true
+    }
+  ]
+}

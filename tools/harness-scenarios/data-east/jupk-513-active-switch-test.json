@@ -1,0 +1,554 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "jupk_513",
+  "notes": "Fresh empty CMOS, 8 s boot, every trough and mechanism switch open. No named keys are used, so PinMAME keyboard handling stays off and the host's direct cabinet writes are not overwritten by the driver's keyboard port: Green is held at 1 (the diagnostic direction) and Black (-7) is pulsed to step. Exact DMD title templates (tools/jurassic_park_harness.py) replace press counts and output 23 marks readiness. The ROM's Switch Test title does not repaint on a closure, so the ACTIVE SWITCH TEST is used: each public matrix switch 1-62 is closed in turn and the held DMD frame names it with its wire colours and number; the flipper buttons are the PinMAME flipper-column addresses 84 (left) and 82 (right), which core_updateSw copies to 63/64. Host switch readback is not ROM evidence.",
+  "watch_switches": [
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "Hold Green in the diagnostic direction"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "ACTIVE SWITCH TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 40,
+      "label": "Find ROM Active Switch Test header"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "timeout_s": 8,
+      "active_only": true,
+      "label": "Wait for Active Switch Test readiness"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 1",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 2",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 3",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 4",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 5",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 6",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 7",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 8",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 9",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 10",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 11",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 12",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 13",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 14",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 15",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 16",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 17",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 18",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 19",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 20",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 21",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 22",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 23",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 24",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 25",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 26",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 27",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 28",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 29",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 30",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 31",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 32",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 33",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 34",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 35",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 36",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 37",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 38",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 39",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 40",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 41",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 42",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 43",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 44",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 45",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 46",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 47",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 48",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 49",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 50",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 51",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 52",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 53",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 54",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 55",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 56",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 57",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 58",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 59",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 60",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 61",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch closure 62",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch Left flipper button",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1500,
+      "settle_s": 0.8,
+      "label": "Active Switch Right flipper button",
+      "snapshot_while_held": true
+    }
+  ]
+}

@@ -1,0 +1,2270 @@
+{
+  "blockers": [
+    {
+      "dimension": "spatial_placement",
+      "reason": "Only one factory-layout table is retained, so no placement is cross-validated, and no drawing callout check has been made, so every placement stays observed. The seven trough contacts have no table object; the left, center and right scoop, T-Rex-scoop and gate lamps are glow-only in the table; the flash banks are partial (the table omits backbox and insert bulbs the factory fits).",
+      "records": [
+        "switch.drain",
+        "switch.trough-5",
+        "switch.trough-4",
+        "switch.trough-3",
+        "switch.trough-2",
+        "switch.trough-1-launch-position",
+        "switch.shooter-lane-lockout",
+        "device.trough-lockout",
+        "lamp.outputs-17",
+        "lamp.outputs-18",
+        "lamp.outputs-33",
+        "lamp.outputs-34",
+        "lamp.outputs-46",
+        "lamp.outputs-57",
+        "lamp.outputs-58"
+      ],
+      "resolution": "A second retained factory-layout table, or a callout check of PDF 31, 33 and 34 against the table (tools/drawing_callouts.py), plus measured trough and scoop positions."
+    },
+    {
+      "dimension": "output_semantics",
+      "reason": "GI relay identity, wiring and fuse groups are settled, but the fitted GI sockets, their count and their playfield, backbox and coin-door split are not; raw printer bits 37-44 are an unexplained PinMAME transport the manual does not document.",
+      "records": [
+        "device.gi",
+        "virtual.address-37",
+        "virtual.address-38",
+        "virtual.address-39",
+        "virtual.address-40",
+        "virtual.address-41",
+        "virtual.address-42",
+        "virtual.address-43",
+        "virtual.address-44"
+      ],
+      "resolution": "Count the GI strings from the power-supply schematic pages or socket photographs (fuses F1-F4: Playfield; Backbox Door & Speaker Panel; Playfield & Coin Door; Backbox Door); run the ROM's print-out feature to see whether the printer byte is ever written."
+    }
+  ],
+  "bounds": [
+    0.0,
+    0.0,
+    952.0,
+    2162.0
+  ],
+  "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
+  "decision": "partial; independent cross-provider review belongs to the coordinator",
+  "evidence_paths": {
+    "manual": "external:manuals/by-machine/data-east.jurassic-park.1993",
+    "runtime": "external:pinmame-review-artifacts/data-east.jurassic-park.1993/session-20261001/runtime",
+    "vpx": "external:vpx-sources/data-east/jurassic-park-1993"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "data-east.jurassic-park.1993",
+  "manual_crosschecks": [
+    "PDF 31 switch-location drawing: counts and sides of the placed switches",
+    "PDF 33 lamp-location drawing: the two-bulb lamps 1, 10, 19, 28 and 55 each match two table lights",
+    "PDF 34 coil / flash-lamp location drawing",
+    "PDF 37 major-assembly drawing: assembly numbers and mechanism positions"
+  ],
+  "object_evidence": {
+    "BallRelease": {
+      "file": "gameitems/Kicker.BallRelease.json",
+      "method": "object_center",
+      "raw_xy": [
+        822.84265,
+        1897.7794
+      ],
+      "sha256": "bec55f854b48a25c9417206c04b166095b98e92b44aa3dbe1c17e710d26a6170",
+      "type": "Kicker",
+      "xy": [
+        0.864331,
+        0.877789
+      ]
+    },
+    "Diverter_On": {
+      "file": "gameitems/Wall.Diverter_On.json",
+      "method": "polygon_area_centroid",
+      "raw_xy": [
+        39.0819,
+        614.60777
+      ],
+      "sha256": "70a295c1ca8c809a98ff066503148a02be36b19920ff2401ef72b57347bbe3ba",
+      "type": "Wall",
+      "xy": [
+        0.041052,
+        0.284277
+      ]
+    },
+    "Drain": {
+      "file": "gameitems/Kicker.Drain.json",
+      "method": "object_center",
+      "raw_xy": [
+        428.3004,
+        2091.1848
+      ],
+      "sha256": "789d2eefb247f251b34291cc709106ac51f8075231529d79e648d849c841fd21",
+      "type": "Kicker",
+      "xy": [
+        0.449895,
+        0.967246
+      ]
+    },
+    "L25": {
+      "file": "gameitems/Light.L25.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        117.35127,
+        1327.9219
+      ],
+      "sha256": "ece1f057b57370742e53fbafc0033722103bd13af0e04e19687848cda71d28e3",
+      "type": "Light",
+      "xy": [
+        0.123268,
+        0.61421
+      ]
+    },
+    "L55": {
+      "file": "gameitems/Light.L55.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        54.82574,
+        1475.0544
+      ],
+      "sha256": "00c0e5a14c0c328f5fd21801cede98f1b1f033f1b6cb65725182510c99f31b6b",
+      "type": "Light",
+      "xy": [
+        0.05759,
+        0.682264
+      ]
+    },
+    "L55a": {
+      "file": "gameitems/Light.L55a.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        818.2383,
+        1478.4445
+      ],
+      "sha256": "21beaadccc05251493aa3e2025a59aa7213c484eb1f6a281c9c8e3bedac2e8b0",
+      "type": "Light",
+      "xy": [
+        0.859494,
+        0.683832
+      ]
+    },
+    "LeftSlingShot": {
+      "file": "gameitems/Wall.LeftSlingShot.json",
+      "method": "polygon_area_centroid",
+      "raw_xy": [
+        222.33697,
+        1589.84298
+      ],
+      "sha256": "17c21aa7c6d03745a30bc3da36214fe85e4a28107f3ebaf7710d71ba20c3ceba",
+      "type": "Wall",
+      "xy": [
+        0.233547,
+        0.735358
+      ]
+    },
+    "Plunger1": {
+      "file": "gameitems/Plunger.Plunger1.json",
+      "method": "object_center",
+      "raw_xy": [
+        900.1112,
+        2052.5498
+      ],
+      "sha256": "533ca35ee770cc30b2090f560534924baab20262d17a95127f3f5b528ae557ae",
+      "type": "Plunger",
+      "xy": [
+        0.945495,
+        0.949375
+      ]
+    },
+    "RightSlingShot": {
+      "file": "gameitems/Wall.RightSlingShot.json",
+      "method": "polygon_area_centroid",
+      "raw_xy": [
+        647.16188,
+        1583.68323
+      ],
+      "sha256": "cc712a184c6de8ef2d93971000585c063db6d1df0c15001c02cb9b023365a798",
+      "type": "Wall",
+      "xy": [
+        0.679792,
+        0.732508
+      ]
+    },
+    "TrexJaw": {
+      "file": "gameitems/Primitive.TrexJaw.json",
+      "method": "object_position",
+      "raw_xy": [
+        312.19653,
+        269.74316
+      ],
+      "sha256": "c09e9aa0e86d9c802e9a2310cce62bdea1b76756af279e104ee987403e1a00ff",
+      "type": "Primitive",
+      "xy": [
+        0.327938,
+        0.124766
+      ]
+    },
+    "TrexPlastic": {
+      "file": "gameitems/Primitive.TrexPlastic.json",
+      "method": "object_position",
+      "raw_xy": [
+        296.75,
+        157.2
+      ],
+      "sha256": "19bd7e801cd74a7bc443bb176d50a69dde4b933dc6d19c08481cbd62d9b68ca3",
+      "type": "Primitive",
+      "xy": [
+        0.311712,
+        0.07271
+      ]
+    },
+    "VUK": {
+      "file": "gameitems/Kicker.VUK.json",
+      "method": "object_center",
+      "raw_xy": [
+        899.3906,
+        1090.3989
+      ],
+      "sha256": "2ef6ced1b70d0459a6967125210ad97ee0e2a07d9eeac6215a31bb21ecd2e90d",
+      "type": "Kicker",
+      "xy": [
+        0.944738,
+        0.504347
+      ]
+    },
+    "l1": {
+      "file": "gameitems/Light.L1.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        305.83322,
+        1306.64
+      ],
+      "sha256": "e697acea3191131633eaf3987ab52b02db802687aa488f50cfad26ce16a044ea",
+      "type": "Light",
+      "xy": [
+        0.321253,
+        0.604366
+      ]
+    },
+    "l10": {
+      "file": "gameitems/Light.L10.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        346.62653,
+        1534.82
+      ],
+      "sha256": "e9a301a496996df0588c6d3aba513e987874aec61fcf1df915d9d1bf7eea58b0",
+      "type": "Light",
+      "xy": [
+        0.364103,
+        0.709907
+      ]
+    },
+    "l10a": {
+      "file": "gameitems/Light.L10a.json",
+      "light": {
+        "falloff_radius": 110.0,
+        "image": "JurassicParkRedraw-4",
+        "show_bulb_mesh": true,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        486.0375,
+        139.37958
+      ],
+      "sha256": "73cfa15760088e4cadddc19b787519b5fecad73feee1bee5f88979a19c89f737",
+      "type": "Light",
+      "xy": [
+        0.510544,
+        0.064468
+      ]
+    },
+    "l11": {
+      "file": "gameitems/Light.L11.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        302.31787,
+        1780.6718
+      ],
+      "sha256": "ac00d4942700a50431f7962cbf5b544d61feb082fc03867c7374a8088471654a",
+      "type": "Light",
+      "xy": [
+        0.317561,
+        0.823622
+      ]
+    },
+    "l12": {
+      "file": "gameitems/Light.L12.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        300.25616,
+        1723.9983
+      ],
+      "sha256": "74955486b0ddd9d7c757c89cd5401aa719a8c2fe371869b82c4096b13a863902",
+      "type": "Light",
+      "xy": [
+        0.315395,
+        0.797409
+      ]
+    },
+    "l13": {
+      "file": "gameitems/Light.L13.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        301.963,
+        1663.9817
+      ],
+      "sha256": "80c5c749966e92385075c81826226ea40d774b591717a62076bcad8d27b775e4",
+      "type": "Light",
+      "xy": [
+        0.317188,
+        0.769649
+      ]
+    },
+    "l14": {
+      "file": "gameitems/Light.L14.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        367.22214,
+        1746.3462
+      ],
+      "sha256": "46b0f0b3207a862e8eba0f55a7d8672bc40ee342e234a26d4289e03121075ff7",
+      "type": "Light",
+      "xy": [
+        0.385738,
+        0.807746
+      ]
+    },
+    "l15": {
+      "file": "gameitems/Light.L15.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        367.0432,
+        1687.2039
+      ],
+      "sha256": "cd2eb8f21041c99df5bd4b28fb766ba4901a57cfd143d0c30f00ca97fe284377",
+      "type": "Light",
+      "xy": [
+        0.38555,
+        0.78039
+      ]
+    },
+    "l16": {
+      "file": "gameitems/Light.L16.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        432.40735,
+        1688.6003
+      ],
+      "sha256": "5261ddacaa95086c495d0b2c3dfcc5f34127c3aafd8a4b17cf671bc9099c950c",
+      "type": "Light",
+      "xy": [
+        0.454209,
+        0.781036
+      ]
+    },
+    "l19": {
+      "file": "gameitems/Light.L19.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        433.32407,
+        1525.6344
+      ],
+      "sha256": "877689ab96573769fcae372fcb28dbd72344993070fe363b47f28c06c0715ab1",
+      "type": "Light",
+      "xy": [
+        0.455172,
+        0.705659
+      ]
+    },
+    "l19a": {
+      "file": "gameitems/Light.L19a.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        453.39563,
+        710.9684
+      ],
+      "sha256": "35b2758328d53577d025b85e5c69885d95dccd2aecb1c870409ae35e49b18dac",
+      "type": "Light",
+      "xy": [
+        0.476256,
+        0.328848
+      ]
+    },
+    "l1a": {
+      "file": "gameitems/Light.L1a.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        196.91481,
+        1000.64777
+      ],
+      "sha256": "344ad23fded074227177670da819aeb842656baaa766d248225d6c183d0b3828",
+      "type": "Light",
+      "xy": [
+        0.206843,
+        0.462834
+      ]
+    },
+    "l1r": {
+      "file": "gameitems/Light.L1r.json",
+      "light": {
+        "falloff_radius": 160.0,
+        "image": "",
+        "show_bulb_mesh": true,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        733.97766,
+        214.45288
+      ],
+      "sha256": "6685d6999d355c9db1c634739bab133361de0867ca93dcf39afc6ccc578d1508",
+      "type": "Light",
+      "xy": [
+        0.770985,
+        0.099192
+      ]
+    },
+    "l2": {
+      "file": "gameitems/Light.L2.json",
+      "light": {
+        "falloff_radius": 12.0,
+        "image": "JurassicParkRedraw-4",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        55.04665,
+        1852.2556
+      ],
+      "sha256": "4f4a21a9b32abc267af29ba37e4a2a15c9f5bd7216a41ef0019262ef3da144d1",
+      "type": "Light",
+      "xy": [
+        0.057822,
+        0.856732
+      ]
+    },
+    "l20": {
+      "file": "gameitems/Light.L20.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        499.93076,
+        1746.8911
+      ],
+      "sha256": "7d7b676a1ffc8f7a26014ef8711107cae9b523700fad9ee455f81475a23b36f7",
+      "type": "Light",
+      "xy": [
+        0.525137,
+        0.807998
+      ]
+    },
+    "l21": {
+      "file": "gameitems/Light.L21.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        500.2037,
+        1687.8895
+      ],
+      "sha256": "a9250799a8c7f4cf9447e4c86268a26ed58b76afd3282f86f928771c3b652ef3",
+      "type": "Light",
+      "xy": [
+        0.525424,
+        0.780707
+      ]
+    },
+    "l22": {
+      "file": "gameitems/Light.L22.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        559.8754,
+        1780.2189
+      ],
+      "sha256": "9992b138324975fe24c9a69b6cd610d1bc1e63364cabfcb233d373a9d73205d8",
+      "type": "Light",
+      "xy": [
+        0.588104,
+        0.823413
+      ]
+    },
+    "l23": {
+      "file": "gameitems/Light.L23.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        563.8542,
+        1723.048
+      ],
+      "sha256": "db86dc0dd6bcfd2813c4f25f96300cc5dfc7632bbe3fdeeb14b10ee3839afbfa",
+      "type": "Light",
+      "xy": [
+        0.592284,
+        0.796969
+      ]
+    },
+    "l24": {
+      "file": "gameitems/Light.L24.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        562.6681,
+        1667.8853
+      ],
+      "sha256": "99944495c3b4bda914e9af6ffd041d2cdc22a5fc1196f6185e3fb4436bee5d8a",
+      "type": "Light",
+      "xy": [
+        0.591038,
+        0.771455
+      ]
+    },
+    "l26": {
+      "file": "gameitems/Light.L26.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        126.9624,
+        1276.1248
+      ],
+      "sha256": "09cb64c97e39df89d05be96bd00a53a2d94fea531065d8a287758b226e2e4fc6",
+      "type": "Light",
+      "xy": [
+        0.133364,
+        0.590252
+      ]
+    },
+    "l27": {
+      "file": "gameitems/Light.L27.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        137.21881,
+        1218.6211
+      ],
+      "sha256": "f350711515b42511f6b45e96d15b19cc83d194cefef331d91012c0fa57434d05",
+      "type": "Light",
+      "xy": [
+        0.144137,
+        0.563655
+      ]
+    },
+    "l28": {
+      "file": "gameitems/Light.L28.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        594.4847,
+        1432.3934
+      ],
+      "sha256": "ff6864f5c860cfc6496e1d2384d9df63957782edd63463f2f2cf4ddc301cb3dc",
+      "type": "Light",
+      "xy": [
+        0.624459,
+        0.662532
+      ]
+    },
+    "l28a": {
+      "file": "gameitems/Light.L28a.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        881.12976,
+        460.75812
+      ],
+      "sha256": "a793b6181d5a977ebe9905ce485fb97dbc29f8d38e2fd681ea4ab606980c4283",
+      "type": "Light",
+      "xy": [
+        0.925556,
+        0.213117
+      ]
+    },
+    "l29": {
+      "file": "gameitems/Light.L29.json",
+      "light": {
+        "falloff_radius": 60.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        545.1044,
+        766.9428
+      ],
+      "sha256": "e0fb4fe79b14e4baf254add20e90b339cbc58f1209034feead10df7d3de2bec5",
+      "type": "Light",
+      "xy": [
+        0.572589,
+        0.354738
+      ]
+    },
+    "l2rb": {
+      "file": "gameitems/Light.L2rb.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        745.8765,
+        1797.3141
+      ],
+      "sha256": "6c949f188288b6ec0a587838e1d13de2cbe7b95e17fab45100b77ffed2a86337",
+      "type": "Light",
+      "xy": [
+        0.783484,
+        0.83132
+      ]
+    },
+    "l3": {
+      "file": "gameitems/Light.L3.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        507.9419,
+        1042.1532
+      ],
+      "sha256": "a2f2a2cd3f6fc53aa93812f06773482c2c36dedb7569da14ade1bb9db9ce9505",
+      "type": "Light",
+      "xy": [
+        0.533552,
+        0.482032
+      ]
+    },
+    "l30": {
+      "file": "gameitems/Light.L30.json",
+      "light": {
+        "falloff_radius": 60.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        649.2745,
+        770.2943
+      ],
+      "sha256": "dd0749048945e9722e11e7c578adf12213d11d7fd2256e0a9e863b25396305d7",
+      "type": "Light",
+      "xy": [
+        0.682011,
+        0.356288
+      ]
+    },
+    "l31": {
+      "file": "gameitems/Light.L31.json",
+      "light": {
+        "falloff_radius": 70.0,
+        "image": "pf0",
+        "show_bulb_mesh": true,
+        "surface": "bumperlights"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        222.96646,
+        736.8316
+      ],
+      "sha256": "3785decb52217ac0ba2ee62aafe156aae1c9a9ebcd85bdb3b3f2ae9f841ad23b",
+      "type": "Light",
+      "xy": [
+        0.234208,
+        0.34081
+      ]
+    },
+    "l32": {
+      "file": "gameitems/Light.L32.json",
+      "light": {
+        "falloff_radius": 70.0,
+        "image": "pf0",
+        "show_bulb_mesh": true,
+        "surface": "bumperlights"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        290.39032,
+        941.6003
+      ],
+      "sha256": "27f39a79fe3118bb49d9e9982ec82f0368dfeb82ea08111ff115979f3d50c458",
+      "type": "Light",
+      "xy": [
+        0.305032,
+        0.435523
+      ]
+    },
+    "l35": {
+      "file": "gameitems/Light.L35.json",
+      "light": {
+        "falloff_radius": 38.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        271.55124,
+        1245.66
+      ],
+      "sha256": "ecf6bd4f20cb0e0af71e2ac6c057edc72f6d02d87d523a3f6bc5ad30a7fcaf37",
+      "type": "Light",
+      "xy": [
+        0.285243,
+        0.576161
+      ]
+    },
+    "l36": {
+      "file": "gameitems/Light.L36.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        413.04514,
+        1060.1099
+      ],
+      "sha256": "d4155ea747c1b4167e9dfcf7128753b9ea519d43eeb3581879fb3248c53f8d42",
+      "type": "Light",
+      "xy": [
+        0.433871,
+        0.490338
+      ]
+    },
+    "l37": {
+      "file": "gameitems/Light.L37.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        573.8629,
+        1201.769
+      ],
+      "sha256": "96a43c6196a2c3270295082c05310b626d8a89d6d3856d238d259f1573bf1521",
+      "type": "Light",
+      "xy": [
+        0.602797,
+        0.55586
+      ]
+    },
+    "l38": {
+      "file": "gameitems/Light.L38.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        436.0632,
+        1003.7856
+      ],
+      "sha256": "1564ab5cde3c97a9d45f9afa0c486d558a46e532bc3a9cb8d87959b89c6bdb95",
+      "type": "Light",
+      "xy": [
+        0.45805,
+        0.464286
+      ]
+    },
+    "l39": {
+      "file": "gameitems/Light.L39.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        443.81342,
+        955.94855
+      ],
+      "sha256": "e0c0fd2a2f6acee020e178cef4d86a20cc7fd320712df00b70f88171f16bafe4",
+      "type": "Light",
+      "xy": [
+        0.466191,
+        0.442159
+      ]
+    },
+    "l3r": {
+      "file": "gameitems/Light.L3R.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        766.57324,
+        95.68764
+      ],
+      "sha256": "63aaf839bea357c1d54e75c2f72c1cac05f88ac12407cfcc57be50cf5307c23b",
+      "type": "Light",
+      "xy": [
+        0.805224,
+        0.044259
+      ]
+    },
+    "l3ra": {
+      "file": "gameitems/Light.L3ra.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        76.79985,
+        177.72034
+      ],
+      "sha256": "f644e8c0444f0771d06d0887539efdc38abb6b80f1a231d41d0c430a7260a1d5",
+      "type": "Light",
+      "xy": [
+        0.080672,
+        0.082202
+      ]
+    },
+    "l3rb": {
+      "file": "gameitems/Light.L3rb.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        682.2047,
+        81.73315
+      ],
+      "sha256": "d85a9f31579c39a6782763273f145ea8c7946d8b0d62c08d26bfd3a4fd309f4f",
+      "type": "Light",
+      "xy": [
+        0.716602,
+        0.037804
+      ]
+    },
+    "l3rd": {
+      "file": "gameitems/Light.L3rd.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        235.8727,
+        52.31975
+      ],
+      "sha256": "cb5f8a9a303ff33d0e4c54cf49cac44f48784e3fb4a1c7581d9df80a95828cac",
+      "type": "Light",
+      "xy": [
+        0.247765,
+        0.0242
+      ]
+    },
+    "l4": {
+      "file": "gameitems/Light.L4.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        365.8349,
+        1213.2203
+      ],
+      "sha256": "d070f83a51e74c52954c3c92ab00dcc40cf8a66aba4c4a2656090c3ea183c4b6",
+      "type": "Light",
+      "xy": [
+        0.38428,
+        0.561156
+      ]
+    },
+    "l40": {
+      "file": "gameitems/Light.L40.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        451.03964,
+        907.82764
+      ],
+      "sha256": "366731a5549fe7f4c3876ca571fbfed15bd33f6ff7bfc837388127096848ba48",
+      "type": "Light",
+      "xy": [
+        0.473781,
+        0.419902
+      ]
+    },
+    "l41": {
+      "file": "gameitems/Light.L41.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        169.38718,
+        1179.2781
+      ],
+      "sha256": "f78a07757325e6de1da53dded0e48fea4f21abeb05c54a5bb8ceaad2b704ccb6",
+      "type": "Light",
+      "xy": [
+        0.177928,
+        0.545457
+      ]
+    },
+    "l42": {
+      "file": "gameitems/Light.L42.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        249.69144,
+        1157.9226
+      ],
+      "sha256": "9c50f3823f965124d1ae9fd57affe550c906b241364629e29707e59266400be1",
+      "type": "Light",
+      "xy": [
+        0.262281,
+        0.535579
+      ]
+    },
+    "l43": {
+      "file": "gameitems/Light.L43.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        347.05167,
+        1134.9728
+      ],
+      "sha256": "de567f9ae8dee30a4e0312b82cd4d569370945692bc37e8cbe60d330dbb06a32",
+      "type": "Light",
+      "xy": [
+        0.36455,
+        0.524964
+      ]
+    },
+    "l44": {
+      "file": "gameitems/Light.L44.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        670.46313,
+        669.7841
+      ],
+      "sha256": "3c0b49e5d24499e17b1807156dc8711f353dac7b4eee7dffa40363a26b992319",
+      "type": "Light",
+      "xy": [
+        0.704268,
+        0.309798
+      ]
+    },
+    "l45": {
+      "file": "gameitems/Light.L45.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        790.8039,
+        658.1041
+      ],
+      "sha256": "c352283dfffc60ecea327cde856fba22ad2b578e77c672c02ec02581dff2de9a",
+      "type": "Light",
+      "xy": [
+        0.830676,
+        0.304396
+      ]
+    },
+    "l47": {
+      "file": "gameitems/Light.L47.json",
+      "light": {
+        "falloff_radius": 12.0,
+        "image": "JurassicParkRedraw-4",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        55.20938,
+        1888.7885
+      ],
+      "sha256": "d023306311991d08ccda626d059f2701b68048878ed0c38fccb31c1a170ce5e3",
+      "type": "Light",
+      "xy": [
+        0.057993,
+        0.87363
+      ]
+    },
+    "l48": {
+      "file": "gameitems/Light.L48.json",
+      "light": {
+        "falloff_radius": 12.0,
+        "image": "JurassicParkRedraw-4",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        56.04977,
+        1924.7168
+      ],
+      "sha256": "2a99fe8520af50ecdcce39223d75710926d4987806c484df66742ad2dbb544dc",
+      "type": "Light",
+      "xy": [
+        0.058876,
+        0.890248
+      ]
+    },
+    "l49": {
+      "file": "gameitems/Light.L49.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        746.49524,
+        1223.8407
+      ],
+      "sha256": "732c755b35441e14740f61d92d049d3875451afea25db341601ec301c56a7808",
+      "type": "Light",
+      "xy": [
+        0.784134,
+        0.566069
+      ]
+    },
+    "l4r": {
+      "file": "gameitems/Light.L4R.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        699.0521,
+        506.48148
+      ],
+      "sha256": "2d1f6b337e62be666bfcd636aa426df9bd942ce3a7e82402ad0de714f8c43569",
+      "type": "Light",
+      "xy": [
+        0.734298,
+        0.234265
+      ]
+    },
+    "l4ra": {
+      "file": "gameitems/Light.L4Ra.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        710.98047,
+        409.02136
+      ],
+      "sha256": "c25e1c9062ce32b282b03a999026a1ee59c85310a08008aeafe25483696b603f",
+      "type": "Light",
+      "xy": [
+        0.746828,
+        0.189187
+      ]
+    },
+    "l4rb": {
+      "file": "gameitems/Light.L4Rb.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        724.67584,
+        314.59442
+      ],
+      "sha256": "d1537962915258e5ad6fa0d0874a48c56c4184726d9cea1036d228093cc0a029",
+      "type": "Light",
+      "xy": [
+        0.761214,
+        0.145511
+      ]
+    },
+    "l5": {
+      "file": "gameitems/Light.L5.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        531.70575,
+        1248.3077
+      ],
+      "sha256": "6e39575b84f2e166afd6ebad1c1ee8acad08dc151e726e996b93011aaa101a7d",
+      "type": "Light",
+      "xy": [
+        0.558514,
+        0.577386
+      ]
+    },
+    "l50": {
+      "file": "gameitems/Light.L50.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        781.45593,
+        1259.048
+      ],
+      "sha256": "83f984c9b2ddbfd5329b51c109247139c9b51612fca22244a8f81af00656651f",
+      "type": "Light",
+      "xy": [
+        0.820857,
+        0.582353
+      ]
+    },
+    "l51": {
+      "file": "gameitems/Light.L51.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        850.0981,
+        652.9475
+      ],
+      "sha256": "d792338ecc5992fd844fe7bfaee939584c5de8cb1e857b8111fd84828c132b72",
+      "type": "Light",
+      "xy": [
+        0.89296,
+        0.302011
+      ]
+    },
+    "l52": {
+      "file": "gameitems/Light.L52.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        544.32495,
+        659.1175
+      ],
+      "sha256": "8f1ca9eada410f9c5885f7c4fb3466b110817bf44803c37345747b95e5fe4172",
+      "type": "Light",
+      "xy": [
+        0.57177,
+        0.304865
+      ]
+    },
+    "l53": {
+      "file": "gameitems/Light.L53.json",
+      "light": {
+        "falloff_radius": 38.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        558.7211,
+        601.8526
+      ],
+      "sha256": "25c8d3a2d0e44bf2f5e3b6238dfb59bb227cdcd5c1a8e289b905b809c86e0962",
+      "type": "Light",
+      "xy": [
+        0.586892,
+        0.278378
+      ]
+    },
+    "l54": {
+      "file": "gameitems/Light.L54.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        570.62476,
+        534.54517
+      ],
+      "sha256": "23d83b6b5550e3b7636bf7302cbb4c4a55c2c63afd646297787e9b533dfe8981",
+      "type": "Light",
+      "xy": [
+        0.599396,
+        0.247246
+      ]
+    },
+    "l56": {
+      "file": "gameitems/Light.L56.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        434.01935,
+        1902.0931
+      ],
+      "sha256": "92fa29dbe78390f0de95541176930f213700e261e4a98e6e52f8651b2f259c46",
+      "type": "Light",
+      "xy": [
+        0.455903,
+        0.879784
+      ]
+    },
+    "l59": {
+      "file": "gameitems/Light.L59.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        470.84796,
+        798.8456
+      ],
+      "sha256": "80070c613e8717569fdc5eda16dd31314b31e3eac285cae1050f783a56780580",
+      "type": "Light",
+      "xy": [
+        0.494588,
+        0.369494
+      ]
+    },
+    "l5r": {
+      "file": "gameitems/Light.L5R.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        704.5463,
+        457.29904
+      ],
+      "sha256": "58342d57e4fa65a1c58c0a1ac981886f020da7a04152f2a474cca3198abbc128",
+      "type": "Light",
+      "xy": [
+        0.74007,
+        0.211517
+      ]
+    },
+    "l5ra": {
+      "file": "gameitems/Light.L5Ra.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        718.1121,
+        360.5287
+      ],
+      "sha256": "117197f0f4b35c7fdfbec43f0d3aa780bae3f67d54f2fdc08e60e6fc00049113",
+      "type": "Light",
+      "xy": [
+        0.754319,
+        0.166757
+      ]
+    },
+    "l5rb": {
+      "file": "gameitems/Light.L5Rb.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        729.2491,
+        266.67038
+      ],
+      "sha256": "2e23bd2a47f48c21ff425e80145c61fa0b30030d5e39907296a5e7fff34d87bc",
+      "type": "Light",
+      "xy": [
+        0.766018,
+        0.123344
+      ]
+    },
+    "l6": {
+      "file": "gameitems/Light.L6.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        618.7634,
+        1290.2666
+      ],
+      "sha256": "81331a3a61e272dd110710c61b377961273f7cef3aabcc2512997855065ae705",
+      "type": "Light",
+      "xy": [
+        0.649962,
+        0.596793
+      ]
+    },
+    "l60": {
+      "file": "gameitems/Light.L60.json",
+      "light": {
+        "falloff_radius": 12.0,
+        "image": "JurassicParkRedraw-4",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        55.99294,
+        1960.127
+      ],
+      "sha256": "532cbc01385651a3a143f0c886a55998ccc33140fd792d7f118657500d931527",
+      "type": "Light",
+      "xy": [
+        0.058816,
+        0.906627
+      ]
+    },
+    "l61": {
+      "file": "gameitems/Light.L61.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        478.74194,
+        597.0174
+      ],
+      "sha256": "28531f9eae350de48be9124050e011f41b74b50cf7c879ccf128664ed3ec45d4",
+      "type": "Light",
+      "xy": [
+        0.50288,
+        0.276141
+      ]
+    },
+    "l62": {
+      "file": "gameitems/Light.L62.json",
+      "light": {
+        "falloff_radius": 70.0,
+        "image": "pf0",
+        "show_bulb_mesh": true,
+        "surface": "bumperlights"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        81.25146,
+        900.3968
+      ],
+      "sha256": "240555883e995007666c0f4a65737fa7dc86bb1dd975b5d979bc2f5ecdf682a1",
+      "type": "Light",
+      "xy": [
+        0.085348,
+        0.416465
+      ]
+    },
+    "l63": {
+      "file": "gameitems/Light.L63.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        866.6248,
+        561.9744
+      ],
+      "sha256": "1be63500ae908cf7354cdb586c5eca325730f058c10dfbc611837bbf206c1dec",
+      "type": "Light",
+      "xy": [
+        0.91032,
+        0.259933
+      ]
+    },
+    "l64": {
+      "file": "gameitems/Light.L64.json",
+      "light": {
+        "falloff_radius": 70.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        433.08633,
+        1812.7917
+      ],
+      "sha256": "f1c1e76cad15064994e04d281e8780a05c75e2716afaa2f27f1bad374839318a",
+      "type": "Light",
+      "xy": [
+        0.454923,
+        0.838479
+      ]
+    },
+    "l6ra": {
+      "file": "gameitems/Light.L6ra.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        124.11542,
+        1797.629
+      ],
+      "sha256": "60bad602ec9e4d9d82c54dafc79050502bae26772fbbf62d92cd394ba767a7eb",
+      "type": "Light",
+      "xy": [
+        0.130373,
+        0.831466
+      ]
+    },
+    "l7": {
+      "file": "gameitems/Light.L7.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        421.08838,
+        1364.3733
+      ],
+      "sha256": "6664aaf0b8cfc7795fe87ccb88099528b455a42c6e60d123f9d5dd0361e44042",
+      "type": "Light",
+      "xy": [
+        0.44232,
+        0.63107
+      ]
+    },
+    "l7ra": {
+      "file": "gameitems/Light.L7ra.json",
+      "light": {
+        "falloff_radius": 160.0,
+        "image": "",
+        "show_bulb_mesh": true,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        181.97762,
+        617.1194
+      ],
+      "sha256": "83cac6be015b80c16df7cabc1753394003517c14673df2678e8a2c5797e50167",
+      "type": "Light",
+      "xy": [
+        0.191153,
+        0.285439
+      ]
+    },
+    "l7rb": {
+      "file": "gameitems/Light.L7rb.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        199.90077,
+        849.5001
+      ],
+      "sha256": "f44bb277a50e0ec968e00e7f238f624b61fb78c642c549b6ac6fd486e1da82a1",
+      "type": "Light",
+      "xy": [
+        0.20998,
+        0.392923
+      ]
+    },
+    "l7rc": {
+      "file": "gameitems/Light.L7rc.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        181.94444,
+        920.5675
+      ],
+      "sha256": "abc06431dc4a5a9d5332daf3b6a6d15470a99c969e5dd271da75f29712780b87",
+      "type": "Light",
+      "xy": [
+        0.191118,
+        0.425794
+      ]
+    },
+    "l7rd": {
+      "file": "gameitems/Light.L7rd.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        339.3333,
+        798.11945
+      ],
+      "sha256": "64d9d6630b3dad1073012471c38e8bf9441714fe7520eee1b1d8664ddaf7a56d",
+      "type": "Light",
+      "xy": [
+        0.356443,
+        0.369158
+      ]
+    },
+    "l8": {
+      "file": "gameitems/Light.L8.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        490.37958,
+        1455.6898
+      ],
+      "sha256": "af48baeaff4f7eb20814f3307bf53b9e284805a8482277afc2e61679ca7c8b74",
+      "type": "Light",
+      "xy": [
+        0.515105,
+        0.673307
+      ]
+    },
+    "l8r": {
+      "file": "gameitems/Light.L8r.json",
+      "light": {
+        "falloff_radius": 50.0,
+        "image": "PlayfieldLights",
+        "show_bulb_mesh": false,
+        "surface": "Playfield"
+      },
+      "method": "object_center",
+      "raw_xy": [
+        488.2511,
+        449.68378
+      ],
+      "sha256": "4cf3b38fd33d5009a1a4303dcc0053773e472b71a27c87bbd8669c5ab4378e5b",
+      "type": "Light",
+      "xy": [
+        0.512869,
+        0.207994
+      ]
+    },
+    "sw17": {
+      "file": "gameitems/Trigger.sw17.json",
+      "method": "object_center",
+      "raw_xy": [
+        52.5829,
+        288.2258
+      ],
+      "sha256": "95cab69201a23bfd99ff1d88db1b26e66a048b8670bbbdc70d9b2cc0d79df446",
+      "type": "Trigger",
+      "xy": [
+        0.055234,
+        0.133314
+      ]
+    },
+    "sw18": {
+      "file": "gameitems/Trigger.sw18.json",
+      "method": "object_center",
+      "raw_xy": [
+        155.34465,
+        82.94347
+      ],
+      "sha256": "9014fbadbc436cc00ae0ac313148e768f63b433523c7986620897f1da5f7ce20",
+      "type": "Trigger",
+      "xy": [
+        0.163177,
+        0.038364
+      ]
+    },
+    "sw19": {
+      "file": "gameitems/Trigger.sw19.json",
+      "method": "object_center",
+      "raw_xy": [
+        191.88031,
+        519.7066
+      ],
+      "sha256": "26a37c3b36a0590c01eec70a1a3ef564fe7bcd28fbc697acbba15248a6bbf161",
+      "type": "Trigger",
+      "xy": [
+        0.201555,
+        0.240382
+      ]
+    },
+    "sw20": {
+      "file": "gameitems/Trigger.sw20.json",
+      "method": "object_center",
+      "raw_xy": [
+        122.84288,
+        351.86118
+      ],
+      "sha256": "b6bf49ce9bb02db8e060e138c7961c87de18a6e1f63cb36199f3c198a0ffe5b7",
+      "type": "Trigger",
+      "xy": [
+        0.129037,
+        0.162748
+      ]
+    },
+    "sw21": {
+      "file": "gameitems/Trigger.sw21.json",
+      "method": "object_center",
+      "raw_xy": [
+        817.8561,
+        1668.0303
+      ],
+      "sha256": "fd88da47084327152bdd00d3da1fd7e6d43090d40af293b73f956958fe638782",
+      "type": "Trigger",
+      "xy": [
+        0.859093,
+        0.771522
+      ]
+    },
+    "sw22": {
+      "file": "gameitems/Trigger.sw22.json",
+      "method": "object_center",
+      "raw_xy": [
+        743.6307,
+        1614.7802
+      ],
+      "sha256": "db1311794d706b508c1001b043683e9a00dcdf09d7717d4069a964230afc5984",
+      "type": "Trigger",
+      "xy": [
+        0.781125,
+        0.746892
+      ]
+    },
+    "sw23": {
+      "file": "gameitems/Trigger.sw23.json",
+      "method": "object_center",
+      "raw_xy": [
+        123.92004,
+        1612.7753
+      ],
+      "sha256": "1b7f0939a9dba25f0177cd725cbe73db435067f1b2d18778e0e718235ebf4546",
+      "type": "Trigger",
+      "xy": [
+        0.130168,
+        0.745965
+      ]
+    },
+    "sw24": {
+      "file": "gameitems/Trigger.sw24.json",
+      "method": "object_center",
+      "raw_xy": [
+        56.26539,
+        1710.2549
+      ],
+      "sha256": "443786a9e09a07bd29afd50b4be30dd65fa38581795037c80e8f88742a9b26ce",
+      "type": "Trigger",
+      "xy": [
+        0.059102,
+        0.791052
+      ]
+    },
+    "sw25": {
+      "file": "gameitems/HitTarget.sw25.json",
+      "method": "object_position",
+      "raw_xy": [
+        81.43951,
+        1266.5376
+      ],
+      "sha256": "21ced8f6397c99d168bb903db9f257c773931ccd7b0216c401f1d4f6022f0fdc",
+      "type": "HitTarget",
+      "xy": [
+        0.085546,
+        0.585818
+      ]
+    },
+    "sw26": {
+      "file": "gameitems/HitTarget.sw26.json",
+      "method": "object_position",
+      "raw_xy": [
+        90.921,
+        1213.5995
+      ],
+      "sha256": "e29721c1333d6e30a9a0a175892639e686d2454467c44e03f476096ce494fa76",
+      "type": "HitTarget",
+      "xy": [
+        0.095505,
+        0.561332
+      ]
+    },
+    "sw27": {
+      "file": "gameitems/HitTarget.sw27.json",
+      "method": "object_position",
+      "raw_xy": [
+        102.7729,
+        1160.2661
+      ],
+      "sha256": "c34c8ff882f0312f6c91ed0d57c1dad7f86f3c432c96641b941a4bc563d1afa0",
+      "type": "HitTarget",
+      "xy": [
+        0.107955,
+        0.536663
+      ]
+    },
+    "sw29": {
+      "file": "gameitems/Kicker.sw29.json",
+      "method": "object_center",
+      "raw_xy": [
+        622.6723,
+        291.9107
+      ],
+      "sha256": "80fdf7d22a6d1f6b0fc85a7775ecb71a10942709e738dcf0cddfb0de209a7a70",
+      "type": "Kicker",
+      "xy": [
+        0.654068,
+        0.135019
+      ]
+    },
+    "sw33": {
+      "file": "gameitems/Trigger.sw33.json",
+      "method": "object_center",
+      "raw_xy": [
+        690.4005,
+        543.82007
+      ],
+      "sha256": "563d0a6825eb47c1a241f9816586702c161508ee53e3206a6d06679ed37d02bc",
+      "type": "Trigger",
+      "xy": [
+        0.725211,
+        0.251536
+      ]
+    },
+    "sw34": {
+      "file": "gameitems/Trigger.sw34.json",
+      "method": "object_center",
+      "raw_xy": [
+        192.0,
+        67.0
+      ],
+      "sha256": "24f9f78eb37bf34ef9a02c19dc3a116d6c20961a492bb91b253cc9e8b92a2c4d",
+      "type": "Trigger",
+      "xy": [
+        0.201681,
+        0.03099
+      ]
+    },
+    "sw35": {
+      "file": "gameitems/Kicker.sw35.json",
+      "method": "object_center",
+      "raw_xy": [
+        144.20726,
+        1090.8042
+      ],
+      "sha256": "2bb8d282ebf75f21da6caf3b2c00fd29fb5da3e8dd93052801673d5fa6d83573",
+      "type": "Kicker",
+      "xy": [
+        0.151478,
+        0.504535
+      ]
+    },
+    "sw37": {
+      "file": "gameitems/Trigger.sw37.json",
+      "method": "object_center",
+      "raw_xy": [
+        315.61124,
+        1054.0828
+      ],
+      "sha256": "86056b2b5d203a63e90efe12b2ff28702c2583019e2a14108132784e2253928e",
+      "type": "Trigger",
+      "xy": [
+        0.331524,
+        0.48755
+      ]
+    },
+    "sw38": {
+      "file": "gameitems/HitTarget.sw38.json",
+      "method": "object_position",
+      "raw_xy": [
+        398.27917,
+        989.99536
+      ],
+      "sha256": "952cca291e1082a9220ef12ed053dbfdb7370e1a12d13a1cf0280921e3924e9b",
+      "type": "HitTarget",
+      "xy": [
+        0.41836,
+        0.457907
+      ]
+    },
+    "sw39": {
+      "file": "gameitems/HitTarget.sw39.json",
+      "method": "object_position",
+      "raw_xy": [
+        403.01987,
+        955.62494
+      ],
+      "sha256": "818128478bfafce9938c70b2977a053a01deeb3de934201e309c599e0ff93a49",
+      "type": "HitTarget",
+      "xy": [
+        0.42334,
+        0.44201
+      ]
+    },
+    "sw40": {
+      "file": "gameitems/HitTarget.sw40.json",
+      "method": "object_position",
+      "raw_xy": [
+        407.3655,
+        921.64935
+      ],
+      "sha256": "ad09315c2f22ca774915768c273145b5ddc0ff7db309c38d01e38eefd52e08b5",
+      "type": "HitTarget",
+      "xy": [
+        0.427905,
+        0.426295
+      ]
+    },
+    "sw45": {
+      "file": "gameitems/Bumper.sw45.json",
+      "method": "object_center",
+      "raw_xy": [
+        223.5,
+        737.1479
+      ],
+      "sha256": "b0161193da3e6baa9f3f657ff40b275c62ce629bf3205bfea4fce1f8f82d0c5a",
+      "type": "Bumper",
+      "xy": [
+        0.234769,
+        0.340956
+      ]
+    },
+    "sw46": {
+      "file": "gameitems/Bumper.sw46.json",
+      "method": "object_center",
+      "raw_xy": [
+        81.90906,
+        900.05695
+      ],
+      "sha256": "21dbe28799790c90d3b26aa93b78e0c1ad8c2be3b3252baba13fd54a31a8b1e6",
+      "type": "Bumper",
+      "xy": [
+        0.086039,
+        0.416308
+      ]
+    },
+    "sw47": {
+      "file": "gameitems/Bumper.sw47.json",
+      "method": "object_center",
+      "raw_xy": [
+        290.6243,
+        941.4324
+      ],
+      "sha256": "efddac3b9f894f0bd61ee2f5bb9f3e906822f6d254005c7b6ff4aa1baba7033d",
+      "type": "Bumper",
+      "xy": [
+        0.305278,
+        0.435445
+      ]
+    },
+    "sw48": {
+      "file": "gameitems/HitTarget.sw48.json",
+      "method": "object_position",
+      "raw_xy": [
+        504.67154,
+        257.60596
+      ],
+      "sha256": "46c58ee79c4843a372bec018b7f5d272b0057c93b515d3d149ed51b783fd77df",
+      "type": "HitTarget",
+      "xy": [
+        0.530117,
+        0.119152
+      ]
+    },
+    "sw49": {
+      "file": "gameitems/HitTarget.sw49.json",
+      "method": "object_position",
+      "raw_xy": [
+        783.0694,
+        1197.4028
+      ],
+      "sha256": "5c31521ba7cf58b562bba35169562164e6b146d771e22d084c0e114c4ccf5644",
+      "type": "HitTarget",
+      "xy": [
+        0.822552,
+        0.55384
+      ]
+    },
+    "sw50": {
+      "file": "gameitems/HitTarget.sw50.json",
+      "method": "object_position",
+      "raw_xy": [
+        815.06934,
+        1232.1681
+      ],
+      "sha256": "c1fe43d5e22292de0e0c3b8a5515788b9b3909a6a2d1fbe4477699a4604aed1f",
+      "type": "HitTarget",
+      "xy": [
+        0.856165,
+        0.56992
+      ]
+    },
+    "sw52": {
+      "file": "gameitems/HitTarget.sw52.json",
+      "method": "object_position",
+      "raw_xy": [
+        376.94574,
+        1024.3657
+      ],
+      "sha256": "b14d27a735c61dd2596fe7d3b55f4b4c3a40b26e90dc817c87ca2f764c72f213",
+      "type": "HitTarget",
+      "xy": [
+        0.395951,
+        0.473805
+      ]
+    },
+    "sw53": {
+      "file": "gameitems/HitTarget.sw53.json",
+      "method": "object_position",
+      "raw_xy": [
+        416.45184,
+        774.6863
+      ],
+      "sha256": "379792eadcc6b26f8242d827537f797b1db91c112e7f7fbaf7d32f4537f4a5be",
+      "type": "HitTarget",
+      "xy": [
+        0.437449,
+        0.358319
+      ]
+    },
+    "sw55": {
+      "file": "gameitems/Kicker.sw55.json",
+      "method": "object_center",
+      "raw_xy": [
+        384.42352,
+        562.5682
+      ],
+      "sha256": "84e8617e8d6e4e328eb448085b37c09413014ef8dcc9fc14b3b07e42f59f36df",
+      "type": "Kicker",
+      "xy": [
+        0.403806,
+        0.260207
+      ]
+    },
+    "sw56": {
+      "file": "gameitems/Kicker.sw56.json",
+      "method": "object_center",
+      "raw_xy": [
+        848.91705,
+        98.03841
+      ],
+      "sha256": "0ef16166ba611b0e27197eca92a23c4888c221e17114f65c8916332d44ed2b14",
+      "type": "Kicker",
+      "xy": [
+        0.89172,
+        0.045346
+      ]
+    },
+    "sw59": {
+      "file": "gameitems/Trigger.sw59.json",
+      "method": "object_center",
+      "raw_xy": [
+        630.25604,
+        658.4359
+      ],
+      "sha256": "36fdb0596c7f0ed35839e05f4dd6b70656ba27bf4fd3a976d73b24f9f54e8600",
+      "type": "Trigger",
+      "xy": [
+        0.662034,
+        0.304549
+      ]
+    },
+    "sw60": {
+      "file": "gameitems/Trigger.sw60.json",
+      "method": "object_center",
+      "raw_xy": [
+        789.91943,
+        665.9274
+      ],
+      "sha256": "6adaf0b6251b023bf9bb0ff844c853e2a3538ede316856d907a5444047305ef3",
+      "type": "Trigger",
+      "xy": [
+        0.829747,
+        0.308015
+      ]
+    },
+    "swPLS": {
+      "file": "gameitems/Trigger.swPLS.json",
+      "method": "object_center",
+      "raw_xy": [
+        899.71265,
+        1928.544
+      ],
+      "sha256": "c7dbb74e9ab1af65a19049a900ef53509a1380ec4b41abae2dbc4e25cac2711d",
+      "type": "Trigger",
+      "xy": [
+        0.945076,
+        0.892019
+      ]
+    }
+  },
+  "partial_flash_banks": [
+    "device.flasher-1-top-middle",
+    "device.flasher-2-middle-right",
+    "device.flasher-3",
+    "device.flasher-4-right",
+    "device.flasher-5-left",
+    "device.flasher-6-middle-left",
+    "device.flasher-7",
+    "device.flasher-8"
+  ],
+  "projections": {
+    "coil_effect": "A coil's effect projects onto its mechanism object, not a winding centre.",
+    "flash_bank": "A flash bank is placed at the PlayfieldLights or dome-bulb Light objects its FlashN routine drives; banks the table models with fewer bulbs than the factory fits stay partial.",
+    "lamp_bulb": "A lamp is placed at the script-driven Light object UpdateLamps binds, never its glow or halo twin.",
+    "sensor_object": "A switch is placed on the object its script handler binds (triggers, kickers, bumpers, hit targets); slingshots on their wall's area centroid.",
+    "trex_pivot": "The five T-Rex sensors and the rotation, up/down and direction controls project onto the TrexPlastic toy pivot; the toy's switches are the table's position model, not objects."
+  },
+  "promotion": {
+    "allowed": false,
+    "missing": [
+      "output_semantics",
+      "spatial_placement",
+      "unresolved_conflicts"
+    ]
+  },
+  "selected_extraction": {
+    "algorithm": "Sorted POSIX paths, sizes and full SHA256; compact sorted-key UTF8 JSON array, no newline.",
+    "bytes": 151666688,
+    "files": 1045,
+    "manifest_sha256": "96b1b1c5488bf15885bf47dfa54920e2e0dd2aeea0a8c23f2fb7c2f596586335",
+    "root": "external:vpx-sources/data-east/jurassic-park-1993/extractions/de-1.03-dcd0e2e88abe"
+  },
+  "transform": "x=raw_x/952; y=raw_y/2162; round to 6 decimals. Slingshot walls use the signed area centroid.",
+  "unplaced_records": [
+    "switch.drain",
+    "switch.trough-5",
+    "switch.trough-4",
+    "switch.trough-3",
+    "switch.trough-2",
+    "switch.trough-1-launch-position",
+    "switch.shooter-lane-lockout",
+    "device.trough-lockout",
+    "lamp.outputs-17",
+    "lamp.outputs-18",
+    "lamp.outputs-33",
+    "lamp.outputs-34",
+    "lamp.outputs-46",
+    "lamp.outputs-57",
+    "lamp.outputs-58"
+  ],
+  "version": 1
+}

@@ -1,0 +1,128 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "jupk_513",
+  "notes": "Fresh empty CMOS, mechanisms open. The ROM's T-REX TEST prints ON or OFF beside TOP, BOTTOM, CENTER, RIGHT and LEFT SWITCH; each candidate public address is closed alone. Then 57 and 36 are held closed and the manual's controls are exercised: flipper buttons move the creature left and right (Top must be ON), Start moves it up and down (Center must be ON) and the trigger pulses the jaw coil. Host readback is not evidence.",
+  "watch_switches": [
+    31,
+    32,
+    36,
+    57,
+    58,
+    41
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "Toggle Green into diagnostic direction"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "T-REX TEST"
+      ],
+      "hold_ms": 250,
+      "settle_s": 1.5,
+      "max_pulses": 40,
+      "label": "Find ROM T-Rex Test header"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "T-Rex Test closure 57",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "T-Rex Test closure 58",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "T-Rex Test closure 36",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "T-Rex Test closure 31",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "T-Rex Test closure 32",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "Hold T-Rex Top (57) closed"
+    },
+    {
+      "type": "pulse_key",
+      "key": "left_flipper",
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "Left flipper with Top closed",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_key",
+      "key": "right_flipper",
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "Right flipper with Top closed",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse_key",
+      "key": "start",
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "Start with Top closed, Center open",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "Hold T-Rex Center (36) closed"
+    },
+    {
+      "type": "pulse_key",
+      "key": "start",
+      "hold_ms": 1500,
+      "settle_s": 1.0,
+      "label": "Start with Top and Center closed",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 1000,
+      "settle_s": 1.0,
+      "label": "Launch trigger (41) with the T-Rex homed",
+      "snapshot_while_held": true
+    }
+  ]
+}

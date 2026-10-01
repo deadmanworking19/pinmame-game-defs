@@ -1,0 +1,20 @@
+# Exact runtime and transport contract
+
+Pinned PinMAME 8371478a7640f1896dcdf565aed340dc5df989ba:
+degames.c lines 967-1017 declare jupk_513 (root) and the clones jupk_600, jupk_501, jupk_g51, jupk_305 and jupk_307 on INITGAMES11(jupk, GEN_DEDMD32, de_128x32DMD, FLIP6364, SNDBRD_DE2S, SNDBRD_DEDMD32, S11_PRINTERLINE): hw.flippers FLIP_SWNO(63,64) (no FLIP_SOL), no extra switch or lamp columns, no custom solenoids, no simData, an all-zero invSw and mux solenoid 10 (the {10} initializer). The 5.13 ROM set (jpcpua.513, jpdspa.510, jpu7/17/21.dat) was checked member by member against the driver's CRC and SHA1.
+core.h lines 300-330: extension 37, custom 51. s11.c lines 392-410: printer byte non-inverted, published at 37-44; lines 558-584: mux 10 routes 1-8 to 25-32; lines 618-625: Data East special-solenoid order pia1ca2->20, pia1cb2->21, pia3ca2->22, pia3cb2->18, pia4ca2->17, pia4cb2->19; lines 628-650: eight-bit switch strobe, uncomplemented core_getSwCol; lines 1188-1196 name jupk_ with the DataEast/Sega 3 brightness models: solenoid 11 reversed #44 6.3 VAC (GI) and 25-32 #89 32 VDC (a brightness model, not fitment).
+core.c lines 1700-1753: 82->64, 84->63; game-on 23 gates synthetic 45-48. Lines 2182-2224: 33-36 dead for Data East, 37-44 raw printer extension, 49 simulator, 50 gap, 51+ custom (none). No upper ROM coil exists.
+
+Exact retained Dark & Friends 1.03 embedded script sha256 8d5045162f3ad7011e924b424a12123ffc0fcee49c598a8d6b649cd993e21b8b: script.vbs line 325 cGameName=jupk_513; 270-274 LoadVPM de.vbs; 334-336 HandleMechanics 0 and HandleKeyboard 0; 415-437 SolCallback(1-23); 443-444 sLRFlipper/sLLFlipper; 500-700 kickers, VUK, boat dock, raptor pit, diverter, jets; 905-1015 matrix Hit/UnHit and PulseSw; 1043-1300 T-Rex saucer, toy model and motors; 1503-1640 flash lamps; 1655-1900 UpdateLamps (Controller.ChangedLamps then nFadeL/nFadeLm).
+The corpus sidecar `Jurassic Park (Data East 1993)1.03.vbs` (sha256 6bf0baeb0dd7098ec3eee893c6bdd76899a227a8c0c021cdae420940ad7b0a00) is the same table with sound edits and the VPW 1.0 script (sha256 07d5090461cd2c1f1f0b6e3d71e25a23ad635c10a3b0621dc430afbede510c49, ROM jupk_600) is a later rebuild; both agree with the embedded script on every switch, solenoid and T-Rex binding used here and add real triggers sw9-sw14 for the trough contacts.
+de.vbs and core.vbs: swLRFlip 82, swLLFlip 84, sLRFlipper 46, sLLFlipper 48. de.vbs sha256 8858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04; core.vbs sha256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69.
+
+Runtime: fresh empty-CMOS runs of jupk_513 on the pinned DLL (see runtime-provenance.md). The committed scenarios use named service keys and exact DMD title fingerprints (tools/jurassic_park_harness.py); output 23 marks readiness for the Active Switch and Laser Kick tests. Expected causal results: each Active Switch closure prints its ROM name; the lamp test lights one lamp per press and prints its name; the cycling-coils test pulses 1-9, 11-13 and 16-22 with 25-32 on the right set; closing 29/35/55/56/61 in the Laser Kick Test fires 9/4/7/1/5; the T-REX TEST turns ON the label of 57/58/36/31/32; host left/right buttons produce 47/48 and 45/46. Host switch readback alone is never ROM evidence. Complete raw runs, snapshots and manifests remain external.
+
+Exact pinned transport files (full-file SHA256):
+
+- src/wpc/core.h: `9d2fa69f7fa6963adc793b272bb5cbfbf94e929c0d7f6b928b1b02a8ee15b2b3`; lines 139-165,300-360; FLIP_SWNO and address bands.
+- src/wpc/core.c: `84aa5ccddc077b60c1331e32ee13d3d577fd5109d4e7a90001692f737a1c7963`; lines 1700-1777,2182-2224,2591; button copies, synthetic outputs, no simData initialization.
+- src/wpc/s11.c: `cd1b989ac1eec8c95126e743829a8a3726e76a9b838a29339776d4025d75d2d4`; lines 371-410,558-650,870-877,1188-1196; printer, mux, PIA and brightness models.
+- src/wpc/sim.c: `20579da60adf58538d5b8c93a0bf22bd8c6d4e3ea6657234cd371293bd05c405`; lines 238; simulator-only output 49.
+- src/wpc/degames.c: `4b0b026de796c07dcddd4753c47859c39c08092a1e87739f85a6b9e12a3af1c1`; lines 75-82, 967-1017.

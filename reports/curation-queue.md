@@ -157,7 +157,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 151 | 1993 | Judge Dredd | Bally | partial | 88% |
 | 152 | 1993 | Twilight Zone | Bally | partial | 94% |
 | 153 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 19% |
-| 154 | 1993 | Jurassic Park | Data East | partial | 19% |
+| 154 | 1993 | Jurassic Park | Data East | partial | 81% |
 | 155 | 1993 | Last Action Hero | Data East | partial | 19% |
 | 156 | 1993 | Tales from the Crypt | Data East | partial | 19% |
 | 157 | 1993 | Gladiators | Gottlieb | partial | 13% |
