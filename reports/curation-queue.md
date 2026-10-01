@@ -613,7 +613,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 607 | 1979 | Road Runner | Atari | partial | 13% |
 | 608 | 1979 | Superman | Atari | partial | 13% |
 | 609 | 1979 | Future Spa | Bally | partial | 19% |
-| 610 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 13% |
+| 610 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 19% |
 | 611 | 1979 | Hotdoggin' | Bally | partial | 19% |
 | 612 | 1979 | Kiss | Bally | author_ready | 100% |
 | 613 | 1979 | KISS | Bally | partial | 6% |

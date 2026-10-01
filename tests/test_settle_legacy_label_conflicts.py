@@ -29,6 +29,17 @@ ROM_NAMES = {
 PAIRED = {
 	("runtime.red-and-ted-s-road-show.rs-l6.ted-test", 19): (20, "MOUTH OPEN / T.17 06 RUNNING"),
 }
+# Settlements read from scoring in play: the bank's other members and the raw step that closes each, the step that
+# closes the address, the points every closure scores, and the relay that drops if the ROM tilts.
+BANKS = {
+	("runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play", 2): {
+		"members": {1: "drop target 1 down", 3: "drop target 3 down", 4: "drop target 4 down"},
+		"step": "public 2 closed",
+		"points": 5000,
+		"relay": 19,
+	},
+}
+SEVEN_SEGMENT = {0: "", 63: "0", 6: "1", 91: "2", 79: "3", 102: "4", 109: "5", 125: "6", 7: "7", 127: "8", 111: "9"}
 # Settlements read from a gameplay timeline: the raw step in which the address changes, and its new state, in order.
 TIMELINES = {
 	("runtime.diner.diner-l4.game-on-23", 23): [
@@ -85,9 +96,17 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				address = settlement["binding"]["device"]
 				paired = PAIRED.get((source["id"], address))
 				timeline = TIMELINES.get((source["id"], address))
+				bank = BANKS.get((source["id"], address))
 				switch = settlement["binding"]["group"] == "pinmame.input.switch"
 				observations = runtime["observations"]
-				if timeline:
+				if bank:
+					# Every member and the address score the same, and only the address's closure says the ROM did not tilt.
+					closures = {item["input_address"]: item for item in observations["named_action_observations"] if item["input_kind"] == "switch"}
+					for number in [*bank["members"], address]:
+						self.assertIn(f"rises by {bank['points']:,}", closures[number]["label"])
+						self.assertIn(bank["relay"], closures[number]["active_solenoid_addresses"])
+					self.assertIn("does not tilt", closures[address]["label"])
+				elif timeline:
 					# One named action per change of the address, each listing it among its transitions.
 					changes = [item for item in observations["named_action_observations"] if address in item["transitioned_solenoid_addresses"]]
 					self.assertEqual(len(timeline), len(changes))
@@ -112,7 +131,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
 					self.assertTrue(steps)
 					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
-				if not paired and not timeline:
+				if not paired and not timeline and not bank:
 					name = ROM_NAMES[(source["id"], address)]
 					if switch:
 						self.assertTrue(all(f"names it {name} " in item["label"] for item in steps))
@@ -150,7 +169,34 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				for item in runtime["observations"].get("diagnostic_snapshots", []):
 					matches = [snap for snap in run["snapshots"] if snap["displays"] and snap["displays"][0]["pixel_sha256"] == item["pixel_sha256"]]
 					self.assertTrue(matches, item["label"])
-				if timeline:
+				if bank:
+					def score(label: str) -> int:
+						return int("".join(SEVEN_SEGMENT[value] for value in by_label[label]["displays"][0]["segments"]) or "0")
+
+					def lit(label: str) -> set[int]:
+						return {item["number"] for item in raw_steps[label]["transitions"]["lamps"] if item["states"][-1]}
+
+					labels = [*bank["members"].values(), bank["step"]]
+					positions = [list(raw_steps).index(label) for label in labels]
+					self.assertEqual(sorted(positions), positions)
+					previous = score(list(raw_steps)[positions[0] - 1])
+					for label in labels:
+						self.assertEqual(bank["points"], score(label) - previous, label)
+						previous = score(label)
+						self.assertIn(bank["relay"], by_label[label]["active_solenoids"])
+						self.assertEqual([], raw_steps[label]["transitions"]["solenoids"])
+					# The address's closure lights lamps that no member's closure lit.
+					award = lit(bank["step"])
+					self.assertTrue(award)
+					for label in bank["members"].values():
+						self.assertFalse(award & lit(label), label)
+					# The relay stays raised from the start of play until the ball drains.
+					rises = [event["time_s"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == bank["relay"] and event["state"]]
+					drops = [event["time_s"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == bank["relay"] and not event["state"]]
+					start, end = by_label[labels[0]]["time_s"], by_label[bank["step"]]["time_s"]
+					self.assertTrue(any(time < start for time in rises))
+					self.assertFalse(any(start - 3 <= time <= end for time in drops))
+				elif timeline:
 					states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address]
 					self.assertEqual([state for _, state in timeline], states)
 					for label, state in timeline:

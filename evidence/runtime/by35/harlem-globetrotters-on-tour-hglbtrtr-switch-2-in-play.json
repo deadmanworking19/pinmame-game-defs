@@ -1,0 +1,209 @@
+{
+  "driver_ids": [
+    "hglbtrtr"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.harlem-globetrotters-on-tour.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game hglbtrtr --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by35/hglbtrtr-switch-2-in-play.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level; the snapshot after it records the score displays (seven-segment values, decoded here as digits) and the active outputs. Public 19 is the BY35 flipper-enable relay, which the ROM drops when it tilts.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "hglbtrtr",
+    "observations": {
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15,
+        17,
+        18,
+        20,
+        21,
+        23,
+        25,
+        26,
+        29,
+        31,
+        33,
+        34,
+        36,
+        39,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        55,
+        57,
+        59,
+        63
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "start button (public 6) after two coins: the ROM starts a game, serves the ball (7) and raises public 19, the flipper-enable relay",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            15,
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "drop target 1 (public 1) closed: the score rises by 5,000 to 5,000 and the ROM lights lamps 15, 17, 23; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "drop target 3 (public 3) closed: the score rises by 5,000 to 10,000 and the ROM lights lamps 31, 33, 39; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "drop target 4 (public 4) closed: the score rises by 5,000 to 15,000 and the ROM lights lamps 47, 49, 55; public 19 stays raised",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 closed while drop targets 1, 3 and 4 are held down: the score rises by 5,000 to 20,000 as it did for each of them, the ROM lights lamps 2, 8, 44, 53, 63, which none of the other three closures lit, and public 19 stays raised, so the ROM does not tilt",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        7,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 16,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "hglbtrtr-switch-2-in-play",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/harness/switch-2-in-play/hglbtrtr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-switch-2-in-play.json",
+        "scenario_sha256": "ae030f10640963829e97eaa09d6226eee4efb3ddaeffe8d29e177df6e52d1a56",
+        "self_test_pulses": 0,
+        "sha256": "3adeaeadeee30b28705cc450e93e3f4c5cf68a1957aacb2b2170cc580c5ee7dd",
+        "snapshot_count": 17,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          11
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e1bf1c869aa00e0cfc2d526eac265aca42cea94726192f974b0bf7b178083fad"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Scores are the harness's seven-segment values for player 1's display, read as digits. The raw trace has no DMD frames. Exact external directory manifest hglbtrtr/manifest.json SHA-256 d2ea8755695cfa2c90ed9d757cc383b6d50856e115f368f8cdcaed05942a2506 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/harness/switch-2-in-play/hglbtrtr",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "3adeaeadeee30b28705cc450e93e3f4c5cf68a1957aacb2b2170cc580c5ee7dd"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Drop Target 2'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal hglbtrtr ROM holding public switch 2 to see whether the ROM registers a tilt, and pulsing the drop-target bank reset coil at public solenoid 15 to see whether 2 clears with the rest of its bank -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
-      "id": "conflict.pinmame-input-switch-2-none",
-      "path": "binding:pinmame.input.switch/2/None",
-      "source_refs": [
-        "legacy.game.harlem-globetrotters",
-        "legacy.platform.bally"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.bally"
@@ -37,8 +27,7 @@
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
-      "unresolved_conflicts"
+      "provenance"
     ],
     "status": "partial"
   },
@@ -199,25 +188,25 @@
         {
           "namespace": "vpe-legacy.switch",
           "value": "002"
-        },
-        {
-          "namespace": "vpe-legacy.switch",
-          "value": "s_ball_roll_tilt"
         }
       ],
       "binding": {
         "device": 2,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.ball-roll-tilt",
+      "id": "device.drop-target-2",
       "kind": "switch",
-      "label": "Ball Roll Tilt",
+      "label": "Drop Target 2",
+      "physical": {
+        "notes": "Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game file's 'Drop Target 2'. In a hglbtrtr gameplay run the ROM scores public 2 exactly as it scores drop targets 1, 3 and 4 (5,000 each), lights lamps none of their closures lit when 2 completes the four, and keeps the flipper-enable relay (19) raised, so it does not tilt. The ROM reads 2 as a member of the 1-4 drop-target bank, and the platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives from the cabinet input port."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.harlem-globetrotters",
-          "legacy.platform.bally"
+          "legacy.platform.bally",
+          "runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -3352,6 +3341,15 @@
       "locator": "PinmameGetGames",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of hglbtrtr from empty NVRAM (scenario tools/harness-scenarios/by35/hglbtrtr-switch-2-in-play.json) that starts a game, closes drop-target switches 1, 3 and 4 and then public 2. Each closure scores 5,000; closing 2 also lights lamps 2, 8, 44, 53 and 63, which none of the other closures lit, and the flipper-enable relay (19) stays raised throughout.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/by35/harlem-globetrotters-on-tour-hglbtrtr-switch-2-in-play.json"
     }
   ]
 }

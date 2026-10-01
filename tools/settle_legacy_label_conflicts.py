@@ -191,6 +191,34 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"controller profile records, it has no driver-board device of its own."
 		),
 	},
+	{
+		"path": "machines/partial/bally/harlem-globetrotters-on-tour-1979.json",
+		"machine_id": "bally.harlem-globetrotters-on-tour.1979",
+		"conflict_id": "conflict.pinmame-input-switch-2-none",
+		"binding": {"group": "pinmame.input.switch", "device": 2},
+		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"label": "Drop Target 2",
+		"kind": "switch",
+		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
+		"source": {
+			"id": "runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play",
+			"uri": "internal:evidence/runtime/by35/harlem-globetrotters-on-tour-hglbtrtr-switch-2-in-play.json",
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of hglbtrtr from empty NVRAM (scenario "
+				"tools/harness-scenarios/by35/hglbtrtr-switch-2-in-play.json) that starts a game, closes drop-target "
+				"switches 1, 3 and 4 and then public 2. Each closure scores 5,000; closing 2 also lights lamps 2, 8, 44, 53 "
+				"and 63, which none of the other closures lit, and the flipper-enable relay (19) stays raised throughout."
+			),
+		},
+		"note": (
+			"Legacy import set the legacy Bally platform map's 'Ball Roll Tilt' (alias s_ball_roll_tilt) against the game "
+			"file's 'Drop Target 2'. In a hglbtrtr gameplay run the ROM scores public 2 exactly as it scores drop targets "
+			"1, 3 and 4 (5,000 each), lights lamps none of their closures lit when 2 completes the four, and keeps the "
+			"flipper-enable relay (19) raised, so it does not tilt. The ROM reads 2 as a member of the 1-4 drop-target "
+			"bank, and the platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives "
+			"from the cabinet input port."
+		),
+	},
 	*[
 		{
 			"path": "machines/partial/bally/nba-fastbreak-1997.json",
