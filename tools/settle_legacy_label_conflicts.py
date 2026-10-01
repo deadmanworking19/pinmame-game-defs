@@ -208,6 +208,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"conflict_id": "conflict.pinmame-input-switch-2-none",
 		"binding": {"group": "pinmame.input.switch", "device": 2},
 		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"id": "switch.drop-target-2",
 		"label": "Drop Target 2",
 		"kind": "switch",
 		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
@@ -226,8 +227,8 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"file's 'Drop Target 2'. In a hglbtrtr gameplay run the ROM scores public 2 exactly as it scores drop targets "
 			"1, 3 and 4 (5,000 each), lights lamps none of their closures lit when 2 completes the four, and keeps the "
 			"flipper-enable relay (19) raised, so it does not tilt. The ROM reads 2 as a member of the 1-4 drop-target "
-			"bank, and the platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives "
-			"from the cabinet input port."
+			"bank, and the platform alias is dropped; BY35 games read their tilt on switch 7, where BY35_COMPORTS puts "
+			"the Ball Tilt input."
 		),
 	},
 	{
@@ -236,6 +237,7 @@ SETTLEMENTS: list[dict[str, Any]] = [
 		"conflict_id": "conflict.pinmame-input-switch-2-none",
 		"binding": {"group": "pinmame.input.switch", "device": 2},
 		"from": {"id": "switch.ball-roll-tilt", "label": "Ball Roll Tilt"},
+		"id": "switch.center-drop-target-1-left",
 		"label": "Center Drop Target 1 (Left)",
 		"kind": "switch",
 		"drop_aliases": [{"namespace": "vpe-legacy.switch", "value": "s_ball_roll_tilt"}],
@@ -245,8 +247,8 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"file's 'Center Drop Target 1 (Left)'. In a skatebll gameplay run, closing center drop targets 3 and 4 scores "
 			"and fires nothing; pressing public 2 after them makes the ROM fire the center drop-target bank reset (10) "
 			"while the flipper-enable relay (19) stays raised, so the ROM does not tilt and reads 2 as the bank member that "
-			"completes it. The platform alias is dropped; BY35 games read their tilt on switch 7, which BY35_COMPORTS drives "
-			"from the cabinet input port."
+			"completes it. The platform alias is dropped; BY35 games read their tilt on switch 7, where BY35_COMPORTS puts the "
+			"Ball Tilt input."
 		),
 	},
 	{
