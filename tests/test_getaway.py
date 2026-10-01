@@ -24,6 +24,18 @@ DRIVER_IDS = {
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {11, 12, 35, 47, 48, 64, 66, 68}
 OPTO_ADDRESSES = {81, 82, 83, 84, 85}
+PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+SWITCH_EDGES_SOURCES = {
+	"gw_l5": "runtime.getaway.gw-l5.switch-edges",
+	"gw_l1": "runtime.getaway.gw-l1.switch-edges",
+}
+FLIPPER_ENABLE_SOURCE = "runtime.getaway.gw-l5.flipper-enable-31"
+RUNTIME_DIR = ROOT / "evidence" / "runtime" / "wpc-fliptronic"
+EDGES_SCENARIO = ROOT / "tools" / "harness-scenarios" / "wpc-fliptronic" / "gw-switch-edges-84-85.json"
+PLAY_SCENARIO = ROOT / "tools" / "harness-scenarios" / "wpc-fliptronic" / "gw-flipper-enable-31.json"
+ROM_NAMES = {45: "R BANK MID", 81: "OPTO 1", 84: "ENTER LEFT RAMP", 85: "OPTO MADE LOOP"}
+EDGE_SEQUENCE = [45, 45, 81, 81, 84, 84, 85, 85, 84, 84, 85, 85, 45, 45]
+GAME_IDENTIFICATION = {"gw_l5": "HIGH SPEED II / 50004 REV. L-5", "gw_l1": "HIGH SPEED II / 50004 REV. L-1"}
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -65,11 +77,12 @@ class GetawayDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["output_semantics", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
+			["recreation_notes", "spatial_placement"],
 			self.definition["coverage"]["missing"],
 		)
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["semantic_naming"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["output_semantics"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["semantic_naming"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["output_semantics"])
+		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("williams.the-getaway-high-speed-ii.1992", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -80,21 +93,31 @@ class GetawayDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("partial", self.definition["knowledge"]["status"])
 
-	def test_both_conflicts_are_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual(
-			{
-				"conflict.switch-84-85-manual-vs-script-semantics",
-				"conflict.solenoid-31-fastflip-address-not-declared",
-			},
-			set(conflicts),
-		)
-		for conflict in conflicts.values():
-			self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-			self.assertIn("unresolved", conflict["description"].lower())
-		self.assertIn("84", conflicts["conflict.switch-84-85-manual-vs-script-semantics"]["path"])
-		self.assertIn("85", conflicts["conflict.switch-84-85-manual-vs-script-semantics"]["path"])
-		self.assertIn("31", conflicts["conflict.solenoid-31-fastflip-address-not-declared"]["path"])
+	def test_both_former_conflicts_are_settled_by_the_rom(self) -> None:
+		self.assertEqual([], self.definition["conflicts"])
+		self.assertNotIn("conflict.", json.dumps(self.definition))
+		# The ROM's T.1 SWITCH EDGES names decide 84/85; both printed pages carry them transposed.
+		self.assertEqual("Enter Left Ramp", self.switches[84]["label"])
+		self.assertEqual("Opto Made Loop", self.switches[85]["label"])
+		for address, printed in ((84, "Opto Made Loop"), (85, "Enter Left Ramp")):
+			switch = self.switches[address]
+			self.assertEqual("validated", switch["provenance"]["status"])
+			self.assertLessEqual(set(SWITCH_EDGES_SOURCES.values()), set(switch["provenance"]["source_refs"]))
+			notes = switch["physical"]["notes"]
+			self.assertIn(f'print this address as "{printed}"', notes)
+			self.assertIn(ROM_NAMES[address], notes)
+			self.assertTrue(switch["normally_closed"])
+		for address in OPTO_ADDRESSES - {84, 85}:
+			self.assertFalse(set(SWITCH_EDGES_SOURCES.values()) & set(self.switches[address]["provenance"]["source_refs"]), address)
+		# Public 31 mirrors WPC_GILAMPS bit 7, which the ROM drives in step with its flipper enable.
+		solenoid = self.solenoids[31]
+		self.assertEqual("used", solenoid["availability"])
+		self.assertEqual("virtual", solenoid["kind"])
+		self.assertIn(FLIPPER_ENABLE_SOURCE, solenoid["provenance"]["source_refs"])
+		self.assertIn("FastFlips.TiltSol", solenoid["physical"]["notes"])
+		self.assertIn("third plumb-bob tilt pulse", solenoid["physical"]["notes"])
+		for address in (29, 30):
+			self.assertNotIn(FLIPPER_ENABLE_SOURCE, self.solenoids[address]["provenance"]["source_refs"])
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -280,10 +303,9 @@ class GetawayDefinitionTests(unittest.TestCase):
 			self.assertEqual("validated", mechanism["provenance"]["status"], mechanism["id"])
 			for reference in list(mechanism["actuators"]) + list(mechanism["sensors"]):
 				self.assertIn(reference, device_ids, reference)
-		self.assertIn(
-			"conflict.switch-84-85-manual-vs-script-semantics",
-			json.dumps(self.definition["mechanisms"]) or "",
-		)
+		diverter = mechanisms["mechanism.supercharger-diverter"]
+		self.assertIn("84 ENTER LEFT RAMP and 85 OPTO MADE LOOP", diverter["behavior"])
+		self.assertLessEqual(set(SWITCH_EDGES_SOURCES.values()), set(diverter["provenance"]["source_refs"]))
 
 	def test_display_inventory_is_the_backbox_dmd(self) -> None:
 		displays = self.definition["displays"]
@@ -306,8 +328,15 @@ class GetawayDefinitionTests(unittest.TestCase):
 			"22e7257316dcb3c414f62a0543f6a68063e8f50524ad9559f1ff98bd38184efc",
 			sources["vpx-table.gw-v1.2"]["sha256"],
 		)
+		runtime = {source["id"]: source for source in self.definition["sources"] if source["kind"] == "runtime_scenario"}
+		self.assertEqual(set(SWITCH_EDGES_SOURCES.values()) | {FLIPPER_ENABLE_SOURCE}, set(runtime))
+		for game, source_id in SWITCH_EDGES_SOURCES.items():
+			self.assertEqual(f"internal:evidence/runtime/wpc-fliptronic/getaway-{game}-switch-edges.json", runtime[source_id]["uri"])
+		self.assertEqual(
+			"internal:evidence/runtime/wpc-fliptronic/getaway-gw_l5-flipper-enable-31.json",
+			runtime[FLIPPER_ENABLE_SOURCE]["uri"],
+		)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -335,6 +364,138 @@ class GetawayDefinitionTests(unittest.TestCase):
 
 		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
 			self.assertTrue(allowed(device["binding"]["group"], device["binding"]["device"]), device["id"])
+
+
+class GetawayRuntimeEvidenceTests(unittest.TestCase):
+	"""The compact runtime summaries are tied to their scenarios here and to the raw runs when retained."""
+
+	def _common(self, evidence: dict[str, object], game: str, scenario: Path) -> dict[str, object]:
+		import hashlib
+
+		self.assertNotIn("game", load_json(scenario))
+		self.assertEqual(game, evidence["runtime"]["game"])
+		self.assertEqual([game], evidence["driver_ids"])
+		self.assertEqual(["williams.the-getaway-high-speed-ii.1992"], evidence["machine_ids"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, evidence["runtime"]["emulator"]["sha256"])
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+		self.assertEqual(scenario.relative_to(ROOT).as_posix(), raw["scenario_path"])
+		return raw
+
+	def test_switch_edges_name_84_enter_left_ramp_and_85_opto_made_loop_on_both_roms(self) -> None:
+		edge_frames: dict[str, list[str]] = {}
+		rom_hashes = set()
+		for game in SWITCH_EDGES_SOURCES:
+			with self.subTest(game=game):
+				evidence = load_json(RUNTIME_DIR / f"getaway-{game}-switch-edges.json")
+				raw = self._common(evidence, game, EDGES_SCENARIO)
+				rom_hashes.add(evidence["runtime"]["rom_archive_sha256"])
+				observations = evidence["runtime"]["observations"]["named_action_observations"]
+				self.assertEqual(EDGE_SEQUENCE, [item["input_address"] for item in observations])
+				snapshots = evidence["runtime"]["observations"]["diagnostic_snapshots"]
+				self.assertEqual(16, len(snapshots))
+				self.assertEqual(GAME_IDENTIFICATION[game], snapshots[0]["interpreted_text"])
+				self.assertEqual("SWITCH EDGES / T.1", snapshots[1]["interpreted_text"])
+				by_level: dict[tuple[int, int], set[str]] = {}
+				for snapshot, item in zip(snapshots[2:], observations, strict=True):
+					address = item["input_address"]
+					state = 1 if item["host_stimulus_switch_addresses"] else 0
+					self.assertEqual([], item["observed_switch_addresses"])
+					self.assertEqual([], item["transitioned_solenoid_addresses"])
+					self.assertIn(f"public {address} (", snapshot["label"])
+					self.assertIn(f"was set to {state}", snapshot["label"])
+					top = ROM_NAMES[address] if state else "SWITCH EDGES"
+					self.assertTrue(snapshot["interpreted_text"].startswith(f"{top} / T.1 LAST SW {address} / "), snapshot["label"])
+					if state:
+						self.assertIn(f"names it {ROM_NAMES[address]}", item["label"])
+					by_level.setdefault((address, state), set()).add(snapshot["pixel_sha256"])
+				for key, hashes in by_level.items():
+					# A repeated level draws the identical frame; a menu left blinking would not.
+					self.assertEqual(1, len(hashes), key)
+				for address in ROM_NAMES:
+					self.assertTrue(by_level[(address, 1)].isdisjoint(by_level[(address, 0)]), address)
+				edge_frames[game] = [snapshot["pixel_sha256"] for snapshot in snapshots[1:]]
+				self._check_retained_edges(game, raw, snapshots)
+		self.assertEqual(2, len(rom_hashes))
+		# L-5 and L-1 draw identical T.1 pages for every edge.
+		self.assertEqual(edge_frames["gw_l5"], edge_frames["gw_l1"])
+
+	def test_public_31_follows_the_roms_flipper_enable(self) -> None:
+		evidence = load_json(RUNTIME_DIR / "getaway-gw_l5-flipper-enable-31.json")
+		raw = self._common(evidence, "gw_l5", PLAY_SCENARIO)
+		observations = evidence["runtime"]["observations"]
+		actions = observations["named_action_observations"]
+		self.assertEqual([112, 112, 14, 112, 112], [item["input_address"] for item in actions])
+		attract, ball_one, tilt, tilted, ball_two = actions
+		for item in (attract, tilted):
+			self.assertEqual([], item["transitioned_solenoid_addresses"])
+			self.assertEqual("no_matching_transition", item["result"])
+			self.assertNotIn(31, item["active_solenoid_addresses"])
+		for item in (ball_one, ball_two):
+			self.assertLessEqual({45, 46}, set(item["transitioned_solenoid_addresses"]))
+			self.assertIn(31, item["active_solenoid_addresses"])
+			self.assertIn(46, item["active_solenoid_addresses"])
+		self.assertEqual([25, 26, 28, 31], tilt["transitioned_solenoid_addresses"])
+		self.assertEqual([], tilt["active_solenoid_addresses"])
+		sequence = observations["ordered_solenoid_on_sequence"]
+		# Every flipper pulse comes after 31 has risen.
+		self.assertLess(sequence.index(31), sequence.index(45))
+		self.assertEqual(2, sequence.count(31))
+		self.assertEqual(2, sequence.count(45))
+		self._check_retained_play(raw, observations)
+
+	def _retained(self, raw: dict[str, object], game: str) -> dict[str, object] | None:
+		import hashlib
+
+		import build_external_evidence_manifest as manifest
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return None
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		manifest.check_manifest(path.parent, game)
+		run = load_json(path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual(game, run["game"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		return run
+
+	def _check_retained_edges(self, game: str, raw: dict[str, object], snapshots: list[dict[str, object]]) -> None:
+		run = self._retained(raw, game)
+		if run is None:
+			return
+		raw_frames = []
+		for snap in run["snapshots"]:
+			if snap["label"] in {"Enter 2 (game identification)", "Enter 5 (start T.1)"} or " -> " in snap["label"]:
+				raw_frames.append((snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]))
+			if " -> " not in snap["label"]:
+				continue
+			address, state = (int(part.split()[0]) for part in snap["label"].split(" -> "))
+			levels = {w["number"]: w["state"] for w in snap["watched_switches"]}
+			self.assertEqual({45: 0, 81: 0, 84: 0, 85: 0} | {address: state}, {a: levels[a] for a in (45, 81, 84, 85)}, snap["label"])
+		# Every summary snapshot is the raw frame of the step it names, in order.
+		self.assertEqual(raw_frames, [(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots])
+
+	def _check_retained_play(self, raw: dict[str, object], observations: dict[str, object]) -> None:
+		run = self._retained(raw, "gw_l5")
+		if run is None:
+			return
+		events = [e for e in run["events"] if e["event"] == "solenoid"]
+		self.assertEqual(observations["ordered_solenoid_on_sequence"], [e["number"] for e in events if e["state"]])
+		transitions = [(e["time_s"], e["state"]) for e in events if e["number"] == 31]
+		self.assertEqual([(46.641, 1), (57.125, 0), (63.188, 1)], transitions)
+		# The ROM fires the flipper windings only while public 31 is high.
+		for event in events:
+			if event["number"] in {45, 46} and event["state"]:
+				self.assertTrue(46.641 < event["time_s"] < 57.125 or event["time_s"] > 63.188, event)
+		snaps = {snap["label"]: snap for snap in run["snapshots"]}
+		for item in observations["diagnostic_snapshots"]:
+			self.assertIn(item["pixel_sha256"], {display["pixel_sha256"] for snap in run["snapshots"] for display in snap["displays"]})
+		self.assertNotIn(31, snaps["right flipper button in attract mode (held)"]["active_solenoids"])
+		self.assertNotIn(31, snaps["right flipper button after the tilt (held)"]["active_solenoids"])
 
 
 def _positions(devices: dict[int, dict[str, object]]) -> dict[int, tuple[float, float]]:

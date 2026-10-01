@@ -22,6 +22,5 @@ Right and Left) are the two independent wireform ramps running down the right an
 playfield to the lower apron area.
 
 This is geometry/parts evidence only — it does not by itself resolve which specific address (84 or
-85) sits at the ramp entrance versus the loop-completion point; see
-`accelerator-and-opto-ramp-boards.md` and the machine definition's `conflict.switch-84-85-manual-vs-
-script-semantics`.
+85) sits at the ramp entrance versus the loop-completion point. The ROM's own T.1 SWITCH EDGES test
+does (84 ENTER LEFT RAMP, 85 OPTO MADE LOOP); see `accelerator-and-opto-ramp-boards.md`.

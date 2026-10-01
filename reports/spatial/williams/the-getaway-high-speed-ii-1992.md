@@ -48,7 +48,7 @@ The matching source is the retained known-working `Getaway, The - High Speed II 
 
 ## Promotion decision
 
-This record stays `partial`. Two first-class conflicts remain unresolved (`conflict.switch-84-85-manual-vs-script-semantics`, `conflict.solenoid-31-fastflip-address-not-declared`), several authoring-relevant addresses have no spatial placement at all in this thin retained table, and recreation knowledge remains candidate until those semantic and spatial gaps are documented. `coverage.missing = ["output_semantics", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` names each gap explicitly.
+This record stays `partial`. Its two former conflicts were settled by the ROM on 2026-10-01: the T.1 SWITCH EDGES test names switch 84 ENTER LEFT RAMP and 85 OPTO MADE LOOP, and a gameplay run shows public solenoid 31 tracking the ROM's own flipper enable. Several authoring-relevant addresses still have no spatial placement at all in this thin retained table, and recreation knowledge remains candidate until those spatial gaps are documented. `coverage.missing = ["recreation_notes", "spatial_placement"]` names each gap explicitly.
 
 ## Retained evidence
 

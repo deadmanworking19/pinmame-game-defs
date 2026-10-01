@@ -13,17 +13,17 @@ physical machine and "guessed most of it from a Playfield picture and the rulesh
 curation because it means the driver's `#define` comment labels (`swOpto1`, `sRSling`, and so on) are
 not automatically trustworthy device-identity ground truth the way they are on most other curated WPC
 titles, even though the driver's numeric public addresses (ordinary WPC column-times-ten-plus-row
-matrix notation) are still real hardware. Two concrete corrections and one unresolved disagreement
-came directly from this gap:
+matrix notation) are still real hardware. Two corrections came out of checking the labels against
+other sources, and they run in opposite directions:
 
 - Solenoids 5 and 6 are reversed in the driver's comments (`sRSling 5`, `sLSling 6`) against two
   independently-agreeing manual pages (Solenoid/Flasher Locations and the Solenoid Table wiring page),
   both of which print item 5 as "Left Slingshot" and item 6 as "Right Slingshot." The manual wins; see
   `device.left-slingshot`/`device.right-slingshot` in the definition.
-- Switches 84 and 85 are a genuine, unresolved disagreement rather than a clean correction: the
-  manual's Switch Locations page labels 84 "Opto Made Loop" and 85 "Enter Left Ramp," but the driver's
-  guessed labels (and the retained known-working script's own runtime grouping/audio design) point the
-  opposite way. See `conflict.switch-84-85-manual-vs-script-semantics` below.
+- Switches 84 and 85 are the other way round: the manual's Switch Locations and SWITCH MATRIX pages
+  label 84 "Opto Made Loop" and 85 "Enter Left Ramp," but the ROM's own switch test names 84 ENTER
+  LEFT RAMP and 85 OPTO MADE LOOP, as the driver's guessed labels and the retained known-working
+  script do. Here the driver is right and the manual has the two names transposed; see below.
 
 ## The Supercharger accelerator loop
 
@@ -54,29 +54,27 @@ that either sends the ball around the loop again or lets it continue. A second s
 High), is printed on the same physical assembly but has **no** script implementation at all in this
 recreation -- the retained table simply does not animate it.
 
-### Switch 84/85 identity: unresolved
+### Switch 84/85 identity: settled by the ROM
 
 Both switches sit on the A-13901-1 board and both are printed as opto interrupters, so their
-*construction* and *polarity* are settled (PinMAME's `gwGameData` inverted-switch mask covers exactly
-81-85, a clean match against the manual's opto part sweep with zero disagreement). What is **not**
-settled is *which physical position each address senses*. Three pieces of evidence pull in two
-directions:
+*construction* and *polarity* were never in doubt (PinMAME's `gwGameData` inverted-switch mask covers
+exactly 81-85, a clean match against the manual's opto part sweep). Which physical position each
+address senses was. The manual's Switch Locations and SWITCH MATRIX pages print 84 = "Opto Made Loop"
+and 85 = "Enter Left Ramp"; the pinned driver's guessed `#define`s (`swLRampEnt` = 84,
+`swOptoLoopMade` = 85) and the retained known-working script (`SW85_Hit` in its `'supercharger` block
+with a distinctive `"sc_loop2"` sound, `SW84_Hit` among the `'Ramp Triggers`) pair them the other way.
+Those two could not settle it alone, since a table author routinely copies switch numbers from the
+public driver source.
 
-- The manual's own Switch Locations page: 84 = "Opto Made Loop," 85 = "Enter Left Ramp."
-- The pinned driver's guessed `#define`s: `swLRampEnt` = 84, `swOptoLoopMade` = 85 -- the opposite
-  pairing.
-- The retained known-working script's own organization: `SW85_Hit` sits in the script's `'supercharger`
-  comment block next to the three wheel-opto handlers and plays a distinctive `"sc_loop2"` sound (a
-  sound cue no other switch in the file shares); `SW84_Hit` sits in a separate `'Ramp Triggers` block
-  next to ordinary lane switches 65/67 and plays only the generic `"rollover"` sound everything else
-  uses. This also points toward the driver's guessed pairing, not the manual's.
-
-Two sources agreeing against one would normally resolve this outright under this project's evidence
-hierarchy, but the two agreeing sources here (the guessed driver comment, and the script author's own
-organizational choices) are not demonstrably independent -- a VPX table author building a recreation
-routinely consults the public PinMAME driver source for switch numbers, so the agreement may simply be
-inherited rather than confirmed. Recorded as `conflict.switch-84-85-manual-vs-script-semantics` and
-left open pending a LibPinMAME harness trace.
+The ROM's own T.1 SWITCH EDGES test does settle it. In hash-pinned harness runs of the production L-5
+and L-1 ROMs from empty NVRAM (`tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json`,
+evidence `evidence/runtime/wpc-fliptronic/getaway-gw_l5-switch-edges.json` and
+`getaway-gw_l1-switch-edges.json`), setting public 84 to 1 makes the top line read **ENTER LEFT RAMP**
+with this matrix position's wires WHT-YEL GRN-GRY, and public 85 reads **OPTO MADE LOOP** with
+WHT-GRN GRN-GRY, while the controls behave as expected (45 R BANK MID, 81 OPTO 1). The ROM's name table
+and its game logic are one firmware written for the physical machine, so 84 is the left-ramp entrance
+opto and 85 the loop-completion opto, and the definition labels them that way. The two printed pages
+carry the names transposed; each device's note says so.
 
 ## Ramp lift mechanism
 
@@ -142,17 +140,22 @@ settle fitment decisively, not this generic block.
 
 ## Solenoid 31 and the undeclared fast-flip address
 
-The retained known-working script binds `SolCallback(31) = "FastFlips.TiltSol"`, the standard nFozzy
-`cFastFlips` convention for reading PinMAME's synthetic fast-flip flipper-enable signal. But pinned
-`gw.c` never calls `wpc_set_fastflip_addr` anywhere (confirmed by an exhaustive source grep), and per
-`src/wpc/wpc.c`'s `core_gameon` function, when no fast-flip address is declared PinMAME instead
-publishes public solenoids 29-31 as a mirror of bits 5-7 of the `WPC_GILAMPS` register -- a
-general-illumination lamp-state register with no inherent connection to flipper enable. This is a
-direct, source-verified contradiction between what the pinned driver says solenoid 31 carries and what
-the retained table's script assumes it carries, recorded as
-`conflict.solenoid-31-fastflip-address-not-declared`. Whether this represents a genuine defect in the
-recreation's flipper timing, a coincidental correlation in this specific ROM's own logic, or a gap in
-this analysis is not resolved here.
+The retained known-working script binds `SolCallback(31) = "FastFlips.TiltSol"`, the nFozzy
+`cFastFlips` convention for reading PinMAME's synthetic fast-flip flipper-enable signal. Pinned `gw.c`
+never calls `wpc_set_fastflip_addr`, so per `src/wpc/wpc.c`'s `core_gameon` fallback PinMAME publishes
+public solenoids 29-31 as a mirror of bits 5-7 of the `WPC_GILAMPS` register instead of a fast-flip
+RAM flag. That looked like a contradiction, but bit 7 is not a lamp bit: the same `wpc.c` comment
+records that before Fliptronic it drove the real game-on relay, and this ROM still drives it as its
+game-on state.
+
+A hash-pinned gameplay run of `gw_l5` (`tools/harness-scenarios/wpc-fliptronic/gw-flipper-enable-31.json`,
+evidence `evidence/runtime/wpc-fliptronic/getaway-gw_l5-flipper-enable-31.json`) compares public 31 with
+the ROM's own flipper response. In attract mode 31 is 0 and the Fliptronic lower-right button (112)
+fires nothing. Start raises 31 for ball 1, and the button then fires flipper power 45 and holds 46. The
+third plumb-bob pulse tilts the game and drops 31, and the button fires nothing again; when the ball
+drains and ball 2 begins, 31 rises and the button works once more. The wheel-drive Enable outputs 25,
+26 and 28 rise and fall with it. So the script's binding reads exactly the state it expects, and a
+recreation can use public 31 as this game's flipper-enable signal.
 
 ## General illumination
 

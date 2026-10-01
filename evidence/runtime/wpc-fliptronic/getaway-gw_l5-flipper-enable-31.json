@@ -1,0 +1,246 @@
+{
+  "driver_ids": [
+    "gw_l5"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.the-getaway-high-speed-ii.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game gw_l5 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/gw-flipper-enable-31.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Public 31 rose 0.344 s after the Start pulse began (46.641 s), fell with the third plumb-bob pulse (57.125 s) and rose again for ball 2 (63.188 s), the three transitions the run recorded at that address.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "gw_l5",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "CREDITS 1.",
+          "label": "attract mode after two coins",
+          "nonzero_pixels": 486,
+          "pixel_sha256": "dc745630901c66d8e79728cfa9b784cf143e12f903e818913a65f74980c2ddfd"
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            26,
+            28,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "00 / BALL 1 0 MPH CREDITS 0",
+          "label": "ball 1 in play, ball in the shooter lane",
+          "nonzero_pixels": 282,
+          "pixel_sha256": "d2b30fd45a2b8e6332e8d8dc8cbf4650ee606c68d876ab234210485a13d575d0"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TILT TILT",
+          "label": "after the third plumb-bob pulse",
+          "nonzero_pixels": 342,
+          "pixel_sha256": "a015c033a6c9244c63201cd3e15c095bc31261d1405d79297d8150f49006e1a3"
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            26,
+            28,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "10,000 / BALL 2 0 MPH CREDITS 0",
+          "label": "ball 2 in play",
+          "nonzero_pixels": 427,
+          "pixel_sha256": "a2c08b419958e235572f05f62121a6addd2f7177fb4f0c1a28653dc98f221af8"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "Fliptronic lower-right flipper button (public 112) held 400 ms in attract mode, public 31 = 0: the ROM fires no flipper winding",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            26,
+            28,
+            31,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "Fliptronic lower-right flipper button (public 112) held 400 ms on ball 1 in play, public 31 = 1: the ROM fires lower-right flipper power 45 and holds 46 while the button is held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "third plumb-bob tilt pulse (public 14): the ROM tilts the game and public 31 falls together with the Enable outputs 25, 26 and 28",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25,
+            26,
+            28,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "Fliptronic lower-right flipper button (public 112) held 400 ms after the tilt, public 31 = 0: the ROM fires no flipper winding",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            25,
+            26,
+            28,
+            31,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "Fliptronic lower-right flipper button (public 112) held 400 ms on ball 2 in play, public 31 = 1 again: the ROM fires 45 and holds 46 while the button is held (the trough release 11 also pulses in this window because the modelled serve leaves the trough switch closed)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11,
+            45,
+            46
+          ]
+        }
+      ],
+      "ordered_solenoid_on_sequence": [
+        25,
+        26,
+        28,
+        31,
+        11,
+        45,
+        46,
+        17,
+        16,
+        31,
+        25,
+        26,
+        28,
+        11,
+        45,
+        46,
+        11
+      ],
+      "solenoid_addresses_seen": [
+        11,
+        16,
+        17,
+        25,
+        26,
+        28,
+        31,
+        45,
+        46
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 24,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 56
+          },
+          {
+            "state": 1,
+            "switch": 57
+          },
+          {
+            "state": 1,
+            "switch": 58
+          }
+        ],
+        "name": "gw-l5-flipper-enable-31",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/getaway/harness/flipper-enable-31/gw_l5/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/gw-flipper-enable-31.json",
+        "scenario_sha256": "41a1808209b7ff598c236dd56e082ec38eb7769598b161f5b14c587972dcf372",
+        "self_test_pulses": 0,
+        "sha256": "e29f770758752a40c599afaf5f718e3f83e1dd6ce759e9941e51ff78caa88c35",
+        "snapshot_count": 29,
+        "watch_switches": [
+          1,
+          5,
+          13,
+          14,
+          22,
+          45,
+          55,
+          56,
+          57,
+          58,
+          78,
+          112
+        ]
+      }
+    ],
+    "rom_archive_sha256": "49c48b79c513ecbd85cbe5c1475548e62bf0c038d1e4f5be9ee334cf325b042a"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. Every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest gw_l5/manifest.json SHA-256 ef1d9485065c1395a557c64390f1e6db69979e6e2cdb32849449906575d68776 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/getaway/harness/flipper-enable-31/gw_l5",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "e29f770758752a40c599afaf5f718e3f83e1dd6ce759e9941e51ff78caa88c35"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

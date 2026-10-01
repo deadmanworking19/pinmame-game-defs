@@ -35,6 +35,12 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.the-getaway-high-speed-ii.1992"
 VPX_TABLE_SOURCE = "vpx-table.gw-v1.2"
 VPX_SCRIPT_SOURCE = "vpx-script.gw-v1.2"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.gw-v1.2"
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+SWITCH_EDGES_SOURCES = {
+	"gw_l5": "runtime.getaway.gw-l5.switch-edges",
+	"gw_l1": "runtime.getaway.gw-l1.switch-edges",
+}
+FLIPPER_ENABLE_SOURCE = "runtime.getaway.gw-l5.flipper-enable-31"
 
 TABLE_SHA256 = "22e7257316dcb3c414f62a0543f6a68063e8f50524ad9559f1ff98bd38184efc"
 SCRIPT_SHA256 = "4f91dbf71bf134b1113939a517900c27d87fa1a142109e79ad64306a40aeb78e"
@@ -69,6 +75,10 @@ DRIVER_COMPATIBILITY = {
 }
 
 # --- Printed switch matrix (manual page 2-40 Switch Locations parts list; page 3-4 SWITCH MATRIX wiring).
+# Switches 84 and 85 are the one exception: both printed pages call 84 "Opto Made Loop" and 85 "Enter
+# Left Ramp", but the ROM's own T.1 SWITCH EDGES test names 84 ENTER LEFT RAMP and 85 OPTO MADE LOOP
+# (gw_l5 and gw_l1), as gw.c's swLRampEnt/swOptoLoopMade and the known-working script do, so the labels
+# below follow the ROM and each device states the printed transposition.
 SWITCH_LABELS = {
 	13: "Start Button", 14: "Plumb Bob Tilt",
 	15: "Left Freeway Bottom", 16: "Left Freeway Top", 17: "Right Freeway Bottom", 18: "Right Freeway Top",
@@ -84,7 +94,7 @@ SWITCH_LABELS = {
 	65: "Made Up/Down Ramp", 67: "Made Left Ramp",
 	71: "Top Loop", 72: "Middle Loop", 73: "Bottom Loop",
 	74: "Top Lock", 75: "Middle Lock", 76: "Bottom Lock", 77: "Eject Hole", 78: "Shooter Lane",
-	81: "Opto 1", 82: "Opto 2", 83: "Opto 3", 84: "Opto Made Loop", 85: "Enter Left Ramp",
+	81: "Opto 1", 82: "Opto 2", 83: "Opto 3", 84: "Enter Left Ramp", 85: "Opto Made Loop",
 	86: "Left Bank Bottom Target", 87: "Left Bank Middle Target", 88: "Left Bank Top Target",
 }
 # Printed "Not Used" on both the Switch Locations parts list and the SWITCH MATRIX wiring page.
@@ -670,7 +680,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.getaway.accelerator-and-opto-ramp-boards",
 					"locator": "PDF pages 117 and 119, printed 3-12 and 3-14, opto driver board assembly pages",
 					"path": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/accelerator-and-opto-ramp-boards.md",
-					"sha256": "158b88ba0d1aa368b6ecc6d2680b8cdecbe3c8905463de506d686694f74090d6",
+					"sha256": "1afa3d0d6716bba84ee42922a7ce9755dc8e333d3603112e66d762cd975780cb",
 					"image": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/accelerator-and-opto-ramp-boards.webp",
 					"image_sha256": "3728bfdc2b5be03052aa20f81a0cac7f4b94d4a21196d583bcb2a3980a3841ab",
 					"image_derivation": "Getaway_HSII_OPS.pdf page 117, crop box 0.04,0.04,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 498, 4784px across 7.97in), rendered at 95 dpi, capped to 700px wide, 1001x881 WebP quality 70",
@@ -680,7 +690,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.getaway.ramp-locations",
 					"locator": "PDF page 105, printed 2-44, Ramp Locations parts list",
 					"path": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/ramp-locations.md",
-					"sha256": "f850e859f4f7e2e3e904b00bfa6013bd1cdbaa0b6ae40a68d9f3f284abd4ea73",
+					"sha256": "50773a9279819bec845a5b1eafb1cc1f3756d1df3d4447b59148e5fb357df1a3",
 					"image": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/ramp-locations.webp",
 					"image_sha256": "084d5f83d22f0b39587f9456d3a9598f54ab2e16daeec6c3bc9196e6846e6de9",
 					"image_derivation": "Getaway_HSII_OPS.pdf page 105, crop box 0.05,0.05,0.95,0.9, scanned page rendered at its native resolution (embedded image xref 443, 4845px across 8.07in), rendered at 98 dpi, capped to 700px wide, 1001x869 WebP quality 70",
@@ -756,6 +766,41 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
+		},
+	] + [
+		{
+			"id": source_id,
+			"kind": "runtime_scenario",
+			"uri": f"internal:evidence/runtime/wpc-fliptronic/getaway-{game}-switch-edges.json",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"locator": (
+				f"One hash-pinned LibPinMAME harness run of {game} from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json) that opens the ROM's T.1 SWITCH "
+				"EDGES test and sets public 45, 81, 84, 85, then 84, 85 and 45 again, to 1 and then 0, two seconds "
+				"each. After each address is set to 1 the ROM's top line prints its own name for that matrix "
+				"position: R BANK MID (45), OPTO 1 (81), ENTER LEFT RAMP (84, wires WHT-YEL GRN-GRY) and OPTO MADE "
+				"LOOP (85, wires WHT-GRN GRN-GRY)."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		}
+		for game, source_id in SWITCH_EDGES_SOURCES.items()
+	] + [
+		{
+			"id": FLIPPER_ENABLE_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "internal:evidence/runtime/wpc-fliptronic/getaway-gw_l5-flipper-enable-31.json",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of gw_l5 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-fliptronic/gw-flipper-enable-31.json) that compares public solenoid 31 "
+				"with the ROM's own flipper response. Public 31 is 0 in attract mode, where the Fliptronic lower-right "
+				"button (112) fires nothing. It rises when Start begins ball 1, and the button then fires lower-right "
+				"flipper power 45 and holds 46. It falls with the third plumb-bob tilt pulse, after which the button "
+				"fires nothing, and rises again when ball 2 begins, when the button fires 45 and 46 once more."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
 		},
 	]
 
@@ -842,6 +887,17 @@ def input_devices() -> list[dict[str, Any]]:
 					"inverted-switch mask (column 8 bits 0-4, i.e. exactly 81-85) normalizes it, so the public "
 					"switch state is already normalized and must not be inverted again."
 				)
+				if address in {84, 85}:
+					printed, other = {84: ("Opto Made Loop", 85), 85: ("Enter Left Ramp", 84)}[address]
+					notes += (
+						f" The Switch Locations parts list (2-40) and the SWITCH MATRIX page (3-4) both print this "
+						f"address as \"{printed}\", the name the ROM gives switch {other}. The ROM's own T.1 SWITCH "
+						f"EDGES test (hash-pinned runs {', '.join(SWITCH_EDGES_SOURCES.values())}, production L-5 and "
+						f"L-1) prints {SWITCH_LABELS[address].upper()} when public {address} is set to 1, with this "
+						"matrix position's wire colours. pinned gw.c's #defines and the known-working script's "
+						"handlers group the address the same way, so the label follows the ROM and the two printed "
+						"pages carry the 84/85 names transposed."
+					)
 			elif address == 23:
 				notes += (
 					' The SWITCH MATRIX page\'s grid cell names this address "Ticket Opto.", but the Switch '
@@ -879,6 +935,8 @@ def input_devices() -> list[dict[str, Any]]:
 				availability = "optional" if address == 23 else "used"
 				extra["normally_closed"] = address in OPTO_SWITCHES
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+				if address in {84, 85}:
+					refs += tuple(SWITCH_EDGES_SOURCES.values())
 				if address in {13, 14, 21, 22}:
 					role = {13: "cabinet.start", 14: "cabinet.tilt", 21: "cabinet.slam-tilt", 22: "cabinet.coin-door"}[address]
 					extra["roles"] = [role]
@@ -1147,13 +1205,17 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			),
 			30: "PinMAME mirrors bit 6 of the WPC_GILAMPS register here under the same fallback as 29.",
 			31: (
-				"Under a normally-configured WPC-Fliptronic driver this channel is PinMAME's synthetic fast-flip "
-				"game-on state, taken from the driver's own fast-flip RAM flag once wpc_set_fastflip_addr is called. "
-				"gw.c never calls wpc_set_fastflip_addr, so per src/wpc/wpc.c's core_gameon fallback (lines ~514-518) "
-				"PinMAME instead mirrors bit 7 of the WPC_GILAMPS register here -- a GI-lamp-related state bit, not a "
-				"flipper-enable signal. The retained known-working script nonetheless binds "
-				'SolCallback(31) = "FastFlips.TiltSol", the standard nFozzy cFastFlips convention that treats this '
-				"address as the flipper-enable gate. See conflict.solenoid-31-fastflip-address-not-declared."
+				"Under a WPC-Fliptronic driver that calls wpc_set_fastflip_addr this channel is PinMAME's synthetic "
+				"fast-flip game-on state, read from the driver's own fast-flip RAM flag. gw.c never calls it, so per "
+				"src/wpc/wpc.c's core_gameon fallback (lines ~514-518) PinMAME mirrors bit 7 of the WPC_GILAMPS register "
+				"here instead. That bit is the CPU's game-on output: wpc.c records that before Fliptronic it drove the "
+				"real game-on relay, and the gw_l5 ROM still drives it in step with its flipper enable. In the "
+				f"hash-pinned run {FLIPPER_ENABLE_SOURCE} public 31 is 0 in attract mode, where the lower-right "
+				"flipper button fires nothing; it rises when Start begins ball 1, while the button fires flipper power "
+				"45 and holds 46; it falls with the third plumb-bob tilt pulse, after which the button fires nothing; and "
+				"it rises again for ball 2. The known-working script's SolCallback(31) = \"FastFlips.TiltSol\", the "
+				"nFozzy cFastFlips convention that treats this address as the flipper-enable gate, therefore reads the "
+				"state it expects."
 			),
 			32: "PinMAME reports this WPC state channel as always zero.",
 			37: "Unused WPC-Fliptronic address space; this generation has no integrated LPDC board (GENWPC_HASWPC95 is not set), so 37-44 are simply unused rather than a duplicated general-purpose range.",
@@ -1172,7 +1234,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			_device(
 				identifier, label, "virtual", "pinmame.output.solenoid", address,
 				"used" if address in {29, 30, 31} else "unused",
-				(CONTROLLER_SOURCE, CORE_SOURCE),
+				(CONTROLLER_SOURCE, CORE_SOURCE, FLIPPER_ENABLE_SOURCE) if address == 31 else (CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 				roles=roles,
 				physical={"notes": notes},
@@ -1347,14 +1409,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"ramp; solenoid 10 (Diverter Low) drives the retained script's SuperchargerDiverter handler, which "
 			"rotates sc_div and toggles Wall29's collidability. Solenoid 1 (Diverter High) has no SolCallback entry "
 			"in the retained script at all and is not visually implemented by this recreation. Switches 84 and 85 "
-			"sit on the dedicated A-13901-1 Opto Ramp Switch Board (one each) at this same mechanism, but which "
-			"physical position (ramp entrance versus loop-completion point) corresponds to which address is a "
-			"genuine, unresolved disagreement between the manual's own Switch Locations labels and the retained "
-			"script's runtime behavior; see conflict.switch-84-85-manual-vs-script-semantics. This recreation's "
-			"SW81_Hit-style velocity boost does not extend to switch 84 or 85; 85 only plays a distinct \"sc_loop2\" "
-			"sound and 84 only plays a generic \"rollover\" sound.",
+			"sit on the dedicated A-13901-1 Opto Ramp Switch Board (one each) at this same mechanism. The ROM's own "
+			"T.1 SWITCH EDGES test names 84 ENTER LEFT RAMP and 85 OPTO MADE LOOP, so 84 senses the ball entering "
+			"the left ramp and 85 the completed Supercharger loop; the manual's Switch Locations and SWITCH MATRIX "
+			"pages print the two names transposed. This recreation's SW81_Hit-style velocity boost does not extend "
+			"to switch 84 or 85; 85 only plays a distinct \"sc_loop2\" sound and 84 only plays a generic "
+			"\"rollover\" sound.",
 			[],
-			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, *SWITCH_EDGES_SOURCES.values(),
 			assembly_part_number="A-15293",
 		),
 		mechanism(
@@ -1538,60 +1600,9 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.switch-84-85-manual-vs-script-semantics",
-			"path": "inputs[binding.device=84,85]",
-			"description": (
-				"The Switch Locations parts list (printed 2-40) labels public switch 84 \"Opto Made Loop\" and "
-				"switch 85 \"Enter Left Ramp\". The pinned driver's own (self-admittedly guessed -- gw.c's header "
-				"comment states its author had no access to the physical machine) #define comments assign the "
-				"opposite semantic pairing (swLRampEnt=84, swOptoLoopMade=85). The retained known-working script's "
-				"own runtime grouping and audio design independently point the same direction as the driver's "
-				"guess rather than the manual: SW85_Hit is grouped under the script's own 'supercharger comment "
-				"header alongside SW81_Hit/SW82_Hit/SW83_Hit (the three motorized accelerator-wheel optos that each "
-				"add ball velocity) and plays a distinct \"sc_loop2\" sound, while SW84_Hit sits in a separate "
-				"'Ramp Triggers comment block alongside ordinary lane switches 65/67 and plays only a generic "
-				"\"rollover\" sound. Per this project's evidence-authority order the known-working script is "
-				"authoritative for runtime semantics and would normally settle this outright, but the script's own "
-				"organizational comments are informal authorial judgment, not a documented independent source, and "
-				"it is unclear whether the table's author derived this grouping from genuine knowledge of the "
-				"physical machine or simply inherited the same guessed driver semantics this manual disagrees "
-				"with -- the two agreeing sources (driver guess, script grouping) are not demonstrably independent "
-				"of each other. Neither the A-13901-1 Opto Ramp Switch Board Assembly page (which wires switches 84 "
-				"and 85 to identical-looking connectors J2/J3 with no location callout) nor the Ramp Locations page "
-				"resolves which physical position -- the Accelerator Entrance Ramp Assembly (item 1, upper ramp "
-				"entry) or the Accelerator Return Assembly (item 3, lower return path near the diverter) -- "
-				"corresponds to which address. Resolution path: a LibPinMAME gameplay harness trace against a legal "
-				"gw_l5 ROM, driving a ball through the Supercharger loop and observing which address transitions "
-				"first as the ball enters versus which transitions as it completes the loop. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-		{
-			"id": "conflict.solenoid-31-fastflip-address-not-declared",
-			"path": "outputs[binding.device=31]",
-			"description": (
-				"The retained known-working script binds SolCallback(31) = \"FastFlips.TiltSol\", the standard "
-				"nFozzy cFastFlips convention that treats public solenoid 31 as PinMAME's synthetic fast-flip "
-				"flipper-enable gate. Pinned gw.c never calls wpc_set_fastflip_addr anywhere in init_gw or "
-				"elsewhere (confirmed by an exhaustive case-insensitive source grep). Per src/wpc/wpc.c's "
-				"core_gameon function (lines approximately 507-527), when wpc_fastflip_addr is zero (i.e. never "
-				"configured) PinMAME instead publishes public solenoids 29-31 as a mirror of bits 5-7 of the "
-				"WPC_GILAMPS register -- a general-illumination-lamp state register, unrelated to flipper enable or "
-				"game-on -- rather than reading any fast-flip RAM flag. This is a direct contradiction between what "
-				"the pinned driver source says public solenoid 31 actually carries and what the retained "
-				"known-working table's script assumes it carries. Because this table is nonetheless credited and "
-				"described as a working, playable recreation, either this analysis of core.c/wpc.c is missing a "
-				"secondary path, or WPC_GILAMPS bit 7 happens to correlate with genuine flipper-enable state for "
-				"unrelated reasons in this ROM's own logic, or the recreation's flipper timing is subtly wrong in a "
-				"way that has not been reported. Resolution path: a LibPinMAME gameplay harness trace against a "
-				"legal gw_l5 ROM, comparing the observed public state of solenoid 31 against the ROM's actual "
-				"flipper-enable behavior during play. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	# The two conflicts this record once carried (switches 84/85 and solenoid 31) were settled by the
+	# ROM in hash-pinned harness runs on 2026-10-01; see the device notes and the runtime sources.
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1625,17 +1636,17 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["output_semantics", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
+			"missing": ["recreation_notes", "spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "conflicted",
+				"semantic_naming": "validated",
 				"physical_wiring": "validated",
-				"output_semantics": "conflicted",
+				"output_semantics": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "candidate",
-				"spatial_placement": "conflicted",
+				"spatial_placement": "candidate",
 			},
 		},
 		"controller": {
@@ -1702,12 +1713,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"(Diverter High) and 25/26/28 (Enable 1/2/3) have no VPX object anywhere in the retained "
 			"extraction; this thin table (875 files, 39,497-byte script) does not model a physical position for "
 			"any of them. Lamps 73/74/75 (the A-15283 Stop Light Assembly) are similarly unplaced.",
-			"conflict.switch-84-85-manual-vs-script-semantics is unresolved: the manual's own printed labels for "
-			"switches 84/85 disagree with the retained known-working script's runtime grouping and audio design, "
-			"and the two agreeing 'driver guess' and 'script grouping' sources are not demonstrably independent.",
-			"conflict.solenoid-31-fastflip-address-not-declared is unresolved: gw.c never declares a fast-flip "
-			"address, so pinned PinMAME publishes public solenoid 31 as a WPC_GILAMPS mirror bit rather than a "
-			"genuine flipper-enable signal, yet the retained script's cFastFlips binding assumes the latter.",
 			"GI addresses 0 and 1 (both playfield-wired per the manual) share one monolithic 25-member VPX "
 			"collection with no way to attribute specific bulbs to one address versus the other, so neither "
 			"carries a validated placement.",
@@ -1836,12 +1841,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"This record stays `partial`. Two first-class conflicts remain unresolved "
-		"(`conflict.switch-84-85-manual-vs-script-semantics`, `conflict.solenoid-31-fastflip-address-not-"
-		"declared`), several authoring-relevant addresses have no spatial placement at all in this thin retained "
-		"table, and recreation knowledge remains candidate until those semantic and spatial gaps are documented. "
-		"`coverage.missing = [\"output_semantics\", \"recreation_notes\", \"spatial_placement\", "
-		"\"unresolved_conflicts\"]` names each gap explicitly.",
+		"This record stays `partial`. Its two former conflicts were settled by the ROM on 2026-10-01: the T.1 "
+		"SWITCH EDGES test names switch 84 ENTER LEFT RAMP and 85 OPTO MADE LOOP, and a gameplay run shows public "
+		"solenoid 31 tracking the ROM's own flipper enable. Several authoring-relevant addresses still have no "
+		"spatial placement at all in this thin retained table, and recreation knowledge remains candidate until "
+		"those spatial gaps are documented. `coverage.missing = [\"recreation_notes\", \"spatial_placement\"]` "
+		"names each gap explicitly.",
 		"",
 		"## Retained evidence",
 		"",

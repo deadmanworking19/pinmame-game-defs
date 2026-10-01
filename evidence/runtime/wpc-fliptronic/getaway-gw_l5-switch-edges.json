@@ -1,0 +1,388 @@
+{
+  "driver_ids": [
+    "gw_l5"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.the-getaway-high-speed-ii.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game gw_l5 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "gw_l5",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "HIGH SPEED II / 50004 REV. L-5",
+          "label": "game identification screen after the second Enter",
+          "nonzero_pixels": 328,
+          "pixel_sha256": "de7f4f7ac70be02c4f722814392dc9fa78113adf037491fb895fb6c0836466f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0",
+          "nonzero_pixels": 432,
+          "pixel_sha256": "a041fa2a16d6da80eee6b57b566f80ae16ecf67a1919a1b3703f90c207e92e0b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R BANK MID / T.1 LAST SW 45 / WHT-GRN GRN-YEL",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 1",
+          "nonzero_pixels": 720,
+          "pixel_sha256": "8e60a1f731e6eeea7f31aae9be70be0c3c120202e4722db880719b0a70fbca5c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 45 / WHT-GRN GRN-YEL",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 0",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "619456278ff352581d66699de6c382ed3f65c4be8c75df462ff80691399575b0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "OPTO 1 / T.1 LAST SW 81 / WHT-BRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 81 (printed opto normalized by gwGameData's mask) was set to 1",
+          "nonzero_pixels": 645,
+          "pixel_sha256": "7c04ca9440f5dc7188ba038cc7953ebc2a78ad6a3bf1af83dd7a2324b17eb32b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 81 / WHT-BRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 81 (printed opto normalized by gwGameData's mask) was set to 0",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "973aef2cea8cb07de78e66a611ac58e6773c526be66972449e3f4f4a149dd1c0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ENTER LEFT RAMP / T.1 LAST SW 84 / WHT-YEL GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 84 (A-13901-1 opto, normalized by the mask) was set to 1",
+          "nonzero_pixels": 770,
+          "pixel_sha256": "af846f2504d7a485919266f7dee2474605f9f0eb1e3c6d71caa8952376b4bd50"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 84 / WHT-YEL GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 84 (A-13901-1 opto, normalized by the mask) was set to 0",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "aba06bf6a8167fa7bc6f5c80c18caa94ef4f509ee53695ba641fd0cb65ba4786"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "OPTO MADE LOOP / T.1 LAST SW 85 / WHT-GRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 85 (A-13901-1 opto, normalized by the mask) was set to 1",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "d8418a6a15429e3e347449058044950d23861f2a9c685ea702525cc91962787f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 85 / WHT-GRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 85 (A-13901-1 opto, normalized by the mask) was set to 0",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "c79834e1a3e3f1456195672b84916ea3ec5f971fc47ff966398367f49c9f4b35"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ENTER LEFT RAMP / T.1 LAST SW 84 / WHT-YEL GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 84 (A-13901-1 opto, normalized by the mask) was set to 1 again",
+          "nonzero_pixels": 770,
+          "pixel_sha256": "af846f2504d7a485919266f7dee2474605f9f0eb1e3c6d71caa8952376b4bd50"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 84 / WHT-YEL GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 84 (A-13901-1 opto, normalized by the mask) was set to 0 again",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "aba06bf6a8167fa7bc6f5c80c18caa94ef4f509ee53695ba641fd0cb65ba4786"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "OPTO MADE LOOP / T.1 LAST SW 85 / WHT-GRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 85 (A-13901-1 opto, normalized by the mask) was set to 1 again",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "d8418a6a15429e3e347449058044950d23861f2a9c685ea702525cc91962787f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 85 / WHT-GRN GRN-GRY",
+          "label": "T.1 SWITCH EDGES two seconds after public 85 (A-13901-1 opto, normalized by the mask) was set to 0 again",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "c79834e1a3e3f1456195672b84916ea3ec5f971fc47ff966398367f49c9f4b35"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R BANK MID / T.1 LAST SW 45 / WHT-GRN GRN-YEL",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 1 again",
+          "nonzero_pixels": 720,
+          "pixel_sha256": "8e60a1f731e6eeea7f31aae9be70be0c3c120202e4722db880719b0a70fbca5c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 45 / WHT-GRN GRN-YEL",
+          "label": "T.1 SWITCH EDGES two seconds after public 45 (ordinary switch) was set to 0 again",
+          "nonzero_pixels": 749,
+          "pixel_sha256": "619456278ff352581d66699de6c382ed3f65c4be8c75df462ff80691399575b0"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it R BANK MID, its own label for matrix column 4 row 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "public 81 (printed opto normalized by gwGameData's mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it OPTO 1, its own label for matrix column 8 row 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "public 81 (printed opto normalized by gwGameData's mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "public 84 (A-13901-1 opto, normalized by the mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it ENTER LEFT RAMP, its own label for matrix column 8 row 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "public 84 (A-13901-1 opto, normalized by the mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            85
+          ],
+          "input_address": 85,
+          "input_kind": "switch",
+          "label": "public 85 (A-13901-1 opto, normalized by the mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it OPTO MADE LOOP, its own label for matrix column 8 row 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 85,
+          "input_kind": "switch",
+          "label": "public 85 (A-13901-1 opto, normalized by the mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "public 84 (A-13901-1 opto, normalized by the mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it ENTER LEFT RAMP, its own label for matrix column 8 row 4 again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "public 84 (A-13901-1 opto, normalized by the mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            85
+          ],
+          "input_address": 85,
+          "input_kind": "switch",
+          "label": "public 85 (A-13901-1 opto, normalized by the mask) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it OPTO MADE LOOP, its own label for matrix column 8 row 5 again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 85,
+          "input_kind": "switch",
+          "label": "public 85 (A-13901-1 opto, normalized by the mask) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it R BANK MID, its own label for matrix column 4 row 5 again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 (ordinary switch) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 25,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "gw-l5-switch-edges-84-85",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/getaway/harness/switch-edges/gw_l5/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json",
+        "scenario_sha256": "559eda65ed96244419120f1eb7eb1da3457b336d4ca2f838a31dceba3272f318",
+        "self_test_pulses": 0,
+        "sha256": "0816fbafe9ba1bef0a7fff3f4786e09de6156b0c12f8afbc9010985f99567b53",
+        "snapshot_count": 26,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          45,
+          81,
+          84,
+          85
+        ]
+      }
+    ],
+    "rom_archive_sha256": "49c48b79c513ecbd85cbe5c1475548e62bf0c038d1e4f5be9ee334cf325b042a"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest gw_l5/manifest.json SHA-256 cf246651be9e0e00b2ef70f38547832a6956c77c262f830bd52937409a43d45a (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/getaway/harness/switch-edges/gw_l5",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "0816fbafe9ba1bef0a7fff3f4786e09de6156b0c12f8afbc9010985f99567b53"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

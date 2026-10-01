@@ -44,7 +44,8 @@ combined opto-sensor-plus-motor-driver electronics for the three motorized accel
 
 This board carries only switches 84 and 85 — no solenoid/motor wiring at all, unlike the Accelerator
 Board above. Neither this page nor the Accelerator Board page states which physical location (ramp
-entrance versus loop-completion point) corresponds to J2 (switch 84) versus J3 (switch 85); that
-identity comes only from the Switch Locations parts list (`switch-locations.md`, "84 Opto Made Loop",
-"85 Enter Left Ramp") and disagrees with the retained known-working script's own runtime grouping and
-sound design (see `conflict.switch-84-85-manual-vs-script-semantics` in the machine definition).
+entrance versus loop-completion point) corresponds to J2 (switch 84) versus J3 (switch 85). The
+Switch Locations parts list (`switch-locations.md`) and the SWITCH MATRIX page (`switch-matrix.md`)
+print "84 Opto Made Loop" and "85 Enter Left Ramp", but the ROM's own T.1 SWITCH EDGES test names 84
+ENTER LEFT RAMP and 85 OPTO MADE LOOP (hash-pinned gw_l5 and gw_l1 runs, cited by the machine
+definition), as the retained known-working script does; the definition follows the ROM.

@@ -1,0 +1,209 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot gw_l5 from an empty NVRAM with the coin door closed (public 22 set) and three balls in the trough (56, 57 and 58 set), with PinMAME's built-in mechanisms disabled and direct switch writes only, so PinMAME's keyboard handling and gwSimData stay inactive. Leave the fresh-NVRAM loop with Escape, then compare public solenoid 31 with the ROM's own flipper response: press the Fliptronic lower-right flipper button (112) in attract mode, insert two coins and press Start, model the ball serve (58 released when the trough release 11 fires, then the shooter lane 78), press the button in play, tilt the game with three plumb-bob pulses (14), press the button again, drain the ball through the outhole (55 until the outhole kicker 16 fires, then back into the trough at 58), wait for public 31 to rise for ball 2 and press the button once more. gw.c never calls wpc_set_fastflip_addr, so PinMAME publishes WPC_GILAMPS bit 7 at public 31.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 1
+    },
+    {
+      "switch": 56,
+      "state": 1
+    },
+    {
+      "switch": 57,
+      "state": 1
+    },
+    {
+      "switch": 58,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    14,
+    55,
+    56,
+    57,
+    58,
+    78,
+    112
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0,
+      "label": "Escape out of the fresh-NVRAM loop"
+    },
+    {
+      "type": "wait",
+      "seconds": 5.0,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "right flipper button in attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 200,
+      "settle_s": 0.2,
+      "label": "start button"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "trough ball release fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves the trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 78,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball in the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "right flipper button in play"
+    },
+    {
+      "type": "set_switch",
+      "switch": 78,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "playfield switch 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "plumb-bob tilt 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "plumb-bob tilt 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "plumb-bob tilt 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "right flipper button after the tilt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball drains to the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "timeout_s": 15.0,
+      "active_only": true,
+      "label": "outhole kicker fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball back in the trough"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        31
+      ],
+      "timeout_s": 20.0,
+      "active_only": true,
+      "label": "public 31 rises for ball 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "ball 2 settles"
+    },
+    {
+      "type": "pulse",
+      "switch": 112,
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "right flipper button on ball 2"
+    }
+  ]
+}

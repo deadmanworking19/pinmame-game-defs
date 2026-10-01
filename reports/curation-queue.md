@@ -191,7 +191,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 185 | 1992 | Bike Race | Sleic (Spain) | partial | 13% |
 | 186 | 1992 | Fish Tales | Williams | author_ready | 100% |
 | 187 | 1992 | Strike Master (L-4) | Williams | partial | 13% |
-| 188 | 1992 | The Getaway: High Speed II | Williams | partial | 75% |
+| 188 | 1992 | The Getaway: High Speed II | Williams | partial | 88% |
 | 189 | 1991 | A.G. Soccer-Ball | Alvin G | partial | 13% |
 | 190 | 1991 | Gilligan's Island | Bally | partial | 13% |
 | 191 | 1991 | Harley Davidson | Bally | partial | 13% |

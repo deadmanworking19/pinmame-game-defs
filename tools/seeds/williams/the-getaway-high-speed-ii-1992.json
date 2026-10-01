@@ -1,25 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The Switch Locations parts list (printed 2-40) labels public switch 84 \"Opto Made Loop\" and switch 85 \"Enter Left Ramp\". The pinned driver's own (self-admittedly guessed -- gw.c's header comment states its author had no access to the physical machine) #define comments assign the opposite semantic pairing (swLRampEnt=84, swOptoLoopMade=85). The retained known-working script's own runtime grouping and audio design independently point the same direction as the driver's guess rather than the manual: SW85_Hit is grouped under the script's own 'supercharger comment header alongside SW81_Hit/SW82_Hit/SW83_Hit (the three motorized accelerator-wheel optos that each add ball velocity) and plays a distinct \"sc_loop2\" sound, while SW84_Hit sits in a separate 'Ramp Triggers comment block alongside ordinary lane switches 65/67 and plays only a generic \"rollover\" sound. Per this project's evidence-authority order the known-working script is authoritative for runtime semantics and would normally settle this outright, but the script's own organizational comments are informal authorial judgment, not a documented independent source, and it is unclear whether the table's author derived this grouping from genuine knowledge of the physical machine or simply inherited the same guessed driver semantics this manual disagrees with -- the two agreeing sources (driver guess, script grouping) are not demonstrably independent of each other. Neither the A-13901-1 Opto Ramp Switch Board Assembly page (which wires switches 84 and 85 to identical-looking connectors J2/J3 with no location callout) nor the Ramp Locations page resolves which physical position -- the Accelerator Entrance Ramp Assembly (item 1, upper ramp entry) or the Accelerator Return Assembly (item 3, lower return path near the diverter) -- corresponds to which address. Resolution path: a LibPinMAME gameplay harness trace against a legal gw_l5 ROM, driving a ball through the Supercharger loop and observing which address transitions first as the ball enters versus which transitions as it completes the loop. Unresolved.",
-      "id": "conflict.switch-84-85-manual-vs-script-semantics",
-      "path": "inputs[binding.device=84,85]",
-      "source_refs": [
-        "manual.williams.the-getaway-high-speed-ii.1992",
-        "pinmame.core.4ec52ff0ac13",
-        "vpx-script.gw-v1.2"
-      ]
-    },
-    {
-      "description": "The retained known-working script binds SolCallback(31) = \"FastFlips.TiltSol\", the standard nFozzy cFastFlips convention that treats public solenoid 31 as PinMAME's synthetic fast-flip flipper-enable gate. Pinned gw.c never calls wpc_set_fastflip_addr anywhere in init_gw or elsewhere (confirmed by an exhaustive case-insensitive source grep). Per src/wpc/wpc.c's core_gameon function (lines approximately 507-527), when wpc_fastflip_addr is zero (i.e. never configured) PinMAME instead publishes public solenoids 29-31 as a mirror of bits 5-7 of the WPC_GILAMPS register -- a general-illumination-lamp state register, unrelated to flipper enable or game-on -- rather than reading any fast-flip RAM flag. This is a direct contradiction between what the pinned driver source says public solenoid 31 actually carries and what the retained known-working table's script assumes it carries. Because this table is nonetheless credited and described as a working, playable recreation, either this analysis of core.c/wpc.c is missing a secondary path, or WPC_GILAMPS bit 7 happens to correlate with genuine flipper-enable state for unrelated reasons in this ROM's own logic, or the recreation's flipper timing is subtly wrong in a way that has not been reported. Resolution path: a LibPinMAME gameplay harness trace against a legal gw_l5 ROM, comparing the observed public state of solenoid 31 against the ROM's actual flipper-enable behavior during play. Unresolved.",
-      "id": "conflict.solenoid-31-fastflip-address-not-declared",
-      "path": "outputs[binding.device=31]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "vpx-script.gw-v1.2"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x8",
     "inversion_applied_by_emulator": true,
@@ -30,18 +10,16 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "output_semantics": "conflicted",
+      "output_semantics": "validated",
       "physical_wiring": "validated",
       "recreation_knowledge": "candidate",
-      "semantic_naming": "conflicted",
-      "spatial_placement": "conflicted",
+      "semantic_naming": "validated",
+      "spatial_placement": "candidate",
       "variant_coverage": "validated"
     },
     "missing": [
-      "output_semantics",
       "recreation_notes",
-      "spatial_placement",
-      "unresolved_conflicts"
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -3701,18 +3679,20 @@
       },
       "id": "switch.matrix-84",
       "kind": "switch",
-      "label": "Opto Made Loop",
+      "label": "Enter Left Ramp",
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-14315 (LED)",
-        "notes": "Printed switch-matrix drive column 8, return row 4. The Switch Locations page prints a paired opto LED/phototransistor part (A-14316 Trans / A-14315 LED) for this address, independently confirmed by the dedicated opto driver board pages (A-15189 Accelerator Board Assembly for 81-83; A-13901-1 Opto Ramp Switch Board Assembly for 84-85), each naming this address's own LED/Transistor connector pins. PinMAME's gwGameData inverted-switch mask (column 8 bits 0-4, i.e. exactly 81-85) normalizes it, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed switch-matrix drive column 8, return row 4. The Switch Locations page prints a paired opto LED/phototransistor part (A-14316 Trans / A-14315 LED) for this address, independently confirmed by the dedicated opto driver board pages (A-15189 Accelerator Board Assembly for 81-83; A-13901-1 Opto Ramp Switch Board Assembly for 84-85), each naming this address's own LED/Transistor connector pins. PinMAME's gwGameData inverted-switch mask (column 8 bits 0-4, i.e. exactly 81-85) normalizes it, so the public switch state is already normalized and must not be inverted again. The Switch Locations parts list (2-40) and the SWITCH MATRIX page (3-4) both print this address as \"Opto Made Loop\", the name the ROM gives switch 85. The ROM's own T.1 SWITCH EDGES test (hash-pinned runs runtime.getaway.gw-l5.switch-edges, runtime.getaway.gw-l1.switch-edges, production L-5 and L-1) prints ENTER LEFT RAMP when public 84 is set to 1, with this matrix position's wire colours. pinned gw.c's #defines and the known-working script's handlers group the address the same way, so the label follows the ROM and the two printed pages carry the 84/85 names transposed.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.the-getaway-high-speed-ii.1992",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.gw-v1.2"
+          "vpx-script.gw-v1.2",
+          "runtime.getaway.gw-l5.switch-edges",
+          "runtime.getaway.gw-l1.switch-edges"
         ],
         "status": "validated"
       },
@@ -3757,18 +3737,20 @@
       },
       "id": "switch.matrix-85",
       "kind": "switch",
-      "label": "Enter Left Ramp",
+      "label": "Opto Made Loop",
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-14315 (LED)",
-        "notes": "Printed switch-matrix drive column 8, return row 5. The Switch Locations page prints a paired opto LED/phototransistor part (A-14316 Trans / A-14315 LED) for this address, independently confirmed by the dedicated opto driver board pages (A-15189 Accelerator Board Assembly for 81-83; A-13901-1 Opto Ramp Switch Board Assembly for 84-85), each naming this address's own LED/Transistor connector pins. PinMAME's gwGameData inverted-switch mask (column 8 bits 0-4, i.e. exactly 81-85) normalizes it, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed switch-matrix drive column 8, return row 5. The Switch Locations page prints a paired opto LED/phototransistor part (A-14316 Trans / A-14315 LED) for this address, independently confirmed by the dedicated opto driver board pages (A-15189 Accelerator Board Assembly for 81-83; A-13901-1 Opto Ramp Switch Board Assembly for 84-85), each naming this address's own LED/Transistor connector pins. PinMAME's gwGameData inverted-switch mask (column 8 bits 0-4, i.e. exactly 81-85) normalizes it, so the public switch state is already normalized and must not be inverted again. The Switch Locations parts list (2-40) and the SWITCH MATRIX page (3-4) both print this address as \"Enter Left Ramp\", the name the ROM gives switch 84. The ROM's own T.1 SWITCH EDGES test (hash-pinned runs runtime.getaway.gw-l5.switch-edges, runtime.getaway.gw-l1.switch-edges, production L-5 and L-1) prints OPTO MADE LOOP when public 85 is set to 1, with this matrix position's wire colours. pinned gw.c's #defines and the known-working script's handlers group the address the same way, so the label follows the ROM and the two printed pages carry the 84/85 names transposed.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.the-getaway-high-speed-ii.1992",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.gw-v1.2"
+          "vpx-script.gw-v1.2",
+          "runtime.getaway.gw-l5.switch-edges",
+          "runtime.getaway.gw-l1.switch-edges"
         ],
         "status": "validated"
       },
@@ -4757,7 +4739,7 @@
         "device.diverter-low"
       ],
       "assembly_part_number": "A-15293",
-      "behavior": "A diverter flap (retained table objects Wall29/sc_div) at the base of the Accelerator Return Assembly (A-15293) either sends a ball around the Supercharger loop again or lets it continue toward the left ramp; solenoid 10 (Diverter Low) drives the retained script's SuperchargerDiverter handler, which rotates sc_div and toggles Wall29's collidability. Solenoid 1 (Diverter High) has no SolCallback entry in the retained script at all and is not visually implemented by this recreation. Switches 84 and 85 sit on the dedicated A-13901-1 Opto Ramp Switch Board (one each) at this same mechanism, but which physical position (ramp entrance versus loop-completion point) corresponds to which address is a genuine, unresolved disagreement between the manual's own Switch Locations labels and the retained script's runtime behavior; see conflict.switch-84-85-manual-vs-script-semantics. This recreation's SW81_Hit-style velocity boost does not extend to switch 84 or 85; 85 only plays a distinct \"sc_loop2\" sound and 84 only plays a generic \"rollover\" sound.",
+      "behavior": "A diverter flap (retained table objects Wall29/sc_div) at the base of the Accelerator Return Assembly (A-15293) either sends a ball around the Supercharger loop again or lets it continue toward the left ramp; solenoid 10 (Diverter Low) drives the retained script's SuperchargerDiverter handler, which rotates sc_div and toggles Wall29's collidability. Solenoid 1 (Diverter High) has no SolCallback entry in the retained script at all and is not visually implemented by this recreation. Switches 84 and 85 sit on the dedicated A-13901-1 Opto Ramp Switch Board (one each) at this same mechanism. The ROM's own T.1 SWITCH EDGES test names 84 ENTER LEFT RAMP and 85 OPTO MADE LOOP, so 84 senses the ball entering the left ramp and 85 the completed Supercharger loop; the manual's Switch Locations and SWITCH MATRIX pages print the two names transposed. This recreation's SW81_Hit-style velocity boost does not extend to switch 84 or 85; 85 only plays a distinct \"sc_loop2\" sound and 84 only plays a generic \"rollover\" sound.",
       "id": "mechanism.supercharger-diverter",
       "kind": "gate",
       "label": "Supercharger loop entrance/return diverter",
@@ -4765,7 +4747,9 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.williams.the-getaway-high-speed-ii.1992",
-          "vpx-script.gw-v1.2"
+          "vpx-script.gw-v1.2",
+          "runtime.getaway.gw-l5.switch-edges",
+          "runtime.getaway.gw-l1.switch-edges"
         ],
         "status": "validated"
       },
@@ -7135,12 +7119,13 @@
       "kind": "virtual",
       "label": "PinMAME Fast-Flip Game-On State (undeclared for this driver)",
       "physical": {
-        "notes": "Under a normally-configured WPC-Fliptronic driver this channel is PinMAME's synthetic fast-flip game-on state, taken from the driver's own fast-flip RAM flag once wpc_set_fastflip_addr is called. gw.c never calls wpc_set_fastflip_addr, so per src/wpc/wpc.c's core_gameon fallback (lines ~514-518) PinMAME instead mirrors bit 7 of the WPC_GILAMPS register here -- a GI-lamp-related state bit, not a flipper-enable signal. The retained known-working script nonetheless binds SolCallback(31) = \"FastFlips.TiltSol\", the standard nFozzy cFastFlips convention that treats this address as the flipper-enable gate. See conflict.solenoid-31-fastflip-address-not-declared."
+        "notes": "Under a WPC-Fliptronic driver that calls wpc_set_fastflip_addr this channel is PinMAME's synthetic fast-flip game-on state, read from the driver's own fast-flip RAM flag. gw.c never calls it, so per src/wpc/wpc.c's core_gameon fallback (lines ~514-518) PinMAME mirrors bit 7 of the WPC_GILAMPS register here instead. That bit is the CPU's game-on output: wpc.c records that before Fliptronic it drove the real game-on relay, and the gw_l5 ROM still drives it in step with its flipper enable. In the hash-pinned run runtime.getaway.gw-l5.flipper-enable-31 public 31 is 0 in attract mode, where the lower-right flipper button fires nothing; it rises when Start begins ball 1, while the button fires flipper power 45 and holds 46; it falls with the third plumb-bob tilt pulse, after which the button fires nothing; and it rises again for ball 2. The known-working script's SolCallback(31) = \"FastFlips.TiltSol\", the nFozzy cFastFlips convention that treats this address as the flipper-enable gate, therefore reads the state it expects."
       },
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-wpc-fliptronic",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.getaway.gw-l5.flipper-enable-31"
         ],
         "status": "validated"
       },
@@ -11766,7 +11751,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/accelerator-and-opto-ramp-boards.md",
           "reviewed": true,
-          "sha256": "158b88ba0d1aa368b6ecc6d2680b8cdecbe3c8905463de506d686694f74090d6",
+          "sha256": "1afa3d0d6716bba84ee42922a7ce9755dc8e333d3603112e66d762cd975780cb",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11778,7 +11763,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.the-getaway-high-speed-ii.1992/ramp-locations.md",
           "reviewed": true,
-          "sha256": "f850e859f4f7e2e3e904b00bfa6013bd1cdbaa0b6ae40a68d9f3f284abd4ea73",
+          "sha256": "50773a9279819bec845a5b1eafb1cc1f3756d1df3d4447b59148e5fb357df1a3",
           "transcribed_by": "curator, read from the rendered page"
         }
       ],
@@ -11832,6 +11817,33 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; 875 files, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=964 bottom=2162. Raw per-object coordinates and field paths for every switch, lamp, solenoid-driven toy, GI collection member, and mechanism reference object are retained verbatim in external:pinmame-review-artifacts/getaway/vpx-geometry.txt.",
       "uri": "external:pinmame-vpx-sources/williams/the-getaway-high-speed-ii-1992/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.getaway.gw-l5.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of gw_l5 from empty NVRAM (scenario tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 45, 81, 84, 85, then 84, 85 and 45 again, to 1 and then 0, two seconds each. After each address is set to 1 the ROM's top line prints its own name for that matrix position: R BANK MID (45), OPTO 1 (81), ENTER LEFT RAMP (84, wires WHT-YEL GRN-GRY) and OPTO MADE LOOP (85, wires WHT-GRN GRN-GRY).",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-fliptronic/getaway-gw_l5-switch-edges.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.getaway.gw-l1.switch-edges",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of gw_l1 from empty NVRAM (scenario tools/harness-scenarios/wpc-fliptronic/gw-switch-edges-84-85.json) that opens the ROM's T.1 SWITCH EDGES test and sets public 45, 81, 84, 85, then 84, 85 and 45 again, to 1 and then 0, two seconds each. After each address is set to 1 the ROM's top line prints its own name for that matrix position: R BANK MID (45), OPTO 1 (81), ENTER LEFT RAMP (84, wires WHT-YEL GRN-GRY) and OPTO MADE LOOP (85, wires WHT-GRN GRN-GRY).",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-fliptronic/getaway-gw_l1-switch-edges.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.getaway.gw-l5.flipper-enable-31",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of gw_l5 from empty NVRAM (scenario tools/harness-scenarios/wpc-fliptronic/gw-flipper-enable-31.json) that compares public solenoid 31 with the ROM's own flipper response. Public 31 is 0 in attract mode, where the Fliptronic lower-right button (112) fires nothing. It rises when Start begins ball 1, and the button then fires lower-right flipper power 45 and holds 46. It falls with the third plumb-bob tilt pulse, after which the button fires nothing, and rises again when ball 2 begins, when the button fires 45 and 46 once more.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-fliptronic/getaway-gw_l5-flipper-enable-31.json"
     }
   ]
 }

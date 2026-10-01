@@ -42,7 +42,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 77 | Whirlwind | `williams.whirlwind.1990` | 81% |
 | 79 | Bram Stoker's Dracula | `williams.bram-stoker-s-dracula.1993` | 94% |
 | 83 | Big Bang Bar | `capcom.big-bang-bar.1996` | 100% |
-| 84 | The Getaway: High Speed II | `williams.the-getaway-high-speed-ii.1992` | 75% |
+| 84 | The Getaway: High Speed II | `williams.the-getaway-high-speed-ii.1992` | 88% |
 | 86 | World Cup Soccer | `midway.world-cup-soccer.1994` | 88% |
 | 87 | Congo | `williams.congo.1995` | 94% |
 | 88 | X-Men | `stern.x-men-limited-edition.2012` | 100% |

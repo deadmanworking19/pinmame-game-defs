@@ -1,0 +1,192 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot a Getaway ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game, so one byte-identical file serves every gw_* driver it is run against (gw_l5 and gw_l1). Leave the fresh-NVRAM message loop with Escape, step past the power-up TEST REPORT, the game identification and the sound revision screens, navigate the service menu to T.1 SWITCH EDGES and start it, then drive each public edge separately, holding each level for 2 s: 45 (Right Bank Middle, an ordinary switch), 81 (Opto 1, a printed opto that gwGameData's inverted-switch mask normalizes), and 84 and 85 (the two A-13901-1 Opto Ramp Switch Board optos, also normalized by the mask). The ROM's top display line names a switch while it reads it as active, so the name it prints after each address is set to 1 is the ROM's own label for that matrix position.",
+  "initial_switches": [
+    {
+      "switch": 22,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    45,
+    81,
+    84,
+    85
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 15.0,
+      "label": "Escape out of the fresh-NVRAM loop"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "Enter 1 (TEST REPORT)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "Enter 2 (game identification)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "Up 1 (sound revision)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "Up 2 (PRESS ENTER FOR MAIN MENU)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "Up 3 (P. PRINTOUTS)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "Up 4 (T. TESTS)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "Enter 4 (test menu, T.1 SWITCH EDGES)"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "Enter 5 (start T.1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "45 -> 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "45 -> 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "81 -> 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "81 -> 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "84 -> 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "84 -> 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "85 -> 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "85 -> 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "84 -> 1 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "84 -> 0 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "85 -> 1 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "85 -> 0 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "45 -> 1 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "45 -> 0 again"
+    }
+  ]
+}
