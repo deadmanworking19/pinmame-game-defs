@@ -55,6 +55,25 @@ def load_json(path: Path) -> dict:
 	return json.loads(path.read_text(encoding="utf-8"))
 
 
+def timeline_mismatches(run: dict, address: int, timeline: list[tuple[str, int]]) -> list[str]:
+	"""Every change of the address must happen in the listed step, in the listed direction, in the listed order."""
+	steps = {step["label"]: step for step in run["steps"]}
+	problems = []
+	states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address]
+	if states != [state for _, state in timeline]:
+		problems.append(f"transitions {states}")
+	for label, state in timeline:
+		changed = [item["states"] for item in steps[label]["transitions"]["solenoids"] if item["number"] == address]
+		if changed != [[state]]:
+			problems.append(f"{label}: {changed}")
+	return problems
+
+
+def seven_segment(values: list[int]) -> int:
+	# Bit 7 is the digit's comma.
+	return int("".join(SEVEN_SEGMENT[value & 0x7F] for value in values) or "0")
+
+
 class LegacyLabelSettlementTests(unittest.TestCase):
 	def test_every_settlement_is_applied_exactly(self) -> None:
 		for settlement in tool.SETTLEMENTS:
@@ -171,7 +190,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					self.assertTrue(matches, item["label"])
 				if bank:
 					def score(label: str) -> int:
-						return int("".join(SEVEN_SEGMENT[value] for value in by_label[label]["displays"][0]["segments"]) or "0")
+						return seven_segment(by_label[label]["displays"][0]["segments"])
 
 					def lit(label: str) -> set[int]:
 						return {item["number"] for item in raw_steps[label]["transitions"]["lamps"] if item["states"][-1]}
@@ -197,11 +216,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					self.assertTrue(any(time < start for time in rises))
 					self.assertFalse(any(start - 3 <= time <= end for time in drops))
 				elif timeline:
-					states = [event["state"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == address]
-					self.assertEqual([state for _, state in timeline], states)
-					for label, state in timeline:
-						changed = [item["states"] for item in raw_steps[label]["transitions"]["solenoids"] if item["number"] == address]
-						self.assertEqual([[state]], changed, label)
+					self.assertEqual([], timeline_mismatches(run, address, timeline))
 				elif paired:
 					rises = [event for event in run["events"] if event["event"] == "solenoid" and event["state"]]
 					self.assertEqual(observations["ordered_solenoid_on_sequence"], [event["number"] for event in rises][-len(observations["ordered_solenoid_on_sequence"]):])
@@ -277,6 +292,31 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 		inconsistent["conflicts"].append({"id": "conflict.other", "path": "binding:pinmame.output.solenoid/18/None", "description": "x", "source_refs": []})
 		with self.assertRaisesRegex(RuntimeError, "omits unresolved_conflicts"):
 			tool.settle(inconsistent, settlement)
+
+	def test_the_timeline_check_rejects_a_reversed_transition(self) -> None:
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not set")
+		for (source_id, address), timeline in TIMELINES.items():
+			with self.subTest(source=source_id):
+				(settlement,) = [item for item in tool.SETTLEMENTS if item["source"]["id"] == source_id]
+				evidence = load_json(ROOT / settlement["source"]["uri"][len("internal:"):])
+				raw = evidence["runtime"]["raw_runs"][-1]
+				run = load_json(Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):])
+				self.assertEqual([], timeline_mismatches(run, address, timeline))
+				# The checkpoints accept either direction, so the check must catch a rise where a drop belongs.
+				label, state = timeline[-1]
+				reversed_step = json.loads(json.dumps(run))
+				for step in reversed_step["steps"]:
+					if step["label"] == label:
+						for item in step["transitions"]["solenoids"]:
+							if item["number"] == address:
+								item["states"] = [1 - state]
+				self.assertTrue(timeline_mismatches(reversed_step, address, timeline))
+				reversed_event = json.loads(json.dumps(run))
+				(last,) = [event for event in reversed_event["events"] if event["event"] == "solenoid" and event["number"] == address][-1:]
+				last["state"] = 1 - last["state"]
+				self.assertTrue(timeline_mismatches(reversed_event, address, timeline))
 
 	def test_the_tool_check_mode_passes(self) -> None:
 		import subprocess
