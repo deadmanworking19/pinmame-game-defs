@@ -1,0 +1,1438 @@
+{
+  "driver_ids": [
+    "bbh_160"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.big-buck-hunter-pro.2010"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game bbh_160 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/stern/bbh-switch-test-sweep.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The scenario uses the named S.A.M. Back and Select keys only to reach the switch test; every held address is a direct public switch write in the playfield matrix. Each held frame's interpreted_text transcribes the switch name and LAST SW line; the wire-colour line below them is not transcribed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "bbh_160",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            4,
+            5
+          ],
+          "display_index": 0,
+          "interpreted_text": "BIG BUCK HUNTER PRO / U.S.A. V1.6 / ENGLISH",
+          "label": "power-up identification",
+          "nonzero_pixels": 464,
+          "pixel_sha256": "0a6130bb1cc55844eaf81d3e66f8aacc667f635d3727788baf35aafcdc08f8dd"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE",
+          "label": "switch test started with every public switch at 0; the grid marks no switch active",
+          "nonzero_pixels": 431,
+          "pixel_sha256": "2c951c937b8a95d29a3da5058e2bde8a65b2c3377b91ef01df24d2fbbc2e3bc5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BUCK HIT / LAST SW. #1",
+          "label": "switch test while public 1 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 661,
+          "pixel_sha256": "e2961f6b8d972bc3f7fae1aec4dfafa056f7bbbd82ab84affe045d8729dd6fe8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #2 / LAST SW. #2",
+          "label": "switch test while public 2 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 687,
+          "pixel_sha256": "25bd21ef6f259f30f81f25d662b0238d59b4bc9a763eb458ec226daa09402bb0"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #3 / LAST SW. #3",
+          "label": "switch test while public 3 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 686,
+          "pixel_sha256": "9aeeb3de3913f336fd2b3df0291154c8a527e84a06f0edbe2e28c9662d34e670"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #4 / LAST SW. #4",
+          "label": "switch test while public 4 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 675,
+          "pixel_sha256": "4c29e00e33c8f79f99c0589b494b97fa436e7b87433daa417c2a2c6bab5abf6d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / L. RAMP ENTRANCE / LAST SW. #5",
+          "label": "switch test while public 5 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 731,
+          "pixel_sha256": "5ea616ff04db00040561fe81e97143bb2f6de8fd6c2f20592d4e4dcc7841572b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT ORBIT / LAST SW. #6",
+          "label": "switch test while public 6 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 685,
+          "pixel_sha256": "9a95f4473276e411550d7e76244eeedc03f50deb97e802e237d86c0f9ae7e3c8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT TOP LANE / LAST SW. #7",
+          "label": "switch test while public 7 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 702,
+          "pixel_sha256": "7306203e5b068d3b6707c2378c4d6d0eade26047333644a28e250ff48618b292"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / CENTER TOP LANE / LAST SW. #8",
+          "label": "switch test while public 8 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 728,
+          "pixel_sha256": "bcd5a90463e1873b9fcdebcbe5872251247806e7dca87f5040bfca320fcf00a6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT TOP LANE / LAST SW. #9",
+          "label": "switch test while public 9 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 716,
+          "pixel_sha256": "b36b5f535dceb65d3ecfdea378eaed833d116387d98765784d100cb500a735bc"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BU(C)K / LAST SW. #10",
+          "label": "switch test while public 10 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 661,
+          "pixel_sha256": "d0720efcf191f00b2d9eb4c95c11f032841d29773c90a3cb20984004b75e7418"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #11 / LAST SW. #11",
+          "label": "switch test while public 11 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "c27a6eb9a5c7ae8b03cda20ad249c9509d29f69f6d5811545f477ec7db769e59"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #12 / LAST SW. #12",
+          "label": "switch test while public 12 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "77c503286397e9f9e91e258c13ce653c82640f50e087c59832bacddd5db86949"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT ORBIT / LAST SW. #13",
+          "label": "switch test while public 13 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 706,
+          "pixel_sha256": "5e0bc9d5732da080f23bb096bb95d0fabe682bc9a1e969a32f47f09bcfd6e84e"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / L. RAMP EXIT / LAST SW. #14",
+          "label": "switch test while public 14 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 693,
+          "pixel_sha256": "9641524678a523fa1e322e5edf13949171e556ae7dc94f5abea16feb4f53013a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TOURNAMENT START / LAST SW. #15",
+          "label": "switch test while public 15 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "3d0c8d6cdafbb393315eae50f3f19dd71cb91a28699c5d894024ef5498f8d009"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / START BUTTON / LAST SW. #16",
+          "label": "switch test while public 16 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 714,
+          "pixel_sha256": "e6ee5b8a53e17bc893e50a63dde15bf3431f70a2852a62bb4bacaa0aeec23553"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #17 / LAST SW. #17",
+          "label": "switch test while public 17 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 686,
+          "pixel_sha256": "955fb15622733f473c10ccb27e622abd321edad0e02d5abefa507fc477d962e3"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #4 (L) / LAST SW. #18",
+          "label": "switch test while public 18 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "1c798d05cfbd6c7ee1bbced3000b375358e17714c31207b99ba7bed94ca37a82"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #3 / LAST SW. #19",
+          "label": "switch test while public 19 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "3bc2a712a68e02cb56710354dcc6751471ca38f81b34ead1f1dd3af168bd21b6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #2 / LAST SW. #20",
+          "label": "switch test while public 20 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 697,
+          "pixel_sha256": "8c50a180247306b0531de14ae4b61bc68a272991eb0e4afc17ee38124d22e969"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #1 (R) / LAST SW. #21",
+          "label": "switch test while public 21 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 712,
+          "pixel_sha256": "c96a82875ebff7cf51b72229131dcdfa5136d5a605de90b798f851095e9c2a64"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH JAM / LAST SW. #22",
+          "label": "switch test while public 22 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "b693dee256f33a40159e0030fc61bffdb23e60c1b7bba7dee2cb491e70418ee2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SHOOTER LANE / LAST SW. #23",
+          "label": "switch test while public 23 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 722,
+          "pixel_sha256": "68ea9cd6da3de9fa545e2c4580d60b12895f1dece8101d9677e64800ce54f78b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT OUTLANE / LAST SW. #24",
+          "label": "switch test while public 24 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "8009d07ac6e3f6eef743dd23f0c8e753a327f06a581fa3a647df0e7a4358d65d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / (E)LK / LAST SW. #25",
+          "label": "switch test while public 25 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 647,
+          "pixel_sha256": "c78fe1a8488260863a8f3698317e7482824c7ab9b587ebcaa8a6903e18330388"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT SLINGSHOT / LAST SW. #26",
+          "label": "switch test while public 26 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 727,
+          "pixel_sha256": "04c3410905b15b1ae2a29638e1f212711e221498c2ced88987d1e2e19598bed4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT SLINGSHOT / LAST SW. #27",
+          "label": "switch test while public 27 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 737,
+          "pixel_sha256": "d102a72dea163e5f345e515c0ee1f30681abf7d2f2a4745a08aba9c947fdc019"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / E(L)K / LAST SW. #28",
+          "label": "switch test while public 28 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 646,
+          "pixel_sha256": "7ebcfd819067ca162395713559039fd6fe67768f51c79bf8dabeb55b54def9b8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT OUTLANE / LAST SW. #29",
+          "label": "switch test while public 29 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 730,
+          "pixel_sha256": "b5a3f7bede25dc4a59a08ed55eafc7fec4fa5afba4f5abae8eb2128ef6946103"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT BUMPER / LAST SW. #30",
+          "label": "switch test while public 30 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 707,
+          "pixel_sha256": "f18a68e9b65a8d9f3e9f0bd5ff6d4277c570b7fdbabecb39418ed0668cce578d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT BUMPER / LAST SW. #31",
+          "label": "switch test while public 31 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 719,
+          "pixel_sha256": "e8b3f12a71e7b366cfc6b77d0636a431b9ab977542ae6992c9d635f8a64a3e48"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BOTTOM BUMPER / LAST SW. #32",
+          "label": "switch test while public 32 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 738,
+          "pixel_sha256": "40a22029ab53b76db90cd4eddc7b6f2fee38d1f07528afd74263f35177f9b3bf"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / EL(K) / LAST SW. #33",
+          "label": "switch test while public 33 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 644,
+          "pixel_sha256": "d085a6b47812fed7c5f847165ce8e6d16a8c9e5f6e7bfe28ef914cba64f21743"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RAM OPTO / LAST SW. #34",
+          "label": "switch test while public 34 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 686,
+          "pixel_sha256": "ab6579bd22dcafdd2c029c18af8df87097a07bf76782eea0387f1618e8494840"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BIRD TARGET / LAST SW. #35",
+          "label": "switch test while public 35 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 708,
+          "pixel_sha256": "4a3c6bfdda813771a4f906cf5e2f3248e3d85b6d001d6518ee63f57163eb68b0"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / B(U)CK / LAST SW. #36",
+          "label": "switch test while public 36 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 658,
+          "pixel_sha256": "d078234d4fb5d852bd9a43705216040c08e650b90ce7d49ae061ae58468a8e93"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BUCK WHEEL OPTO #1 / LAST SW. #37",
+          "label": "switch test while public 37 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 761,
+          "pixel_sha256": "c3abe4a010f3cb8d5e7c1e7b50b6dfe5ed33d6e8dd093857ab692d4745f0feec"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / (B)UCK / LAST SW. #38",
+          "label": "switch test while public 38 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 663,
+          "pixel_sha256": "08d8397e79e172cad8fb3cb7a784edf7cb124836a553b418d5a661a88cf3bf1b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BUC(K) / LAST SW. #39",
+          "label": "switch test while public 39 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 664,
+          "pixel_sha256": "781d43e9e3ec6d4c92ac2949bda64040df3e54e2816674c6818b8c485884121a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / JUG 1 (TOP) / LAST SW. #40",
+          "label": "switch test while public 40 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 685,
+          "pixel_sha256": "0ef2ba3e2dd9d701eb52e4d1d3e5989304bf29d7c70cd8d938d62879df871f51"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / JUG 2 / LAST SW. #41",
+          "label": "switch test while public 41 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 644,
+          "pixel_sha256": "d9db119381d3a3ea4dc187bdd9b1cd8cfc9e98147645af65539eb982c0569a84"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / JUG 3 (BOT) / LAST SW. #42",
+          "label": "switch test while public 42 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 688,
+          "pixel_sha256": "46c854fbac3afa9562d9650621b6fec1353efff578fc0a86f8f89e11ec5f38d8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BIRD OPTO / LAST SW. #43",
+          "label": "switch test while public 43 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 691,
+          "pixel_sha256": "7ca8caafc407ab6f49348ea1eddb84c20f9691c9ddea5a87a1a4254edec34949"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SPINNER / LAST SW. #44",
+          "label": "switch test while public 44 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 672,
+          "pixel_sha256": "893e18815b0e4f96237b9bfd7fd4350c53e416f17230d9563384f759f86fa6ad"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BUCK WHEEL OPTO #2 / LAST SW. #45",
+          "label": "switch test while public 45 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 769,
+          "pixel_sha256": "29bc0302d9e3268dd7405f5c0b33814b4f6388db032aa4600c5d4c0d582d2385"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #46 / LAST SW. #46",
+          "label": "switch test while public 46 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "68195ca5cd4c067ae2308c43df7f27e1b57c0e3cbcd581d2db2fe6e187d40a38"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #47 / LAST SW. #47",
+          "label": "switch test while public 47 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 692,
+          "pixel_sha256": "72d5208afe55b6303ebb5a83e4d86aea42ff5e1bb52f1a48cb78184a27bfc316"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #48 / LAST SW. #48",
+          "label": "switch test while public 48 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 705,
+          "pixel_sha256": "eb51d2de7d5dea2201f97e63bbee4089f65bc4c65251e0bf4bf6bcbbbafbd46b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #49 / LAST SW. #49",
+          "label": "switch test while public 49 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 690,
+          "pixel_sha256": "2e8a82b70061b213ccbd243730ff10da94440fcce581b2b5fda4846eb428202b"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #50 / LAST SW. #50",
+          "label": "switch test while public 50 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "da9b0729d3724bd922b670cf9934cf5f86ca9d8dfec8e380fcdf666580cddf9a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #51 / LAST SW. #51",
+          "label": "switch test while public 51 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "af0789b9ec247a878c83c0aef9c560b8ed0ba5a4ad702efe1d66172d04138643"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #52 / LAST SW. #52",
+          "label": "switch test while public 52 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "b70eb2da3af7f18b02943e858ca1f7999a28086e5eab0e82bee1c6afe617596d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #53 / LAST SW. #53",
+          "label": "switch test while public 53 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "3dbf265259ce5741a04a8705dc7f104e7bd909bcf014b600be5f090342e75341"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #54 / LAST SW. #54",
+          "label": "switch test while public 54 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 693,
+          "pixel_sha256": "5a285381c9a924d0f412b4dda3ae687404c8c4905b5e018ba4464abc62459931"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #55 / LAST SW. #55",
+          "label": "switch test while public 55 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 701,
+          "pixel_sha256": "64f289cb7cebde7b776bc4a3ebc5c175c0beaf83e3ef08011b5faa4aa2acf3cf"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #56 / LAST SW. #56",
+          "label": "switch test while public 56 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "c46b332e30c49e791011ed1a2a29ab910dd9cb29e5f127592b4869811917b043"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #57 / LAST SW. #57",
+          "label": "switch test while public 57 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 688,
+          "pixel_sha256": "7c7da3c5df94240baebc250a6f7694048aa70ca5bb5f0999bd2d0bc4da894fad"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #58 / LAST SW. #58",
+          "label": "switch test while public 58 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "540323d178fc7ea1fe23f686b43ac2ef7886801811123b7f0f55684b88b0183c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #59 / LAST SW. #59",
+          "label": "switch test while public 59 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 702,
+          "pixel_sha256": "3610eeab4be5d8545f49c81c6afc24b7e0b1f2f4e57a9991580ddb2d31183358"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #60 / LAST SW. #60",
+          "label": "switch test while public 60 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 697,
+          "pixel_sha256": "1074911059f0c8b8e1a11e78214b0415bcaf376ec736bb81c472880e1f5bbc8c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #61 / LAST SW. #61",
+          "label": "switch test while public 61 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "ee977976d3545d2c3f010f1d078dc7b76fd374fc097999006136cbf2ecf9b76a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #62 / LAST SW. #62",
+          "label": "switch test while public 62 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "b1c554ec6852c04afd0d04d635d303cb42a5d05625c5e0c0c2d21c61d8fc37d1"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #63 / LAST SW. #63",
+          "label": "switch test while public 63 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "395afd5adc43e18b0eb402bb3a78f9d6bc058e6589301508ac6fc319bf8b356d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #64 / LAST SW. #64",
+          "label": "switch test while public 64 is held at 1 (the wire-colour line is not transcribed)",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "b039aee24463f280bd0b79fc4bfee3a21539101494f2a6af753b660cd1a75c3c"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "public 1 held at 1 for 1.2 s: the ROM prints BUCK HIT and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 held at 1 for 1.2 s: the ROM prints SWITCH #2 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "public 3 held at 1 for 1.2 s: the ROM prints SWITCH #3 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "public 4 held at 1 for 1.2 s: the ROM prints SWITCH #4 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "public 5 held at 1 for 1.2 s: the ROM prints L. RAMP ENTRANCE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "public 6 held at 1 for 1.2 s: the ROM prints LEFT ORBIT and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "public 7 held at 1 for 1.2 s: the ROM prints LEFT TOP LANE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "public 8 held at 1 for 1.2 s: the ROM prints CENTER TOP LANE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "public 9 held at 1 for 1.2 s: the ROM prints RIGHT TOP LANE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "public 10 held at 1 for 1.2 s: the ROM prints BU(C)K and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "public 11 held at 1 for 1.2 s: the ROM prints SWITCH #11 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 held at 1 for 1.2 s: the ROM prints SWITCH #12 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "public 13 held at 1 for 1.2 s: the ROM prints RIGHT ORBIT and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "public 14 held at 1 for 1.2 s: the ROM prints L. RAMP EXIT and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "public 15 held at 1 for 1.2 s: the ROM prints TOURNAMENT START and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "public 16 held at 1 for 1.2 s: the ROM prints START BUTTON and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "public 17 held at 1 for 1.2 s: the ROM prints SWITCH #17 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "public 18 held at 1 for 1.2 s: the ROM prints TROUGH #4 (L) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "public 19 held at 1 for 1.2 s: the ROM prints TROUGH #3 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "public 20 held at 1 for 1.2 s: the ROM prints TROUGH #2 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "public 21 held at 1 for 1.2 s: the ROM prints TROUGH #1 (R) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "public 22 held at 1 for 1.2 s: the ROM prints TROUGH JAM and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "public 23 held at 1 for 1.2 s: the ROM prints SHOOTER LANE and marks it in its grid, and fires solenoid 2 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "public 24 held at 1 for 1.2 s: the ROM prints LEFT OUTLANE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "public 25 held at 1 for 1.2 s: the ROM prints (E)LK and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "public 26 held at 1 for 1.2 s: the ROM prints LEFT SLINGSHOT and marks it in its grid, and fires solenoid 17 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "public 27 held at 1 for 1.2 s: the ROM prints RIGHT SLINGSHOT and marks it in its grid, and fires solenoid 18 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "public 28 held at 1 for 1.2 s: the ROM prints E(L)K and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "public 29 held at 1 for 1.2 s: the ROM prints RIGHT OUTLANE and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "public 30 held at 1 for 1.2 s: the ROM prints LEFT BUMPER and marks it in its grid, and fires solenoid 9 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "public 31 held at 1 for 1.2 s: the ROM prints RIGHT BUMPER and marks it in its grid, and fires solenoid 10 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "public 32 held at 1 for 1.2 s: the ROM prints BOTTOM BUMPER and marks it in its grid, and fires solenoid 11 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "public 33 held at 1 for 1.2 s: the ROM prints EL(K) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "public 34 held at 1 for 1.2 s: the ROM prints RAM OPTO and marks it in its grid, and fires solenoid 12 as it does when the switch closes in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "public 35 held at 1 for 1.2 s: the ROM prints BIRD TARGET and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "public 36 held at 1 for 1.2 s: the ROM prints B(U)CK and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 held at 1 for 1.2 s: the ROM prints BUCK WHEEL OPTO #1 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 held at 1 for 1.2 s: the ROM prints (B)UCK and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "public 39 held at 1 for 1.2 s: the ROM prints BUC(K) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "public 40 held at 1 for 1.2 s: the ROM prints JUG 1 (TOP) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 held at 1 for 1.2 s: the ROM prints JUG 2 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            42
+          ],
+          "input_address": 42,
+          "input_kind": "switch",
+          "label": "public 42 held at 1 for 1.2 s: the ROM prints JUG 3 (BOT) and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            43
+          ],
+          "input_address": 43,
+          "input_kind": "switch",
+          "label": "public 43 held at 1 for 1.2 s: the ROM prints BIRD OPTO and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 held at 1 for 1.2 s: the ROM prints SPINNER and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 held at 1 for 1.2 s: the ROM prints BUCK WHEEL OPTO #2 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "public 46 held at 1 for 1.2 s: the ROM prints SWITCH #46 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 held at 1 for 1.2 s: the ROM prints SWITCH #47 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "public 48 held at 1 for 1.2 s: the ROM prints SWITCH #48 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            49
+          ],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "public 49 held at 1 for 1.2 s: the ROM prints SWITCH #49 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            50
+          ],
+          "input_address": 50,
+          "input_kind": "switch",
+          "label": "public 50 held at 1 for 1.2 s: the ROM prints SWITCH #50 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            51
+          ],
+          "input_address": 51,
+          "input_kind": "switch",
+          "label": "public 51 held at 1 for 1.2 s: the ROM prints SWITCH #51 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            52
+          ],
+          "input_address": 52,
+          "input_kind": "switch",
+          "label": "public 52 held at 1 for 1.2 s: the ROM prints SWITCH #52 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            53
+          ],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "public 53 held at 1 for 1.2 s: the ROM prints SWITCH #53 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            54
+          ],
+          "input_address": 54,
+          "input_kind": "switch",
+          "label": "public 54 held at 1 for 1.2 s: the ROM prints SWITCH #54 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            55
+          ],
+          "input_address": 55,
+          "input_kind": "switch",
+          "label": "public 55 held at 1 for 1.2 s: the ROM prints SWITCH #55 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            56
+          ],
+          "input_address": 56,
+          "input_kind": "switch",
+          "label": "public 56 held at 1 for 1.2 s: the ROM prints SWITCH #56 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            57
+          ],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "public 57 held at 1 for 1.2 s: the ROM prints SWITCH #57 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "public 58 held at 1 for 1.2 s: the ROM prints SWITCH #58 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            59
+          ],
+          "input_address": 59,
+          "input_kind": "switch",
+          "label": "public 59 held at 1 for 1.2 s: the ROM prints SWITCH #59 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            60
+          ],
+          "input_address": 60,
+          "input_kind": "switch",
+          "label": "public 60 held at 1 for 1.2 s: the ROM prints SWITCH #60 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "public 61 held at 1 for 1.2 s: the ROM prints SWITCH #61 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            62
+          ],
+          "input_address": 62,
+          "input_kind": "switch",
+          "label": "public 62 held at 1 for 1.2 s: the ROM prints SWITCH #62 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            63
+          ],
+          "input_address": 63,
+          "input_kind": "switch",
+          "label": "public 63 held at 1 for 1.2 s: the ROM prints SWITCH #63 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            64
+          ],
+          "input_address": 64,
+          "input_kind": "switch",
+          "label": "public 64 held at 1 for 1.2 s: the ROM prints SWITCH #64 and marks it in its grid",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 71,
+        "initial_switches": [],
+        "name": "bbh-160-switch-test-sweep",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, and the ROM came up in attract mode with no factory-reset message to dismiss, so the scenario's only service input before the switch test is Back followed by five Select presses",
+        "retained_from": "external:pinmame-review-artifacts/big-buck-hunter-pro-2010/harness/switch-test-sweep/bbh_160/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/bbh-switch-test-sweep.json",
+        "scenario_sha256": "7c6fe9c2fe016c9d9976d88f082280add6616e1b4657f8935572f78fea3e3283",
+        "self_test_pulses": 0,
+        "sha256": "a25fd388fdf6f2ddaaf86fbe789380bbce855d5a88ec08892cdb9431cae7d8a5",
+        "snapshot_count": 136,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      }
+    ],
+    "rom_archive_sha256": "82f0101cc2dc1a8888a7ef6e5ccb0bcdd98eb15257caa3cc864c02b7a3e6b94b"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest bbh_160/manifest.json SHA-256 ea7382983e26c11ea18a97c98b974c7538584f40cb0dd8b8c25c8aa0498dab45 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/big-buck-hunter-pro-2010/harness/switch-test-sweep/bbh_160",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "a25fd388fdf6f2ddaaf86fbe789380bbce855d5a88ec08892cdb9431cae7d8a5"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

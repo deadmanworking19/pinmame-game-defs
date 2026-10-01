@@ -60,6 +60,19 @@ VPX_SCRIPT_V10_SOURCE = "vpx-script.bbh-stern-2010-v1.10"
 VPX_EXTRACTION_V10_SOURCE = "vpx-extraction.bbh-stern-2010-v1.10"
 RUNTIME_ATTRACT_SOURCE = "runtime-scenario.bbh-attract-observe"
 ROM_SOURCE = "rom.stern.big-buck-hunter-pro"
+# The ROM's own switch test names every matrix switch and marks it in its grid while the ROM reads it as
+# active. The Avengers LE control run shows this is the ROM's logical reading (its active-low Loki optos are
+# named at public 0); here every switch reads inactive at 0, and the six optos read active at 1.
+SWITCH_TEST_SOURCES = {
+	"bbh_160": "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+	"bbh_170": "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+}
+SWITCH_TEST_CONTROL_SOURCE = "runtime.avengers-limited-edition.switch-test-loki-control"
+SWITCH_TEST_REFS = (*SWITCH_TEST_SOURCES.values(), SWITCH_TEST_CONTROL_SOURCE)
+ROM_SWITCH_TEST_OPTOS = {
+	21: "TROUGH #1 (R)", 22: "TROUGH JAM", 34: "RAM OPTO", 37: "BUCK WHEEL OPTO #1", 43: "BIRD OPTO",
+	45: "BUCK WHEEL OPTO #2",
+}
 
 TABLE_SHA256 = "347f5533c2a673611eec9689b8c2ab7456e01db94ea8cae1082eec2545d80626"
 SCRIPT_SHA256 = "da706d513c20c0936013e7c76eba6394408b20a6e9c7e9526873c969211b2e5c"
@@ -597,6 +610,41 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "pinmame-game-defs curation harness run",
 		},
+	] + [
+		{
+			"id": source_id,
+			"kind": "runtime_scenario",
+			"uri": f"internal:evidence/runtime/sam/big-buck-hunter-pro-{game}-switch-test-sweep.json",
+			"revision": PINMAME_REVISION,
+			"locator": (
+				f"One hash-pinned LibPinMAME harness run of {game} from empty NVRAM (scenario "
+				"tools/harness-scenarios/stern/bbh-switch-test-sweep.json) that enters the S.A.M. switch test "
+				"(Back, then Select five times) and holds every matrix switch 1-64 at public 1 for 1.2 s in turn. "
+				"With every switch at 0 the grid marks none active; each held switch is named and marked, among "
+				"them the optos TROUGH #1 (R) (21), TROUGH JAM (22), RAM OPTO (34), BUCK WHEEL OPTO #1 (37), BIRD "
+				"OPTO (43) and BUCK WHEEL OPTO #2 (45). Holding 23, 26, 27, 30, 31, 32 and 34 also fires solenoids "
+				"2, 17, 18, 9, 10, 11 and 12."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		}
+		for game, source_id in SWITCH_TEST_SOURCES.items()
+	] + [
+		{
+			"id": SWITCH_TEST_CONTROL_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "internal:evidence/runtime/sam/avengers-limited-edition-switch-test-loki-control.json",
+			"revision": PINMAME_REVISION,
+			"locator": (
+				"A control run of the Avengers Limited Edition 1.7 ROM from empty NVRAM (scenario "
+				"tools/harness-scenarios/stern/avs-switch-test-loki-control.json). Its known-working script drives "
+				"the Loki lock optos 49-51 active-low, and its switch test marks them in the grid at public 0, prints "
+				"NONE while 49 is held at 1 and LOKI LOCK 1 (BOT) when it returns to 0: the S.A.M. switch test "
+				"reports the ROM's logical reading, not the raw public level."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -871,13 +919,13 @@ def matrix_label(address: int) -> tuple[str, str | None, str]:
 	if address == 33:
 		return ("Rollover (right side)", "script SW33_Hit/SW33_unHit", "observed")
 	if address == 34:
-		return ("Kickback Ram Ball Sense", "script sw34_Hit/sw34_UnHit maintained with the RamFire kick logic; object Kicker.sw34", "observed")
+		return ("Ram Opto", "script sw34_Hit/sw34_UnHit maintained with the RamFire kick logic; object Kicker.sw34; the ROM's switch test names it RAM OPTO", "observed")
 	if address == 35:
 		return ("Stand-Up Target", "script sw35_hit pulses 35; object HitTarget.sw35", "observed")
 	if address == 36:
 		return ("Stand-Up Target", "script sw36_hit pulses 36; object HitTarget.sw36", "observed")
 	if address == 37:
-		return ("Buck Drive Position Opto A", "named 'opto switch 37' by the retained script's commented-out Buck animation code; the magna-save right key also pulses it as a manual Buck-advance convenience", "candidate")
+		return ("Buck Wheel Opto #1", "named 'opto switch 37' by the retained script's commented-out Buck animation code and BUCK WHEEL OPTO #1 by the ROM's switch test; the magna-save right key also pulses it as a manual Buck-advance convenience", "observed")
 	if address == 38:
 		return ("Stand-Up Target", "script sw38_hit pulses 38; object HitTarget.sw38", "observed")
 	if address == 39:
@@ -889,11 +937,11 @@ def matrix_label(address: int) -> tuple[str, str | None, str]:
 	if address == 42:
 		return ("Stand-Up Target", "script sw42_hit pulses 42; object HitTarget.sw42", "observed")
 	if address == 43:
-		return ("Rollover (upper playfield)", "script sw43_Hit/sw43_unHit maintained; object Trigger.sw43", "observed")
+		return ("Bird Opto", "script sw43_Hit/sw43_unHit maintained; object Trigger.sw43; the ROM's switch test names it BIRD OPTO", "observed")
 	if address == 44:
 		return ("Spinner", "script sw44_Spin pulses 44; object Spinner.sw44", "observed")
 	if address == 45:
-		return ("Buck Drive Position Opto B", "named 'opto switch 45' by the retained script's commented-out Buck animation code", "candidate")
+		return ("Buck Wheel Opto #2", "named 'opto switch 45' by the retained script's commented-out Buck animation code and BUCK WHEEL OPTO #2 by the ROM's switch test", "observed")
 	return (f"Unidentified switch {address}", None, "candidate")
 
 
@@ -910,7 +958,11 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 		"kind": "switch",
 		"binding": {"group": "pinmame.input.switch", "device": address},
 		"aliases": [{"namespace": "pinmame.switch", "value": str(address)}],
-		"provenance": provenance(*(SCRIPT_REFS + (MANUAL_SOURCE,) if address in (18, 19, 20, 21, 22) else SCRIPT_REFS), status=status),
+		"provenance": provenance(
+			*(SCRIPT_REFS + (MANUAL_SOURCE,) if address in (18, 19, 20, 21, 22) else SCRIPT_REFS),
+			*(SWITCH_TEST_REFS if address in ROM_SWITCH_TEST_OPTOS else ()),
+			status=status,
+		),
 	}
 	notes: list[str] = []
 	physical: dict[str, Any] = {}
@@ -932,8 +984,7 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 				"Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) "
 				"180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 "
 				"and SW. 19. Mechanical, normally-open-when-rested construction is the roller "
-				"actuator's own; the emulator normalizes nothing (see "
-				"conflict.sam-invsw-never-populated for the platform-wide polarity caveat)."
+				"actuator's own; the emulator normalizes nothing on this platform."
 			)
 		if address in (21, 22):
 			physical["part_number"] = "515-0173-00 (TX) / 515-0174-00 (RX)"
@@ -944,18 +995,38 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 				"OPTO REC (515-0174-00) board assemblies, and the cut-away labels them SW. 22 and "
 				"SW. 21. " + ("Position 21 is the kicker-side opto of the pair; position 22 is the "
 				"exit opto the served ball crosses. " if address == 21 else THROUGH_EXIT_PULSE_NOTE + " ")
-				+ "Pinned PinMAME normalizes no switch state on this platform, so the public state "
-				"carries the raw hardware polarity; see conflict.sam-invsw-never-populated."
+				+ "Pinned PinMAME normalizes no switch state on this platform."
 			)
 		if address in (37, 45):
 			physical["switch_type"] = "opto"
 			notes.append(
 				"Construction opto per the retained script's own commented labels ('opto switch 37', "
-				"'opto switch 45'); the manual's deer-track assembly page (PDF page 12) shows the "
-				"track's actuator but carries no electrical table, so the switch count and exact "
-				"addresses behind the Buck drive are not independently confirmed. The retained table "
+				"'opto switch 45') and the ROM's own switch-test name; the manual's deer-track assembly page "
+				"(PDF page 12) shows the track's actuator but carries no electrical table. The retained table "
 				"does not assert either address at runtime; its Buck feedback is the substitute "
 				"writes on the unfitted UK post-save addresses 71/72 instead."
+			)
+		if address in (34, 43):
+			physical["switch_type"] = "opto"
+			notes.append(
+				"Construction opto per the ROM's own switch-test name. The manual's ball-guide assemblies "
+				"(511-5230-04/-05, PDF page 24) carry opto transceivers (500-6775-01) whose switch addresses the "
+				"manual does not state; RAM OPTO and BIRD OPTO are the only matrix switches besides the trough "
+				"and Buck-wheel pairs that the ROM names as optos, but no retained source says which ball guide "
+				"carries which."
+			)
+		if address in ROM_SWITCH_TEST_OPTOS:
+			device["normally_closed"] = False
+			notes.append(
+				f"The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 "
+				f"it prints {ROM_SWITCH_TEST_OPTOS[address]} and marks the switch in its grid while public "
+				f"{address} is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE "
+				"control run shows that the S.A.M. switch test reports the ROM's logical reading (there the "
+				"active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a "
+				"recreation never inverts it. normally_closed is false: sam.c's switch read hands "
+				"coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the "
+				"ROM reads the switch active and rests open."
+				+ (" Holding it at 1 in the switch test also fires the kickback ram, solenoid 12." if address == 34 else "")
 			)
 		if address == 11:
 			notes.append(
@@ -1823,31 +1894,6 @@ def relationships() -> list[dict[str, Any]]:
 def conflicts() -> list[dict[str, Any]]:
 	return [
 		{
-			"id": "conflict.sam-invsw-never-populated",
-			"path": "controller.inversion_applied_by_emulator; inputs[binding.device=21,22,37,45]",
-			"description": (
-				"The controller profile pinmame.sam declares inversion_applied_by_emulator: true as a "
-				"platform capability, matching every WPC profile this project has curated. For Stern "
-				"S.A.M. pinned PinMAME applies none: sam.c's INITGAME macro expands to a positional "
-				"aggregate initializer that stops at the hw sub-struct, so core_gameData->wpc.invSw is "
-				"left at its C zero-initialization default, core.c copies those zeros into "
-				"coreGlobals.invSw at machine init, and no Stern S.A.M. game in sam.c ever assigns "
-				"invSw. This machine's opto-construction evidence is unusually direct and unusually "
-				"incomplete at the same time: the manual's own trough cut-away labels the dual opto "
-				"boards SW. 21 and SW. 22, the retained script's commented Buck code names 'opto "
-				"switch 37' and 'opto switch 45', and the ball-guide assemblies carry opto "
-				"transceivers (500-6775-01) whose switch addresses no retained source states -- so "
-				"physical construction is known for 21/22/37/45 and unmapped for at least two more "
-				"optos, while the emulator-side normalization is known to be absent for all of them. "
-				"The public state of every opto on this machine is raw hardware polarity. Resolution "
-				"path: a LibPinMAME gameplay-harness trace of a legal bbh_160 ROM (whose bytes match "
-				"the pinned revision exactly) observing the idle public state of switches 21, 22, 37 "
-				"and 45 with and without a ball present, plus the boot diagnostic's own switch-status "
-				"page for the unmapped ball-guide optos. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CONTROLLER_SOURCE, ROM_SOURCE],
-		},
-		{
 			"id": "conflict.elk-button-physical-control",
 			"path": "inputs[binding.device=85]",
 			"description": (
@@ -2135,8 +2181,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Promotion to `author_ready` is refused. Two conflicts remain unresolved "
-		"(`conflict.sam-invsw-never-populated`, `conflict.elk-button-physical-control`); the switch "
+		"Promotion to `author_ready` is refused. One conflict remains unresolved "
+		"(`conflict.elk-button-physical-control`); contact polarity is asserted only for the six optos the "
+		"ROM's switch test settled; the switch "
 		"semantics of the 46-64 matrix block and the eight-address 73-80 extended block, the "
 		"identities of eleven solenoids, and lamps 1-2 remain unknown because no electrical table "
 		"exists in any retained source; the attract-mode harness run resolved the other twenty "

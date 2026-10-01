@@ -58,9 +58,18 @@ ATTRACT_OBSERVED_LAMPS = set(range(3, 81))
 STACKED_PRIMITIVE_LAMPS = {27, 28, 29, 30}
 
 EXPECTED_CONFLICT_IDS = {
-	"conflict.sam-invsw-never-populated",
 	"conflict.elk-button-physical-control",
 }
+PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+SWITCH_TEST_SCENARIO = ROOT / "tools" / "harness-scenarios" / "stern" / "bbh-switch-test-sweep.json"
+SWITCH_TEST_SOURCES = {
+	"bbh_160": "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+	"bbh_170": "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+}
+SWITCH_TEST_CONTROL_SOURCE = "runtime.avengers-limited-edition.switch-test-loki-control"
+ROM_SWITCH_TEST_OPTOS = {21: "TROUGH #1 (R)", 22: "TROUGH JAM", 34: "RAM OPTO", 37: "BUCK WHEEL OPTO #1", 43: "BIRD OPTO", 45: "BUCK WHEEL OPTO #2"}
+# Holding these in the switch test fires the coil the ROM pairs with the switch.
+SWITCH_TEST_COILS = {23: [2], 26: [17], 27: [18], 30: [9], 31: [10], 32: [11], 34: [12]}
 
 
 def _load_definition() -> dict:
@@ -526,6 +535,154 @@ class RetainedExtractionTests(unittest.TestCase):
 
 		manifest = curator.verify_extraction_manifest(sources_root)
 		self.assertEqual(len(manifest["files"]), curator.EXTRACTION_FILE_COUNT)
+
+
+
+ROM_SWITCH_NAMES = {
+	1: 'BUCK HIT',
+	5: 'L. RAMP ENTRANCE',
+	6: 'LEFT ORBIT',
+	7: 'LEFT TOP LANE',
+	8: 'CENTER TOP LANE',
+	9: 'RIGHT TOP LANE',
+	10: 'BU(C)K',
+	13: 'RIGHT ORBIT',
+	14: 'L. RAMP EXIT',
+	15: 'TOURNAMENT START',
+	16: 'START BUTTON',
+	18: 'TROUGH #4 (L)',
+	19: 'TROUGH #3',
+	20: 'TROUGH #2',
+	21: 'TROUGH #1 (R)',
+	22: 'TROUGH JAM',
+	23: 'SHOOTER LANE',
+	24: 'LEFT OUTLANE',
+	25: '(E)LK',
+	26: 'LEFT SLINGSHOT',
+	27: 'RIGHT SLINGSHOT',
+	28: 'E(L)K',
+	29: 'RIGHT OUTLANE',
+	30: 'LEFT BUMPER',
+	31: 'RIGHT BUMPER',
+	32: 'BOTTOM BUMPER',
+	33: 'EL(K)',
+	34: 'RAM OPTO',
+	35: 'BIRD TARGET',
+	36: 'B(U)CK',
+	37: 'BUCK WHEEL OPTO #1',
+	38: '(B)UCK',
+	39: 'BUC(K)',
+	40: 'JUG 1 (TOP)',
+	41: 'JUG 2',
+	42: 'JUG 3 (BOT)',
+	43: 'BIRD OPTO',
+	44: 'SPINNER',
+	45: 'BUCK WHEEL OPTO #2',
+}
+
+
+class SwitchTestEvidenceTests(unittest.TestCase):
+	"""The ROM's switch-test sweep settles the six optos; the summaries are tied to the raw runs when retained."""
+
+	def test_the_six_rom_named_optos_are_active_high_and_nothing_else_claims_polarity(self) -> None:
+		definition = _load_definition()
+		switches = _inputs_by_device(definition)
+		refs = set(SWITCH_TEST_SOURCES.values()) | {SWITCH_TEST_CONTROL_SOURCE}
+		for address, device in switches.items():
+			if device["binding"]["group"] != "pinmame.input.switch":
+				continue
+			if address in ROM_SWITCH_TEST_OPTOS:
+				self.assertIs(False, device["normally_closed"], address)
+				self.assertEqual("opto", device["physical"]["switch_type"], address)
+				self.assertIn(ROM_SWITCH_TEST_OPTOS[address], device["physical"]["notes"], address)
+				self.assertIn("never inverts it", device["physical"]["notes"], address)
+				self.assertLessEqual(refs, set(device["provenance"]["source_refs"]), address)
+			else:
+				self.assertNotIn("normally_closed", device, address)
+				self.assertFalse(refs & set(device["provenance"]["source_refs"]), address)
+		self.assertEqual("Ram Opto", switches[34]["label"])
+		self.assertEqual("Bird Opto", switches[43]["label"])
+		self.assertEqual("Buck Wheel Opto #1", switches[37]["label"])
+		self.assertEqual("Buck Wheel Opto #2", switches[45]["label"])
+		self.assertIn("kickback ram, solenoid 12", switches[34]["physical"]["notes"])
+		self.assertNotIn("conflict.sam-invsw-never-populated", json.dumps(definition))
+
+	def _retained(self, evidence: dict, game: str) -> dict | None:
+		import hashlib
+		import os
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return None
+		import build_external_evidence_manifest as manifest
+
+		(raw,) = evidence["runtime"]["raw_runs"]
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		digest = manifest.check_manifest(path.parent, game)
+		# The digest on disk must be the one the summary cites, so a resealed directory cannot pass.
+		self.assertIn(f"{game}/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+		run = json.loads(path.read_text(encoding="utf-8"))
+		self.assertIsNone(run["failure"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		return run
+
+	def test_the_sweep_names_every_matrix_switch_only_while_it_is_held(self) -> None:
+		import hashlib
+
+		scenario_sha256 = hashlib.sha256(SWITCH_TEST_SCENARIO.read_bytes()).hexdigest()
+		self.assertNotIn("game", json.loads(SWITCH_TEST_SCENARIO.read_text(encoding="utf-8")))
+		sources = {source["id"]: source for source in _load_definition()["sources"]}
+		frames: dict[str, list[str]] = {}
+		for game, source_id in SWITCH_TEST_SOURCES.items():
+			with self.subTest(game=game):
+				path = ROOT / "evidence" / "runtime" / "sam" / f"big-buck-hunter-pro-{game}-switch-test-sweep.json"
+				self.assertEqual("internal:" + path.relative_to(ROOT).as_posix(), sources[source_id]["uri"])
+				evidence = json.loads(path.read_text(encoding="utf-8"))
+				self.assertEqual([game], evidence["driver_ids"])
+				self.assertEqual(["stern.big-buck-hunter-pro.2010"], evidence["machine_ids"])
+				runtime = evidence["runtime"]
+				self.assertEqual(PINNED_LIBRARY_SHA256, runtime["emulator"]["sha256"])
+				(raw,) = runtime["raw_runs"]
+				self.assertEqual(scenario_sha256, raw["scenario_sha256"])
+				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+				actions = runtime["observations"]["named_action_observations"]
+				snapshots = runtime["observations"]["diagnostic_snapshots"]
+				self.assertEqual(list(range(1, 65)), [item["input_address"] for item in actions])
+				self.assertEqual(66, len(snapshots))
+				self.assertEqual("SWITCH TEST / NONE", snapshots[1]["interpreted_text"])
+				for item, snapshot in zip(actions, snapshots[2:], strict=True):
+					address = item["input_address"]
+					name = ROM_SWITCH_NAMES.get(address, f"SWITCH #{address}")
+					self.assertEqual(f"SWITCH TEST / {name} / LAST SW. #{address}", snapshot["interpreted_text"])
+					self.assertIn(f"prints {name} ", item["label"])
+					self.assertEqual([address], item["host_stimulus_switch_addresses"])
+					self.assertEqual(SWITCH_TEST_COILS.get(address, []), item["transitioned_solenoid_addresses"])
+				frames[game] = [snapshot["pixel_sha256"] for snapshot in snapshots[1:]]
+				run = self._retained(evidence, game)
+				if run is None:
+					continue
+				by_label = {snap["label"]: snap for snap in run["snapshots"]}
+				expected = [by_label["booted"], by_label["Select 5: switch test"]] + [by_label[f"hold {address} (held)"] for address in range(1, 65)]
+				self.assertEqual(
+					[(snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in expected],
+					[(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots],
+				)
+				for address in range(1, 65):
+					levels = {w["number"]: w["state"] for w in by_label[f"hold {address} (held)"]["watched_switches"]}
+					self.assertEqual(1, levels[address])
+		# Firmware 1.6 and 1.7 draw the identical switch-test page for every switch.
+		self.assertEqual(frames["bbh_160"], frames["bbh_170"])
+
+	def test_the_control_run_is_cited_by_its_own_artifact_name(self) -> None:
+		source = {source["id"]: source for source in _load_definition()["sources"]}[SWITCH_TEST_CONTROL_SOURCE]
+		path = ROOT / source["uri"][len("internal:"):]
+		evidence = json.loads(path.read_text(encoding="utf-8"))
+		self.assertEqual(["stern.avengers-limited-edition.2012"], evidence["machine_ids"])
+		texts = [item["interpreted_text"] for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]]
+		self.assertEqual("SWITCH TEST / NONE / LAST SW. #47", texts[4])
+		self.assertTrue(texts[5].startswith("SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49"))
 
 
 if __name__ == "__main__":

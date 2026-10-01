@@ -1,18 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "The controller profile pinmame.sam declares inversion_applied_by_emulator: true as a platform capability, matching every WPC profile this project has curated. For Stern S.A.M. pinned PinMAME applies none: sam.c's INITGAME macro expands to a positional aggregate initializer that stops at the hw sub-struct, so core_gameData->wpc.invSw is left at its C zero-initialization default, core.c copies those zeros into coreGlobals.invSw at machine init, and no Stern S.A.M. game in sam.c ever assigns invSw. This machine's opto-construction evidence is unusually direct and unusually incomplete at the same time: the manual's own trough cut-away labels the dual opto boards SW. 21 and SW. 22, the retained script's commented Buck code names 'opto switch 37' and 'opto switch 45', and the ball-guide assemblies carry opto transceivers (500-6775-01) whose switch addresses no retained source states -- so physical construction is known for 21/22/37/45 and unmapped for at least two more optos, while the emulator-side normalization is known to be absent for all of them. The public state of every opto on this machine is raw hardware polarity. Resolution path: a LibPinMAME gameplay-harness trace of a legal bbh_160 ROM (whose bytes match the pinned revision exactly) observing the idle public state of switches 21, 22, 37 and 45 with and without a ball present, plus the boot diagnostic's own switch-status page for the unmapped ball-guide optos. Unresolved.",
-      "id": "conflict.sam-invsw-never-populated",
-      "path": "controller.inversion_applied_by_emulator; inputs[binding.device=21,22,37,45]",
-      "source_refs": [
-        "pinmame.core.8371478a7640",
-        "manual.stern.big-buck-hunter-pro.2010",
-        "vpx-script.bbh-stern-2010",
-        "controller-profile.pinmame-sam",
-        "rom.stern.big-buck-hunter-pro"
-      ]
-    },
-    {
       "description": "The retained table binds the Elk diverter's player control to public switch 85, the hardware D-13 'upper left flipper' cabinet position, and the ROM demonstrably reads that bit (sam.c's EOS mirror exists so the ROM's flipper self-test sees D-13/D-14 as a pair). But this machine fits no upper flipper, and the partial manual's cabinet parts tables list only two red flipper button assemblies (item 5, qty 2), the start button (3S) and the tournament button (4T) -- no third side button of any kind. Two readings fit the evidence: the factory harness parallels the left flipper button's switch onto D-13 so the Elk fires off the left flipper button, or a cabinet control exists that the partial manual's tables omit. Nothing retained can distinguish these, and the answer changes what a cabinet builder must wire. Resolution path: a photograph of an unrestored machine's cabinet wiring where the D-9 to D-16 return harness is visible, or a continuity check of the left flipper button switch against the CPU board's flipper-column connector on real hardware. Unresolved.",
       "id": "conflict.elk-button-physical-control",
       "path": "inputs[binding.device=85]",
@@ -1106,7 +1094,7 @@
       "kind": "switch",
       "label": "Trough #4 (entry, left)",
       "physical": {
-        "notes": "Retained-evidence role: script trough ball stack order 21,20,19,18; manual cut-away label SW. 18 on a roller microswitch (item 9, 180-5119-02). Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing (see conflict.sam-invsw-never-populated for the platform-wide polarity caveat).",
+        "notes": "Retained-evidence role: script trough ball stack order 21,20,19,18; manual cut-away label SW. 18 on a roller microswitch (item 9, 180-5119-02). Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing on this platform.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -1154,7 +1142,7 @@
       "kind": "switch",
       "label": "Trough #3",
       "physical": {
-        "notes": "Retained-evidence role: script trough order; manual cut-away label SW. 19 on a roller microswitch. Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing (see conflict.sam-invsw-never-populated for the platform-wide polarity caveat).",
+        "notes": "Retained-evidence role: script trough order; manual cut-away label SW. 19 on a roller microswitch. Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing on this platform.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -1202,7 +1190,7 @@
       "kind": "switch",
       "label": "Trough #2",
       "physical": {
-        "notes": "Retained-evidence role: script trough order; the manual orders three roller microswitches (item 9, qty 3) and labels two of them SW. 18 and SW. 19, so the third is this position by the assembly's own count and the script's order. Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing (see conflict.sam-invsw-never-populated for the platform-wide polarity caveat).",
+        "notes": "Retained-evidence role: script trough order; the manual orders three roller microswitches (item 9, qty 3) and labels two of them SW. 18 and SW. 19, so the third is this position by the assembly's own count and the script's order. Manual PDF page 3: trough item 9 is three Micro Switch (Roller Actuator, Lite-Force) 180-5119-02 with item 10 protect plates, and the cut-away labels two of them SW. 18 and SW. 19. Mechanical, normally-open-when-rested construction is the roller actuator's own; the emulator normalizes nothing on this platform.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -1249,9 +1237,10 @@
       "id": "switch.matrix-21",
       "kind": "switch",
       "label": "Trough #1 (kicker position, dual-opto board)",
+      "normally_closed": false,
       "physical": {
         "location": "dual opto transmitter/receiver boards at the trough exit",
-        "notes": "Retained-evidence role: script trough order; manual cut-away label SW. 21 on the dual opto board pair (items 12/13, 515-0173-00 / 515-0174-00). Manual PDF page 3: trough items 12/13 are the Dual OPTO TRANS (515-0173-00) and Dual OPTO REC (515-0174-00) board assemblies, and the cut-away labels them SW. 22 and SW. 21. Position 21 is the kicker-side opto of the pair; position 22 is the exit opto the served ball crosses. Pinned PinMAME normalizes no switch state on this platform, so the public state carries the raw hardware polarity; see conflict.sam-invsw-never-populated.",
+        "notes": "Retained-evidence role: script trough order; manual cut-away label SW. 21 on the dual opto board pair (items 12/13, 515-0173-00 / 515-0174-00). Manual PDF page 3: trough items 12/13 are the Dual OPTO TRANS (515-0173-00) and Dual OPTO REC (515-0174-00) board assemblies, and the cut-away labels them SW. 22 and SW. 21. Position 21 is the kicker-side opto of the pair; position 22 is the exit opto the served ball crosses. Pinned PinMAME normalizes no switch state on this platform. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints TROUGH #1 (R) and marks the switch in its grid while public 21 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "515-0173-00 (TX) / 515-0174-00 (RX)",
         "switch_type": "opto"
       },
@@ -1259,7 +1248,10 @@
         "source_refs": [
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010",
-          "manual.stern.big-buck-hunter-pro.2010"
+          "manual.stern.big-buck-hunter-pro.2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -1298,9 +1290,10 @@
       "id": "switch.matrix-22",
       "kind": "switch",
       "label": "Trough Exit Opto",
+      "normally_closed": false,
       "physical": {
         "location": "dual opto transmitter/receiver boards at the trough exit",
-        "notes": "Retained-evidence role: manual cut-away label SW. 22 on the dual opto board pair; The retained script pulses this address from inside solTrough (vpmTimer.PulseSw 22) as the served ball leaves, which is the ball crossing the exit opto rather than the coil actuating a switch.. Manual PDF page 3: trough items 12/13 are the Dual OPTO TRANS (515-0173-00) and Dual OPTO REC (515-0174-00) board assemblies, and the cut-away labels them SW. 22 and SW. 21. The retained script pulses this address from inside solTrough (vpmTimer.PulseSw 22) as the served ball leaves, which is the ball crossing the exit opto rather than the coil actuating a switch. Pinned PinMAME normalizes no switch state on this platform, so the public state carries the raw hardware polarity; see conflict.sam-invsw-never-populated.",
+        "notes": "Retained-evidence role: manual cut-away label SW. 22 on the dual opto board pair; The retained script pulses this address from inside solTrough (vpmTimer.PulseSw 22) as the served ball leaves, which is the ball crossing the exit opto rather than the coil actuating a switch.. Manual PDF page 3: trough items 12/13 are the Dual OPTO TRANS (515-0173-00) and Dual OPTO REC (515-0174-00) board assemblies, and the cut-away labels them SW. 22 and SW. 21. The retained script pulses this address from inside solTrough (vpmTimer.PulseSw 22) as the served ball leaves, which is the ball crossing the exit opto rather than the coil actuating a switch. Pinned PinMAME normalizes no switch state on this platform. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints TROUGH JAM and marks the switch in its grid while public 22 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "515-0173-00 (TX) / 515-0174-00 (RX)",
         "switch_type": "opto"
       },
@@ -1308,7 +1301,10 @@
         "source_refs": [
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010",
-          "manual.stern.big-buck-hunter-pro.2010"
+          "manual.stern.big-buck-hunter-pro.2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -1841,14 +1837,19 @@
       },
       "id": "switch.matrix-34",
       "kind": "switch",
-      "label": "Kickback Ram Ball Sense",
+      "label": "Ram Opto",
+      "normally_closed": false,
       "physical": {
-        "notes": "Retained-evidence role: script sw34_Hit/sw34_UnHit maintained with the RamFire kick logic; object Kicker.sw34."
+        "notes": "Retained-evidence role: script sw34_Hit/sw34_UnHit maintained with the RamFire kick logic; object Kicker.sw34; the ROM's switch test names it RAM OPTO. Construction opto per the ROM's own switch-test name. The manual's ball-guide assemblies (511-5230-04/-05, PDF page 24) carry opto transceivers (500-6775-01) whose switch addresses the manual does not state; RAM OPTO and BIRD OPTO are the only matrix switches besides the trough and Buck-wheel pairs that the ROM names as optos, but no retained source says which ball guide carries which. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints RAM OPTO and marks the switch in its grid while public 34 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open. Holding it at 1 in the switch test also fires the kickback ram, solenoid 12.",
+        "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "vpx-script.bbh-stern-2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
         "status": "observed"
       },
@@ -1976,17 +1977,21 @@
       },
       "id": "switch.matrix-37",
       "kind": "switch",
-      "label": "Buck Drive Position Opto A",
+      "label": "Buck Wheel Opto #1",
+      "normally_closed": false,
       "physical": {
-        "notes": "Retained-evidence role: named 'opto switch 37' by the retained script's commented-out Buck animation code; the magna-save right key also pulses it as a manual Buck-advance convenience. Construction opto per the retained script's own commented labels ('opto switch 37', 'opto switch 45'); the manual's deer-track assembly page (PDF page 12) shows the track's actuator but carries no electrical table, so the switch count and exact addresses behind the Buck drive are not independently confirmed. The retained table does not assert either address at runtime; its Buck feedback is the substitute writes on the unfitted UK post-save addresses 71/72 instead.",
+        "notes": "Retained-evidence role: named 'opto switch 37' by the retained script's commented-out Buck animation code and BUCK WHEEL OPTO #1 by the ROM's switch test; the magna-save right key also pulses it as a manual Buck-advance convenience. Construction opto per the retained script's own commented labels ('opto switch 37', 'opto switch 45') and the ROM's own switch-test name; the manual's deer-track assembly page (PDF page 12) shows the track's actuator but carries no electrical table. The retained table does not assert either address at runtime; its Buck feedback is the substitute writes on the unfitted UK post-save addresses 71/72 instead. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints BUCK WHEEL OPTO #1 and marks the switch in its grid while public 37 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "vpx-script.bbh-stern-2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "placements": [
@@ -2247,14 +2252,19 @@
       },
       "id": "switch.matrix-43",
       "kind": "switch",
-      "label": "Rollover (upper playfield)",
+      "label": "Bird Opto",
+      "normally_closed": false,
       "physical": {
-        "notes": "Retained-evidence role: script sw43_Hit/sw43_unHit maintained; object Trigger.sw43."
+        "notes": "Retained-evidence role: script sw43_Hit/sw43_unHit maintained; object Trigger.sw43; the ROM's switch test names it BIRD OPTO. Construction opto per the ROM's own switch-test name. The manual's ball-guide assemblies (511-5230-04/-05, PDF page 24) carry opto transceivers (500-6775-01) whose switch addresses the manual does not state; RAM OPTO and BIRD OPTO are the only matrix switches besides the trough and Buck-wheel pairs that the ROM names as optos, but no retained source says which ball guide carries which. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints BIRD OPTO and marks the switch in its grid while public 43 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
+        "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "vpx-script.bbh-stern-2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
         "status": "observed"
       },
@@ -2337,17 +2347,21 @@
       },
       "id": "switch.matrix-45",
       "kind": "switch",
-      "label": "Buck Drive Position Opto B",
+      "label": "Buck Wheel Opto #2",
+      "normally_closed": false,
       "physical": {
-        "notes": "Retained-evidence role: named 'opto switch 45' by the retained script's commented-out Buck animation code. Construction opto per the retained script's own commented labels ('opto switch 37', 'opto switch 45'); the manual's deer-track assembly page (PDF page 12) shows the track's actuator but carries no electrical table, so the switch count and exact addresses behind the Buck drive are not independently confirmed. The retained table does not assert either address at runtime; its Buck feedback is the substitute writes on the unfitted UK post-save addresses 71/72 instead.",
+        "notes": "Retained-evidence role: named 'opto switch 45' by the retained script's commented-out Buck animation code and BUCK WHEEL OPTO #2 by the ROM's switch test. Construction opto per the retained script's own commented labels ('opto switch 37', 'opto switch 45') and the ROM's own switch-test name; the manual's deer-track assembly page (PDF page 12) shows the track's actuator but carries no electrical table. The retained table does not assert either address at runtime; its Buck feedback is the substitute writes on the unfitted UK post-save addresses 71/72 instead. The ROM's own switch test settles this opto's level: in hash-pinned runs of bbh_160 and bbh_170 it prints BUCK WHEEL OPTO #2 and marks the switch in its grid while public 45 is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading (there the active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "vpx-script.bbh-stern-2010",
+          "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+          "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+          "runtime.avengers-limited-edition.switch-test-loki-control"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "placements": [
@@ -10054,6 +10068,33 @@
       "revision": "2026-08-28",
       "sha256": "49faad88b97d2a902c7d573c2692cf2f7765a4ebcb0a06d371766612f3fbe6e8",
       "uri": "external:pinmame-runtime-evidence/big-buck-hunter-pro-2010/attract-03/run.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.big-buck-hunter-pro.bbh-160.switch-test-sweep",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of bbh_160 from empty NVRAM (scenario tools/harness-scenarios/stern/bbh-switch-test-sweep.json) that enters the S.A.M. switch test (Back, then Select five times) and holds every matrix switch 1-64 at public 1 for 1.2 s in turn. With every switch at 0 the grid marks none active; each held switch is named and marked, among them the optos TROUGH #1 (R) (21), TROUGH JAM (22), RAM OPTO (34), BUCK WHEEL OPTO #1 (37), BIRD OPTO (43) and BUCK WHEEL OPTO #2 (45). Holding 23, 26, 27, 30, 31, 32 and 34 also fires solenoids 2, 17, 18, 9, 10, 11 and 12.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/big-buck-hunter-pro-bbh_160-switch-test-sweep.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.big-buck-hunter-pro.bbh-170.switch-test-sweep",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of bbh_170 from empty NVRAM (scenario tools/harness-scenarios/stern/bbh-switch-test-sweep.json) that enters the S.A.M. switch test (Back, then Select five times) and holds every matrix switch 1-64 at public 1 for 1.2 s in turn. With every switch at 0 the grid marks none active; each held switch is named and marked, among them the optos TROUGH #1 (R) (21), TROUGH JAM (22), RAM OPTO (34), BUCK WHEEL OPTO #1 (37), BIRD OPTO (43) and BUCK WHEEL OPTO #2 (45). Holding 23, 26, 27, 30, 31, 32 and 34 also fires solenoids 2, 17, 18, 9, 10, 11 and 12.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/big-buck-hunter-pro-bbh_170-switch-test-sweep.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.avengers-limited-edition.switch-test-loki-control",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "A control run of the Avengers Limited Edition 1.7 ROM from empty NVRAM (scenario tools/harness-scenarios/stern/avs-switch-test-loki-control.json). Its known-working script drives the Loki lock optos 49-51 active-low, and its switch test marks them in the grid at public 0, prints NONE while 49 is held at 1 and LOKI LOCK 1 (BOT) when it returns to 0: the S.A.M. switch test reports the ROM's logical reading, not the raw public level.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/avengers-limited-edition-switch-test-loki-control.json"
     }
   ]
 }
