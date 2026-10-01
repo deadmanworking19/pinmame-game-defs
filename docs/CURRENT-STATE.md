@@ -69,3 +69,10 @@ entry in the commit that finishes it.
 - **Out-of-range clamps.** `curate_cirqus_voltaire.py` clamps sole objects that lie 6-8 % beyond the
   right rail. Check each against the out-of-range lesson in `docs/SPATIAL.md`; the record is
   `author_ready`.
+- **Wiring-detail conflicts.** The runbook now treats a disagreement only about a connector, pin,
+  wire colour or board designator as a device note. These records still carry such conflicts as
+  `unresolved`: WHO dunnit (`lamp-matrix-connectors`, `left-flipper-opto-wire`,
+  `reel-drive-connectors`), Secret Service (`right-flipper-power-wire`,
+  `special-coil-driver-transistors`), Taxi (`taxi.knocker-connector`, `taxi.left-jet-connector`) and
+  Terminator 2 (`lamp-schematic-connector-labels`). Check that each disagrees on nothing else, then
+  mark it `ignored` with a rationale through the machine's curator.
