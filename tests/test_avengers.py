@@ -3,12 +3,14 @@ from __future__ import annotations
 import ast
 import importlib.util
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
 LE_PATH = ROOT / "machines" / "partial" / "stern" / "avengers-limited-edition-2012.json"
 PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "avengers-pro-2012.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-boot-start.json"

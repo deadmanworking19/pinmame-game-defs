@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
 DEFINITION_PATH = ROOT / "machines/partial/williams/terminator-2-judgment-day-1991.json"
 AUDIT_PATH = ROOT / "reports/spatial/williams/terminator-2-judgment-day-1991.json"
 
