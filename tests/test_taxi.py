@@ -389,6 +389,35 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 		self.assertEqual(SEED_PATH.read_bytes(), DEFINITION_PATH.read_bytes())
 		self.assertEqual(curator.knowledge_text(ROOT), KNOWLEDGE_PATH.read_text(encoding="utf-8"))
 
+	def test_playfield_lamps_are_placed_on_their_script_bound_lights(self) -> None:
+		playfield = set(range(9, 49)) | set(range(57, 64))
+		for address, lamp in self.lamps.items():
+			if address not in playfield:
+				self.assertEqual(("not_applicable", "cabinet_or_service"), (lamp["spatial"]["status"], lamp["spatial"]["reason"]))
+				continue
+			placements = lamp["spatial"]["placements"]
+			self.assertEqual(1, len(placements))
+			self.assertEqual((f"placement.lamp-{address}.l{address}", "emitter"), (placements[0]["id"], placements[0]["role"]))
+			status = "candidate" if address == 37 else "observed"
+			self.assertEqual((status, status), (lamp["spatial"]["status"], placements[0]["provenance"]["status"]))
+			self.assertIn(f"Set Lights({address})", lamp["physical"]["notes"])
+			self.assertNotIn("must be reconciled", lamp["physical"]["notes"])
+		self.assertIn("rubber post", self.lamps[37]["physical"]["notes"])
+		ids = [p["id"] for group in ("inputs", "outputs") for item in self.definition[group]
+		       for p in item.get("spatial", {}).get("placements", [])]
+		self.assertEqual((82, 82), (len(ids), len(set(ids))))
+
+	@unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX root not configured")
+	def test_lamp_placements_recompute_from_retained_lights(self) -> None:
+		extraction = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / "williams/taxi/Taxi (Williams 1988)1.2/extraction-vpxtool-git-v0.33.3"
+		script = (extraction / "script.vbs").read_text(encoding="utf-8", errors="replace")
+		for address in list(range(9, 49)) + list(range(57, 64)):
+			self.assertIn(f"Set Lights({address})=l{address}", script)
+			light = json.loads((extraction / f"gameitems/Light.L{address}.json").read_text(encoding="utf-8"))["Light"]
+			placement = self.lamps[address]["spatial"]["placements"][0]
+			self.assertEqual((round(light["center"]["x"] / 952, 6), round(light["center"]["y"] / 1974, 6)),
+			                 (placement["x"], placement["y"]))
+
 	def test_drivers_inputs_outputs_and_displays_match_the_settled_contract(self) -> None:
 		self.assertEqual(curator.DRIVER_IDS, {driver["id"] for driver in self.definition["drivers"]})
 		self.assertEqual(set(range(-7, -3)) | set(range(1, 65)) | set(range(81, 89)), set(self.switches))

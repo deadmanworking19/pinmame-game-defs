@@ -42,6 +42,62 @@ Exact table bounds: left 0/top 0/right 952/bottom 1974 VPX units. x=(raw_x-left)
 | solenoid.19 | Bumper2 | gameitems/Bumper.Bumper2.json | center | 0.573792 | 0.225051 | effect |
 | solenoid.21 | Bumper3 | gameitems/Bumper.Bumper3.json | center | 0.455882 | 0.308637 | effect |
 
+## Playfield lamp placements
+
+Each playfield lamp uses the stored centre of the single table Light that the embedded script binds with `Set Lights(N)=lN` (script lines 272-318). No lamp uses a glow, reflection, insert overlay or centroid.
+
+| Device | Object | Extracted path | Method | x | y | Role |
+| --- | --- | --- | --- | --- | --- | --- |
+| lamp.9 | L9 | gameitems/Light.L9.json | center | 0.352941 | 0.506269 | emitter |
+| lamp.10 | L10 | gameitems/Light.L10.json | center | 0.403493 | 0.506522 | emitter |
+| lamp.11 | L11 | gameitems/Light.L11.json | center | 0.451221 | 0.506396 | emitter |
+| lamp.12 | L12 | gameitems/Light.L12.json | center | 0.501116 | 0.506586 | emitter |
+| lamp.13 | L13 | gameitems/Light.L13.json | center | 0.555475 | 0.506586 | emitter |
+| lamp.14 | L14 | gameitems/Light.L14.json | center | 0.380817 | 0.068351 | emitter |
+| lamp.15 | L15 | gameitems/Light.L15.json | center | 0.487881 | 0.074316 | emitter |
+| lamp.16 | L16 | gameitems/Light.L16.json | center | 0.597256 | 0.082865 | emitter |
+| lamp.17 | L17 | gameitems/Light.L17.json | center | 0.451295 | 0.633843 | emitter |
+| lamp.18 | L18 | gameitems/Light.L18.json | center | 0.404307 | 0.592646 | emitter |
+| lamp.19 | L19 | gameitems/Light.L19.json | center | 0.50405 | 0.592663 | emitter |
+| lamp.20 | L20 | gameitems/Light.L20.json | center | 0.404533 | 0.553136 | emitter |
+| lamp.21 | L21 | gameitems/Light.L21.json | center | 0.504307 | 0.552713 | emitter |
+| lamp.22 | L22 | gameitems/Light.L22.json | center | 0.229386 | 0.630098 | emitter |
+| lamp.23 | L23 | gameitems/Light.L23.json | center | 0.795299 | 0.501361 | emitter |
+| lamp.24 | L24 | gameitems/Light.L24.json | center | 0.468487 | 0.177527 | emitter |
+| lamp.25 | L25 | gameitems/Light.L25.json | center | 0.780226 | 0.544871 | emitter |
+| lamp.26 | L26 | gameitems/Light.L26.json | center | 0.136482 | 0.509922 | emitter |
+| lamp.27 | L27 | gameitems/Light.L27.json | center | 0.499584 | 0.400073 | emitter |
+| lamp.28 | L28 | gameitems/Light.L28.json | center | 0.265866 | 0.325618 | emitter |
+| lamp.29 | L29 | gameitems/Light.L29.json | center | 0.639575 | 0.336411 | emitter |
+| lamp.30 | L30 | gameitems/Light.L30.json | center | 0.454044 | 0.837133 | emitter |
+| lamp.31 | L31 | gameitems/Light.L31.json | center | 0.454044 | 0.68503 | emitter |
+| lamp.32 | L32 | gameitems/Light.L32.json | center | 0.841124 | 0.461151 | emitter |
+| lamp.33 | L33 | gameitems/Light.L33.json | center | 0.394039 | 0.751298 | emitter |
+| lamp.34 | L34 | gameitems/Light.L34.json | center | 0.327468 | 0.663406 | emitter |
+| lamp.35 | L35 | gameitems/Light.L35.json | center | 0.546744 | 0.7418 | emitter |
+| lamp.36 | L36 | gameitems/Light.L36.json | center | 0.589548 | 0.648398 | emitter |
+| lamp.37 | L37 | gameitems/Light.L37.json | center | 0.054884 | 0.684524 | emitter (candidate) |
+| lamp.38 | L38 | gameitems/Light.L38.json | center | 0.128355 | 0.66338 | emitter |
+| lamp.39 | L39 | gameitems/Light.L39.json | center | 0.853919 | 0.685512 | emitter |
+| lamp.40 | L40 | gameitems/Light.L40.json | center | 0.779707 | 0.660296 | emitter |
+| lamp.41 | L41 | gameitems/Light.L41.json | center | 0.671218 | 0.506871 | emitter |
+| lamp.42 | L42 | gameitems/Light.L42.json | center | 0.249737 | 0.506364 | emitter |
+| lamp.43 | L43 | gameitems/Light.L43.json | center | 0.23792 | 0.267541 | emitter |
+| lamp.44 | L44 | gameitems/Light.L44.json | center | 0.679753 | 0.262855 | emitter |
+| lamp.45 | L45 | gameitems/Light.L45.json | center | 0.317621 | 0.43465 | emitter |
+| lamp.46 | L46 | gameitems/Light.L46.json | center | 0.192752 | 0.581655 | emitter |
+| lamp.47 | L47 | gameitems/Light.L47.json | center | 0.264312 | 0.182276 | emitter |
+| lamp.48 | L48 | gameitems/Light.L48.json | center | 0.222164 | 0.460391 | emitter |
+| lamp.57 | L57 | gameitems/Light.L57.json | center | 0.883535 | 0.289767 | emitter |
+| lamp.58 | L58 | gameitems/Light.L58.json | center | 0.882222 | 0.270707 | emitter |
+| lamp.59 | L59 | gameitems/Light.L59.json | center | 0.882747 | 0.25304 | emitter |
+| lamp.60 | L60 | gameitems/Light.L60.json | center | 0.88209 | 0.234549 | emitter |
+| lamp.61 | L61 | gameitems/Light.L61.json | center | 0.881828 | 0.215109 | emitter |
+| lamp.62 | L62 | gameitems/Light.L62.json | center | 0.882484 | 0.197062 | emitter |
+| lamp.63 | L63 | gameitems/Light.L63.json | center | 0.88406 | 0.178255 | emitter |
+
+Factory cross-check: `lamp-locations.webp` (SHA256 1da3d7347b6ba9d7f86eca40d6824f955bc1525e7766b5af4f5ff3181360bf9a) was fitted to the table with a least-squares affine from control pixels read by eye on gridded crops: Bumper1 px (298, 337) -> VPU (344.5, 435.0), residual 4.4; Bumper2 px (422.5, 345) -> VPU (546.25, 444.25), residual 2.2; Bumper3 px (350.5, 448.5) -> VPU (434.0, 609.25), residual 4.6; LeftFlipper px (261, 1112.5) -> VPU (273.6884, 1646.0), residual 1.5; RightFlipper px (462.5, 1111) -> VPU (590.5589, 1646.0), residual 1.9. Through that fit, every lamp above except 37 lands on its own printed insert or leader end. Lamp 37: Leader 37 ends on a small post-sized circle at the top of the left outlane, where the table models a rubber post at about (42, 1277) VPU; no insert is drawn at l37, about 75 VPU lower. The right outlane draws insert 39 exactly at l39. The left SPECIAL socket position is therefore not confirmed by the factory drawing. The fit, per-lamp drawing pixels, crops and overlays are retained in review-artifacts/taxi-1988/session-20261001/lamp-reconciliation (manifest SHA256 b97f0231b205bf2df11e1501e3c4795facd31cec3fda0eb03f1d89dbbd23a213). The drawing is an identity check only; no drawing pixel is a coordinate.
+
 ## Projection classes and world geometry
 
 Visible Trigger rollover wires 14..16 and 37..40 anchor wire-actuation sites; the contact bodies are below the playfield. Gates 23/25/26 anchor the blade-actuated passage sites, not gate-home sensors. Kicker anchors 13/35/36 record occupied holes; coil 3/5/8 effects share the named catapult/eject assembly sites. Coil 7 uses the scripted Spinout ejection site, not a separately measured coil mount or switch 43 contact. Jet effects 17/19/21 share the ring centers. Coil 4/6 effects project the common reset assembly to its middle target face. Coil 9 uses the four-vertex mean of the narrow TopGate collision wall, locating route opening rather than the coil mount.
@@ -58,7 +114,7 @@ Playfield tilt 9: factory leader below the left apron; no retained contact objec
 
 ## Remaining physical and variant blockers
 
-Every controlled physical lamp/flasher socket and complete GI population remains unproved. Backbox and coin-door effects need quantities and routing even when playfield placement is not applicable. C1..C5 each 1p+1i, C6/C7 each 1p+1d, C8 two playfield, Jackpot 1p+2i, Joyride 1p from the wiring table. Dome PCB F/L designator capacity is not installed population proof. No glow helper, bulb centroid or invented socket is admitted.
+Every controlled flasher socket, the complete GI population and lamp 37's socket remain unproved; playfield lamps are placed on their script-bound table lights. Backbox and coin-door effects need quantities and routing even when playfield placement is not applicable. C1..C5 each 1p+1i, C6/C7 each 1p+1d, C8 two playfield, Jackpot 1p+2i, Joyride 1p from the wiring table. Dome PCB F/L designator capacity is not installed population proof. No glow helper, bulb centroid or invented socket is admitted.
 
 The 35 observed recreation anchors do not earn author-ready credit. Prototype construction and full competition differences remain unresolved; only L3/L4/LG1/P5 archives are supplied. Acquired full factory manuals/OCR, exact VPX/script/world export, pinned source, legal ROM tables and successful retained traces settle the admitted claims. Ghidra cannot establish physical socket geometry or prototype construction.
 
