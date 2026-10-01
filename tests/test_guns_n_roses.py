@@ -109,7 +109,18 @@ class GunsNRosesTests(unittest.TestCase):
                 self.assertEqual(expected, described)
                 self.assertEqual(4, physical["quantity"])
                 self.assertEqual(physical["quantity"], sum(described.values()))
-                self.assertNotIn("spatial", flasher, "Region evidence does not locate individual sockets")
+                if address == 27:
+                    self.assertNotIn("spatial", flasher, "3R's tails cannot be followed on the scan")
+                else:
+                    # Candidate bulb positions measured at the PDF 40 leader ends, never promoted.
+                    placements = flasher["spatial"]["placements"]
+                    self.assertEqual("candidate", flasher["spatial"]["status"])
+                    self.assertEqual(expected.get("playfield", 0) + expected.get("rear playfield back-panel", 0), len(placements))
+                    for placement in placements:
+                        self.assertEqual(("emitter", "candidate"), (placement["role"], placement["provenance"]["status"]))
+                        self.assertIn(curator.CALLOUTS, placement["provenance"]["source_refs"])
+                        self.assertEqual(curator.drawing_callouts.measured(curator.CALLOUT_DATA, placement["id"]),
+                                         (placement["x"], placement["y"]))
                 for region, count in described.items():
                     totals[region] += count
                 self.assertEqual(
@@ -140,8 +151,11 @@ class GunsNRosesTests(unittest.TestCase):
         self.assertEqual(2,len(self.lamps[55]["spatial"]["placements"]))
         self.assertTrue(all("spatial" not in self.switches[n] for n in range(9,16)))
         self.assertTrue(all(self.switches[n]["physical"]["quantity"] == 2 for n in [28,29,30]))
-        self.assertTrue(all("spatial" not in self.switches[n] for n in [28,29,30]))
-        self.assertTrue(all("spatial" not in self.solenoids[n] for n in range(25,33)))
+        # Each sling switch sits on its sling wall, the object its kicker coil already uses.
+        for switch, coil in ((28, 21), (29, 20), (30, 22)):
+            self.assertEqual([(p["x"], p["y"]) for p in self.solenoids[coil]["spatial"]["placements"]],
+                             [(p["x"], p["y"]) for p in self.switches[switch]["spatial"]["placements"]])
+        self.assertEqual([27], [n for n in range(25, 33) if "spatial" not in self.solenoids[n]])
         self.assertTrue(all(self.solenoids[n]["physical"]["quantity"] == 4 for n in range(25,33)))
         self.assertEqual("pinmame-spatial-blockers",
                          load_json(ROOT/"reports/spatial/data-east/guns-n-roses-1994.json")["format"])
@@ -149,6 +163,44 @@ class GunsNRosesTests(unittest.TestCase):
         self.assertEqual(3,len(audit["physical_flipper_anchors"]))
         upper=next(a for a in audit["physical_flipper_anchors"] if a["object"]=="LeftFlipper1")
         self.assertEqual((0.120201,0.419499),(upper["x"],upper["y"]))
+
+    def test_drawing_callout_check_decides_every_placement_status(self):
+        seed = curator.CALLOUT_DATA
+        decisions = curator.drawing_callouts.evaluate(seed, curator.drawing_callouts.placements_of(self.machine))
+        measured = set(seed["measurements"])
+        checked = 0
+        for device in self.machine["inputs"] + self.machine["outputs"]:
+            for placement in (device.get("spatial") or {}).get("placements") or []:
+                decision = decisions["placements"].get(placement["id"])
+                status = placement["provenance"]["status"]
+                if placement["id"] in measured:
+                    self.assertIsNone(decision, "a drawing measurement is never checked against its own drawing")
+                    self.assertEqual("candidate", status)
+                    continue
+                if decision is None:
+                    self.assertEqual("observed", status, placement["id"])
+                    continue
+                checked += 1
+                self.assertEqual("validated" if decision["agrees"] else "observed", status, placement["id"])
+                self.assertEqual(decision["agrees"], curator.CALLOUTS in placement["provenance"]["source_refs"])
+                self.assertEqual(not decision["agrees"], "stays observed" in device["physical"]["notes"], placement["id"])
+        self.assertEqual(len(seed["checks"]), checked)
+        report = load_json(ROOT/"reports/spatial/data-east/guns-n-roses-1994.json")
+        self.assertEqual(curator.callout_check(self.machine), report["drawing_callout_check"])
+        # The drawing transposes the sling callouts 28/29, so neither may validate.
+        self.assertEqual("observed", self.switches[28]["spatial"]["status"])
+        self.assertEqual("observed", self.switches[29]["spatial"]["status"])
+
+    @unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT") and os.environ.get("PINMAME_MANUALS_ROOT"),
+                         "retained review artifacts and manuals not configured")
+    def test_drawing_callout_renders_and_reads_are_retained(self):
+        seed = curator.CALLOUT_DATA
+        reviews, manuals = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]), Path(os.environ["PINMAME_MANUALS_ROOT"])
+        self.assertGreater(curator.drawing_callouts.verify_retained(seed, ROOT, manuals, reviews), 3)
+        tampered = copy.deepcopy(seed)
+        tampered["pages"]["pdf-40"]["image"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "render missing or changed"):
+            curator.drawing_callouts.verify_retained(tampered, ROOT, manuals, reviews)
 
     def test_legacy_identifiers_and_aliases_are_preserved(self):
         for group,devices in [("inputs",self.switches),("outputs",self.solenoids)]:

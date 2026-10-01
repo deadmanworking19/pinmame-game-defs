@@ -40,21 +40,23 @@ bulbs: 14 playfield, 16 backbox insert and 2 rear playfield back-panel bulbs
 in total. Bank 1R (public 25) has two playfield bulbs and two back-panel bulbs
 at the rear playfield corners. PDF 41 / printed page 37 distinguishes Backpanel
 from Insert; the PDF 40 / printed page 36 Backbox Flash Lamps drawing includes
-only 2R-8R. Individual physical socket positions remain unresolved.
+only 2R-8R. Their playfield bulbs are placed as candidates where the PDF 40
+leaders end; a leader marks the lamp, not its exact socket centre.
 The older Team PP script shares glow objects, reverses output 31
 and has bad l2/l3 timer bindings.
 Those implementation defects stay in notes; they do not change factory wiring.
 
 The exact retained geometry has bounds 1000x1902. Positions use player view,
 x left-to-right and y rear-to-front. Collidable walls use polygon area centroid;
-coil effects project to their actual mechanism. Factory drawing leaders check
-identity, not exact socket offsets. Primitive origins, Flasher sprites,
+coil effects project to their actual mechanism. Primitive origins, Flasher sprites,
 lightmaps, blooms and reflections are excluded. The local old tables contain
 three flipper pivots. The upper-left is LeftFlipper1; the older embedded script
 moves it with the lower-left, while VPW supplies staged control. No per-contact
-trough geometry is present. Each sling has two physical leaf contacts; one VPX
-impact-region wall cannot locate both. The retained visual helpers cannot establish
-every fitted GI/flasher socket.
+trough geometry is present. Each sling switch is placed on its sling wall, the
+kicking rubber its two leaf contacts sit behind. The retained visual helpers
+cannot establish fitted GI sockets.
+
+A factory location-drawing callout check validates 101 of the 114 table placements it covers: every callout on PDF 37, 39 and 40 was transcribed independently, each page was fitted against independently read controls (jet-bumper caps and flipper pivots; on PDF 39, whose pivots balloons hide, the two inlane rollover slots stand in for them) and against its other callouts, and a placement validates when its own callout lands within 0.07 normalized under both fits. The rest stay observed, each with a note on its device: coils 14; switches 18, 20, 21, 22, 23, 28, 29, 33, 36, 52, 58, 60. Most of those are balloons drawn on the part without a leader, which do not locate it that closely; the drawing transposes the 28/29 sling callouts.
 
 ROM evidence uses the verified pinned DLL and US 3.00 in new empty state.
 The bounded DMD adapter matches exact header pixels and waits for game-on 23

@@ -14,6 +14,7 @@ from pathlib import Path
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_bytes
 from pinmame_flipper_column import flipper_column_inputs, flipper_column_relationships
+import drawing_callouts
 from guns_n_roses_data import (
     ASSEMBLY_TABLES, COIL_CHART, FLIPPER_CHART, LAMP_COLUMNS, LAMP_NAMES,
     LAMP_ROWS, SWITCH_COLUMNS, SWITCH_NAMES, SWITCH_PARTS, SWITCH_ROWS,
@@ -37,6 +38,7 @@ VBS = "vpm-library.guns-n-roses"
 CORE_VBS = "vpm-core-library.guns-n-roses"
 SB63 = "service-sb63.guns-n-roses.1994"
 SB64 = "service-sb64.guns-n-roses.1994"
+CALLOUTS = "drawing-callouts.guns-n-roses.2026-10-01"
 REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 PIN_FILES = (
     ("core.h", "9d2fa69f7fa6963adc793b272bb5cbfbf94e929c0d7f6b928b1b02a8ee15b2b3", "139-165,300-360; FLIP_SWNO and address bands"),
@@ -49,6 +51,8 @@ TABLE_SUBDIR = "data-east/guns-n-roses-1994/extractions/team-pp-2019-4e54ffbde40
 MANUAL_FILENAME = "Data_East_1994_Guns_N_Roses_Manual.pdf"
 MANUAL_SHA = "1afd9b93bc17a7b46841c00a23e6f6f02fd3c2e61e3cfe06ba9d88e31aaa7236"
 GEOMETRY = load_json(ROOT / "tools/guns_n_roses_geometry.json")
+CALLOUT_SEED = ROOT / f"tools/seeds/{STEM}-callouts.json"
+CALLOUT_DATA = load_json(CALLOUT_SEED)
 MANUAL_ACQUISITIONS = load_json(ROOT / "tools/guns_n_roses_manual_provenance.json")["records"]
 
 
@@ -161,10 +165,10 @@ def inputs() -> list:
             d["physical"].update(quantity=2, switch_type="leaf")
             d["physical"]["notes"] += (
                 " Factory PDF 58 lists two 180-5054-00 leaf contacts and two diodes per "
-                "slingshot assembly, represented by this one matrix circuit. The VPX "
-                "wall centroid is an impact-region proxy, not either contact's center. "
-                "Individual physical contact positions remain unresolved.")
-            d.pop("spatial", None)
+                "slingshot assembly, represented by this one matrix circuit. The placement "
+                "is the sling's collision wall, whose Slingshot event the script reports on "
+                "this address: the kicking rubber the two contacts sit behind, as on every "
+                "other curated machine, not either contact's own centre.")
         if address == 62:
             d["physical"]["switch_type"] = "microswitch"
             d["physical"]["notes"] += (
@@ -260,6 +264,23 @@ def outputs() -> list:
                     " PDF 41 / printed page 37 distinguishes Backpanel from Insert. "
                     "PDF 40 / printed page 36 places the two back-panel bulbs at the "
                     "rear playfield corners and lists only 2R-8R in the Backbox Flash Lamps drawing.")
+            measured = sorted(pid for pid, item in CALLOUT_DATA["measurements"].items() if item["device"] == d["id"])
+            if measured:
+                d["spatial"] = {"status": "candidate", "placements": [
+                    {"id": pid, "role": "emitter", "space": "playfield",
+                     "x": drawing_callouts.measured(CALLOUT_DATA, pid)[0], "y": drawing_callouts.measured(CALLOUT_DATA, pid)[1],
+                     "provenance": prov(MANUAL, CALLOUTS, status="candidate")} for pid in measured]}
+                d["physical"]["notes"] += (
+                    f" Spatial: {len(measured)} playfield bulb position{'s' if len(measured) > 1 else ''} measured where the "
+                    f"PDF 40 (printed 36) {address-24}R leader{'s end' if len(measured) > 1 else ' ends'}, through that page's "
+                    "jet-bumper and flipper-pivot fit (tools/seeds/data-east/guns-n-roses-1994-callouts.json). The leader marks the "
+                    "flash lamp, not its socket centre, so each placement is a candidate good to about 0.03 normalized. "
+                    + CALLOUT_DATA["measurements"][measured[0]]["note"])
+            elif address == 27:
+                d["physical"]["notes"] += (
+                    " Spatial: the PDF 40 (printed 36) 3R balloon's two tails merge into the left lane "
+                    "guides on this scan and cannot be followed to their arrowheads, so its playfield "
+                    "bulbs stay unplaced.")
             if address == 28:
                 d["physical"]["notes"] += (
                     " Table calls this captive-ball flash; location drawing labels 4R Turbo "
@@ -846,6 +867,15 @@ def sources(texts: dict) -> list:
                [ex("active-switches.md", "Raw run and scenario hashes; every held screenshot pixel/PGM hash and displayed label")],
                "Primary curator; legally supplied user ROMs", revision=REVISION),
     ]
+    result.append({"id": CALLOUTS, "kind": "human_review", "uri": "internal:" + CALLOUT_SEED.relative_to(ROOT).as_posix(),
+                   "sha256": hashlib.sha256(CALLOUT_SEED.read_bytes()).hexdigest(), "locator":
+                         "2026-10-01 factory location-drawing callout check of PDF 37, 39 and 40 (printed 33, 35, 36): every "
+                         "callout transcribed independently on the retained 200 dpi page renders, verifier corrections recorded "
+                         "with their reasons, per-page control and callout fits, and the flasher leader ends measured as candidate "
+                         "bulb positions; a table placement whose own callout lands within 0.07 normalized under both fits is "
+                         "validated (tools/drawing_callouts.py). Reads, overlays and generator are retained under review-artifacts "
+                         "with a pinned manifest.", "attribution": "PinMAME game definitions contributors",
+                   "rights": "NOASSERTION", "license": "NOASSERTION"})
     for identifier, needle in [(SB63, "Bulletin_63"), (SB64, "Bulletin_64")]:
         record = next(r for r in MANUAL_ACQUISITIONS if needle in r["original_filename"])
         result.append(source(identifier, "service_bulletin", "external:manuals/"+record["relative_path"],
@@ -873,7 +903,7 @@ def build() -> dict:
     relationships.extend(flipper_column_relationships(
         flip_swno=(63, 64), matrix_ids=sw, refs=(*PIN_REFS, RUNTIME, ACTIVE_RUNTIME),
     ))
-    return {
+    machine = {
         "format": "pinmame-machine-definition", "schema_version": 1,
         "machine": {"id": KEY, "name": "Guns N' Roses", "manufacturer": "Data East",
                     "year": 1994, "kind": "physical_pinball", "ipdb_id": 1100,
@@ -914,6 +944,35 @@ def build() -> dict:
             "attributable factory correction before selecting the upper coil part.",
             "source_refs":[MANUAL,ASSEMBLY_MANUAL],"status":"unresolved"}],
     }
+    # Factory location-drawing callouts promote the placements they confirm.
+    drawing_callouts.apply_to_definition(machine, CALLOUT_DATA, CALLOUTS)
+    return machine
+
+
+def callout_check(machine: dict) -> dict:
+    """The drawing callout check's report record, recomputed from the committed seed."""
+    decisions = drawing_callouts.evaluate(CALLOUT_DATA, drawing_callouts.placements_of(machine))
+    return drawing_callouts.summary(CALLOUT_DATA, decisions, CALLOUT_SEED.relative_to(ROOT).as_posix(),
+                                    hashlib.sha256(CALLOUT_SEED.read_bytes()).hexdigest())
+
+
+CALLOUT_PAGE_KINDS = {"pdf-37": "switch", "pdf-39": "lamp", "pdf-40": "coil"}
+
+
+def callout_sentence(machine: dict) -> str:
+    check = callout_check(machine)
+    rest: dict[str, list[str]] = {}
+    for item in check["not_validated"].values():
+        rest.setdefault(CALLOUT_PAGE_KINDS[item["page"]], []).append(item["label"])
+    order = lambda label: (int("".join(c for c in label if c.isdigit())), label)
+    parts = [f"{kind}{'es' if kind == 'switch' else 's'} {', '.join(sorted(labels, key=order))}" for kind, labels in sorted(rest.items())]
+    return (f"A factory location-drawing callout check validates {check['validated']} of the {check['checked']} table "
+            "placements it covers: every callout on PDF 37, 39 and 40 was transcribed independently, each page was fitted "
+            "against independently read controls (jet-bumper caps and flipper pivots; on PDF 39, whose pivots balloons "
+            "hide, the two inlane rollover slots stand in for them) and against its other callouts, and a placement validates "
+            "when its own callout lands within 0.07 normalized under both fits. The rest stay observed, each with a note on "
+            f"its device: {'; '.join(parts)}. Most of those are balloons drawn on the part without a leader, which do not "
+            "locate it that closely; the drawing transposes the 28/29 sling callouts.")
 
 
 def report(machine: dict) -> dict:
@@ -942,19 +1001,19 @@ def report(machine: dict) -> dict:
                               "PDF 40-41 physical coils and playfield/backbox insert/back-panel flasher split",
                               "PDF 55 trough/lock separate assemblies","PDF 56-57 three flippers",
                               "Addendum PDF 2-3 magnet input permutation"],
-        "projections":{"wall_sensor":"Exact collidable contact-region polygon area centroid.",
+        "drawing_callout_check": callout_check(machine),
+        "projections":{"wall_sensor":"Exact collidable contact-region polygon area centroid; the three sling switches use their sling wall, the kicking rubber whose Slingshot event the script reports.",
+                       "factory_drawing_measurement":"Flash-lamp bank bulbs measured where the PDF 40 R-bank leaders end, through that page's control fit; candidate only.",
                        "coil_effect":"Bumper/sling/drop/kicker mechanism, not winding center.",
                        "insert_bulb":"Named Light center reconciled to factory location symbol; no overlay duplication.",
                        "magnet_effect":"Exact cvpmMagnet event Trigger center; force radius not construction size."},
         "unplaced_records":missing_spatial,
         "blockers":[
             {"dimension":"spatial_placement","records":missing_spatial,
-             "reason":"Seven individual trough contacts and lockout have no separate object in the older exact table; "
-             "each slingshot has two physical leaf contacts but only a combined VPX wall impact region. "
-             "Factory diagram balloons do not prove socket/contact offsets. Flash banks contain 14 playfield, "
-             "16 backbox insert and 2 rear playfield back-panel bulbs; 1R's back-panel pair belongs to the playfield. "
-             "The script reuses glow/reflection lights, and factory leaders do not identify every playfield socket. "
-             "No safe substitute coordinates are emitted.",
+             "reason":"Seven individual trough contacts and the trough eject have no separate object in the older exact table, "
+             "and the factory drawing only labels the under-apron trough. Placements outside the drawing callout "
+             "check's 0.07 limit stay observed, and the flash-lamp bank bulbs are candidate drawing measurements: the "
+             "script reuses glow/reflection lights, so no table object locates a flash lamp.",
              "resolution":"Acquire exact VPW geometry or measured production photos; fit factory frame/control points "
              "and retain per-socket measurements. Request recorded in external session/status.md."},
             {"dimension":"output_semantics","records":[sol["id"] for sol in machine["outputs"] if sol["binding"]=={"group":"pinmame.output.solenoid","device":11}],
@@ -1015,21 +1074,23 @@ bulbs: 14 playfield, 16 backbox insert and 2 rear playfield back-panel bulbs
 in total. Bank 1R (public 25) has two playfield bulbs and two back-panel bulbs
 at the rear playfield corners. PDF 41 / printed page 37 distinguishes Backpanel
 from Insert; the PDF 40 / printed page 36 Backbox Flash Lamps drawing includes
-only 2R-8R. Individual physical socket positions remain unresolved.
+only 2R-8R. Their playfield bulbs are placed as candidates where the PDF 40
+leaders end; a leader marks the lamp, not its exact socket centre.
 The older Team PP script shares glow objects, reverses output 31
 and has bad l2/l3 timer bindings.
 Those implementation defects stay in notes; they do not change factory wiring.
 
 The exact retained geometry has bounds 1000x1902. Positions use player view,
 x left-to-right and y rear-to-front. Collidable walls use polygon area centroid;
-coil effects project to their actual mechanism. Factory drawing leaders check
-identity, not exact socket offsets. Primitive origins, Flasher sprites,
+coil effects project to their actual mechanism. Primitive origins, Flasher sprites,
 lightmaps, blooms and reflections are excluded. The local old tables contain
 three flipper pivots. The upper-left is LeftFlipper1; the older embedded script
 moves it with the lower-left, while VPW supplies staged control. No per-contact
-trough geometry is present. Each sling has two physical leaf contacts; one VPX
-impact-region wall cannot locate both. The retained visual helpers cannot establish
-every fitted GI/flasher socket.
+trough geometry is present. Each sling switch is placed on its sling wall, the
+kicking rubber its two leaf contacts sit behind. The retained visual helpers
+cannot establish fitted GI sockets.
+
+CALLOUT_SENTENCE
 
 ROM evidence uses the verified pinned DLL and US 3.00 in new empty state.
 The bounded DMD adapter matches exact header pixels and waits for game-on 23
@@ -1051,6 +1112,7 @@ prototype description stay external, hashed and attributable. No physical
 ball-path force, animation timer or magnet radius is inferred from VPX tuning.
 
 """
+    text = text.replace("CALLOUT_SENTENCE", callout_sentence(machine))
     for mechanism in machine["mechanisms"]:
         text += f"## {mechanism['label']}\n\n{mechanism['behavior']}\n\n"
     text += (
@@ -1180,6 +1242,7 @@ def verify_external(working: Path) -> None:
         raise ValueError("Retained pinned DLL drift")
     if check_manifest(runtime_dir,"gnr_300") != provenance["manifest"]["sha256"]:
         raise ValueError("Runtime directory manifest drift")
+    drawing_callouts.verify_retained(CALLOUT_DATA, ROOT, working/"manuals", working/"review-artifacts")
 
 
 def main() -> None:
