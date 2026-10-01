@@ -41,7 +41,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 35 | 2008 | Shrek | Stern | partial | 19% |
 | 36 | 2008 | Simpsons Kooky Carnival, The (Redemption) (V2.0) | Stern | partial | 13% |
 | 37 | 2007 | Dale Jr. | Stern | partial | 13% |
-| 38 | 2007 | Family Guy | Stern | partial | 19% |
+| 38 | 2007 | Family Guy | Stern | partial | 88% |
 | 39 | 2007 | Spider-Man | Stern | author_ready | 100% |
 | 40 | 2007 | Wheel of Fortune | Stern | partial | 19% |
 | 41 | 2006 | Pirates of the Caribbean | Stern | partial | 75% |

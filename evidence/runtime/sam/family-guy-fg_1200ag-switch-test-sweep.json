@@ -1,0 +1,1572 @@
+{
+  "driver_ids": [
+    "fg_1200ag"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.family-guy.2007"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game fg_1200ag --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --ready-timeout 90 --scenario tools/harness-scenarios/stern/bbh-switch-test-sweep.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The scenario uses the named S.A.M. Back and Select keys only to reach the switch test; every held address is a direct public switch write in the playfield matrix. Each held frame's interpreted_text transcribes the switch name and LAST SW line; the wire-colour line below them is not transcribed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "fg_1200ag",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "ATTRACT MODE",
+          "label": "power-up attract mode",
+          "nonzero_pixels": 460,
+          "pixel_sha256": "bf52d67590444e7c7e35f49c2fd438a565d9c0ca4ef488687f5a176fc0a54d4f"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE",
+          "label": "switch test started with every public switch at 0; the grid marks no switch active",
+          "nonzero_pixels": 431,
+          "pixel_sha256": "2c951c937b8a95d29a3da5058e2bde8a65b2c3377b91ef01df24d2fbbc2e3bc5"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BALL SAVER UP / LAST SW. #1",
+          "label": "switch test while public 1 is held at 1",
+          "nonzero_pixels": 706,
+          "pixel_sha256": "bb4fbd42ab6635369c3962dcfb3aba2b2a734a5303c6e9df04b9bc4e18a1c1e2"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BALL SAVER DOWN / LAST SW. #2",
+          "label": "switch test while public 2 is held at 1",
+          "nonzero_pixels": 733,
+          "pixel_sha256": "678ab462351d6eda16780e421cb2a6de54a8fdb25b45defca6d9b6a30a26c125"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT ORBIT S/U / LAST SW. #3",
+          "label": "switch test while public 3 is held at 1",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "7f28d0ff377f9173814d82732bc0c61a4289f3e7d1b5ac342bbd3a8bf4008ba8"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / R. 2-BANK BOTTOM / LAST SW. #4",
+          "label": "switch test while public 4 is held at 1",
+          "nonzero_pixels": 725,
+          "pixel_sha256": "2a9004caa094b16454b09f20092d9b0776849f7df57910cce941f760e5434b94"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / R. 2-BANK TOP / LAST SW. #5",
+          "label": "switch test while public 5 is held at 1",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "bbefa9392d84a0591d68f67239996b4102489dab2550a30770b8def20f4d376c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LT NEWTON ROLLOVER / LAST SW. #6",
+          "label": "switch test while public 6 is held at 1",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "59ddc30264695eab8b41b2a82a2174373808f8bf40788f0c718c86aa40c680a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RT NEWTON ROLLOVER / LAST SW. #7",
+          "label": "switch test while public 7 is held at 1",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "b4521b31dff9714938d7c9bf1309be626a5f8e7479afc126901f43d9c0864da6"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / PIRATE TARGET / LAST SW. #8",
+          "label": "switch test while public 8 is held at 1",
+          "nonzero_pixels": 713,
+          "pixel_sha256": "6a3ff3752fed734a04d6b98444b114b062da299350e662e9a27faf6689501c66"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / 1-BANK DROP TARGET / LAST SW. #9",
+          "label": "switch test while public 9 is held at 1",
+          "nonzero_pixels": 750,
+          "pixel_sha256": "dd00c43be1f69678580f6cc5bb36a0a7d65fc32a4036f891a76525a1381c190a"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MEG TARGET / LAST SW. #10",
+          "label": "switch test while public 10 is held at 1",
+          "nonzero_pixels": 698,
+          "pixel_sha256": "9139fbd78ac278274757b0f9ff135e7a8c99bb3ff1a29c6871e97aa6ed67fe64"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #11 / LAST SW. #11",
+          "label": "switch test while public 11 is held at 1",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "c27a6eb9a5c7ae8b03cda20ad249c9509d29f69f6d5811545f477ec7db769e59"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #12 / LAST SW. #12",
+          "label": "switch test while public 12 is held at 1",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "77c503286397e9f9e91e258c13ce653c82640f50e087c59832bacddd5db86949"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TV EJECT / LAST SW. #13",
+          "label": "switch test while public 13 is held at 1",
+          "nonzero_pixels": 670,
+          "pixel_sha256": "b97428d82b7480da08cab4f3ac7f9bc7689b39a43fa9d1d4d976ddfaab0109ca"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #14 / LAST SW. #14",
+          "label": "switch test while public 14 is held at 1",
+          "nonzero_pixels": 693,
+          "pixel_sha256": "52facacad0cc0e2d6f171d7be1d95d712dab1c25bfbc1e46089e6be762aa6304"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TOURNAMENT START / LAST SW. #15",
+          "label": "switch test while public 15 is held at 1",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "3d0c8d6cdafbb393315eae50f3f19dd71cb91a28699c5d894024ef5498f8d009"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / START BUTTON / LAST SW. #16",
+          "label": "switch test while public 16 is held at 1",
+          "nonzero_pixels": 714,
+          "pixel_sha256": "e6ee5b8a53e17bc893e50a63dde15bf3431f70a2852a62bb4bacaa0aeec23553"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #17 / LAST SW. #17",
+          "label": "switch test while public 17 is held at 1",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "0e4192c3d686083635ff5e3ff57e3c02c2cf93f99fd998915fa5b4cfbbc8f80d"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #4 (L) / LAST SW. #18",
+          "label": "switch test while public 18 is held at 1",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "1c798d05cfbd6c7ee1bbced3000b375358e17714c31207b99ba7bed94ca37a82"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #3 / LAST SW. #19",
+          "label": "switch test while public 19 is held at 1",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "3bc2a712a68e02cb56710354dcc6751471ca38f81b34ead1f1dd3af168bd21b6"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #2 / LAST SW. #20",
+          "label": "switch test while public 20 is held at 1",
+          "nonzero_pixels": 697,
+          "pixel_sha256": "8c50a180247306b0531de14ae4b61bc68a272991eb0e4afc17ee38124d22e969"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH #1 (R) / LAST SW. #21",
+          "label": "switch test while public 21 is held at 1",
+          "nonzero_pixels": 717,
+          "pixel_sha256": "3642962a924755139495dda0dff1022bc660d99924bd36f2b3d5f5c8184d54f1"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TROUGH JAM / LAST SW. #22",
+          "label": "switch test while public 22 is held at 1",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "b693dee256f33a40159e0030fc61bffdb23e60c1b7bba7dee2cb491e70418ee2"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SHOOTER LANE / LAST SW. #23",
+          "label": "switch test while public 23 is held at 1",
+          "nonzero_pixels": 722,
+          "pixel_sha256": "68ea9cd6da3de9fa545e2c4580d60b12895f1dece8101d9677e64800ce54f78b"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT OUTLANE / LAST SW. #24",
+          "label": "switch test while public 24 is held at 1",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "8009d07ac6e3f6eef743dd23f0c8e753a327f06a581fa3a647df0e7a4358d65d"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT RETURN / LAST SW. #25",
+          "label": "switch test while public 25 is held at 1",
+          "nonzero_pixels": 702,
+          "pixel_sha256": "38ced74f5a80482f59ef25794ad20891db7b397fb3d6ce76636580575b500afc"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT SLING / LAST SW. #26",
+          "label": "switch test while public 26 is held at 1",
+          "nonzero_pixels": 690,
+          "pixel_sha256": "56a140be017b3c8fa04e4d3b2bc1955303fba8f068c7d1b31ed424727c64b64c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT SLING / LAST SW. #27",
+          "label": "switch test while public 27 is held at 1",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "f8a448118c5c67e4742ddf2f536ad7ff6ce46ef08839aa52b626b49a28d81df4"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT RETURN / LAST SW. #28",
+          "label": "switch test while public 28 is held at 1",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "0afea44abd38354544324fbdba749c7cb0072f619c7cc351e7b00f3347f08493"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT OUTLANE / LAST SW. #29",
+          "label": "switch test while public 29 is held at 1",
+          "nonzero_pixels": 730,
+          "pixel_sha256": "b5a3f7bede25dc4a59a08ed55eafc7fec4fa5afba4f5abae8eb2128ef6946103"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / TOP BUMPER / LAST SW. #30",
+          "label": "switch test while public 30 is held at 1",
+          "nonzero_pixels": 704,
+          "pixel_sha256": "0fe9610ac0585c3cfe772c158241e984eab798f323fe33acea03014752a082dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT BUMPER / LAST SW. #31",
+          "label": "switch test while public 31 is held at 1",
+          "nonzero_pixels": 719,
+          "pixel_sha256": "e8b3f12a71e7b366cfc6b77d0636a431b9ab977542ae6992c9d635f8a64a3e48"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BOTTOM BUMPER / LAST SW. #32",
+          "label": "switch test while public 32 is held at 1",
+          "nonzero_pixels": 738,
+          "pixel_sha256": "40a22029ab53b76db90cd4eddc7b6f2fee38d1f07528afd74263f35177f9b3bf"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT RAMP MADE / LAST SW. #33",
+          "label": "switch test while public 33 is held at 1",
+          "nonzero_pixels": 734,
+          "pixel_sha256": "bb35ed7a9f567686e348702ab5dcc3da481db1fc5cc17e9be6a63421c96d6843"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #34 / LAST SW. #34",
+          "label": "switch test while public 34 is held at 1",
+          "nonzero_pixels": 700,
+          "pixel_sha256": "f92b5de84b8a162ab39fd6670dba04274193e3936b2e21f9121b5af4e014cfa2"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / EVIL MONKEY / LAST SW. #35",
+          "label": "switch test while public 35 is held at 1",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "e69735dca0f8456193eeb7694dc28b2adf1627c0a9b61767724c1be339466c96"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #36 / LAST SW. #36",
+          "label": "switch test while public 36 is held at 1",
+          "nonzero_pixels": 702,
+          "pixel_sha256": "d5338d1c1194243b1843dc99b564bfd67874904e759d1ccc185912c5d15d1523"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #37 / LAST SW. #37",
+          "label": "switch test while public 37 is held at 1",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "821f25d3cb1b1557a9fd0da4f4b1c6665979d581a0d3d40255bdb9727fba9ceb"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #38 / LAST SW. #38",
+          "label": "switch test while public 38 is held at 1",
+          "nonzero_pixels": 708,
+          "pixel_sha256": "0936361dcdd093bb7994dcad2427826def7dca87400c7f63ecac08a46aa2499a"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT ORBIT SPINNER / LAST SW. #39",
+          "label": "switch test while public 39 is held at 1",
+          "nonzero_pixels": 780,
+          "pixel_sha256": "9356706fc24e82261e5da7c7839b15f7be7ff3216c48dcab85a71a8752db6c74"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / DEATH RETURN / LAST SW. #40",
+          "label": "switch test while public 40 is held at 1",
+          "nonzero_pixels": 718,
+          "pixel_sha256": "4b6b3245956defdec3a0f663b99e83ea22eb3d1c81b204e6c1af09db96a36875"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / 3 BANK BOT / LAST SW. #41",
+          "label": "switch test while public 41 is held at 1",
+          "nonzero_pixels": 686,
+          "pixel_sha256": "1932504833e3660567aa419b47b2ec341a8b813c5b3ebb4d5edf6f00aa935cd8"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / 3 BANK MID / LAST SW. #42",
+          "label": "switch test while public 42 is held at 1",
+          "nonzero_pixels": 695,
+          "pixel_sha256": "978fc845330cca2a4ad7b09a8dfa78c0f8f6a4651c7fd260b9b2b08eada6d884"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / 3 BANK TOP / LAST SW. #43",
+          "label": "switch test while public 43 is held at 1",
+          "nonzero_pixels": 692,
+          "pixel_sha256": "0b02717a7f5aeeb6ff224aef01171cf707fdf3789e0c6272e76135519a53feee"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / (F)ART / LAST SW. #44",
+          "label": "switch test while public 44 is held at 1",
+          "nonzero_pixels": 647,
+          "pixel_sha256": "7ef214e26ec294416d8240ac0878e3d9a0c0b85ad613cebbbc8ec92b36e09ba5"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / F(A)RT / LAST SW. #45",
+          "label": "switch test while public 45 is held at 1",
+          "nonzero_pixels": 657,
+          "pixel_sha256": "56af862bd317d4dcf595e909a4e907795fa7a028312654a0311785366c018eb7"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / FA(R)T / LAST SW. #46",
+          "label": "switch test while public 46 is held at 1",
+          "nonzero_pixels": 655,
+          "pixel_sha256": "c0d7a0b2f9548850119eadb79039b0d5fe95f9e35917592ef7211998129ced14"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / FAR(T) / LAST SW. #47",
+          "label": "switch test while public 47 is held at 1",
+          "nonzero_pixels": 652,
+          "pixel_sha256": "84b5d4af498ecfe3c8513a079b26853c262ba2f0f51fd529d37da218d474cb5d"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SNEAK RAMP / LAST SW. #48",
+          "label": "switch test while public 48 is held at 1",
+          "nonzero_pixels": 706,
+          "pixel_sha256": "9f49f398e79c5417b273ef65daacf8936489b155b6b820fa78ca681e8ebcb516"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / BEER CAN / LAST SW. #49",
+          "label": "switch test while public 49 is held at 1",
+          "nonzero_pixels": 678,
+          "pixel_sha256": "551dc56cd292f51d78beed50b14b80d30478cb0b7b5484184ce60d907607f49b"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI MEG TARGET / LAST SW. #50",
+          "label": "switch test while public 50 is held at 1",
+          "nonzero_pixels": 738,
+          "pixel_sha256": "2bf7f23badf71fd827ea62b6a26078803cfd61c6a52c52d5694a68bf91b6b054"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI PETER TARGET / LAST SW. #51",
+          "label": "switch test while public 51 is held at 1",
+          "nonzero_pixels": 750,
+          "pixel_sha256": "52e163d4bf6ddf593d14f44e7806b67bcbb4501bf855ecc967d440f8796109f7"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI RIGHT ORBIT / LAST SW. #52",
+          "label": "switch test while public 52 is held at 1",
+          "nonzero_pixels": 740,
+          "pixel_sha256": "11b68d3f09434c4d96b2a2dd89c84ff9c953bdcd474c56026490a111dc272c8c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI LEFT ORBIT / LAST SW. #53",
+          "label": "switch test while public 53 is held at 1",
+          "nonzero_pixels": 732,
+          "pixel_sha256": "ac6287f261892badafffcba0a096640b72b6f2fe8863700fc6326928a0cae185"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI RAMP / LAST SW. #54",
+          "label": "switch test while public 54 is held at 1",
+          "nonzero_pixels": 690,
+          "pixel_sha256": "0d45fed65118b14d4d5c40d6cf329791e93ac6b96a72bfbaddb3c5c9b25cacdd"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / MINI TROUGH / LAST SW. #55",
+          "label": "switch test while public 55 is held at 1",
+          "nonzero_pixels": 712,
+          "pixel_sha256": "b671ff6b8368942e5055918382d726d375f150bd59d2fca4bcbfad5958706a87"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #56 / LAST SW. #56",
+          "label": "switch test while public 56 is held at 1",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "c46b332e30c49e791011ed1a2a29ab910dd9cb29e5f127592b4869811917b043"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT ORBIT / LAST SW. #57",
+          "label": "switch test while public 57 is held at 1",
+          "nonzero_pixels": 694,
+          "pixel_sha256": "a93a01d4e38aeede8ed6a8a05158c840febf4be8b0fbed61ef0de57cc3a8fb9b"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #58 / LAST SW. #58",
+          "label": "switch test while public 58 is held at 1",
+          "nonzero_pixels": 703,
+          "pixel_sha256": "540323d178fc7ea1fe23f686b43ac2ef7886801811123b7f0f55684b88b0183c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #59 / LAST SW. #59",
+          "label": "switch test while public 59 is held at 1",
+          "nonzero_pixels": 702,
+          "pixel_sha256": "3610eeab4be5d8545f49c81c6afc24b7e0b1f2f4e57a9991580ddb2d31183358"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #60 / LAST SW. #60",
+          "label": "switch test while public 60 is held at 1",
+          "nonzero_pixels": 697,
+          "pixel_sha256": "1074911059f0c8b8e1a11e78214b0415bcaf376ec736bb81c472880e1f5bbc8c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #61 / LAST SW. #61",
+          "label": "switch test while public 61 is held at 1",
+          "nonzero_pixels": 696,
+          "pixel_sha256": "ee977976d3545d2c3f010f1d078dc7b76fd374fc097999006136cbf2ecf9b76a"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #62 / LAST SW. #62",
+          "label": "switch test while public 62 is held at 1",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "b1c554ec6852c04afd0d04d635d303cb42a5d05625c5e0c0c2d21c61d8fc37d1"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / SWITCH #63 / LAST SW. #63",
+          "label": "switch test while public 63 is held at 1",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "395afd5adc43e18b0eb402bb3a78f9d6bc058e6589301508ac6fc319bf8b356d"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / CLAM EJECT / LAST SW. #64",
+          "label": "switch test while public 64 is held at 1",
+          "nonzero_pixels": 685,
+          "pixel_sha256": "8f04f49f67d6de4945e8ed680430d06d0161474f552cd33402c178820968a3c9"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "public 1 held at 1 for 1.2 s: the ROM prints BALL SAVER UP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4,
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 held at 1 for 1.2 s: the ROM prints BALL SAVER DOWN",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "public 3 held at 1 for 1.2 s: the ROM prints LEFT ORBIT S/U",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "public 4 held at 1 for 1.2 s: the ROM prints R. 2-BANK BOTTOM",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "public 5 held at 1 for 1.2 s: the ROM prints R. 2-BANK TOP",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "public 6 held at 1 for 1.2 s: the ROM prints LT NEWTON ROLLOVER",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "public 7 held at 1 for 1.2 s: the ROM prints RT NEWTON ROLLOVER",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "public 8 held at 1 for 1.2 s: the ROM prints PIRATE TARGET",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "public 9 held at 1 for 1.2 s: the ROM prints 1-BANK DROP TARGET",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "public 10 held at 1 for 1.2 s: the ROM prints MEG TARGET",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "public 11 held at 1 for 1.2 s: the ROM prints SWITCH #11",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 held at 1 for 1.2 s: the ROM prints SWITCH #12",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "public 13 held at 1 for 1.2 s: the ROM prints TV EJECT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "public 14 held at 1 for 1.2 s: the ROM prints SWITCH #14",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "public 15 held at 1 for 1.2 s: the ROM prints TOURNAMENT START",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "public 16 held at 1 for 1.2 s: the ROM prints START BUTTON",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "public 17 held at 1 for 1.2 s: the ROM prints SWITCH #17",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "public 18 held at 1 for 1.2 s: the ROM prints TROUGH #4 (L)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "public 19 held at 1 for 1.2 s: the ROM prints TROUGH #3",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "public 20 held at 1 for 1.2 s: the ROM prints TROUGH #2",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "public 21 held at 1 for 1.2 s: the ROM prints TROUGH #1 (R)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "public 22 held at 1 for 1.2 s: the ROM prints TROUGH JAM",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "public 23 held at 1 for 1.2 s: the ROM prints SHOOTER LANE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "public 24 held at 1 for 1.2 s: the ROM prints LEFT OUTLANE",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "public 25 held at 1 for 1.2 s: the ROM prints LEFT RETURN",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "public 26 held at 1 for 1.2 s: the ROM prints LEFT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "public 27 held at 1 for 1.2 s: the ROM prints RIGHT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "public 28 held at 1 for 1.2 s: the ROM prints RIGHT RETURN",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "public 29 held at 1 for 1.2 s: the ROM prints RIGHT OUTLANE",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "public 30 held at 1 for 1.2 s: the ROM prints TOP BUMPER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "public 31 held at 1 for 1.2 s: the ROM prints RIGHT BUMPER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "public 32 held at 1 for 1.2 s: the ROM prints BOTTOM BUMPER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "public 33 held at 1 for 1.2 s: the ROM prints LEFT RAMP MADE",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "public 34 held at 1 for 1.2 s: the ROM prints SWITCH #34",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "public 35 held at 1 for 1.2 s: the ROM prints EVIL MONKEY",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "public 36 held at 1 for 1.2 s: the ROM prints SWITCH #36",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "public 37 held at 1 for 1.2 s: the ROM prints SWITCH #37",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "public 38 held at 1 for 1.2 s: the ROM prints SWITCH #38",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "public 39 held at 1 for 1.2 s: the ROM prints RIGHT ORBIT SPINNER",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "public 40 held at 1 for 1.2 s: the ROM prints DEATH RETURN",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "public 41 held at 1 for 1.2 s: the ROM prints 3 BANK BOT",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            42
+          ],
+          "input_address": 42,
+          "input_kind": "switch",
+          "label": "public 42 held at 1 for 1.2 s: the ROM prints 3 BANK MID",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            43
+          ],
+          "input_address": 43,
+          "input_kind": "switch",
+          "label": "public 43 held at 1 for 1.2 s: the ROM prints 3 BANK TOP",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            44
+          ],
+          "input_address": 44,
+          "input_kind": "switch",
+          "label": "public 44 held at 1 for 1.2 s: the ROM prints (F)ART",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            45
+          ],
+          "input_address": 45,
+          "input_kind": "switch",
+          "label": "public 45 held at 1 for 1.2 s: the ROM prints F(A)RT",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            46
+          ],
+          "input_address": 46,
+          "input_kind": "switch",
+          "label": "public 46 held at 1 for 1.2 s: the ROM prints FA(R)T",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 held at 1 for 1.2 s: the ROM prints FAR(T)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "public 48 held at 1 for 1.2 s: the ROM prints SNEAK RAMP",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            49
+          ],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "public 49 held at 1 for 1.2 s: the ROM prints BEER CAN",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            50
+          ],
+          "input_address": 50,
+          "input_kind": "switch",
+          "label": "public 50 held at 1 for 1.2 s: the ROM prints MINI MEG TARGET",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            51
+          ],
+          "input_address": 51,
+          "input_kind": "switch",
+          "label": "public 51 held at 1 for 1.2 s: the ROM prints MINI PETER TARGET",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            52
+          ],
+          "input_address": 52,
+          "input_kind": "switch",
+          "label": "public 52 held at 1 for 1.2 s: the ROM prints MINI RIGHT ORBIT",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            53
+          ],
+          "input_address": 53,
+          "input_kind": "switch",
+          "label": "public 53 held at 1 for 1.2 s: the ROM prints MINI LEFT ORBIT",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            54
+          ],
+          "input_address": 54,
+          "input_kind": "switch",
+          "label": "public 54 held at 1 for 1.2 s: the ROM prints MINI RAMP",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            55
+          ],
+          "input_address": 55,
+          "input_kind": "switch",
+          "label": "public 55 held at 1 for 1.2 s: the ROM prints MINI TROUGH",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            56
+          ],
+          "input_address": 56,
+          "input_kind": "switch",
+          "label": "public 56 held at 1 for 1.2 s: the ROM prints SWITCH #56",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            57
+          ],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "public 57 held at 1 for 1.2 s: the ROM prints RIGHT ORBIT",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "public 58 held at 1 for 1.2 s: the ROM prints SWITCH #58",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            59
+          ],
+          "input_address": 59,
+          "input_kind": "switch",
+          "label": "public 59 held at 1 for 1.2 s: the ROM prints SWITCH #59",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            60
+          ],
+          "input_address": 60,
+          "input_kind": "switch",
+          "label": "public 60 held at 1 for 1.2 s: the ROM prints SWITCH #60",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "public 61 held at 1 for 1.2 s: the ROM prints SWITCH #61",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            62
+          ],
+          "input_address": 62,
+          "input_kind": "switch",
+          "label": "public 62 held at 1 for 1.2 s: the ROM prints SWITCH #62",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            63
+          ],
+          "input_address": 63,
+          "input_kind": "switch",
+          "label": "public 63 held at 1 for 1.2 s: the ROM prints SWITCH #63",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            64
+          ],
+          "input_address": 64,
+          "input_kind": "switch",
+          "label": "public 64 held at 1 for 1.2 s: the ROM prints CLAM EJECT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 71,
+        "initial_switches": [],
+        "name": "switch-test-sweep-fg_1200ag",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and the ROM reached attract mode without a factory-reset message to dismiss",
+        "retained_from": "external:pinmame-review-artifacts/family-guy-2007/harness/switch-sweep-fg_1200ag/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/bbh-switch-test-sweep.json",
+        "scenario_sha256": "7c6fe9c2fe016c9d9976d88f082280add6616e1b4657f8935572f78fea3e3283",
+        "self_test_pulses": 0,
+        "sha256": "3c2465ef377c6e400d54ac4b259a7dd4676ba51206bfddd1cf8736b2b752cd4d",
+        "snapshot_count": 136,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      }
+    ],
+    "rom_archive_sha256": "49e51a6db05f42e53d8d2dc0c46ad26d2312d1fdd58ec65654d32752eb754096"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame was read visually and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest switch-sweep-fg_1200ag/manifest.json SHA-256 a1592b8a0095367cce5f008e642f6967ae806484bba3db6e61384109f151ca41 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/family-guy-2007/harness/switch-sweep-fg_1200ag",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "3c2465ef377c6e400d54ac4b259a7dd4676ba51206bfddd1cf8736b2b752cd4d"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

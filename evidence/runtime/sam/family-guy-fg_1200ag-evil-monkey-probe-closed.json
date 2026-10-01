@@ -1,0 +1,170 @@
+{
+  "driver_ids": [
+    "fg_1200ag"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.family-guy.2007"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game fg_1200ag --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --ready-timeout 90 --scenario tools/harness-scenarios/stern/family-guy-2007-evil-monkey-probe.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Every public switch write is a host stimulus, never a ROM observation; the observations are the public solenoids that changed during each step. Evil Monkey switch 35 starts closed. Public solenoid 20 (the Stewie stepper homing) and 24 (the credit-sound output) change during most steps and are listed in each label but not counted as responses.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "fg_1200ag",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "Start button (switch 35 closed): public 1 changed 11 times, public 20 changed 20 times, public 24 changed 2 times, public 33 changed 1 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            33
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "ball in shooter lane: public 1 changed 7 times, public 20 changed 4 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "ball plunged: public 1 changed 8 times, public 20 changed 52 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "Chris target (switch 3) hit, switch 35 still closed: public 1 changed 6 times, public 27 changed 17 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "switch 35 opens (as if the ball hit the Evil Monkey target): no public solenoid changed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "switch 35 closes again: public 1 changed 2 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "Chris target (switch 3) hit again: public 1 changed 2 times, public 27 changed 18 times",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            27
+          ]
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 23,
+        "initial_switches": [],
+        "name": "evil-monkey-probe-closed-fg_1200ag",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and the ROM reached attract mode without a factory-reset message to dismiss",
+        "retained_from": "external:pinmame-review-artifacts/family-guy-2007/harness/evil-monkey-probe-closed-fg_1200ag/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/family-guy-2007-evil-monkey-probe.json",
+        "scenario_sha256": "8d2b584306843a91698ac1f0bda0aadc7375b570f9c96d8236f8dc03f4928bbe",
+        "self_test_pulses": 0,
+        "sha256": "a7cc58e92e78f9c16e5a065af2a96855012182e03f41497e4ffbcf43e6bf8c46",
+        "snapshot_count": 24,
+        "watch_switches": [
+          3,
+          16,
+          18,
+          19,
+          20,
+          21,
+          23,
+          35,
+          55,
+          65,
+          81,
+          83
+        ]
+      }
+    ],
+    "rom_archive_sha256": "49e51a6db05f42e53d8d2dc0c46ad26d2312d1fdd58ec65654d32752eb754096"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame was read visually and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest evil-monkey-probe-closed-fg_1200ag/manifest.json SHA-256 ad33e423aae1b2f1b31c3185c6bde4f863f4c1388a8d93bcd01d693d57aa3a4d (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/family-guy-2007/harness/evil-monkey-probe-closed-fg_1200ag",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "a7cc58e92e78f9c16e5a065af2a96855012182e03f41497e4ffbcf43e6bf8c46"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,214 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 400,
+      "settle_s": 3,
+      "label": "Back"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 3,
+      "label": "Select 1: SERVICE MENU splash"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 3,
+      "label": "Select 2: icon menu, DIAG highlighted"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 5,
+      "label": "Select 3: diagnostics menu, SW highlighted"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 4,
+      "label": "Select 4: switch menu, TEST highlighted"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 4,
+      "label": "Select 5: switch test"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 66,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 66"
+    },
+    {
+      "type": "pulse",
+      "switch": 67,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 67"
+    },
+    {
+      "type": "pulse",
+      "switch": 68,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 68"
+    },
+    {
+      "type": "pulse",
+      "switch": 69,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 69"
+    },
+    {
+      "type": "pulse",
+      "switch": 70,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 71,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 71"
+    },
+    {
+      "type": "pulse",
+      "switch": 72,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 72"
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 81"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 85,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 85"
+    },
+    {
+      "type": "pulse",
+      "switch": 86,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 86"
+    },
+    {
+      "type": "pulse",
+      "switch": 87,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 87"
+    },
+    {
+      "type": "pulse",
+      "switch": 88,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold 88"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold -7"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold -6"
+    },
+    {
+      "type": "pulse",
+      "switch": -5,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold -5"
+    },
+    {
+      "type": "pulse",
+      "switch": -4,
+      "hold_ms": 1200,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold -4"
+    }
+  ],
+  "notes": "Boot a Family Guy S.A.M. ROM from an empty NVRAM and enter the switch test with the named Back and Select service keys (Back, then Select five times). Hold each dedicated-switch public address 65-72 (D-1 to D-8), 81-88 (D-9 to D-16 as the driver numbers them) and -7 to -4 (D-17 to D-20) for 1.2 s with a snapshot while held and 0.8 s after release. The switch test prints the ROM's own name for a switch it reads closed. The named service keys drive the coin-door buttons 0, -1, -2 and -3, so these four are not held directly. The scenario names no game."
+}

@@ -1,0 +1,103 @@
+{
+  "coordinates": "x=raw_x/952, y=raw_y/2115; six-decimal repository helper values; player view, y rear to apron",
+  "drawing_callout_check": {
+    "checked": 100,
+    "limit": 0.07,
+    "not_validated": {
+      "placement.switch-33.sensor": {
+        "callout_offset": 0.1002,
+        "control_offset": 0.0945,
+        "label": "33",
+        "page": "pdf-7"
+      }
+    },
+    "pages": {
+      "pdf-7": {
+        "callout_fit_pairs": 35,
+        "callout_loo_max": 0.0557,
+        "callout_pairs": 36,
+        "control_loo_max": 0.0069,
+        "control_rms": 0.0025,
+        "controls": 6,
+        "image": {
+          "path": "family-guy-2007/session-20261002/callout-check/renders/fg_sw-007.png",
+          "pixels": [
+            1700,
+            2200
+          ],
+          "root": "review_artifacts",
+          "sha256": "19235b1a9d126da527223fa72cb7dfcfaf16859fd74bc17b852e98d0df37cd3b"
+        },
+        "locator": "Family Guy service manual FG_FIND_IT_IN_FRONT.pdf PDF 7, printed DR.5: Switch Locations drawing"
+      },
+      "pdf-9": {
+        "callout_fit_pairs": 64,
+        "callout_loo_max": 0.0672,
+        "callout_pairs": 64,
+        "control_loo_max": 0.0101,
+        "control_rms": 0.0026,
+        "controls": 5,
+        "image": {
+          "path": "family-guy-2007/session-20261002/callout-check/renders/fg_lamp-009.png",
+          "pixels": [
+            1700,
+            2200
+          ],
+          "root": "review_artifacts",
+          "sha256": "813d4eaa995966b6ad4fe9197b75ba58a67a7a2a568ed3b083dc4b5041eddf4f"
+        },
+        "locator": "Family Guy service manual FG_FIND_IT_IN_FRONT.pdf PDF 9, printed DR.7: Lamp Locations drawing"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-02",
+      "transcription": "independent Claude Sonnet 5.5 (claude-sonnet-5-5) readers working only from the page renders, without table data",
+      "verification": "the curating Claude Sonnet 5.5 session overlaid both fitted pages and corrected the lamp page controls (each correction carries a verifier_note or reason); an independent Claude Opus agent then checked every green placement and every fit control against the renders (verifier-report.md)"
+    },
+    "retained_artifacts": {
+      "directory": "family-guy-2007/session-20261002/callout-check",
+      "manifest_sha256": "51a7826de76ab053d76793a195d21f0e123ad1eb4d678f8f0f8d4e67a385e183"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/stern/family-guy-2007-callouts.json",
+    "seed_sha256": "ccd4e6d301fb9f810120c5cb769c38e04e39b24b22ca3b29b6c8ee3979d609cc",
+    "validated": 99
+  },
+  "embedded_script_sha256": "c7b201acb74a329913b159db88315c422b8dcead0ba4bb30b61785ed1785f8db",
+  "extraction_manifest_sha256": "abc897a7a9d39473f991c73a95a06a72939984ea07201969da2642559540db19",
+  "format": "pinmame-spatial-blockers",
+  "located_observations": 156,
+  "machine_id": "stern.family-guy.2007",
+  "manual_sha256": "2bbcfa34ad70ab90c0fadabaf825850cecae58c8028af9aaabf8be1ad01979cd",
+  "missing_spatial_ids": [
+    "switch.18-trough-4-left",
+    "switch.19-trough-3",
+    "switch.20-trough-2",
+    "switch.21-trough-1-right-up-kicker-opto",
+    "switch.22-trough-jam-stack-opto",
+    "device.24-optional-5-v-coil",
+    "device.25-flash-back-panel-left-blue",
+    "device.26-flash-back-panel-center-red",
+    "device.27-flash-back-panel-right-clear",
+    "device.28-flash-beer-can-brian",
+    "lamp.69-ball-saver-post",
+    "gi.master",
+    "display.dmd"
+  ],
+  "projection_classes": {
+    "cabinet_or_service": "not applicable",
+    "coil_mechanism_anchor": "observed effect anchor on the mechanism object the coil drives (flipper pivots, kickers, drop-target banks, the death post wall); the coil body is not modelled and the DR.9 page is not fitted",
+    "exact_named_vpx_object_center": "observed, and validated where drawing_callout_check agrees: the table's swN triggers, walls, targets and kickers, the Bumper1-3 pop bumpers and the lN lights",
+    "flasher_bulb_light": "observed emitter on the table's F23 and F29-F32 lights; Q25-Q28 have no retained table object",
+    "led_board_letter": "observed emitter on the table's LEDn object lying on the same printed letter of the mini-playfield art; the table binds some of them under the wrong names (device notes)",
+    "manual_drawing_projection": "not used for coordinates; the factory DR.5 and DR.7 boxes validate table placements (drawing_callout_check)",
+    "virtual_or_unused": "not applicable"
+  },
+  "promotion": "partial",
+  "reason": "The retained table is a defective reconstruction (reversed pop-bumper bindings, swapped BRIAN/CHRIS LEDs, no objects for the trough sensors 18-22 or the back-panel flashers Q25-Q28, no GI) and the DR.9 coil/flash page could not be fitted; the Evil Monkey latch gate is also unresolved. A second, correct table or measured placements are needed before author readiness.",
+  "source_seed_sha256": "113aa302f368c1ccb2fab6ccfcc25c871615fadffd546ca7db8245574437c0f9",
+  "table_sha256": "159558a39efd5a784bf0e587e9f07563e4fcd92765eeda02c9abc8bad015e2ff",
+  "unresolved_conflict_ids": [],
+  "validated_placements": 99,
+  "version": 1
+}

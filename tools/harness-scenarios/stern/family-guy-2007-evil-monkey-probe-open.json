@@ -1,0 +1,169 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 18 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 19 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 20 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 21 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 55 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 83 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 81 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.05,
+      "label": "initial switch 35 open"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 500,
+      "settle_s": 4,
+      "label": "Start button (switch 35 open)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "ball in shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 3,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 3,
+      "label": "Chris target (switch 3) hit, switch 35 still open"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 4,
+      "label": "switch 35 opens (as if the ball hit the Evil Monkey target)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 4,
+      "label": "switch 35 closes again"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 300,
+      "settle_s": 3,
+      "label": "Chris target (switch 3) hit again"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "final observation"
+    }
+  ],
+  "watch_switches": [
+    3,
+    23,
+    35
+  ],
+  "notes": "Same stimuli as family-guy-2007-evil-monkey-probe.json but Evil Monkey switch 35 starts open. The scenario names no game."
+}
