@@ -357,6 +357,13 @@ def outputs() -> list:
                     " This older table incorrectly gives l2/l3 TimerInterval=18; their "
                     "ROCK insert positions are established by the factory drawing. "
                     "That local runtime bug does not redefine factory lamp 2 or 3.")
+            if address == 39:
+                d["physical"]["notes"] += (
+                    " This older table leaves l39 (TimerInterval 39) out of its AllLamps "
+                    "collection, so vpmMapLights never drives it; it instead lights the "
+                    "co-located JackpotAm light from SolCallback(30) SolFlash30. The insert "
+                    "position is established by the factory drawing (PDF 39) and the l39 "
+                    "object centre; that local runtime bug does not redefine factory lamp 39.")
             if address == 55:
                 d["physical"]["notes"] += " Factory shows two 55 locations (left shooter and left ramp); retained l55/l55a are distinct bulbs."
         else:
