@@ -1,0 +1,222 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/nbaf-flasher-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next flasher; in repeat mode the ROM pulses it until the next press, so each step's transitioned_solenoid_addresses is the address it selected.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "game identification",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER LEFT / T.5 19 REPEAT / BLK-ORN RED-WHT",
+          "label": "T.5 FLASHER TEST at flasher 19",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "60a22ad4014ad7e4b568f028654c00854d4ce0d62c0956e2d4c7a9fcf2e241d7"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 17: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 18: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 19: the ROM pulses it repeatedly and prints UPPER LEFT with the wires BLK-ORN RED-WHT",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 20: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 22: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 24: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 17: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 18: the ROM pulses it repeatedly",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        20,
+        22,
+        24,
+        29,
+        31,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 20,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf-31-flasher-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/flasher-test/nbaf_31/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-flasher-test.json",
+        "scenario_sha256": "1f8b7f94968028376c32169160aabe18ca9596c6b6616a142da8fb790e8aed78",
+        "self_test_pulses": 0,
+        "sha256": "877cc07f90fedeaaafce88e0f7a99ff11fe72e30f38b3500016dbc0984505df6",
+        "snapshot_count": 21,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest nbaf_31/manifest.json SHA-256 3d195df4632c431267f658ff278e86326e7e765186fe2bf0bf567d89f124e855 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/flasher-test/nbaf_31",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "877cc07f90fedeaaafce88e0f7a99ff11fe72e30f38b3500016dbc0984505df6"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

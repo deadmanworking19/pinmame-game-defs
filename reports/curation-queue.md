@@ -78,7 +78,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 72 | 1998 | Wack-A-Doodle-Doo (Redemption) | Sega | partial | 6% |
 | 73 | 1998 | Monster Bash | Williams | author_ready | 100% |
 | 74 | 1997 | Cirqus Voltaire | Bally | author_ready | 100% |
-| 75 | 1997 | NBA Fastbreak | Bally | partial | 13% |
+| 75 | 1997 | NBA Fastbreak | Bally | partial | 19% |
 | 76 | 1997 | Star Wars Trilogy | Sega | partial | 13% |
 | 77 | 1997 | Starship Troopers | Sega | partial | 19% |
 | 78 | 1997 | The Lost World Jurassic Park | Sega | partial | 13% |

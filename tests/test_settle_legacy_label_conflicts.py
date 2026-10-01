@@ -16,8 +16,12 @@ import settle_legacy_label_conflicts as tool  # noqa: E402
 PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
 # The ROM's own printed name for each settled address, as the evidence summary transcribes it.
 ROM_NAMES = {
-	"runtime.black-rose.br-l4.flasher-test": "RIGHT BOTTOM",
-	"runtime.no-fear.nf-23x.flasher-test": "FLS. NO FEAR",
+	("runtime.black-rose.br-l4.flasher-test", 19): "RIGHT BOTTOM",
+	("runtime.no-fear.nf-23x.flasher-test", 19): "FLS. NO FEAR",
+	("runtime.nba-fastbreak.nbaf-31.switch-edges", 1): "LEFT COIN SLOT",
+	("runtime.nba-fastbreak.nbaf-31.switch-edges", 2): "CENTER COIN SLOT",
+	("runtime.nba-fastbreak.nbaf-31.switch-edges", 3): "RIGHT COIN SLOT",
+	("runtime.nba-fastbreak.nbaf-31.flasher-test", 19): "UPPER LEFT",
 }
 
 
@@ -39,7 +43,7 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				(device,) = [item for item in record["outputs"] + record["inputs"] if item["binding"] == settlement["binding"]]
 				self.assertEqual(settlement["label"], device["label"])
 				self.assertEqual(settlement["kind"], device["kind"])
-				self.assertEqual(f"device.{tool.slug(settlement['label'])}", device["id"])
+				self.assertEqual(settlement.get("id", f"device.{tool.slug(settlement['label'])}"), device["id"])
 				for alias in settlement["drop_aliases"]:
 					self.assertNotIn(alias, device["aliases"])
 				self.assertEqual("observed", device["provenance"]["status"])
@@ -62,12 +66,21 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
 				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
 				address = settlement["binding"]["device"]
-				name = ROM_NAMES[source["id"]]
-				steps = [item for item in runtime["observations"]["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
-				self.assertTrue(steps)
-				self.assertTrue(any(f"prints {name} " in item["label"] for item in steps))
-				texts = {item["label"]: item for item in runtime["observations"]["diagnostic_snapshots"]}
-				frame = [item for label, item in texts.items() if label.endswith(f" {address}")][0]
+				name = ROM_NAMES[(source["id"], address)]
+				switch = settlement["binding"]["group"] == "pinmame.input.switch"
+				observations = runtime["observations"]
+				if switch:
+					# A switch is named on the ROM's top line while the host holds it at 1.
+					steps = [item for item in observations["named_action_observations"] if item["host_stimulus_switch_addresses"] == [address]]
+					self.assertTrue(steps)
+					self.assertTrue(all(f"names it {name} " in item["label"] and not item["transitioned_solenoid_addresses"] for item in steps))
+					frames = [item for item in observations["diagnostic_snapshots"] if f"after public {address} (" in item["label"] and "set to 1" in item["label"]]
+				else:
+					steps = [item for item in observations["named_action_observations"] if item["transitioned_solenoid_addresses"] == [address]]
+					self.assertTrue(steps)
+					self.assertTrue(any(f"prints {name} " in item["label"] for item in steps))
+					frames = [item for item in observations["diagnostic_snapshots"] if item["label"].endswith(f" {address}")]
+				(frame,) = frames
 				self.assertTrue(frame["interpreted_text"].startswith(f"{name} / "))
 				root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
 				if not root:
@@ -91,9 +104,17 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 				for item in runtime["observations"]["diagnostic_snapshots"]:
 					matches = [snap for snap in run["snapshots"] if snap["displays"] and snap["displays"][0]["pixel_sha256"] == item["pixel_sha256"]]
 					self.assertTrue(matches, item["label"])
-				# The step whose frame names the address is the step that pulsed it.
-				pulsed = [label for label, step in raw_steps.items() if {t["number"] for t in step["transitions"]["solenoids"] if any(t["states"])} == {address}]
-				self.assertTrue(any(by_label[label]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"] for label in pulsed))
+				if switch:
+					# The frame that names the switch is the one taken while only it was held at 1.
+					held = by_label[f"{address} -> 1"]
+					self.assertEqual(frame["pixel_sha256"], held["displays"][0]["pixel_sha256"])
+					self.assertEqual(1, raw_steps[f"{address} -> 1"]["observed_state"])
+					self.assertEqual({address}, {item["number"] for item in held["watched_switches"] if item["state"] and item["number"] in run["watch_switches"]})
+					self.assertEqual([], raw_steps[f"{address} -> 1"]["transitions"]["solenoids"])
+				else:
+					# The step whose frame names the address is the step that pulsed it.
+					pulsed = [label for label, step in raw_steps.items() if {t["number"] for t in step["transitions"]["solenoids"] if any(t["states"])} == {address}]
+					self.assertTrue(any(by_label[label]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"] for label in pulsed))
 
 	def test_the_tool_check_mode_passes(self) -> None:
 		import subprocess

@@ -3,11 +3,13 @@
 `import-legacy` recorded a conflict wherever a legacy platform file and a legacy game file named one
 public address differently. On several WPC records the platform file's `ROM Started` (legacy alias
 `c_game_on`) sits on solenoid 19, where no WPC generation has a game-on output, while the game file
-names a flasher there. When a hash-pinned harness run of the game's own ROM shows what the address
-is, this tool rewrites that one device from the run, drops the conflict, cites the run, and keeps
-`coverage.missing` honest.
+names a flasher there; on others the game file puts playfield sensors on the coin-door switches the
+platform file places at 1-4. When a hash-pinned harness run of the game's own ROM shows what the
+address is, this tool rewrites that one device from the run, drops the conflict, cites the run, and
+keeps `coverage.missing` honest.
 
-Every settlement below names its retained evidence. The tool edits only the listed device, conflict,
+Every settlement below names its retained evidence. Several settlements may cite one run; a device
+keeps its id unless the settlement gives a new one. The tool edits only the listed device, conflict,
 source list and coverage; everything else in the record is left as `import-legacy` wrote it. Run
 with --check to verify that every listed record already matches what the tool would write.
 """
@@ -28,6 +30,25 @@ from pinmame_game_defs.jsonio import canonical_bytes  # noqa: E402
 
 RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 ATTRIBUTION = "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external"
+
+NBA_FASTBREAK_SWITCH_EDGES = {
+	"id": "runtime.nba-fastbreak.nbaf-31.switch-edges",
+	"uri": "internal:evidence/runtime/wpc-95/nba-fastbreak-nbaf_31-switch-edges.json",
+	"locator": (
+		"One hash-pinned LibPinMAME harness run of nbaf_31 from empty NVRAM (scenario "
+		"tools/harness-scenarios/wpc-95/nbaf-switch-edges-1-4-12.json) that holds public 12, 1, 2, 3, 4 and 12 again "
+		"at each level for 2 s inside T.1 SWITCH EDGES. At level 1 the ROM's top line names public 1-3 LEFT, CENTER "
+		"and RIGHT COIN SLOT, public 4 4TH COIN OPTION, and public 12 BACKBOX BASKET; it reports 1-4 as LAST SW D1-D4, "
+		"the coin-door switches."
+	),
+}
+NBA_FASTBREAK_COIN_NOTE = (
+	"Legacy import set the WPC platform map's 'Coin Button {n}' against the game file's 'Backbox Basket Score {n}'. "
+	"In T.1 SWITCH EDGES the 3.1 ROM names public {n} {name} and reports it as LAST SW D{n}, a coin-door switch "
+	"({wires}); it names public 12 BACKBOX BASKET, the one backbox basket switch nbaf.c defines (swBackboxBasket). "
+	"Public {n} is the coin slot WPC_COMPORTS places there; the game file's 'Backbox Basket Score' labels at 1-3 do "
+	"not match what the ROM reads at those matrix positions."
+)
 
 SETTLEMENTS: list[dict[str, Any]] = [
 	{
@@ -81,6 +102,51 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"game file's '(x2)' quantity is not confirmed by the run."
 		),
 	},
+	*[
+		{
+			"path": "machines/partial/bally/nba-fastbreak-1997.json",
+			"machine_id": "bally.nba-fastbreak.1997",
+			"conflict_id": f"conflict.pinmame-input-switch-{number}-none",
+			"binding": {"group": "pinmame.input.switch", "device": number},
+			"id": f"switch.coin-{number}",
+			"label": name.title(),
+			"kind": "switch",
+			"drop_aliases": [],
+			"source": NBA_FASTBREAK_SWITCH_EDGES,
+			"note": NBA_FASTBREAK_COIN_NOTE.format(n=number, name=name, wires=wires),
+		}
+		for number, name, wires in (
+			(1, "LEFT COIN SLOT", "ORN-BRN BLACK"),
+			(2, "CENTER COIN SLOT", "ORN-RED BLACK"),
+			(3, "RIGHT COIN SLOT", "ORN-BLK BLACK"),
+		)
+	],
+	{
+		"path": "machines/partial/bally/nba-fastbreak-1997.json",
+		"machine_id": "bally.nba-fastbreak.1997",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"label": "Flasher — Upper Left",
+		"kind": "flasher",
+		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
+		"source": {
+			"id": "runtime.nba-fastbreak.nbaf-31.flasher-test",
+			"uri": "internal:evidence/runtime/wpc-95/nba-fastbreak-nbaf_31-flasher-test.json",
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of nbaf_31 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-95/nbaf-flasher-test.json) that steps T.5 FLASHER TEST through the "
+				"flashers 17, 18, 19, 20, 22 and 24 in repeat mode. At step 19 the ROM pulses public solenoid 19 and "
+				"prints UPPER LEFT with the wires BLK-ORN RED-WHT."
+			),
+		},
+		"note": (
+			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
+			"against the game file's 'Flasher — Upper Left / BG Left'. The 3.1 ROM's own T.5 FLASHER TEST settles "
+			"it: it pulses public 19 among flashers 17, 18, 19, 20, 22 and 24 and prints UPPER LEFT (BLK-ORN RED-WHT). "
+			"No WPC generation has a game-on output at 19, so the platform alias is dropped. The ROM names one "
+			"output, so the game file's '/ BG Left' is not confirmed by the run."
+		),
+	},
 ]
 
 
@@ -97,7 +163,7 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 		raise RuntimeError(f"{settlement['path']}: expected one device at {settlement['binding']}, found {len(matches)}")
 	device = matches[0]
 	source = settlement["source"]
-	device["id"] = f"device.{slug(settlement['label'])}"
+	device["id"] = settlement.get("id", f"device.{slug(settlement['label'])}")
 	device["label"] = settlement["label"]
 	device["kind"] = settlement["kind"]
 	device["aliases"] = [alias for alias in device.get("aliases", []) if alias not in settlement["drop_aliases"]]
@@ -108,7 +174,7 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 	if identifiers.count(device["id"]) != 1:
 		raise RuntimeError(f"{settlement['path']}: {device['id']} would not be unique")
 	result["conflicts"] = [conflict for conflict in result["conflicts"] if conflict["id"] != settlement["conflict_id"]]
-	result["sources"] = [item for item in result["sources"] if item["id"] != source["id"]] + [{
+	record = {
 		"id": source["id"],
 		"kind": "runtime_scenario",
 		"uri": source["uri"],
@@ -116,7 +182,13 @@ def settle(document: dict[str, Any], settlement: dict[str, Any]) -> dict[str, An
 		"locator": source["locator"],
 		"license": "NOASSERTION",
 		"attribution": ATTRIBUTION,
-	}]
+	}
+	# Replace in place, so that settlements sharing one run leave the source list stable on re-application.
+	positions = [index for index, item in enumerate(result["sources"]) if item["id"] == source["id"]]
+	if positions:
+		result["sources"][positions[0]] = record
+	else:
+		result["sources"].append(record)
 	unresolved = [conflict for conflict in result["conflicts"] if conflict.get("status", "unresolved") == "unresolved"]
 	if not unresolved:
 		result["coverage"]["missing"] = [item for item in result["coverage"]["missing"] if item != "unresolved_conflicts"]

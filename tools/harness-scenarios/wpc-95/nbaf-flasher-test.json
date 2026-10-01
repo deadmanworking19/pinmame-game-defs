@@ -1,0 +1,154 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Escape out of the fresh-NVRAM loop",
+      "settle_s": 15.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 1 (TEST REPORT)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 2 (game identification)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter 3 (main menu, B. BOOKKEEPING)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (P. PRINTOUTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T. TESTS)",
+      "settle_s": 1.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter (test menu, T.1 SWITCH EDGES)",
+      "settle_s": 2.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T.2)",
+      "settle_s": 1.2,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T.3)",
+      "settle_s": 1.2,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T.4)",
+      "settle_s": 1.2,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Up (T.5)",
+      "settle_s": 1.2,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "Enter (start T.5 FLASHER TEST)",
+      "settle_s": 3.0,
+      "switch": 8,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 1",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 2",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 3",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 4",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 5",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 6",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "T.5 step 7",
+      "settle_s": 2.5,
+      "switch": 7,
+      "type": "pulse"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 0,
+      "switch": 22
+    }
+  ],
+  "notes": "Boot a NBA Fastbreak ROM from an empty NVRAM with the coin door open (public 22 released) and PinMAME's built-in mechanisms disabled; the scenario names no game. Leave the fresh-NVRAM loop with Escape, open the wpc-95 service menu, start T.5 FLASHER TEST and step it with Up until it wraps. In repeat mode the ROM pulses the selected output and prints its own name and wire colours for it, so each step pairs a printed name with the public address PinMAME published.",
+  "version": 1,
+  "watch_switches": [
+    22
+  ]
+}

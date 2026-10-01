@@ -1,0 +1,361 @@
+{
+  "driver_ids": [
+    "nbaf_31"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.nba-fastbreak.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game nbaf_31 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-95/nbaf-switch-edges-1-4-12.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels. The ROM reports public 1-4 as LAST SW D1-D4, the coin-door switches, and public 12 as LAST SW 12.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "nbaf_31",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NBA FASTBREAK / 50053 REV. 3.1",
+          "label": "game identification screen",
+          "nonzero_pixels": 355,
+          "pixel_sha256": "29a10fcecafdb0e27ce059d5c47c79efe138782901f8f019f5f4178ff0ba08a7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 SWITCH EDGES started, every watched switch at public 0",
+          "nonzero_pixels": 437,
+          "pixel_sha256": "a1d04759263872a4ae18c4fdd7aded4ef5e75e7d7f5f949af242b90a3af87907"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX BASKET / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "T.1 SWITCH EDGES two seconds after public 12 (nbaf.c swBackboxBasket, the control) was set to 1",
+          "nonzero_pixels": 814,
+          "pixel_sha256": "ac6003f746ed4177391ada4232593bfee9d164efbaf0533f46c99f665e032007"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "T.1 SWITCH EDGES two seconds after public 12 (nbaf.c swBackboxBasket, the control) was set to 0",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "057542c11cd4504162500f9260f3930a0d22118718dcfde8661f4cec51caa904"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT COIN SLOT / T.1 LAST SW D1 / ORN-BRN BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 1 (WPC_COMPORTS coin-door column) was set to 1",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "4b0a280cc59afae3aa8dd17b56fc6c21764b94e299fc340ae83b428d5dbc167a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW D1 / ORN-BRN BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 1 (WPC_COMPORTS coin-door column) was set to 0",
+          "nonzero_pixels": 741,
+          "pixel_sha256": "9c10222beb380564313b3712a16f4003f0609e5e2b3fd5cdfe29acf387d59402"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CENTER COIN SLOT / T.1 LAST SW D2 / ORN-RED BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 2 (WPC_COMPORTS coin-door column) was set to 1",
+          "nonzero_pixels": 787,
+          "pixel_sha256": "23fdcbf45f26b692c27d2959ecf5236b5b9da12f80b0e991899914a01589bf6e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW D2 / ORN-RED BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 2 (WPC_COMPORTS coin-door column) was set to 0",
+          "nonzero_pixels": 745,
+          "pixel_sha256": "e44c6adf245f77a26e7d471bbf478011f262262588e1131ae42e92720406a997"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT COIN SLOT / T.1 LAST SW D3 / ORN-BLK BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 3 (WPC_COMPORTS coin-door column) was set to 1",
+          "nonzero_pixels": 755,
+          "pixel_sha256": "5fbcfd1d1c1f17c4beeda810bc32bee3d404400e3a9ff987b38543f9bbe39933"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW D3 / ORN-BLK BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 3 (WPC_COMPORTS coin-door column) was set to 0",
+          "nonzero_pixels": 735,
+          "pixel_sha256": "1047c7cc32c4dc3139549d9af5810e2c9b771d4f02885ff34ad0ee2e835458cf"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "4TH COIN OPTION / T.1 LAST SW D4 / ORN-YEL BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 4 (WPC_COMPORTS coin-door column) was set to 1",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "ebbbf04546230ca1eda36038d6ff0a237f36a971bc4b5c25e170fb1142ee4d4f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW D4 / ORN-YEL BLACK",
+          "label": "T.1 SWITCH EDGES two seconds after public 4 (WPC_COMPORTS coin-door column) was set to 0",
+          "nonzero_pixels": 729,
+          "pixel_sha256": "66c591331ae881fb68b1b0e9c5a5c192b02bfd084cf49dca420ef3151eae9da1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACKBOX BASKET / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "T.1 SWITCH EDGES two seconds after public 12 (nbaf.c swBackboxBasket, the control) was set to 1 again",
+          "nonzero_pixels": 814,
+          "pixel_sha256": "ac6003f746ed4177391ada4232593bfee9d164efbaf0533f46c99f665e032007"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 12 / WHT-RED GRN-BRN",
+          "label": "T.1 SWITCH EDGES two seconds after public 12 (nbaf.c swBackboxBasket, the control) was set to 0 again",
+          "nonzero_pixels": 767,
+          "pixel_sha256": "057542c11cd4504162500f9260f3930a0d22118718dcfde8661f4cec51caa904"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 (nbaf.c swBackboxBasket, the control) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it BACKBOX BASKET and its second line reports LAST SW 12",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 (nbaf.c swBackboxBasket, the control) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "public 1 (WPC_COMPORTS coin-door column) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it LEFT COIN SLOT and its second line reports LAST SW D1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "public 1 (WPC_COMPORTS coin-door column) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 (WPC_COMPORTS coin-door column) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it CENTER COIN SLOT and its second line reports LAST SW D2",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "public 2 (WPC_COMPORTS coin-door column) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "public 3 (WPC_COMPORTS coin-door column) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it RIGHT COIN SLOT and its second line reports LAST SW D3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "public 3 (WPC_COMPORTS coin-door column) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "public 4 (WPC_COMPORTS coin-door column) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it 4TH COIN OPTION and its second line reports LAST SW D4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "public 4 (WPC_COMPORTS coin-door column) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 (nbaf.c swBackboxBasket, the control) set to 1 inside T.1 SWITCH EDGES: the ROM's top line names it BACKBOX BASKET and its second line reports LAST SW 12 again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "public 12 (nbaf.c swBackboxBasket, the control) set to 0 inside T.1 SWITCH EDGES: the ROM's top line returns to SWITCH EDGES again",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 21,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "nbaf-31-switch-edges-1-4-12",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/switch-edges/nbaf_31/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-95/nbaf-switch-edges-1-4-12.json",
+        "scenario_sha256": "62405b83b756eddac23863ebd54b0d72619776b3c8e5540b454e40424fa935cb",
+        "self_test_pulses": 0,
+        "sha256": "88ae6d61f922cd45a0ee2e2c236e663c2c4b8da3136d3a7c52c7c3c97c8ddef3",
+        "snapshot_count": 22,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          12,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d5fd2c89752419a77d84965ac4cbe05d42d5c373337241cc0265b403e3bfc2fa"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest nbaf_31/manifest.json SHA-256 50a1ecbdcaa2e43d31fae51e9829f66057598366602cba39795de3c7390b3d9a (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-fastbreak-1997/harness/switch-edges/nbaf_31",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "88ae6d61f922cd45a0ee2e2c236e663c2c4b8da3136d3a7c52c7c3c97c8ddef3"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
