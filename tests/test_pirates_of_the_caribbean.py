@@ -60,8 +60,17 @@ EXPECTED_CONFLICT_IDS = {
 	"conflict.coin-door-adjust-button-order",
 	"conflict.flasher-back-panel-bulb-count",
 	"conflict.pop-bumper-position-naming",
-	"conflict.sam-invsw-never-populated",
 }
+PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+SWITCH_TEST_SCENARIO = ROOT / "tools" / "harness-scenarios" / "stern" / "potc-switch-test-optos.json"
+CONTROL_SCENARIO = ROOT / "tools" / "harness-scenarios" / "stern" / "avs-switch-test-loki-control.json"
+SWITCH_TEST_SOURCES = {
+	"potc_600af": "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+	"potc_110af": "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+}
+CONTROL_SOURCE = "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
+SWITCH_TEST_NAMES = {1: "LEFT LANE", 3: "HIT CHEST", 4: "PLUNDER EXIT", 11: "PLUNDER ENTER", 21: "TROUGH #1 (R)", 22: "TROUGH JAM", 60: "SKILL HOLE MADE", 61: "SHIP MADE"}
+SWITCH_TEST_HOLDS = [1, 3, 4, 11, 21, 22, 60, 61, 3, 1]
 
 
 def load_json(path: Path) -> dict:
@@ -314,15 +323,26 @@ class PolarityTests(unittest.TestCase):
 		}
 		self.assertEqual(MANUAL_OPTO_ADDRESSES, actual)
 
-	def test_no_switch_claims_a_polarity_pinned_sam_source_cannot_supply(self) -> None:
-		"""Stern S.A.M. populates no inverted-switch mask, so normally_closed must stay unasserted."""
+	def test_only_the_rom_verified_optos_claim_a_contact_polarity(self) -> None:
+		"""The ROM's switch test settles the seven optos; every other switch stays unasserted."""
 		for address, device in self.switches.items():
-			self.assertNotIn("normally_closed", device, address)
+			if address in MANUAL_OPTO_ADDRESSES:
+				self.assertIs(False, device["normally_closed"], address)
+			else:
+				self.assertNotIn("normally_closed", device, address)
 
-	def test_every_opto_discloses_the_platform_wide_normalization_gap(self) -> None:
+	def test_every_opto_cites_the_roms_switch_test_and_its_control(self) -> None:
+		refs = set(SWITCH_TEST_SOURCES.values()) | {CONTROL_SOURCE}
 		for address in MANUAL_OPTO_ADDRESSES:
-			notes = self.switches[address]["physical"]["notes"]
-			self.assertIn("conflict.sam-invsw-never-populated", notes, address)
+			switch = self.switches[address]
+			notes = switch["physical"]["notes"]
+			self.assertIn("reads public 1 as active", notes, address)
+			self.assertIn("never inverts it", notes, address)
+			self.assertNotIn("conflict.sam-invsw-never-populated", notes, address)
+			self.assertLessEqual(refs, set(switch["provenance"]["source_refs"]), address)
+		for address in set(self.switches) - MANUAL_OPTO_ADDRESSES:
+			self.assertFalse(refs & set(self.switches[address]["provenance"]["source_refs"]), address)
+		self.assertIn("trough eject", self.switches[22]["physical"]["notes"])
 
 	def test_polarity_is_named_in_coverage_missing(self) -> None:
 		self.assertIn("polarity", self.definition["coverage"]["missing"])
@@ -740,6 +760,109 @@ class RetainedExtractionTests(unittest.TestCase):
 			path = root / name
 			self.assertTrue(path.is_file(), path)
 			self.assertEqual(expected, hashlib.sha256(path.read_bytes()).hexdigest(), name)
+
+
+class SwitchTestEvidenceTests(unittest.TestCase):
+	"""The switch-test summaries are tied to their scenarios here and to the retained raw runs when present."""
+
+	def _common(self, path: Path, game: str, machine_id: str, scenario: Path) -> dict:
+		import hashlib
+
+		evidence = load_json(path)
+		self.assertNotIn("game", load_json(scenario))
+		self.assertEqual([game], evidence["driver_ids"])
+		self.assertEqual([machine_id], evidence["machine_ids"])
+		runtime = evidence["runtime"]
+		self.assertEqual(game, runtime["game"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, runtime["emulator"]["sha256"])
+		(raw,) = runtime["raw_runs"]
+		self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+		return evidence
+
+	def _retained(self, evidence: dict, game: str) -> dict | None:
+		import hashlib
+		import os
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return None
+		import build_external_evidence_manifest as manifest
+
+		(raw,) = evidence["runtime"]["raw_runs"]
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		digest = manifest.check_manifest(path.parent, game)
+		# The cited manifest digest is the one on disk, so a regenerated directory cannot pass silently.
+		self.assertIn(f"{game}/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+		run = load_json(path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(raw["scenario_sha256"], run["scenario"]["sha256"])
+		return run
+
+	def test_every_opto_is_named_only_while_held_at_public_one(self) -> None:
+		definition = load_json(DEFINITION_PATH)
+		sources = {source["id"]: source for source in definition["sources"]}
+		frames: dict[str, list[str]] = {}
+		for game, source_id in SWITCH_TEST_SOURCES.items():
+			with self.subTest(game=game):
+				path = ROOT / "evidence" / "runtime" / "sam" / f"pirates-of-the-caribbean-{game}-switch-test-optos.json"
+				self.assertEqual("internal:" + path.relative_to(ROOT).as_posix(), sources[source_id]["uri"])
+				evidence = self._common(path, game, "stern.pirates-of-the-caribbean.2006", SWITCH_TEST_SCENARIO)
+				observations = evidence["runtime"]["observations"]
+				actions = observations["named_action_observations"]
+				self.assertEqual(SWITCH_TEST_HOLDS, [item["input_address"] for item in actions])
+				snapshots = observations["diagnostic_snapshots"]
+				self.assertEqual(2 + 2 * len(SWITCH_TEST_HOLDS), len(snapshots))
+				self.assertEqual("SWITCH TEST / NONE", snapshots[1]["interpreted_text"])
+				for index, item in enumerate(actions):
+					address = item["input_address"]
+					self.assertEqual([address], item["host_stimulus_switch_addresses"])
+					self.assertEqual([], item["observed_switch_addresses"])
+					self.assertEqual([1] if address == 22 else [], item["transitioned_solenoid_addresses"])
+					self.assertIn(f"prints {SWITCH_TEST_NAMES[address]} ", item["label"])
+					held, released = snapshots[2 + 2 * index], snapshots[3 + 2 * index]
+					self.assertTrue(held["interpreted_text"].startswith(f"SWITCH TEST / {SWITCH_TEST_NAMES[address]} / LAST SW. #{address} / "))
+					self.assertEqual(f"SWITCH TEST / NONE / LAST SW. #{address}", released["interpreted_text"])
+				frames[game] = [item["pixel_sha256"] for item in snapshots[1:]]
+				run = self._retained(evidence, game)
+				if run is None:
+					continue
+				by_label = {snap["label"]: snap for snap in run["snapshots"]}
+				expected = [by_label["booted"], by_label["Select 5: switch test"]]
+				for address, suffix in zip(SWITCH_TEST_HOLDS, [""] * 8 + [" again"] * 2):
+					held = by_label[f"hold {address}{suffix} (held)"]
+					self.assertEqual(1, {w["number"]: w["state"] for w in held["watched_switches"]}[address])
+					expected += [held, by_label[f"hold {address}{suffix}"]]
+				self.assertEqual(
+					[(snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in expected],
+					[(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots],
+				)
+				for snap in run["snapshots"]:
+					self.assertEqual(0, sum(w["state"] for w in snap["watched_switches"] if not snap["label"].endswith("(held)")), snap["label"])
+		# Both firmware generations draw the same grid; only their wire-caption punctuation differs.
+		self.assertEqual(frames["potc_600af"][0], frames["potc_110af"][0])
+
+	def test_the_avengers_le_control_shows_the_switch_test_reports_logical_state(self) -> None:
+		path = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-switch-test-loki-control.json"
+		definition = load_json(DEFINITION_PATH)
+		self.assertEqual("internal:" + path.relative_to(ROOT).as_posix(), {source["id"]: source for source in definition["sources"]}[CONTROL_SOURCE]["uri"])
+		evidence = self._common(path, "avs_170h", "stern.avengers-limited-edition.2012", CONTROL_SCENARIO)
+		observations = evidence["runtime"]["observations"]
+		actions = observations["named_action_observations"]
+		self.assertEqual([47, 49, 49, 49, 49], [item["input_address"] for item in actions])
+		texts = [item["interpreted_text"] for item in observations["diagnostic_snapshots"]]
+		self.assertEqual("SWITCH TEST / NONE / LAST SW. #47", texts[4])
+		self.assertTrue(texts[5].startswith("SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49"))
+		self.assertEqual("SWITCH TEST / NONE / LAST SW. #49", texts[6])
+		self.assertTrue(texts[7].startswith("SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49"))
+		run = self._retained(evidence, "avs_170h")
+		if run is None:
+			return
+		by_label = {snap["label"]: snap for snap in run["snapshots"]}
+		for label, state in (("49 -> 1", 1), ("49 -> 0", 0), ("49 -> 1 again", 1), ("49 -> 0 again", 0)):
+			self.assertEqual(state, {w["number"]: w["state"] for w in by_label[label]["watched_switches"]}[49], label)
 
 
 if __name__ == "__main__":

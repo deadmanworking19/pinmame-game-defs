@@ -897,8 +897,8 @@ def source_records() -> list[dict[str, Any]]:
 				"without affecting any address rule and were left unchanged rather than edited from inside a "
 				"single game's curation: hw.custSol is hardcoded 16 by sam.c's INITGAME macro for every SAM "
 				"game rather than configured per game, and the platform-level inversion_applied_by_emulator "
-				"flag is true while pinned SAM source populates no inverted-switch mask at all (see "
-				"conflict.sam-invsw-never-populated)."
+				"flag is true while pinned SAM source populates no inverted-switch mask at all; the profile's "
+				"own Polarity note says the flag only forbids re-inverting the public state."
 			),
 			"license": "BSD-3-Clause",
 			"attribution": "PinMAME contributors",
@@ -1074,7 +1074,51 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+	] + [
+		{
+			"id": source_id,
+			"kind": "runtime_scenario",
+			"uri": f"internal:evidence/runtime/sam/{path}",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"locator": locator,
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		}
+		for source_id, path, locator in (
+			*(
+				(
+					source_id,
+					f"pirates-of-the-caribbean-{game}-switch-test-optos.json",
+					f"One hash-pinned LibPinMAME harness run of {game} from empty NVRAM (scenario "
+					"tools/harness-scenarios/stern/potc-switch-test-optos.json) that enters the S.A.M. switch test "
+					"and holds public 1 (Left Lane), then the optos 3, 4, 11, 21, 22, 60 and 61, then 3 and 1 again, "
+					"for 3 s each. The ROM names each one and marks it in its grid only while it is held at 1, and "
+					"pulses the trough eject (solenoid 1) twice while 22 is held.",
+				)
+				for game, source_id in SWITCH_TEST_SOURCES.items()
+			),
+			(
+				SWITCH_TEST_CONTROL_SOURCE,
+				"avengers-limited-edition-switch-test-loki-control.json",
+				"A control run of the Avengers Limited Edition ROM avs_170h from empty NVRAM (scenario "
+				"tools/harness-scenarios/stern/avs-switch-test-loki-control.json). Its known-working script drives "
+				"the Loki lock optos 49-51 active-low, and its switch test shows them in the grid at public 0, "
+				"prints NONE while 49 is held at 1 and LOKI LOCK 1 (BOT) when it returns to 0: the S.A.M. switch "
+				"test reports the ROM's logical reading, not the raw public level.",
+			),
+		)
 	]
+
+# The ROM's own switch test settles the seven optos' polarity. It names a switch and marks it in its grid
+# only while the ROM reads it as active, and the Avengers LE control run shows that this is the ROM's
+# logical reading: its active-low Loki optos are named at public 0. Here every opto is named at public 1.
+SWITCH_TEST_SOURCES = {
+	"potc_600af": "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+	"potc_110af": "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+}
+SWITCH_TEST_CONTROL_SOURCE = "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+OPTO_RUNTIME_REFS = (*SWITCH_TEST_SOURCES.values(), SWITCH_TEST_CONTROL_SOURCE)
 
 # --- Devices -------------------------------------------------------------------------------------
 
@@ -1084,12 +1128,16 @@ GEOMETRY_REFS = (VPX_TABLE_SOURCE, MANUAL_SOURCE)
 
 OPTO_POLARITY_NOTE = (
 	"Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page "
-	"carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix "
-	"inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C "
-	"zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public "
-	"switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed "
-	"construction and controller normalization are independent facts and neither is settled here; see "
-	"conflict.sam-invsw-never-populated."
+	"carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion "
+	"for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), "
+	"so the public state is what the CPU reads. The ROM's own switch test settles the level: in "
+	"hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while "
+	"public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch "
+	"1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: "
+	"there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the "
+	"known-working script drives it that way, and a recreation never inverts it. normally_closed is "
+	"false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix "
+	"contact is closed exactly when the ROM reads the switch active and rests open."
 )
 
 
@@ -1142,8 +1190,15 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 			physical["location"] = location
 		if address in OPTO_SWITCHES:
 			physical["switch_type"] = "opto"
+			device["normally_closed"] = False
+			device["provenance"] = provenance(*(SCRIPT_REFS if address in SWITCH_POSITIONS else MANUAL_REFS), *OPTO_RUNTIME_REFS)
 			notes.append(f"Printed in-cell annotation: {annotation}.")
 			notes.append(OPTO_POLARITY_NOTE)
+			if address == 22:
+				notes.append(
+					"While public 22 is held at 1 in the switch test, both ROMs also pulse the trough eject "
+					"(solenoid 1) twice, as they do to clear a ball from the jam position."
+				)
 		elif address in (15, 16):
 			physical["switch_type"] = "button"
 			notes.append("Printed CABINET; a cabinet button rather than a playfield switch.")
@@ -1881,34 +1936,6 @@ def relationships() -> list[dict[str, Any]]:
 def conflicts() -> list[dict[str, Any]]:
 	return [
 		{
-			"id": "conflict.sam-invsw-never-populated",
-			"path": "controller.inversion_applied_by_emulator; inputs[binding.device=3,4,11,21,22,60,61]",
-			"description": (
-				"The controller profile pinmame.sam declares inversion_applied_by_emulator: true as a "
-				"platform capability, matching every WPC profile this project has curated. For Stern S.A.M. "
-				"pinned PinMAME applies none. sam.c's INITGAME macro expands to a positional aggregate "
-				"initializer that stops at the hw sub-struct, so core_gameData->wpc.invSw is left at its C "
-				"zero-initialization default, and core.c copies those zeros straight into "
-				"coreGlobals.invSw at machine init. Searching the whole of src/wpc/sam.c for invSw returns no "
-				"assignment anywhere, so this is a platform-wide fact to check on every future S.A.M. "
-				"curation rather than a defect specific to this game -- the same shape as the Whitestar gap "
-				"already recorded for Stern The Simpsons Pinball Party. Against that, this manual positively "
-				"identifies seven switches as opto pairs: 3 (Hit Chest), 4 (Plunder Exit) and 11 (Plunder "
-				"Enter) annotated (OPTO PAIR), 21 (Trough #1) annotated (VUK OPTO), 22 (Trough Jam) "
-				"annotated (STACK OPTO), and 60 (Skill Hole Made) and 61 (Ship Made) annotated (OPTO PAIR); "
-				"21 and 22 additionally print transmitter and receiver part numbers 515-0173-00 and "
-				"515-0174-00 in place of a mechanical switch part. That set is the exhaustive result of "
-				"sweeping all 64 printed cells for both of this page's own cues, and the page carries no "
-				"shaded-cell legend and shades nothing. Physical construction is therefore known for seven "
-				"addresses while their emulator-side normalization is not, and the manual never states "
-				"normally-open or normally-closed for any individual switch either -- its own switch-wiring "
-				"schematic inset labels all three terminals generically. Resolution path: a LibPinMAME "
-				"gameplay-harness trace of a legal potc ROM observing the idle public state of switches 3, 4, "
-				"11, 21, 22, 60 and 61 with and without a ball present. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, CONTROLLER_SOURCE],
-		},
-		{
 			"id": "conflict.flasher-back-panel-bulb-count",
 			"path": "outputs[binding.device=22,30]",
 			"description": (
@@ -2258,12 +2285,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Promotion to `author_ready` is refused. Two output addresses have no spatial record, three "
-		"conflicts remain unresolved (`conflict.sam-invsw-never-populated`, "
-		"`conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`; the "
-		"`conflict.coin-door-adjust-button-order` naming defect is recorded as ignored), opto polarity is unsettled for all seven "
-		"manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing. Recreation "
-		"knowledge remains observed until the missing placements and polarity conflicts can be reconciled. The record therefore stays `partial` "
+		"Promotion to `author_ready` is refused. Two output addresses have no spatial record, two "
+		"conflicts remain unresolved (`conflict.flasher-back-panel-bulb-count`, "
+		"`conflict.pop-bumper-position-naming`; the `conflict.coin-door-adjust-button-order` naming defect is "
+		"recorded as ignored), and contact polarity is asserted only for the seven manual-identified optos, "
+		"which the ROM's own switch test settled; every other switch still lacks it. Recreation knowledge "
+		"remains observed until the missing placements, polarity and conflicts are reconciled. The record "
+		"therefore stays `partial` "
 		"with `coverage.missing = [\"polarity\", \"recreation_notes\", \"spatial_placement\", \"unresolved_conflicts\"]` and "
 		"`coverage.dimensions.physical_wiring = \"conflicted\"`.",
 		"",

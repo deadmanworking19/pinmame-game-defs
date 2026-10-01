@@ -1,0 +1,201 @@
+{
+  "driver_ids": [
+    "avs_170h"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.avengers-limited-edition.2012"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game avs_170h --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/stern/avs-switch-test-loki-control.json --dmd-dir <external-dmd-dir> --output <external-run.json>. A control for reading the S.A.M. switch test; Pirates of the Caribbean cites it, and its own definition does not.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "avs_170h",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            23
+          ],
+          "display_index": 0,
+          "interpreted_text": "AVENGERS LE / U.S.A. V1.7 / ENGLISH - 0",
+          "label": "power-up identification of the Limited Edition ROM",
+          "nonzero_pixels": 341,
+          "pixel_sha256": "2688573f2000f889b0a1250e805bcbc4e514da5aa4a0f92bc73364ad52c60c26"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE",
+          "label": "switch test started with every public switch at 0; the grid marks 49, 50 and 51 active",
+          "nonzero_pixels": 452,
+          "pixel_sha256": "5a91f63c9f042ca5f86655b4fa43e57f8820c3f06493e1118829281f47d58f3c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT ORBIT / LAST SW. #47 / GRN-ORG / TAN-VIO",
+          "label": "switch test while public 47 (an ordinary switch) is held at 1",
+          "nonzero_pixels": 708,
+          "pixel_sha256": "41fcc1eeb8fab98d839fbd1dc39a458b9d827b0d2a081d2e1b20a6a5775ecb75"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #47",
+          "label": "switch test two seconds after public 47 was released to 0",
+          "nonzero_pixels": 535,
+          "pixel_sha256": "248f5b34c3fa99c3393dce288b9bb7077ac78f5cc213563d9a9107ee13d3e3c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #47",
+          "label": "three seconds after Loki opto 49 was set to 1; the grid marks only 50 and 51",
+          "nonzero_pixels": 528,
+          "pixel_sha256": "95eab57595b7ffc8213f1a65b1b1765ef1174c7d6b99b2db07387f7568f39de3"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49 / GRN-YEL / WHT-BRN",
+          "label": "three seconds after Loki opto 49 returned to 0; the grid marks 49, 50 and 51",
+          "nonzero_pixels": 744,
+          "pixel_sha256": "ac970b7d5642538441ab8815ac972f3c77802a2e4944ddbc37710d619fdaf636"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #49",
+          "label": "three seconds after Loki opto 49 was set to 1 again; the grid marks only 50 and 51",
+          "nonzero_pixels": 533,
+          "pixel_sha256": "20e87ac2b70a39f7c69a7ca1d7bb0bc7a3a7eb08e47b641f3a7df9e468b661a2"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49 / GRN-YEL / WHT-BRN",
+          "label": "three seconds after Loki opto 49 returned to 0 again; the grid marks 49, 50 and 51",
+          "nonzero_pixels": 744,
+          "pixel_sha256": "ac970b7d5642538441ab8815ac972f3c77802a2e4944ddbc37710d619fdaf636"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 (Left Orbit, an ordinary switch) held at 1 for 3 s: the ROM prints LEFT ORBIT, then NONE after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            49
+          ],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "Loki opto 49 set to 1: the ROM prints NONE and drops 49 from the grid, so it reads public 1 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "Loki opto 49 set to 0: the ROM prints LOKI LOCK 1 (BOT) and marks 49 in the grid, so it reads public 0 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            49
+          ],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "Loki opto 49 set to 1 again: the ROM prints NONE and drops 49 from the grid, so it reads public 1 as inactive",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_address": 49,
+          "input_kind": "switch",
+          "label": "Loki opto 49 set to 0 again: the ROM prints LOKI LOCK 1 (BOT) and marks 49 in the grid, so it reads public 0 as active",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 12,
+        "initial_switches": [],
+        "name": "avs-170h-switch-test-loki-control",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, and the ROM came up in attract mode with no factory-reset message to dismiss, so the scenario's only service input before the switch test is Back followed by five Select presses",
+        "retained_from": "external:pinmame-review-artifacts/pirates-of-the-caribbean-2006/harness/switch-test-control/avs_170h/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/avs-switch-test-loki-control.json",
+        "scenario_sha256": "2c55efa100bf8cb2bf1a4ef1b37c77a846efe178512bca4fdacf3266a035f789",
+        "self_test_pulses": 0,
+        "sha256": "96b4dd4f1bc44534e169c4462ad59832ed893796354172ce7ddd03614237cdcc",
+        "snapshot_count": 14,
+        "watch_switches": [
+          47,
+          49,
+          50,
+          51
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a5ea0eafcc45671ce66b29336c81f875f49515235034520f53e3042dfdefc74d"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest avs_170h/manifest.json SHA-256 018923f254dae5bff0e8259b73f1cdb25725dc2f1ca72cfe3f521b5b657ffd04 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/pirates-of-the-caribbean-2006/harness/switch-test-control/avs_170h",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "96b4dd4f1bc44534e169c4462ad59832ed893796354172ce7ddd03614237cdcc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

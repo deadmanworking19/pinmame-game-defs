@@ -6,8 +6,9 @@ Canonical definition: `machines/partial/stern/pirates-of-the-caribbean-2006.json
 `evidence/excerpts/stern.pirates-of-the-caribbean.2006/`.
 
 This record is deliberately `partial`. Read the "What is not settled" section before
-authoring anything that depends on switch polarity, on the flasher bulb split between the
-playfield and the back panel, or on general-illumination bulb positions.
+authoring anything that depends on the polarity of a switch other than the seven optos, on the
+flasher bulb split between the playfield and the back panel, or on general-illumination bulb
+positions.
 
 ## Identity, and the year trap
 
@@ -251,29 +252,47 @@ Quantities are printed on two of them: `#22 FLASH: REAR CENTER (X2)` and `#30 FL
 RIGHT [X3]`. Where those bulbs physically sit is the one thing this manual contradicts itself
 about; see the conflict below.
 
+## Opto polarity: settled by the ROM's switch test
+
+Pinned Stern S.A.M. source populates no inverted-switch mask: `INITGAME`'s positional
+initializer leaves `wpc.invSw` at its C zero default, and no S.A.M. game in `sam.c` assigns it.
+This manual identifies seven opto switches - 3, 4, 11, 21, 22, 60 and 61 - and never states
+normally-open or normally-closed for any switch. That gap was recorded as
+`conflict.sam-invsw-never-populated` until the ROM settled it on 2026-10-01.
+
+The S.A.M. switch test names a switch and marks it in its 16x4 grid while the ROM reads it as
+active. A control run of the Avengers Limited Edition ROM shows that this is the ROM's logical
+reading rather than the raw public level: that game's Loki lock optos, which its known-working
+script drives active-low, sit in the grid at public 0, and opto 49 shows NONE while held at 1
+and LOKI LOCK 1 (BOT) once it returns to 0. In hash-pinned runs of `potc_600af` (V6.0) and
+`potc_110af` (V1.10), every Pirates switch starts at 0 with an empty grid, and each of the
+seven optos is named and marked only while it is held at public 1, exactly like the ordinary
+Left Lane switch 1. Holding the stack opto 22 at 1 also makes both ROMs pulse the trough eject
+twice, as they do to clear a jammed ball. So the ROM reads all seven optos active at public 1,
+the known-working script drives them that way, and a recreation never inverts them. Because
+`sam.c`'s switch read hands `coreGlobals.swMatrix` to the CPU uncomplemented, each opto's matrix
+contact rests open: the seven optos record `normally_closed: false`. Evidence:
+`evidence/runtime/sam/pirates-of-the-caribbean-potc_600af-switch-test-optos.json`,
+`...potc_110af-switch-test-optos.json` and the control
+`evidence/runtime/sam/avengers-limited-edition-switch-test-loki-control.json`.
+
+Every other switch on this record still has no contact polarity asserted, so `polarity` stays
+in `coverage.missing`. Check opto polarity this way on every future S.A.M. curation rather than
+assuming it: S.A.M. games differ, and the Avengers LE's Loki optos read active at 0.
+
 ## What is not settled
 
-Three unresolved conflicts, all recorded as first-class `conflicts` entries, and one ignored
+Two unresolved conflicts, both recorded as first-class `conflicts` entries, and one ignored
 naming defect kept beside them.
 
-1. **`conflict.sam-invsw-never-populated`** - the platform-wide polarity gap. Pinned Stern
-   S.A.M. source populates no inverted-switch mask at all: `INITGAME`'s positional
-   initializer leaves `wpc.invSw` at its C zero default and searching the whole of `sam.c`
-   for `invSw` returns no assignment anywhere. Against that, this manual positively
-   identifies seven opto switches - 3, 4, 11, 21, 22, 60 and 61 - and never states
-   normally-open or normally-closed for any individual switch. Physical construction is known
-   for seven addresses while their emulator-side normalization is not. Check this on every
-   future S.A.M. curation rather than assuming it; it is the same shape as the Whitestar gap
-   already recorded for Stern The Simpsons Pinball Party. Resolution needs a LibPinMAME
-   harness trace observing the idle public state of those seven addresses.
-2. **`conflict.flasher-back-panel-bulb-count`** - the Coil & Flash Lamp Locations page draws
+1. **`conflict.flasher-back-panel-bulb-count`** - the Coil & Flash Lamp Locations page draws
    one `22` and one `30` callout in its back-panel inset, which makes both printed quantities
    add up, while printed page 91 lists exactly two `#89` sockets on the back panel and labels
    **both** of them `Q22 FLASH` with no `Q30` socket anywhere. This record follows page 91's
    explicit parts list for address 22 and gives it a `cabinet_or_service` record with
    quantity 2; address 30 carries no spatial key at all, because no placement set can match
    its printed quantity of three without choosing a side.
-3. **`conflict.pop-bumper-position-naming`** - the manual names the three bumpers LEFT, RIGHT
+2. **`conflict.pop-bumper-position-naming`** - the manual names the three bumpers LEFT, RIGHT
    and BOTTOM on both its switch page and its coil page, and its locations plan draws the
    three coil callouts at the cluster's left, right and player-nearest positions in that
    order. The retained script binds them in naive numeric order instead, which makes its LEFT
@@ -283,7 +302,7 @@ naming defect kept beside them.
    for all six placements (switches 30/31/32 and coils 9/10/11) and records the disagreement
    rather than resolving it silently, because the runtime script is normally this project's
    authority for address semantics and it is the source being overruled.
-4. **`conflict.coin-door-adjust-button-order`** (ignored, not blocking) - `sam.c` disagrees
+3. **`conflict.coin-door-adjust-button-order`** (ignored, not blocking) - `sam.c` disagrees
    with itself about which red coin-door adjustment button is public -2 and which is -1: its
    descriptive comment block says D21 is Plus and D22 is Minus, while its own keyboard
    input-port table puts Minus on the bit that becomes -2. This manual agrees with the
@@ -293,7 +312,7 @@ naming defect kept beside them.
 
 Two output addresses carry no spatial record at all:
 
-- **Public solenoid 30**, for the reason in conflict 2.
+- **Public solenoid 30**, for the reason in conflict 1.
 - **G.I. address 0**. This manual prints no general-illumination bulb table anywhere. The
   only G.I. inventory it states is the ten back-panel `#44` sockets on printed page 91 and
   the three right-ramp LED modules the Lamp Locations page calls out ("THE 3 LEDS MODULES ON
@@ -303,7 +322,7 @@ Two output addresses carry no spatial record at all:
   collection has 85 members, but many are co-located render doubles and ten are back-panel
   proxies, so it cannot substitute for the missing table.
 
-The recreation knowledge remains candidate until the explicit polarity conflicts and unresolved spatial placements above are reconciled.
+The recreation knowledge remains candidate until the remaining switch polarity, the conflicts and the unresolved spatial placements above are reconciled.
 
 ## Two things worth carrying to the next Stern S.A.M. game
 

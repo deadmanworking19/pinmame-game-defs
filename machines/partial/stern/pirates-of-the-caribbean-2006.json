@@ -1,16 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "The controller profile pinmame.sam declares inversion_applied_by_emulator: true as a platform capability, matching every WPC profile this project has curated. For Stern S.A.M. pinned PinMAME applies none. sam.c's INITGAME macro expands to a positional aggregate initializer that stops at the hw sub-struct, so core_gameData->wpc.invSw is left at its C zero-initialization default, and core.c copies those zeros straight into coreGlobals.invSw at machine init. Searching the whole of src/wpc/sam.c for invSw returns no assignment anywhere, so this is a platform-wide fact to check on every future S.A.M. curation rather than a defect specific to this game -- the same shape as the Whitestar gap already recorded for Stern The Simpsons Pinball Party. Against that, this manual positively identifies seven switches as opto pairs: 3 (Hit Chest), 4 (Plunder Exit) and 11 (Plunder Enter) annotated (OPTO PAIR), 21 (Trough #1) annotated (VUK OPTO), 22 (Trough Jam) annotated (STACK OPTO), and 60 (Skill Hole Made) and 61 (Ship Made) annotated (OPTO PAIR); 21 and 22 additionally print transmitter and receiver part numbers 515-0173-00 and 515-0174-00 in place of a mechanical switch part. That set is the exhaustive result of sweeping all 64 printed cells for both of this page's own cues, and the page carries no shaded-cell legend and shades nothing. Physical construction is therefore known for seven addresses while their emulator-side normalization is not, and the manual never states normally-open or normally-closed for any individual switch either -- its own switch-wiring schematic inset labels all three terminals generically. Resolution path: a LibPinMAME gameplay-harness trace of a legal potc ROM observing the idle public state of switches 3, 4, 11, 21, 22, 60 and 61 with and without a ball present. Unresolved.",
-      "id": "conflict.sam-invsw-never-populated",
-      "path": "controller.inversion_applied_by_emulator; inputs[binding.device=3,4,11,21,22,60,61]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "manual.stern.pirates-of-the-caribbean.2006",
-        "controller-profile.pinmame-sam"
-      ]
-    },
-    {
       "description": "The manual disagrees with itself about how its five flasher bulbs are split between the playfield and the back panel. The Coils Detailed Chart Table prints public solenoid 22 as FLASH: REAR CENTER (X2) and public solenoid 30 as FLASH: BACK RIGHT [X3], both #89 bulbs. The Coil & Flash Lamp Locations page draws one 22 callout and one 30 callout inside its back-panel inset with the grey 'Coils / Flash Lamps on Back Panel' shading, plus one 22 and two 30 callouts on the playfield plan -- which adds up to both printed quantities. But printed page 91 (Back Panel Assembly, Individual Parts Only) lists exactly two #89 sockets on the back panel as its ITEM 5 (QTY. 2) and labels both of them Q22 FLASH, with no Q30 socket drawn or listed anywhere on the page. The two pages cannot both be right. The retained known-working table is consistent with page 91 for address 22 (two co-located F22 Light objects at the playfield's own rear edge, normalized y 0.019 and 0.020) but also adds a third F22 light further onto the playfield, and for address 30 it models two playfield lights plus a co-located pair at the rear edge -- so it reproduces both readings at once and settles nothing. This record follows page 91's explicit parts list for address 22 and gives it a controlled cabinet_or_service spatial record with quantity 2. For address 30 no placement set can be produced whose count matches the printed quantity of three without choosing a side, so that record carries no spatial key at all. Resolution path: a photograph or lamp test of an unrestored machine's back panel showing how many #89 sockets are fitted and which driver each is wired to. Unresolved.",
       "id": "conflict.flasher-back-panel-bulb-count",
       "path": "outputs[binding.device=22,30]",
@@ -925,9 +915,10 @@
       "id": "switch.matrix-3",
       "kind": "switch",
       "label": "Hit Chest",
+      "normally_closed": false,
       "physical": {
         "location": "above playfield",
-        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 3. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 3. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "500-6775-00",
         "switch_type": "opto"
       },
@@ -935,7 +926,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -987,9 +981,10 @@
       "id": "switch.matrix-4",
       "kind": "switch",
       "label": "Plunder Exit",
+      "normally_closed": false,
       "physical": {
         "location": "above playfield",
-        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 4. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 4. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "500-6775-00",
         "switch_type": "opto"
       },
@@ -997,7 +992,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -1391,9 +1389,10 @@
       "id": "switch.matrix-11",
       "kind": "switch",
       "label": "Plunder Enter",
+      "normally_closed": false,
       "physical": {
         "location": "above playfield",
-        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 11. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive row 1 (transistor Q1), return column 11. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "500-6775-00",
         "switch_type": "opto"
       },
@@ -1401,7 +1400,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -1972,8 +1974,9 @@
       "id": "switch.matrix-21",
       "kind": "switch",
       "label": "Trough #1 (R)",
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive row 2 (transistor Q2), return column 5. Printed in-cell annotation: (VUK OPTO). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated. The manual leaves this row's location cell blank because the transmitter and receiver part numbers occupy it; the other three switches of the same four-ball trough print \"below playfield\". No location is asserted here rather than carried across from a neighbouring row.",
+        "notes": "Printed switch-matrix drive row 2 (transistor Q2), return column 5. Printed in-cell annotation: (VUK OPTO). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open. The manual leaves this row's location cell blank because the transmitter and receiver part numbers occupy it; the other three switches of the same four-ball trough print \"below playfield\". No location is asserted here rather than carried across from a neighbouring row.",
         "part_number": "515-0173-00 (TX) / 515-0174-00 (RX)",
         "switch_type": "opto"
       },
@@ -1981,7 +1984,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -2033,8 +2039,9 @@
       "id": "switch.matrix-22",
       "kind": "switch",
       "label": "Trough Jam",
+      "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive row 2 (transistor Q2), return column 6. Printed in-cell annotation: (STACK OPTO). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated. The manual leaves this row's location cell blank because the transmitter and receiver part numbers occupy it; the other three switches of the same four-ball trough print \"below playfield\". No location is asserted here rather than carried across from a neighbouring row.",
+        "notes": "Printed switch-matrix drive row 2 (transistor Q2), return column 6. Printed in-cell annotation: (STACK OPTO). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open. While public 22 is held at 1 in the switch test, both ROMs also pulse the trough eject (solenoid 1) twice, as they do to clear a ball from the jam position. The manual leaves this row's location cell blank because the transmitter and receiver part numbers occupy it; the other three switches of the same four-ball trough print \"below playfield\". No location is asserted here rather than carried across from a neighbouring row.",
         "part_number": "515-0173-00 (TX) / 515-0174-00 (RX)",
         "switch_type": "opto"
       },
@@ -2042,7 +2049,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -4231,9 +4241,10 @@
       "id": "switch.matrix-60",
       "kind": "switch",
       "label": "Skill Hole Made",
+      "normally_closed": false,
       "physical": {
         "location": "above playfield",
-        "notes": "Printed switch-matrix drive row 4 (transistor Q4), return column 12. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive row 4 (transistor Q4), return column 12. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "500-6775-00",
         "switch_type": "opto"
       },
@@ -4241,7 +4252,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -4293,9 +4307,10 @@
       "id": "switch.matrix-61",
       "kind": "switch",
       "label": "Ship Made",
+      "normally_closed": false,
       "physical": {
         "location": "above playfield",
-        "notes": "Printed switch-matrix drive row 4 (transistor Q4), return column 13. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies zero switch-matrix inversion for this driver -- sam.c's INITGAME macro leaves core_gameData->wpc.invSw at its C zero-initialization default and no Stern S.A.M. game in sam.c ever assigns it -- so the public switch state is raw hardware polarity, not emulator-normalized. Physical normally-closed construction and controller normalization are independent facts and neither is settled here; see conflict.sam-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive row 4 (transistor Q4), return column 13. Printed in-cell annotation: (OPTO PAIR). Identified as opto construction by this manual's own in-cell annotation; the switch-matrix page carries no shaded-cell opto legend and shades nothing. Pinned PinMAME applies no switch inversion for this driver (sam.c's INITGAME leaves core_gameData->wpc.invSw zero, and no S.A.M. game sets it), so the public state is what the CPU reads. The ROM's own switch test settles the level: in hash-pinned runs of potc_600af and potc_110af it names this switch and marks it in its grid while public 1 is held, and prints NONE once it returns to 0, exactly as for the ordinary Left Lane switch 1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the known-working script drives it that way, and a recreation never inverts it. normally_closed is false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the ROM reads the switch active and rests open.",
         "part_number": "500-6775-00",
         "switch_type": "opto"
       },
@@ -4303,7 +4318,10 @@
         "source_refs": [
           "manual.stern.pirates-of-the-caribbean.2006",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.potc-stern-2006"
+          "vpx-script.potc-stern-2006",
+          "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+          "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+          "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control"
         ],
         "status": "validated"
       },
@@ -13941,7 +13959,7 @@
       "id": "controller-profile.pinmame-sam",
       "kind": "human_review",
       "license": "BSD-3-Clause",
-      "locator": "Stern S.A.M. public switch, DIP, solenoid, lamp and single-GI address rules. Every rule the profile states was re-derived from pinned source for this curation and matched: sequential switch numbering with matrix 1-64, dedicated D-1 to D-8 at 65-72, dedicated D-17 to D-24 at -7 to 0, the flipper column at 81-88, solenoids 1-66 with 33 as the synthetic game-on state, and one aggregate GI channel at address 0. Two of the profile's prose notes are imprecise without affecting any address rule and were left unchanged rather than edited from inside a single game's curation: hw.custSol is hardcoded 16 by sam.c's INITGAME macro for every SAM game rather than configured per game, and the platform-level inversion_applied_by_emulator flag is true while pinned SAM source populates no inverted-switch mask at all (see conflict.sam-invsw-never-populated).",
+      "locator": "Stern S.A.M. public switch, DIP, solenoid, lamp and single-GI address rules. Every rule the profile states was re-derived from pinned source for this curation and matched: sequential switch numbering with matrix 1-64, dedicated D-1 to D-8 at 65-72, dedicated D-17 to D-24 at -7 to 0, the flipper column at 81-88, solenoids 1-66 with 33 as the synthetic game-on state, and one aggregate GI channel at address 0. Two of the profile's prose notes are imprecise without affecting any address rule and were left unchanged rather than edited from inside a single game's curation: hw.custSol is hardcoded 16 by sam.c's INITGAME macro for every SAM game rather than configured per game, and the platform-level inversion_applied_by_emulator flag is true while pinned SAM source populates no inverted-switch mask at all; the profile's own Polarity note says the flag only forbids re-inverting the public state.",
       "revision": "repository",
       "uri": "internal:controllers/pinmame/sam.json"
     },
@@ -14070,6 +14088,33 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size and SHA-256 under extracted-vpxtool; manifest SHA-256 b462146e7b641f57fdb08a032c9298ce921675e63798ba245bcca0e3904fe799; 1229 files, 85415058 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=952 bottom=2155.",
       "uri": "external:pinmame-vpx-sources/stern/pirates-of-the-caribbean-2006/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.pirates-of-the-caribbean.potc-600af.switch-test-optos",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of potc_600af from empty NVRAM (scenario tools/harness-scenarios/stern/potc-switch-test-optos.json) that enters the S.A.M. switch test and holds public 1 (Left Lane), then the optos 3, 4, 11, 21, 22, 60 and 61, then 3 and 1 again, for 3 s each. The ROM names each one and marks it in its grid only while it is held at 1, and pulses the trough eject (solenoid 1) twice while 22 is held.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/pirates-of-the-caribbean-potc_600af-switch-test-optos.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.pirates-of-the-caribbean.potc-110af.switch-test-optos",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of potc_110af from empty NVRAM (scenario tools/harness-scenarios/stern/potc-switch-test-optos.json) that enters the S.A.M. switch test and holds public 1 (Left Lane), then the optos 3, 4, 11, 21, 22, 60 and 61, then 3 and 1 again, for 3 s each. The ROM names each one and marks it in its grid only while it is held at 1, and pulses the trough eject (solenoid 1) twice while 22 is held.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/pirates-of-the-caribbean-potc_110af-switch-test-optos.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.avengers-limited-edition.avs-170h.switch-test-loki-control",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "A control run of the Avengers Limited Edition ROM avs_170h from empty NVRAM (scenario tools/harness-scenarios/stern/avs-switch-test-loki-control.json). Its known-working script drives the Loki lock optos 49-51 active-low, and its switch test shows them in the grid at public 0, prints NONE while 49 is held at 1 and LOKI LOCK 1 (BOT) when it returns to 0: the S.A.M. switch test reports the ROM's logical reading, not the raw public level.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/sam/avengers-limited-edition-switch-test-loki-control.json"
     }
   ]
 }

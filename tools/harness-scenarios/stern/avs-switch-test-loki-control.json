@@ -1,0 +1,96 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 30.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 400,
+      "key": "service_green",
+      "label": "Back",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 1: SERVICE MENU splash",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 2: icon menu, DIAG highlighted",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 3: diagnostics menu, SW highlighted",
+      "settle_s": 5.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 4: switch menu, TEST highlighted",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 5: switch test",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 47",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 47,
+      "type": "pulse"
+    },
+    {
+      "label": "49 -> 1",
+      "settle_s": 3.0,
+      "state": 1,
+      "switch": 49,
+      "type": "set_switch"
+    },
+    {
+      "label": "49 -> 0",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 49,
+      "type": "set_switch"
+    },
+    {
+      "label": "49 -> 1 again",
+      "settle_s": 3.0,
+      "state": 1,
+      "switch": 49,
+      "type": "set_switch"
+    },
+    {
+      "label": "49 -> 0 again",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 49,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "notes": "Control for reading the S.A.M. switch test: boot the Avengers Limited Edition ROM avs_170h from an empty NVRAM and enter the switch test as the avs-switch-test-58-61 scenario does. The known-working LE script drives the three Loki lock optos 49-51 active-low (high while the lock is empty). Hold 47 (Left Orbit, an ordinary switch) for 3 s, then set Loki opto 49 to 1 and back to 0 twice, 3 s per level. If the switch test reports the ROM's logical reading, 49 shows NONE and leaves the grid while it is held at public 1 and LOKI LOCK 1 (BOT) once it returns to 0, and the grid marks 49-51 at rest.",
+  "version": 1,
+  "watch_switches": [
+    47,
+    49,
+    50,
+    51
+  ]
+}

@@ -57,7 +57,7 @@ The matching source is the retained known-working `Pirates of the Caribbean (Ste
 
 ## Promotion decision
 
-Promotion to `author_ready` is refused. Two output addresses have no spatial record, three conflicts remain unresolved (`conflict.sam-invsw-never-populated`, `conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`; the `conflict.coin-door-adjust-button-order` naming defect is recorded as ignored), opto polarity is unsettled for all seven manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing. Recreation knowledge remains observed until the missing placements and polarity conflicts can be reconciled. The record therefore stays `partial` with `coverage.missing = ["polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` and `coverage.dimensions.physical_wiring = "conflicted"`.
+Promotion to `author_ready` is refused. Two output addresses have no spatial record, two conflicts remain unresolved (`conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`; the `conflict.coin-door-adjust-button-order` naming defect is recorded as ignored), and contact polarity is asserted only for the seven manual-identified optos, which the ROM's own switch test settled; every other switch still lacks it. Recreation knowledge remains observed until the missing placements, polarity and conflicts are reconciled. The record therefore stays `partial` with `coverage.missing = ["polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` and `coverage.dimensions.physical_wiring = "conflicted"`.
 
 ## Retained evidence
 
