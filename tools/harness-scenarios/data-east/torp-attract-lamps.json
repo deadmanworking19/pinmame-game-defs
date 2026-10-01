@@ -1,0 +1,36 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 20.0,
+      "type": "wait"
+    },
+    {
+      "label": "attract mode",
+      "seconds": 60.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 11
+    },
+    {
+      "state": 1,
+      "switch": 12
+    },
+    {
+      "state": 1,
+      "switch": 13
+    }
+  ],
+  "notes": "Boot a Torpedo Alley ROM from an empty NVRAM with three balls in the trough (11, 12 and 13 set) and observe 60 s of attract mode with no further input. The scenario names no game. The attract lamp show lights every lamp-matrix address the ROM uses outside a lamp test, which shows whether the ROM drives public lamp 24 (Insert 1 Torpedo).",
+  "version": 1,
+  "watch_switches": [
+    11,
+    12,
+    13
+  ]
+}

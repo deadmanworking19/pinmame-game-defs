@@ -128,6 +128,8 @@ CORE = "pinmame.core.4ec52ff0ac13"
 CATALOG = "pinmame.catalog.4ec52ff0ac13"
 TABLE = "vpx-table.torpedo-alley-hybrid-mod-1-1"
 SCRIPT_REF = "vpx-script.torpedo-alley-hybrid-mod-1-1"
+RUNTIME_ATTRACT = "runtime.torpedo-alley.torp-e21.attract-lamps"
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 EXTRACTION = "vpx-extraction.torpedo-alley-hybrid-mod-1-1"
 RENDER_REVIEW = "human-review.torpedo-alley-manual-renders"
 VPM_EXCERPT_SHA256 = "29cde6e4ed313762210624b32356922e41ca2180f6688f664df46f2ae6948c4a"
@@ -477,6 +479,12 @@ for address in range(1, 65):
         notes.append("The active table script adds this address to the shared Lights() array; UseLamps=1 leaves ChangedLamps consumption to shared VPM core code rather than a table-local loop.")
     else:
         notes.append(f"The only Lights({address}) assignment is whole-line commented, so this address has no executable shared-array membership in the retained script.")
+        if address == 24:
+            notes.append(
+                "That is a defect in the retained table, not a doubt about the machine: the manual fits this lamp, and "
+                "the torp_e21 ROM drives public lamp 24 in its attract lamp show (hash-pinned run "
+                f"{RUNTIME_ATTRACT}), so a recreation binds it like any other insert."
+            )
     entry = {
         "id": device_id,
         "label": LAMPS[str(address)],
@@ -492,7 +500,7 @@ for address in range(1, 65):
             "notes": " ".join(notes),
         },
         "wiring": matrix_wiring(address, TRANSCRIPTION["lamp_drive_wires"], TRANSCRIPTION["lamp_return_wires"]),
-        "provenance": prov("conflicted" if address == 24 else "candidate", [MANUAL, SCRIPT_REF, TABLE]),
+        "provenance": prov("candidate", [MANUAL, SCRIPT_REF, TABLE, RUNTIME_ATTRACT] if address == 24 else [MANUAL, SCRIPT_REF, TABLE]),
     }
     if address in TRANSCRIPTION["insert_board_lamps"]:
         entry["physical"]["location"] = "insert board"
@@ -688,6 +696,10 @@ sources = [
             },
         ],
     },
+    {"id": RUNTIME_ATTRACT, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/data-east/torpedo-alley-torp_e21-attract-lamps.json",
+     "revision": RUNTIME_PINMAME_REVISION,
+     "locator": "One hash-pinned LibPinMAME harness run of torp_e21 from empty NVRAM (scenario tools/harness-scenarios/data-east/torp-attract-lamps.json): 60 s of attract mode with no input. The attract lamp show lights every lamp-matrix address 1-64, lamp 24 included.",
+     "license": "NOASSERTION", "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external"},
     {"id": EXTRACTION, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/data-east/torpedo-alley-1988/vpxtool-extract",
      "revision": "vpxtool git:0561bb4", "sha256": EVIDENCE_HASHES["extraction-manifest.json"],
      "locator": f"{MANIFEST['file_count']} files; {MANIFEST['total_bytes']} bytes; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST['manifest_sha256']}"},
@@ -740,9 +752,6 @@ definition = {
          "source_refs": [MANUAL, SCRIPT_REF, TABLE]},
         {"id": "conflict.switch-36-runtime-misroute", "path": "/inputs/switch.matrix-36",
          "description": "The manual assigns 36 to Right Star Rollover and the extraction contains SW36 at that location, but active SW36_Hit pulses public switch 26 (S lane). Resolution path: a continuity check or photograph of an unrestored playfield tracing the right star rollover back to the GRN-BLK drive and WHT-YEL return the printed matrix gives address 36, or a second independently authored known-working Torpedo Alley recreation whose right-star handler pulses 36 rather than 26. Unresolved.",
-         "source_refs": [MANUAL, SCRIPT_REF, TABLE]},
-        {"id": "conflict.lamp-24-runtime-omission", "path": "/outputs/lamp.matrix-24",
-         "description": "The manual fits lamp 24 as Insert 1 Torpedo (2) and the extraction has an L24 Light object. The script's only Lights(24) assignment is whole-line commented, so shared VPM lamp polling cannot reach it through this table's active membership array. Resolution path: a photograph of an unrestored playfield confirming that two Insert 1 Torpedo bulbs hang on the YEL-ORN drive and RED-GRY return the printed matrix gives address 24, together with a LibPinMAME trace against a legal torp_e21 ROM observing whether the ROM drives public lamp 24 outside its own lamp test; a corrected build of the retained table, or a second known-working recreation whose Lights(24) assignment is live, would supply the runtime binding. Unresolved.",
          "source_refs": [MANUAL, SCRIPT_REF, TABLE]},
     ],
 }
@@ -800,7 +809,7 @@ spatial_report = {
         {"class": "shared-lights-array-coordinate-candidate", "status": "candidate", "devices": [f"lamp.matrix-{address}" for address in RESOLUTION["active_lights_membership"]],
          "reason": "Executable membership proves a shared runtime visual group, not a physical ROM-to-socket binding."},
         {"class": "lamp-object-name-only-candidate", "status": "candidate", "devices": ["lamp.matrix-24"],
-         "reason": "L24 exists, but its only Lights(24) assignment is a whole-line comment."},
+         "reason": "L24 exists, but its only Lights(24) assignment is a whole-line comment; the ROM drives lamp 24 in attract mode, so the omission is the table's."},
         {"class": "flasher-visual-proxy", "status": "candidate", "devices": [f"coil.driver-{address}" for address in (1, 2, 3, 4, 5, 6, 9, 14, 15)],
          "reason": "Direct callbacks expose table effect objects; those objects are not surveyed physical bulb centers."},
         {"class": "mechanical-effect-object", "status": "candidate", "devices": [f"coil.driver-{address}" for address in (16, 25, 26, 27, 28, 29, 31, 32)],
@@ -822,9 +831,9 @@ spatial_report = {
         {"devices": [f"coil.driver-{address}" for address in (17, 18, 19, 21, 22)], "dimension": "special_coil_placement", "reason": "Manual construction and Data East public mapping establish circuit topology, but native physics has no public SolCallback or physical effect object from which to derive an actuator center."},
     ],
     "blockers": [
-        {"devices": [f"coil.driver-{address}" for address in sorted(MUX_TYPING_CONFLICTS)] + ["coil.driver-11", "lamp.matrix-24"], "dimension": "output_semantics",
-         "reason": "Pinned output typing, effective callback 11 and active lamp-24 membership disagree with manual construction.",
-         "would_resolve": "A PinMAME maintainer explanation or corrected torp_ typing plus a controller trace of relay sides, GI 11 and lamp 24."},
+        {"devices": [f"coil.driver-{address}" for address in sorted(MUX_TYPING_CONFLICTS)] + ["coil.driver-11"], "dimension": "output_semantics",
+         "reason": "Pinned output typing and effective callback 11 disagree with manual construction.",
+         "would_resolve": "A PinMAME maintainer explanation or corrected torp_ typing plus a controller trace of relay sides and GI 11."},
         {"devices": ["coil.driver-45", "coil.driver-46", "coil.driver-47", "coil.driver-48"], "dimension": "polarity",
          "reason": "The synthetic power/hold states have no settled winding-level mapping without a bench state capture. Switches 15/16 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.",
          "would_resolve": "Bench capture of the flipper windings and public power/hold states on an original machine or faithful harness."},
@@ -832,11 +841,11 @@ spatial_report = {
           "reason": "Candidate visual names/effects, incomplete 01L-08L two-bulb socket counts, unbound GI and special coils do not establish every socket or actuator center.",
          "would_resolve": "A socket/address and under-playfield actuator survey of an original playfield, insert board and backbox."},
         {"devices": [conflict["id"] for conflict in unresolved_conflicts(definition)], "dimension": "unresolved_conflicts",
-        "reason": "Six source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.",
+        "reason": "Five source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.",
          "would_resolve": "Corrected upstream sources or independent original-machine traces that explicitly choose each conflicting state without inference."},
     ],
     "conflicts": [conflict["id"] for conflict in definition["conflicts"]],
-    "promotion_decision": "Keep partial. Output typing, EOS/button state, special-coil semantic conflict and placement, two misrouted switches, lamp 24, GI behavior, the second physical bulb positions for 01L-08L, and other socket-level placements remain unresolved.",
+    "promotion_decision": "Keep partial. Output typing, EOS/button state, special-coil semantic conflict and placement, two misrouted switches, GI behavior, the second physical bulb positions for 01L-08L, and other socket-level placements remain unresolved.",
 }
 
 
@@ -935,7 +944,7 @@ The three pop bumpers and two slingshots have source-reconciled circuit topology
 
 ## What remains unresolved
 
-`coverage.missing` is exactly `output_semantics`, `mechanism_behavior`, `polarity`, `recreation_notes`, `spatial_placement`, and `unresolved_conflicts`. Output semantics need a PinMAME maintainer explanation or corrected `torp_` typing plus a trace across both K1 states, GI 11 and lamp 24. Mechanism behavior remains conflicted where the printed EOS construction and runtime cabinet-button model disagree. Polarity needs a bench capture mapping the synthetic power/hold states 45-48 onto the flipper windings; switches 15/16 are settled, because `core_updateSw` copies the cabinet-button bits at 82/84 into them. Recreation notes remain candidate while those source conflicts prevent a complete build specification. Spatial completion needs an original-machine socket/address and under-playfield actuator survey covering the playfield, insert board and backbox; the printed quantity of two for each 01L-08L flasher branch is retained, but the table exposes only one usable effect anchor for 01L-06L, two disjoint helper clusters rather than a physical center for 07L, and no active callback for 08L, so no unsupported bulb position is fabricated. Lamp addresses 1, 8, 16, 23, 24, 31 and 32 likewise retain a printed quantity of two while publishing only one candidate object coordinate. No hash-pinned Internet Archive resource or directly verifiable IPDB resource is retained, so the manual's GameEx source URL remains recorded without archive metadata; the machine's IPDB 2603 identity comes from the pinned OPDB snapshot and ROM crosswalk in `reports/opdb-identity.json`. The six unresolved conflicts need corrected upstream evidence or independent traces that explicitly settle each disagreement; the two flipper end-of-stroke naming records are recorded as ignored, because no evidence about them could change a recreation. Until those exist, the record remains partial.
+`coverage.missing` is exactly `output_semantics`, `mechanism_behavior`, `polarity`, `recreation_notes`, `spatial_placement`, and `unresolved_conflicts`. Output semantics need a PinMAME maintainer explanation or corrected `torp_` typing plus a trace across both K1 states and GI 11. Lamp 24 is settled: the manual fits it and the ROM drives it in attract mode, so the retained table's commented-out `Lights(24)` binding is that table's defect. Mechanism behavior remains conflicted where the printed EOS construction and runtime cabinet-button model disagree. Polarity needs a bench capture mapping the synthetic power/hold states 45-48 onto the flipper windings; switches 15/16 are settled, because `core_updateSw` copies the cabinet-button bits at 82/84 into them. Recreation notes remain candidate while those source conflicts prevent a complete build specification. Spatial completion needs an original-machine socket/address and under-playfield actuator survey covering the playfield, insert board and backbox; the printed quantity of two for each 01L-08L flasher branch is retained, but the table exposes only one usable effect anchor for 01L-06L, two disjoint helper clusters rather than a physical center for 07L, and no active callback for 08L, so no unsupported bulb position is fabricated. Lamp addresses 1, 8, 16, 23, 24, 31 and 32 likewise retain a printed quantity of two while publishing only one candidate object coordinate. No hash-pinned Internet Archive resource or directly verifiable IPDB resource is retained, so the manual's GameEx source URL remains recorded without archive metadata; the machine's IPDB 2603 identity comes from the pinned OPDB snapshot and ROM crosswalk in `reports/opdb-identity.json`. The five unresolved conflicts need corrected upstream evidence or independent traces that explicitly settle each disagreement; the two flipper end-of-stroke naming records are recorded as ignored, because no evidence about them could change a recreation. Until those exist, the record remains partial.
 """
 
 

@@ -72,16 +72,6 @@
         "vpx-script.torpedo-alley-hybrid-mod-1-1",
         "vpx-table.torpedo-alley-hybrid-mod-1-1"
       ]
-    },
-    {
-      "description": "The manual fits lamp 24 as Insert 1 Torpedo (2) and the extraction has an L24 Light object. The script's only Lights(24) assignment is whole-line commented, so shared VPM lamp polling cannot reach it through this table's active membership array. Resolution path: a photograph of an unrestored playfield confirming that two Insert 1 Torpedo bulbs hang on the YEL-ORN drive and RED-GRY return the printed matrix gives address 24, together with a LibPinMAME trace against a legal torp_e21 ROM observing whether the ROM drives public lamp 24 outside its own lamp test; a corrected build of the retained table, or a second known-working recreation whose Lights(24) assignment is live, would supply the runtime binding. Unresolved.",
-      "id": "conflict.lamp-24-runtime-omission",
-      "path": "/outputs/lamp.matrix-24",
-      "source_refs": [
-        "manual.data-east.torpedo-alley.1988",
-        "vpx-script.torpedo-alley-hybrid-mod-1-1",
-        "vpx-table.torpedo-alley-hybrid-mod-1-1"
-      ]
     }
   ],
   "controller": {
@@ -8150,16 +8140,17 @@
       "label": "Insert 1 Torpedo (2)",
       "physical": {
         "location": "insert board",
-        "notes": "Manual lamp matrix column 3, row 8; matrix cell 'Insert 1 Torpedo (2)'. The extracted Light name L24 is a coordinate candidate, not an observed physical ROM-to-socket binding. The only Lights(24) assignment is whole-line commented, so this address has no executable shared-array membership in the retained script.",
+        "notes": "Manual lamp matrix column 3, row 8; matrix cell 'Insert 1 Torpedo (2)'. The extracted Light name L24 is a coordinate candidate, not an observed physical ROM-to-socket binding. The only Lights(24) assignment is whole-line commented, so this address has no executable shared-array membership in the retained script. That is a defect in the retained table, not a doubt about the machine: the manual fits this lamp, and the torp_e21 ROM drives public lamp 24 in its attract lamp show (hash-pinned run runtime.torpedo-alley.torp-e21.attract-lamps), so a recreation binds it like any other insert.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.data-east.torpedo-alley.1988",
           "vpx-script.torpedo-alley-hybrid-mod-1-1",
-          "vpx-table.torpedo-alley-hybrid-mod-1-1"
+          "vpx-table.torpedo-alley-hybrid-mod-1-1",
+          "runtime.torpedo-alley.torp-e21.attract-lamps"
         ],
-        "status": "conflicted"
+        "status": "candidate"
       },
       "spatial": {
         "placements": [
@@ -10792,6 +10783,15 @@
       "rights": "NOASSERTION",
       "sha256": "8858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04",
       "uri": "external:pinmame-review-artifacts/vpm-script-libs/de.vbs"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.torpedo-alley.torp-e21.attract-lamps",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of torp_e21 from empty NVRAM (scenario tools/harness-scenarios/data-east/torp-attract-lamps.json): 60 s of attract mode with no input. The attract lamp show lights every lamp-matrix address 1-64, lamp 24 included.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/data-east/torpedo-alley-torp_e21-attract-lamps.json"
     },
     {
       "id": "vpx-extraction.torpedo-alley-hybrid-mod-1-1",

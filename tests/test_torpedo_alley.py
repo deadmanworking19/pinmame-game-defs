@@ -175,8 +175,15 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         self.assertTrue(all(lamps[address]["spatial"]["status"] == "candidate" for address in range(1, 65)))
         self.assertTrue(all(len(lamps[address]["spatial"]["placements"]) == 1 for address in range(1, 65)))
         self.assertTrue(all("coordinate candidate, not an observed physical" in lamps[address]["physical"]["notes"] for address in range(1, 65)))
-        self.assertEqual("conflicted", lamps[24]["provenance"]["status"])
+        # The ROM drives lamp 24 in attract mode; the commented-out script binding is the table's defect.
+        self.assertEqual("candidate", lamps[24]["provenance"]["status"])
         self.assertIn("whole-line commented", lamps[24]["physical"]["notes"])
+        self.assertIn("defect in the retained table", lamps[24]["physical"]["notes"])
+        self.assertIn("runtime.torpedo-alley.torp-e21.attract-lamps", lamps[24]["provenance"]["source_refs"])
+        evidence = json.loads((ROOT / "evidence" / "runtime" / "data-east" / "torpedo-alley-torp_e21-attract-lamps.json").read_text(encoding="utf-8"))
+        self.assertIn(24, evidence["runtime"]["observations"]["lamp_addresses_driven_outside_self_test"])
+        self.assertEqual(list(range(1, 65)), evidence["runtime"]["observations"]["lamp_addresses_driven_outside_self_test"])
+        self._check_retained_attract_run(evidence)
         self.assertIn("shared VPM core", lamps[1]["physical"]["notes"])
 
     def test_solenoid_namespace_typing_mux_and_dispositions_are_explicit(self) -> None:
@@ -276,12 +283,34 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         }, {(item["source"], item["destination"]) for item in special})
         self.assertEqual({"conflicted", "validated"}, {item["provenance"]["status"] for item in special})
 
-    def test_all_eight_conflicts_are_first_class(self) -> None:
+    def _check_retained_attract_run(self, evidence: dict) -> None:
+        import hashlib
+        import os
+
+        scenario = ROOT / "tools" / "harness-scenarios" / "data-east" / "torp-attract-lamps.json"
+        (raw,) = evidence["runtime"]["raw_runs"]
+        self.assertEqual(hashlib.sha256(scenario.read_bytes()).hexdigest(), raw["scenario_sha256"])
+        self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+        root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+        if not root:
+            return
+        import build_external_evidence_manifest as manifest
+
+        path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+        self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+        digest = manifest.check_manifest(path.parent, "torp_e21")
+        self.assertIn(f"torp_e21/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+        run = json.loads(path.read_text(encoding="utf-8"))
+        self.assertIsNone(run["failure"])
+        lit = sorted({event["number"] for event in run["events"] if event["event"] == "lamp" and event["state"]})
+        self.assertEqual(evidence["runtime"]["observations"]["lamp_addresses_seen"], lit)
+
+    def test_all_seven_conflicts_are_first_class(self) -> None:
         self.assertEqual({
             "conflict.left-flipper-eos-runtime", "conflict.right-flipper-eos-runtime",
             "conflict.mux-bank-output-typing", "conflict.special-solenoid-sp1-sp2-schematic-swap",
             "conflict.output-11-callback-overwrite", "conflict.switch-23-runtime-misroute",
-            "conflict.switch-36-runtime-misroute", "conflict.lamp-24-runtime-omission",
+            "conflict.switch-36-runtime-misroute",
         }, {item["id"] for item in self.definition["conflicts"]})
         self.assertTrue(all(len(item["source_refs"]) >= 2 for item in self.definition["conflicts"]))
 
