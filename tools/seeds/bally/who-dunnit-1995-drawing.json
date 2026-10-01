@@ -1,0 +1,396 @@
+{
+  "format": "pinmame-drawing-reconciliation",
+  "version": 1,
+  "machine_id": "bally.who-dunnit.1995",
+  "date": "2026-10-01",
+  "manual_sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
+  "table_sha256": "a0f18c07f98ec7dce96cc030eb11af11a0c28d0d1cffb5390744067b9221e2a9",
+  "method": "Control pixels were read by eye on gridded native crops of the retained 300 dpi renders: jet bumper ring centres, flipper pivot circles, two flasher domes and the left lock cup. They are paired with the exact retained VPX object centres and fitted per page with a least-squares affine. Measured device points are factory device symbols at leader ends, never callout balloons.",
+  "rejected_fit": {
+    "artifact": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry/fit.json",
+    "sha256": "532d5d824bd60c54695a71b04733b0ed2f3d0fde7dd7729ca34a05ec85e9f38e",
+    "reason": "Its 'hand-read' control pixels equal its own frame formula applied to the VPX coordinates (switch 63: 914 + 349.2/953*700 = 1170.5) and sit 10-17 px from the drawn bumper and lamp symbols, so its sub-VPU residuals are not a drawing measurement and reconcile nothing."
+  },
+  "pages": {
+    "pdf-127": {
+      "render": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-manual-transcription/native-renders/pdf-127.webp",
+      "sha256": "a338d4c4d87b5496d0282f29dda34277d9d7e007e4403d7da9d854ef6461a043",
+      "pixels": [
+        2480,
+        3507
+      ],
+      "locator": "PDF 127, printed 2-45, Switch Locations (continued)",
+      "controls": [
+        {
+          "object": "sw63",
+          "object_type": "Bumper",
+          "semantics": "left jet bumper ring centre",
+          "pixel": [
+            1170,
+            602
+          ],
+          "raw_vpu": [
+            349.2,
+            268.5
+          ],
+          "residual_vpu": 2.6,
+          "leave_one_out_vpu": 3.5
+        },
+        {
+          "object": "sw65",
+          "object_type": "Bumper",
+          "semantics": "right jet bumper ring centre",
+          "pixel": [
+            1315.5,
+            603
+          ],
+          "raw_vpu": [
+            549.4,
+            266.8
+          ],
+          "residual_vpu": 4.7,
+          "leave_one_out_vpu": 8.1
+        },
+        {
+          "object": "sw64",
+          "object_type": "Bumper",
+          "semantics": "bottom jet bumper ring centre",
+          "pixel": [
+            1240.5,
+            730
+          ],
+          "raw_vpu": [
+            449.36,
+            443.25
+          ],
+          "residual_vpu": 6.3,
+          "leave_one_out_vpu": 8.4
+        },
+        {
+          "object": "LeftFlipper",
+          "object_type": "Flipper",
+          "semantics": "left flipper pivot circle",
+          "pixel": [
+            1097.5,
+            1755
+          ],
+          "raw_vpu": [
+            279.3832,
+            1791.5
+          ],
+          "residual_vpu": 4.5,
+          "leave_one_out_vpu": 7.1
+        },
+        {
+          "object": "RightFlipper",
+          "object_type": "Flipper",
+          "semantics": "right flipper pivot circle",
+          "pixel": [
+            1335,
+            1751.5
+          ],
+          "raw_vpu": [
+            589.2847,
+            1791.5
+          ],
+          "residual_vpu": 5.0,
+          "leave_one_out_vpu": 13.1
+        },
+        {
+          "object": "Flasherbase2",
+          "object_type": "Primitive",
+          "semantics": "top-left flasher dome centre",
+          "pixel": [
+            977.5,
+            481.25
+          ],
+          "raw_vpu": [
+            86.6352,
+            98.2817
+          ],
+          "residual_vpu": 5.4,
+          "leave_one_out_vpu": 10.0
+        },
+        {
+          "object": "sw51",
+          "object_type": "Kicker",
+          "semantics": "left lock cup circle centre",
+          "pixel": [
+            942.3,
+            1310.7
+          ],
+          "raw_vpu": [
+            57.8956,
+            1209.7288
+          ],
+          "residual_vpu": 8.5,
+          "leave_one_out_vpu": 13.4
+        },
+        {
+          "object": "Flasherbase3",
+          "object_type": "Primitive",
+          "semantics": "lower-left flasher dome centre",
+          "pixel": [
+            995,
+            1318.3
+          ],
+          "raw_vpu": [
+            129.4434,
+            1205.6029
+          ],
+          "residual_vpu": 6.7,
+          "leave_one_out_vpu": 9.2
+        }
+      ],
+      "affine": {
+        "raw_x": [
+          1.34391993,
+          0.019014242,
+          -1233.223955212
+        ],
+        "raw_y": [
+          0.017898101,
+          1.325087178,
+          -552.380713965
+        ],
+        "formula": "raw = a*u + b*v + c on native render pixels (u right, v down)"
+      },
+      "rms_residual_vpu": 5.7,
+      "max_leave_one_out_vpu": 13.4
+    },
+    "pdf-129": {
+      "render": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-manual-transcription/native-renders/pdf-129.webp",
+      "sha256": "3fb0d0be6b2d427400a54eab423294e978e6256ede5e9cc27f8275f4e3d13727",
+      "pixels": [
+        2480,
+        3507
+      ],
+      "locator": "PDF 129, printed 2-47, Solenoid/Flasher Locations (continued)",
+      "controls": [
+        {
+          "object": "sw63",
+          "object_type": "Bumper",
+          "semantics": "left jet bumper ring centre",
+          "pixel": [
+            1161,
+            750
+          ],
+          "raw_vpu": [
+            349.2,
+            268.5
+          ],
+          "residual_vpu": 6.2,
+          "leave_one_out_vpu": 8.2
+        },
+        {
+          "object": "sw65",
+          "object_type": "Bumper",
+          "semantics": "right jet bumper ring centre",
+          "pixel": [
+            1322,
+            753
+          ],
+          "raw_vpu": [
+            549.4,
+            266.8
+          ],
+          "residual_vpu": 5.3,
+          "leave_one_out_vpu": 9.2
+        },
+        {
+          "object": "sw64",
+          "object_type": "Bumper",
+          "semantics": "bottom jet bumper ring centre",
+          "pixel": [
+            1243,
+            899
+          ],
+          "raw_vpu": [
+            449.36,
+            443.25
+          ],
+          "residual_vpu": 4.4,
+          "leave_one_out_vpu": 5.9
+        },
+        {
+          "object": "LeftFlipper",
+          "object_type": "Flipper",
+          "semantics": "left flipper pivot circle",
+          "pixel": [
+            1087.5,
+            2045
+          ],
+          "raw_vpu": [
+            279.3832,
+            1791.5
+          ],
+          "residual_vpu": 4.1,
+          "leave_one_out_vpu": 6.5
+        },
+        {
+          "object": "RightFlipper",
+          "object_type": "Flipper",
+          "semantics": "right flipper pivot circle",
+          "pixel": [
+            1352.5,
+            2047.5
+          ],
+          "raw_vpu": [
+            589.2847,
+            1791.5
+          ],
+          "residual_vpu": 6.7,
+          "leave_one_out_vpu": 17.5
+        },
+        {
+          "object": "Flasherbase2",
+          "object_type": "Primitive",
+          "semantics": "top-left flasher dome centre",
+          "pixel": [
+            945,
+            621.25
+          ],
+          "raw_vpu": [
+            86.6352,
+            98.2817
+          ],
+          "residual_vpu": 10.9,
+          "leave_one_out_vpu": 19.9
+        },
+        {
+          "object": "sw51",
+          "object_type": "Kicker",
+          "semantics": "left lock cup circle centre",
+          "pixel": [
+            910,
+            1545
+          ],
+          "raw_vpu": [
+            57.8956,
+            1209.7288
+          ],
+          "residual_vpu": 10.3,
+          "leave_one_out_vpu": 16.4
+        },
+        {
+          "object": "Flasherbase3",
+          "object_type": "Primitive",
+          "semantics": "lower-left flasher dome centre",
+          "pixel": [
+            970.7,
+            1554
+          ],
+          "raw_vpu": [
+            129.4434,
+            1205.6029
+          ],
+          "residual_vpu": 5.0,
+          "leave_one_out_vpu": 6.8
+        }
+      ],
+      "affine": {
+        "raw_x": [
+          1.202237738,
+          0.010159811,
+          -1052.917362476
+        ],
+        "raw_y": [
+          0.007484341,
+          1.181082457,
+          -632.07444704
+        ],
+        "formula": "raw = a*u + b*v + c on native render pixels (u right, v down)"
+      },
+      "rms_residual_vpu": 7.0,
+      "max_leave_one_out_vpu": 19.9
+    }
+  },
+  "measurements": [
+    {
+      "device_id": "switch.matrix-37",
+      "page": "pdf-127",
+      "role": "sensor",
+      "leader_end_pixel": [
+        937,
+        648
+      ],
+      "symbol_pixel": [
+        945,
+        648
+      ],
+      "point_semantics": "switch symbol at the left end of the ramp bracket that crosses the left orbit, where the 37 leader ends (device symbol, not a balloon)",
+      "uncertainty_radius_vpu": 20,
+      "raw_vpu": [
+        49.1,
+        323.2
+      ],
+      "leader_end_raw_vpu": [
+        38.4,
+        323.0
+      ],
+      "normalized": {
+        "x": 0.052,
+        "y": 0.152
+      },
+      "precision": "three decimals: control-fit leave-one-out error up to about 20 VPU on this scan",
+      "replaces": {
+        "object": "sw37",
+        "kind": "Trigger",
+        "note": "invisible table trigger further up the ramp; it carries the runtime binding (vpmtimer.pulsesw 37), not the switch position",
+        "raw_vpu": [
+          141.9,
+          244.8
+        ],
+        "distance_vpu": 121
+      }
+    },
+    {
+      "device_id": "solenoid.14",
+      "page": "pdf-129",
+      "role": "effect",
+      "leader_end_pixel": [
+        900,
+        820
+      ],
+      "symbol_pixel": [
+        904,
+        820
+      ],
+      "point_semantics": "left end of the same cross-orbit ramp bracket, where the 14 leader ends; the drawing marks the bracket part, not the bulb's position along it (bracket spans roughly 100 VPU)",
+      "uncertainty_radius_vpu": 60,
+      "raw_vpu": [
+        42.2,
+        343.2
+      ],
+      "leader_end_raw_vpu": [
+        37.4,
+        343.1
+      ],
+      "normalized": {
+        "x": 0.044,
+        "y": 0.161
+      },
+      "precision": "three decimals: control-fit leave-one-out error up to about 20 VPU on this scan",
+      "replaces": {
+        "object": "Flasherlight6",
+        "kind": "Light",
+        "note": "the table lights its phone flasher inside its Phone toy (mesh x 106-361, y 266-507), outside the factory bracket position",
+        "raw_vpu": [
+          224.0,
+          435.1
+        ],
+        "distance_vpu": 204
+      }
+    }
+  ],
+  "identity_checks": {
+    "pdf-125": "All 60 placed playfield lamps land on their own printed lamp symbol or leader end (overlay through the page frame x=(u-902)/729, y=(v-460)/1680; leader-only clusters 25-28, 37-38, 46, 61-68, 71-72, 78, 83-84 inspected zoomed). Identity check only; the frame overlay carries about 15 VPU of systematic offset.",
+    "pdf-127": "Placed switches land on their own leader ends except 37 (re-placed from this drawing) and 41, whose invisible subway trigger sits about 40 VPU from its leader end; trough 31-35 remain whole-mechanism projections.",
+    "pdf-129": "Coil and flasher anchors land on their own items except 14 (re-placed from this drawing) and 20, whose Flasherbase5 dome sits about 60 VPU from the bracket its leader marks; 1/2 are effect anchors, not coil mounts."
+  },
+  "retained_artifacts": {
+    "directory": "review-artifacts/bally.who-dunnit.1995/session-20261001/drawing-reconciliation",
+    "manifest_sha256": "7895c6c2a8646853da019f7c94e0562247c449df52f96ae76995b0452f68e872",
+    "fits_sha256": "b2a67a3f8939e7df1ed8060b2c1d0c462b4d0225b3c6675d28d9238f10784bd7"
+  }
+}

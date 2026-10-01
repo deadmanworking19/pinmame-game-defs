@@ -299,7 +299,400 @@
     "gi.string-02",
     "gi.string-03"
   ],
+  "drawing_reconciliation": {
+    "identity_checks": {
+      "pdf-125": "All 60 placed playfield lamps land on their own printed lamp symbol or leader end (overlay through the page frame x=(u-902)/729, y=(v-460)/1680; leader-only clusters 25-28, 37-38, 46, 61-68, 71-72, 78, 83-84 inspected zoomed). Identity check only; the frame overlay carries about 15 VPU of systematic offset.",
+      "pdf-127": "Placed switches land on their own leader ends except 37 (re-placed from this drawing) and 41, whose invisible subway trigger sits about 40 VPU from its leader end; trough 31-35 remain whole-mechanism projections.",
+      "pdf-129": "Coil and flasher anchors land on their own items except 14 (re-placed from this drawing) and 20, whose Flasherbase5 dome sits about 60 VPU from the bracket its leader marks; 1/2 are effect anchors, not coil mounts."
+    },
+    "measurements": [
+      {
+        "device_id": "switch.matrix-37",
+        "leader_end_pixel": [
+          937,
+          648
+        ],
+        "leader_end_raw_vpu": [
+          38.4,
+          323.0
+        ],
+        "normalized": {
+          "x": 0.052,
+          "y": 0.152
+        },
+        "page": "pdf-127",
+        "point_semantics": "switch symbol at the left end of the ramp bracket that crosses the left orbit, where the 37 leader ends (device symbol, not a balloon)",
+        "precision": "three decimals: control-fit leave-one-out error up to about 20 VPU on this scan",
+        "raw_vpu": [
+          49.1,
+          323.2
+        ],
+        "replaces": {
+          "distance_vpu": 121,
+          "kind": "Trigger",
+          "note": "invisible table trigger further up the ramp; it carries the runtime binding (vpmtimer.pulsesw 37), not the switch position",
+          "object": "sw37",
+          "raw_vpu": [
+            141.9,
+            244.8
+          ]
+        },
+        "role": "sensor",
+        "symbol_pixel": [
+          945,
+          648
+        ],
+        "uncertainty_radius_vpu": 20
+      },
+      {
+        "device_id": "solenoid.14",
+        "leader_end_pixel": [
+          900,
+          820
+        ],
+        "leader_end_raw_vpu": [
+          37.4,
+          343.1
+        ],
+        "normalized": {
+          "x": 0.044,
+          "y": 0.161
+        },
+        "page": "pdf-129",
+        "point_semantics": "left end of the same cross-orbit ramp bracket, where the 14 leader ends; the drawing marks the bracket part, not the bulb's position along it (bracket spans roughly 100 VPU)",
+        "precision": "three decimals: control-fit leave-one-out error up to about 20 VPU on this scan",
+        "raw_vpu": [
+          42.2,
+          343.2
+        ],
+        "replaces": {
+          "distance_vpu": 204,
+          "kind": "Light",
+          "note": "the table lights its phone flasher inside its Phone toy (mesh x 106-361, y 266-507), outside the factory bracket position",
+          "object": "Flasherlight6",
+          "raw_vpu": [
+            224.0,
+            435.1
+          ]
+        },
+        "role": "effect",
+        "symbol_pixel": [
+          904,
+          820
+        ],
+        "uncertainty_radius_vpu": 60
+      }
+    ],
+    "method": "Control pixels were read by eye on gridded native crops of the retained 300 dpi renders: jet bumper ring centres, flipper pivot circles, two flasher domes and the left lock cup. They are paired with the exact retained VPX object centres and fitted per page with a least-squares affine. Measured device points are factory device symbols at leader ends, never callout balloons.",
+    "pages": {
+      "pdf-127": {
+        "affine": {
+          "formula": "raw = a*u + b*v + c on native render pixels (u right, v down)",
+          "raw_x": [
+            1.34391993,
+            0.019014242,
+            -1233.223955212
+          ],
+          "raw_y": [
+            0.017898101,
+            1.325087178,
+            -552.380713965
+          ]
+        },
+        "controls": [
+          {
+            "leave_one_out_vpu": 3.5,
+            "object": "sw63",
+            "object_type": "Bumper",
+            "pixel": [
+              1170,
+              602
+            ],
+            "raw_vpu": [
+              349.2,
+              268.5
+            ],
+            "residual_vpu": 2.6,
+            "semantics": "left jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 8.1,
+            "object": "sw65",
+            "object_type": "Bumper",
+            "pixel": [
+              1315.5,
+              603
+            ],
+            "raw_vpu": [
+              549.4,
+              266.8
+            ],
+            "residual_vpu": 4.7,
+            "semantics": "right jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 8.4,
+            "object": "sw64",
+            "object_type": "Bumper",
+            "pixel": [
+              1240.5,
+              730
+            ],
+            "raw_vpu": [
+              449.36,
+              443.25
+            ],
+            "residual_vpu": 6.3,
+            "semantics": "bottom jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 7.1,
+            "object": "LeftFlipper",
+            "object_type": "Flipper",
+            "pixel": [
+              1097.5,
+              1755
+            ],
+            "raw_vpu": [
+              279.3832,
+              1791.5
+            ],
+            "residual_vpu": 4.5,
+            "semantics": "left flipper pivot circle"
+          },
+          {
+            "leave_one_out_vpu": 13.1,
+            "object": "RightFlipper",
+            "object_type": "Flipper",
+            "pixel": [
+              1335,
+              1751.5
+            ],
+            "raw_vpu": [
+              589.2847,
+              1791.5
+            ],
+            "residual_vpu": 5.0,
+            "semantics": "right flipper pivot circle"
+          },
+          {
+            "leave_one_out_vpu": 10.0,
+            "object": "Flasherbase2",
+            "object_type": "Primitive",
+            "pixel": [
+              977.5,
+              481.25
+            ],
+            "raw_vpu": [
+              86.6352,
+              98.2817
+            ],
+            "residual_vpu": 5.4,
+            "semantics": "top-left flasher dome centre"
+          },
+          {
+            "leave_one_out_vpu": 13.4,
+            "object": "sw51",
+            "object_type": "Kicker",
+            "pixel": [
+              942.3,
+              1310.7
+            ],
+            "raw_vpu": [
+              57.8956,
+              1209.7288
+            ],
+            "residual_vpu": 8.5,
+            "semantics": "left lock cup circle centre"
+          },
+          {
+            "leave_one_out_vpu": 9.2,
+            "object": "Flasherbase3",
+            "object_type": "Primitive",
+            "pixel": [
+              995,
+              1318.3
+            ],
+            "raw_vpu": [
+              129.4434,
+              1205.6029
+            ],
+            "residual_vpu": 6.7,
+            "semantics": "lower-left flasher dome centre"
+          }
+        ],
+        "locator": "PDF 127, printed 2-45, Switch Locations (continued)",
+        "max_leave_one_out_vpu": 13.4,
+        "pixels": [
+          2480,
+          3507
+        ],
+        "render": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-manual-transcription/native-renders/pdf-127.webp",
+        "rms_residual_vpu": 5.7,
+        "sha256": "a338d4c4d87b5496d0282f29dda34277d9d7e007e4403d7da9d854ef6461a043"
+      },
+      "pdf-129": {
+        "affine": {
+          "formula": "raw = a*u + b*v + c on native render pixels (u right, v down)",
+          "raw_x": [
+            1.202237738,
+            0.010159811,
+            -1052.917362476
+          ],
+          "raw_y": [
+            0.007484341,
+            1.181082457,
+            -632.07444704
+          ]
+        },
+        "controls": [
+          {
+            "leave_one_out_vpu": 8.2,
+            "object": "sw63",
+            "object_type": "Bumper",
+            "pixel": [
+              1161,
+              750
+            ],
+            "raw_vpu": [
+              349.2,
+              268.5
+            ],
+            "residual_vpu": 6.2,
+            "semantics": "left jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 9.2,
+            "object": "sw65",
+            "object_type": "Bumper",
+            "pixel": [
+              1322,
+              753
+            ],
+            "raw_vpu": [
+              549.4,
+              266.8
+            ],
+            "residual_vpu": 5.3,
+            "semantics": "right jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 5.9,
+            "object": "sw64",
+            "object_type": "Bumper",
+            "pixel": [
+              1243,
+              899
+            ],
+            "raw_vpu": [
+              449.36,
+              443.25
+            ],
+            "residual_vpu": 4.4,
+            "semantics": "bottom jet bumper ring centre"
+          },
+          {
+            "leave_one_out_vpu": 6.5,
+            "object": "LeftFlipper",
+            "object_type": "Flipper",
+            "pixel": [
+              1087.5,
+              2045
+            ],
+            "raw_vpu": [
+              279.3832,
+              1791.5
+            ],
+            "residual_vpu": 4.1,
+            "semantics": "left flipper pivot circle"
+          },
+          {
+            "leave_one_out_vpu": 17.5,
+            "object": "RightFlipper",
+            "object_type": "Flipper",
+            "pixel": [
+              1352.5,
+              2047.5
+            ],
+            "raw_vpu": [
+              589.2847,
+              1791.5
+            ],
+            "residual_vpu": 6.7,
+            "semantics": "right flipper pivot circle"
+          },
+          {
+            "leave_one_out_vpu": 19.9,
+            "object": "Flasherbase2",
+            "object_type": "Primitive",
+            "pixel": [
+              945,
+              621.25
+            ],
+            "raw_vpu": [
+              86.6352,
+              98.2817
+            ],
+            "residual_vpu": 10.9,
+            "semantics": "top-left flasher dome centre"
+          },
+          {
+            "leave_one_out_vpu": 16.4,
+            "object": "sw51",
+            "object_type": "Kicker",
+            "pixel": [
+              910,
+              1545
+            ],
+            "raw_vpu": [
+              57.8956,
+              1209.7288
+            ],
+            "residual_vpu": 10.3,
+            "semantics": "left lock cup circle centre"
+          },
+          {
+            "leave_one_out_vpu": 6.8,
+            "object": "Flasherbase3",
+            "object_type": "Primitive",
+            "pixel": [
+              970.7,
+              1554
+            ],
+            "raw_vpu": [
+              129.4434,
+              1205.6029
+            ],
+            "residual_vpu": 5.0,
+            "semantics": "lower-left flasher dome centre"
+          }
+        ],
+        "locator": "PDF 129, printed 2-47, Solenoid/Flasher Locations (continued)",
+        "max_leave_one_out_vpu": 19.9,
+        "pixels": [
+          2480,
+          3507
+        ],
+        "render": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-manual-transcription/native-renders/pdf-129.webp",
+        "rms_residual_vpu": 7.0,
+        "sha256": "3fb0d0be6b2d427400a54eab423294e978e6256ede5e9cc27f8275f4e3d13727"
+      }
+    },
+    "rejected_fit": {
+      "artifact": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry/fit.json",
+      "reason": "Its 'hand-read' control pixels equal its own frame formula applied to the VPX coordinates (switch 63: 914 + 349.2/953*700 = 1170.5) and sit 10-17 px from the drawn bumper and lamp symbols, so its sub-VPU residuals are not a drawing measurement and reconcile nothing.",
+      "sha256": "532d5d824bd60c54695a71b04733b0ed2f3d0fde7dd7729ca34a05ec85e9f38e"
+    },
+    "retained_artifacts": {
+      "directory": "review-artifacts/bally.who-dunnit.1995/session-20261001/drawing-reconciliation",
+      "fits_sha256": "b2a67a3f8939e7df1ed8060b2c1d0c462b4d0225b3c6675d28d9238f10784bd7",
+      "manifest_sha256": "7895c6c2a8646853da019f7c94e0562247c449df52f96ae76995b0452f68e872"
+    }
+  },
+  "drawing_seed_sha256": "7077d36ef93e7595ea96a2729876fc6671a05291ef58c55d40501a0ba3e5ace1",
   "evidence_paths": {
+    "drawing_review": "review-artifacts/bally.who-dunnit.1995/session-20261001/drawing-reconciliation",
+    "drawing_seed": "tools/seeds/bally/who-dunnit-1995-drawing.json",
     "extracted": "vpx-sources/bally/who-dunnit-1995/extracted",
     "extraction_manifest": "vpx-sources/bally/who-dunnit-1995/extracted.manifest.json",
     "geometry_review": "review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry",
@@ -1524,7 +1917,6 @@
     "solenoid.11",
     "solenoid.12",
     "solenoid.13",
-    "solenoid.14",
     "solenoid.16",
     "solenoid.17",
     "solenoid.18",
@@ -1562,13 +1954,14 @@
   ],
   "projection_classes": {
     "actuator": "Named VPX mechanism anchor or visible effect projection only. No projection is called a hidden winding, motor body or physical bulb centre.",
-    "flasher_and_coil": "46 formerly unplaced devices now have 47 candidate VPX mechanism projections. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
+    "factory_drawing_measurement": "Candidate coordinate measured on a factory location drawing at the device symbol where a leader ends, through that page's independently read fit; used only where no retained table object sits at the factory position.",
+    "flasher_and_coil": "45 devices use 46 candidate VPX mechanism projections; flasher 14 uses the factory drawing instead. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
     "gi": "Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown. All five strings' table wiring/bulb/location claims and backbox exclusions remain candidate: the board layout shows J120/J121, but PDF 158–159 omits J112–J127 pin destinations and supplies no branch/placement corroboration.",
-    "lamp": "Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded; the factory location drawing on PDF 125 still needs device-by-device socket reconciliation.",
-    "manual_drawing": "PDF 127 switch and PDF 125 lamp plans have separate affine fits and visually checked symbol controls. Tiny residuals can reflect a VPX author tracing the manual and do not prove independent physical accuracy. The PDF 129 actuator overlay is rejected: it reused the PDF 127 frame although page 129 has a different scale/origin. No balloon centre is used as a device coordinate.",
+    "lamp": "Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded. Every placed playfield lamp lands on its own printed PDF 125 lamp symbol or leader end (identity check); socket-level precision is not measured.",
+    "manual_drawing": "PDF 127 and PDF 129 have separate least-squares affine fits from eight control features read by eye on the native renders (RMS about 6-7 VPU, leave-one-out at most about 20 VPU). They confirm the identity of every placed switch and coil/flasher anchor and supply two candidate coordinates: switch 37 and flasher 14, whose leaders end at a ramp bracket the table does not model there. No balloon centre is used as a device coordinate. The earlier terra fit.json (session-20260930) is rejected: its control pixels were computed from the VPX coordinates through its own frame formula and sit 10-17 px from the drawn symbols, so its sub-VPU residuals reconcile nothing.",
     "switch": "Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate only; cabinet, EOS and always-closed positions use controlled not_applicable."
   },
-  "promotion_decision": "partial: every currently known used device has at least a candidate or controlled non-playfield status, but 46 mechanism/actuator device projections are not physical sensor, coil, or bulb centres. No measured GI/socket census or full hidden geometry; PDF 129 overlay rejected; prototype physical differences and output semantics remain unresolved.",
+  "promotion_decision": "partial: every currently known used device has at least a candidate or controlled non-playfield status, but 45 mechanism/actuator device projections are not physical sensor, coil, or bulb centres and two placements rest on single factory-drawing readings. No measured GI/socket census or full hidden geometry; prototype physical differences and output semantics remain unresolved.",
   "script_sha256": "034fe6483660fbc9516aa15a4727d8dc6da0cfb3db0321b0c1357523967ccd44",
   "spatial_seed_objects": [
     {
@@ -2478,7 +2871,7 @@
   "unresolved_geometry": [
     "No complete factory G.I. socket census or backbox/cabinet bulb coordinates. G.I. table locations remain candidate without J120/J121 destination corroboration; PDF 158–159 omits J112–J127 connector-list entries.",
     "Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.",
-    "PDF 129 actuator/flasher overlay is invalid until its own frame is fitted; candidate VPX points carry no manual-page-129 reconciliation claim.",
+    "Switch 41's invisible subway trigger sits about 40 VPU and flasher 20's Flasherbase5 dome about 60 VPU from the parts their PDF 127/129 leaders mark; neither is re-placed from a single leader reading.",
     "One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."
   ],
   "version": 1,

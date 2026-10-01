@@ -1867,7 +1867,7 @@
       "label": "Made Ramp Left",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed shaded opto cell. CPU row path and wdGameData mask normalize this address.",
+        "notes": "Printed shaded opto cell. CPU row path and wdGameData mask normalize this address. Spatial: the PDF 127 (2-45) leader 37 ends on a switch symbol at the left end of the ramp bracket that crosses the left orbit. Measured through an independently read page fit at about (49, 323) VPU, ±20 VPU (tools/seeds/bally/who-dunnit-1995-drawing.json). The retained table's sw37 sits about 121 VPU away: invisible table trigger further up the ramp; it carries the runtime binding (vpmtimer.pulsesw 37), not the switch position.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1884,19 +1884,19 @@
       "spatial": {
         "placements": [
           {
-            "id": "switch.37.candidate-1",
+            "id": "switch.37.factory-drawing",
             "provenance": {
               "source_refs": [
-                "vpx-table.who-dunnit-ninuzzu-2018",
-                "vpx-script.who-dunnit-ninuzzu-2018",
-                "manual.bally.who-dunnit.1995.ipdb-3685"
+                "manual.bally.who-dunnit.1995.ipdb-3685",
+                "manual-drawing-reconciliation.who-dunnit-2026-10-01",
+                "vpx-table.who-dunnit-ninuzzu-2018"
               ],
               "status": "candidate"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.148896,
-            "y": 0.115023
+            "x": 0.052,
+            "y": 0.152
           }
         ],
         "status": "candidate"
@@ -6062,7 +6062,7 @@
       "kind": "flasher",
       "label": "Phone Flasher",
       "physical": {
-        "notes": "Manual prints 1 playfield and 0 backbox bulb(s). One public output drives both branches.",
+        "notes": "Manual prints 1 playfield and 0 backbox bulb(s). One public output drives both branches. Spatial: the PDF 129 (2-47) leader 14 ends at the left end of the same cross-orbit ramp bracket; the drawing marks the bracket part, not the bulb's position along it. Measured through an independently read page fit at about (42, 343) VPU, ±60 VPU (tools/seeds/bally/who-dunnit-1995-drawing.json). The retained table's Flasherlight6 sits about 204 VPU away: the table lights its phone flasher inside its Phone toy (mesh x 106-361, y 266-507), outside the factory bracket position.",
         "part_number": "24-8802",
         "quantity": 1
       },
@@ -6080,20 +6080,19 @@
       "spatial": {
         "placements": [
           {
-            "id": "output.14.phone-flasher",
+            "id": "output.14.factory-drawing",
             "provenance": {
               "source_refs": [
-                "vpx-table.who-dunnit-ninuzzu-2018",
-                "vpx-script.who-dunnit-ninuzzu-2018",
                 "manual.bally.who-dunnit.1995.ipdb-3685",
-                "vpx-measurement.who-dunnit-2018"
+                "manual-drawing-reconciliation.who-dunnit-2026-10-01",
+                "vpx-table.who-dunnit-ninuzzu-2018"
               ],
               "status": "candidate"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.235087,
-            "y": 0.204462
+            "x": 0.044,
+            "y": 0.161
           }
         ],
         "status": "candidate"
@@ -12949,9 +12948,18 @@
       "id": "vpx-measurement.who-dunnit-2018",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned; PDF 129 actuator overlay explicitly rejected because it reused PDF 127's transform; PDF 127 switch and PDF 125 lamp fits retained as drawing reconciliations only",
+      "locator": "47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned. Two candidates (switch 37 sw37, flasher 14 Flasherlight6) are superseded by factory-drawing measurements. The register's terra fit.json is rejected as a drawing reconciliation: its control pixels were computed from the VPX coordinates through its own frame formula, not read from the drawing.",
       "sha256": "4ece3a02cc9b7b579c062a79a0b8d3c3fc73cfc71de691c77d1897bfccc18035",
       "uri": "internal:tools/seeds/bally/who-dunnit-1995-geometry.json"
+    },
+    {
+      "attribution": "PinMAME game definitions contributors",
+      "id": "manual-drawing-reconciliation.who-dunnit-2026-10-01",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "2026-10-01 factory drawing reconciliation: per-page least-squares affine fits of PDF 127 (2-45) and PDF 129 (2-47) from eight control features read by eye on the retained 300 dpi renders (RMS about 6-7 VPU), measured leader-end device symbols for switch 37 and flasher 14, and identity checks of every placed lamp, switch and coil anchor on PDF 125/127/129. Crops, overlays, fit script and fits are retained externally under review-artifacts/bally.who-dunnit.1995/session-20261001/drawing-reconciliation with a pinned manifest.",
+      "sha256": "7077d36ef93e7595ea96a2729876fc6671a05291ef58c55d40501a0ba3e5ace1",
+      "uri": "internal:tools/seeds/bally/who-dunnit-1995-drawing.json"
     },
     {
       "attribution": "PinMAME game definitions contributors",

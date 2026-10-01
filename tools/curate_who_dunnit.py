@@ -28,6 +28,8 @@ SPATIAL_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-spatial.json"
 GI_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-gi-candidates.json"
 GEOMETRY_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-geometry.json"
 KNOWLEDGE_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-knowledge.md"
+DRAWING_SEED = ROOT / "tools/seeds/bally/who-dunnit-1995-drawing.json"
+DRAWING_REVIEW = "session-20261001/drawing-reconciliation"
 KNOWLEDGE = ROOT / "knowledge/bally/who-dunnit-1995.md"
 REPORT = ROOT / "reports/spatial/bally/who-dunnit-1995.json"
 REPORT_MD = ROOT / "reports/spatial/bally/who-dunnit-1995.md"
@@ -55,6 +57,7 @@ SCRIPT_SRC = "vpx-script.who-dunnit-ninuzzu-2018"
 TABLE_SRC = "vpx-table.who-dunnit-ninuzzu-2018"
 EXTRACTION_SRC = "vpx-extraction.who-dunnit-ninuzzu-2018"
 GEOMETRY_SRC = "vpx-measurement.who-dunnit-2018"
+DRAWING_SRC = "manual-drawing-reconciliation.who-dunnit-2026-10-01"
 CORE_SRC = f"pinmame.core.{PIN[:12]}"
 CORE_ARTIFACTS = {
     "src/wpc/sims/wpc/prelim/wd.c": (CORE_SRC, "ef33ac1bdae145166c00d4dadcb95e5b10f883cc88da01c7577b5ee09775f6e1",
@@ -271,6 +274,67 @@ def geometry_spatial(device_id:str, candidates:dict[str,list[dict[str,Any]]]) ->
              for item in entries]}
 
 
+def _affine_fit(pixels: list[list[float]], values: list[float]) -> list[float]:
+    """Least-squares a*u+b*v+c through the normal equations (no numpy dependency)."""
+    rows=[(float(u),float(v),1.0) for u,v in pixels]
+    m=[[sum(r[i]*r[j] for r in rows) for j in range(3)] for i in range(3)]
+    t=[sum(r[i]*value for r,value in zip(rows,values)) for i in range(3)]
+    for col in range(3):
+        pivot=max(range(col,3),key=lambda row:abs(m[row][col]))
+        m[col],m[pivot]=m[pivot],m[col]; t[col],t[pivot]=t[pivot],t[col]
+        for row in range(3):
+            if row!=col:
+                factor=m[row][col]/m[col][col]
+                m[row]=[a-factor*b for a,b in zip(m[row],m[col])]; t[row]-=factor*t[col]
+    return [t[i]/m[i][i] for i in range(3)]
+
+
+def drawing_measurements() -> dict[str,dict[str,Any]]:
+    """Factory leader/symbol points measured through independently read page fits."""
+    seed=load_json(DRAWING_SEED)
+    if seed["machine_id"]!=MID or seed["manual_sha256"]!=MANUAL_SHA or seed["table_sha256"]!=TABLE_SHA:
+        raise ValueError("WHO dunnit drawing reconciliation identity changed")
+    for key,page in seed["pages"].items():
+        controls=page["controls"]
+        if len(controls)<6:
+            raise ValueError(f"WHO dunnit drawing fit {key} needs at least six controls")
+        for axis,index in (("raw_x",0),("raw_y",1)):
+            refit=_affine_fit([c["pixel"] for c in controls],[c["raw_vpu"][index] for c in controls])
+            if any(abs(a-b)>1e-6 for a,b in zip(refit,page["affine"][axis])):
+                raise ValueError(f"WHO dunnit drawing fit {key} {axis} does not reproduce from its controls")
+    result={}
+    for item in seed["measurements"]:
+        (a,b,c),(d,e,f)=seed["pages"][item["page"]]["affine"]["raw_x"],seed["pages"][item["page"]]["affine"]["raw_y"]
+        u,v=item["symbol_pixel"]
+        x,y=a*u+b*v+c,d*u+e*v+f
+        if (abs(x-item["raw_vpu"][0])>0.06 or abs(y-item["raw_vpu"][1])>0.06 or
+            item["normalized"]!={"x":round(item["raw_vpu"][0]/953,3),"y":round(item["raw_vpu"][1]/2128,3)}):
+            raise ValueError(f"WHO dunnit drawing measurement drift: {item['device_id']}")
+        result[item["device_id"]]=item
+    if set(result)!={"switch.matrix-37","solenoid.14"}:
+        raise ValueError("WHO dunnit drawing measurement census changed")
+    return result
+
+
+def drawing_spatial(item:dict[str,Any]) -> dict[str,Any]:
+    ident=item["device_id"].replace("switch.matrix-","switch.").replace("solenoid.","output.")+".factory-drawing"
+    return {"status":"candidate","placements":[{"id":ident,"role":item["role"],"space":"playfield",
+             "x":item["normalized"]["x"],"y":item["normalized"]["y"],
+             "provenance":prov(MANUAL_SRC,DRAWING_SRC,TABLE_SRC,status="candidate")}]}
+
+
+DRAWING_LEAD={"switch.matrix-37":"the PDF 127 (2-45) leader 37 ends on a switch symbol at the left end of the ramp bracket that crosses the left orbit",
+              "solenoid.14":"the PDF 129 (2-47) leader 14 ends at the left end of the same cross-orbit ramp bracket; the drawing marks the bracket part, not the bulb's position along it"}
+
+
+def drawing_note(item:dict[str,Any]) -> str:
+    old=item["replaces"]
+    return (f" Spatial: {DRAWING_LEAD[item['device_id']]}. "
+            f"Measured through an independently read page fit at about ({item['raw_vpu'][0]:.0f}, {item['raw_vpu'][1]:.0f}) VPU, "
+            f"±{item['uncertainty_radius_vpu']} VPU (tools/seeds/bally/who-dunnit-1995-drawing.json). "
+            f"The retained table's {old['object']} sits about {old['distance_vpu']} VPU away: {old['note']}.")
+
+
 def prov(*refs: str, status: str = "validated") -> dict[str, Any]:
     source_refs=list(refs)
     if CORE_SRC in refs:
@@ -359,7 +423,10 @@ def source_records() -> list[dict[str, Any]]:
          "sha256":MANIFEST_SHA,"acquired_at":"2026-09-30T07:52:35Z","locator":"Complete 631-file, 65,628,606-byte sorted POSIX-path/size/SHA-256 manifest; vpxtool git:v0.33.3",
          "license":"NOASSERTION","attribution":"ninuzzu and DJRobX"},
         {"id":GEOMETRY_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-geometry.json",
-         "sha256":sha(GEOMETRY_SEED),"locator":"47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned; PDF 129 actuator overlay explicitly rejected because it reused PDF 127's transform; PDF 127 switch and PDF 125 lamp fits retained as drawing reconciliations only",
+         "sha256":sha(GEOMETRY_SEED),"locator":"47 reviewed VPX candidate projections for 46 devices; source-object hashes and world-VPU OBJ bounds pinned. Two candidates (switch 37 sw37, flasher 14 Flasherlight6) are superseded by factory-drawing measurements. The register's terra fit.json is rejected as a drawing reconciliation: its control pixels were computed from the VPX coordinates through its own frame formula, not read from the drawing.",
+         "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
+        {"id":DRAWING_SRC,"kind":"human_review","uri":"internal:tools/seeds/bally/who-dunnit-1995-drawing.json",
+         "sha256":sha(DRAWING_SEED),"locator":"2026-10-01 factory drawing reconciliation: per-page least-squares affine fits of PDF 127 (2-45) and PDF 129 (2-47) from eight control features read by eye on the retained 300 dpi renders (RMS about 6-7 VPU), measured leader-end device symbols for switch 37 and flasher 14, and identity checks of every placed lamp, switch and coil anchor on PDF 125/127/129. Crops, overlays, fit script and fits are retained externally under review-artifacts/"+MID+"/"+DRAWING_REVIEW+" with a pinned manifest.",
          "license":"NOASSERTION","attribution":"PinMAME game definitions contributors"},
         {"id":RUNTIME_SRC,"kind":"runtime_scenario","uri":"external:review-artifacts/bally.who-dunnit.1995/session-20260930/terra-runtime/traces/06-switch-edges-115-112-114.json",
          "sha256":RUNTIME_SHA,
@@ -378,7 +445,8 @@ def source_records() -> list[dict[str, Any]]:
     ]
 
 
-def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]]) -> list[dict[str, Any]]:
+def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]],
+           drawing:dict[str,dict[str,Any]]) -> list[dict[str, Any]]:
     labels = table_labels(EXCERPTS/"switch-matrix.md")
     if {a for a,n in labels.items() if n == "NOT USED"} != UNUSED_SWITCH:
         raise ValueError("printed unused-switch set changed")
@@ -417,6 +485,9 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         if unused:item["spatial"]=na("unused",MANUAL_SRC)
         elif cabinet:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif address==24:item["spatial"]=na("constant",MANUAL_SRC)
+        elif item["id"] in drawing:
+            item["spatial"]=drawing_spatial(drawing[item["id"]])
+            item["physical"]["notes"]=item["physical"].get("notes","")+drawing_note(drawing[item["id"]])
         elif (sp:=candidate_spatial("switch",address,candidates,TABLE_SRC,SCRIPT_SRC,MANUAL_SRC) or geometry_spatial(item["id"],geometry)):
             item["spatial"]=sp
         result.append(item)
@@ -479,7 +550,8 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
     return result
 
 
-def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]]) -> list[dict[str,Any]]:
+def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[str,list[dict[str,Any]]],
+            drawing:dict[str,dict[str,Any]]) -> list[dict[str,Any]]:
     labels=table_labels(EXCERPTS/"lamp-matrix.md")
     parts=lamp_parts()
     sol_rows=solenoid_table()
@@ -549,6 +621,9 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
         elif address==32:item["spatial"]=na("virtual",CORE_SRC)
         elif unused:item["spatial"]=na("unused",MANUAL_SRC,CORE_SRC)
         elif kind=="virtual":item["spatial"]=na("virtual",CORE_SRC)
+        elif item["id"] in drawing:
+            item["spatial"]=drawing_spatial(drawing[item["id"]])
+            item["physical"]["notes"]=item["physical"].get("notes","")+drawing_note(drawing[item["id"]])
         elif availability=="used" and (sp:=geometry_spatial(item["id"],geometry)):
             item["spatial"]=sp
         result.append(item)
@@ -680,6 +755,7 @@ def drivers() -> list[dict[str,Any]]:
 def build() -> dict[str,Any]:
     candidates=spatial_candidates()
     geometry=geometry_candidates()
+    drawing=drawing_measurements()
     return {"format":"pinmame-machine-definition","schema_version":2,
             "machine":{"id":MID,"name":"WHO dunnit","manufacturer":"Bally","year":1995,
                        "kind":"physical_pinball","ipdb_id":3685,"opdb_id":"G50kj-MDqpv",
@@ -692,7 +768,7 @@ def build() -> dict[str,Any]:
                                       "mechanisms":"observed","variant_coverage":"observed",
                                       "recreation_knowledge":"validated","spatial_placement":"candidate"}},
             "controller":{"platform":"pinmame.wpc-95","hardware_generation":"0x40","inversion_applied_by_emulator":True},
-            "drivers":drivers(),"inputs":inputs(candidates,geometry),"outputs":outputs(candidates,geometry),
+            "drivers":drivers(),"inputs":inputs(candidates,geometry,drawing),"outputs":outputs(candidates,geometry,drawing),
             "displays":[{"id":"display.dmd","label":"Dot Matrix Display","kind":"dmd","controller_index":0,
                          "width":128,"height":32,"spatial":na("cabinet_or_service",MANUAL_SRC,CORE_SRC),
                          "provenance":prov(MANUAL_SRC,CORE_SRC)}],
@@ -726,13 +802,16 @@ def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
         if item["id"] in candidates:
             by_class["gi" if item["kind"]=="gi" else "lamp" if item["kind"]=="lamp" else "switch" if item["id"].startswith("switch.") else "actuator"].append(item["id"])
     geometry=load_json(GEOMETRY_SEED)
-    projected=sorted({item["device_id"] for item in geometry["candidates"]})
+    drawing=load_json(DRAWING_SEED)
+    measured={item["device_id"] for item in drawing["measurements"]}
+    projected=sorted({item["device_id"] for item in geometry["candidates"]}-measured)
     return {"format":"pinmame-spatial-blockers","version":1,"machine_id":MID,
             "table_sha256":TABLE_SHA,"script_sha256":SCRIPT_SHA,"manual_sha256":MANUAL_SHA,
             "extraction_manifest_sha256":MANIFEST_SHA,"extraction_file_count":FILE_COUNT,
             "spatial_seed_sha256":sha(SPATIAL_SEED),"gi_seed_sha256":sha(GI_SEED),
             "geometry_seed_sha256":sha(GEOMETRY_SEED),"geometry_register_sha256":geometry["terra_register_sha256"],
             "world_obj_sha256":geometry["world_obj_sha256"],
+            "drawing_seed_sha256":sha(DRAWING_SEED),
             "evidence_paths":{"table":f"vpx-sources/bally/who-dunnit-1995/{TABLE_NAME}",
                               "extracted":"vpx-sources/bally/who-dunnit-1995/extracted",
                               "extraction_manifest":"vpx-sources/bally/who-dunnit-1995/extracted.manifest.json",
@@ -740,21 +819,25 @@ def spatial_report(definition:dict[str,Any]) -> dict[str,Any]:
                               "spatial_seed":"tools/seeds/bally/who-dunnit-1995-spatial.json",
                               "gi_seed":"tools/seeds/bally/who-dunnit-1995-gi-candidates.json",
                               "geometry_seed":"tools/seeds/bally/who-dunnit-1995-geometry.json",
-                              "geometry_review":"review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry"},
+                              "geometry_review":"review-artifacts/bally.who-dunnit.1995/session-20260930/terra-geometry",
+                              "drawing_seed":"tools/seeds/bally/who-dunnit-1995-drawing.json",
+                              "drawing_review":f"review-artifacts/{MID}/{DRAWING_REVIEW}"},
             "bounds":{"left":0,"top":0,"right":953,"bottom":2128},
             "transform":"x=object_x/953; y=object_y/2128; player view, rear y=0, apron y=1; values rounded to six decimals",
             "projection_classes":{"switch":"Exact-name VPX collision object centre for matrix switch or F5 Spinner, candidate only; cabinet, EOS and always-closed positions use controlled not_applicable.",
-                                  "lamp":"Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded; the factory location drawing on PDF 125 still needs device-by-device socket reconciliation.",
+                                  "lamp":"Exact LNN VPX Light centre, candidate only. L16/L17/L18 glow helpers are excluded. Every placed playfield lamp lands on its own printed PDF 125 lamp symbol or leader end (identity check); socket-level precision is not measured.",
                                   "gi":"Script collection members GI_Left/GI_Right/GI_Top with bulb mesh; 11/10/28 retained. Other collection members are glow/reflection leads, not sockets. Factory GI socket quantity is unknown. All five strings' table wiring/bulb/location claims and backbox exclusions remain candidate: the board layout shows J120/J121, but PDF 158–159 omits J112–J127 pin destinations and supplies no branch/placement corroboration.",
                                   "actuator":"Named VPX mechanism anchor or visible effect projection only. No projection is called a hidden winding, motor body or physical bulb centre.",
-                                  "flasher_and_coil":"46 formerly unplaced devices now have 47 candidate VPX mechanism projections. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
-                                  "manual_drawing":"PDF 127 switch and PDF 125 lamp plans have separate affine fits and visually checked symbol controls. Tiny residuals can reflect a VPX author tracing the manual and do not prove independent physical accuracy. The PDF 129 actuator overlay is rejected: it reused the PDF 127 frame although page 129 has a different scale/origin. No balloon centre is used as a device coordinate."},
+                                  "flasher_and_coil":"45 devices use 46 candidate VPX mechanism projections; flasher 14 uses the factory drawing instead. World-transformed OBJ bounds locate collidable primitives. Cup, reel, target, ramp, post and flipper anchors are not hidden coil or sensor centres; flasher domes and named Light proxies are not proven bulb centres. Backbox branches have no invented playfield point.",
+                                  "manual_drawing":"PDF 127 and PDF 129 have separate least-squares affine fits from eight control features read by eye on the native renders (RMS about 6-7 VPU, leave-one-out at most about 20 VPU). They confirm the identity of every placed switch and coil/flasher anchor and supply two candidate coordinates: switch 37 and flasher 14, whose leaders end at a ramp bracket the table does not model there. No balloon centre is used as a device coordinate. The earlier terra fit.json (session-20260930) is rejected: its control pixels were computed from the VPX coordinates through its own frame formula and sit 10-17 px from the drawn symbols, so its sub-VPU residuals reconcile nothing.",
+                                  "factory_drawing_measurement":"Candidate coordinate measured on a factory location drawing at the device symbol where a leader ends, through that page's independently read fit; used only where no retained table object sits at the factory position."},
             "candidate_placements":candidates,"candidate_by_class":by_class,"without_placements":missing,
             "projected_device_ids":projected,"geometry_candidates":geometry["candidates"],
-            "unresolved_geometry":["No complete factory G.I. socket census or backbox/cabinet bulb coordinates. G.I. table locations remain candidate without J120/J121 destination corroboration; PDF 158–159 omits J112–J127 connector-list entries.","Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.","PDF 129 actuator/flasher overlay is invalid until its own frame is fitted; candidate VPX points carry no manual-page-129 reconciliation claim.","One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."],
+            "drawing_reconciliation":{key:drawing[key] for key in ("method","rejected_fit","pages","measurements","identity_checks","retained_artifacts")},
+            "unresolved_geometry":["No complete factory G.I. socket census or backbox/cabinet bulb coordinates. G.I. table locations remain candidate without J120/J121 destination corroboration; PDF 158–159 omits J112–J127 connector-list entries.","Hidden trough optos, reel indexes, bank/ramp limit contacts, coil bodies and flipper E.O.S. contacts have only whole-mechanism or output-effect projections.","Switch 41's invisible subway trigger sits about 40 VPU and flasher 20's Flasherbase5 dome about 60 VPU from the parts their PDF 127/129 leaders mark; neither is re-placed from a single leader reading.","One derivative VPX lineage and manual diagrams do not establish all physical centres or prototype geometry."],
             "spatial_seed_objects":load_json(SPATIAL_SEED)["candidates"],
             "gi_seed_objects":load_json(GI_SEED)["candidates"],
-            "promotion_decision":"partial: every currently known used device has at least a candidate or controlled non-playfield status, but 46 mechanism/actuator device projections are not physical sensor, coil, or bulb centres. No measured GI/socket census or full hidden geometry; PDF 129 overlay rejected; prototype physical differences and output semantics remain unresolved."}
+            "promotion_decision":"partial: every currently known used device has at least a candidate or controlled non-playfield status, but 45 mechanism/actuator device projections are not physical sensor, coil, or bulb centres and two placements rest on single factory-drawing readings. No measured GI/socket census or full hidden geometry; prototype physical differences and output semantics remain unresolved."}
 
 
 def report_markdown(report:dict[str,Any]) -> str:
@@ -770,6 +853,15 @@ def report_markdown(report:dict[str,Any]) -> str:
             f"The [reviewed geometry register](../../../tools/seeds/bally/who-dunnit-1995-geometry.json) has SHA-256 `{report['geometry_seed_sha256']}` and 47 candidate records. "
             "The JSON form embeds their source hashes, world-VPU or polygon centre definitions, projection classes, and uncertainty.\n\n"+
             "\n".join(f"- **{name} ({len(report['candidate_by_class'].get(name, []))} candidate devices):** {description}" for name,description in report["projection_classes"].items())+"\n\n"
+            "## Factory drawing reconciliation\n\n"+report["drawing_reconciliation"]["method"]+"\n\n"+
+            "".join(f"- **{key}** ({page['locator']}): {len(page['controls'])} controls, RMS {page['rms_residual_vpu']} VPU, "
+                    f"largest leave-one-out {page['max_leave_one_out_vpu']} VPU.\n"
+                    for key,page in report["drawing_reconciliation"]["pages"].items())+
+            "".join(f"- `{item['device_id']}` measured at ({item['raw_vpu'][0]}, {item['raw_vpu'][1]}) VPU, ±{item['uncertainty_radius_vpu']} VPU, "
+                    f"replacing `{item['replaces']['object']}` ({item['replaces']['distance_vpu']} VPU away).\n"
+                    for item in report["drawing_reconciliation"]["measurements"])+
+            "".join(f"- {key}: {text}\n" for key,text in report["drawing_reconciliation"]["identity_checks"].items())+
+            f"- Rejected: {report['drawing_reconciliation']['rejected_fit']['reason']}\n\n"
             "## Unresolved physical geometry\n\n"+"\n".join(f"- {item}" for item in report["unresolved_geometry"])+"\n\n"
             "## Missing placements\n\n"+
             ("\n".join(f"- `{name}`" for name in report["without_placements"])+"\n" if report["without_placements"] else
@@ -898,6 +990,19 @@ def verify_external() -> None:
                   for c in original["candidates"]]
         if measured!=geometry_seed["candidates"]:
             raise RuntimeError("reviewed WHO dunnit geometry candidates differ from pinned measurements")
+        drawing=load_json(DRAWING_SEED)
+        review_dir=Path(review_root)/MID/DRAWING_REVIEW
+        manifest_bytes=(review_dir/"manifest.json").read_bytes()
+        if hashlib.sha256(manifest_bytes).hexdigest()!=drawing["retained_artifacts"]["manifest_sha256"]:
+            raise RuntimeError("retained WHO dunnit drawing reconciliation manifest mismatch")
+        for entry in load_json(review_dir/"manifest.json")["files"]:
+            if sha(review_dir/entry["path"])!=entry["sha256"]:
+                raise RuntimeError(f"retained WHO dunnit drawing reconciliation file mismatch: {entry['path']}")
+        if sha(review_dir/"fits.json")!=drawing["retained_artifacts"]["fits_sha256"]:
+            raise RuntimeError("retained WHO dunnit drawing fits mismatch")
+        for page in drawing["pages"].values():
+            if sha(Path(review_root)/page["render"].split("review-artifacts/",1)[1])!=page["sha256"]:
+                raise RuntimeError(f"retained WHO dunnit manual render mismatch: {page['render']}")
         runtime=Path(review_root)/MID/"session-20260930/terra-runtime"
         if sha(runtime/"traces/06-switch-edges-115-112-114.json")!=RUNTIME_SHA or sha(runtime/"scenarios/06-switch-edges-115-112-114.json")!=SCENARIO_SHA:
             raise RuntimeError("retained WHO dunnit causal runtime evidence mismatch")

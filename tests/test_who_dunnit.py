@@ -386,8 +386,9 @@ class WhoDunnitTests(unittest.TestCase):
         self.assertEqual(canonical_bytes(curator.build()), curator.PARTIAL.read_bytes())
         self.assertEqual(curator.KNOWLEDGE_SEED.read_bytes(),curator.KNOWLEDGE.read_bytes())
         report=read(curator.REPORT)
-        self.assertEqual((47,46,0),(len(report["geometry_candidates"]),len(report["projected_device_ids"]),len(report["without_placements"])))
+        self.assertEqual((47,45,0),(len(report["geometry_candidates"]),len(report["projected_device_ids"]),len(report["without_placements"])))
         self.assertIn("rejected",report["projection_classes"]["manual_drawing"])
+        self.assertNotIn("solenoid.14",report["projected_device_ids"])
         self.assertEqual("direct_flipper_pivot",next(c for c in report["geometry_candidates"] if c["device_id"]=="solenoid.45")["projection_class"])
         self.assertEqual("effect",self.solenoids[17]["spatial"]["placements"][0]["role"])
         self.assertEqual("effect",self.switches[12]["spatial"]["placements"][0]["role"])
@@ -398,6 +399,34 @@ class WhoDunnitTests(unittest.TestCase):
                     data = (ROOT / excerpt["path"]).read_bytes()
                     self.assertEqual(hashlib.sha256(data).hexdigest(), excerpt["sha256"])
         curator.check()
+
+    def test_factory_drawing_measurements(self) -> None:
+        drawing=read(curator.DRAWING_SEED)
+        for page in drawing["pages"].values():
+            self.assertGreaterEqual(len(page["controls"]),6)
+            self.assertLessEqual(page["rms_residual_vpu"],10)
+            self.assertLessEqual(page["max_leave_one_out_vpu"],25)
+        # The rejected session-20260930 fit derived its pixels from the VPX coordinates.
+        self.assertEqual("532d5d824bd60c54695a71b04733b0ed2f3d0fde7dd7729ca34a05ec85e9f38e",drawing["rejected_fit"]["sha256"])
+        measured=curator.drawing_measurements()
+        for device,expected_id,old in (("switch.matrix-37","switch.37.factory-drawing","sw37"),
+                                       ("solenoid.14","output.14.factory-drawing","Flasherlight6")):
+            item=self.switches[37] if device.startswith("switch") else self.solenoids[14]
+            placement=item["spatial"]["placements"]
+            self.assertEqual(1,len(placement))
+            self.assertEqual((expected_id,"candidate",measured[device]["normalized"]["x"],measured[device]["normalized"]["y"]),
+                             (placement[0]["id"],placement[0]["provenance"]["status"],placement[0]["x"],placement[0]["y"]))
+            self.assertIn(curator.DRAWING_SRC,placement[0]["provenance"]["source_refs"])
+            self.assertIn(old,item["physical"]["notes"])
+            self.assertGreater(measured[device]["replaces"]["distance_vpu"],100)
+        # A tampered affine coefficient must be rejected.
+        tampered=json.loads(curator.DRAWING_SEED.read_text(encoding="utf-8"))
+        tampered["pages"]["pdf-127"]["affine"]["raw_x"][2]+=1.0
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"drawing.json"
+            path.write_text(json.dumps(tampered),encoding="utf-8")
+            with patch.object(curator,"DRAWING_SEED",path), self.assertRaisesRegex(ValueError,"does not reproduce"):
+                curator.drawing_measurements()
 
     def test_knowledge_note_drift_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
