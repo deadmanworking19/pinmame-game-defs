@@ -11,7 +11,7 @@ ROM evidence settles what the documents leave open:
 Two things keep the record partial:
 
 - **Unresolved conflict.** The manual does not settle which cabinet flipper button fires the upper-playfield flipper (see "Flippers"). The definition keeps the disagreement as `conflict.upper-flipper-button`.
-- **Spatial placement.** Every coordinate comes from one community table, and only the switches and coils that the manual's own location drawings call out by number are `validated`. The trough switches (11-13) have no table object and are not placed. Five of the eight flasher circuits print more playfield bulbs than the table models, and the manual prints no G.I. bulb count.
+- **Spatial placement.** Every coordinate comes from one community table, and only the switches and coils that the manual's own location drawings call out by number are `validated`. The trough switches (11-13) have no table object and are not placed. Four of the eight flasher circuits (25, 26, 27 and 30) print two playfield bulbs where the table models one, and the manual prints no G.I. bulb count.
 
 ## Identity and driver family
 
@@ -73,7 +73,7 @@ The flipper-lane-change inputs 57 (right) and 58 (left) are optotransistors on t
 
 ## The two playfields
 
-The playfield is split-level. A lower playfield carries the flippers, the three jet bumpers, the U-turn, the two three-bank drop-target banks and the right eject hole. An upper playfield deck above it, mounted on two hinge posts and raised for service (operator message, printed 9), carries the W-I-N and W-A-R lanes, the loop, the drawbridge targets and the three-ball lock. The long Skyway ramp on the left of the lower playfield brings the ball to the upper deck, where the upper flipper (right side) feeds it. The retained table models both decks in one x/y frame (954 x 2052), which is why upper-playfield devices appear among lower-playfield coordinates; the manual's matrix legend marks the upper-playfield lamps and switches "UPF".
+The playfield is split-level. A lower playfield carries the flippers, the U-turn, the two three-bank drop-target banks and the right eject hole. An upper playfield deck above it, mounted on two hinge posts and raised for service (operator message, printed 9), carries the three jet bumpers (the manual lists them, and switches 17, 18 and 19, under its Upper Playfield pages, printed 71-72), the W-I-N and W-A-R lanes, the loop, the drawbridge targets and the three-ball lock. The long Skyway ramp on the left of the lower playfield brings the ball to the upper deck, where the upper flipper (right side) feeds it. The retained table models both decks in one x/y frame (954 x 2052), which is why upper-playfield devices appear among lower-playfield coordinates; the manual's matrix legend marks the upper-playfield lamps and switches "UPF".
 
 ## Ball path
 

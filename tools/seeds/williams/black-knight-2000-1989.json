@@ -2280,7 +2280,7 @@
       "label": "Drawbridge Target (Middle)",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix column 5 (GRN-BLK), row 2 (WHT-RED). The bk2k_l4 switch table names it \"UPPER TARGET 2\". In the ROM's own Switch Levels and Switch Edges tests (runtime runs l4-switch-levels and l4-switch-edges) writing public 1 makes the ROM show this name and the switch number, and public 0 shows nothing, so the ROM treats public 1 as actuated. bk2kGameData has no inverted-switch mask and pinned core_getSwCol returns the matrix bits raw, so the contact the matrix sees is open at rest and closed when the switch is actuated; the manual prints no rest state for any matrix contact. The matrix table (printed 67) prints \"Motor Targets (Middle Tgt)\". Anchored at the drag-point centroid of the retained DBTrgt2 wall, the middle drawbridge target.",
+        "notes": "Printed switch-matrix column 5 (GRN-BLK), row 2 (WHT-RED). The bk2k_l4 switch table names it \"UPPER TARGET 2\". In the ROM's own Switch Levels and Switch Edges tests (runtime runs l4-switch-levels and l4-switch-edges) writing public 1 makes the ROM show this name and the switch number, and public 0 shows nothing, so the ROM treats public 1 as actuated. bk2kGameData has no inverted-switch mask and pinned core_getSwCol returns the matrix bits raw, so the contact the matrix sees is open at rest and closed when the switch is actuated; the manual prints no rest state for any matrix contact. The matrix table (printed 67) prints \"Motor Targets (Middle Tgt)\". The Moving Target Assembly's parts page (printed 58) lists A-11177-1 as the left target assembly and A-11315-3 as the mid and right target assembly, which would make the middle target A-11315-3; the Upper Playfield Switches list (printed 72) prints A-11177-1 for 34. The record follows the switch list for the part number, and the difference does not reach a recreation. Anchored at the drag-point centroid of the retained DBTrgt2 wall, the middle drawbridge target.",
         "part_number": "A-11177-1"
       },
       "provenance": {
@@ -4626,7 +4626,7 @@
         "device.motor-targets-upf-relay"
       ],
       "assembly_part_number": "C-12464",
-      "behavior": "The Moving Target Assembly (C-12464) on the upper playfield carries three targets (33 upper, 34 middle, 35 lower; A-11177-1 left and A-11315-3 mid and right) that a Motor Assembly (B-12465: an 11 RPM motor, cam and a snap-action switch with roller 5647-12073-06) raises and lowers, switched by the Motor Targets relay (16). The UP (16) and DOWN (24) switches report the two ends of the travel. The operator message calls it a three-target version of the Pin-Bot five-target raising/lowering motor bank and says the targets must be completed to gain access to the Drawbridge ramp. The retained script models it as a cvpmMech (linear, length 60, 50 steps, one solenoid): position 0 closes 16 and position 50 closes 24, the targets are dropped from position 49 and raised at 0. Runtime (runs l4-motor-bank-* and l4-boot-motor-*, host-written stimuli with no bank model): the ROM's service test 08, MOTOR BANK TEST, energizes relay 16 and waits for either position switch, 16 (UP) or 24 (DOWN); when it sees one it shows UP or DN, releases the relay about 0.05 s later, energizes it again about 1.4 s later and waits about 3.4 s for the other switch before showing MOTOR ERROR and releasing the relay (about 6.8 s of waiting when no switch ever closes). A switch already closed at the start or closed 1 s later is accepted alike, and with both closed the ROM alternates UP and DN every 1.45 s. At power-up the ROM runs relay 16 for about 7.8 s, about 2 s longer while 16 or 24 is held. These runs do not establish which physical end each switch marks or whether the relay raises or lowers the targets.",
+      "behavior": "The Moving Target Assembly (C-12464) on the upper playfield carries three targets (33 upper, 34 middle, 35 lower) that a Motor Assembly (B-12465: an 11 RPM motor, cam and a snap-action switch with roller 5647-12073-06) raises and lowers, switched by the Motor Targets relay (16). The assembly's parts page (printed 58) lists A-11177-1 as the left target assembly and A-11315-3 as the mid and right target assembly, while the Upper Playfield Switches list (printed 72) prints A-11177-1 for 33 and 34 and A-11315-3 for 35, so the two disagree about the middle target; a recreation cannot express the difference. The UP (16) and DOWN (24) switches report the two ends of the travel. The operator message calls it a three-target version of the Pin-Bot five-target raising/lowering motor bank and says the targets must be completed to gain access to the Drawbridge ramp. The retained script models it as a cvpmMech (linear, length 60, 50 steps, one solenoid): position 0 closes 16 and position 50 closes 24, the targets are dropped from position 49 and raised at 0. Runtime (runs l4-motor-bank-* and l4-boot-motor-*, host-written stimuli with no bank model): the ROM's service test 08, MOTOR BANK TEST, energizes relay 16 and waits for either position switch, 16 (UP) or 24 (DOWN); when it sees one it shows UP or DN, releases the relay about 0.05 s later, energizes it again about 1.4 s later and waits about 3.4 s for the other switch before showing MOTOR ERROR and releasing the relay (about 6.8 s of waiting when no switch ever closes). A switch already closed at the start or closed 1 s later is accepted alike, and with both closed the ROM alternates UP and DN every 1.45 s. At power-up the ROM runs relay 16 for about 7.8 s, about 2 s longer while 16 or 24 is held. These runs do not establish which physical end each switch marks or whether the relay raises or lowers the targets.",
       "id": "mechanism.drawbridge-targets",
       "kind": "motorized",
       "label": "Drawbridge moving target bank",
@@ -5246,8 +5246,8 @@
       "kind": "coil",
       "label": "UPF Lockup Kickback",
       "physical": {
-        "notes": "Solenoid Table entry 07A (Switched): pulsed while the A/C select relay (12) is released. The bk2k_l4 coil table names the matching step \"LEVEL 3 KICKER\", and the ROM's Coil Test (run l4-coil) pulses this address in that step. Retained script: Lock.SolExit (cvpmVLock releases a locked ball). Placed at Plunger.LockPlunger (the upper-playfield lockup kickback plunger). The Solenoid Table prints AE-24-900 for 07A, while the Upper Playfield Solenoids/Flashers list prints AE-23-800 for \"3-Ball Lock Kickback\" and the Kickback Assembly's own parts page (B-12671) prints AE-23-800; the part number is recorded as the Solenoid Table prints it and the disagreement is not a question about the machine's behaviour. The Upper Playfield Parts list prints the same assembly B-12671 as item 1 \"3-Ball Lockup Kickback\". At power-up the ROM pulses it once about 1.2 s after start and then pulses it about every 1.2 s while any of the upper lock switches (36-38) is held at 1 (runs l4-boot-*); with the trough full (11-13 at 1) it skips this sweep.",
-        "part_number": "AE-24-900"
+        "notes": "Solenoid Table entry 07A (Switched): pulsed while the A/C select relay (12) is released. The bk2k_l4 coil table names the matching step \"LEVEL 3 KICKER\", and the ROM's Coil Test (run l4-coil) pulses this address in that step. Retained script: Lock.SolExit (cvpmVLock releases a locked ball). Placed at Plunger.LockPlunger (the upper-playfield lockup kickback plunger). The Solenoid Table prints AE-24-900 for 07A, while the Upper Playfield Solenoids/Flashers list prints AE-23-800 for \"3-Ball Lock Kickback\" and the Kickback Assembly's own parts page (B-12671) prints AE-23-800. The record follows the list and the assembly's own page, two sources against the table's one; the coil winding is not something a recreation can express, so the disagreement is stated here and not recorded as a conflict. The Upper Playfield Parts list prints the same assembly B-12671 as item 1 \"3-Ball Lockup Kickback\". At power-up the ROM pulses it once about 1.2 s after start and then pulses it about every 1.2 s while any of the upper lock switches (36-38) is held at 1 (runs l4-boot-*); with the trough full (11-13 at 1) it skips this sweep.",
+        "part_number": "AE-23-800"
       },
       "provenance": {
         "source_refs": [
@@ -8161,7 +8161,7 @@
       "kind": "lamp",
       "label": "Bolt Circle Center",
       "physical": {
-        "notes": "Printed lamp-matrix column 1, row 5. The matrix table (printed 68) prints \"Bolt Circle Center\". The lamps lists (printed 69 and 72) print \"Center, Bolt Circle\". Placed at the retained light Light5, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 5) it is the one lamp that blinks and the ROM calls it 'BOLT CIRCLE MID' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 1, row 5. The matrix table (printed 68) prints \"Bolt Circle Center\". The lamps lists (printed 69 and 72) print \"Center, Bolt Circle\". Placed at the retained bulb light Light5 (is_bulb_light), this lamp's own light object; the table also lights a Light5b partner for it. In the ROM's Single Lamps test (run l4-single-lamps, step 5) it is the one lamp that blinks and the ROM calls it 'BOLT CIRCLE MID' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8330,7 +8330,7 @@
       "kind": "lamp",
       "label": "Last Chance (Left Outlane)",
       "physical": {
-        "notes": "Printed lamp-matrix column 1, row 8. The matrix table (printed 68) prints \"LAST CHANCE (L Outlane)\". The lamps lists (printed 69 and 72) print \"LAST CHANCE (L Outlane)\". Placed at the retained light Light8, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 8) it is the one lamp that blinks and the ROM calls it 'LEFT OUTLANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 1, row 8. The matrix table (printed 68) prints \"LAST CHANCE (L Outlane)\". The lamps lists (printed 69 and 72) print \"LAST CHANCE (L Outlane)\". Placed at the retained bulb light Light8b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light8 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 8) it is the one lamp that blinks and the ROM calls it 'LEFT OUTLANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8357,7 +8357,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.046384,
-            "y": 0.684089
+            "y": 0.683723
           }
         ],
         "status": "observed"
@@ -8391,7 +8391,7 @@
       "kind": "lamp",
       "label": "U-Turn Bolt (Right)",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 1. The matrix table (printed 68) prints \"U-Turn Bolt (Right)\". The lamps lists (printed 69 and 72) print \"U-TURN Bolt (Right)\". Placed at the retained light Light9, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 9) it is the one lamp that blinks and the ROM calls it 'U-TURN RIGHT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 1. The matrix table (printed 68) prints \"U-Turn Bolt (Right)\". The lamps lists (printed 69 and 72) print \"U-TURN Bolt (Right)\". Placed at the retained bulb light Light9b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light9 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 9) it is the one lamp that blinks and the ROM calls it 'U-TURN RIGHT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8417,8 +8417,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.559953,
-            "y": 0.478473
+            "x": 0.558962,
+            "y": 0.478558
           }
         ],
         "status": "observed"
@@ -8452,7 +8452,7 @@
       "kind": "lamp",
       "label": "Spin Bolt (Ball Popper)",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 2. The matrix table (printed 68) prints \"Spin Bolt (Ball Popper)\". The lamps lists (printed 69 and 72) print \"SPIN Bolt\". Placed at the retained light Light10, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 10) it is the one lamp that blinks and the ROM calls it 'SPIN BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 2. The matrix table (printed 68) prints \"Spin Bolt (Ball Popper)\". The lamps lists (printed 69 and 72) print \"SPIN Bolt\". Placed at the retained bulb light Light10b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light10 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 10) it is the one lamp that blinks and the ROM calls it 'SPIN BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8478,8 +8478,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.651672,
-            "y": 0.514657
+            "x": 0.654874,
+            "y": 0.517544
           }
         ],
         "status": "observed"
@@ -8513,7 +8513,7 @@
       "kind": "lamp",
       "label": "Lock Bolt (Right Eject)",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 3. The matrix table (printed 68) prints \"Lock Bolt (R Eject)\". The lamps lists (printed 69 and 72) print \"LOCK Bolt (R Eject Hole)\". Placed at the retained light Light11, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 11) it is the one lamp that blinks and the ROM calls it 'RIGHT EJECT BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 3. The matrix table (printed 68) prints \"Lock Bolt (R Eject)\". The lamps lists (printed 69 and 72) print \"LOCK Bolt (R Eject Hole)\". Placed at the retained bulb light Light11b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light11 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 11) it is the one lamp that blinks and the ROM calls it 'RIGHT EJECT BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8539,8 +8539,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.750467,
-            "y": 0.555593
+            "x": 0.750524,
+            "y": 0.550804
           }
         ],
         "status": "observed"
@@ -8574,7 +8574,7 @@
       "kind": "lamp",
       "label": "BLACK B",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 4. The matrix table (printed 68) prints \"B\". The lamps lists (printed 69 and 72) print \"B (in \"BLACK\")\". Placed at the retained light Light12, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 12) it is the one lamp that blinks and the ROM calls it '\"B\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 4. The matrix table (printed 68) prints \"B\". The lamps lists (printed 69 and 72) print \"B (in \"BLACK\")\". Placed at the retained bulb light Light12b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light12 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 12) it is the one lamp that blinks and the ROM calls it '\"B\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8600,8 +8600,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.172375,
-            "y": 0.61947
+            "x": 0.175577,
+            "y": 0.623051
           }
         ],
         "status": "observed"
@@ -8635,7 +8635,7 @@
       "kind": "lamp",
       "label": "BLACK L",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 5. The matrix table (printed 68) prints \"L\". The lamps lists (printed 69 and 72) print \"L (in \"BLACK\")\". Placed at the retained light Light13, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 13) it is the one lamp that blinks and the ROM calls it '\"L\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 5. The matrix table (printed 68) prints \"L\". The lamps lists (printed 69 and 72) print \"L (in \"BLACK\")\". Placed at the retained bulb light Light13b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light13 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 13) it is the one lamp that blinks and the ROM calls it '\"L\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8661,8 +8661,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.200013,
-            "y": 0.586677
+            "x": 0.204403,
+            "y": 0.590643
           }
         ],
         "status": "observed"
@@ -8696,7 +8696,7 @@
       "kind": "lamp",
       "label": "BLACK A",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 6. The matrix table (printed 68) prints \"A\". The lamps lists (printed 69 and 72) print \"A (in \"BLACK\")\". Placed at the retained light Light14, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 14) it is the one lamp that blinks and the ROM calls it '\"A\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 6. The matrix table (printed 68) prints \"A\". The lamps lists (printed 69 and 72) print \"A (in \"BLACK\")\". Placed at the retained bulb light Light14b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light14 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 14) it is the one lamp that blinks and the ROM calls it '\"A\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8722,8 +8722,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.245901,
-            "y": 0.559541
+            "x": 0.249476,
+            "y": 0.562378
           }
         ],
         "status": "observed"
@@ -8757,7 +8757,7 @@
       "kind": "lamp",
       "label": "BLACK C",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 7. The matrix table (printed 68) prints \"C\". The lamps lists (printed 69 and 72) print \"C (in \"BLACK\")\". Placed at the retained light Light15, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 15) it is the one lamp that blinks and the ROM calls it '\"C\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 7. The matrix table (printed 68) prints \"C\". The lamps lists (printed 69 and 72) print \"C (in \"BLACK\")\". Placed at the retained bulb light Light15b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light15 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 15) it is the one lamp that blinks and the ROM calls it '\"C\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8783,8 +8783,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.305953,
-            "y": 0.538201
+            "x": 0.309748,
+            "y": 0.541667
           }
         ],
         "status": "observed"
@@ -8818,7 +8818,7 @@
       "kind": "lamp",
       "label": "BLACK K",
       "physical": {
-        "notes": "Printed lamp-matrix column 2, row 8. The matrix table (printed 68) prints \"K\". The lamps lists (printed 69 and 72) print \"K (in \"BLACK\")\". Placed at the retained light Light16, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 16) it is the one lamp that blinks and the ROM calls it '\"K\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 2, row 8. The matrix table (printed 68) prints \"K\". The lamps lists (printed 69 and 72) print \"K (in \"BLACK\")\". Placed at the retained bulb light Light16b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light16 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 16) it is the one lamp that blinks and the ROM calls it '\"K\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8844,8 +8844,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.374626,
-            "y": 0.52446
+            "x": 0.376834,
+            "y": 0.527047
           }
         ],
         "status": "observed"
@@ -8879,7 +8879,7 @@
       "kind": "lamp",
       "label": "Extra Ball Bolt",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 1. The matrix table (printed 68) prints \"Extra Ball Bolt\". The lamps lists (printed 69 and 72) print \"EXTRA BALL Bolt\". Placed at the retained light Light17, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 17) it is the one lamp that blinks and the ROM calls it 'EXTRA BALL BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 1. The matrix table (printed 68) prints \"Extra Ball Bolt\". The lamps lists (printed 69 and 72) print \"EXTRA BALL Bolt\". Placed at the retained bulb light Light17b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light17 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 17) it is the one lamp that blinks and the ROM calls it 'EXTRA BALL BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8905,8 +8905,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.171589,
-            "y": 0.356519
+            "x": 0.171908,
+            "y": 0.356847
           }
         ],
         "status": "observed"
@@ -8940,7 +8940,7 @@
       "kind": "lamp",
       "label": "Big Red Bolt (UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 2. The matrix table (printed 68) prints \"Red Bolt (UPF right)\". The lamps lists (printed 69 and 72) print \"Big Red Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light18, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 18) it is the one lamp that blinks and the ROM calls it 'BIG RED BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 2. The matrix table (printed 68) prints \"Red Bolt (UPF right)\". The lamps lists (printed 69 and 72) print \"Big Red Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light18b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light18 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 18) it is the one lamp that blinks and the ROM calls it 'BIG RED BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -8966,8 +8966,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.890199,
-            "y": 0.259747
+            "x": 0.890461,
+            "y": 0.259868
           }
         ],
         "status": "observed"
@@ -9001,7 +9001,7 @@
       "kind": "lamp",
       "label": "Magna Save",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 3. The matrix table (printed 68) prints \"Magna Save™\". The lamps lists (printed 69 and 72) print \"MAGNA SAVE™\". The Magna Save lamp, on the lower playfield per the matrix legend. The retained script lights the Magna Save ready sign (Light19/Light19b, the bulbyellow primitive and two peg plastics) from it (LightType 1); it is placed at Light19, the lamp's own light object. Placed at the retained light Light19, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 19) it is the one lamp that blinks and the ROM calls it 'MAGNA SAVE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 3. The matrix table (printed 68) prints \"Magna Save™\". The lamps lists (printed 69 and 72) print \"MAGNA SAVE™\". The Magna Save lamp, on the lower playfield per the matrix legend. The retained script lights the Magna Save ready sign (Light19/Light19b, the bulbyellow primitive and two peg plastics) from it (LightType 1); it is placed at Light19, the lamp's own light object. Placed at the retained bulb light Light19 (is_bulb_light), this lamp's own light object; the table also lights a Light19b partner for it. In the ROM's Single Lamps test (run l4-single-lamps, step 19) it is the one lamp that blinks and the ROM calls it 'MAGNA SAVE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9062,7 +9062,7 @@
       "kind": "lamp",
       "label": "Big Blue Bolt (UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 4. The matrix table (printed 68) prints \"Blue Bolt (UPF left)\". The lamps lists (printed 69 and 72) print \"Big Blue Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light20, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 20) it is the one lamp that blinks and the ROM calls it 'BIG BLUE BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 4. The matrix table (printed 68) prints \"Blue Bolt (UPF left)\". The lamps lists (printed 69 and 72) print \"Big Blue Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light20b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light20 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 20) it is the one lamp that blinks and the ROM calls it 'BIG BLUE BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9088,8 +9088,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.283019,
-            "y": 0.299342
+            "x": 0.283543,
+            "y": 0.299951
           }
         ],
         "status": "observed"
@@ -9123,7 +9123,7 @@
       "kind": "lamp",
       "label": "Last Chance (Right Outlane)",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 5. The matrix table (printed 68) prints \"LAST CHANCE (R Outlane)\". The lamps lists (printed 69 and 72) print \"LAST CHANCE (R Outlane)\". Placed at the retained light Light21, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 21) it is the one lamp that blinks and the ROM calls it 'RIGHT OUTLANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 5. The matrix table (printed 68) prints \"LAST CHANCE (R Outlane)\". The lamps lists (printed 69 and 72) print \"LAST CHANCE (R Outlane)\". Placed at the retained bulb light Light21b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light21 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 21) it is the one lamp that blinks and the ROM calls it 'RIGHT OUTLANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9149,8 +9149,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.848795,
-            "y": 0.68153
+            "x": 0.849319,
+            "y": 0.681774
           }
         ],
         "status": "observed"
@@ -9184,7 +9184,7 @@
       "kind": "lamp",
       "label": "U-Turn Bolt (Left)",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 6. The matrix table (printed 68) prints \"U-TURN (Left)\". The lamps lists (printed 69 and 72) print \"U-TURN Bolt (Left)\". Placed at the retained light Light22, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 22) it is the one lamp that blinks and the ROM calls it 'U-TURN LEFT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 6. The matrix table (printed 68) prints \"U-TURN (Left)\". The lamps lists (printed 69 and 72) print \"U-TURN Bolt (Left)\". Placed at the retained bulb light Light22b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light22 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 22) it is the one lamp that blinks and the ROM calls it 'U-TURN LEFT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9210,8 +9210,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.334324,
-            "y": 0.400379
+            "x": 0.334906,
+            "y": 0.400585
           }
         ],
         "status": "observed"
@@ -9245,7 +9245,7 @@
       "kind": "lamp",
       "label": "Kickback (Left Outlane)",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 7. The matrix table (printed 68) prints \"KICKBACK (L Outlane)\". The lamps lists (printed 69 and 72) print \"KICKBACK Bolt (L Outlane)\". Placed at the retained light Light23, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 23) it is the one lamp that blinks and the ROM calls it 'KICK BACK BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 7. The matrix table (printed 68) prints \"KICKBACK (L Outlane)\". The lamps lists (printed 69 and 72) print \"KICKBACK Bolt (L Outlane)\". Placed at the retained bulb light Light23b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light23 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 23) it is the one lamp that blinks and the ROM calls it 'KICK BACK BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9271,8 +9271,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.045335,
-            "y": 0.73136
+            "x": 0.045597,
+            "y": 0.731603
           }
         ],
         "status": "observed"
@@ -9306,7 +9306,7 @@
       "kind": "lamp",
       "label": "Shoot Again",
       "physical": {
-        "notes": "Printed lamp-matrix column 3, row 8. The matrix table (printed 68) prints \"SHOOT AGAIN\". The lamps lists (printed 69 and 72) print \"SHOOT AGAIN\". Placed at the retained light Light24, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 24) it is the one lamp that blinks and the ROM calls it 'SHOOT AGAIN' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 3, row 8. The matrix table (printed 68) prints \"SHOOT AGAIN\". The lamps lists (printed 69 and 72) print \"SHOOT AGAIN\". Placed at the retained bulb light Light24b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light24 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 24) it is the one lamp that blinks and the ROM calls it 'SHOOT AGAIN' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9332,8 +9332,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.449686,
-            "y": 0.865253
+            "x": 0.450734,
+            "y": 0.865497
           }
         ],
         "status": "observed"
@@ -9367,7 +9367,7 @@
       "kind": "lamp",
       "label": "WIN W Lane (Top UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 1. The matrix table (printed 68) prints \"\"W\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"W (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light25, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 25) it is the one lamp that blinks and the ROM calls it 'WIN \"W\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 1. The matrix table (printed 68) prints \"\"W\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"W (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light25b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light25 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 25) it is the one lamp that blinks and the ROM calls it 'WIN \"W\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9393,8 +9393,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.513234,
-            "y": 0.068896
+            "x": 0.513627,
+            "y": 0.068957
           }
         ],
         "status": "observed"
@@ -9428,7 +9428,7 @@
       "kind": "lamp",
       "label": "WIN I Lane (Top UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 2. The matrix table (printed 68) prints \"\"I\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"I (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light26, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 26) it is the one lamp that blinks and the ROM calls it 'WIN \"I\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 2. The matrix table (printed 68) prints \"\"I\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"I (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light26b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light26 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 26) it is the one lamp that blinks and the ROM calls it 'WIN \"I\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9454,8 +9454,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.6212,
-            "y": 0.068409
+            "x": 0.621593,
+            "y": 0.067982
           }
         ],
         "status": "observed"
@@ -9489,7 +9489,7 @@
       "kind": "lamp",
       "label": "WIN N Lane (Top UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 3. The matrix table (printed 68) prints \"\"N\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"N (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light27, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 27) it is the one lamp that blinks and the ROM calls it 'WIN \"N\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 3. The matrix table (printed 68) prints \"\"N\" Lane (Top UPF)\". The lamps lists (printed 69 and 72) print \"N (in \"WIN\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light27b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light27 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 27) it is the one lamp that blinks and the ROM calls it 'WIN \"N\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9515,8 +9515,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.729691,
-            "y": 0.068287
+            "x": 0.729036,
+            "y": 0.067982
           }
         ],
         "status": "observed"
@@ -9550,7 +9550,7 @@
       "kind": "lamp",
       "label": "WAR W Lane (Bottom UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 4. The matrix table (printed 68) prints \"\"W\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"W (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light28, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 28) it is the one lamp that blinks and the ROM calls it 'WAR \"W\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 4. The matrix table (printed 68) prints \"\"W\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"W (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light28b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light28 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 28) it is the one lamp that blinks and the ROM calls it 'WAR \"W\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9576,8 +9576,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.460823,
-            "y": 0.377741
+            "x": 0.460954,
+            "y": 0.377924
           }
         ],
         "status": "observed"
@@ -9611,7 +9611,7 @@
       "kind": "lamp",
       "label": "WAR A Lane (Bottom UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 5. The matrix table (printed 68) prints \"\"A\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"A (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light29, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 29) it is the one lamp that blinks and the ROM calls it 'WAR \"A\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 5. The matrix table (printed 68) prints \"\"A\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"A (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light29b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light29 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 29) it is the one lamp that blinks and the ROM calls it 'WAR \"A\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9637,8 +9637,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.565383,
-            "y": 0.414413
+            "x": 0.565514,
+            "y": 0.413986
           }
         ],
         "status": "observed"
@@ -9672,7 +9672,7 @@
       "kind": "lamp",
       "label": "WAR R Lane (Bottom UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 6. The matrix table (printed 68) prints \"\"R\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"R (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light30, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 30) it is the one lamp that blinks and the ROM calls it 'WAR \"R\" LANE' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 6. The matrix table (printed 68) prints \"\"R\" Lane (Btm UPF)\". The lamps lists (printed 69 and 72) print \"R (in \"WAR\")\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light30b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light30 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 30) it is the one lamp that blinks and the ROM calls it 'WAR \"R\" LANE' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9698,8 +9698,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.670204,
-            "y": 0.45279
+            "x": 0.669811,
+            "y": 0.453216
           }
         ],
         "status": "observed"
@@ -9733,7 +9733,7 @@
       "kind": "lamp",
       "label": "Jackpot Bolt",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 7. The matrix table (printed 68) prints \"JACKPOT Bolt\". The lamps lists (printed 69 and 72) print \"JACKPOT Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light31, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 31) it is the one lamp that blinks and the ROM calls it 'JACKPOT BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 7. The matrix table (printed 68) prints \"JACKPOT Bolt\". The lamps lists (printed 69 and 72) print \"JACKPOT Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light31b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light31 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 31) it is the one lamp that blinks and the ROM calls it 'JACKPOT BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9760,7 +9760,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.594864,
-            "y": 0.351486
+            "y": 0.351852
           }
         ],
         "status": "observed"
@@ -9794,7 +9794,7 @@
       "kind": "lamp",
       "label": "Advance Ransom Bolt",
       "physical": {
-        "notes": "Printed lamp-matrix column 4, row 8. The matrix table (printed 68) prints \"ADVANCE RANSOM Bolt\". The lamps lists (printed 69 and 72) print \"ADVANCE RANSOM Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light32, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 32) it is the one lamp that blinks and the ROM calls it 'RANSOM BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 4, row 8. The matrix table (printed 68) prints \"ADVANCE RANSOM Bolt\". The lamps lists (printed 69 and 72) print \"ADVANCE RANSOM Bolt\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light32b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light32 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 32) it is the one lamp that blinks and the ROM calls it 'RANSOM BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9820,8 +9820,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.716195,
-            "y": 0.402656
+            "x": 0.715933,
+            "y": 0.402534
           }
         ],
         "status": "observed"
@@ -9855,7 +9855,7 @@
       "kind": "lamp",
       "label": "Motor Target Bolt 3 (Left UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 1. The matrix table (printed 68) prints \"Motor Target Bolt 3 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 3\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light33, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 33) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 3' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 1. The matrix table (printed 68) prints \"Motor Target Bolt 3 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 3\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light33b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light33 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 33) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 3' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9916,7 +9916,7 @@
       "kind": "lamp",
       "label": "Motor Target Bolt 2 (Left UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 2. The matrix table (printed 68) prints \"Motor Target Bolt 2 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 2\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light34, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 34) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 2' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 2. The matrix table (printed 68) prints \"Motor Target Bolt 2 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 2\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light34b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light34 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 34) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 2' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -9942,8 +9942,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.471698,
-            "y": 0.301657
+            "x": 0.472222,
+            "y": 0.301779
           }
         ],
         "status": "observed"
@@ -9977,7 +9977,7 @@
       "kind": "lamp",
       "label": "Motor Target Bolt 1 (Left UPF)",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 3. The matrix table (printed 68) prints \"Motor Target Bolt 1 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 1\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained light Light35, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 35) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 1' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 3. The matrix table (printed 68) prints \"Motor Target Bolt 1 (L UPF)\". The lamps lists (printed 69 and 72) print \"Motor Target Bolt 1\". An upper-playfield lamp (the matrix legend's UPF; the retained table models the upper playfield in the same x/y frame, offset in height). Placed at the retained bulb light Light35b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light35 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 35) it is the one lamp that blinks and the ROM calls it 'UPPER TARGET 1' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10003,8 +10003,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.48847,
-            "y": 0.331993
+            "x": 0.489256,
+            "y": 0.332115
           }
         ],
         "status": "observed"
@@ -10038,7 +10038,7 @@
       "kind": "lamp",
       "label": "Bonus 2X",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 4. The matrix table (printed 68) prints \"2X (left)\". The lamps lists (printed 69 and 72) print \"2X (left)\". Placed at the retained light Light36, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 36) it is the one lamp that blinks and the ROM calls it '2X' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 4. The matrix table (printed 68) prints \"2X (left)\". The lamps lists (printed 69 and 72) print \"2X (left)\". Placed at the retained bulb light Light36b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light36 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 36) it is the one lamp that blinks and the ROM calls it '2X' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10064,8 +10064,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.350891,
-            "y": 0.812378
+            "x": 0.351677,
+            "y": 0.812865
           }
         ],
         "status": "observed"
@@ -10099,7 +10099,7 @@
       "kind": "lamp",
       "label": "Bonus 3X",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 5. The matrix table (printed 68) prints \"3X\". The lamps lists (printed 69 and 72) print \"3X\". Placed at the retained light Light37, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 37) it is the one lamp that blinks and the ROM calls it '3X' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 5. The matrix table (printed 68) prints \"3X\". The lamps lists (printed 69 and 72) print \"3X\". Placed at the retained bulb light Light37b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light37 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 37) it is the one lamp that blinks and the ROM calls it '3X' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10125,8 +10125,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.395964,
-            "y": 0.799098
+            "x": 0.396751,
+            "y": 0.799464
           }
         ],
         "status": "observed"
@@ -10160,7 +10160,7 @@
       "kind": "lamp",
       "label": "Bonus Hold",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 6. The matrix table (printed 68) prints \"BONUS HOLD\". The lamps lists (printed 69 and 72) print \"BONUS HOLD\". Placed at the retained light Light38, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 38) it is the one lamp that blinks and the ROM calls it 'BONUS HOLD' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 6. The matrix table (printed 68) prints \"BONUS HOLD\". The lamps lists (printed 69 and 72) print \"BONUS HOLD\". Placed at the retained bulb light Light38b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light38 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 38) it is the one lamp that blinks and the ROM calls it 'BONUS HOLD' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10186,8 +10186,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.448506,
-            "y": 0.794469
+            "x": 0.448637,
+            "y": 0.794347
           }
         ],
         "status": "observed"
@@ -10221,7 +10221,7 @@
       "kind": "lamp",
       "label": "Bonus 4X",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 7. The matrix table (printed 68) prints \"4X\". The lamps lists (printed 69 and 72) print \"4X\". Placed at the retained light Light39, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 39) it is the one lamp that blinks and the ROM calls it '4X' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 7. The matrix table (printed 68) prints \"4X\". The lamps lists (printed 69 and 72) print \"4X\". Placed at the retained bulb light Light39b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light39 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 39) it is the one lamp that blinks and the ROM calls it '4X' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10247,8 +10247,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.501048,
-            "y": 0.799708
+            "x": 0.500524,
+            "y": 0.799951
           }
         ],
         "status": "observed"
@@ -10282,7 +10282,7 @@
       "kind": "lamp",
       "label": "Bonus 5X",
       "physical": {
-        "notes": "Printed lamp-matrix column 5, row 8. The matrix table (printed 68) prints \"5X (right)\". The lamps lists (printed 69 and 72) print \"5X (right)\". Placed at the retained light Light40, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 40) it is the one lamp that blinks and the ROM calls it 'SX' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 5, row 8. The matrix table (printed 68) prints \"5X (right)\". The lamps lists (printed 69 and 72) print \"5X (right)\". Placed at the retained bulb light Light40b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light40 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 40) it is the one lamp that blinks and the ROM calls it 'SX' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10308,8 +10308,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.547694,
-            "y": 0.810307
+            "x": 0.548218,
+            "y": 0.810673
           }
         ],
         "status": "observed"
@@ -10343,7 +10343,7 @@
       "kind": "lamp",
       "label": "KNIGHT G (Right 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 1. The matrix table (printed 68) prints \"\"G\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"G (R 3-b Dr Tgt)\". Placed at the retained light Light41, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 41) it is the one lamp that blinks and the ROM calls it '\"G\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 1. The matrix table (printed 68) prints \"\"G\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"G (R 3-b Dr Tgt)\". Placed at the retained bulb light Light41b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light41 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 41) it is the one lamp that blinks and the ROM calls it '\"G\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10370,7 +10370,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.406184,
-            "y": 0.455531
+            "y": 0.455775
           }
         ],
         "status": "observed"
@@ -10404,7 +10404,7 @@
       "kind": "lamp",
       "label": "KNIGHT H (Right 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 2. The matrix table (printed 68) prints \"\"H\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"H (R 3-b Dr Tgt)\". Placed at the retained light Light42, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 42) it is the one lamp that blinks and the ROM calls it '\"H\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 2. The matrix table (printed 68) prints \"\"H\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"H (R 3-b Dr Tgt)\". Placed at the retained bulb light Light42b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light42 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 42) it is the one lamp that blinks and the ROM calls it '\"H\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10465,7 +10465,7 @@
       "kind": "lamp",
       "label": "KNIGHT T (Right 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 3. The matrix table (printed 68) prints \"\"T\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"T (R 3-b Dr Tgt)\". Placed at the retained light Light43, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 43) it is the one lamp that blinks and the ROM calls it '\"T\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 3. The matrix table (printed 68) prints \"\"T\" (R 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"T (R 3-b Dr Tgt)\". Placed at the retained bulb light Light43b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light43 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 43) it is the one lamp that blinks and the ROM calls it '\"T\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10491,8 +10491,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.494497,
-            "y": 0.489766
+            "x": 0.495283,
+            "y": 0.49001
           }
         ],
         "status": "observed"
@@ -10526,7 +10526,7 @@
       "kind": "lamp",
       "label": "KNIGHT K (Left 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 4. The matrix table (printed 68) prints \"\"K\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"K (L 3-b Dr Tgt)\". Placed at the retained light Light44, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 44) it is the one lamp that blinks and the ROM calls it '\"K\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 4. The matrix table (printed 68) prints \"\"K\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"K (L 3-b Dr Tgt)\". Placed at the retained bulb light Light44b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light44 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 44) it is the one lamp that blinks and the ROM calls it '\"K\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10552,8 +10552,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.148847,
-            "y": 0.556774
+            "x": 0.148323,
+            "y": 0.556652
           }
         ],
         "status": "observed"
@@ -10587,7 +10587,7 @@
       "kind": "lamp",
       "label": "KNIGHT N (Left 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 5. The matrix table (printed 68) prints \"\"N\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"N (L 3-b Dr Tgt)\". Placed at the retained light Light45, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 45) it is the one lamp that blinks and the ROM calls it '\"N\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 5. The matrix table (printed 68) prints \"\"N\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"N (L 3-b Dr Tgt)\". Placed at the retained bulb light Light45b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light45 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 45) it is the one lamp that blinks and the ROM calls it '\"N\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10613,7 +10613,7 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.162998,
+            "x": 0.163784,
             "y": 0.530824
           }
         ],
@@ -10648,7 +10648,7 @@
       "kind": "lamp",
       "label": "KNIGHT I (Left 3-Bank)",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 6. The matrix table (printed 68) prints \"\"I\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"I (L 3-b Dr Tgt)\". Placed at the retained light Light46, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 46) it is the one lamp that blinks and the ROM calls it '\"I\"' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 6. The matrix table (printed 68) prints \"\"I\" (L 3-Bank Dr Tgt)\". The lamps lists (printed 69 and 72) print \"I (L 3-b Dr Tgt)\". Placed at the retained bulb light Light46b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light46 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 46) it is the one lamp that blinks and the ROM calls it '\"I\"' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10675,7 +10675,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.179507,
-            "y": 0.506457
+            "y": 0.506579
           }
         ],
         "status": "observed"
@@ -10709,7 +10709,7 @@
       "kind": "lamp",
       "label": "Skyway Bolt",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 7. The matrix table (printed 68) prints \"SKYWAY Bolt\". The lamps lists (printed 69 and 72) print \"SKYWAY Bolt\". Placed at the retained light Light47, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 47) it is the one lamp that blinks and the ROM calls it 'SKYWAY BOLT' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 7. The matrix table (printed 68) prints \"SKYWAY Bolt\". The lamps lists (printed 69 and 72) print \"SKYWAY Bolt\". Placed at the retained bulb light Light47b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light47 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 47) it is the one lamp that blinks and the ROM calls it 'SKYWAY BOLT' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10735,8 +10735,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.273847,
-            "y": 0.487573
+            "x": 0.274109,
+            "y": 0.487695
           }
         ],
         "status": "observed"
@@ -10770,7 +10770,7 @@
       "kind": "lamp",
       "label": "Hurry-Up Bolt",
       "physical": {
-        "notes": "Printed lamp-matrix column 6, row 8. The matrix table (printed 68) prints \"HURRY-UP Bolt\". The lamps lists (printed 69 and 72) print \"HURRY-UP Bolt\". Placed at the retained light Light48, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 48) it is the one lamp that blinks and the ROM calls it 'HURRY UP' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 6, row 8. The matrix table (printed 68) prints \"HURRY-UP Bolt\". The lamps lists (printed 69 and 72) print \"HURRY-UP Bolt\". Placed at the retained bulb light Light48b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light48 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 48) it is the one lamp that blinks and the ROM calls it 'HURRY UP' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10796,8 +10796,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.224786,
-            "y": 0.422918
+            "x": 0.225629,
+            "y": 0.422758
           }
         ],
         "status": "observed"
@@ -10831,7 +10831,7 @@
       "kind": "lamp",
       "label": "Extra Ball (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 1. The matrix table (printed 68) prints \"EXTRA BALL (Bolt Circle)\". Placed at the retained light Light49, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 49) it is the one lamp that blinks and the ROM calls it 'CENTER EX. BALL' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 1. The matrix table (printed 68) prints \"EXTRA BALL (Bolt Circle)\". Placed at the retained bulb light Light49b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light49 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 49) it is the one lamp that blinks and the ROM calls it 'CENTER EX. BALL' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10857,8 +10857,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.446484,
-            "y": 0.575452
+            "x": 0.453354,
+            "y": 0.572856
           }
         ],
         "status": "observed"
@@ -10892,7 +10892,7 @@
       "kind": "lamp",
       "label": "50,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 2. The matrix table (printed 68) prints \"50,000 (Bolt Circle)\". Placed at the retained light Light50, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 50) it is the one lamp that blinks and the ROM calls it 'CENTER SOOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 2. The matrix table (printed 68) prints \"50,000 (Bolt Circle)\". Placed at the retained bulb light Light50b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light50 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 50) it is the one lamp that blinks and the ROM calls it 'CENTER SOOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10918,8 +10918,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.510163,
-            "y": 0.5813
+            "x": 0.516247,
+            "y": 0.578947
           }
         ],
         "status": "observed"
@@ -10953,7 +10953,7 @@
       "kind": "lamp",
       "label": "Magna Save (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 3. The matrix table (printed 68) prints \"MAGNA SAVE (Bolt Circle)\". Placed at the retained light Light51, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 51) it is the one lamp that blinks and the ROM calls it 'CENTER MAGNA SV' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 3. The matrix table (printed 68) prints \"MAGNA SAVE (Bolt Circle)\". Placed at the retained bulb light Light51b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light51 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 51) it is the one lamp that blinks and the ROM calls it 'CENTER MAGNA SV' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -10979,8 +10979,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.564932,
-            "y": 0.59726
+            "x": 0.572327,
+            "y": 0.594542
           }
         ],
         "status": "observed"
@@ -11014,7 +11014,7 @@
       "kind": "lamp",
       "label": "10,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 4. The matrix table (printed 68) prints \"10,000 (Bolt Circle)\". Placed at the retained light Light52, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 52) it is the one lamp that blinks and the ROM calls it 'CENTER 1OOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 4. The matrix table (printed 68) prints \"10,000 (Bolt Circle)\". Placed at the retained bulb light Light52b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light52 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 52) it is the one lamp that blinks and the ROM calls it 'CENTER 1OOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11040,8 +11040,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.60293,
-            "y": 0.622479
+            "x": 0.606918,
+            "y": 0.619883
           }
         ],
         "status": "observed"
@@ -11075,7 +11075,7 @@
       "kind": "lamp",
       "label": "Multi-Ball (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 5. The matrix table (printed 68) prints \"MULTI-BALL (Bolt Circle)\". Placed at the retained light Light53, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 53) it is the one lamp that blinks and the ROM calls it 'CENTER MULTIBALL' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 5. The matrix table (printed 68) prints \"MULTI-BALL (Bolt Circle)\". Placed at the retained bulb light Light53b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light53 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 53) it is the one lamp that blinks and the ROM calls it 'CENTER MULTIBALL' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11101,8 +11101,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.62075,
-            "y": 0.652328
+            "x": 0.621069,
+            "y": 0.649366
           }
         ],
         "status": "observed"
@@ -11136,7 +11136,7 @@
       "kind": "lamp",
       "label": "100,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 6. The matrix table (printed 68) prints \"100,000 (Bolt Circle)\". Placed at the retained light Light54, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 54) it is the one lamp that blinks and the ROM calls it 'CENTER 1OOOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 6. The matrix table (printed 68) prints \"100,000 (Bolt Circle)\". Placed at the retained bulb light Light54b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light54 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 54) it is the one lamp that blinks and the ROM calls it 'CENTER 1OOOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11162,8 +11162,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.607909,
-            "y": 0.682177
+            "x": 0.607966,
+            "y": 0.679337
           }
         ],
         "status": "observed"
@@ -11197,7 +11197,7 @@
       "kind": "lamp",
       "label": "Ransom (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 7. The matrix table (printed 68) prints \"RANSOM (Bolt Circle)\". Placed at the retained light Light55, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 55) it is the one lamp that blinks and the ROM calls it 'CENTER RANSOM' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 7. The matrix table (printed 68) prints \"RANSOM (Bolt Circle)\". Placed at the retained bulb light Light55b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light55 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 55) it is the one lamp that blinks and the ROM calls it 'CENTER RANSOM' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11223,8 +11223,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.570697,
-            "y": 0.707762
+            "x": 0.570755,
+            "y": 0.704922
           }
         ],
         "status": "observed"
@@ -11258,7 +11258,7 @@
       "kind": "lamp",
       "label": "200,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 7, row 8. The matrix table (printed 68) prints \"200,000 (Bolt Circle)\". Placed at the retained light Light56, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 56) it is the one lamp that blinks and the ROM calls it 'CENTER 2OOOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 7, row 8. The matrix table (printed 68) prints \"200,000 (Bolt Circle)\". Placed at the retained bulb light Light56b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light56 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 56) it is the one lamp that blinks and the ROM calls it 'CENTER 2OOOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11284,8 +11284,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.514355,
-            "y": 0.725306
+            "x": 0.518344,
+            "y": 0.721491
           }
         ],
         "status": "observed"
@@ -11319,7 +11319,7 @@
       "kind": "lamp",
       "label": "Special (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 1. The matrix table (printed 68) prints \"SPECIAL (Bolt Circle)\". Placed at the retained light Light57, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 57) it is the one lamp that blinks and the ROM calls it 'CENTER SPECIAL' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 1. The matrix table (printed 68) prints \"SPECIAL (Bolt Circle)\". Placed at the retained bulb light Light57b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light57 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 57) it is the one lamp that blinks and the ROM calls it 'CENTER SPECIAL' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11345,8 +11345,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.450676,
-            "y": 0.731519
+            "x": 0.450734,
+            "y": 0.731725
           }
         ],
         "status": "observed"
@@ -11380,7 +11380,7 @@
       "kind": "lamp",
       "label": "20,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 2. The matrix table (printed 68) prints \"20,000 (Bolt Circle)\". Placed at the retained light Light58, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 58) it is the one lamp that blinks and the ROM calls it 'CENTER 2OOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 2. The matrix table (printed 68) prints \"20,000 (Bolt Circle)\". Placed at the retained bulb light Light58b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light58 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 58) it is the one lamp that blinks and the ROM calls it 'CENTER 2OOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11406,8 +11406,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.386473,
-            "y": 0.725671
+            "x": 0.38653,
+            "y": 0.725755
           }
         ],
         "status": "observed"
@@ -11441,7 +11441,7 @@
       "kind": "lamp",
       "label": "Kickback (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 3. The matrix table (printed 68) prints \"KICKBACK (Bolt Circle)\". Placed at the retained light Light59, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 59) it is the one lamp that blinks and the ROM calls it 'CENTER KICKBACK' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 3. The matrix table (printed 68) prints \"KICKBACK (Bolt Circle)\". Placed at the retained bulb light Light59b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light59 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 59) it is the one lamp that blinks and the ROM calls it 'CENTER KICKBACK' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11467,8 +11467,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.328297,
-            "y": 0.709589
+            "x": 0.336478,
+            "y": 0.70614
           }
         ],
         "status": "observed"
@@ -11502,7 +11502,7 @@
       "kind": "lamp",
       "label": "150,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 4. The matrix table (printed 68) prints \"150,000 (Bolt Circle)\". Placed at the retained light Light60, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 60) it is the one lamp that blinks and the ROM calls it 'CENTER 1SOOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 4. The matrix table (printed 68) prints \"150,000 (Bolt Circle)\". Placed at the retained bulb light Light60b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light60 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 60) it is the one lamp that blinks and the ROM calls it 'CENTER 1SOOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11528,8 +11528,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.291871,
-            "y": 0.684614
+            "x": 0.301887,
+            "y": 0.679825
           }
         ],
         "status": "observed"
@@ -11563,7 +11563,7 @@
       "kind": "lamp",
       "label": "Drawbridge (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 5. The matrix table (printed 68) prints \"Drawbridge (Bolt Circle)\". Placed at the retained light Light61, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 61) it is the one lamp that blinks and the ROM calls it 'CENTER DRAWBRG.' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 5. The matrix table (printed 68) prints \"Drawbridge (Bolt Circle)\". Placed at the retained bulb light Light61b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light61 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 61) it is the one lamp that blinks and the ROM calls it 'CENTER DRAWBRG.' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11589,8 +11589,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.278506,
-            "y": 0.654156
+            "x": 0.288784,
+            "y": 0.649854
           }
         ],
         "status": "observed"
@@ -11624,7 +11624,7 @@
       "kind": "lamp",
       "label": "75,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 6. The matrix table (printed 68) prints \"75,000 (Bolt Circle)\". Placed at the retained light Light62, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 62) it is the one lamp that blinks and the ROM calls it 'CENTER 7SOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 6. The matrix table (printed 68) prints \"75,000 (Bolt Circle)\". Placed at the retained bulb light Light62b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light62 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 62) it is the one lamp that blinks and the ROM calls it 'CENTER 7SOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11650,8 +11650,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.293443,
-            "y": 0.62455
+            "x": 0.300314,
+            "y": 0.618421
           }
         ],
         "status": "observed"
@@ -11685,7 +11685,7 @@
       "kind": "lamp",
       "label": "Hurry-Up (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 7. The matrix table (printed 68) prints \"HURRY-UP (Bolt Circle)\". Placed at the retained light Light63, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 63) it is the one lamp that blinks and the ROM calls it 'CENTER HURRY UP' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 7. The matrix table (printed 68) prints \"HURRY-UP (Bolt Circle)\". Placed at the retained bulb light Light63b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light63 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 63) it is the one lamp that blinks and the ROM calls it 'CENTER HURRY UP' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11711,8 +11711,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.328821,
-            "y": 0.598844
+            "x": 0.337526,
+            "y": 0.593567
           }
         ],
         "status": "observed"
@@ -11746,7 +11746,7 @@
       "kind": "lamp",
       "label": "250,000 (Bolt Circle)",
       "physical": {
-        "notes": "Printed lamp-matrix column 8, row 8. The matrix table (printed 68) prints \"250,000 (Bolt Circle)\". Placed at the retained light Light64, whose co-located 'b' partner is the same lamp's glow. In the ROM's Single Lamps test (run l4-single-lamps, step 64) it is the one lamp that blinks and the ROM calls it 'CENTER 2SOOOO' (the display draws 0 as O and 5 as S).",
+        "notes": "Printed lamp-matrix column 8, row 8. The matrix table (printed 68) prints \"250,000 (Bolt Circle)\". Placed at the retained bulb light Light64b, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the insert as the textured render overlay Light64 (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not used for the position. In the ROM's Single Lamps test (run l4-single-lamps, step 64) it is the one lamp that blinks and the ROM calls it 'CENTER 2SOOOO' (the display draws 0 as O and 5 as S).",
         "quantity": 1
       },
       "provenance": {
@@ -11772,8 +11772,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.384377,
-            "y": 0.581787
+            "x": 0.392558,
+            "y": 0.57846
           }
         ],
         "status": "observed"
@@ -11869,7 +11869,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.black-knight-2000.1989/solenoid-table.md",
           "reviewed": true,
-          "sha256": "9e24c041f06247c6a7642e0927c31fcc65aa17075d62aad145c9a5f11e0e5ab7",
+          "sha256": "ccd1de92712c37bc0fc849d871b220cd8bf11e77372b09d3beb15ab39f4fb6ba",
           "transcribed_by": "curator, read from the rendered page"
         },
         {

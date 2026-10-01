@@ -20,7 +20,7 @@ numbered page.
 | 04A^3 | Right 3-Bank Drop Tgt Reset | Switched | Vio- Yel | 1P11-5 | 5J1-5: 5J4-6 (A) | Q24 | AE-26-1200 |
 | 04C^3 | Flipper Lane Flasher | Switched | Blk-Yel | (Gry-Yel) | 5J5-5 (C) | Q24 | #906/#89 flashlamps 2p,2i |
 | 05A^3 | Not Used | Switched | Vio-Grn | 1P11-6 | 5J1-4: 5J4-5 (A) | Q31 | (blank) |
-| 05C^3 | Drop Target Flasher | Switched | Blk-Grn | (Gry-Grn) | 5J5-4 (C) | Q31 | #906/#89 flashlamps 1p,2i |
+| 05C^3 | Drop Target Flasher | Switched | Blk-Grn | (Gry-Gm) | 5J5-4 (C) | Q31 | #906/#89 flashlamps 1p,2i |
 | 06A^3 | Ball Popper | Switched | Vio-Blu | 1P11-7 | 5J1-3: 5J4-4 (A) | Q23 | AE-23-800 |
 | 06C^3 | LPF Ramp Flasher | Switched | Blk-Blu | (Gry-Blu) | 5J5-3 (C) | Q23 | #906/#89 flashlamps 2p,2i |
 | 07A^3 | UPF Lockup Kickback | Switched | Vio-Blk | 1P11-8 | 5J1-2: 5J4-2 (A) | Q30 | AE-24-900 |
@@ -49,8 +49,9 @@ numbered page.
 
 The Wire Color column prints each A/C pair inside one brace, and the CPU Bd column prints the A
 circuit's connector first with the C circuit's parenthesised wire colour below it (for example
-`1P11-1` above `(Gry-Brn)`). The scan reads the 05C CPU Bd cell as `(Gry-Gm)`; it is transcribed
-as `(Gry-Grn)` because it is the C-side partner of Vio-Grn and no other cell carries "Gm". The
+`1P11-1` above `(Gry-Brn)`). The scan reads the 05C CPU Bd cell as `(Gry-Gm)`, transcribed here as
+printed; the structured definition normalizes it to `Gry-Grn` because it is the C-side partner of
+Vio-Grn and no other cell carries "Gm". The
 "Right Flipper" and "Left Flipper" header rows are underlined. The `^4a`/`^4b` superscripts are
 printed beside the part numbers of rows 09, 10, 11 and 16; row 12 prints `^5`.
 

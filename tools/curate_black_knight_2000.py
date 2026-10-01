@@ -243,63 +243,63 @@ SWITCH_POSITIONS = {
 
 LAMP_POSITIONS = {
 	5: ('Light5', 0.449686, 0.662524),
-	8: ('Light8', 0.046384, 0.684089),
-	9: ('Light9', 0.559953, 0.478473),
-	10: ('Light10', 0.651672, 0.514657),
-	11: ('Light11', 0.750467, 0.555593),
-	12: ('Light12', 0.172375, 0.619470),
-	13: ('Light13', 0.200013, 0.586677),
-	14: ('Light14', 0.245901, 0.559541),
-	15: ('Light15', 0.305953, 0.538201),
-	16: ('Light16', 0.374626, 0.524460),
-	17: ('Light17', 0.171589, 0.356519),
-	18: ('Light18', 0.890199, 0.259747),
+	8: ('Light8b', 0.046384, 0.683723),
+	9: ('Light9b', 0.558962, 0.478558),
+	10: ('Light10b', 0.654874, 0.517544),
+	11: ('Light11b', 0.750524, 0.550804),
+	12: ('Light12b', 0.175577, 0.623051),
+	13: ('Light13b', 0.204403, 0.590643),
+	14: ('Light14b', 0.249476, 0.562378),
+	15: ('Light15b', 0.309748, 0.541667),
+	16: ('Light16b', 0.376834, 0.527047),
+	17: ('Light17b', 0.171908, 0.356847),
+	18: ('Light18b', 0.890461, 0.259868),
 	19: ('Light19', 0.848025, 0.598956),
-	20: ('Light20', 0.283019, 0.299342),
-	21: ('Light21', 0.848795, 0.681530),
-	22: ('Light22', 0.334324, 0.400379),
-	23: ('Light23', 0.045335, 0.731360),
-	24: ('Light24', 0.449686, 0.865253),
-	25: ('Light25', 0.513234, 0.068896),
-	26: ('Light26', 0.621200, 0.068409),
-	27: ('Light27', 0.729691, 0.068287),
-	28: ('Light28', 0.460823, 0.377741),
-	29: ('Light29', 0.565383, 0.414413),
-	30: ('Light30', 0.670204, 0.452790),
-	31: ('Light31', 0.594864, 0.351486),
-	32: ('Light32', 0.716195, 0.402656),
-	33: ('Light33', 0.458595, 0.266813),
-	34: ('Light34', 0.471698, 0.301657),
-	35: ('Light35', 0.488470, 0.331993),
-	36: ('Light36', 0.350891, 0.812378),
-	37: ('Light37', 0.395964, 0.799098),
-	38: ('Light38', 0.448506, 0.794469),
-	39: ('Light39', 0.501048, 0.799708),
-	40: ('Light40', 0.547694, 0.810307),
-	41: ('Light41', 0.406184, 0.455531),
-	42: ('Light42', 0.449161, 0.472222),
-	43: ('Light43', 0.494497, 0.489766),
-	44: ('Light44', 0.148847, 0.556774),
-	45: ('Light45', 0.162998, 0.530824),
-	46: ('Light46', 0.179507, 0.506457),
-	47: ('Light47', 0.273847, 0.487573),
-	48: ('Light48', 0.224786, 0.422918),
-	49: ('Light49', 0.446484, 0.575452),
-	50: ('Light50', 0.510163, 0.581300),
-	51: ('Light51', 0.564932, 0.597260),
-	52: ('Light52', 0.602930, 0.622479),
-	53: ('Light53', 0.620750, 0.652328),
-	54: ('Light54', 0.607909, 0.682177),
-	55: ('Light55', 0.570697, 0.707762),
-	56: ('Light56', 0.514355, 0.725306),
-	57: ('Light57', 0.450676, 0.731519),
-	58: ('Light58', 0.386473, 0.725671),
-	59: ('Light59', 0.328297, 0.709589),
-	60: ('Light60', 0.291871, 0.684614),
-	61: ('Light61', 0.278506, 0.654156),
-	62: ('Light62', 0.293443, 0.624550),
-	63: ('Light63', 0.328821, 0.598844),
-	64: ('Light64', 0.384377, 0.581787),
+	20: ('Light20b', 0.283543, 0.299951),
+	21: ('Light21b', 0.849319, 0.681774),
+	22: ('Light22b', 0.334906, 0.400585),
+	23: ('Light23b', 0.045597, 0.731603),
+	24: ('Light24b', 0.450734, 0.865497),
+	25: ('Light25b', 0.513627, 0.068957),
+	26: ('Light26b', 0.621593, 0.067982),
+	27: ('Light27b', 0.729036, 0.067982),
+	28: ('Light28b', 0.460954, 0.377924),
+	29: ('Light29b', 0.565514, 0.413986),
+	30: ('Light30b', 0.669811, 0.453216),
+	31: ('Light31b', 0.594864, 0.351852),
+	32: ('Light32b', 0.715933, 0.402534),
+	33: ('Light33b', 0.458595, 0.266813),
+	34: ('Light34b', 0.472222, 0.301779),
+	35: ('Light35b', 0.489256, 0.332115),
+	36: ('Light36b', 0.351677, 0.812865),
+	37: ('Light37b', 0.396751, 0.799464),
+	38: ('Light38b', 0.448637, 0.794347),
+	39: ('Light39b', 0.500524, 0.799951),
+	40: ('Light40b', 0.548218, 0.810673),
+	41: ('Light41b', 0.406184, 0.455775),
+	42: ('Light42b', 0.449161, 0.472222),
+	43: ('Light43b', 0.495283, 0.490010),
+	44: ('Light44b', 0.148323, 0.556652),
+	45: ('Light45b', 0.163784, 0.530824),
+	46: ('Light46b', 0.179507, 0.506579),
+	47: ('Light47b', 0.274109, 0.487695),
+	48: ('Light48b', 0.225629, 0.422758),
+	49: ('Light49b', 0.453354, 0.572856),
+	50: ('Light50b', 0.516247, 0.578947),
+	51: ('Light51b', 0.572327, 0.594542),
+	52: ('Light52b', 0.606918, 0.619883),
+	53: ('Light53b', 0.621069, 0.649366),
+	54: ('Light54b', 0.607966, 0.679337),
+	55: ('Light55b', 0.570755, 0.704922),
+	56: ('Light56b', 0.518344, 0.721491),
+	57: ('Light57b', 0.450734, 0.731725),
+	58: ('Light58b', 0.386530, 0.725755),
+	59: ('Light59b', 0.336478, 0.706140),
+	60: ('Light60b', 0.301887, 0.679825),
+	61: ('Light61b', 0.288784, 0.649854),
+	62: ('Light62b', 0.300314, 0.618421),
+	63: ('Light63b', 0.337526, 0.593567),
+	64: ('Light64b', 0.392558, 0.578460),
 }
 
 
@@ -334,7 +334,7 @@ SOLENOID_A = {
 	4: ("Right 3-Bank Drop Target Reset", "coil", "Vio- Yel", "1P11-5", "5J1-5: 5J4-6 (A)", "Q24", "AE-26-1200"),
 	5: ("Not Used Switched Solenoid 05A", "coil", "Vio-Grn", "1P11-6", "5J1-4: 5J4-5 (A)", "Q31", None),
 	6: ("Ball Popper", "coil", "Vio-Blu", "1P11-7", "5J1-3: 5J4-4 (A)", "Q23", "AE-23-800"),
-	7: ("UPF Lockup Kickback", "coil", "Vio-Blk", "1P11-8", "5J1-2: 5J4-2 (A)", "Q30", "AE-24-900"),
+	7: ("UPF Lockup Kickback", "coil", "Vio-Blk", "1P11-8", "5J1-2: 5J4-2 (A)", "Q30", "AE-23-800"),
 	8: ("Right Eject", "coil", "Vio-Gry", "1P11-9", "5J1-1: 5J4-1 (A)", "Q22", "AE-26-1500"),
 }
 # address -> (label, wire, cpu connection, power connection, lamp type, playfield bulbs, insert-board bulbs)
@@ -892,6 +892,12 @@ def input_devices() -> list[dict[str, Any]]:
 			notes.append(f"The matrix table (printed 67) prints \"{MATRIX_WORDING[address]}\".")
 		if address in LIST_WORDING:
 			notes.append(f"The switches lists (printed 66 and 72) print \"{LIST_WORDING[address]}\".")
+		if address == 34:
+			notes.append(
+				"The Moving Target Assembly's parts page (printed 58) lists A-11177-1 as the left target assembly and A-11315-3 as the mid and right target "
+				"assembly, which would make the middle target A-11315-3; the Upper Playfield Switches list (printed 72) prints A-11177-1 for 34. The record follows the "
+				"switch list for the part number, and the difference does not reach a recreation."
+			)
 		physical: dict[str, Any] = {}
 		if address in SWITCH_PARTS:
 			physical["part_number"] = SWITCH_PARTS[address]
@@ -1058,9 +1064,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address == 7:
 				notes += (
 					" The Solenoid Table prints AE-24-900 for 07A, while the Upper Playfield Solenoids/Flashers list prints AE-23-800 for \"3-Ball Lock "
-					"Kickback\" and the Kickback Assembly's own parts page (B-12671) prints AE-23-800; the part number is recorded as the Solenoid Table "
-					"prints it and the disagreement is not a question about the machine's behaviour. The Upper Playfield Parts list prints the same "
-					"assembly B-12671 as item 1 \"3-Ball Lockup Kickback\"."
+					"Kickback\" and the Kickback Assembly's own parts page (B-12671) prints AE-23-800. The record follows the list and the assembly's own "
+					"page, two sources against the table's one; the coil winding is not something a recreation can express, so the disagreement is stated "
+					"here and not recorded as a conflict. The Upper Playfield Parts list prints the same assembly B-12671 as item 1 \"3-Ball Lockup Kickback\"."
 				)
 				extra["roles"] = ["mechanism.lock-release"]
 			if address == 8:
@@ -1249,7 +1255,14 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"The Magna Save lamp, on the lower playfield per the matrix legend. The retained script lights the Magna Save ready sign (Light19/Light19b, "
 					"the bulbyellow primitive and two peg plastics) from it (LightType 1); it is placed at Light19, the lamp's own light object."
 				)
-			notes.append(f"Placed at the retained light {object_name}, whose co-located 'b' partner is the same lamp's glow.")
+			if object_name.endswith("b"):
+				notes.append(
+					f"Placed at the retained bulb light {object_name}, this lamp's illumination source (is_bulb_light, a small circular bulb shape). The table also draws the "
+					f"insert as the textured render overlay {object_name[:-1]} (is_bulb_light false, a playfield-image layer); that overlay is not a bulb object and is not "
+					"used for the position."
+				)
+			else:
+				notes.append(f"Placed at the retained bulb light {object_name} (is_bulb_light), this lamp's own light object; the table also lights a {object_name}b partner for it.")
 			extra["spatial"] = located(identifier, "emitter", [LAMP_POSITIONS[address][1:]], VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE, MANUAL_SOURCE, status=LAMP_PLACEMENT_STATUS)
 		notes.append(f"In the ROM's Single Lamps test (run l4-single-lamps, step {address}) it is the one lamp that blinks and the ROM calls it '{ROM_LAMP_NAMES[address]}' (the display draws 0 as O and 5 as S).")
 		refs = refs + (RUNTIME_SOURCE,)
@@ -1326,9 +1339,10 @@ def mechanisms() -> list[dict[str, Any]]:
 		mechanism(
 			"mechanism.drawbridge-targets", "Drawbridge moving target bank", "motorized", [output_id("Motor Targets (UPF) Relay")],
 			["switch.matrix-16", "switch.matrix-24", "switch.matrix-33", "switch.matrix-34", "switch.matrix-35"],
-			"The Moving Target Assembly (C-12464) on the upper playfield carries three targets (33 upper, 34 middle, 35 lower; A-11177-1 left and A-11315-3 "
-			"mid and right) that a Motor Assembly (B-12465: an 11 RPM motor, cam and a snap-action switch with roller 5647-12073-06) raises and lowers, "
-			"switched by the Motor Targets relay (16). The UP (16) and DOWN (24) switches report the two ends of the travel. The operator message calls it a "
+			"The Moving Target Assembly (C-12464) on the upper playfield carries three targets (33 upper, 34 middle, 35 lower) that a Motor Assembly (B-12465: an 11 RPM motor, cam and a snap-action switch with roller 5647-12073-06) raises and lowers, "
+			"switched by the Motor Targets relay (16). The assembly's parts page (printed 58) lists A-11177-1 as the left target assembly and A-11315-3 as the "
+			"mid and right target assembly, while the Upper Playfield Switches list (printed 72) prints A-11177-1 for 33 and 34 and A-11315-3 for 35, so the "
+			"two disagree about the middle target; a recreation cannot express the difference. The UP (16) and DOWN (24) switches report the two ends of the travel. The operator message calls it a "
 			"three-target version of the Pin-Bot five-target raising/lowering motor bank and says the targets must be completed to gain access to the "
 			"Drawbridge ramp. The retained script models it as a cvpmMech (linear, length 60, 50 steps, one solenoid): position 0 closes 16 and position 50 "
 			"closes 24, the targets are dropped from position 49 and raised at 0. " + DRAWBRIDGE_BEHAVIOR,
