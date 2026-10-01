@@ -166,7 +166,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 160 | 1993 | Wipe Out | Gottlieb | partial | 13% |
 | 161 | 1993 | Bushido | Inder/Spinball (Spain) | partial | 13% |
 | 162 | 1993 | Addams Family Values (Coin Dropper) (L-4) | Williams | partial | 13% |
-| 163 | 1993 | Bram Stoker's Dracula | Williams | partial | 88% |
+| 163 | 1993 | Bram Stoker's Dracula | Williams | partial | 94% |
 | 164 | 1993 | Indiana Jones: The Pinball Adventure | Williams | author_ready | 100% |
 | 165 | 1993 | Star Trek: The Next Generation | Williams | partial | 88% |
 | 166 | 1993 | White Water | Williams | partial | 94% |

@@ -185,6 +185,13 @@ class CoverageTests(unittest.TestCase):
 		for conflict in conflicts:
 			self.assertGreaterEqual(len(conflict["source_refs"]), 2, conflict["id"])
 			self.assertGreater(len(conflict["description"]), 400, conflict["id"])
+			# Only the sam.c comment-block naming defect is settled by higher-authority sources.
+			expected = "ignored" if conflict["id"] == "conflict.coin-door-adjust-button-order" else "unresolved"
+			self.assertEqual(expected, conflict.get("status", "unresolved"), conflict["id"])
+		for device in self.definition["inputs"]:
+			if device["binding"]["device"] in (-2, -1):
+				self.assertEqual("validated", device["provenance"]["status"])
+				self.assertIn("conflict.coin-door-adjust-button-order is ignored", device["physical"]["notes"])
 
 	def test_promotion_gate_refuses_author_ready_while_conflicts_remain(self) -> None:
 		self.assertNotEqual("author_ready", self.definition["coverage"]["status"])

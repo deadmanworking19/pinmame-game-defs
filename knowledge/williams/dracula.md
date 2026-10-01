@@ -1,9 +1,10 @@
 # Bram Stoker's Dracula (Williams, 1993)
 
 Coverage: **partial** — every dimension is validated except one lamp with no resolvable
-spatial evidence (lamp 53, Magnet) and one unresolved wiring-provenance conflict
-(`conflict.upper-flipper-circuit-side-naming`). See
-`reports/spatial/williams/bram-stoker-s-dracula-1993.md` for the full audit.
+spatial evidence (lamp 53, Magnet). One naming disagreement about solenoids 33-36 is
+recorded as an ignored conflict (`conflict.upper-flipper-circuit-side-naming`), because it
+cannot change a recreation. See `reports/spatial/williams/bram-stoker-s-dracula-1993.md`
+for the full audit.
 
 ## Overview
 
@@ -68,11 +69,12 @@ diverter and Top Lockup post) and Monster Bash's repurposed Fliptronic switch po
 Pinned PinMAME's own `src/wpc/core.h` macros (`sURFlipPow`/`sURFlip` = 33/34,
 `sULFlipPow`/`sULFlip` = 35/36) call 33/34 the upper-**right** circuit and 35/36 the
 upper-**left** circuit, while this manual's own Solenoid/Flasher Table prints the
-opposite ("Up Lt. F." at 33/34, "Up Rt. F." at 35/36) — a genuine, unresolved
-left/right-naming disagreement recorded as `conflict.upper-flipper-circuit-side-naming`,
-in the same family as Attack From Mars's afm.c loop-gate naming defect. It does not
-affect any device's function or address, both of which are taken from the manual's
-function column directly.
+opposite ("Up Lt. F." at 33/34, "Up Rt. F." at 35/36), in the same family as Attack
+From Mars's afm.c loop-gate naming defect. It does not affect any device's function or
+address: both are taken from the manual's function column, and the retained script's
+`SolCallback(33)`-`(36)` bindings agree. The disagreement is therefore a naming and
+board-designator detail, recorded as the ignored `conflict.upper-flipper-circuit-side-naming`
+with both readings stated in each device note; structured wiring follows the manual's table.
 
 ## Custom mechanisms
 
@@ -210,13 +212,12 @@ conflict.
   matching `Light` object in the retained extraction and no reference anywhere in
   `script.vbs`. Resolving its position needs either a different retained table that does
   model it, or a playfield photograph/insert map.
-- `conflict.upper-flipper-circuit-side-naming`: pinned PinMAME's own macro naming and
-  this manual's printed circuit-side label disagree about which upper-flipper driver-
-  transistor pair (33/34 vs 35/36) is nominally "right" versus "left." Resolving it would
-  need either a WPC-Fliptronic schematic sheet that traces the physical driver-board
-  silkscreen, or acceptance that the naming is cosmetic and immaterial once the real
-  device functions are known (which this definition already treats it as, while still
-  recording the disagreement).
+- `conflict.upper-flipper-circuit-side-naming` (ignored, not blocking): pinned PinMAME's
+  own macro naming and this manual's printed circuit-side label disagree about which
+  upper-flipper driver-transistor pair (33/34 vs 35/36) is nominally "right" versus
+  "left." The naming cannot reach a recreation, because the device functions and public
+  addresses agree; a WPC-Fliptronic schematic sheet that traces the physical driver-board
+  silkscreen would still settle which label is right.
 
 ## Sources
 

@@ -266,6 +266,19 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual(["manual.data-east.secret-service.1988", "human-review.secret-service-production-renders"], right_wire["source_refs"])
         self.assertIn("production playfield wiring diagram labels CN3 pin 6 BLU-YEL", right_wire["description"])
         self.assertNotIn("manual.data-east.secret-service.1988-preliminary", right_wire["source_refs"])
+        # A wire colour or transistor designator alone cannot reach a recreation, so both are kept but not blocking.
+        transistors = next(item for item in self.definition["conflicts"] if item["id"] == "conflict.special-coil-driver-transistors")
+        for conflict in (right_wire, transistors):
+            self.assertEqual("ignored", conflict["status"])
+            self.assertIn("wiring-detail disagreement", conflict["rationale"])
+        flippers = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.right-flipper-pair")
+        self.assertIn("BIU-YEL", flippers["behavior"])
+        self.assertIn("BLU-YEL", flippers["behavior"])
+        for output in self.definition["outputs"]:
+            if output["id"] in {"coil.driver-17", "coil.driver-19", "coil.driver-20"}:
+                self.assertIn("conflict.special-coil-driver-transistors is ignored", output["physical"]["notes"])
+                # The separate public-mapping conflict keeps these outputs conflicted.
+                self.assertEqual("conflicted", output["provenance"]["status"])
 
     def test_spatial_report_uses_952_bounds_and_names_every_projection(self) -> None:
         report = load_json(REPORT_PATH)

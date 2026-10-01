@@ -1269,7 +1269,8 @@ def _dedicated_switch(address: int) -> dict[str, Any]:
 			"is: its descriptive comment block lists D21 as Plus and D22 as Minus, while its own keyboard "
 			"input-port table (SAM_COMPORTS) puts Minus on the bit that becomes public -2 and Plus on the "
 			"bit that becomes public -1. This manual agrees with the input-port table, so two sources "
-			"against one resolve it that way; see conflict.coin-door-adjust-button-order."
+			"against one resolve it that way. The comment block is a naming defect in PinMAME source, not a "
+			"conflict (conflict.coin-door-adjust-button-order is ignored)."
 		)
 	if availability == "unused":
 		device["spatial"] = not_applicable("unused", MANUAL_SOURCE)
@@ -1970,12 +1971,20 @@ def conflicts() -> list[dict[str, Any]]:
 				"and Plus at -1, which is what this record uses. It is recorded as a first-class conflict for "
 				"provenance completeness in the same spirit as the naming defect already recorded for "
 				"Williams Bram Stoker's Dracula, even though both addresses are coin-door service buttons "
-				"and neither can affect an authored playfield device. Unresolved in pinned source. "
+				"and neither can affect an authored playfield device. "
 				"Resolution path: an upstream correction to sam.c so its descriptive dedswitch_upper_r "
 				"comment block agrees with its own SAM_COMPORTS assignment, which any contributor can open "
 				"as a pull request against vpinball/pinmame and a maintainer can merge; no physical "
 				"evidence is outstanding, because this machine's own dedicated-switch block already "
-				"settles which red button is which. Unresolved."
+				"settles which red button is which."
+			),
+			"status": "ignored",
+			"rationale": (
+				"A naming defect in PinMAME source that higher-authority sources already settle, not a conflict "
+				"(runbook, What is not a conflict): sam.c's own SAM_COMPORTS input-port table and this machine's "
+				"printed dedicated-switch block both put Minus at public -2 and Plus at public -1, so only a "
+				"descriptive source comment disagrees and nothing a recreation consumes is in doubt. Both device "
+				"notes state it."
 			),
 			"source_refs": [CORE_SOURCE, MANUAL_SOURCE],
 		},
@@ -2249,10 +2258,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Promotion to `author_ready` is refused. Two output addresses have no spatial record, four "
+		"Promotion to `author_ready` is refused. Two output addresses have no spatial record, three "
 		"conflicts remain unresolved (`conflict.sam-invsw-never-populated`, "
-		"`conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`, "
-		"`conflict.coin-door-adjust-button-order`), opto polarity is unsettled for all seven "
+		"`conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`; the "
+		"`conflict.coin-door-adjust-button-order` naming defect is recorded as ignored), opto polarity is unsettled for all seven "
 		"manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing. Recreation "
 		"knowledge remains observed until the missing placements and polarity conflicts can be reconciled. The record therefore stays `partial` "
 		"with `coverage.missing = [\"polarity\", \"recreation_notes\", \"spatial_placement\", \"unresolved_conflicts\"]` and "

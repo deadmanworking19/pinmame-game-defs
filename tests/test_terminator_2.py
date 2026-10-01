@@ -34,6 +34,14 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
 		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual({"conflict.solenoid-12-physical-presence", "conflict.lamp-schematic-connector-labels", "conflict.gi-string-routing", "conflict.flashing-channel-24"}, {item["id"] for item in self.definition["conflicts"]})
+		# The lamp sheets disagree only on connector labels, a wiring detail kept as an ignored conflict.
+		statuses = {item["id"]: item.get("status", "unresolved") for item in self.definition["conflicts"]}
+		self.assertEqual("ignored", statuses.pop("conflict.lamp-schematic-connector-labels"))
+		self.assertEqual({"unresolved"}, set(statuses.values()))
+		for lamp in (item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"):
+			self.assertEqual("validated", lamp["provenance"]["status"])
+			self.assertIn(f"J137-{lamp['binding']['device'] // 10}", lamp["physical"]["notes"])
+			self.assertIn("conflict.lamp-schematic-connector-labels is ignored", lamp["physical"]["notes"])
 		self.assertNotEqual("author_ready", self.definition["coverage"]["status"])
 
 	def test_switch_matrix_and_controller_inputs_are_complete(self) -> None:
@@ -137,8 +145,8 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("Terminator 2 Judgement Day Operations Manual.pdf", manual["original_filename"])
 		self.assertEqual({
 			"excerpt.t2.switch-matrix", "excerpt.t2.solenoid-table-01-08", "excerpt.t2.solenoid-table-09-16",
-			"excerpt.t2.solenoid-table-flashers-gi", "excerpt.t2.lamp-matrix", "excerpt.t2.major-mechanisms-map",
-			"excerpt.t2.cannon-platform-assembly",
+			"excerpt.t2.solenoid-table-flashers-gi", "excerpt.t2.lamp-matrix", "excerpt.t2.lamp-schematic",
+			"excerpt.t2.major-mechanisms-map", "excerpt.t2.cannon-platform-assembly",
 		}, {excerpt["id"] for excerpt in manual["excerpts"]})
 		self.assertTrue(all("scanned page rendered at its native resolution" in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
 		self.assertTrue(all("pdftoppm" not in excerpt["image_derivation"] for excerpt in manual["excerpts"]))

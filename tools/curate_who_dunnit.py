@@ -391,7 +391,7 @@ def source_records() -> list[dict[str, Any]]:
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":LAMP_CONNECTOR_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
-         "locator":"PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column conflict with PDF 124/136 matrix headers.",
+         "locator":"PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column differ from the PDF 124/136 matrix headers.",
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":FLIPTRONIC_CONNECTOR_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
@@ -403,7 +403,7 @@ def source_records() -> list[dict[str, Any]]:
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":REEL_BOARD_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
-         "locator":"PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
+         "locator":"PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims differ from PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
          "license":"NOASSERTION","rights":"NOASSERTION","attribution":"Bally/Midway; scan hosted by the Internet Pinball Machine Database"},
         {"id":FLIPPER_PART_SRC,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MID}/ipdb-3685/{MANUAL_NAME}",
          "original_filename":MANUAL_NAME,"sha256":MANUAL_SHA,
@@ -513,10 +513,14 @@ def inputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[s
         elif offset in (1,3):
             side="right" if offset==1 else "left"
             item["physical"]["notes"]=f"Lower {side} cabinet opto button; this is F{offset+1}, not the F{offset} E.O.S. switch."
-            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J905-1" if offset==1 else "J905-2","return_connection":"J905-6 switch ground"}
+            # Wire colours follow the PDF 126 switch matrix, the game's own wiring table.
+            item["wiring"]={"board":"Fliptronic II board A-15472-1","control_connection":"J905-1" if offset==1 else "J905-2",
+                            "control_wire":"Black-Violet" if offset==1 else "Black-Gray","return_connection":"J905-6 switch ground"}
             if offset==3:
-                item["physical"]["notes"]+=" Factory wire-colour conflict at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. The connector/binding agrees; physical wire colour remains unresolved (conflict.left-flipper-opto-wire)."
-                item["provenance"]=prov(MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC,CORE_SRC,PROFILE_SRC,RUNTIME_SRC,status="conflicted")
+                item["physical"]["notes"]+=(" Wire colour at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. "
+                    "The pin, the device and public input 114 agree, so this is a wiring detail, not a conflict (conflict.left-flipper-opto-wire is ignored). "
+                    "Structured wiring follows the PDF 126 switch matrix, the game's own wiring table.")
+                item["provenance"]=prov(MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC,CORE_SRC,PROFILE_SRC,RUNTIME_SRC)
         elif auxiliary:
             side="right" if offset==5 else "left"
             pin="J905-3" if offset==5 else "J905-5"
@@ -598,10 +602,13 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
         if address in {23,24,27,28}:
             connector,wire={23:("J122-3","Blue-Orange"),24:("J122-4","Blue-Yellow"),
                             27:("J126-7","Blue-Violet"),28:("J126-8","Blue-Gray")}[address]
-            item["physical"]["notes"]+=(f" Structured drive wiring is only the PDF 128 (2-46) table claim {row[5]} {row[6]}; "
-                f"PDF 155 (3-23) instead assigns this {'left' if address<25 else 'right'} reel phase to {connector} {wire}. "
-                "Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.")
-            item["provenance"]=prov(REEL_TABLE_SRC,REEL_BOARD_SRC,CORE_SRC,SCRIPT_SRC,"runtime.who-dunnit.reels.wd-12",status="conflicted")
+            side='left' if address<25 else 'right'
+            item["physical"]["notes"]+=(f" Structured drive wiring follows the PDF 128 (2-46) circuit table, the game's own wiring table: {row[5]} {row[6]}. "
+                f"PDF 155 (3-23) instead routes this {side} reel phase to {connector} {wire}. "
+                f"Both pages, the ROM's T.18 reel test and the retained script's {'MechReelL' if address<25 else 'MechReelR'} agree that this output drives the {side} reel, "
+                "so the pin disagreement is a wiring detail, not a conflict (conflict.reel-drive-connectors is ignored). "
+                "ROM T.18 proves the logical output pair, not a physical connector choice.")
+            item["provenance"]=prov(REEL_TABLE_SRC,REEL_BOARD_SRC,CORE_SRC,SCRIPT_SRC,"runtime.who-dunnit.reels.wd-12")
         if address in {45,46,47,48}:
             manual_address={45:29,46:30,47:31,48:32}[address]
             item["aliases"].append({"namespace":"manual.solenoid","value":str(manual_address)})
@@ -643,11 +650,11 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
               "aliases":[{"namespace":"pinmame.lamp","value":str(address)}],
               "availability":"unused" if unused else "used",
               "physical":{"location":"cabinet" if cabinet else "playfield"},
-              "provenance":prov(MANUAL_SRC,LAMP_CONNECTOR_SRC,SCRIPT_SRC,status="conflicted")}
+              "provenance":prov(MANUAL_SRC,LAMP_CONNECTOR_SRC,SCRIPT_SRC)}
         if address in parts:
             bulb,assembly=parts[address]
             item["physical"].update({"quantity":1,"part_number":bulb,"assembly_part_number":assembly,
-                                     "notes":"#555 insert bulb" if bulb=="24-8768" else "#44 incandescent bulb"})
+                                     "notes":"#555 insert bulb." if bulb=="24-8768" else "#44 incandescent bulb."})
         col,row=divmod(address,10)
         drive,drive_conn,drive_q=LAMP_COLUMN[col-1]
         ret,ret_conn,ret_q=LAMP_ROW[row-1]
@@ -657,10 +664,11 @@ def outputs(candidates: dict[tuple[str,int],list[dict[str,Any]]], geometry:dict[
         board_column=f"J138-{col if col<8 else 9}"
         board_row=f"J{'134' if cabinet else '135'}-{row if row<3 else row+1}"
         item["physical"]["notes"]=(item["physical"].get("notes","")+" ").lstrip()+(
-            f"Structured wiring retains the PDF 124 (2-42) matrix claim {drive_conn}/{ret_conn} only; it is not settled physical wiring. "
+            f"Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: {drive_conn}/{ret_conn}. "
             f"PDF 159 (3-27) lists {board_column} for playfield column {col} and {board_row} for {'cabinet' if cabinet else 'playfield'} row {row}; "
             "J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. "
-            "The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.")
+            "The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. "
+            "Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).")
         if unused:item["spatial"]=na("unused",MANUAL_SRC)
         elif cabinet:item["spatial"]=na("cabinet_or_service",MANUAL_SRC)
         elif (sp:=candidate_spatial("lamp",address,candidates,TABLE_SRC,SCRIPT_SRC,MANUAL_SRC)):
@@ -778,14 +786,17 @@ def build() -> dict[str,Any]:
                           "description":"The manual's printed 2-46 solenoid drive table lists the right jet coil as AE-26-1500, while its 2-46 location table and printed 2-21 A-9415-2 jet assembly drawing list AE-26-1200. The physical fitted part is not established by these conflicting factory cells. Resolution path: inspect a documented original right-jet assembly or obtain an applicable factory correction before asserting a part number.",
                           "source_refs":[MANUAL_SRC,ASSEMBLY_SRC],"status":"unresolved"},
                          {"id":"conflict.lamp-matrix-connectors","path":"outputs[group=pinmame.output.lamp].wiring",
-                          "description":"PDF 124 (printed 2-42) lamp matrix lists columns 1–6 as J137-1..6, columns 7/8 as J138-7/9, and rows 1–8 as J133-1,2,4..9. PDF 159 (printed 3-27) Power Driver Board connector list explicitly says J133 Not Used and J137 Not Used, lists playfield columns 1–8 as J138-1..7/9 (J138-8 Key), playfield rows as J135-1,2,4..9, cabinet rows 6–8 as J134-7..9, and column 8 to insert lamps as J136-3. All 64 matrix cells carry the unresolved row-header discrepancy; columns 1–6 also carry the column-header discrepancy, and cabinet lamps 87/88 have the J134/J136 routing claim. The structured wiring preserves the matrix transcription, not a settled physical connector choice. Only J138-7/column 7 and J138-9/column 8 agree narrowly between pages. Resolution path: inspect a documented original production lamp harness and board connector routing or obtain an applicable factory correction before selecting physical connectors.",
-                          "source_refs":[MANUAL_SRC,LAMP_CONNECTOR_SRC],"status":"unresolved"},
+                          "description":"PDF 124 (printed 2-42) lamp matrix lists columns 1–6 as J137-1..6, columns 7/8 as J138-7/9, and rows 1–8 as J133-1,2,4..9. PDF 159 (printed 3-27) Power Driver Board connector list explicitly says J133 Not Used and J137 Not Used, lists playfield columns 1–8 as J138-1..7/9 (J138-8 Key), playfield rows as J135-1,2,4..9, cabinet rows 6–8 as J134-7..9, and column 8 to insert lamps as J136-3. All 64 matrix cells carry the unresolved row-header discrepancy; columns 1–6 also carry the column-header discrepancy, and cabinet lamps 87/88 have the J134/J136 routing claim. Structured wiring follows the matrix transcription. Only J138-7/column 7 and J138-9/column 8 agree narrowly between pages. Resolution path: inspect a documented original production lamp harness and board connector routing or obtain an applicable factory correction before selecting physical connectors.",
+                          "status":"ignored","rationale":"A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the two pages differ only in connector headers and put every lamp on the same matrix column and row, and the matrix also gives each lamp its name, bulb and location, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 124 lamp matrix, the game's own wiring table, and each lamp note states the PDF 159 reading.",
+                          "source_refs":[MANUAL_SRC,LAMP_CONNECTOR_SRC]},
                          {"id":"conflict.left-flipper-opto-wire","path":"inputs[id=switch.fliptronic-114].wiring.control_wire",
-                          "description":"PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; physical wire colour is unresolved and no structured control_wire is selected. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
-                          "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"},
+                          "description":"PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; structured wiring follows the PDF 126 colour. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
+                          "status":"ignored","rationale":"A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the pages differ only in the wire colour at J905-2 and agree on the pin, the left cabinet opto and public input 114, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 126 switch matrix, the game's own wiring table, and the device note states the PDF 157 reading.",
+                          "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC]},
                          {"id":"conflict.reel-drive-connectors","path":"outputs[id=solenoid.23|solenoid.24|solenoid.27|solenoid.28].wiring",
-                          "description":"PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins, but left/right physical reel routing differs. Structured wiring preserves the circuit-table claim with conflicted provenance. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
-                          "source_refs":[REEL_TABLE_SRC,REEL_BOARD_SRC],"status":"unresolved"},
+                          "description":"PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins; both pages agree that 23/24 drive the left reel and 27/28 the right reel. Structured wiring follows the circuit table. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
+                          "status":"ignored","rationale":"A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the pages differ only in which driver-board pins and wires carry the left and right reel phases. Both pages, the ROM's T.18 reel test and the retained script agree that public 23/24 drive the left reel and 27/28 the right reel, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 128 circuit table, the game's own wiring table, and each output note states the PDF 155 reading.",
+                          "source_refs":[REEL_TABLE_SRC,REEL_BOARD_SRC]},
                          {"id":"conflict.auxiliary-flipper-opto-fitment","path":"inputs[id=switch.fliptronic-116|switch.fliptronic-118].availability",
                           "description":"PDF 126 (printed 2-44) F6/public 116 J905-3 and F8/public 118 J905-5 are labelled Upper Right/Left Flipper Opto (NOT USED), with no fitted switch parts. PDF 157 (printed 3-25) assigns J905-3 Black-Yellow to right flipper opto and J905-5 Black-Blue to left flipper opto. Each is a separate public channel; these pins cannot be folded into primary 112/114. Board-list routing does not establish actual fitted auxiliary contacts, and keyboard-conditional upper-button synthesis in core.c does not establish physical fitment, ROM consumption or always-mirrored inputs. Availability remains unknown and candidate. Upper flipper coils 33–35 and upper-left EOS 117 remain absent/unused as separately sourced. Resolution path: inspect a documented original production cabinet opto assembly/harness or obtain an applicable factory fitment correction, then use an isolated direct-input ROM probe to establish consumption and polarity if the contacts are fitted.",
                           "source_refs":[MANUAL_SRC,FLIPTRONIC_CONNECTOR_SRC],"status":"unresolved"},

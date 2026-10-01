@@ -228,8 +228,12 @@ class WhoDunnitTests(unittest.TestCase):
         conflicts = self.definition["conflicts"]
         self.assertEqual(6, len(conflicts))
         by_id={conflict["id"]:conflict for conflict in conflicts}
+        # Connector, pin and wire-colour disagreements are wiring details: kept, but not blocking.
+        wiring_details={"conflict.lamp-matrix-connectors","conflict.left-flipper-opto-wire","conflict.reel-drive-connectors"}
         for conflict in conflicts:
-            self.assertEqual("unresolved", conflict["status"])
+            self.assertEqual("ignored" if conflict["id"] in wiring_details else "unresolved", conflict["status"])
+            if conflict["id"] in wiring_details:
+                self.assertIn("wiring-detail disagreement", conflict["rationale"])
             self.assertIn("Resolution path:", conflict["description"])
             self.assertEqual(2,len(set(conflict["source_refs"])))
         jet=by_id["conflict.right-jet-coil-part"]
@@ -240,9 +244,10 @@ class WhoDunnitTests(unittest.TestCase):
                         "J138-1..7/9","J138-8 Key","J135-1,2,4..9","J134-7..9","J136-3"):
             self.assertIn(reading,lamps["description"])
         for lamp in self.lamps.values():
-            self.assertEqual("conflicted",lamp["provenance"]["status"])
+            self.assertEqual("validated",lamp["provenance"]["status"])
             self.assertIn(curator.LAMP_CONNECTOR_SRC,lamp["provenance"]["source_refs"])
-            self.assertIn("not settled physical wiring",lamp["physical"]["notes"])
+            self.assertIn("follows the PDF 124 (2-42) lamp matrix",lamp["physical"]["notes"])
+            self.assertIn("conflict.lamp-matrix-connectors is ignored",lamp["physical"]["notes"])
             self.assertIn("PDF 159 (3-27) lists", lamp["physical"]["notes"])
             self.assertIn("J138-7/column 7 and J138-9/column 8", lamp["physical"]["notes"])
             self.assertIn("J138-8 is a key", lamp["physical"]["notes"])
@@ -254,9 +259,13 @@ class WhoDunnitTests(unittest.TestCase):
         opto=by_id["conflict.left-flipper-opto-wire"]
         self.assertIn("Black-Gray",opto["description"])
         self.assertIn("Blue-Gray",opto["description"])
-        self.assertEqual("conflicted",self.switches[114]["provenance"]["status"])
+        self.assertEqual("validated",self.switches[114]["provenance"]["status"])
         self.assertEqual("J905-2",self.switches[114]["wiring"]["control_connection"])
-        self.assertNotIn("control_wire",self.switches[114]["wiring"])
+        # The game's own switch matrix decides the structured colour; the board list's reading stays in the note.
+        self.assertEqual("Black-Gray",self.switches[114]["wiring"]["control_wire"])
+        self.assertIn("Blue-Gray",self.switches[114]["physical"]["notes"])
+        self.assertEqual("Black-Violet",self.switches[112]["wiring"]["control_wire"])
+        # The coil-part and auxiliary-opto fitment conflicts still hold physical wiring open.
         self.assertEqual("conflicted",self.definition["coverage"]["dimensions"]["physical_wiring"])
         flippers = by_id["conflict.lower-flipper-coil-part"]
         self.assertEqual({curator.FLIPPER_PART_SRC, curator.DUPLICATE_TABLE_SRC}, set(flippers["source_refs"]))
@@ -310,7 +319,8 @@ class WhoDunnitTests(unittest.TestCase):
         for address, (table_pin, board_pin, board_wire) in expected.items():
             output = self.solenoids[address]
             self.assertEqual(f"{table_pin} playfield", output["wiring"]["drive_connection"])
-            self.assertEqual("conflicted", output["provenance"]["status"])
+            self.assertEqual("validated", output["provenance"]["status"])
+            self.assertIn("conflict.reel-drive-connectors is ignored", output["physical"]["notes"])
             self.assertTrue(set(conflict["source_refs"]) <= set(output["provenance"]["source_refs"]))
             self.assertIn(f"{board_pin} {board_wire}", output["physical"]["notes"])
             self.assertIn("not a physical connector choice", output["physical"]["notes"])

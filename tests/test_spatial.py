@@ -503,9 +503,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Guns N' Roses adds the factory chart versus upper-flipper assembly coil conflict.
 		# World Poker Tour and WHO dunnit each add one definition with unresolved factory conflicts.
 		# This requirement counts machines, so additional conflicts on these games add no further gap.
-		# Taxi retains equal-authority factory load/connector disagreements instead of guessing.
+		# Taxi retains its equal-authority factory load disagreement instead of guessing; its connector disagreements are ignored wiring details.
 		# Black Knight 2000 adds its upper-flipper button conflict (the Solenoid Table and the cabinet wiring drawing disagree).
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Bram Stoker's Dracula's only conflict, a circuit-side naming detail, is now ignored, removing one.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

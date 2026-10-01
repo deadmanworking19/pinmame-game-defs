@@ -59,11 +59,12 @@ class DraculaDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		# The only conflict is an ignored naming detail, so lamp 53's placement is the sole blocker.
+		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"physical_wiring", "spatial_placement"}:
+			if dimension == "spatial_placement":
 				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.bram-stoker-s-dracula.1993", self.definition["machine"]["id"])
@@ -132,15 +133,21 @@ class DraculaDefinitionTests(unittest.TestCase):
 		mechanism = next(m for m in self.definition["mechanisms"] if m["id"] == "mechanism.drop-target")
 		self.assertEqual(["switch.matrix-15", "switch.matrix-16"], sorted(mechanism["sensors"]))
 
-	def test_the_upper_flipper_circuit_side_naming_conflict_is_recorded_and_unresolved(self) -> None:
+	def test_the_upper_flipper_circuit_side_naming_conflict_is_recorded_and_ignored(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
 		self.assertEqual({"conflict.upper-flipper-circuit-side-naming"}, set(conflicts))
 		conflict = conflicts["conflict.upper-flipper-circuit-side-naming"]
 		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("unresolved", description)
+		# Both readings stay on the record; the device and its address agree, so it does not block.
+		self.assertEqual("ignored", conflict["status"])
+		self.assertIn("naming and board-designator disagreement", conflict["rationale"])
+		for label in ("sURFlipPow", "Up Lt. F.", "Up Rt. F."):
+			self.assertIn(label, conflict["description"])
 		for address in (33, 34, 35, 36):
 			self.assertIn(str(address), conflict["path"])
+			solenoid = self.solenoids[address]
+			self.assertEqual("validated", solenoid["provenance"]["status"])
+			self.assertIn("conflict.upper-flipper-circuit-side-naming is ignored", solenoid["physical"]["notes"])
 
 	def test_lamp_53_has_no_fabricated_spatial_record(self) -> None:
 		lamp = self.lamps[53]

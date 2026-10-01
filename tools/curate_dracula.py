@@ -649,7 +649,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.dracula.solenoid-flasher-wiring",
 					"locator": "PDF page 120, printed page 3-8, SOLENOID/FLASHER TABLE",
 					"path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/solenoid-flasher-wiring.md",
-					"sha256": "68a9465bd5a0981182055b0be1f9a1cd30202b1d81c6c46821b26d5abdecbab6",
+					"sha256": "e560110be4445935305c5a99a55d1b23b498ccd52d7c3eafd8478f8f99356d90",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -1014,9 +1014,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address in {33, 34, 35, 36}:
 				notes += (
 					" Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair "
-					"(this machine has no upper flippers); see conflict.upper-flipper-circuit-side-naming for the "
-					"disagreement between pinned PinMAME's own macro naming and this manual's printed circuit-side "
-					"label."
+					"(this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the "
+					"upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' "
+					"and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this "
+					"device and its public address, so the side label is a naming detail, not a conflict "
+					"(conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table."
 				)
 			if address in {45, 46, 47, 48}:
 				notes += " PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed)."
@@ -1468,16 +1470,23 @@ def conflicts() -> list[dict[str, Any]]:
 				"round: 'Up Lt. F. Power/Hold' at 33/34 and 'Up Rt. F. Power/Hold' at 35/36. Neither the device "
 				"functions (Up/Down Post Diverter, Right Gate, Castle Release Post, Left Gate Actuator) nor their "
 				"public addresses are in doubt on either source; only which now-repurposed flipper-side driver "
-				"transistor pair physically underlies each address disagrees. Unresolved; recorded for provenance "
-				"completeness rather than blocking the device labels, which are taken directly from the manual's "
-				"function column. "
+				"transistor pair physically underlies each address disagrees. The device labels are taken directly "
+				"from the manual's function column, and the retained script's SolCallback(33..36) bindings agree. "
 				"Resolution path: this is a board fact rather than a game fact, so any Fliptronic II board "
 				"schematic that assigns each upper power/hold driver transistor to a side settles it -- read "
 				"it against the four printed rows here, Q1/Q5 on J907-2/J907-1 for 33/34 and Q2/Q7 on "
 				"J907-5/J907-4 for 35/36; this manual's own pages 3-17 through 3-21 do not, because they "
 				"print the Fliptronic II cabinet-switch and end-of-stroke circuits rather than the coil-driver "
 				"assignment. Failing that, a photograph of a Fliptronic II board showing the transistor "
-				"silkscreen beside each J907 pin, or corrected upstream naming in src/wpc/core.h. Unresolved."
+				"silkscreen beside each J907 pin, or corrected upstream naming in src/wpc/core.h."
+			),
+			"status": "ignored",
+			"rationale": (
+				"A naming and board-designator disagreement, not a conflict (runbook, What is not a conflict): "
+				"PinMAME's macro names and the manual's printed circuit-side labels differ only on which upper-flipper "
+				"side and driver transistor pair each address uses, while the manual's function column and the retained "
+				"script agree on every device and its public address, so nothing a recreation consumes is in doubt. "
+				"Structured wiring follows the manual's own table, and each device note states both readings."
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
 		},
@@ -1515,12 +1524,12 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "conflicted",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1591,11 +1600,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"object anywhere in the retained extraction and is never referenced in script.vbs, so it has no "
 			"resolvable spatial evidence. Its `spatial` key is omitted rather than a coordinate being invented; "
 			"every other dimension this report audits is complete.",
-			"Solenoids 33-36 are wired through the Fliptronic upper-flipper driver-transistor pairs, and pinned "
-			"PinMAME's own macro naming disagrees with this manual's printed circuit-side label about which pair "
-			"is which (conflict.upper-flipper-circuit-side-naming). This does not affect any device's address or "
-			"function, which are taken from the manual directly, but it is an unresolved disagreement between "
-			"equal-authority sources and keeps physical_wiring conflicted.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1714,12 +1718,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses "
 		"this audit covers except lamp 53, and the deterministic curator reproduces the canonical artifact and "
 		"its pinned seed byte-for-byte. Lamp 53 (Magnet, #44) is a genuine bulb per the manual with no resolvable "
-		"geometry in the retained extraction, and solenoids 33-36 carry an unresolved disagreement between pinned "
-		"PinMAME's own macro naming and this manual's printed circuit-side label about which upper-flipper driver "
-		"pair underlies each address (`conflict.upper-flipper-circuit-side-naming`). The definition therefore "
-		"carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so "
-		"promotion to `author_ready` is refused; the record stays `partial` with `coverage.missing = "
-		"[\"spatial_placement\", \"unresolved_conflicts\"]`.",
+		"geometry in the retained extraction, so promotion to `author_ready` is refused; the record stays "
+		"`partial` with `coverage.missing = [\"spatial_placement\"]`. Solenoids 33-36 carry a disagreement between "
+		"pinned PinMAME's own macro naming and this manual's printed circuit-side label about which upper-flipper "
+		"driver pair underlies each address (`conflict.upper-flipper-circuit-side-naming`). The manual's function "
+		"column and the retained script agree on every device and its public address, so that naming difference "
+		"is recorded as an ignored conflict and does not block promotion.",
 		"",
 		"## Retained evidence",
 		"",

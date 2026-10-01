@@ -30,13 +30,15 @@
       ]
     },
     {
-      "description": "Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons lands on public switch -2 and which on -1. Its descriptive comment block over dedswitch_upper_r reads 'D21 - DED #22 - Plus (Coin Door)' then 'D22 - DED #23 - Minus', while its own keyboard input-port table SAM_COMPORTS assigns 'Minus' to the port bit that CORE_SETKEYSW shifts into switch-column-0 bit 5 (public -2) and 'Plus' to the bit that becomes bit 6 (public -1). This manual's own dedicated-switch block agrees with the input-port table: D-22 is MINUS (< / - RED BUTTON), part 180-5192-02, and D-23 is PLUS (+ / > RED BUTTON), same part. Two sources against one resolve it in favour of Minus at -2 and Plus at -1, which is what this record uses. It is recorded as a first-class conflict for provenance completeness in the same spirit as the naming defect already recorded for Williams Bram Stoker's Dracula, even though both addresses are coin-door service buttons and neither can affect an authored playfield device. Unresolved in pinned source. Resolution path: an upstream correction to sam.c so its descriptive dedswitch_upper_r comment block agrees with its own SAM_COMPORTS assignment, which any contributor can open as a pull request against vpinball/pinmame and a maintainer can merge; no physical evidence is outstanding, because this machine's own dedicated-switch block already settles which red button is which. Unresolved.",
+      "description": "Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons lands on public switch -2 and which on -1. Its descriptive comment block over dedswitch_upper_r reads 'D21 - DED #22 - Plus (Coin Door)' then 'D22 - DED #23 - Minus', while its own keyboard input-port table SAM_COMPORTS assigns 'Minus' to the port bit that CORE_SETKEYSW shifts into switch-column-0 bit 5 (public -2) and 'Plus' to the bit that becomes bit 6 (public -1). This manual's own dedicated-switch block agrees with the input-port table: D-22 is MINUS (< / - RED BUTTON), part 180-5192-02, and D-23 is PLUS (+ / > RED BUTTON), same part. Two sources against one resolve it in favour of Minus at -2 and Plus at -1, which is what this record uses. It is recorded as a first-class conflict for provenance completeness in the same spirit as the naming defect already recorded for Williams Bram Stoker's Dracula, even though both addresses are coin-door service buttons and neither can affect an authored playfield device. Resolution path: an upstream correction to sam.c so its descriptive dedswitch_upper_r comment block agrees with its own SAM_COMPORTS assignment, which any contributor can open as a pull request against vpinball/pinmame and a maintainer can merge; no physical evidence is outstanding, because this machine's own dedicated-switch block already settles which red button is which.",
       "id": "conflict.coin-door-adjust-button-order",
       "path": "inputs[binding.device=-2,-1]",
+      "rationale": "A naming defect in PinMAME source that higher-authority sources already settle, not a conflict (runbook, What is not a conflict): sam.c's own SAM_COMPORTS input-port table and this machine's printed dedicated-switch block both put Minus at public -2 and Plus at public -1, so only a descriptive source comment disagrees and nothing a recreation consumes is in doubt. Both device notes state it.",
       "source_refs": [
         "pinmame.core.4ec52ff0ac13",
         "manual.stern.pirates-of-the-caribbean.2006"
-      ]
+      ],
+      "status": "ignored"
     }
   ],
   "controller": {
@@ -647,7 +649,7 @@
       "label": "Minus (Red Button)",
       "physical": {
         "location": "Coin Door",
-        "notes": "Printed dedicated switch D-22. Read through sam.c's dedswitch_upper_r, which returns coreGlobals.swMatrix[0] as the low byte of the upper dedicated-switch word. Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons this is: its descriptive comment block lists D21 as Plus and D22 as Minus, while its own keyboard input-port table (SAM_COMPORTS) puts Minus on the bit that becomes public -2 and Plus on the bit that becomes public -1. This manual agrees with the input-port table, so two sources against one resolve it that way; see conflict.coin-door-adjust-button-order.",
+        "notes": "Printed dedicated switch D-22. Read through sam.c's dedswitch_upper_r, which returns coreGlobals.swMatrix[0] as the low byte of the upper dedicated-switch word. Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons this is: its descriptive comment block lists D21 as Plus and D22 as Minus, while its own keyboard input-port table (SAM_COMPORTS) puts Minus on the bit that becomes public -2 and Plus on the bit that becomes public -1. This manual agrees with the input-port table, so two sources against one resolve it that way. The comment block is a naming defect in PinMAME source, not a conflict (conflict.coin-door-adjust-button-order is ignored).",
         "part_number": "180-5192-02",
         "switch_type": "button"
       },
@@ -699,7 +701,7 @@
       "label": "Plus (Red Button)",
       "physical": {
         "location": "Coin Door",
-        "notes": "Printed dedicated switch D-23. Read through sam.c's dedswitch_upper_r, which returns coreGlobals.swMatrix[0] as the low byte of the upper dedicated-switch word. Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons this is: its descriptive comment block lists D21 as Plus and D22 as Minus, while its own keyboard input-port table (SAM_COMPORTS) puts Minus on the bit that becomes public -2 and Plus on the bit that becomes public -1. This manual agrees with the input-port table, so two sources against one resolve it that way; see conflict.coin-door-adjust-button-order.",
+        "notes": "Printed dedicated switch D-23. Read through sam.c's dedswitch_upper_r, which returns coreGlobals.swMatrix[0] as the low byte of the upper dedicated-switch word. Pinned sam.c disagrees with itself about which of the two red coin-door adjustment buttons this is: its descriptive comment block lists D21 as Plus and D22 as Minus, while its own keyboard input-port table (SAM_COMPORTS) puts Minus on the bit that becomes public -2 and Plus on the bit that becomes public -1. This manual agrees with the input-port table, so two sources against one resolve it that way. The comment block is a naming defect in PinMAME source, not a conflict (conflict.coin-door-adjust-button-order is ignored).",
         "part_number": "180-5192-02",
         "switch_type": "button"
       },

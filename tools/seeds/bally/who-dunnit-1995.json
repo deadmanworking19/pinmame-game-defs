@@ -11,34 +11,37 @@
       "status": "unresolved"
     },
     {
-      "description": "PDF 124 (printed 2-42) lamp matrix lists columns 1–6 as J137-1..6, columns 7/8 as J138-7/9, and rows 1–8 as J133-1,2,4..9. PDF 159 (printed 3-27) Power Driver Board connector list explicitly says J133 Not Used and J137 Not Used, lists playfield columns 1–8 as J138-1..7/9 (J138-8 Key), playfield rows as J135-1,2,4..9, cabinet rows 6–8 as J134-7..9, and column 8 to insert lamps as J136-3. All 64 matrix cells carry the unresolved row-header discrepancy; columns 1–6 also carry the column-header discrepancy, and cabinet lamps 87/88 have the J134/J136 routing claim. The structured wiring preserves the matrix transcription, not a settled physical connector choice. Only J138-7/column 7 and J138-9/column 8 agree narrowly between pages. Resolution path: inspect a documented original production lamp harness and board connector routing or obtain an applicable factory correction before selecting physical connectors.",
+      "description": "PDF 124 (printed 2-42) lamp matrix lists columns 1–6 as J137-1..6, columns 7/8 as J138-7/9, and rows 1–8 as J133-1,2,4..9. PDF 159 (printed 3-27) Power Driver Board connector list explicitly says J133 Not Used and J137 Not Used, lists playfield columns 1–8 as J138-1..7/9 (J138-8 Key), playfield rows as J135-1,2,4..9, cabinet rows 6–8 as J134-7..9, and column 8 to insert lamps as J136-3. All 64 matrix cells carry the unresolved row-header discrepancy; columns 1–6 also carry the column-header discrepancy, and cabinet lamps 87/88 have the J134/J136 routing claim. Structured wiring follows the matrix transcription. Only J138-7/column 7 and J138-9/column 8 agree narrowly between pages. Resolution path: inspect a documented original production lamp harness and board connector routing or obtain an applicable factory correction before selecting physical connectors.",
       "id": "conflict.lamp-matrix-connectors",
       "path": "outputs[group=pinmame.output.lamp].wiring",
+      "rationale": "A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the two pages differ only in connector headers and put every lamp on the same matrix column and row, and the matrix also gives each lamp its name, bulb and location, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 124 lamp matrix, the game's own wiring table, and each lamp note states the PDF 159 reading.",
       "source_refs": [
         "manual.bally.who-dunnit.1995.ipdb-3685",
         "manual.bally.who-dunnit.1995.lamp-connectors"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     },
     {
-      "description": "PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; physical wire colour is unresolved and no structured control_wire is selected. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
+      "description": "PDF 126 (printed 2-44) switch matrix F4 prints Black-Gray at J905-2. PDF 157 (printed 3-25) Fliptronic II A-15472-1 connector list prints J905-2 Blue-Gray to left flipper opto. The pin, device and public binding 114 agree; structured wiring follows the PDF 126 colour. Resolution path: inspect a documented original production left cabinet opto harness or obtain an applicable factory wiring correction.",
       "id": "conflict.left-flipper-opto-wire",
       "path": "inputs[id=switch.fliptronic-114].wiring.control_wire",
+      "rationale": "A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the pages differ only in the wire colour at J905-2 and agree on the pin, the left cabinet opto and public input 114, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 126 switch matrix, the game's own wiring table, and the device note states the PDF 157 reading.",
       "source_refs": [
         "manual.bally.who-dunnit.1995.ipdb-3685",
         "manual.bally.who-dunnit.1995.fliptronic-connectors"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     },
     {
-      "description": "PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins, but left/right physical reel routing differs. Structured wiring preserves the circuit-table claim with conflicted provenance. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
+      "description": "PDF 128 (printed 2-46) assigns Left Slot 23/24 to J126-7/-8 Blu-Vio/Blu-Gry and Right Slot 27/28 to J122-3/-4 Blu-Org/Blu-Yel. PDF 155 (printed 3-23) instead labels Left Reel Sol 23 & 24 at J122-3/-4 Blue-Orange/Blue-Yellow and Right Reel Sol 27 & 28 at J126-7/-8 Blue-Violet/Blue-Gray. Center 25/26 agrees on J122-1/-2. The wire colours follow the connector pins; both pages agree that 23/24 drive the left reel and 27/28 the right reel. Structured wiring follows the circuit table. ROM T.18 logical reel selections do not settle the physical connectors. Resolution path: inspect a documented original production reel harness/driver-board routing or obtain an applicable factory correction before selecting either physical connector mapping.",
       "id": "conflict.reel-drive-connectors",
       "path": "outputs[id=solenoid.23|solenoid.24|solenoid.27|solenoid.28].wiring",
+      "rationale": "A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the pages differ only in which driver-board pins and wires carry the left and right reel phases. Both pages, the ROM's T.18 reel test and the retained script agree that public 23/24 drive the left reel and 27/28 the right reel, so nothing a recreation consumes is in doubt. Structured wiring follows the PDF 128 circuit table, the game's own wiring table, and each output note states the PDF 155 reading.",
       "source_refs": [
         "manual.bally.who-dunnit.1995.reel-drive-table",
         "manual.bally.who-dunnit.1995.reel-driver-connectors"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     },
     {
       "description": "PDF 126 (printed 2-44) F6/public 116 J905-3 and F8/public 118 J905-5 are labelled Upper Right/Left Flipper Opto (NOT USED), with no fitted switch parts. PDF 157 (printed 3-25) assigns J905-3 Black-Yellow to right flipper opto and J905-5 Black-Blue to left flipper opto. Each is a separate public channel; these pins cannot be folded into primary 112/114. Board-list routing does not establish actual fitted auxiliary contacts, and keyboard-conditional upper-button synthesis in core.c does not establish physical fitment, ROM consumption or always-mirrored inputs. Availability remains unknown and candidate. Upper flipper coils 33–35 and upper-left EOS 117 remain absent/unused as separately sourced. Resolution path: inspect a documented original production cabinet opto assembly/harness or obtain an applicable factory fitment correction, then use an isolated direct-input ROM probe to establish consumption and polarity if the contacts are fitted.",
@@ -4337,6 +4340,7 @@
       "wiring": {
         "board": "Fliptronic II board A-15472-1",
         "control_connection": "J905-1",
+        "control_wire": "Black-Violet",
         "return_connection": "J905-6 switch ground"
       }
     },
@@ -4413,7 +4417,7 @@
       "kind": "switch",
       "label": "Lower Left Flipper Cabinet Opto",
       "physical": {
-        "notes": "Lower left cabinet opto button; this is F4, not the F3 E.O.S. switch. Factory wire-colour conflict at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. The connector/binding agrees; physical wire colour remains unresolved (conflict.left-flipper-opto-wire).",
+        "notes": "Lower left cabinet opto button; this is F4, not the F3 E.O.S. switch. Wire colour at J905-2: PDF 126 (2-44) prints Black-Gray; PDF 157 (3-25) prints Blue-Gray to left flipper opto. The pin, the device and public input 114 agree, so this is a wiring detail, not a conflict (conflict.left-flipper-opto-wire is ignored). Structured wiring follows the PDF 126 switch matrix, the game's own wiring table.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -4427,7 +4431,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4442,6 +4446,7 @@
       "wiring": {
         "board": "Fliptronic II board A-15472-1",
         "control_connection": "J905-2",
+        "control_wire": "Black-Gray",
         "return_connection": "J905-6 switch ground"
       }
     },
@@ -6602,7 +6607,7 @@
       "kind": "motor",
       "label": "Left Slot B",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J126-7 playfield Blu-Vio; PDF 155 (3-23) instead assigns this left reel phase to J122-3 Blue-Orange. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring follows the PDF 128 (2-46) circuit table, the game's own wiring table: J126-7 playfield Blu-Vio. PDF 155 (3-23) instead routes this left reel phase to J122-3 Blue-Orange. Both pages, the ROM's T.18 reel test and the retained script's MechReelL agree that this output drives the left reel, so the pin disagreement is a wiring detail, not a conflict (conflict.reel-drive-connectors is ignored). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6616,7 +6621,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6663,7 +6668,7 @@
       "kind": "motor",
       "label": "Left Slot A",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J126-8 playfield Blu-Gry; PDF 155 (3-23) instead assigns this left reel phase to J122-4 Blue-Yellow. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring follows the PDF 128 (2-46) circuit table, the game's own wiring table: J126-8 playfield Blu-Gry. PDF 155 (3-23) instead routes this left reel phase to J122-4 Blue-Yellow. Both pages, the ROM's T.18 reel test and the retained script's MechReelL agree that this output drives the left reel, so the pin disagreement is a wiring detail, not a conflict (conflict.reel-drive-connectors is ignored). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6677,7 +6682,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6844,7 +6849,7 @@
       "kind": "motor",
       "label": "Right Slot B",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J122-3 playfield Blu-Org; PDF 155 (3-23) instead assigns this right reel phase to J126-7 Blue-Violet. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring follows the PDF 128 (2-46) circuit table, the game's own wiring table: J122-3 playfield Blu-Org. PDF 155 (3-23) instead routes this right reel phase to J126-7 Blue-Violet. Both pages, the ROM's T.18 reel test and the retained script's MechReelR agree that this output drives the right reel, so the pin disagreement is a wiring detail, not a conflict (conflict.reel-drive-connectors is ignored). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6858,7 +6863,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6905,7 +6910,7 @@
       "kind": "motor",
       "label": "Right Slot A",
       "physical": {
-        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring is only the PDF 128 (2-46) table claim J122-4 playfield Blu-Yel; PDF 155 (3-23) instead assigns this right reel phase to J126-8 Blue-Gray. Physical connector routing remains unresolved (conflict.reel-drive-connectors). ROM T.18 proves the logical output pair, not a physical connector choice.",
+        "notes": "Slot-reel motor phase paired A/B through one driver per reel. PDF 109 item 6 lists A-19745-1 Stepper Motor PCB w/Spacers (3); PDF 155–156 labels the driver A-19043-1. Their kit/bare-board relationship and identical assembly identity are unverified. The schematic shows +12 V DC, ground and four motor leads. Manual lists these circuits under Flasher or General Purpose. Physical phase order remains unmeasured. Structured drive wiring follows the PDF 128 (2-46) circuit table, the game's own wiring table: J122-4 playfield Blu-Yel. PDF 155 (3-23) instead routes this right reel phase to J126-8 Blue-Gray. Both pages, the ROM's T.18 reel test and the retained script's MechReelR agree that this output drives the right reel, so the pin disagreement is a wiring detail, not a conflict (conflict.reel-drive-connectors is ignored). ROM T.18 proves the logical output pair, not a physical connector choice.",
         "part_number": "14-8024 12V"
       },
       "provenance": {
@@ -6919,7 +6924,7 @@
           "pinmame.core.8371478a7640.wpc-c",
           "pinmame.core.8371478a7640.core-h"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8027,7 +8032,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-1. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8037,7 +8042,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8086,7 +8091,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-2. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8096,7 +8101,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8145,7 +8150,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-4. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8155,7 +8160,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8204,7 +8209,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-5. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8214,7 +8219,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8263,7 +8268,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-6. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8273,7 +8278,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8322,7 +8327,7 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-7. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8332,7 +8337,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8381,7 +8386,7 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-8. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8391,7 +8396,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8440,7 +8445,7 @@
       "physical": {
         "assembly_part_number": "B-9414-3",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-1/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-1/J133-9. PDF 159 (3-27) lists J138-1 for playfield column 1 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8450,7 +8455,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8499,7 +8504,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-1. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8509,7 +8514,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8558,7 +8563,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-2. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8568,7 +8573,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8617,7 +8622,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-4. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8627,7 +8632,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8676,7 +8681,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-5. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8686,7 +8691,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8735,7 +8740,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-6. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8745,7 +8750,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8794,7 +8799,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-7. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8804,7 +8809,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8853,7 +8858,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-8. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8863,7 +8868,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8912,7 +8917,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-2/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-2/J133-9. PDF 159 (3-27) lists J138-2 for playfield column 2 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8922,7 +8927,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8971,7 +8976,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-1. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -8981,7 +8986,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9030,7 +9035,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-2. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9040,7 +9045,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9089,7 +9094,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-4. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9099,7 +9104,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9148,7 +9153,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-5. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9158,7 +9163,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9207,7 +9212,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-6. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9217,7 +9222,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9266,7 +9271,7 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-7. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9276,7 +9281,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9325,7 +9330,7 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-8. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9335,7 +9340,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9384,7 +9389,7 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-3/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-3/J133-9. PDF 159 (3-27) lists J138-3 for playfield column 3 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9394,7 +9399,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9443,7 +9448,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-1. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9453,7 +9458,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9502,7 +9507,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-2. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9512,7 +9517,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9561,7 +9566,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-4. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9571,7 +9576,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9620,7 +9625,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-5. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9630,7 +9635,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9679,7 +9684,7 @@
       "physical": {
         "assembly_part_number": "A-20530",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-6. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9689,7 +9694,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9738,7 +9743,7 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-7. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9748,7 +9753,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9797,7 +9802,7 @@
       "physical": {
         "assembly_part_number": "A-17807",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-8. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9807,7 +9812,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9856,7 +9861,7 @@
       "physical": {
         "assembly_part_number": "A-17801",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-4/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-4/J133-9. PDF 159 (3-27) lists J138-4 for playfield column 4 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9866,7 +9871,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9915,7 +9920,7 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-1. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -9925,7 +9930,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9974,7 +9979,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-2. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -9984,7 +9989,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10033,7 +10038,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-4. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10043,7 +10048,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10092,7 +10097,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-5. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10102,7 +10107,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10151,7 +10156,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-6. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10161,7 +10166,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10210,7 +10215,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-7. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10220,7 +10225,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10269,7 +10274,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-8. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10279,7 +10284,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10328,7 +10333,7 @@
       "physical": {
         "assembly_part_number": "A-20527",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-5/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-5/J133-9. PDF 159 (3-27) lists J138-5 for playfield column 5 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10338,7 +10343,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10387,7 +10392,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-1. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10397,7 +10402,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10446,7 +10451,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-2. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10456,7 +10461,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10505,7 +10510,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-4. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10515,7 +10520,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10564,7 +10569,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-5. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10574,7 +10579,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10623,7 +10628,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-6. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10633,7 +10638,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10682,7 +10687,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-7. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10692,7 +10697,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10741,7 +10746,7 @@
       "physical": {
         "assembly_part_number": "A-20529",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-8. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10751,7 +10756,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10800,7 +10805,7 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J137-6/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J137-6/J133-9. PDF 159 (3-27) lists J138-6 for playfield column 6 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -10810,7 +10815,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10859,7 +10864,7 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-1. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10869,7 +10874,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10918,7 +10923,7 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-2. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10928,7 +10933,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -10977,7 +10982,7 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-4. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -10987,7 +10992,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11036,7 +11041,7 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-5. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -11046,7 +11051,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11095,7 +11100,7 @@
       "physical": {
         "assembly_part_number": "A-20613",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-6. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -11105,7 +11110,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11154,7 +11159,7 @@
       "physical": {
         "assembly_part_number": "A-17835",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-7. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -11164,7 +11169,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11213,7 +11218,7 @@
       "physical": {
         "assembly_part_number": "A-17807",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-8. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-8 for playfield row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -11223,7 +11228,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11272,7 +11277,7 @@
       "physical": {
         "assembly_part_number": "A-18735",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-7/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-7/J133-9. PDF 159 (3-27) lists J138-7 for playfield column 7 and J135-9 for playfield row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -11282,7 +11287,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11331,7 +11336,7 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-1 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-1. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-1 for playfield row 1; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -11341,7 +11346,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11390,7 +11395,7 @@
       "physical": {
         "assembly_part_number": "A-20507",
         "location": "playfield",
-        "notes": "#44 incandescent bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-2 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#44 incandescent bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-2. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-2 for playfield row 2; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-6549",
         "quantity": 1
       },
@@ -11400,7 +11405,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11449,7 +11454,7 @@
       "physical": {
         "assembly_part_number": "A-20659",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-4 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-4. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-4 for playfield row 3; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -11459,7 +11464,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11508,7 +11513,7 @@
       "physical": {
         "assembly_part_number": "A-20659",
         "location": "playfield",
-        "notes": "#555 insert bulb Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-5 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors.",
+        "notes": "#555 insert bulb. Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-5. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-5 for playfield row 4; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored).",
         "part_number": "24-8768",
         "quantity": 1
       },
@@ -11518,7 +11523,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -11566,7 +11571,7 @@
       "label": "Not Used",
       "physical": {
         "location": "playfield",
-        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-6 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors."
+        "notes": "Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-6. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-6 for playfield row 5; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -11574,7 +11579,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -11612,7 +11617,7 @@
       "label": "Not Used",
       "physical": {
         "location": "playfield",
-        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-7 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors."
+        "notes": "Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-7. PDF 159 (3-27) lists J138-9 for playfield column 8 and J135-7 for playfield row 6; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -11620,7 +11625,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -11658,7 +11663,7 @@
       "label": "Buy-In Button",
       "physical": {
         "location": "cabinet",
-        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-8 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J134-8 for cabinet row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors."
+        "notes": "Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-8. PDF 159 (3-27) lists J138-9 for playfield column 8 and J134-8 for cabinet row 7; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -11666,7 +11671,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -11704,7 +11709,7 @@
       "label": "Start",
       "physical": {
         "location": "cabinet",
-        "notes": "Structured wiring retains the PDF 124 (2-42) matrix claim J138-9/J133-9 only; it is not settled physical wiring. PDF 159 (3-27) lists J138-9 for playfield column 8 and J134-9 for cabinet row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. This does not resolve the other headers. See conflict.lamp-matrix-connectors."
+        "notes": "Structured wiring follows the PDF 124 (2-42) lamp matrix, the game's own wiring table: J138-9/J133-9. PDF 159 (3-27) lists J138-9 for playfield column 8 and J134-9 for cabinet row 8; J133 and J137 are Not Used. J136-3 separately carries column 8 to insert lamps. The narrow agreements are J138-7/column 7 and J138-9/column 8; J138-8 is a key. Both pages put this lamp on the same matrix column and row and differ only in connector headers, so this is a wiring detail, not a conflict (conflict.lamp-matrix-connectors is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -11712,7 +11717,7 @@
           "manual.bally.who-dunnit.1995.lamp-connectors",
           "vpx-script.who-dunnit-ninuzzu-2018"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -12777,7 +12782,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/switch-matrix.md",
           "reviewed": true,
-          "sha256": "aadafb04709f567b38fb952719395bf6e39aa492a73f85008f23ced69ea55dd3",
+          "sha256": "334dcf3232fa5c87d449caa303cfda4e0bf2647ced838bc1d2b269c7ebbd44e9",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12786,7 +12791,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-matrix.md",
           "reviewed": true,
-          "sha256": "374f6622b2175a86a415433fb340ef8072ff8bd15a91679a2135e4fd6a3146fe",
+          "sha256": "329f0d5164baef47b362b6bb9e608d8521d7613e1c565de17fe5ff97c16dc58e",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12795,7 +12800,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/lamp-connectors.md",
           "reviewed": true,
-          "sha256": "f3476ea51c15d3d14c2f46e864aaa9dfb0e805e42c451aebbb52f99f9a72b89c",
+          "sha256": "4a0b94bd456370a0e229f373eeb2fe37a165b543d1e44ebc6633ad660f24e342",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12804,7 +12809,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/solenoid-flasher.md",
           "reviewed": true,
-          "sha256": "2a0bc86480c306d943cb77313b4e8fb6d04966580aea5e4cd5c567fa186e30b6",
+          "sha256": "e74adf0040768e8e17e7407462ada052b9a9c4b77db6f97d467b5b550be2bd4d",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12813,7 +12818,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/flipper-circuits.md",
           "reviewed": true,
-          "sha256": "05297ef67623f788d789494267050578b028cbe2320156b64f2a5666f4170a44",
+          "sha256": "4d50db4f5e230544c9fe26ef8d16d70381b4053f122dc443d0602ba456922f52",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         },
         {
@@ -12822,7 +12827,7 @@
           "method": "mixed",
           "path": "evidence/excerpts/bally.who-dunnit.1995/service-mechanisms.md",
           "reviewed": true,
-          "sha256": "101e2e71ec2bf12e22622b4004804b042024a61dbe9caa452510070656f8684d",
+          "sha256": "018a6efa104addc9061f5ff7e819ec7eccc7a07f5d925b782a3764838f9cc01d",
           "transcribed_by": "primary curator; OCR checked against rendered source pages"
         }
       ],
@@ -12851,7 +12856,7 @@
       "id": "manual.bally.who-dunnit.1995.lamp-connectors",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column conflict with PDF 124/136 matrix headers.",
+      "locator": "PDF pages 158–159, printed 3-26–3-27 Power Driver Board A-12697-4 layout/connector list; excerpt.who-dunnit.lamp-connectors. Layout shows J120/J121; pin list ends J111 and resumes J128, omitting J112–J127 destinations. J133/J137 Not Used, J135 playfield rows, J134 cabinet rows, J138 playfield columns and J136 insert column differ from the PDF 124/136 matrix headers.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",
@@ -12884,7 +12889,7 @@
       "id": "manual.bally.who-dunnit.1995.reel-driver-connectors",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims conflict with PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
+      "locator": "PDF page 155, printed 3-23 A-19043-1 reel driver connector diagrams; PDF 156, printed 3-24 bridge schematic; excerpt.who-dunnit.service-mechanisms. Left Reel 23/24 J122-3/-4 Blue-Orange/Blue-Yellow; Center 25/26 J122-1/-2 Blue-Brown/Blue-Red; Right Reel 27/28 J126-7/-8 Blue-Violet/Blue-Gray. Left/right physical connector claims differ from PDF 128; A-19745-1 PCB w/Spacers on PDF 109 is not proven identical to the schematic board identifier.",
       "original_filename": "Bally_1995_WHO_dunnit_English_Manual_WPC_Schematic_Manual_January_1995_Rev_Level_3_OCR_searchable.pdf",
       "rights": "NOASSERTION",
       "sha256": "5fa08344d905c9730c86c6baee79b43e6a4a1c4e2230f67a08c2973b57bc714e",

@@ -253,7 +253,8 @@ about; see the conflict below.
 
 ## What is not settled
 
-Four unresolved conflicts, all recorded as first-class `conflicts` entries.
+Three unresolved conflicts, all recorded as first-class `conflicts` entries, and one ignored
+naming defect kept beside them.
 
 1. **`conflict.sam-invsw-never-populated`** - the platform-wide polarity gap. Pinned Stern
    S.A.M. source populates no inverted-switch mask at all: `INITGAME`'s positional
@@ -282,12 +283,13 @@ Four unresolved conflicts, all recorded as first-class `conflicts` entries.
    for all six placements (switches 30/31/32 and coils 9/10/11) and records the disagreement
    rather than resolving it silently, because the runtime script is normally this project's
    authority for address semantics and it is the source being overruled.
-4. **`conflict.coin-door-adjust-button-order`** - `sam.c` disagrees with itself about which
-   red coin-door adjustment button is public -2 and which is -1: its descriptive comment
-   block says D21 is Plus and D22 is Minus, while its own keyboard input-port table puts
-   Minus on the bit that becomes -2. This manual agrees with the input-port table, so two
-   sources against one resolve it that way. Recorded for provenance completeness even though
-   both addresses are coin-door service buttons.
+4. **`conflict.coin-door-adjust-button-order`** (ignored, not blocking) - `sam.c` disagrees
+   with itself about which red coin-door adjustment button is public -2 and which is -1: its
+   descriptive comment block says D21 is Plus and D22 is Minus, while its own keyboard
+   input-port table puts Minus on the bit that becomes -2. This manual agrees with the
+   input-port table, so two sources against one resolve it that way. A naming defect in a
+   source comment that higher-authority sources settle is a device note, not a conflict, so
+   the record is kept as ignored and both device notes state it.
 
 Two output addresses carry no spatial record at all:
 

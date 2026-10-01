@@ -10,14 +10,16 @@
       ]
     },
     {
-      "description": "The later lamp schematic connector labels do not match the matrix table labels one-for-one. Matrix address/name identity is preserved from the printed matrix table; connector labels are not synthesized into wiring fields. Resolution path: re-render the disagreeing lamp schematic sheet of the retained image-only 118-page manual at a higher dpi and reconcile it address by address against the printed lamp-matrix table, or obtain a second printed copy or revision of the manual; where the two still disagree, only a per-address continuity check from the lamp-driver row and column pins to each socket on an unrestored machine, or a photograph of that playfield's insert legends, can say which sheet describes the machine. Unresolved.",
+      "description": "The lamp matrix table on printed page 1-33 (repeated on 2-34 and PDF page 117) prints columns on J138-1 to J138-7 and J138-9 and rows on J133-1, J133-2 and J133-4 to J133-9, while the lamp matrix schematic on printed page 2-34 draws columns on J137-1 to J137-8 and rows on J133-1 to J133-8; the 1-33 lamp-circuit example also routes its column through J137. Read address by address at native resolution, both sheets give the same eight column and row wire colours and the same addresses 11-88, and the schematic names no lamps. Matrix address/name identity is preserved from the printed matrix table; neither connector reading is synthesized into wiring fields. Resolution path: a photograph of an unrestored machine's power driver board lamp connectors, showing whether the column harness plugs J137 or J138 and which J133 pins the rows use.",
       "id": "conflict.lamp-schematic-connector-labels",
       "path": "outputs.pinmame.output.lamp",
+      "rationale": "A wiring-detail disagreement, not a conflict (runbook, What is not a conflict): the two sheets differ only in connector labels and agree on every lamp's address and on its column and row wires, so nothing a recreation consumes is in doubt. Lamp identity follows the printed matrix table, and each lamp note states both connector readings.",
       "source_refs": [
         "manual.williams.terminator-2-judgment-day.1991",
         "manual-support.williams.terminator-2-judgment-day.1991",
         "pinmame.core.4ec52ff0ac13"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The manual names five GI strings (GI 1 Top Insert, GI 2 Left Playfield, GI 3 Right Playfield, GI 4 Not Used, GI 5 Bottom Insert), while the retained VPW script exposes GI2/GI3 emitter arrays and a separate Case 3 Light2-Light5 branch; legacy mapping names also differ. Physical five-channel routing and script callback grouping remain explicit, unresolved evidence rather than an averaged map. Resolution path: run the machine's own general-illumination test on an unrestored production unit and photograph which region lights at each of the five steps, matching each step to the printed drives Wht-Brn/J120-7/Q18, Wht-Vio/J119-1/Q10, Wht-Yel/J121-9/Q14, Wht-Orn/J120-8/Q16 and Wht-Grn/J120-10/Q12; that also settles whether the printed GI 4 string, which carries a connector and transistor but no printed bulb part, is fitted at all. A LibPinMAME harness trace against the retained legal t2_l8 ROM supplies the emulator half of the pairing but cannot say where the bulbs sit. Unresolved.",
@@ -7187,7 +7189,7 @@
       "kind": "lamp",
       "label": "Multiplier 2x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-1; manual lamp address 11."
+        "notes": "Printed lamp matrix address 1-1; manual lamp address 11. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-1 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7236,7 +7238,7 @@
       "kind": "lamp",
       "label": "Multiplier 4x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-2; manual lamp address 12."
+        "notes": "Printed lamp matrix address 1-2; manual lamp address 12. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-1 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7285,7 +7287,7 @@
       "kind": "lamp",
       "label": "Hold Bonus",
       "physical": {
-        "notes": "Printed lamp matrix address 1-3; manual lamp address 13."
+        "notes": "Printed lamp matrix address 1-3; manual lamp address 13. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-1 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7334,7 +7336,7 @@
       "kind": "lamp",
       "label": "Multiplier 6x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-4; manual lamp address 14."
+        "notes": "Printed lamp matrix address 1-4; manual lamp address 14. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-1 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7383,7 +7385,7 @@
       "kind": "lamp",
       "label": "Multiplier 8x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-5; manual lamp address 15."
+        "notes": "Printed lamp matrix address 1-5; manual lamp address 15. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-1 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7432,7 +7434,7 @@
       "kind": "lamp",
       "label": "Shoot Again",
       "physical": {
-        "notes": "Printed lamp matrix address 1-6; manual lamp address 16."
+        "notes": "Printed lamp matrix address 1-6; manual lamp address 16. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-1 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7481,7 +7483,7 @@
       "kind": "lamp",
       "label": "Mouth",
       "physical": {
-        "notes": "Printed lamp matrix address 1-7; manual lamp address 17."
+        "notes": "Printed lamp matrix address 1-7; manual lamp address 17. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-1 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7530,7 +7532,7 @@
       "kind": "lamp",
       "label": "Not Used",
       "physical": {
-        "notes": "Printed lamp matrix address 1-8; manual lamp address 18. Printed lamp matrix says Not Used; no L18 object exists in the retained VPX table."
+        "notes": "Printed lamp matrix address 1-8; manual lamp address 18. Printed lamp matrix says Not Used; no L18 object exists in the retained VPX table. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-1 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7570,7 +7572,7 @@
       "kind": "lamp",
       "label": "Kickback",
       "physical": {
-        "notes": "Printed lamp matrix address 2-1; manual lamp address 21."
+        "notes": "Printed lamp matrix address 2-1; manual lamp address 21. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-2 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7619,7 +7621,7 @@
       "kind": "lamp",
       "label": "Special",
       "physical": {
-        "notes": "Printed lamp matrix address 2-2; manual lamp address 22."
+        "notes": "Printed lamp matrix address 2-2; manual lamp address 22. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-2 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7681,7 +7683,7 @@
       "kind": "lamp",
       "label": "Left Return Lane",
       "physical": {
-        "notes": "Printed lamp matrix address 2-3; manual lamp address 23."
+        "notes": "Printed lamp matrix address 2-3; manual lamp address 23. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-2 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7730,7 +7732,7 @@
       "kind": "lamp",
       "label": "Right Return Lane",
       "physical": {
-        "notes": "Printed lamp matrix address 2-4; manual lamp address 24."
+        "notes": "Printed lamp matrix address 2-4; manual lamp address 24. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-2 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7779,7 +7781,7 @@
       "kind": "lamp",
       "label": "Data Base 3",
       "physical": {
-        "notes": "Printed lamp matrix address 2-5; manual lamp address 25."
+        "notes": "Printed lamp matrix address 2-5; manual lamp address 25. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-2 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7828,7 +7830,7 @@
       "kind": "lamp",
       "label": "Load Gun",
       "physical": {
-        "notes": "Printed lamp matrix address 2-6; manual lamp address 26."
+        "notes": "Printed lamp matrix address 2-6; manual lamp address 26. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-2 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7877,7 +7879,7 @@
       "kind": "lamp",
       "label": "Extra Ball",
       "physical": {
-        "notes": "Printed lamp matrix address 2-7; manual lamp address 27."
+        "notes": "Printed lamp matrix address 2-7; manual lamp address 27. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-2 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7926,7 +7928,7 @@
       "kind": "lamp",
       "label": "Load for Jackpot",
       "physical": {
-        "notes": "Printed lamp matrix address 2-8; manual lamp address 28."
+        "notes": "Printed lamp matrix address 2-8; manual lamp address 28. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-2 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7975,7 +7977,7 @@
       "kind": "lamp",
       "label": "Target 1 High",
       "physical": {
-        "notes": "Printed lamp matrix address 3-1; manual lamp address 31."
+        "notes": "Printed lamp matrix address 3-1; manual lamp address 31. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-3 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8024,7 +8026,7 @@
       "kind": "lamp",
       "label": "Target 2",
       "physical": {
-        "notes": "Printed lamp matrix address 3-2; manual lamp address 32."
+        "notes": "Printed lamp matrix address 3-2; manual lamp address 32. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-3 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8073,7 +8075,7 @@
       "kind": "lamp",
       "label": "Target 3",
       "physical": {
-        "notes": "Printed lamp matrix address 3-3; manual lamp address 33."
+        "notes": "Printed lamp matrix address 3-3; manual lamp address 33. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-3 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8122,7 +8124,7 @@
       "kind": "lamp",
       "label": "Target 4",
       "physical": {
-        "notes": "Printed lamp matrix address 3-4; manual lamp address 34."
+        "notes": "Printed lamp matrix address 3-4; manual lamp address 34. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-3 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8171,7 +8173,7 @@
       "kind": "lamp",
       "label": "Target 5 Low",
       "physical": {
-        "notes": "Printed lamp matrix address 3-5; manual lamp address 35."
+        "notes": "Printed lamp matrix address 3-5; manual lamp address 35. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-3 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8220,7 +8222,7 @@
       "kind": "lamp",
       "label": "Middle Target Bank Left",
       "physical": {
-        "notes": "Printed lamp matrix address 3-6; manual lamp address 36."
+        "notes": "Printed lamp matrix address 3-6; manual lamp address 36. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-3 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8269,7 +8271,7 @@
       "kind": "lamp",
       "label": "Middle Target Bank Center",
       "physical": {
-        "notes": "Printed lamp matrix address 3-7; manual lamp address 37."
+        "notes": "Printed lamp matrix address 3-7; manual lamp address 37. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-3 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8318,7 +8320,7 @@
       "kind": "lamp",
       "label": "Middle Target Bank Right",
       "physical": {
-        "notes": "Printed lamp matrix address 3-8; manual lamp address 38."
+        "notes": "Printed lamp matrix address 3-8; manual lamp address 38. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-3 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8367,7 +8369,7 @@
       "kind": "lamp",
       "label": "Lock Two",
       "physical": {
-        "notes": "Printed lamp matrix address 4-1; manual lamp address 41."
+        "notes": "Printed lamp matrix address 4-1; manual lamp address 41. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-4 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8416,7 +8418,7 @@
       "kind": "lamp",
       "label": "Data Base 2",
       "physical": {
-        "notes": "Printed lamp matrix address 4-2; manual lamp address 42."
+        "notes": "Printed lamp matrix address 4-2; manual lamp address 42. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-4 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8465,7 +8467,7 @@
       "kind": "lamp",
       "label": "10 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 4-3; manual lamp address 43."
+        "notes": "Printed lamp matrix address 4-3; manual lamp address 43. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-4 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8514,7 +8516,7 @@
       "kind": "lamp",
       "label": "Extra Ball",
       "physical": {
-        "notes": "Printed lamp matrix address 4-4; manual lamp address 44."
+        "notes": "Printed lamp matrix address 4-4; manual lamp address 44. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-4 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8563,7 +8565,7 @@
       "kind": "lamp",
       "label": "Multi-ball",
       "physical": {
-        "notes": "Printed lamp matrix address 4-5; manual lamp address 45."
+        "notes": "Printed lamp matrix address 4-5; manual lamp address 45. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-4 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8612,7 +8614,7 @@
       "kind": "lamp",
       "label": "Light Hurry Up",
       "physical": {
-        "notes": "Printed lamp matrix address 4-6; manual lamp address 46."
+        "notes": "Printed lamp matrix address 4-6; manual lamp address 46. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-4 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8661,7 +8663,7 @@
       "kind": "lamp",
       "label": "Hold Bonus",
       "physical": {
-        "notes": "Printed lamp matrix address 4-7; manual lamp address 47."
+        "notes": "Printed lamp matrix address 4-7; manual lamp address 47. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-4 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8710,7 +8712,7 @@
       "kind": "lamp",
       "label": "Security Pass",
       "physical": {
-        "notes": "Printed lamp matrix address 4-8; manual lamp address 48."
+        "notes": "Printed lamp matrix address 4-8; manual lamp address 48. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-4 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8759,7 +8761,7 @@
       "kind": "lamp",
       "label": "Eyes Lower",
       "physical": {
-        "notes": "Printed lamp matrix address 5-1; manual lamp address 51."
+        "notes": "Printed lamp matrix address 5-1; manual lamp address 51. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-5 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8821,7 +8823,7 @@
       "kind": "lamp",
       "label": "Eyes Upper",
       "physical": {
-        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. The working script drives the exact Primitive.L52 skull-eye mesh. That primitive has an object-space origin at (0,0), so the exact adjacent skull drop-target center is retained as a disclosed assembly projection rather than treating (0,0) as a lamp position."
+        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-5 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored). The working script drives the exact Primitive.L52 skull-eye mesh. That primitive has an object-space origin at (0,0), so the exact adjacent skull drop-target center is retained as a disclosed assembly projection rather than treating (0,0) as a lamp position."
       },
       "provenance": {
         "source_refs": [
@@ -8872,7 +8874,7 @@
       "kind": "lamp",
       "label": "5 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-3; manual lamp address 53."
+        "notes": "Printed lamp matrix address 5-3; manual lamp address 53. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-5 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8921,7 +8923,7 @@
       "kind": "lamp",
       "label": "3 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-4; manual lamp address 54."
+        "notes": "Printed lamp matrix address 5-4; manual lamp address 54. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-5 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -8970,7 +8972,7 @@
       "kind": "lamp",
       "label": "1 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-5; manual lamp address 55."
+        "notes": "Printed lamp matrix address 5-5; manual lamp address 55. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-5 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9019,7 +9021,7 @@
       "kind": "lamp",
       "label": "750 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-6; manual lamp address 56."
+        "notes": "Printed lamp matrix address 5-6; manual lamp address 56. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-5 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9068,7 +9070,7 @@
       "kind": "lamp",
       "label": "500 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-7; manual lamp address 57."
+        "notes": "Printed lamp matrix address 5-7; manual lamp address 57. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-5 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9117,7 +9119,7 @@
       "kind": "lamp",
       "label": "250 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-8; manual lamp address 58."
+        "notes": "Printed lamp matrix address 5-8; manual lamp address 58. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-5 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9166,7 +9168,7 @@
       "kind": "lamp",
       "label": "Left CPU Lit",
       "physical": {
-        "notes": "Printed lamp matrix address 6-1; manual lamp address 61."
+        "notes": "Printed lamp matrix address 6-1; manual lamp address 61. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-6 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9215,7 +9217,7 @@
       "kind": "lamp",
       "label": "Left Vault Key",
       "physical": {
-        "notes": "Printed lamp matrix address 6-2; manual lamp address 62."
+        "notes": "Printed lamp matrix address 6-2; manual lamp address 62. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-6 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9264,7 +9266,7 @@
       "kind": "lamp",
       "label": "Left Silent Alarm",
       "physical": {
-        "notes": "Printed lamp matrix address 6-3; manual lamp address 63."
+        "notes": "Printed lamp matrix address 6-3; manual lamp address 63. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-6 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9313,7 +9315,7 @@
       "kind": "lamp",
       "label": "Left Passcode",
       "physical": {
-        "notes": "Printed lamp matrix address 6-4; manual lamp address 64."
+        "notes": "Printed lamp matrix address 6-4; manual lamp address 64. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-6 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9362,7 +9364,7 @@
       "kind": "lamp",
       "label": "Left Checkpoint",
       "physical": {
-        "notes": "Printed lamp matrix address 6-5; manual lamp address 65."
+        "notes": "Printed lamp matrix address 6-5; manual lamp address 65. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-6 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9411,7 +9413,7 @@
       "kind": "lamp",
       "label": "Lock 1",
       "physical": {
-        "notes": "Printed lamp matrix address 6-6; manual lamp address 66."
+        "notes": "Printed lamp matrix address 6-6; manual lamp address 66. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-6 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9460,7 +9462,7 @@
       "kind": "lamp",
       "label": "Data Base 1",
       "physical": {
-        "notes": "Printed lamp matrix address 6-7; manual lamp address 67."
+        "notes": "Printed lamp matrix address 6-7; manual lamp address 67. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-6 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9509,7 +9511,7 @@
       "kind": "lamp",
       "label": "Left Ramp",
       "physical": {
-        "notes": "Printed lamp matrix address 6-8; manual lamp address 68."
+        "notes": "Printed lamp matrix address 6-8; manual lamp address 68. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-6 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9558,7 +9560,7 @@
       "kind": "lamp",
       "label": "Right CPU Lit",
       "physical": {
-        "notes": "Printed lamp matrix address 7-1; manual lamp address 71."
+        "notes": "Printed lamp matrix address 7-1; manual lamp address 71. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-7 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9607,7 +9609,7 @@
       "kind": "lamp",
       "label": "Right Vault Key",
       "physical": {
-        "notes": "Printed lamp matrix address 7-2; manual lamp address 72."
+        "notes": "Printed lamp matrix address 7-2; manual lamp address 72. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-7 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9656,7 +9658,7 @@
       "kind": "lamp",
       "label": "Right Silent Alarm",
       "physical": {
-        "notes": "Printed lamp matrix address 7-3; manual lamp address 73."
+        "notes": "Printed lamp matrix address 7-3; manual lamp address 73. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-7 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9705,7 +9707,7 @@
       "kind": "lamp",
       "label": "Right Passcode",
       "physical": {
-        "notes": "Printed lamp matrix address 7-4; manual lamp address 74."
+        "notes": "Printed lamp matrix address 7-4; manual lamp address 74. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-7 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9754,7 +9756,7 @@
       "kind": "lamp",
       "label": "Right Checkpoint",
       "physical": {
-        "notes": "Printed lamp matrix address 7-5; manual lamp address 75."
+        "notes": "Printed lamp matrix address 7-5; manual lamp address 75. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-7 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9803,7 +9805,7 @@
       "kind": "lamp",
       "label": "Right Bank Top",
       "physical": {
-        "notes": "Printed lamp matrix address 7-6; manual lamp address 76."
+        "notes": "Printed lamp matrix address 7-6; manual lamp address 76. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-7 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9852,7 +9854,7 @@
       "kind": "lamp",
       "label": "Right Bank Middle",
       "physical": {
-        "notes": "Printed lamp matrix address 7-7; manual lamp address 77."
+        "notes": "Printed lamp matrix address 7-7; manual lamp address 77. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-7 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9901,7 +9903,7 @@
       "kind": "lamp",
       "label": "Right Bank Bottom",
       "physical": {
-        "notes": "Printed lamp matrix address 7-8; manual lamp address 78."
+        "notes": "Printed lamp matrix address 7-8; manual lamp address 78. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-7 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9950,7 +9952,7 @@
       "kind": "lamp",
       "label": "Chase Values",
       "physical": {
-        "notes": "Printed lamp matrix address 8-1; manual lamp address 81."
+        "notes": "Printed lamp matrix address 8-1; manual lamp address 81. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-8 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -9999,7 +10001,7 @@
       "kind": "lamp",
       "label": "Right Ramp",
       "physical": {
-        "notes": "Printed lamp matrix address 8-2; manual lamp address 82."
+        "notes": "Printed lamp matrix address 8-2; manual lamp address 82. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-8 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10048,7 +10050,7 @@
       "kind": "lamp",
       "label": "Hurry Up",
       "physical": {
-        "notes": "Printed lamp matrix address 8-3; manual lamp address 83."
+        "notes": "Printed lamp matrix address 8-3; manual lamp address 83. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-8 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10097,7 +10099,7 @@
       "kind": "lamp",
       "label": "Start Button",
       "physical": {
-        "notes": "Printed lamp matrix address 8-4; manual lamp address 84."
+        "notes": "Printed lamp matrix address 8-4; manual lamp address 84. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-8 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10141,7 +10143,7 @@
       "kind": "lamp",
       "label": "Drop Target",
       "physical": {
-        "notes": "Printed lamp matrix address 8-5; manual lamp address 85."
+        "notes": "Printed lamp matrix address 8-5; manual lamp address 85. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-8 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10190,7 +10192,7 @@
       "kind": "lamp",
       "label": "Top Lane Left",
       "physical": {
-        "notes": "Printed lamp matrix address 8-6; manual lamp address 86."
+        "notes": "Printed lamp matrix address 8-6; manual lamp address 86. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-8 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10239,7 +10241,7 @@
       "kind": "lamp",
       "label": "Top Lane Center",
       "physical": {
-        "notes": "Printed lamp matrix address 8-7; manual lamp address 87."
+        "notes": "Printed lamp matrix address 8-7; manual lamp address 87. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-8 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10288,7 +10290,7 @@
       "kind": "lamp",
       "label": "Top Lane Right",
       "physical": {
-        "notes": "Printed lamp matrix address 8-8; manual lamp address 88."
+        "notes": "Printed lamp matrix address 8-8; manual lamp address 88. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-8 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -10984,7 +10986,19 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-matrix.md",
           "reviewed": true,
-          "sha256": "7f8d67287f26548190ee3d953426a2cd6a6ec0bbbf8fdb95976d2151e910b03a",
+          "sha256": "c05984d0ba65fac031f076261701d80b02880b137147a6a799a344b220869b7c",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-schematic",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-schematic.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 100, crop box 0.2,0.075,0.68,0.415, scanned page rendered at its native resolution (embedded image xref 891, 2551px across 8.26in), rendered at 252 dpi, capped to 1000px wide, grayscale, 1001x1003 WebP quality 80",
+          "image_sha256": "1faee311290e94dc4250eaaae3a34fc5426fa33ca71a0109b4226fad580a55be",
+          "locator": "PDF page 100, printed page 2-34, lamp matrix schematic J137 column and J133 row connector labels",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-schematic.md",
+          "reviewed": true,
+          "sha256": "5b61c381e8fb8bd9f1aa7bb90a8bffe4e9aa9f3a57397f1bf72c6a7b94cc69bb",
           "transcribed_by": "curator, manually read and visually checked against the retained crop"
         },
         {

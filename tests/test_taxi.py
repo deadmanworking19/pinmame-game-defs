@@ -502,9 +502,18 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 		self.assertEqual("unknown", next(x for x in self.definition["drivers"] if x["id"] == "taxi_p5")["physical_compatibility"])
 		self.assertEqual({"spatial_placement", "variant_differences", "output_semantics", "unresolved_conflicts"}, set(self.definition["coverage"]["missing"]))
 		self.assertEqual(3, len(self.definition["conflicts"]))
-		self.assertTrue(all(x["status"] == "unresolved" for x in self.definition["conflicts"]))
+		statuses = {x["id"]: x["status"] for x in self.definition["conflicts"]}
+		# Connector-only disagreements are wiring details; the Sol 16 load question still blocks.
+		self.assertEqual({"conflict.taxi.knocker-connector": "ignored", "conflict.taxi.left-jet-connector": "ignored",
+			"conflict.taxi.output16-load": "unresolved"}, statuses)
+		# The knocker's only printed first pin is the Bell's, so no drive connection is asserted.
 		self.assertNotIn("drive_connection", self.solenoids[14]["wiring"])
-		self.assertNotIn("drive_connection", self.solenoids[17]["wiring"])
+		self.assertEqual("5J2-4: 5J6-5", self.solenoids[13]["wiring"]["drive_connection"])
+		# The left jet follows the game's own wiring table; the schematic's plug stays in the note.
+		self.assertEqual("5J3-7: 5J7-7", self.solenoids[17]["wiring"]["drive_connection"])
+		self.assertIn("5J6-7", self.solenoids[17]["physical"]["notes"])
+		for address in (14, 17):
+			self.assertEqual("validated", self.solenoids[address]["provenance"]["status"])
 		self.assertNotIn("quantity", self.solenoids[16]["physical"])
 		self.assertEqual("conflicted", self.solenoids[16]["provenance"]["status"])
 

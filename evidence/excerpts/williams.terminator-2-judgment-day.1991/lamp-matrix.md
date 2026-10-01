@@ -15,4 +15,4 @@ The printed columns are 1 Yellow-Brown J138-1/Q98, 2 Yellow-Red J138-2/Q97, 3 Ye
 | 7 | 17 Mouth | 27 Extra Ball | 37 Middle Target Bank Center | 47 Hold Bonus | 57 500,000 | 67 Data Base 1 | 77 Right Bank Middle | 87 Top Lane Center |
 | 8 | 18 Not Used | 28 Load for Jackpot | 38 Middle Target Bank Right | 48 Security Pass | 58 250,000 | 68 Left Ramp | 78 Right Bank Bottom | 88 Top Lane Right |
 
-The definition uses this printed matrix for lamp address/name identity. The manual's later connector schematic is deliberately not collapsed into the per-address records because its labels conflict with this matrix; that discrepancy remains an explicit unresolved conflict.
+The definition uses this printed matrix for lamp address/name identity. The later lamp schematic on printed page 2-34 ([lamp-schematic.md](lamp-schematic.md)) draws the same columns and rows, with the same wire colours and addresses, on J137-1..8 and J133-1..8. Because the two sheets disagree only on connector labels, the definition records the difference as a wiring detail in each lamp note (`conflict.lamp-schematic-connector-labels`, ignored) and synthesizes neither reading into wiring fields.

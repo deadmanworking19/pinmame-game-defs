@@ -40,7 +40,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 67 | Creature from the Black Lagoon | `bally.creature-from-the-black-lagoon.1992` | 81% |
 | 71 | FunHouse | `williams.funhouse.1990` | 94% |
 | 77 | Whirlwind | `williams.whirlwind.1990` | 81% |
-| 79 | Bram Stoker's Dracula | `williams.bram-stoker-s-dracula.1993` | 88% |
+| 79 | Bram Stoker's Dracula | `williams.bram-stoker-s-dracula.1993` | 94% |
 | 83 | Big Bang Bar | `capcom.big-bang-bar.1996` | 100% |
 | 84 | The Getaway: High Speed II | `williams.the-getaway-high-speed-ii.1992` | 75% |
 | 86 | World Cup Soccer | `midway.world-cup-soccer.1994` | 88% |

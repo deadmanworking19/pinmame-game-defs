@@ -72,7 +72,8 @@ Footnote: `* J122-1, 3 have tieback diodes at J122-5, 8 respectively.`
   35/36 — i.e. PinMAME's own macros call 33/34 the upper-**right** circuit and 35/36 the
   upper-**left** circuit, the opposite of this page's "Up Lt."/"Up Rt." labels. The
   device functions and addresses are not in doubt either way; only the circuit-side
-  heritage disagrees. Recorded as `conflict.upper-flipper-circuit-side-naming`.
+  heritage disagrees. Recorded as `conflict.upper-flipper-circuit-side-naming` and ignored
+  as a naming detail, because device and address agree on both sources.
 - **GI strings 3 and 4 have no playfield voltage/drive connection at all** — only
   backbox (04) and backbox+cabinet (05) columns are populated — matching the retained
   script's `GIUpdate2`, which drives only GI addresses 0-2 through real playfield light
