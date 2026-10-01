@@ -6,10 +6,10 @@ turn a useful rejection artifact into false evidence.  The coordinates below
 are normalized playfield anchors reconciled to the LE manual's physical maps.
 Where the manual only gives a grouped assembly, the assertion is intentionally
 an assembly anchor and carries a note; it is not presented as an individual
-sensor or emitter location. The upper-right-orbit address is deliberately
-withheld: the manual's switch matrix grid says 58 while its physical
-switch-location drawing marks the disputed coordinate 61, and the known-working
-LE script drives 58 without a 61 handler.
+sensor or emitter location. The right orbit switch 58 has no coordinate yet:
+the LE switch-location drawing numbers it 61, the Pro's number for it (the LE
+and Pro ROMs' switch tests show the swap), and its callout has not been
+measured.
 """
 
 from __future__ import annotations
@@ -317,7 +317,7 @@ def spatial_audit(definition: dict) -> dict:
         "machine_id": definition["machine"]["id"],
         "coordinate_space": "playfield",
         "coordinate_convention": {"x": "left_to_right", "y": "rear_to_apron"},
-        "evidence_policy": "manual-only; disputed upper-right-orbit address withheld; no Pro geometry is promoted to LE",
+        "evidence_policy": "manual-only; no Pro geometry is promoted to LE",
         "manual": {
             "source_id": MANUAL_SOURCE,
             "sha256": "4687ae0ed0ac249411deff3b0284d5c13d8fab154e430e95b6bd9f7bb82dca62",
@@ -338,8 +338,8 @@ def spatial_audit(definition: dict) -> dict:
         ],
         "unresolved_blockers": [
             {
-                "devices": {"inputs": [58, 61]},
-                "blocker": "Unresolved LE upper-right-orbit address mapping: the official physical switch-location drawing marks the disputed coordinate as switch 61, the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT, and the known-working LE VPX script drives sw58 without a sw61 handler. Neither address receives a spatial placement or an unused classification.",
+                "devices": {"inputs": [58]},
+                "blocker": "Right orbit switch 58 is not yet placed. The LE switch-location drawing draws it under the Pro's number 61 (the LE ROM's switch test names 58 RIGHT ORBIT and 61 NOT USED, the Pro ROM's the reverse), and that callout has not been measured onto the normalized LE map.",
             },
             {"devices": {"inputs": [8, 9]}, "blocker": "Bridge down/up endpoint placement is not separated by a trustworthy LE spatial record."},
             {"devices": {"inputs": [17, 18, 19, 20, 21, 22, 23]}, "blocker": "Six-ball trough contacts and jam switch are grouped in the manual; individual switch centers and the jam geometry remain unlocated."},

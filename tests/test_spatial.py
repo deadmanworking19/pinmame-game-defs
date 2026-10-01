@@ -507,7 +507,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Black Knight 2000 adds its upper-flipper button conflict (the Solenoid Table and the cabinet wiring drawing disagree).
 		# Bram Stoker's Dracula's only conflict, a circuit-side naming detail, is now ignored, removing one.
 		# The Getaway's 2026-10-01 harness runs settle both of its conflicts, removing one more.
-		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# The Avengers LE and Pro switch tests settle the LE's right-orbit address, removing one more.
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

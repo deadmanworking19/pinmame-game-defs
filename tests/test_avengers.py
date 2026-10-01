@@ -15,6 +15,16 @@ LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edi
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-pro-boot-start.json"
 PRO_SCRIPT_EVIDENCE_PATH = ROOT / "evidence" / "vpx" / "vpxtable-scripts" / "avs_170c" / "85ea928246dbdf4b.json"
 LE_SPATIAL_AUDIT_PATH = ROOT / "reports" / "spatial" / "stern" / "avengers-limited-edition-2012.json"
+SWITCH_TEST_SCENARIO = ROOT / "tools" / "harness-scenarios" / "stern" / "avs-switch-test-58-61.json"
+SWITCH_TESTS = {
+	"avs_170h": ("runtime.avengers-le.avs-170h.switch-test", "stern.avengers-limited-edition.2012", ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-avs_170h-switch-test-58-61.json"),
+	"avs_170": ("runtime.avengers-pro.avs-170.switch-test", "stern.avengers-pro.2012", ROOT / "evidence" / "runtime" / "sam" / "avengers-pro-avs_170-switch-test-58-61.json"),
+}
+SWITCH_TEST_NAMES = {
+	"avs_170h": {47: "LEFT ORBIT", 48: "R. RAMP EXIT", 58: "RIGHT ORBIT", 61: "NOT USED"},
+	"avs_170": {47: "LEFT ORBIT", 48: "R. RAMP EXIT", 58: "NOT USED", 61: "RIGHT ORBIT"},
+}
+PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -296,13 +306,22 @@ class AvengersDefinitionTests(unittest.TestCase):
 		le_inputs = bindings(self.le, "inputs", "pinmame.input.switch")
 		le_solenoids = bindings(self.le, "outputs", "pinmame.output.solenoid")
 		le_lamps = bindings(self.le, "outputs", "pinmame.output.lamp")
-		self.assertEqual("conflicted", le_inputs[58]["provenance"]["status"])
-		self.assertEqual("unknown", le_inputs[61]["availability"])
-		self.assertEqual("conflicted", le_inputs[61]["provenance"]["status"])
+		# The LE and Pro ROMs' switch tests settle the old 58/61 conflict: the LE wires the right orbit to 58,
+		# and the LE switch-location drawing's 61 is the Pro's number for it.
+		switch_test_refs = {source_id for source_id, _machine, _path in SWITCH_TESTS.values()}
+		self.assertEqual("validated", le_inputs[58]["provenance"]["status"])
+		self.assertLessEqual(switch_test_refs, set(le_inputs[58]["provenance"]["source_refs"]))
+		self.assertEqual("used", le_inputs[58]["availability"])
+		self.assertIn("RIGHT ORBIT", le_inputs[58]["physical"]["notes"])
 		self.assertNotIn("spatial", le_inputs[58])
-		self.assertNotIn("spatial", le_inputs[61])
-		self.assertIn("address", le_inputs[58]["physical"]["notes"])
-		self.assertIn("classified unused", le_inputs[61]["physical"]["notes"])
+		self.assertEqual("unused", le_inputs[61]["availability"])
+		self.assertEqual("switch.unused-matrix-switch-61", le_inputs[61]["id"])
+		self.assertEqual("validated", le_inputs[61]["provenance"]["status"])
+		self.assertLessEqual(switch_test_refs, set(le_inputs[61]["provenance"]["source_refs"]))
+		self.assertIn("NOT USED", le_inputs[61]["physical"]["notes"])
+		self.assertEqual("unused", le_inputs[61]["spatial"]["reason"])
+		self.assertEqual([], self.le["conflicts"])
+		self.assertEqual(["spatial_placement"], self.le["coverage"]["missing"])
 		self.assertNotIn("spatial", le_inputs[17])
 		self.assertNotIn("spatial", le_inputs[86])
 		self.assertEqual("not_applicable", le_inputs[65]["spatial"]["status"])
@@ -331,13 +350,15 @@ class AvengersDefinitionTests(unittest.TestCase):
 		self.assertEqual("1972c6bc5c032f8a2eeac30cb89c88479bc38d9f77e33bbc0893ae48795018a6", rejected[0]["sha256"])
 		address_blockers = [
 			blocker for blocker in self.le_spatial_audit["unresolved_blockers"]
-			if blocker.get("devices", {}).get("inputs") == [58, 61]
+			if blocker.get("devices", {}).get("inputs") == [58]
 		]
 		self.assertEqual(1, len(address_blockers))
-		self.assertIn("manual", address_blockers[0]["blocker"])
-		self.assertIn("sw58", address_blockers[0]["blocker"])
-		self.assertIn("sw61", address_blockers[0]["blocker"])
-		self.assertEqual("conflict.le-upper-right-orbit-address", self.le["conflicts"][0]["id"])
+		self.assertIn("Pro's number 61", address_blockers[0]["blocker"])
+		self.assertNotIn(61, {
+			address
+			for blocker in self.le_spatial_audit["unresolved_blockers"]
+			for address in blocker.get("devices", {}).get("inputs", [])
+		})
 		self.assertIn("display.dmd", {
 			display_id
 			for blocker in self.le_spatial_audit["unresolved_blockers"]
@@ -348,6 +369,73 @@ class AvengersDefinitionTests(unittest.TestCase):
 			and 9 in blocker.get("devices", {}).get("inputs", [])
 			for blocker in self.le_spatial_audit["unresolved_blockers"]
 		))
+
+
+class AvengersSwitchTestEvidenceTests(unittest.TestCase):
+	"""The LE and Pro switch-test summaries are tied to their scenario and, when retained, to the raw runs."""
+
+	def test_the_le_and_pro_roms_name_58_and_61_the_opposite_way(self) -> None:
+		import hashlib
+		import os
+
+		scenario = load_json(SWITCH_TEST_SCENARIO)
+		self.assertNotIn("game", scenario)
+		scenario_sha256 = hashlib.sha256(SWITCH_TEST_SCENARIO.read_bytes()).hexdigest()
+		le = load_json(LE_PATH)
+		le_sources = {source["id"]: source for source in le["sources"]}
+		for game, (source_id, machine_id, path) in SWITCH_TESTS.items():
+			with self.subTest(game=game):
+				self.assertEqual("internal:" + path.relative_to(ROOT).as_posix(), le_sources[source_id]["uri"])
+				evidence = load_json(path)
+				self.assertEqual([game], evidence["driver_ids"])
+				self.assertEqual([machine_id], evidence["machine_ids"])
+				runtime = evidence["runtime"]
+				self.assertEqual(game, runtime["game"])
+				self.assertEqual(PINNED_LIBRARY_SHA256, runtime["emulator"]["sha256"])
+				(raw,) = runtime["raw_runs"]
+				self.assertEqual(scenario_sha256, raw["scenario_sha256"])
+				self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+				actions = runtime["observations"]["named_action_observations"]
+				self.assertEqual([47, 58, 61, 58, 61, 48], [item["input_address"] for item in actions])
+				snapshots = runtime["observations"]["diagnostic_snapshots"]
+				self.assertEqual(14, len(snapshots))
+				self.assertEqual("SWITCH TEST / NONE", snapshots[1]["interpreted_text"])
+				held_frames: dict[int, set[str]] = {}
+				for index, item in enumerate(actions):
+					address = item["input_address"]
+					name = SWITCH_TEST_NAMES[game][address]
+					self.assertEqual([address], item["host_stimulus_switch_addresses"])
+					self.assertEqual([], item["observed_switch_addresses"])
+					self.assertIn(f"the ROM prints {name} ", item["label"])
+					held, released = snapshots[2 + 2 * index], snapshots[3 + 2 * index]
+					self.assertTrue(held["interpreted_text"].startswith(f"SWITCH TEST / {name} / LAST SW. #{address} / "))
+					self.assertEqual(f"SWITCH TEST / NONE / LAST SW. #{address}", released["interpreted_text"])
+					held_frames.setdefault(address, set()).add(held["pixel_sha256"])
+				for address, hashes in held_frames.items():
+					self.assertEqual(1, len(hashes), address)
+				root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+				if not root:
+					continue
+				import build_external_evidence_manifest as manifest
+
+				run_path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+				self.assertEqual(raw["sha256"], hashlib.sha256(run_path.read_bytes()).hexdigest())
+				manifest.check_manifest(run_path.parent, game)
+				run = load_json(run_path)
+				self.assertIsNone(run["failure"])
+				self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
+				by_label = {snap["label"]: snap for snap in run["snapshots"]}
+				expected = [by_label["booted"], by_label["Select 5: switch test"]]
+				for label in ("hold 47", "hold 58", "hold 61", "hold 58 again", "hold 61 again", "hold 48"):
+					address = int(label.split()[1])
+					held = by_label[f"{label} (held)"]
+					self.assertEqual(1, {w["number"]: w["state"] for w in held["watched_switches"]}[address], label)
+					expected += [held, by_label[label]]
+				# Every summary snapshot is the raw frame of the step it names, in order.
+				self.assertEqual(
+					[(snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in expected],
+					[(item["pixel_sha256"], item["nonzero_pixels"]) for item in snapshots],
+				)
 
 
 if __name__ == "__main__":

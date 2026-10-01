@@ -30,6 +30,11 @@ LE_SCRIPT = "vpx.avengers-le.jp-salas-v600"
 PRO_SCRIPT = "vpx.avengers-pro.vpw-1-3-1"
 LE_RUNTIME = "runtime.avengers-le.boot-start"
 PRO_RUNTIME = "runtime.avengers-pro.boot-start"
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+# The LE switch test names 58 RIGHT ORBIT and 61 NOT USED; the Pro control run names the reverse,
+# which is why the LE switch-location drawing, which numbers the right orbit 61, follows the Pro.
+LE_SWITCH_TEST = "runtime.avengers-le.avs-170h.switch-test"
+PRO_SWITCH_TEST_CONTROL = "runtime.avengers-pro.avs-170.switch-test"
 
 LE_DRIVER_IDS = {"avs_120h", "avs_140h", "avs_170h", "avs_170hc"}
 PRO_DRIVER_IDS = {"avs_110", "avs_140", "avs_170", "avs_170c"}
@@ -167,31 +172,27 @@ def matrix_switch(number: int, manual: str, script: str, limited_edition: bool) 
 	elif not limited_edition and number == 22:
 		result["roles"] = ["ball.jam"]
 	if limited_edition and number == 58:
-		result["physical"]["notes"] = "Runtime causality identifies sw58 as the right-orbit callback, but the LE physical switch-location drawing marks the disputed upper-right-orbit coordinate 61. Spatial placement is withheld pending address reconciliation."
-		result["provenance"] = {"status": "conflicted", "source_refs": [manual, script]}
+		result["physical"]["notes"] = (
+			"The LE switch matrix grid names 58 RIGHT ORBIT and the known-working LE script drives sw58 from the "
+			"right-orbit trigger. The LE switch-location drawing numbers the same switch 61, which is the Pro's "
+			"number for it: in hash-pinned switch-test runs the LE ROM avs_170h prints RIGHT ORBIT (wires GRN-YEL / "
+			"TAN-RED) for public 58 and NOT USED for 61, while the Pro ROM avs_170 prints the reverse."
+		)
+		result["provenance"] = provenance(manual, script, LE_SWITCH_TEST, PRO_SWITCH_TEST_CONTROL)
 	if limited_edition and number == 61:
-		result.update({
-			"id": "switch.unresolved-upper-right-orbit-address",
-			"label": "Unresolved upper-right orbit address",
-			"availability": "unknown",
-			"physical": {
-				"switch_type": "unknown",
-				"notes": "The LE physical switch-location drawing marks the disputed upper-right-orbit coordinate 61, while the manual switch matrix grid and known-working LE VPX script identify 58. This address is neither promoted nor classified unused.",
-			},
-			"provenance": {"status": "conflicted", "source_refs": [manual, script]},
-		})
+		result["physical"]["notes"] = (
+			"The LE ROM avs_170h's switch test prints NOT USED for public 61 (wires GRN-YEL / TAN-GRN). The 61 callout "
+			"on the LE switch-location drawing is the Pro's number for the right orbit switch, which the LE wires to "
+			"58; the Pro ROM avs_170 prints RIGHT ORBIT for 61 and NOT USED for 58."
+		)
+		result["provenance"] = provenance(manual, script, LE_SWITCH_TEST, PRO_SWITCH_TEST_CONTROL)
 	return result
 
 
 def conflicts(limited_edition: bool, manual: str, script: str) -> list[dict[str, object]]:
-	if not limited_edition:
-		return []
-	return [{
-		"id": "conflict.le-upper-right-orbit-address",
-		"path": "inputs[pinmame.input.switch:58|61]",
-		"description": "The official LE physical switch-location drawing marks the disputed upper-right-orbit coordinate as switch 61, while the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT and the known-working LE VPX script drives sw58 without a sw61 handler. The address mapping cannot be reconciled without guessing, so both spatial placements and the unused classification for 61 are withheld. Resolution path: a LibPinMAME Switch Test trace against a legal avs_170h ROM holding public 58 and then 61 and recording the name the ROM prints for each, which shows whether this firmware names any device at 61 at all; or, decisively, a continuity check by an owner or operator with the playfield raised, reading whether the upper-right-orbit switch's return lead is the TAN-RED wire on J12-P8 recorded here for 58 or the TAN-GRN wire on J12-P4 recorded here for 61. Unresolved.",
-		"source_refs": [manual, script],
-	}]
+	# The LE's one conflict, the upper-right-orbit address (58 against the drawing's 61), was settled by the
+	# LE and Pro ROMs' own switch tests on 2026-10-01; see switches 58 and 61.
+	return []
 
 
 def dedicated_switch(device: int, manual_number: int, label: str, availability: str, switch_type: str, normally_closed: bool, manual: str, script: str) -> dict[str, object]:
@@ -612,8 +613,24 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 		"locator": f"Isolated LibPinMAME boot/start scenario using exact {'avs_170h.zip a5ea0eafcc45671ce66b29336c81f875f49515235034520f53e3042dfdefc74d' if limited_edition else 'avs_170.zip 5bf37fe0f4a7a101d941de3659dd29dd9913b01f020d3202d644a86ed8802cc3'}; captures 128x32x4 DMD, GI 0, lamp activity, and public solenoid transitions",
 		"license": "NOASSERTION", "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes are external",
 	}
+	switch_tests = [
+		{
+			"id": source_id, "kind": "runtime_scenario", "uri": f"internal:evidence/runtime/sam/{path}",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"locator": (
+				f"One hash-pinned LibPinMAME harness run of {game} from empty NVRAM (scenario "
+				"tools/harness-scenarios/stern/avs-switch-test-58-61.json) that enters the S.A.M. switch test and holds "
+				f"public 47, 58, 61, 58, 61 and 48 for 3 s each. While each is held the ROM prints its own name: {names}."
+			),
+			"license": "NOASSERTION", "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		}
+		for source_id, game, path, names in (
+			(LE_SWITCH_TEST, "avs_170h", "avengers-limited-edition-avs_170h-switch-test-58-61.json", "LEFT ORBIT (47), RIGHT ORBIT (58), NOT USED (61) and R. RAMP EXIT (48)"),
+			(PRO_SWITCH_TEST_CONTROL, "avs_170", "avengers-pro-avs_170-switch-test-58-61.json", "LEFT ORBIT (47), NOT USED (58), RIGHT ORBIT (61) and R. RAMP EXIT (48); this Pro run is a control for the LE record"),
+		)
+	] if limited_edition else []
 	return [
-		manual_record, script_record, runtime_record,
+		manual_record, script_record, runtime_record, *switch_tests,
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c Avengers INITGAME, SAM two-color DMD, and eight-custom-solenoid transport configuration", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames Avengers driver family", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	]
@@ -676,7 +693,7 @@ The conventional 1-80 lamp matrix is fully enumerated, including unused 13, 69-7
 
 Coordinates use normalized playfield space: x=0 is left and x=1 is right; y=0 is rear/backglass and y=1 is the apron. The promoted subset is observed against the official LE switch, lamp, coil, and RGB-GI maps on manual pages 63, 64, 66, 68, and 117. Assembly anchors are explicitly labeled when the manual groups paired optos or a multi-device mechanism. No coordinate in this LE definition is sourced from a Pro VPX table.
 
-The organized local VPX candidate `Avengers (Stern 2012)-WIP HD neo Hulk rascalV2.vpx` is retained as a review artifact but rejected for LE spatial use: its script identifies ROM `avs_170`, which is Pro-family evidence. The LE evidence itself has an unresolved upper-right-orbit address: the manual's physical location drawing marks the disputed coordinate 61, its switch matrix grid says 58, and the known-working LE script drives `sw58` without a `sw61` handler. Neither input receives that coordinate, and 61 is not classified as unused. The same fail-closed rule applies to LE bridge, auxiliary-board, lock-lamp, Tesseract-lamp, and any relocated geometry.
+The organized local VPX candidate `Avengers (Stern 2012)-WIP HD neo Hulk rascalV2.vpx` is retained as a review artifact but rejected for LE spatial use: its script identifies ROM `avs_170`, which is Pro-family evidence. The LE's right orbit switch is 58: the manual's switch matrix grid and the known-working LE script say so, and the LE ROM's own switch test prints RIGHT ORBIT for 58 and NOT USED for 61. The LE switch-location drawing marks the right orbit 61 because it carries the Pro's number: the Pro ROM's switch test prints RIGHT ORBIT for 61 and NOT USED for 58. Switch 61 is therefore unused on the LE, and 58 still awaits a coordinate measured from that drawing. The same fail-closed rule applies to LE bridge, auxiliary-board, lock-lamp, Tesseract-lamp, and any relocated geometry.
 
 Controlled N/A assertions cover DIP switches, unused devices, cabinet/service controls, rear-panel flashers, internal GI/bridge relays, the optional shaker and coin meter, and the virtual game-on output. Remaining physical devices intentionally have no spatial assertion until their individual LE geometry is reconciled: bridge endpoints 8/9, trough contacts 17-23, shooter switch 86, unlocated coils/auxiliary effects, the used lamp matrix, RGB-GI per-emitter locations and multiplicity, and the DMD display field (schema v2 has no display spatial-placement member). This keeps the machine schema-v2 partial and identifies the exact authoring blockers instead of inventing placements.
 
@@ -693,6 +710,7 @@ Controlled N/A assertions cover DIP switches, unused devices, cabinet/service co
 - `manual.avengers-limited-edition`: official Stern `Avengers-LE-Manual-compressed.pdf`, SHA-256 `4687ae0ed0ac249411deff3b0284d5c13d8fab154e430e95b6bd9f7bb82dca62`; I/O charts on PDF pages 63-69, auxiliary board on 108, RGB GI map on 117, and assembly drawings throughout.
 - `vpx.avengers-le.jp-salas-v600`: known-working JP Salas LE script at vpxtable_scripts revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `c6da231a360a0f062fa5b434d08faca3c1b7b6a5436cc51b5b54dac924e1a3b4`.
 - `runtime.avengers-le.boot-start`: isolated exact `avs_170h.zip` run, raw SHA-256 `3fdb8e048c0c8ff130163333e508953b6ec3bfb0670931af9cbddc957c011bd3`; ROM archive SHA-256 `a5ea0eafcc45671ce66b29336c81f875f49515235034520f53e3042dfdefc74d` remains external.
+- `runtime.avengers-le.avs-170h.switch-test` and `runtime.avengers-pro.avs-170.switch-test`: hash-pinned switch-test runs of the LE and Pro ROMs on the pinned-revision library (`evidence/runtime/sam/avengers-limited-edition-avs_170h-switch-test-58-61.json` and `avengers-pro-avs_170-switch-test-58-61.json`), retained under the working root's `review-artifacts/avengers-limited-edition-2012/harness/switch-test/`.
 """
 
 PRO_KNOWLEDGE = """# The Avengers Pro (Stern, 2012)

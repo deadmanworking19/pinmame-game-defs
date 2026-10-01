@@ -1,0 +1,108 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 30.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 400,
+      "key": "service_green",
+      "label": "Back",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 1: SERVICE MENU splash",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 2: icon menu, DIAG highlighted",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 3: diagnostics menu, SW highlighted",
+      "settle_s": 5.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 4: switch menu, TEST highlighted",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 5: switch test",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 47",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 47,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 58",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 58,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 61",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 61,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 58 again",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 58,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 61 again",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 61,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 3000,
+      "label": "hold 48",
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "switch": 48,
+      "type": "pulse"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "notes": "Boot an Avengers ROM from an empty NVRAM and enter the S.A.M. switch test with the named Back and Select service keys (Back, then Select five times: service-menu splash, icon menu, diagnostics menu, switch menu, switch test). The scenario names no game, so one byte-identical file serves the Limited Edition avs_170h and the Pro avs_170. Hold each public switch for 3 s with a snapshot while held and another 2 s after release: 47 (left orbit, a control), 58, 61, 58 and 61 again, and 48 (right ramp exit, a second control). The switch test prints the ROM's own name and wire colours for the switch it reads closed, and NONE once it is released. S.A.M. applies no inversion, so a held public 1 is a closed contact. The held addresses lie in the playfield matrix, outside every cabinet input the named keys drive.",
+  "version": 1,
+  "watch_switches": [
+    47,
+    48,
+    58,
+    61
+  ]
+}

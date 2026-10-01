@@ -18,7 +18,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 12 | 2013 | Star Trek Pro | Stern | author_ready | 100% |
 | 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready | 100% |
 | 14 | 2012 | AC/DC Pro (original) | Stern | author_ready | 100% |
-| 15 | 2012 | The Avengers Limited Edition | Stern | partial | 88% |
+| 15 | 2012 | The Avengers Limited Edition | Stern | partial | 94% |
 | 16 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
 | 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | author_ready | 100% |
 | 18 | 2012 | X-Men Pro | Stern | partial | 88% |

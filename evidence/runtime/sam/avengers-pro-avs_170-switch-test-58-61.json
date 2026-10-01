@@ -1,0 +1,277 @@
+{
+  "driver_ids": [
+    "avs_170"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.avengers-pro.2012"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game avs_170 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/stern/avs-switch-test-58-61.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The scenario uses the named S.A.M. Back and Select keys only to reach the switch test; every held address is a direct public switch write in the playfield matrix.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "avs_170",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            54
+          ],
+          "display_index": 0,
+          "interpreted_text": "AVENGERS / U.S.A. V1.7 / ENGLISH - 0",
+          "label": "power-up identification of the Pro ROM",
+          "nonzero_pixels": 312,
+          "pixel_sha256": "4d7a5f03602e0302768b7b20a1467c2ed41d942cf6fdffda370acd5500489dcd"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE",
+          "label": "switch test started, every watched switch at public 0",
+          "nonzero_pixels": 452,
+          "pixel_sha256": "5a91f63c9f042ca5f86655b4fa43e57f8820c3f06493e1118829281f47d58f3c"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / LEFT ORBIT / LAST SW. #47 / GRN-ORG / TAN-VIO",
+          "label": "switch test while public 47 is held at 1",
+          "nonzero_pixels": 708,
+          "pixel_sha256": "41fcc1eeb8fab98d839fbd1dc39a458b9d827b0d2a081d2e1b20a6a5775ecb75"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #47",
+          "label": "switch test two seconds after public 47 was released to 0",
+          "nonzero_pixels": 535,
+          "pixel_sha256": "248f5b34c3fa99c3393dce288b9bb7077ac78f5cc213563d9a9107ee13d3e3c4"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NOT USED / LAST SW. #58 / GRN-YEL / TAN-RED",
+          "label": "switch test while public 58 is held at 1",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "c279969add642292527794b06c7fb42f03f832fe55fda910a6b762c3a60a9848"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #58",
+          "label": "switch test two seconds after public 58 was released to 0",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "7ec0bad0bd6e7d099b9bf7afebfbf5c685484ebeb51c7542c61d6bac5f8a6904"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT ORBIT / LAST SW. #61 / GRN-YEL / TAN-GRN",
+          "label": "switch test while public 61 is held at 1",
+          "nonzero_pixels": 721,
+          "pixel_sha256": "0ae121f3ac07443606ed2df2b7cb8d7f34b707085004eb52d036f2c846c900d6"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #61",
+          "label": "switch test two seconds after public 61 was released to 0",
+          "nonzero_pixels": 540,
+          "pixel_sha256": "3f0386a04a4d5b5409da8a6556c95c0c8b0f330560c4214cb7b2c65d56218948"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NOT USED / LAST SW. #58 / GRN-YEL / TAN-RED",
+          "label": "switch test while public 58 is held at 1 again",
+          "nonzero_pixels": 699,
+          "pixel_sha256": "c279969add642292527794b06c7fb42f03f832fe55fda910a6b762c3a60a9848"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #58",
+          "label": "switch test two seconds after public 58 was released to 0 again",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "7ec0bad0bd6e7d099b9bf7afebfbf5c685484ebeb51c7542c61d6bac5f8a6904"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / RIGHT ORBIT / LAST SW. #61 / GRN-YEL / TAN-GRN",
+          "label": "switch test while public 61 is held at 1 again",
+          "nonzero_pixels": 721,
+          "pixel_sha256": "0ae121f3ac07443606ed2df2b7cb8d7f34b707085004eb52d036f2c846c900d6"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #61",
+          "label": "switch test two seconds after public 61 was released to 0 again",
+          "nonzero_pixels": 540,
+          "pixel_sha256": "3f0386a04a4d5b5409da8a6556c95c0c8b0f330560c4214cb7b2c65d56218948"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / R. RAMP EXIT / LAST SW. #48 / GRN-ORG / TAN-WHT",
+          "label": "switch test while public 48 is held at 1",
+          "nonzero_pixels": 724,
+          "pixel_sha256": "164a701a6c6026d4a41048badc4e39f5db8dad5b7b276f46affb490573f6f996"
+        },
+        {
+          "active_solenoid_addresses": [
+            33
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH TEST / NONE / LAST SW. #48",
+          "label": "switch test two seconds after public 48 was released to 0",
+          "nonzero_pixels": 541,
+          "pixel_sha256": "79935720b6e5c73bd7ac63e78340b9da7610c5b217e25f75b28a8351c769baa8"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "public 47 held at 1 for 3 s inside the Pro switch test: the ROM prints LEFT ORBIT with the wire colours GRN-ORG / TAN-VIO, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "public 58 held at 1 for 3 s inside the Pro switch test: the ROM prints NOT USED with the wire colours GRN-YEL / TAN-RED, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "public 61 held at 1 for 3 s inside the Pro switch test: the ROM prints RIGHT ORBIT with the wire colours GRN-YEL / TAN-GRN, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            58
+          ],
+          "input_address": 58,
+          "input_kind": "switch",
+          "label": "public 58 held at 1 for 3 s inside the Pro switch test again: the ROM prints NOT USED with the wire colours GRN-YEL / TAN-RED, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            61
+          ],
+          "input_address": 61,
+          "input_kind": "switch",
+          "label": "public 61 held at 1 for 3 s inside the Pro switch test again: the ROM prints RIGHT ORBIT with the wire colours GRN-YEL / TAN-GRN, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            48
+          ],
+          "input_address": 48,
+          "input_kind": "switch",
+          "label": "public 48 held at 1 for 3 s inside the Pro switch test: the ROM prints R. RAMP EXIT with the wire colours GRN-ORG / TAN-WHT, and NONE again after the release",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 13,
+        "initial_switches": [],
+        "name": "avs-170-switch-test-58-61",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/avengers-limited-edition-2012/harness/switch-test/avs_170/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/avs-switch-test-58-61.json",
+        "scenario_sha256": "aa7ee31dd54d5f24b804a461b025fa3f90cc82df500cd06978ec1584c7e77916",
+        "self_test_pulses": 0,
+        "sha256": "4bd2c95b25622dc5f42347d5e943df11a56c84c866f37c39daabb4c6250b7584",
+        "snapshot_count": 20,
+        "watch_switches": [
+          47,
+          48,
+          58,
+          61
+        ]
+      }
+    ],
+    "rom_archive_sha256": "5bf37fe0f4a7a101d941de3659dd29dd9913b01f020d3202d644a86ed8802cc3"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest avs_170/manifest.json SHA-256 5410311df52b3d3c515ef47ba9ab7c7db302ea3b8fed4cd674c174fe3a268105 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/avengers-limited-edition-2012/harness/switch-test/avs_170",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "4bd2c95b25622dc5f42347d5e943df11a56c84c866f37c39daabb4c6250b7584"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
