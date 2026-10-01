@@ -1136,8 +1136,9 @@ OPTO_POLARITY_NOTE = (
 	"1. The Avengers LE control run shows that the S.A.M. switch test reports the ROM's logical reading: "
 	"there the active-low Loki optos are named at public 0. So the ROM reads public 1 as active, the "
 	"known-working script drives it that way, and a recreation never inverts it. normally_closed is "
-	"false: sam.c's switch read hands coreGlobals.swMatrix to the CPU uncomplemented, so the matrix "
-	"contact is closed exactly when the ROM reads the switch active and rests open."
+	"false: sam.c's matrix read returns the complement of coreGlobals.swMatrix, because the S.A.M. "
+	"inputs read a closed contact low, so public 1 is the CPU's closed-contact reading. The contact is "
+	"therefore closed exactly when the ROM reads the switch active, and rests open."
 )
 
 

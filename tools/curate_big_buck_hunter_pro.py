@@ -1023,9 +1023,10 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 				f"{address} is held at 1, and with every switch at 0 its grid marks none active. The Avengers LE "
 				"control run shows that the S.A.M. switch test reports the ROM's logical reading (there the "
 				"active-low Loki optos are named at public 0), so this ROM reads public 1 as active and a "
-				"recreation never inverts it. normally_closed is false: sam.c's switch read hands "
-				"coreGlobals.swMatrix to the CPU uncomplemented, so the matrix contact is closed exactly when the "
-				"ROM reads the switch active and rests open."
+				"recreation never inverts it. normally_closed is false: sam.c's matrix read returns the "
+				"complement of coreGlobals.swMatrix, because the S.A.M. inputs read a closed contact low, so public "
+				"1 is the CPU's closed-contact reading. The contact is therefore closed exactly when the ROM reads "
+				"the switch active, and rests open."
 				+ (" Holding it at 1 in the switch test also fires the kickback ram, solenoid 12." if address == 34 else "")
 			)
 		if address == 11:
@@ -2187,9 +2188,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"semantics of the 46-64 matrix block and the eight-address 73-80 extended block, the "
 		"identities of eleven solenoids, and lamps 1-2 remain unknown because no electrical table "
 		"exists in any retained source; the attract-mode harness run resolved the other twenty "
-		"lamp addresses to observed-driven and the remaining route is a service-menu coil/switch "
-		"run whose entry key is still unmapped; recreation knowledge remains observed until that "
-		"run exercises the ROM's Buck feedback and the Elk button path; and the stacked-bulb and "
+		"lamp addresses to observed-driven; Back and five 700 ms Select presses reach the switch test, "
+		"whose 1-64 sweep is retained, and the same path should reach the coil test that would name the "
+		"unknown solenoids; recreation knowledge remains observed until those runs exercise the ROM's Buck "
+		"feedback and the Elk button path; and the stacked-bulb and "
 		"G.I. spatial gaps have no honest placement set. The record therefore stays `partial` "
 		"with `coverage.missing = [\"input_semantics\", \"output_semantics\", \"polarity\", "
 		"\"recreation_notes\", \"spatial_placement\", \"unresolved_conflicts\"]`.",

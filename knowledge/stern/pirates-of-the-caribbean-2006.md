@@ -269,9 +269,10 @@ and LOKI LOCK 1 (BOT) once it returns to 0. In hash-pinned runs of `potc_600af` 
 seven optos is named and marked only while it is held at public 1, exactly like the ordinary
 Left Lane switch 1. Holding the stack opto 22 at 1 also makes both ROMs pulse the trough eject
 twice, as they do to clear a jammed ball. So the ROM reads all seven optos active at public 1,
-the known-working script drives them that way, and a recreation never inverts them. Because
-`sam.c`'s switch read hands `coreGlobals.swMatrix` to the CPU uncomplemented, each opto's matrix
-contact rests open: the seven optos record `normally_closed: false`. Evidence:
+the known-working script drives them that way, and a recreation never inverts them. `sam.c`'s
+matrix read returns the complement of `coreGlobals.swMatrix`, because the S.A.M. inputs read a
+closed contact low, so public 1 is the CPU's closed-contact reading. Each opto's matrix contact
+therefore rests open: the seven optos record `normally_closed: false`. Evidence:
 `evidence/runtime/sam/pirates-of-the-caribbean-potc_600af-switch-test-optos.json`,
 `...potc_110af-switch-test-optos.json` and the control
 `evidence/runtime/sam/avengers-limited-edition-switch-test-loki-control.json`.

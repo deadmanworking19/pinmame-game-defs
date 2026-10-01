@@ -683,6 +683,15 @@ class SwitchTestEvidenceTests(unittest.TestCase):
 		texts = [item["interpreted_text"] for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]]
 		self.assertEqual("SWITCH TEST / NONE / LAST SW. #47", texts[4])
 		self.assertTrue(texts[5].startswith("SWITCH TEST / LOKI LOCK 1 (BOT) / LAST SW. #49"))
+		run = self._retained(evidence, "avs_170h")
+		if run is None:
+			return
+		by_label = {snap["label"]: snap for snap in run["snapshots"]}
+		expected = [by_label[label] for label in ["booted", "Select 5: switch test", "hold 47 (held)", "hold 47", "49 -> 1", "49 -> 0", "49 -> 1 again", "49 -> 0 again"]]
+		self.assertEqual(
+			[(snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in expected],
+			[(item["pixel_sha256"], item["nonzero_pixels"]) for item in evidence["runtime"]["observations"]["diagnostic_snapshots"]],
+		)
 
 
 if __name__ == "__main__":

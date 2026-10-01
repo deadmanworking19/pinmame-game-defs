@@ -863,6 +863,12 @@ class SwitchTestEvidenceTests(unittest.TestCase):
 		by_label = {snap["label"]: snap for snap in run["snapshots"]}
 		for label, state in (("49 -> 1", 1), ("49 -> 0", 0), ("49 -> 1 again", 1), ("49 -> 0 again", 0)):
 			self.assertEqual(state, {w["number"]: w["state"] for w in by_label[label]["watched_switches"]}[49], label)
+		# Every summary snapshot is the raw frame of the step it names, in order.
+		expected = [by_label[label] for label in ["booted", "Select 5: switch test", "hold 47 (held)", "hold 47", "49 -> 1", "49 -> 0", "49 -> 1 again", "49 -> 0 again"]]
+		self.assertEqual(
+			[(snap["displays"][0]["pixel_sha256"], snap["displays"][0]["nonzero_pixels"]) for snap in expected],
+			[(item["pixel_sha256"], item["nonzero_pixels"]) for item in observations["diagnostic_snapshots"]],
+		)
 
 
 if __name__ == "__main__":
