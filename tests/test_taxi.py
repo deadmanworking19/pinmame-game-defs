@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import curate_taxi as curator
+import drawing_callouts
 import taxi_runtime_evidence as runtime_evidence
 from build_external_evidence_manifest import write_manifest
 from pinmame_game_defs.jsonio import canonical_bytes
@@ -28,6 +29,7 @@ DEFINITION_PATH = ROOT / curator.PARTIAL_RELATIVE_PATH
 AUTHOR_READY_PATH = ROOT / curator.AUTHOR_READY_RELATIVE_PATH
 KNOWLEDGE_PATH = ROOT / curator.KNOWLEDGE_RELATIVE_PATH
 SPATIAL_REPORT_PATH = ROOT / curator.SPATIAL_REPORT_RELATIVE_PATH
+CALLOUT_PATH = ROOT / "tools/seeds/williams/taxi-1988-callouts.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / curator.SPATIAL_REPORT_MARKDOWN_RELATIVE_PATH
 EVIDENCE_BINDING_PATH = ROOT / curator.EVIDENCE_BINDING_RELATIVE_PATH
 
@@ -381,6 +383,8 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 		cls.dips = _by_binding(cls.definition, "inputs", curator.DIP_GROUP)
 		cls.solenoids = _by_binding(cls.definition, "outputs", curator.SOLENOID_GROUP)
 		cls.lamps = _by_binding(cls.definition, "outputs", curator.LAMP_GROUP)
+		cls.callout_seed = json.loads(CALLOUT_PATH.read_text(encoding="utf-8"))
+		cls.callout_decisions = drawing_callouts.evaluate(cls.callout_seed, drawing_callouts.placements_of(cls.definition))
 
 	def test_seed_and_generated_definition_are_byte_identical(self) -> None:
 		self.assertTrue(DEFINITION_PATH.is_file(), "Taxi is expected to remain a partial unless the seed explicitly changes status")
@@ -398,14 +402,56 @@ class TaxiSeededDefinitionTests(unittest.TestCase):
 			placements = lamp["spatial"]["placements"]
 			self.assertEqual(1, len(placements))
 			self.assertEqual((f"placement.lamp-{address}.l{address}", "emitter"), (placements[0]["id"], placements[0]["role"]))
-			status = "candidate" if address == 37 else "observed"
+			# Lamp 37 stays a candidate; the factory drawing callout check decides every other lamp.
+			decision = self.callout_decisions["placements"].get(placements[0]["id"])
+			status = "candidate" if address == 37 else "validated" if decision["agrees"] else "observed"
 			self.assertEqual((status, status), (lamp["spatial"]["status"], placements[0]["provenance"]["status"]))
 			self.assertIn(f"Set Lights({address})", lamp["physical"]["notes"])
 			self.assertNotIn("must be reconciled", lamp["physical"]["notes"])
 		self.assertIn("rubber post", self.lamps[37]["physical"]["notes"])
 		ids = [p["id"] for group in ("inputs", "outputs") for item in self.definition[group]
 		       for p in item.get("spatial", {}).get("placements", [])]
-		self.assertEqual((82, 82), (len(ids), len(set(ids))))
+		self.assertEqual((96, 96), (len(ids), len(set(ids))))
+		self.assertNotIn("placement.lamp-37.l37", self.callout_seed["checks"])
+
+	def test_drawing_callout_check_decides_every_placement_status(self) -> None:
+		source = "drawing-callouts.taxi.2026-10-01"
+		self.assertEqual(hashlib.sha256(CALLOUT_PATH.read_bytes()).hexdigest(),
+		                 {s["id"]: s for s in self.definition["sources"]}[source]["sha256"])
+		checked = 0
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			for placement in device.get("spatial", {}).get("placements", []):
+				decision = self.callout_decisions["placements"].get(placement["id"])
+				status = placement["provenance"]["status"]
+				if decision is None:
+					self.assertIn(status, {"observed", "candidate"}, placement["id"])
+					continue
+				checked += 1
+				self.assertEqual("validated" if decision["agrees"] else "observed", status, placement["id"])
+				self.assertEqual(decision["agrees"], source in placement["provenance"]["source_refs"], placement["id"])
+				single = len(device["spatial"]["placements"]) == 1
+				said = "this placement stays observed" if single else f"placement {placement['id']} stays observed"
+				self.assertEqual(not decision["agrees"], said in device["physical"]["notes"], placement["id"])
+		self.assertEqual(len(self.callout_seed["checks"]), checked)
+		excerpt = (ROOT / "evidence/excerpts/williams.taxi.1988/spatial.md").read_text(encoding="utf-8")
+		validated = sum(d["agrees"] for d in self.callout_decisions["placements"].values())
+		self.assertIn(f"It validates {validated} of the {checked} placements it checks", excerpt)
+
+	def test_slings_and_flashers_sit_on_their_script_bound_objects(self) -> None:
+		solenoids = {d["binding"]["device"]: d for d in self.definition["outputs"] if d["binding"]["group"] == "pinmame.output.solenoid"}
+		for number, wall in ((18, "leftslingshot"), (20, "rightslingshot")):
+			switch, coil = self.switches[number]["spatial"]["placements"], solenoids[number]["spatial"]["placements"]
+			self.assertEqual([f"placement.switch-{number}.{wall}"], [p["id"] for p in switch])
+			self.assertEqual([(p["x"], p["y"]) for p in switch], [(p["x"], p["y"]) for p in coil])
+			self.assertEqual(("sensor", "effect"), (switch[0]["role"], coil[0]["role"]))
+		lights = {15: ["flasher15"], 25: ["flasher25"], 26: ["flasher26"], 27: ["flasher27"], 28: ["flasher28"], 29: ["flasher29"],
+		          30: ["flasher30"], 31: ["flasher31a"], 32: ["flasher32", "flasher32a"]}  # 30/31's second bulb is the backbox dome
+		for number, names in lights.items():
+			placements = solenoids[number]["spatial"]["placements"]
+			self.assertEqual([f"placement.solenoid-{number}.{name}" for name in names], [p["id"] for p in placements])
+			self.assertTrue(all(p["role"] == "emitter" for p in placements))
+			self.assertIn(f"SolCallback({number})", solenoids[number]["physical"]["notes"])
+		self.assertNotIn("spatial", solenoids[16], "Joyride 16 stays unplaced while its load is in conflict")
 
 	@unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX root not configured")
 	def test_lamp_placements_recompute_from_retained_lights(self) -> None:

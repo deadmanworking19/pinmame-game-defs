@@ -13,7 +13,7 @@
     ],
     "status": "partial"
   },
-  "definition_sha256": "773602910921dba7b631220b83688fcb7c99817cb89671bb20c80f79b1a7c83a",
+  "definition_sha256": "5fe50604a4eb373ad2b05ba05758d9f091d2c50bacc0789cca67b5b8096967b4",
   "emitter_policy": "Each emitted placement is reproduced as its own seed placement. Glow sprites and render helpers are not physical socket proof unless the canonical seed records a physical placement and provenance.",
   "format": "pinmame-spatial-blockers",
   "located_devices": [
@@ -48,9 +48,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -58,7 +59,7 @@
             "y": 0.134554
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -92,9 +93,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -102,7 +104,7 @@
             "y": 0.112842
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -136,9 +138,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -146,7 +149,7 @@
             "y": 0.117908
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -180,9 +183,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -190,7 +194,7 @@
             "y": 0.12576
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -224,9 +228,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -234,7 +239,51 @@
             "y": 0.220365
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.18",
+      "kind": "switch",
+      "label": "Left Kicker (sling)",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor is the drag-point centroid of the retained Wall.LeftSlingShot, the sling's kicking rubber; the embedded script's LeftSlingShot_Slingshot (line 453) pulses switch 18 when that wall fires. Factory B-12283 mounts the actuating leaf contacts behind that rubber, so this places the sling the contacts sense, not either contact's own centre.",
+        "quantity": 1,
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.switch-18.leftslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.225109,
+            "y": 0.714321
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -268,9 +317,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -278,7 +328,51 @@
             "y": 0.225051
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.20",
+      "kind": "switch",
+      "label": "Right Kicker (sling)",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor is the drag-point centroid of the retained Wall.RightSlingShot, the sling's kicking rubber; the embedded script's RightSlingShot_Slingshot (line 435) pulses switch 20 when that wall fires. Factory B-12283 mounts the actuating leaf contacts behind that rubber, so this places the sling the contacts sense, not either contact's own centre.",
+        "quantity": 1,
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.switch-20.rightslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.68583,
+            "y": 0.713181
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -312,9 +406,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -322,7 +417,7 @@
             "y": 0.308637
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -335,7 +430,7 @@
       "label": "Top Lane Entry",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw23 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw23 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 23's leader 0.078 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-08",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -400,9 +495,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -410,7 +506,7 @@
             "y": 0.136398
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -423,7 +519,7 @@
       "label": "Left Ramp Entry",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw25 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw25 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 25's leader 0.161 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-08",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -488,9 +584,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -498,7 +595,7 @@
             "y": 0.421859
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -535,9 +632,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -545,7 +643,7 @@
             "y": 0.385132
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -559,7 +657,7 @@
       "physical": {
         "assembly_part_number": "C-11318-1",
         "location": "playfield / underplayfield",
-        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw28, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. The adjacent sw27/sw29 bindings are reversed in the retained table; sw28 remains the middle face.",
+        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw28, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. The adjacent sw27/sw29 bindings are reversed in the retained table; sw28 remains the middle face. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 28's leader 0.121 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "p/o C-11318-1",
         "quantity": 1,
         "switch_type": "opto"
@@ -606,7 +704,7 @@
       "physical": {
         "assembly_part_number": "C-11318-1",
         "location": "playfield / underplayfield",
-        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw27, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. Retained-table defect: script 153 binds sw27/sw28/sw29 directly to 27/28/29, but sw27 is the right face and sw29 the left face. Physical address 29 therefore uses sw27 geometry; correct the table binding rather than swapping machine identities.",
+        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw27, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. Retained-table defect: script 153 binds sw27/sw28/sw29 directly to 27/28/29, but sw27 is the right face and sw29 the left face. Physical address 29 therefore uses sw27 geometry; correct the table binding rather than swapping machine identities. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 29's leader 0.153 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "p/o C-11318-1",
         "quantity": 1,
         "switch_type": "opto"
@@ -676,9 +774,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -686,7 +785,7 @@
             "y": 0.530838
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -723,9 +822,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -733,7 +833,7 @@
             "y": 0.555978
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -770,9 +870,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -780,7 +881,7 @@
             "y": 0.581687
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -793,7 +894,7 @@
       "label": "Right Ramp Exit",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw33P: world-space mesh bounds center (202.405365,523.496430) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw33 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 33 separately. This is a projected recreation wire-actuation site, not a measured microswitch body.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw33P: world-space mesh bounds center (202.405365,523.496430) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw33 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 33 separately. This is a projected recreation wire-actuation site, not a measured microswitch body. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 33's leader 0.092 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-04",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -838,7 +939,7 @@
       "label": "Left Ramp Exit",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw34P: world-space mesh bounds center (697.897130,450.231950) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw34 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 34 separately. This is a projected recreation wire-actuation site, not a measured microswitch body.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw34P: world-space mesh bounds center (697.897130,450.231950) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw34 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 34 separately. This is a projected recreation wire-actuation site, not a measured microswitch body. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 34's leader 0.220 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-04",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -904,9 +1005,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -914,7 +1016,7 @@
             "y": 0.589215
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -948,9 +1050,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -958,7 +1061,7 @@
             "y": 0.303642
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -992,9 +1095,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1002,7 +1106,7 @@
             "y": 0.740502
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1036,9 +1140,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1046,7 +1151,7 @@
             "y": 0.718212
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1080,9 +1185,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1090,7 +1196,7 @@
             "y": 0.739932
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1124,9 +1230,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1134,7 +1241,7 @@
             "y": 0.714256
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1169,9 +1276,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1179,7 +1287,7 @@
             "y": 0.589215
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1192,7 +1300,7 @@
       "label": "Middle 3-bank Dr Tgt",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the common underplayfield reset actuator effect to the central face of its factory C-11223-1 three-target assembly, retained HitTarget.sw28; this is a single assembly effect anchor, not a measured reset-coil mount. Factory PDF 53/60 establishes common-bank reset and script callback establishes runtime routing separately.",
+        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the common underplayfield reset actuator effect to the central face of its factory C-11223-1 three-target assembly, retained HitTarget.sw28; this is a single assembly effect anchor, not a measured reset-coil mount. Factory PDF 53/60 establishes common-bank reset and script callback establishes runtime routing separately. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 4A's leader 0.073 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "AE-26-1200",
         "quantity": 1
       },
@@ -1259,9 +1367,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1269,7 +1378,7 @@
             "y": 0.134554
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1304,9 +1413,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1314,7 +1424,7 @@
             "y": 0.555978
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1327,7 +1437,7 @@
       "label": "Spinout Kickbig",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the underplayfield actuator effect to its occupied/catapult/ejection site, retained Kicker.SpinoutKicker center, reconciled to factory PDF 60 assembly leader and parts drawing. This is the ball-moving assembly effect, not a measured coil mount; script callback and stack InitKick/InitSaucer establish runtime routing separately.",
+        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the underplayfield actuator effect to its occupied/catapult/ejection site, retained Kicker.SpinoutKicker center, reconciled to factory PDF 60 assembly leader and parts drawing. This is the ball-moving assembly effect, not a measured coil mount; script callback and stack InitKick/InitSaucer establish runtime routing separately. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 7A's leader 0.118 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "AE-26-1500",
         "quantity": 1
       },
@@ -1394,9 +1504,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1404,7 +1515,7 @@
             "y": 0.303642
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1417,7 +1528,7 @@
       "label": "Top Ball Gate",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the underplayfield gate actuator effect to the drag-point centroid of the narrow retained Wall.TopGate (four world-space vertices). Factory PDF 60 leader 9 identifies the rear-left controlled gate; callback 9 toggles this collision wall. This places the route-opening effect, not the coil mount.",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the underplayfield gate actuator effect to the drag-point centroid of the narrow retained Wall.TopGate (four world-space vertices). Factory PDF 60 leader 9 identifies the rear-left controlled gate; callback 9 toggles this collision wall. This places the route-opening effect, not the coil mount. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 9's leader 0.079 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "SM1-35-4000-DC",
         "quantity": 1
       },
@@ -1454,6 +1565,52 @@
     },
     {
       "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.15",
+      "kind": "flasher",
+      "label": "JACKPOT Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,2i. Spatial: placed on Light.Flasher15, a light the embedded script's SolCallback(15) (line 45) drives through vpmFlasher. The factory PDF 60 coil-location leader 15 ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,2i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamp",
+        "quantity": 3
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-15.flasher15",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.679753,
+            "y": 0.262855
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
         "device": 17,
         "group": "pinmame.output.solenoid"
       },
@@ -1485,9 +1642,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1495,7 +1653,53 @@
             "y": 0.220365
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.18",
+      "kind": "coil",
+      "label": "Left Kicker (\"Sling\")",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the sling kicker's effect to the same Wall.LeftSlingShot drag-point centroid. The table binds no SolCallback(18); it animates the sling from the wall's own Slingshot event, so this anchor is switch 18's object and places the kicking rubber, not the coil or its arm pivot.",
+        "part_number": "AE-26-1500",
+        "quantity": 1
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-18.leftslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.225109,
+            "y": 0.714321
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1530,9 +1734,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -1540,7 +1745,53 @@
             "y": 0.225051
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.20",
+      "kind": "coil",
+      "label": "Right Kicker (\"Sling\")",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the sling kicker's effect to the same Wall.RightSlingShot drag-point centroid. The table binds no SolCallback(20); it animates the sling from the wall's own Slingshot event, so this anchor is switch 20's object and places the kicking rubber, not the coil or its arm pivot.",
+        "part_number": "AE-26-1500",
+        "quantity": 1
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-20.rightslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.68583,
+            "y": 0.713181
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1575,14 +1826,398 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
             "x": 0.455882,
             "y": 0.308637
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.25",
+      "kind": "flasher",
+      "label": "Pin-Bot Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,1i. Spatial: placed on Light.Flasher25, a light the embedded script's SolCallback(25) (line 47) drives through vpmFlasher. The factory PDF 60 coil-location leader 1C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-25.flasher25",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.779937,
+            "y": 0.554205
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.26",
+      "kind": "flasher",
+      "label": "Dracula Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,1i. Spatial: placed on Light.Flasher26, a light the embedded script's SolCallback(26) (line 48) drives through vpmFlasher. The factory PDF 60 coil-location leader 2C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-26.flasher26",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.142069,
+            "y": 0.520422
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.27",
+      "kind": "flasher",
+      "label": "Marilyn Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,1i. Spatial: placed on Light.Flasher27, a light the embedded script's SolCallback(27) (line 49) drives through vpmFlasher. The factory PDF 60 coil-location leader 3C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-27.flasher27",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.470326,
+            "y": 0.414039
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.28",
+      "kind": "flasher",
+      "label": "Santa Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,1i. Spatial: placed on Light.Flasher28, a light the embedded script's SolCallback(28) (line 50) drives through vpmFlasher. The factory PDF 60 coil-location leader 4C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-28.flasher28",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.271534,
+            "y": 0.330515
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.29",
+      "kind": "flasher",
+      "label": "Gorbie Flasher",
+      "physical": {
+        "location": "playfield and insert board",
+        "notes": "Printed bulb population 1p,1i. Spatial: placed on Light.Flasher29, a light the embedded script's SolCallback(29) (line 51) drives through vpmFlasher. The factory PDF 60 coil-location leader 5C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1i, and backbox insert bulbs have no playfield point.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-29.flasher29",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.640756,
+            "y": 0.339634
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.30",
+      "kind": "flasher",
+      "label": "Left Ramp Flasher",
+      "physical": {
+        "location": "playfield and backbox top dome",
+        "notes": "Printed bulb population 1p,1d. Spatial: placed on Light.Flasher30, a light the embedded script's SolCallback(30) (line 52) drives through vpmFlasher. The factory PDF 60 coil-location leader 6C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1d, and backbox insert bulbs have no playfield point. The callback also drives Light.Flasher30a, but the printed d bulb is the backbox-top Dome Light PCB (PDF 58), so that light places no playfield bulb.",
+        "part_number": "#89, #906 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-30.flasher30",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.122768,
+            "y": 0.313513
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.31",
+      "kind": "flasher",
+      "label": "Right Ramp Flasher",
+      "physical": {
+        "location": "playfield and backbox top dome",
+        "notes": "Printed bulb population 1p,1d. Spatial: placed on Light.Flasher31a, a light the embedded script's SolCallback(31) (line 53) drives through vpmFlasher. The factory PDF 60 coil-location leader 7C ends there, so it is the modelled flash lamp rather than a glow; the printed population is 1p,1d, and backbox insert bulbs have no playfield point. The callback also drives Light.Flasher31, but the printed d bulb is the backbox-top Dome Light PCB (PDF 58), so that light places no playfield bulb.",
+        "part_number": "#89, #906 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-31.flasher31a",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.804491,
+            "y": 0.265388
+          }
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.32",
+      "kind": "flasher",
+      "label": "Spinout Flasher",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Printed bulb population 2p. Spatial: placed on Light.Flasher32 and Light.Flasher32a, the lights the embedded script's SolCallback(32) (line 54) drives through vpmFlasher. The factory PDF 60 coil-location leader 8C ends at one of them, so they are the modelled flash lamps rather than a glow; the printed population is 2p, and backbox insert bulbs have no playfield point. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) draws callout 8C only once, at a nearer placement of this device, so placement placement.solenoid-32.flasher32a stays observed.",
+        "part_number": "#89 flashlamps",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-32.flasher32",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.924895,
+            "y": 0.026849
+          },
+          {
+            "id": "placement.solenoid-32.flasher32a",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.85583,
+            "y": 0.026596
           }
         ],
         "status": "observed"
@@ -1616,9 +2251,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1626,7 +2262,7 @@
             "y": 0.506269
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1657,9 +2293,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1667,7 +2304,7 @@
             "y": 0.506522
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1698,9 +2335,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1708,7 +2346,7 @@
             "y": 0.506396
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1739,9 +2377,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1749,7 +2388,7 @@
             "y": 0.506586
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1780,9 +2419,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1790,7 +2430,7 @@
             "y": 0.506586
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1821,9 +2461,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1831,7 +2472,7 @@
             "y": 0.068351
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1862,9 +2503,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1872,7 +2514,7 @@
             "y": 0.074316
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1903,9 +2545,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1913,7 +2556,7 @@
             "y": 0.082865
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1944,9 +2587,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1954,7 +2598,7 @@
             "y": 0.633843
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1985,9 +2629,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -1995,7 +2640,7 @@
             "y": 0.592646
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2026,9 +2671,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2036,7 +2682,7 @@
             "y": 0.592663
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2067,9 +2713,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2077,7 +2724,7 @@
             "y": 0.553136
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2108,9 +2755,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2118,7 +2766,7 @@
             "y": 0.552713
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2149,9 +2797,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2159,7 +2808,7 @@
             "y": 0.630098
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2190,9 +2839,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2200,7 +2850,7 @@
             "y": 0.501361
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2231,9 +2881,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2241,7 +2892,7 @@
             "y": 0.177527
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2272,9 +2923,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2282,7 +2934,7 @@
             "y": 0.544871
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2313,9 +2965,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2323,7 +2976,7 @@
             "y": 0.509922
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2354,9 +3007,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2364,7 +3018,7 @@
             "y": 0.400073
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2395,9 +3049,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2405,7 +3060,7 @@
             "y": 0.325618
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2436,9 +3091,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2446,7 +3102,7 @@
             "y": 0.336411
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2477,9 +3133,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2487,7 +3144,7 @@
             "y": 0.837133
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2518,9 +3175,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2528,7 +3186,7 @@
             "y": 0.68503
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2559,9 +3217,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2569,7 +3228,7 @@
             "y": 0.461151
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2600,9 +3259,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2610,7 +3270,7 @@
             "y": 0.751298
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2641,9 +3301,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2651,7 +3312,7 @@
             "y": 0.663406
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2682,9 +3343,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2692,7 +3354,7 @@
             "y": 0.7418
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2723,9 +3385,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2733,7 +3396,7 @@
             "y": 0.648398
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2805,9 +3468,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2815,7 +3479,7 @@
             "y": 0.66338
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2846,9 +3510,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2856,7 +3521,7 @@
             "y": 0.685512
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2887,9 +3552,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2897,7 +3563,7 @@
             "y": 0.660296
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2928,9 +3594,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2938,7 +3605,7 @@
             "y": 0.506871
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2969,9 +3636,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2979,7 +3647,7 @@
             "y": 0.506364
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3010,9 +3678,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3020,7 +3689,7 @@
             "y": 0.267541
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3033,7 +3702,7 @@
       "label": "JACKPOT (right)",
       "physical": {
         "location": "playfield",
-        "notes": "Circuit identified by complete factory lamp list and final matrix. No bulb quantity is inferred from Light helpers. Placed on the retained table light L44 that the script binds with Set Lights(44); through an independently read five-control fit its centre lands on this lamp's own insert in the factory PDF 64 lamp-location drawing."
+        "notes": "Circuit identified by complete factory lamp list and final matrix. No bulb quantity is inferred from Light helpers. Placed on the retained table light L44 that the script binds with Set Lights(44); through an independently read five-control fit its centre lands on this lamp's own insert in the factory PDF 64 lamp-location drawing. The factory drawing (Williams Taxi manual PDF 64, printed TAXI 61) ends callout 44's leader 0.239 normalized from it, beyond the 0.07 limit, so this placement stays observed."
       },
       "provenance": {
         "source_refs": [
@@ -3092,9 +3761,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3102,7 +3772,7 @@
             "y": 0.43465
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3133,9 +3803,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3143,7 +3814,7 @@
             "y": 0.581655
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3174,9 +3845,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3184,7 +3856,7 @@
             "y": 0.182276
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3215,9 +3887,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3225,7 +3898,7 @@
             "y": 0.460391
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3256,9 +3929,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3266,7 +3940,7 @@
             "y": 0.289767
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3297,9 +3971,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3307,7 +3982,7 @@
             "y": 0.270707
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3338,9 +4013,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3348,7 +4024,7 @@
             "y": 0.25304
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3379,9 +4055,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3389,7 +4066,7 @@
             "y": 0.234549
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3420,9 +4097,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3430,7 +4108,7 @@
             "y": 0.215109
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3461,9 +4139,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3471,7 +4150,7 @@
             "y": 0.197062
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -3502,9 +4181,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3512,7 +4192,7 @@
             "y": 0.178255
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     }
   ],
@@ -5937,9 +6617,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -5947,7 +6628,7 @@
             "y": 0.112842
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -5981,9 +6662,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -5991,7 +6673,7 @@
             "y": 0.117908
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6025,9 +6707,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6035,7 +6718,7 @@
             "y": 0.12576
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6048,7 +6731,7 @@
       "label": "Top Lane Entry",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw23 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw23 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 23's leader 0.078 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-08",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -6092,7 +6775,7 @@
       "label": "Left Ramp Entry",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw25 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical gate-actuated microswitch to retained Gate.sw25 center. The gate blade models passage; this does not place the underplayfield switch body or claim gate-home feedback. Factory PDF 62 leader confirms the lane/ramp entry; script pulse supplies runtime binding separately. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 25's leader 0.161 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-08",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -6157,9 +6840,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6167,7 +6851,7 @@
             "y": 0.421859
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6204,9 +6888,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6214,7 +6899,7 @@
             "y": 0.385132
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6228,7 +6913,7 @@
       "physical": {
         "assembly_part_number": "C-11318-1",
         "location": "playfield / underplayfield",
-        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw28, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. The adjacent sw27/sw29 bindings are reversed in the retained table; sw28 remains the middle face.",
+        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw28, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. The adjacent sw27/sw29 bindings are reversed in the retained table; sw28 remains the middle face. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 28's leader 0.121 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "p/o C-11318-1",
         "quantity": 1,
         "switch_type": "opto"
@@ -6275,7 +6960,7 @@
       "physical": {
         "assembly_part_number": "C-11318-1",
         "location": "playfield / underplayfield",
-        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw27, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. Retained-table defect: script 153 binds sw27/sw28/sw29 directly to 27/28/29, but sw27 is the right face and sw29 the left face. Physical address 29 therefore uses sw27 geometry; correct the table binding rather than swapping machine identities.",
+        "notes": "Drop-bank optical electronics report target down at public 1; target upright inactive 0; no controller-wide inversion. Project the underplayfield opto sensing location to the corresponding latched target face center: retained HitTarget.sw27, reconciled to factory PDF 62 leaders and ROM labels. This is a recreation face anchor, not a surveyed opto PCB coordinate. Retained-table defect: script 153 binds sw27/sw28/sw29 directly to 27/28/29, but sw27 is the right face and sw29 the left face. Physical address 29 therefore uses sw27 geometry; correct the table binding rather than swapping machine identities. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 29's leader 0.153 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "p/o C-11318-1",
         "quantity": 1,
         "switch_type": "opto"
@@ -6345,9 +7030,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6355,7 +7041,7 @@
             "y": 0.530838
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6392,9 +7078,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6402,7 +7089,7 @@
             "y": 0.555978
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6439,9 +7126,10 @@
                 "vpx.taxi.table",
                 "manual.taxi",
                 "rom.taxi.tables",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6449,7 +7137,7 @@
             "y": 0.581687
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6462,7 +7150,7 @@
       "label": "Right Ramp Exit",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw33P: world-space mesh bounds center (202.405365,523.496430) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw33 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 33 separately. This is a projected recreation wire-actuation site, not a measured microswitch body.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw33P: world-space mesh bounds center (202.405365,523.496430) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw33 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 33 separately. This is a projected recreation wire-actuation site, not a measured microswitch body. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 33's leader 0.092 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-04",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -6507,7 +7195,7 @@
       "label": "Left Ramp Exit",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw34P: world-space mesh bounds center (697.897130,450.231950) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw34 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 34 separately. This is a projected recreation wire-actuation site, not a measured microswitch body.",
+        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Sensor anchor projects the physical elevated ramp-exit microswitch to the modeled resting wire sw34P: world-space mesh bounds center (697.897130,450.231950) VPU from vpxtool export obj --units vpu. The animated primitive origin and invisible Trigger.sw34 collision center differ and are not used. Factory PDF 62 leader establishes the crossed-ramp exit; script Hit/Unhit supplies address 34 separately. This is a projected recreation wire-actuation site, not a measured microswitch body. The factory drawing (Williams Taxi manual PDF 62, printed TAXI 59) ends callout 34's leader 0.220 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "5647-12133-04",
         "quantity": 1,
         "switch_type": "microswitch"
@@ -6573,9 +7261,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6583,7 +7272,7 @@
             "y": 0.740502
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6617,9 +7306,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6627,7 +7317,7 @@
             "y": 0.718212
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6661,9 +7351,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6671,7 +7362,7 @@
             "y": 0.739932
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6705,9 +7396,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
@@ -6715,7 +7407,7 @@
             "y": 0.714256
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6750,9 +7442,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -6760,7 +7453,7 @@
             "y": 0.589215
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6773,7 +7466,7 @@
       "label": "Middle 3-bank Dr Tgt",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the common underplayfield reset actuator effect to the central face of its factory C-11223-1 three-target assembly, retained HitTarget.sw28; this is a single assembly effect anchor, not a measured reset-coil mount. Factory PDF 53/60 establishes common-bank reset and script callback establishes runtime routing separately.",
+        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the common underplayfield reset actuator effect to the central face of its factory C-11223-1 three-target assembly, retained HitTarget.sw28; this is a single assembly effect anchor, not a measured reset-coil mount. Factory PDF 53/60 establishes common-bank reset and script callback establishes runtime routing separately. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 4A's leader 0.073 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "AE-26-1200",
         "quantity": 1
       },
@@ -6840,9 +7533,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -6850,7 +7544,7 @@
             "y": 0.134554
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6885,9 +7579,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -6895,7 +7590,7 @@
             "y": 0.555978
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6908,7 +7603,7 @@
       "label": "Spinout Kickbig",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the underplayfield actuator effect to its occupied/catapult/ejection site, retained Kicker.SpinoutKicker center, reconciled to factory PDF 60 assembly leader and parts drawing. This is the ball-moving assembly effect, not a measured coil mount; script callback and stack InitKick/InitSaucer establish runtime routing separately.",
+        "notes": "Factory fitted physical load. Factory A-side load is selected while relay 12 is de-energized; PinMAME already separates public A 1..8 and C 25..32 outputs. Effect anchors need separate placement proof. Project the underplayfield actuator effect to its occupied/catapult/ejection site, retained Kicker.SpinoutKicker center, reconciled to factory PDF 60 assembly leader and parts drawing. This is the ball-moving assembly effect, not a measured coil mount; script callback and stack InitKick/InitSaucer establish runtime routing separately. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 7A's leader 0.118 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "AE-26-1500",
         "quantity": 1
       },
@@ -6975,9 +7670,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "manual.taxi",
-                "vpx.taxi.script"
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -6985,7 +7681,7 @@
             "y": 0.303642
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -6998,7 +7694,7 @@
       "label": "Top Ball Gate",
       "physical": {
         "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the underplayfield gate actuator effect to the drag-point centroid of the narrow retained Wall.TopGate (four world-space vertices). Factory PDF 60 leader 9 identifies the rear-left controlled gate; callback 9 toggles this collision wall. This places the route-opening effect, not the coil mount.",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the underplayfield gate actuator effect to the drag-point centroid of the narrow retained Wall.TopGate (four world-space vertices). Factory PDF 60 leader 9 identifies the rear-left controlled gate; callback 9 toggles this collision wall. This places the route-opening effect, not the coil mount. The factory drawing (Williams Taxi manual PDF 60, printed TAXI 57) ends callout 9's leader 0.079 normalized from it, beyond the 0.07 limit, so this placement stays observed.",
         "part_number": "SM1-35-4000-DC",
         "quantity": 1
       },
@@ -7066,9 +7762,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -7076,7 +7773,53 @@
             "y": 0.220365
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.18",
+      "kind": "coil",
+      "label": "Left Kicker (\"Sling\")",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the sling kicker's effect to the same Wall.LeftSlingShot drag-point centroid. The table binds no SolCallback(18); it animates the sling from the wall's own Slingshot event, so this anchor is switch 18's object and places the kicking rubber, not the coil or its arm pivot.",
+        "part_number": "AE-26-1500",
+        "quantity": 1
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-18.leftslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.225109,
+            "y": 0.714321
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7111,9 +7854,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -7121,7 +7865,53 @@
             "y": 0.225051
           }
         ],
-        "status": "observed"
+        "status": "validated"
+      }
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.20",
+      "kind": "coil",
+      "label": "Right Kicker (\"Sling\")",
+      "physical": {
+        "location": "playfield / underplayfield",
+        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Project the sling kicker's effect to the same Wall.RightSlingShot drag-point centroid. The table binds no SolCallback(20); it animates the sling from the wall's own Slingshot event, so this anchor is switch 20's object and places the kicking rubber, not the coil or its arm pivot.",
+        "part_number": "AE-26-1500",
+        "quantity": 1
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.taxi",
+          "pinmame.taxi.s11-c",
+          "pinmame.taxi.s11games-c",
+          "pinmame.taxi.core-c",
+          "vpx.taxi.script"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "placement.solenoid-20.rightslingshot",
+            "provenance": {
+              "source_refs": [
+                "vpx.taxi.table",
+                "manual.taxi",
+                "vpx.taxi.script",
+                "drawing-callouts.taxi.2026-10-01"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.68583,
+            "y": 0.713181
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7156,9 +7946,10 @@
               "source_refs": [
                 "vpx.taxi.table",
                 "vpx.taxi.script",
-                "manual.taxi"
+                "manual.taxi",
+                "drawing-callouts.taxi.2026-10-01"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
@@ -7166,7 +7957,7 @@
             "y": 0.308637
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     }
   ],
@@ -7345,7 +8136,7 @@
           "image": null,
           "image_sha256": null,
           "path": "evidence/excerpts/williams.taxi.1988/spatial.md",
-          "sha256": "028beda6110117f62a8b8cfbc02dd8961c5ea398f92113b281c7b1d9554752a9"
+          "sha256": "1a9bdf8825469c6c7abd00d12aa7304e029f4d42ceb0e99993ac90c5543a0e3a"
         }
       ],
       "id": "vpx.taxi.table",
@@ -7464,7 +8255,7 @@
           "image": null,
           "image_sha256": null,
           "path": "evidence/excerpts/williams.taxi.1988/spatial.md",
-          "sha256": "028beda6110117f62a8b8cfbc02dd8961c5ea398f92113b281c7b1d9554752a9"
+          "sha256": "1a9bdf8825469c6c7abd00d12aa7304e029f4d42ceb0e99993ac90c5543a0e3a"
         }
       ],
       "id": "vpx.taxi.world-mesh",
@@ -7472,6 +8263,14 @@
       "locator": "vpxtool git:v0.33.3 export obj --units vpu of retained VPX SHA256 7c6f52b24e7fabc761611d33b7eab5de15b9025f954fb4e423f3219e09af9c40; x/y VPU verified against independent wire/HitTarget controls; z is not used; generation time is retained OBJ Windows CreationTimeUtc",
       "sha256": "dfb0965ef597f88e5c94bcb63cfbb6532a57394e15993707fe88a2dc6dc50cce",
       "uri": "local-retained:review-artifacts/taxi-1988/followup-1/luna-inventory/vpxtool-obj-vpu/Taxi (Williams 1988)1.2.obj"
+    },
+    {
+      "excerpts": [],
+      "id": "drawing-callouts.taxi.2026-10-01",
+      "kind": "human_review",
+      "locator": "2026-10-01 factory location-drawing callout check of the committed PDF 60/62/64 excerpt crops: every callout transcribed independently, verifier corrections recorded with their reasons, per-page control and callout fits; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py).",
+      "sha256": "4479de403d3be9a67600fe1cf6632273335ade50f232a0856e5ae03b1e485b4c",
+      "uri": "internal:tools/seeds/williams/taxi-1988-callouts.json"
     }
   ],
   "unplaced_physical_devices": [
@@ -7561,52 +8360,6 @@
         "part_number": "5647-09957-00",
         "quantity": 1,
         "switch_type": "microswitch"
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 18,
-        "group": "pinmame.input.switch"
-      },
-      "id": "switch.18",
-      "kind": "switch",
-      "label": "Left Kicker (sling)",
-      "physical": {
-        "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Spatial limitation: The retained LeftSlingShot collision wall reports no switch 18 and represents the whole rubber collision edge, while factory B-12283 uses actuating leaf contacts. The table lacks separately located contact objects; a wall centroid does not locate those contacts.",
-        "quantity": 1,
-        "switch_type": "leaf"
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 20,
-        "group": "pinmame.input.switch"
-      },
-      "id": "switch.20",
-      "kind": "switch",
-      "label": "Right Kicker (sling)",
-      "physical": {
-        "location": "playfield / underplayfield",
-        "notes": "Factory parts and final wiring; beam rest and ball occupancy are separate from matrix rest polarity. Spatial limitation: The retained RightSlingShot collision wall reports no switch 20 and represents the whole rubber collision edge, while factory B-12283 uses actuating leaf contacts. The table lacks separately located contact objects; a wall centroid does not locate those contacts.",
-        "quantity": 1,
-        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -7741,31 +8494,6 @@
     },
     {
       "binding": {
-        "device": 15,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.15",
-      "kind": "flasher",
-      "label": "JACKPOT Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,2i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamp",
-        "quantity": 3
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
         "device": 16,
         "group": "pinmame.output.solenoid"
       },
@@ -7786,256 +8514,6 @@
           "manual.taxi.schematics"
         ],
         "status": "conflicted"
-      }
-    },
-    {
-      "binding": {
-        "device": 18,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.18",
-      "kind": "coil",
-      "label": "Left Kicker (\"Sling\")",
-      "physical": {
-        "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Spatial limitation: LeftSlingShot is a collision-edge wall and sling primitives are animation geometry. No reconciled world-space actuator/arm pivot or strike point was established from those objects and the factory assembly; its wall centroid would locate neither coil nor actuator.",
-        "part_number": "AE-26-1500",
-        "quantity": 1
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 20,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.20",
-      "kind": "coil",
-      "label": "Right Kicker (\"Sling\")",
-      "physical": {
-        "location": "playfield / underplayfield",
-        "notes": "Factory fitted physical load. Effect anchors need separate placement proof. Spatial limitation: RightSlingShot is a collision-edge wall and sling primitives are animation geometry. No reconciled world-space actuator/arm pivot or strike point was established from those objects and the factory assembly; its wall centroid would locate neither coil nor actuator.",
-        "part_number": "AE-26-1500",
-        "quantity": 1
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 25,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.25",
-      "kind": "flasher",
-      "label": "Pin-Bot Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,1i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 26,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.26",
-      "kind": "flasher",
-      "label": "Dracula Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,1i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 27,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.27",
-      "kind": "flasher",
-      "label": "Marilyn Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,1i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 28,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.28",
-      "kind": "flasher",
-      "label": "Santa Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,1i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 29,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.29",
-      "kind": "flasher",
-      "label": "Gorbie Flasher",
-      "physical": {
-        "location": "playfield and insert board",
-        "notes": "Printed bulb population 1p,1i. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 30,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.30",
-      "kind": "flasher",
-      "label": "Left Ramp Flasher",
-      "physical": {
-        "location": "playfield and backbox top dome",
-        "notes": "Printed bulb population 1p,1d. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89, #906 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 31,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.31",
-      "kind": "flasher",
-      "label": "Right Ramp Flasher",
-      "physical": {
-        "location": "playfield and backbox top dome",
-        "notes": "Printed bulb population 1p,1d. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89, #906 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
-      }
-    },
-    {
-      "binding": {
-        "device": 32,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "solenoid.32",
-      "kind": "flasher",
-      "label": "Spinout Flasher",
-      "physical": {
-        "location": "playfield / underplayfield",
-        "notes": "Printed bulb population 2p. Physical bulbs remain unplaced; callback glows are excluded.",
-        "part_number": "#89 flashlamps",
-        "quantity": 2
-      },
-      "provenance": {
-        "source_refs": [
-          "manual.taxi",
-          "pinmame.taxi.s11-c",
-          "pinmame.taxi.s11games-c",
-          "pinmame.taxi.core-c",
-          "vpx.taxi.script"
-        ],
-        "status": "validated"
       }
     }
   ],

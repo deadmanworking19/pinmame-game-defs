@@ -11,7 +11,9 @@ Exact table bounds: left 0/top 0/right 952/bottom 1974 VPX units. x=(raw_x-left)
 | switch.15 | sw15 | gameitems/Trigger.sw15.json | center | 0.487395 | 0.117908 | sensor |
 | switch.16 | sw16 | gameitems/Trigger.sw16.json | center | 0.598477 | 0.12576 | sensor |
 | switch.17 | Bumper1 | gameitems/Bumper.Bumper1.json | center | 0.36187 | 0.220365 | sensor |
+| switch.18 | LeftSlingShot | gameitems/Wall.LeftSlingShot.json | drag-point mean | 0.225109 | 0.714321 | sensor |
 | switch.19 | Bumper2 | gameitems/Bumper.Bumper2.json | center | 0.573792 | 0.225051 | sensor |
+| switch.20 | RightSlingShot | gameitems/Wall.RightSlingShot.json | drag-point mean | 0.68583 | 0.713181 | sensor |
 | switch.21 | Bumper3 | gameitems/Bumper.Bumper3.json | center | 0.455882 | 0.308637 | sensor |
 | switch.23 | sw23 | gameitems/Gate.sw23.json | center | 0.733665 | 0.166148 | sensor |
 | switch.24 | sw24 | gameitems/HitTarget.sw24.json | position | 0.252626 | 0.136398 | sensor |
@@ -39,7 +41,9 @@ Exact table bounds: left 0/top 0/right 952/bottom 1974 VPX units. x=(raw_x-left)
 | solenoid.8 | RightLock | gameitems/Kicker.RightLock.json | center | 0.917146 | 0.303642 | effect |
 | solenoid.9 | TopGate | gameitems/Wall.TopGate.json | drag-point mean | 0.225696 | 0.06774 | effect |
 | solenoid.17 | Bumper1 | gameitems/Bumper.Bumper1.json | center | 0.36187 | 0.220365 | effect |
+| solenoid.18 | LeftSlingShot | gameitems/Wall.LeftSlingShot.json | drag-point mean | 0.225109 | 0.714321 | effect |
 | solenoid.19 | Bumper2 | gameitems/Bumper.Bumper2.json | center | 0.573792 | 0.225051 | effect |
+| solenoid.20 | RightSlingShot | gameitems/Wall.RightSlingShot.json | drag-point mean | 0.68583 | 0.713181 | effect |
 | solenoid.21 | Bumper3 | gameitems/Bumper.Bumper3.json | center | 0.455882 | 0.308637 | effect |
 
 ## Playfield lamp placements
@@ -98,9 +102,26 @@ Each playfield lamp uses the stored centre of the single table Light that the em
 
 Factory cross-check: `lamp-locations.webp` (SHA256 1da3d7347b6ba9d7f86eca40d6824f955bc1525e7766b5af4f5ff3181360bf9a) was fitted to the table with a least-squares affine from control pixels read by eye on gridded crops: Bumper1 px (298, 337) -> VPU (344.5, 435.0), residual 4.4; Bumper2 px (422.5, 345) -> VPU (546.25, 444.25), residual 2.2; Bumper3 px (350.5, 448.5) -> VPU (434.0, 609.25), residual 4.6; LeftFlipper px (261, 1112.5) -> VPU (273.6884, 1646.0), residual 1.5; RightFlipper px (462.5, 1111) -> VPU (590.5589, 1646.0), residual 1.9. Through that fit, every lamp above except 37 lands on its own printed insert or leader end. Lamp 37: Leader 37 ends on a small post-sized circle at the top of the left outlane, where the table models a rubber post at about (42, 1277) VPU; no insert is drawn at l37, about 75 VPU lower. The right outlane draws insert 39 exactly at l39. The left SPECIAL socket position is therefore not confirmed by the factory drawing. The fit, per-lamp drawing pixels, crops and overlays are retained in review-artifacts/taxi-1988/session-20261001/lamp-reconciliation (manifest SHA256 b97f0231b205bf2df11e1501e3c4795facd31cec3fda0eb03f1d89dbbd23a213). The drawing is an identity check only; no drawing pixel is a coordinate.
 
+## Flasher placements
+
+Each controlled flasher uses the stored centre of the Light (or lights) its embedded-script `SolCallback` drives through `vpmFlasher` (script lines 45-54). The factory PDF 60 coil-location leaders 15 and 1C-8C end at these lights, so they are the modelled flash lamps, not glows. C6/C7 print one playfield and one dome bulb, and the dome is the backbox-top Dome Light PCB (PDF 58), so only the light each leader marks is placed (Flasher30, Flasher31a); C8's two playfield bulbs use both of its lights. Joyride 16 stays unplaced while its load is in conflict.
+
+| Device | Object | Extracted path | Method | x | y | Role |
+| --- | --- | --- | --- | --- | --- | --- |
+| solenoid.15 | Flasher15 | gameitems/Light.Flasher15.json | center | 0.679753 | 0.262855 | emitter |
+| solenoid.25 | Flasher25 | gameitems/Light.Flasher25.json | center | 0.779937 | 0.554205 | emitter |
+| solenoid.26 | Flasher26 | gameitems/Light.Flasher26.json | center | 0.142069 | 0.520422 | emitter |
+| solenoid.27 | Flasher27 | gameitems/Light.Flasher27.json | center | 0.470326 | 0.414039 | emitter |
+| solenoid.28 | Flasher28 | gameitems/Light.Flasher28.json | center | 0.271534 | 0.330515 | emitter |
+| solenoid.29 | Flasher29 | gameitems/Light.Flasher29.json | center | 0.640756 | 0.339634 | emitter |
+| solenoid.30 | Flasher30 | gameitems/Light.Flasher30.json | center | 0.122768 | 0.313513 | emitter |
+| solenoid.31 | Flasher31a | gameitems/Light.Flasher31a.json | center | 0.804491 | 0.265388 | emitter |
+| solenoid.32 | Flasher32 | gameitems/Light.Flasher32.json | center | 0.924895 | 0.026849 | emitter |
+| solenoid.32 | Flasher32a | gameitems/Light.Flasher32a.json | center | 0.85583 | 0.026596 | emitter |
+
 ## Projection classes and world geometry
 
-Visible Trigger rollover wires 14..16 and 37..40 anchor wire-actuation sites; the contact bodies are below the playfield. Gates 23/25/26 anchor the blade-actuated passage sites, not gate-home sensors. Kicker anchors 13/35/36 record occupied holes; coil 3/5/8 effects share the named catapult/eject assembly sites. Coil 7 uses the scripted Spinout ejection site, not a separately measured coil mount or switch 43 contact. Jet effects 17/19/21 share the ring centers. Coil 4/6 effects project the common reset assembly to its middle target face. Coil 9 uses the four-vertex mean of the narrow TopGate collision wall, locating route opening rather than the coil mount.
+Visible Trigger rollover wires 14..16 and 37..40 anchor wire-actuation sites; the contact bodies are below the playfield. Gates 23/25/26 anchor the blade-actuated passage sites, not gate-home sensors. Kicker anchors 13/35/36 record occupied holes; coil 3/5/8 effects share the named catapult/eject assembly sites. Coil 7 uses the scripted Spinout ejection site, not a separately measured coil mount or switch 43 contact. Jet effects 17/19/21 share the ring centers. Coil 4/6 effects project the common reset assembly to its middle target face. Coil 9 uses the four-vertex mean of the narrow TopGate collision wall, locating route opening rather than the coil mount. Sling walls LeftSlingShot/RightSlingShot anchor both switch 18/20 and kicker coil 18/20: the script's Slingshot events pulse 18/20 and it binds no SolCallback for the coils, so each anchor places the kicking rubber, not a leaf contact, coil or arm pivot.
 
 Drop 27..32 project the underplayfield opto sensing site to each raised face. Factory PDF 62 parts/leader endpoints, ROM names and successful L4 display responses settle left/middle/right 27/28/29 and top/middle/bottom 30/31/32. The retained script 153 binds sw27/sw28/sw29 directly, but the table faces are ordered sw29/sw28/sw27 from left to right. Use sw29 for physical 27 and sw27 for physical 29; this proven consumed-table defect belongs in notes, not machine conflicts.
 
@@ -110,12 +131,34 @@ Ramp 33/34 use modeled animated wire sw33P/sw34P world-mesh bounds centers, resp
 
 ## Concrete rejected mechanical classes
 
-Playfield tilt 9: factory leader below the left apron; no retained contact object or established manual-to-table frame. Outhole 10 and trough 11/12: abstract stack occupancy, with Drain/BallRelease ball-transfer helpers and no individually modeled contacts. Shooter 22: script handlers exist but no sw22 in the 870-object extraction. Slings 18/20: collision-edge walls and animation geometry do not locate paired leaf contacts or actuator pivots/strike sites. Spinout 43: abstract stack occupancy and transfer/ejection helpers do not locate a microswitch. Spinout 44: invisible triangular circulation trigger on Bol30; stored center is outside its drag-point triangle, so it cannot locate a physical wire/contact. Coils 1/2: Drain/BallRelease do not establish outhole lever or feeder-crank locations. Each affected device carries its own limitation.
+Playfield tilt 9: factory leader below the left apron; no retained contact object or established manual-to-table frame. Outhole 10 and trough 11/12: abstract stack occupancy, with Drain/BallRelease ball-transfer helpers and no individually modeled contacts. Shooter 22: script handlers exist but no sw22 in the 870-object extraction. Spinout 43: abstract stack occupancy and transfer/ejection helpers do not locate a microswitch. Spinout 44: invisible triangular circulation trigger on Bol30; stored center is outside its drag-point triangle, so it cannot locate a physical wire/contact. Coils 1/2: Drain/BallRelease do not establish outhole lever or feeder-crank locations. Each affected device carries its own limitation.
+
+## Factory drawing callout check
+
+A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it. Every callout on the committed PDF 60/62/64 excerpt crops was transcribed independently and verified by overlay (`tools/seeds/williams/taxi-1988-callouts.json`; reads, corrections, overlays and generator retained under review-artifacts/taxi-1988/session-20261001/callout-check, manifest SHA256 5436140ac6105acdaa787560356c0e6cba5c2b17685f0616463255665d8b734b). It validates 84 of the 95 placements it checks; lamp 37 is not promoted.
+
+- Williams Taxi manual PDF 60, printed TAXI 57: coil locations (committed excerpt crop): 5 controls (RMS 0.0007), 19 of 21 callout pairs in the fit (largest leave-one-out 0.0683).
+- Williams Taxi manual PDF 62, printed TAXI 59: switch locations (committed excerpt crop): 5 controls (RMS 0.0011), 22 of 27 callout pairs in the fit (largest leave-one-out 0.065).
+- Williams Taxi manual PDF 64, printed TAXI 61: lamp locations (committed excerpt crop): 5 controls (RMS 0.0009), 45 of 46 callout pairs in the fit (largest leave-one-out 0.0274).
+
+Not validated:
+
+- `placement.lamp-44.l44`: lamp callout 44, 0.239 normalized away.
+- `placement.solenoid-32.flasher32a`: coil/flasher callout 8C, every callout of this label marks a nearer placement.
+- `placement.solenoid-4.sw28`: coil/flasher callout 4A, 0.073 normalized away.
+- `placement.solenoid-7.spinoutkicker`: coil/flasher callout 7A, 0.118 normalized away.
+- `placement.solenoid-9.topgate`: coil/flasher callout 9, 0.079 normalized away.
+- `placement.switch-23.sw23`: switch callout 23, 0.078 normalized away.
+- `placement.switch-25.sw25`: switch callout 25, 0.161 normalized away.
+- `placement.switch-28.sw28`: switch callout 28, 0.121 normalized away.
+- `placement.switch-29.sw27`: switch callout 29, 0.153 normalized away.
+- `placement.switch-33.sw33p`: switch callout 33, 0.092 normalized away.
+- `placement.switch-34.sw34p`: switch callout 34, 0.220 normalized away.
 
 ## Remaining physical and variant blockers
 
-Every controlled flasher socket, the complete GI population and lamp 37's socket remain unproved; playfield lamps are placed on their script-bound table lights. Backbox and coin-door effects need quantities and routing even when playfield placement is not applicable. C1..C5 each 1p+1i, C6/C7 each 1p+1d, C8 two playfield, Jackpot 1p+2i, Joyride 1p from the wiring table. Dome PCB F/L designator capacity is not installed population proof. No glow helper, bulb centroid or invented socket is admitted.
+The complete GI population, Joyride flasher 16 and lamp 37's socket remain unproved; playfield lamps and flashers are placed on their script-bound table lights. Backbox and coin-door effects need quantities and routing even when playfield placement is not applicable. C1..C5 each 1p+1i, C6/C7 each 1p+1d, C8 two playfield, Jackpot 1p+2i, Joyride 1p from the wiring table. Dome PCB F/L designator capacity is not installed population proof. No glow helper, bulb centroid or invented socket is admitted.
 
-The 82 recreation placements (35 mechanical anchors and 47 playfield lamps; 81 observed, lamp 37 candidate) do not earn author-ready credit. Prototype construction and full competition differences remain unresolved; only L3/L4/LG1/P5 archives are supplied. Acquired full factory manuals/OCR, exact VPX/script/world export, pinned source, legal ROM tables and successful retained traces settle the admitted claims. Ghidra cannot establish physical socket geometry or prototype construction.
+The 96 recreation placements (39 mechanical anchors, 47 playfield lamps and 10 flasher lights; 84 validated by the drawing callout check below, lamp 37 candidate, the rest observed) do not earn author-ready credit. Prototype construction and full competition differences remain unresolved; only L3/L4/LG1/P5 archives are supplied. Acquired full factory manuals/OCR, exact VPX/script/world export, pinned source, legal ROM tables and successful retained traces settle the admitted claims. Ghidra cannot establish physical socket geometry or prototype construction.
 
 Three equal-authority factory disagreements remain unresolved: Sol 14 duplicate auxiliary pin, Sol 17 downstream plug and Sol 16 load type. They remain promotion blockers even when public addresses are proved.
