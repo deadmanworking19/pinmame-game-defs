@@ -174,7 +174,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 168 | 1992 | U.S.A. Football | Alvin G | partial | 13% |
 | 169 | 1992 | Black Rose | Bally | partial | 19% |
 | 170 | 1992 | Creature from the Black Lagoon | Bally | partial | 81% |
-| 171 | 1992 | Doctor Who | Bally | partial | 13% |
+| 171 | 1992 | Doctor Who | Bally | partial | 19% |
 | 172 | 1992 | The Addams Family | Bally | author_ready | 100% |
 | 173 | 1992 | Aaron Spelling (1.01) | Data East | partial | 13% |
 | 174 | 1992 | Hook | Data East | partial | 19% |

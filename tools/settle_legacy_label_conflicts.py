@@ -108,6 +108,32 @@ SETTLEMENTS: list[dict[str, Any]] = [
 			"game file's '(x2)' quantity is not confirmed by the run."
 		),
 	},
+	{
+		"path": "machines/partial/bally/doctor-who-1992.json",
+		"machine_id": "bally.doctor-who.1992",
+		"conflict_id": "conflict.pinmame-output-solenoid-19-none",
+		"binding": {"group": "pinmame.output.solenoid", "device": 19},
+		"from": {"id": "device.game-on", "label": "ROM Started"},
+		"label": "Flasher F19 (5x3 Right/Right)",
+		"kind": "flasher",
+		"drop_aliases": [{"namespace": "vpe-legacy.coil", "value": "c_game_on"}],
+		"source": {
+			"id": "runtime.doctor-who.dw-l2.flasher-test",
+			"uri": "internal:evidence/runtime/wpc-fliptronic/doctor-who-dw_l2-flasher-test.json",
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of dw_l2 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-fliptronic/dw-flasher-test.json) that steps T.5 FLASHER TEST through the "
+				"flashers 6, 8, 14 and 17-24 in repeat mode. At step 19 the ROM pulses public solenoid 19 and prints "
+				"5x3 Right/Right with the wires BLK-ORN RED-WHT."
+			),
+		},
+		"note": (
+			"Legacy import labelled this address 'ROM Started' (alias c_game_on) from the legacy WPC platform map, "
+			"against the game file's 'Flasher F19'. The L-2 ROM's own T.5 FLASHER TEST settles it: it pulses public 19 "
+			"among the flashers 6, 8, 14 and 17-24 and prints 5x3 Right/Right (BLK-ORN RED-WHT). No WPC generation has "
+			"a game-on output at 19, so the platform alias is dropped."
+		),
+	},
 	*[
 		{
 			"path": "machines/partial/bally/nba-fastbreak-1997.json",

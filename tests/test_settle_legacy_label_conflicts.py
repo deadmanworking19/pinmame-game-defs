@@ -18,6 +18,7 @@ PINNED_LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e
 ROM_NAMES = {
 	("runtime.black-rose.br-l4.flasher-test", 19): "RIGHT BOTTOM",
 	("runtime.no-fear.nf-23x.flasher-test", 19): "FLS. NO FEAR",
+	("runtime.doctor-who.dw-l2.flasher-test", 19): "5x3 Right/Right",
 	("runtime.nba-fastbreak.nbaf-31.switch-edges", 1): "LEFT COIN SLOT",
 	("runtime.nba-fastbreak.nbaf-31.switch-edges", 2): "CENTER COIN SLOT",
 	("runtime.nba-fastbreak.nbaf-31.switch-edges", 3): "RIGHT COIN SLOT",
@@ -112,9 +113,20 @@ class LegacyLabelSettlementTests(unittest.TestCase):
 					self.assertEqual({address}, {item["number"] for item in held["watched_switches"] if item["state"] and item["number"] in run["watch_switches"]})
 					self.assertEqual([], raw_steps[f"{address} -> 1"]["transitions"]["solenoids"])
 				else:
-					# The step whose frame names the address is the step that pulsed it.
-					pulsed = [label for label, step in raw_steps.items() if {t["number"] for t in step["transitions"]["solenoids"] if any(t["states"])} == {address}]
-					self.assertTrue(any(by_label[label]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"] for label in pulsed))
+					# The frame that names the address was taken after the press that selected it and before the next
+					# press: repeat mode blinks the name, so it may come from a later frame than the selecting step's.
+					steps = run["steps"]
+					presses = [index for index, step in enumerate(steps) if step["type"] == "pulse"]
+					windows = []
+					for index in presses:
+						if {t["number"] for t in steps[index]["transitions"]["solenoids"] if any(t["states"])} == {address}:
+							following = [later for later in presses if later > index]
+							windows.append(range(index, following[0] if following else len(steps)))
+					self.assertTrue(windows)
+					self.assertTrue(any(
+						by_label[steps[position]["label"]]["displays"][0]["pixel_sha256"] == frame["pixel_sha256"]
+						for window in windows for position in window
+					))
 
 	def test_the_tool_refuses_the_wrong_device_and_inconsistent_coverage(self) -> None:
 		settlement = tool.SETTLEMENTS[0]
