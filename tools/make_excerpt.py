@@ -20,10 +20,12 @@ refuses anything over 100 kB by default. Scanned line art compresses badly whate
 so the way back under the limit is normally a tighter crop - one block, not one page - rather than a
 lower quality that makes the text unreadable.
 
-Some pages genuinely need more. A colour playfield insert map or a lamp-location drawing can carry
-meaning in the colours themselves, and downsampling it to a legible grayscale costs more than the
-budget allows. Pass ``--color`` and raise ``--max-bytes`` for those, and say in the excerpt why the
-exception was needed. It should stay an exception: a handful per project, not per machine.
+Some crops genuinely need more. A page-scale drawing - a location diagram, schematic sheet or
+wiring drawing whose callouts span the page - cannot be tightened without dropping what it cites.
+``tests/test_excerpts.py`` allows such a crop up to 1.5 MB once its excerpt ID is listed in
+``PAGE_SCALE_DRAWINGS``, and fails every other crop over 100 kB. Raise ``--max-bytes`` only for a
+drawing you list there in the same change. Pass ``--color`` only when the colours themselves carry
+meaning, such as an insert map, and say in the excerpt why.
 
 Usage:
 
@@ -98,7 +100,7 @@ def main() -> int:
 	parser.add_argument("--quality", type=int, default=DEFAULT_QUALITY, help="WebP quality; use --lossless for shading-critical pages")
 	parser.add_argument("--lossless", action="store_true", help="lossless WebP, for pages where subtle shading is the evidence")
 	parser.add_argument("--color", action="store_true", help="keep colour; the exception, for pages where colour carries meaning such as an insert map")
-	parser.add_argument("--max-bytes", type=int, default=MAX_BYTES, help=f"size ceiling, default {MAX_BYTES}; raise it only for a genuine colour exception")
+	parser.add_argument("--max-bytes", type=int, default=MAX_BYTES, help=f"size ceiling, default {MAX_BYTES}; raise it only for a page-scale drawing listed in PAGE_SCALE_DRAWINGS in tests/test_excerpts.py")
 	args = parser.parse_args()
 
 	try:
@@ -164,8 +166,8 @@ def main() -> int:
 		raise SystemExit(
 			f"crop is {size} bytes, over the {args.max_bytes} byte limit. Tighten --box to the block "
 			f"you actually cite, or lower --width; do not drop --quality far enough to blur the text. "
-			f"If this is a colour page whose colours carry meaning, pass --color and raise "
-			f"--max-bytes, and record why in the excerpt."
+			f"If this is a page-scale drawing whose callouts span the page, raise --max-bytes and "
+			f"list its excerpt ID in PAGE_SCALE_DRAWINGS in tests/test_excerpts.py; any other crop must fit."
 		)
 
 	print(f"wrote {out.relative_to(ROOT).as_posix() if out.is_relative_to(ROOT) else out} "

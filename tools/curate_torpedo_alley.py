@@ -13,7 +13,7 @@ import json
 import re
 from pathlib import Path
 
-from pinmame_game_defs.validation import unresolved_conflicts
+from pinmame_game_defs.conflicts import unresolved_conflicts
 from pinmame_flipper_column import (
     VPM_CORE_SHA256,
     VPM_DE_LIBRARY_SOURCE,

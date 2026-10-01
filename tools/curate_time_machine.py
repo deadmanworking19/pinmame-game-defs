@@ -11,7 +11,7 @@ from pathlib import Path
 from pinmame_game_defs.coverage import build_coverage_report, build_curation_queue, render_coverage_markdown, render_curation_queue_markdown, write_coverage_report
 from pinmame_game_defs.jsonio import content_sha256, load_json, write_json, write_text
 from pinmame_game_defs.registry import rebuild_catalog
-from pinmame_game_defs.validation import unresolved_conflicts
+from pinmame_game_defs.conflicts import unresolved_conflicts
 from pinmame_flipper_column import (
 	VPM_CORE_SHA256,
 	VPM_DE_LIBRARY_SOURCE,

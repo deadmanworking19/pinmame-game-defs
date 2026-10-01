@@ -32,6 +32,7 @@ LAMP_PATTERNS = (
 GI_PATTERN = re.compile(r"\b(?:UpdateGI|GIUpdate|GICallback\w*)\s*\(?\s*(\d+)\b", re.IGNORECASE)
 MECH_PATTERN = re.compile(r"\b(?:New\s+cvpmMech|cvpmMech|mech\w*\.(?:Sol1|Sol2|AddSw|MType|Length|Steps)|cvpmMagnet)\b", re.IGNORECASE)
 COMMENT_LINE_PATTERN = re.compile(r"^\s*'\s?(.*)$")
+TRAILING_REM_PATTERN = re.compile(r":\s*rem\b", re.IGNORECASE)
 
 
 def _revision(source_root: Path) -> str:
@@ -83,7 +84,8 @@ def strip_trailing_comment(line: str) -> str:
 	A single-quote character starts a comment only when it sits outside a
 	double-quoted string, so a callback line with a quoted sound name keeps its
 	argument while a trailing boilerplate comment (round 9 of review showed one
-	becoming a phantom switch candidate) is dropped."""
+	becoming a phantom switch candidate) is dropped. A ``Rem`` statement after a
+	``:`` separator is a comment too; the word boundary keeps ``: RemoveBall``."""
 	in_quotes = False
 	index = 0
 	while index < len(line):
@@ -91,6 +93,8 @@ def strip_trailing_comment(line: str) -> str:
 		if character == '"':
 			in_quotes = not in_quotes
 		elif character == "'" and not in_quotes:
+			return line[:index].rstrip()
+		elif character == ":" and not in_quotes and TRAILING_REM_PATTERN.match(line, index):
 			return line[:index].rstrip()
 		index += 1
 	return line

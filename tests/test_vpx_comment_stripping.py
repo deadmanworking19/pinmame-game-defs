@@ -20,6 +20,12 @@ class StripTrailingCommentTests(unittest.TestCase):
 		self.assertEqual('x = "it' + chr(39) + 's live"', stripped)
 		self.assertNotEqual(line.split("'")[0].rstrip(), stripped)
 
+	def test_rem_after_a_separator_is_a_comment(self) -> None:
+		self.assertEqual("x = 1", strip_trailing_comment('x = 1 : Rem SolCallback(5) = "dead"'))
+		self.assertEqual("x = 1", strip_trailing_comment("x = 1:REM vpmTimer.PulseSw 62"))
+		self.assertEqual("x = 1 : RemoveBall", strip_trailing_comment("x = 1 : RemoveBall"))
+		self.assertEqual('x = ": Rem live"', strip_trailing_comment('x = ": Rem live"'))
+
 	def test_the_whole_line_can_be_a_comment(self) -> None:
 		self.assertEqual("", strip_trailing_comment("  ' SetLamp 106, Controller.Lamp(6)"))
 		self.assertEqual("", strip_trailing_comment("':vpmTimer.PulseSw 62 no idea"))
