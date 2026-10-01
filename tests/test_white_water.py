@@ -562,7 +562,7 @@ class WhiteWaterRetainedEvidenceTests(unittest.TestCase):
 		# and three further control points against their already-validated device coordinates, the
 		# same evidence used to trust the world-space baked-mesh formula's scale/sign/axis mapping
 		# for lamps 17/55 (though not to promote those two lamps to "validated" -- see the review
-		# note below and in CURRENT-STATE.md). "Rock3_Rightpopbumper" was dropped as a control point:
+		# note below and in docs/archive/current-state-ledger-until-2026-10-01.md). "Rock3_Rightpopbumper" was dropped as a control point:
 		# its own bounding box spans roughly 840 units of the table's ~2092-unit depth, so its
 		# centroid landing near switch 17 is not meaningful evidence of anything.
 		import curate_white_water as curator

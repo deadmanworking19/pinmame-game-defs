@@ -974,40 +974,6 @@ Consume PinMAME's decoded public mux outputs without adding another IRQ delay. R
 """
 
 
-LEDGER_ANCHOR = "Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`)"
-LEDGER_BLOCK = """Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`) was curated on 2026-08-09, replacing `stub.pinmame.play_a24`. Pinned source contains the single `CORE_GAMEDEF(play,a24,...)` and no `CORE_CLONEDEF`; the one-driver physical family is deliberate. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and ten preserved conflicts, eight of them unresolved and two recorded as ignored flipper end-of-stroke naming. The retained geometry is exactly 952 by 1974, and both extents are asserted before normalization. The controller id is `pinmame.dataeast`; the reviewed shared profile now represents its common Data East address contract without misclassifying the physical board as Williams System 11.
-
-Seven points generalise from this record.
-
-1. **`S11_MUXDELAY` is public-output timing, not a second mux for consumers to recreate.** Playboy sets a non-zero `gameSpecific1` value. `pia0b_w` delays its PIA port-B byte by one IRQ; `updsol` then attributes the shared A/C driver byte to outputs 1-8 or 25-32 using K1 at output 10. Decoded-output recreations must not add another delay, while raw PIA/board emulation must reproduce the latch.
-2. **The flipper EOS/button disagreement comes from the public PinMAME address contract.** The manual prints EOS contacts at the two `FLIP_SWNO` addresses while PinMAME publishes cabinet-button state there. Keep the pair as conflicts and consume the public addresses as buttons.
-3. **Object-count gaps can describe a presentation choice rather than missing mappings.** The table has 55 numeric Light names for 64 lamp addresses. The missing nine—26, 32 and 57-63—are explicitly routed to Flasher proxies and are exactly the lamps the manual locates in a separate backbox/back-panel box. Seven named PINBALL Light proxies are also flagged backglass, but the manual drawing does not locate those addresses at all; presentation names and centers therefore do not prove their physical plane.
-4. **Lamp idioms remain table-specific evidence.** Playboy uses 16 active `SetLamp` occurrences and neither `Lampz.MassAssign` nor `vpmMapLights`. Count executable routes and reconcile every address; do not transfer mapping rules between tables.
-5. **A flasher output can span both the playfield and backbox, while a VPX recreation may model only playfield effects.** Playboy's printed inset clearly assigns backbox bulbs to outputs 3, 4, 8, 9, 12, 14 and 15, but every retained VPX effect for those outputs sits in playfield space; output 12's clear backbox count already equals its schematic total. Preserve certain minima, mark unreadable digits unresolved and treat the VPX points as presentation consumers rather than physical sockets.
-6. **Data East's printed SP1-SP6 sequence does not equal PinMAME public 17-22 order.** The nearby `s11.c` PIA comments—not an assumed printed-number/handler correspondence—identify handlers 0-5 as SP6, SP5, SP2, SP3, SP1 and SP4. Applying `setSSSol`'s Data East offsets `{3,4,5,1,0,2}` derives printed SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. Preserve each printed SP number as a manual alias, derive the public binding from both the handler comments and permutation, and keep an unfitted SP6 as the physical unused driver at public 20 rather than shifting it to 22.
-
-7. **A diagnostic trace supports only the paths its scenario can actually drive.** Playboy's automatic coil test interleaves outputs 1-6 with K1 at 10 and the C-bank outputs 25-30, then continues through 7-16; named flipper actions with held-state readback observe switch 15 with 47/48 and switch 16 with 45/46. The other direct pulses ran during automatic Coil Test, had no held-state readback, and cannot reach public 17-22 through this driver's empty `ssSw` mapping. They are retained only as hash-pinned raw provenance and make no special-solenoid claim.
-
-"""
-
-
-def merge_ledger(current: str) -> str:
-    if LEDGER_BLOCK in current:
-        return current
-    if LEDGER_ANCHOR in current:
-        start = current.index(LEDGER_ANCHOR)
-        end = current.find("\nData East ", start + len(LEDGER_ANCHOR))
-        if end < 0:
-            end = current.find("Before selecting a game, check this ledger", start)
-        if end < 0:
-            raise ValueError("Playboy 35th Anniversary ledger entry has no safe replacement boundary")
-        return current[:start] + LEDGER_BLOCK + current[end + 1:]
-    marker = "Before selecting a game, check this ledger"
-    if marker not in current:
-        raise ValueError("CURRENT-STATE insertion marker missing")
-    return current.replace(marker,LEDGER_BLOCK+marker,1)
-
-
 def json_text(value: object) -> str:
     return json.dumps(value,ensure_ascii=False,indent=2,sort_keys=True)+"\n"
 
@@ -1042,8 +1008,6 @@ def generate() -> None:
     for path in [ROOT/STUB_PATH,ROOT/STUB_KNOWLEDGE_PATH]:
         if path.exists():
             path.unlink()
-    ledger_path = ROOT/"docs/CURRENT-STATE.md"
-    write_text(ledger_path,merge_ledger(ledger_path.read_text(encoding="utf-8").replace("\r\n","\n")))
     rebuild_catalog(ROOT)
     write_coverage_report(ROOT)
 
@@ -1056,9 +1020,6 @@ def check() -> None:
         drift.append(AUTHOR_READY_PATH.as_posix())
     if (ROOT/STUB_PATH).exists() or (ROOT/STUB_KNOWLEDGE_PATH).exists():
         drift.extend([STUB_PATH.as_posix(),STUB_KNOWLEDGE_PATH.as_posix()])
-    ledger = (ROOT/"docs/CURRENT-STATE.md").read_text(encoding="utf-8").replace("\r\n","\n")
-    if ledger.count(LEDGER_ANCHOR) != 1 or LEDGER_BLOCK not in ledger:
-        drift.append("docs/CURRENT-STATE.md")
     catalog = load_json(ROOT/"catalog/pinmame.json")
     machine_rows = [row for row in catalog["machines"] if row["id"] == MACHINE_ID]
     if len(machine_rows) != 1 or machine_rows[0].get("definition") != MACHINE_PATH.as_posix() or machine_rows[0].get("definition_sha256") != content_sha256(build_machine()):

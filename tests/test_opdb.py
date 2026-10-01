@@ -148,7 +148,7 @@ class OpdbImportTests(unittest.TestCase):
 			self.assertEqual(override["opdb_id"], reported[machine_id]["opdb_id"], machine_id)
 
 	def test_unsupported_opdb_identities_stay_unmapped(self) -> None:
-		# See docs/CURRENT-STATE.md: the pinned snapshot has no record for either physical variant.
+		# See docs/archive/current-state-ledger-until-2026-10-01.md: the pinned snapshot has no record for either physical variant.
 		# The 2026-08-29 identity promotion moved their residual stubs into named partial records
 		# whose identity comes from the PinMAME catalog alone, still without any OPDB identity.
 		with (ROOT / "machines/opdb_id.csv").open("r", encoding="utf-8-sig", newline="") as stream:

@@ -833,40 +833,6 @@ Recreate only the explicitly mapped addresses and topologies. Do not invent acti
 """
 
 
-LEDGER_BLOCK = """Data East Time Machine (`data-east.time-machine.1988`) was corrected on 2026-08-09 and gained hash-pinned runtime diagnostic evidence on 2026-08-12. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and three unresolved source conflicts, plus two ignored flipper end-of-stroke naming records. The retained geometry is exactly 1000 by 1910, and both extents are asserted before normalization.
-
-Five things from it generalise.
-
-1. **An emulator-published output type is not runtime evidence.** Time Machine's `s11.c` short-name block configures four distinct mux-state types at public 29-32, while the retained manual and active table resolve only the first four right-bank devices at 25-28. Without a trace, the remaining states are `unknown` availability with no physical quantity, rather than either live hardware or dead address space.
-2. **A collection-driven lamp mapper can contain more numeric Light names than the controller has addresses.** `vpmMapLights` indexes each member by `TimerInterval`; TimerInterval 1-64 cover the hardware matrix, while sole member `l65` targets unreachable slot 65 and is a backglass presentation helper. Count controller addresses first, then explain every extra object.
-3. **Data East is not a substitute name for the System 11 profile.** Time Machine shares emulator implementation paths with System 11, but its platform record is the independently derived `pinmame.dataeast` profile. Construction and causality likewise remain separate: the script proves a three-position serial lock released through one output, while the retained Archive.org manual's assembly drawing proves one cam, spring-return plunger and coil.
-4. **Data East's printed SP1-SP6 order is not PinMAME public 17-22 order.** `src/wpc/s11.c` PIA comments identify handlers 0-5 as SP6, SP5, SP2, SP3, SP1 and SP4; applying the Data East `ssSolNo` offsets `{3,4,5,1,0,2}` derives printed SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. On Time Machine that moves the unfitted SP6 circuit to public 20, places the known left sling/left pop/right sling at 18/19/21, and leaves the conflicting right/center SP1/SP2 pair at 17/22. Preserve the printed SP identity as a manual alias and derive the public binding from both the handler comments and permutation; sequentially assigning SP1-SP6 to 17-22 silently mislabels five of six addresses.
-
-5. **A diagnostic trace supports only the paths its scenario can actually drive.** Time Machine's automatic cycle observes muxed public outputs 25-28 but not watched 29-32; that absence cannot prove a public address dead or unfitted. Held flipper actions confirm PinMAME's emulator-facing button/synthetic-output contract (15 with 47/48 and 16 with 45/46), but cannot distinguish the manual's physical EOS interpretation. The direct pulses landed, yet `INITGAMES11` leaves this driver's `ssSw` mapping empty and the run remained in automatic Coil Test, so switch closures could not exercise public 17-22. Resolving SP1/SP2 requires gameplay observation of the ROM's PIA `setSSSol` path or static ROM analysis.
-
-The physical family is the three-driver `tmac_*` clone tree (`tmac_a24` parent plus English `tmac_a18` and German `tmac_g18` firmware); all share the same physical game-data declaration.
-
-"""
-
-
-def merge_ledger(current: str) -> str:
-	anchor = "Data East Time Machine (`data-east.time-machine.1988`)"
-	if LEDGER_BLOCK in current:
-		return current
-	if anchor in current:
-		start = current.index(anchor)
-		end = current.find("\nData East ", start + len(anchor))
-		if end < 0:
-			end = current.find("Before selecting a game, check this ledger", start)
-		if end < 0:
-			raise ValueError("Time Machine ledger entry has no safe replacement boundary")
-		return current[:start] + LEDGER_BLOCK + current[end + 1:]
-	marker = "Before selecting a game, check this ledger"
-	if marker not in current:
-		raise ValueError("CURRENT-STATE insertion marker missing")
-	return current.replace(marker, LEDGER_BLOCK + marker, 1)
-
-
 def json_text(value: object) -> str:
 	return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
@@ -899,8 +865,6 @@ def generate() -> None:
 		write_text(ROOT / relative, content.replace("\r\n","\n"))
 	for path in [ROOT / STUB_PATH, ROOT / STUB_KNOWLEDGE_PATH]:
 		if path.exists(): path.unlink()
-	ledger_path = ROOT / "docs/CURRENT-STATE.md"
-	write_text(ledger_path, merge_ledger(ledger_path.read_text(encoding="utf-8").replace("\r\n","\n")))
 	rebuild_catalog(ROOT)
 	write_coverage_report(ROOT)
 
@@ -924,8 +888,6 @@ def check() -> None:
 	if evidence_errors: raise SystemExit("evidence: " + ", ".join(evidence_errors))
 	drift = [relative.as_posix() for relative,content in desired_files().items() if not compare_lf(ROOT / relative, content)]
 	if (ROOT / STUB_PATH).exists() or (ROOT / STUB_KNOWLEDGE_PATH).exists(): drift.extend([STUB_PATH.as_posix(),STUB_KNOWLEDGE_PATH.as_posix()])
-	ledger = (ROOT / "docs/CURRENT-STATE.md").read_text(encoding="utf-8").replace("\r\n","\n")
-	if LEDGER_BLOCK not in ledger: drift.append("docs/CURRENT-STATE.md")
 	catalog = load_json(ROOT / "catalog/pinmame.json")
 	machine_rows = [row for row in catalog["machines"] if row["id"] == MACHINE_ID]
 	if len(machine_rows) != 1 or machine_rows[0].get("definition") != MACHINE_PATH.as_posix() or machine_rows[0].get("definition_sha256") != content_sha256(build_machine()):

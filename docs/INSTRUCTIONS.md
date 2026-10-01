@@ -1,6 +1,6 @@
 # Agent instructions for PinMAME machine definitions
 
-This file is the operational runbook for the agent continuing the physical-machine definition project. It is generic policy: it must not name individual games, quote coverage counts, or pin upstream revisions. All of that mutable state lives in `docs/CURRENT-STATE.md`. Read the schemas, this file, and that ledger before changing a definition, and keep the ledger and the generated catalog/coverage reports synchronized throughout the work.
+This file is the operational runbook for the agent continuing the physical-machine definition project. It is generic policy: it must not name individual games, quote coverage counts, or pin upstream revisions. The little mutable project state it depends on lives in the short `docs/CURRENT-STATE.md`. Read the schemas, this file, and that ledger before changing a definition, and keep the generated catalog/coverage reports synchronized throughout the work. Task-specific lessons from past curation are in `docs/LESSONS.md`: read the section for a task before starting it, not the whole file.
 
 ## Mandatory prerequisites and discovery
 
@@ -46,15 +46,15 @@ try {
 }
 ```
 
-Select the latest GPT Sol, GPT Terra, or GPT Luna with Codex's `-m` option using the resolved identifier. Use the unversioned `opus`, `sonnet`, or `haiku` alias with Claude Code's `--model` option and verify that it resolves to the latest available model in that family. Do not substitute another family when the required tier is unavailable. Run a reviewer without edit permission: use `codex review` against the intended base or a Codex read-only sandbox, and use Claude Code with `--permission-mode plan`. Typical review calls are:
+Select the latest GPT Sol, GPT Terra, or GPT Luna with Codex's `-m` option using the resolved identifier. Use the unversioned `opus`, `sonnet`, or `haiku` alias with Claude Code's `--model` option and verify that it resolves to the latest available model in that family. Do not substitute another family when the required tier is unavailable. Run a reviewer without edit permission: use `codex exec` in a read-only sandbox, because `codex review --base` accepts no custom prompt, and use Claude Code with `--permission-mode plan`. Name the base commit in the prompt. Typical review calls are:
 
 ```powershell
 $reviewPrompt = @'
-Perform an independent read-only review of the exact contribution tree.
+Perform an independent read-only review of the exact contribution tree: git diff <base>..HEAD.
 Report only discrete, actionable findings; do not edit files.
 '@
 
-$reviewPrompt | codex -C $worktree -m $latestSolModel review -c 'model_reasoning_effort="xhigh"' --base master -
+$reviewPrompt | codex exec -C $worktree -m $latestSolModel -c 'model_reasoning_effort="xhigh"' -s read-only -o $reviewFindingsPath -
 
 Push-Location -LiteralPath $worktree
 try {
@@ -232,17 +232,28 @@ The coordinate convention follows VPX/player view in one normalized `playfield` 
 ## Pinned baseline and current-state ledger
 
 This runbook is generic policy and must stay free of individual game names, counts, claims, and
-pinned revisions. All of that is mutable state and lives in `docs/CURRENT-STATE.md`: the pinned
-upstream revisions and their baseline role, the reviewed scope exceptions, the current generated
-coverage counts, per-game promotion notes worth carrying forward, and which games are already
-claimed.
+pinned revisions. `docs/CURRENT-STATE.md` holds the little mutable project state that has no better
+home: the pinned upstream revisions and their baseline role, pointers to the reviewed scope
+exceptions and the generated coverage reports, and standing maintainer priorities. Every session
+reads it, so it must stay short; it is not a log.
 
-Read that file before selecting a game and update it after every material change, in the same
-commit as the work it describes. When a curation lesson generalizes beyond one machine, write the
-general rule here and leave the machine that produced it in the ledger. If an operational pinned
-input changes, stop, produce a reviewed catalog/source diff, update every affected hash and count,
-and include the scope change in the mandatory high-tier model review and maintainer PR review;
-never let an upstream checkout drift silently.
+Record work where its reader will look for it, never in the ledger:
+
+- what a game's definition is, why it stays partial, and its mechanism and edition knowledge: the
+  game's knowledge note, spatial report and `coverage.missing`;
+- what a session did, which models ran, and how review findings were settled: the commit messages,
+  the PR description and `review-artifacts`;
+- coverage counts: the generated catalog and coverage reports, never copied by hand;
+- which games are being worked on: the per-game branches and worktrees themselves (step 1);
+- a curation lesson that generalizes beyond one machine: the general rule here when every session
+  needs it, otherwise in the matching section of `docs/LESSONS.md`, with the machine that produced
+  it named in its knowledge note or commit message.
+
+Update the ledger in the same commit as a change to what it records. The ledger as it stood before
+compaction is frozen under `docs/archive/`; search it for history, but never read it whole or append
+to it. If an operational pinned input changes, stop, produce a reviewed catalog/source diff, update
+every affected hash and count, and include the scope change in the mandatory high-tier model review
+and maintainer PR review; never let an upstream checkout drift silently.
 ## Canonical architecture and artifact ownership
 
 The canonical product is independently versioned, VPE-neutral JSON data. Physical machine identity is primary; PinMAME driver/ROM variants attach to a physical machine, and `machine_family` groups genuine editions without erasing edition-specific hardware. A generated or flattened representation may be consumed elsewhere, but no consumer-specific implementation detail may alter canonical hashes.
@@ -295,7 +306,7 @@ Rules that matter more than they look:
 - **Cite the game's own document for game-specific facts.** Board-internal wiring is shared between machines that carry the same board, so it may be lifted; which connector branch a harness actually plugs is not, and must come from this game's sheet.
 - **An excerpt is itself an assertion.** It is transcribed by the same party making the claim, so it buys self-consistency, a forcing function to open the page, and reviewability - not independent verification. Record `method` and `transcribed_by`, and set `reviewed` only when a curator has visually checked the transcription against the rendered page. OCR cleanup delegated to the low tier stays candidate evidence until it is checked.
 
-Use a rendered crop only when the fact is a **drawing** - schematic wiring, a connector fan-out, an insert map. A printed table belongs in the transcription, where it is a kilobyte, diffable and greppable; as an image it is forty times the size and cannot be searched. Generate crops with `tools/make_excerpt.py`, which records the page, crop box, dpi and tool so the image can be re-derived, accepts `--rotate 90`, `180`, or `270` for sideways scans, and refuses anything over 100 kB. Do not threshold to 1-bit: printed shading is itself evidence on some machines, the shaded opto rows of a switch matrix being the obvious case. Grayscale is the default; a colour page whose colours carry meaning is a deliberate exception, and the excerpt should say why.
+Use a rendered crop only when the fact is a **drawing** - schematic wiring, a connector fan-out, an insert map. A printed table belongs in the transcription, where it is a kilobyte, diffable and greppable; as an image it is forty times the size and cannot be searched. Generate crops with `tools/make_excerpt.py`, which records the page, crop box, dpi and tool so the image can be re-derived, accepts `--rotate 90`, `180`, or `270` for sideways scans, and refuses crops over its `--max-bytes` (100 kB by default); `tests/test_excerpts.py` allows up to 1.5 MB only for page-scale drawings listed in `PAGE_SCALE_DRAWINGS`. Do not threshold to 1-bit: printed shading is itself evidence on some machines, the shaded opto rows of a switch matrix being the obvious case. Grayscale is the default; a colour page whose colours carry meaning is a deliberate exception, and the excerpt should say why.
 
 **Never render at a fixed dpi.** `tools/render_excerpt_image.py` derives the resolution instead, and should be preferred for any new crop. A scanned page is a single embedded raster at whatever the scanner produced - 150, 200, 400, 600, rarely a round number and essentially never 300 - so the tool reads that image's own pixel width against its placed width in points and renders at exactly that. Rendering higher invents pixels and inflates the repository; rendering lower discards the fine print in a connector table, which is usually the reason the crop exists. A born-digital page has no native resolution at all, so there the tool picks a dpi from the smallest type inside the crop and targets a readable glyph height. Record the tool's printed `image_derivation` verbatim: it names the page, the crop box, which case applied and why, and any width cap that reduced the result below native. Crop tightly to the table, block or drawing being cited - a tight crop is the evidence for one claim, where a whole page is a chunk of a copyrighted service manual.
 
@@ -414,11 +425,11 @@ Low-severity fixes can be committed without a re-review.
 
 ### 1. Select and isolate the game
 
-Check the current-state ledger and open PRs/issues to avoid duplicating claimed work. Finish existing partial games before starting untouched games, ordered by physical release date newest first except for explicit maintainer priorities. Finish higher-tier and non-Pro work before opening any new Pro search; do not abandon an already-started Pro contribution merely because Pro searches are otherwise deferred.
+Check the current-state ledger's standing priorities, then the existing per-game worktrees and unmerged branches (`git worktree list`, `git branch --all --no-merged origin/master`) and open PRs/issues to avoid duplicating claimed work. Finish existing partial games before starting untouched games, ordered by physical release date newest first except for explicit maintainer priorities. Finish higher-tier and non-Pro work before opening any new Pro search; do not abandon an already-started Pro contribution merely because Pro searches are otherwise deferred.
 
 Create one branch and one worktree per game under `<working-root>/worktrees/pinmame-game-defs-<slug>`, based on the latest reviewed `master` integration commit. Before creating it, verify that the exact target does not exist and the branch name is unused. Do not mix two games in one staged tree.
 
-Record the worktree path, branch, base commit, active model tiers/sessions, evidence roots, and current coverage status in this file's current-state ledger.
+The branch and worktree are the claim, so name both after the machine slug. Record the base commit, active model tiers/sessions, evidence roots, and starting coverage status in the game's `review-artifacts` folder and, at submission, in the PR description, not in the current-state ledger.
 
 ### 2. Inventory the physical family and variants
 
@@ -444,7 +455,7 @@ Relationships must express physical or proven causal behavior, not merely proxim
 
 ### 5. Add normalized spatial evidence
 
-Use the exact retained VPX table bounds and object coordinates. Normalize with the repository helper; do not hand-round inconsistently. Prefer exact physical object centers or meaningful wall/trigger centroids. Use a documented projection only when no direct physical object exists and the projection is defensible from manual/table geometry. Assign stable placement IDs and roles, enforce unique IDs, keep coordinates in range with at most six decimal places, and align quantity with placements.
+Read the spatial-placement section of `docs/LESSONS.md` first. Use the exact retained VPX table bounds and object coordinates. Normalize with the repository helper; do not hand-round inconsistently. Prefer exact physical object centers or meaningful wall/trigger centroids. Use a documented projection only when no direct physical object exists and the projection is defensible from manual/table geometry. Assign stable placement IDs and roles, enforce unique IDs, keep coordinates in range with at most six decimal places, and align quantity with placements.
 
 When a factory drawing is the only defensible coordinate source, make the measurement reproducible: retain a tight native-resolution crop, identify the exact full-page render and its pixel dimensions, record the playfield-frame corners, state whether each measured point is a device symbol, physical socket, remote callout balloon, or leader endpoint, list the source pixel centers and normalization formula, and round only to the precision the scan supports. Reconcile the manual frame against at least one exact retained-table control point before mixing manual- and VPX-derived placements in one normalized space. A callout's leader tip marks the part the callout names, not a point on it: when a modelled table object lies on or beside that part within the fit's accuracy, the drawing is consistent with the object and does not overrule it. A drawing inset can have its own, non-uniform scale; fit it separately from the main drawing, and treat a point far outside its control cluster as a coarse cross-check, never as a coordinate. Placement provenance must name both the coordinate source and any manual/script source needed to justify a shared anchor.
 
@@ -514,7 +525,7 @@ Normal fixup commits are allowed during contribution development, but the final 
 
 ### 9. Prepare, review, and submit the PR
 
-Update the contribution branch against the latest `master` before final review. Resolve conflicts by preserving all newer upstream work and applying the game's delta. Common conflicts are generated catalog/coverage/queue files, pending spatial sets, hard-count regression tests, and this runbook's current-state ledger. Rebuild generated files and update combined counts from the actual repository; never choose one stale side wholesale.
+Update the contribution branch against the latest `master` before final review. Resolve conflicts by preserving all newer upstream work and applying the game's delta. Common conflicts are generated catalog/coverage/queue files, pending spatial sets, and hard-count regression tests. A branch started before the ledger was compacted may still append a per-game narrative to `docs/CURRENT-STATE.md`: move anything in it that the game's knowledge note lacks into that note, and drop the ledger hunk. Rebuild generated files and update combined counts from the actual repository; never choose one stale side wholesale.
 
 Run the full gates on the exact clean PR candidate, then obtain the mandatory independent high-tier model review described above. Fix valid findings and repeat both testing and model review until the reviewed `HEAD` and tree hash match the proposed PR exactly. Push the contributor branch and open or update a PR targeting `master`, including evidence locations, coverage status, gate results, and the reviewed hashes. Maintainers perform the authoritative final review and decide whether to approve or merge; contributors and model reviewers must not represent their review as maintainer approval.
 
@@ -540,11 +551,11 @@ Do useful independent work while a worker or reviewer model runs. Separate games
 
 Report status at least hourly while work is ongoing. Include a percentage indicator, completed/in-review/blocked games, exact branches or commits when useful, current author-ready/partial/stub counts, active worker/reviewer state, concrete blockers, next actions, and whether completed worktrees, branches, background processes, and shared-checkout leftovers were cleaned (step 11). The percentage is an implementation-progress indicator, not false machine-coverage credit; author-ready coverage must always be reported separately from partials and stubs.
 
-Keep this runbook's current-state ledger, the live task plan, `catalog/pinmame.json`, `reports/coverage.*`, and `reports/curation-queue.*` synchronized after every material change. Record when a game stays partial and why. The user explicitly asked not to stop until all supported physical PinMAME games are covered or the user says to stop; when blocked on one game, continue safe work on another rather than ending the project.
+Keep the live task plan, `catalog/pinmame.json`, `reports/coverage.*`, and `reports/curation-queue.*` synchronized after every material change, and the current-state ledger whenever a pin or standing priority changes. Record why a game stays partial in its `coverage.missing` and knowledge note. The user explicitly asked not to stop until all supported physical PinMAME games are covered or the user says to stop; when blocked on one game, continue safe work on another rather than ending the project.
 
 ## Harness and reverse-engineering escalation
 
-Static source extraction can enumerate controller structure but cannot prove every semantic name or custom mechanism. Use the implemented LibPinMAME gameplay harness for unresolved runtime behavior: boot a legal user-supplied ROM, drive switches, capture lamps/solenoids/displays, preserve NVRAM/reset conditions, and produce content-addressed traces without ROM bytes. Define explicit scenarios and expected causal transitions instead of free-play logs.
+Before designing a scenario, read the harness section of `docs/LESSONS.md`. Static source extraction can enumerate controller structure but cannot prove every semantic name or custom mechanism. Use the implemented LibPinMAME gameplay harness for unresolved runtime behavior: boot a legal user-supplied ROM, drive switches, capture lamps/solenoids/displays, preserve NVRAM/reset conditions, and produce content-addressed traces without ROM bytes. Define explicit scenarios and expected causal transitions instead of free-play logs.
 
 Write repeatable action sequences as `pinmame-harness-scenario` JSON validated by `schemas/harness-scenario.schema.json`, retain reusable scenarios under `tools/harness-scenarios/`, and invoke them with `python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario <scenario.json> --output <external-run.json>`. The runner supports direct switch pulses and states, named keyboard inputs, waits, display-driven navigation, output-driven navigation, and output waits. Use named service keys when the emulator input port implements momentary or toggled cabinet behavior; a persistent `set_switch` is not necessarily equivalent to a real service-button edge.
 
