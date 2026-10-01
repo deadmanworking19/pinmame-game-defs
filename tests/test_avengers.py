@@ -420,7 +420,9 @@ class AvengersSwitchTestEvidenceTests(unittest.TestCase):
 
 				run_path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
 				self.assertEqual(raw["sha256"], hashlib.sha256(run_path.read_bytes()).hexdigest())
-				manifest.check_manifest(run_path.parent, game)
+				digest = manifest.check_manifest(run_path.parent, game)
+				# The digest on disk must be the one the summary cites, so a resealed directory cannot pass.
+				self.assertIn(f"{game}/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
 				run = load_json(run_path)
 				self.assertIsNone(run["failure"])
 				self.assertEqual(PINNED_LIBRARY_SHA256, run["library_sha256"])
