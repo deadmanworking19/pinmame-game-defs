@@ -30,7 +30,7 @@ The ledger as it stood before this compaction, with every per-game section and r
 | `vpinball/pinmame-dotnet` | `e3e31eea6cd8eb046b4a8ea3110a31bb19c32b45` | Historical: managed interop reference for the migrated compatibility fixtures; no local checkout needed |
 | Legacy managed integration | `cf2030710f9a6ee19fdbeec9cc9fccaba2032a6f` | Historical: migration evidence for the 11 legacy game classes, aliases and direct wires; fetch only to change or revalidate that migration |
 
-The first three are operational and match the runbook's clone script. Changing any of them is a
+The first three are operational and match the clone script in `docs/SETUP.md`. Changing any of them is a
 scope change; follow the runbook's pinned-input procedure.
 
 ## Scope exceptions

@@ -160,7 +160,7 @@ Where such a record already exists, **mark it `status: "ignored"` rather than de
 
 **A defect in a consumed artifact.** A retained VPX table that pulses the wrong address, comments out a lamp binding, or overwrites its own callback is a bug in that table. Nothing about the physical machine is in doubt, and the machine's `conflicts` array is the wrong place to track it: state the defect in the affected device's note, and let the definition record what the machine actually is. Reserve conflicts for the machine.
 
-**A wiring-detail disagreement.** When sources disagree only on a connector, pin, wire colour or board designator (such as a driver transistor number), and agree on the device, its public address and its fitment, nothing a recreation consumes is in doubt. Keep both readings literally in the excerpt, state the disagreement in the device note, and put the game's own wiring table's reading in structured data. Do not open a conflict; mark an existing one `ignored` as described above.
+**A wiring-detail disagreement.** When sources disagree only on a connector, pin, wire colour or board designator (such as a driver transistor number), and agree on the device, its public address and its fitment, nothing a recreation consumes is in doubt. Keep both readings literally in the excerpt and state the disagreement in the device note. In structured data, follow the reading that agreeing independent sources support; when nothing settles it, use the game's own wiring table. Do not open a conflict; mark an existing one `ignored` as described above.
 
 Before writing a conflict, answer in one sentence what evidence would settle it and who could obtain it. If that sentence cannot be written, the entry is an observation and belongs in a device note or the recreation note. If it can, **write it into the record** as a trailing `Resolution path: …` sentence — that clause is the only part of a conflict a reader can act on, and the reference site renders it as its own block. A conflict without one asks a future curator to rediscover the question before they can start on the answer. If the curator writing the entry could obtain that evidence now, obtain it instead of writing the conflict. For example, the resolution path may be a harness run on a ROM the authorized library holds, or the ROM's own service test. A resolution path that names an available, untried run is a deferred task, not an open question, and nothing schedules it.
 
@@ -379,5 +379,6 @@ read `docs/HARNESS.md` before designing a scenario. Whatever the scenario:
   evidence.
 - A transition proves that a public address changed under the recorded conditions, not its physical
   identity, polarity, quantity or location, and failure to observe an address never proves it unused.
+- Host input readback, such as `PinmameGetSwitch` right after a host write, is never ROM evidence.
 - Escalate to Ghidra only after manuals, the VPX script, PinMAME source, ROM tables and harness traces
   fail to settle an authoring-critical fact, as `docs/HARNESS.md` describes.
