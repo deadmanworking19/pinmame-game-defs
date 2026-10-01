@@ -23,10 +23,10 @@ Geometry comes from the retained known-working Flupper 1.1 table (SHA-256 `98ffb
 
 ## Explicit projections
 
-- pinmame.input.switch 16: UP (Motor Targets) is the roller snap-action switch (5647-12073-06) the Motor Assembly's cam (B-12465, item 6) closes at one end of the drawbridge targets' travel; no retained object models it, so it is anchored at the middle drawbridge-target wall, which the table's own motor model (cvpmMech Mech3Bank) moves.
+- pinmame.input.switch 16: UP (Motor Targets) is the roller snap-action switch (5647-12073-06, item 6 of Motor Assembly B-12465) that the motor cam (item 4, A-12463) closes at one end of the drawbridge targets' travel; no retained object models it, so it is anchored at the middle drawbridge-target wall, which the table's own motor model (cvpmMech Mech3Bank) moves.
 - pinmame.input.switch 18: The slingshot switch pair (A-4834-H; A-11538-1, "Paired Kicker Actuating Sw") is inside the kicker; anchored at the drag-point centroid of the retained LSling wall.
 - pinmame.input.switch 20: Anchored at the drag-point centroid of the retained RSling wall.
-- pinmame.input.switch 24: DOWN (Motor Targets) is the second roller snap-action switch (5647-12073-06) on the Motor Assembly's cam; anchored at the middle drawbridge-target wall for the same reason as 16.
+- pinmame.input.switch 24: DOWN (Motor Targets) is the second roller snap-action switch (5647-12073-06, item 6 of Motor Assembly B-12465) that the same motor cam (item 4, A-12463) closes at the other end; anchored at the middle drawbridge-target wall for the same reason as 16.
 - pinmame.input.switch 33: Anchored at the drag-point centroid of the retained DBTrgt1 wall, the table's upper drawbridge target.
 - pinmame.input.switch 34: Anchored at the drag-point centroid of the retained DBTrgt2 wall, the middle drawbridge target.
 - pinmame.input.switch 35: Anchored at the drag-point centroid of the retained DBTrgt3 wall, the lower drawbridge target.

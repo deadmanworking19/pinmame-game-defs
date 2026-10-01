@@ -256,6 +256,13 @@ class BlackKnight2000DefinitionTests(unittest.TestCase):
 				for placement in spatial["placements"]:
 					self.assertTrue(0.0 <= placement["x"] <= 1.0 and 0.0 <= placement["y"] <= 1.0, device["id"])
 
+	def test_knowledge_note_is_reproduced_by_the_curator(self) -> None:
+		import curate_black_knight_2000 as curator
+
+		self.assertEqual(curator.KNOWLEDGE_TEXT, KNOWLEDGE_PATH.read_text(encoding="utf-8"))
+		self.assertIn("Coverage: **partial**", curator.KNOWLEDGE_TEXT)
+		self.assertNotIn("also lights lamps 19 and 51", curator.KNOWLEDGE_TEXT)
+
 	def test_rom_name_table_excerpt_matches_curator(self) -> None:
 		import curate_black_knight_2000 as curator
 
