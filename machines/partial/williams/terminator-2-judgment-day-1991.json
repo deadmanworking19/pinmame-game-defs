@@ -1,12 +1,13 @@
 {
   "conflicts": [
     {
-      "description": "The early manual coil/location list identifies solenoid 12 as Knock Down / SM1-26-600, while the later manual electrical table says Not Used. The retained VPW script has no SolCallback(12). The definition retains the channel as optional and does not manufacture a resolution. Resolution path: a photograph or continuity check of the printed Brn-Yel / J127-5 / Q52 branch on an unrestored production machine, showing whether an SM1-26-600 coil is fitted on it at all; separately, a LibPinMAME harness trace of the solenoid test against the retained legal t2_l8 ROM shows whether the ROM drives public 12, which bounds the question from the emulator side without settling fitment. Unresolved.",
+      "description": "The early manual coil/location list identifies solenoid 12 as Knock Down / SM1-26-600, while the later manual electrical table says Not Used. The retained VPW script has no SolCallback(12). The L-8 ROM's own T.4 SOLENOID TEST names solenoid 12 KNOCK DOWN with the printed BRN-YEL wire and pulses public 12 (runtime.terminator-2.t2-l8.solenoid-flasher-tests), so the production firmware still carries the device; that bounds the question from the emulator side but cannot show whether a coil is fitted. The definition retains the channel as optional and does not manufacture a resolution. Resolution path: a photograph or continuity check of the printed Brn-Yel / J127-5 / Q52 branch on an unrestored production machine, showing whether an SM1-26-600 coil is fitted on it at all. Unresolved.",
       "id": "conflict.solenoid-12-physical-presence",
       "path": "outputs.pinmame.output.solenoid.12",
       "source_refs": [
         "manual.williams.terminator-2-judgment-day.1991",
-        "pinmame.core.4ec52ff0ac13"
+        "pinmame.core.4ec52ff0ac13",
+        "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
       ]
     },
     {
@@ -29,15 +30,6 @@
         "manual.williams.terminator-2-judgment-day.1991",
         "vpx-script.t2-vpw-0022",
         "controller-profile.pinmame-wpc-alpha"
-      ]
-    },
-    {
-      "description": "The manual lists a Backglass Flashlamp at solenoid 24, but the retained script has no SolCallback(24). Physical inventory and emulator address are retained without inventing a callback or playfield emitter. Resolution path: a photograph of an unrestored backbox showing whether a #906 bulb is fitted on the printed Blu-Gry / J125-7 / Q32 branch, together with a LibPinMAME harness trace of the flasher test against the retained legal t2_l8 ROM confirming that the ROM drives public 24; the retained table's silence is a gap in that table and settles nothing about the machine either way. Unresolved.",
-      "id": "conflict.flashing-channel-24",
-      "path": "outputs.pinmame.output.solenoid.24",
-      "source_refs": [
-        "manual.williams.terminator-2-judgment-day.1991",
-        "vpx-script.t2-vpw-0022"
       ]
     }
   ],
@@ -5371,13 +5363,14 @@
       "kind": "coil",
       "label": "Knock Down",
       "physical": {
-        "notes": "Manual physical device: Knock Down; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Conflict: the early manual solenoid/location list calls this Knock Down (SM1-26-600), but the later electrical table marks solenoid 12 Not Used. The retained VPW script has no SolCallback(12). Availability is optional until the printed conflict is resolved. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
+        "notes": "Manual physical device: Knock Down; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Conflict: the early manual solenoid/location list calls this Knock Down (SM1-26-600), but the later electrical table marks solenoid 12 Not Used. The retained VPW script has no SolCallback(12). The L-8 ROM still drives it: its T.4 SOLENOID TEST prints KNOCK DOWN with the wires BRN-YEL VIO-ORN, the printed branch, and pulses public 12. Firmware that names and drives a coil does not show that one is fitted, so availability is optional until the printed conflict is resolved. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
         "part_number": "SM1-26-600"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
         ],
         "status": "validated"
       },
@@ -6001,7 +5994,7 @@
           "value": "24"
         }
       ],
-      "availability": "optional",
+      "availability": "used",
       "binding": {
         "device": 24,
         "group": "pinmame.output.solenoid"
@@ -6010,14 +6003,15 @@
       "kind": "flasher",
       "label": "Backglass Flashlamp",
       "physical": {
-        "notes": "Manual physical device: Backglass Flashlamp; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Conflict: the manual identifies a backglass flashlamp, while the retained VPW script has no SolCallback(24); the physical output is retained without inventing script behavior. The manual locates this flasher in the backglass/backbox, outside normalized playfield space; the working script has no callback for it.",
+        "notes": "Manual physical device: Backglass Flashlamp; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The manual identifies a backglass flashlamp on the Blu-Gry / J125-7 / Q32 branch, and the L-8 ROM's T.5 FLASHER TEST prints F.L. C. BACKGLASS with the wires BLU-GRY RED-WHT and pulses public 24. The retained VPW script has no SolCallback(24); that is a gap in the table, which renders no backglass, and says nothing against the machine. The manual locates this flasher in the backglass/backbox, outside normalized playfield space; the working script has no callback for it.",
         "part_number": "#906 (1 BB)"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
           "vpx-script.t2-vpw-0022",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
         ],
         "status": "validated"
       },
@@ -11101,6 +11095,15 @@
       "locator": "Pre-existing authorized local ROM evidence; bytes are not copied into this repository",
       "sha256": "4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1",
       "uri": "external:pinmame-roms/t2_l8.zip"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.terminator-2.t2-l8.solenoid-flasher-tests",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of t2_l8 from empty NVRAM (scenario tools/harness-scenarios/wpc-alpha/t2-solenoid-flasher-tests.json) that steps T.4 SOLENOID TEST through solenoids 1-14 and T.5 FLASHER TEST through flashers 17-27 in repeat mode. Each step pulses one public address while the ROM prints its name and wire colours: solenoid 12 is KNOCK DOWN (BRN-YEL VIO-ORN) and flasher 24 is F.L. C. BACKGLASS (BLU-GRY RED-WHT).",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-alpha/terminator-2-t2_l8-solenoid-flasher-tests.json"
     }
   ]
 }

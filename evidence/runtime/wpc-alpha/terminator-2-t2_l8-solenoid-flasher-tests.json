@@ -1,0 +1,533 @@
+{
+  "driver_ids": [
+    "t2_l8"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.terminator-2-judgment-day.1991"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game t2_l8 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-alpha/t2-solenoid-flasher-tests.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next output; in repeat mode the ROM pulses it until the next press. Every step's transitioned_solenoid_addresses is the address that pulsed in that step, so each printed name is tied to the public address PinMAME published.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "t2_l8",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TERMINATOR 2 / 50013 REV. L-8",
+          "label": "game identification",
+          "nonzero_pixels": 326,
+          "pixel_sha256": "35a65147ce01b135a9dee0d6a71077885e69457763ff191f0632723a28629d07"
+        },
+        {
+          "active_solenoid_addresses": [
+            11,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "GUN MOTOR / T.4 11 REPEAT / BRN-ORN VIO-ORN",
+          "label": "T.4 SOLENOID TEST at solenoid 11",
+          "nonzero_pixels": 477,
+          "pixel_sha256": "e3a27d5cb68a2d013e9d4551fd3b8622067c9ffe5b3fa337747018a9245caf83"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "KNOCK DOWN / T.4 12 REPEAT / BRN-YEL VIO-ORN",
+          "label": "T.4 SOLENOID TEST at solenoid 12",
+          "nonzero_pixels": 486,
+          "pixel_sha256": "20cab66f55cd180a135fe01e9e1ac21f36e808552419b48f4a1c811152566246"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT JET / T.4 13 REPEAT / BRN-GRN VIO-ORN",
+          "label": "T.4 SOLENOID TEST at solenoid 13",
+          "nonzero_pixels": 447,
+          "pixel_sha256": "a97687339cf59b03ac38c3a0b26e26b595481106abc756436a76820f7773f3c5"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "2 F.L. LEFT RAMP / T.5 23 REPEAT / BLU-VIO RED-WHT",
+          "label": "T.5 FLASHER TEST at flasher 23",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "7e25f472b130eee392a3ae853af46c03f348ba93ce17c3cb1deaf5c7c242281f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "F.L. C. BACKGLASS / T.5 24 REPEAT / BLU-GRY RED-WHT",
+          "label": "T.5 FLASHER TEST at flasher 24",
+          "nonzero_pixels": 537,
+          "pixel_sha256": "aa8a23bebab0800bd109d31933a91e0dbbaf78f3aba3be6c2f1ddd926c2f6ab6"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "2 F.L. TARGETS / T.5 25 REPEAT / BLU-BRN RED-WHT",
+          "label": "T.5 FLASHER TEST at flasher 25",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "d9e7e97b3c213dadb6b2e8c268248320f778c1262cadf744dc02740c4a811125"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 1: the ROM pulses it repeatedly (this frame caught the name line in its blink-off phase)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 2: the ROM pulses it repeatedly (this frame caught the name line in its blink-off phase)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 3: the ROM pulses it repeatedly and prints OUTHOLE",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 4: the ROM pulses it repeatedly and prints TROUGH",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 5: the ROM pulses it repeatedly and prints RIGHT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 6: the ROM pulses it repeatedly and prints LEFT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 7: the ROM pulses it repeatedly and prints KNOCKER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 8: the ROM pulses it repeatedly and prints KICKBACK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 9: the ROM pulses it repeatedly and prints PLUNGER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 10: the ROM pulses it repeatedly and prints TOP LOCK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 11: the ROM pulses it repeatedly and prints GUN MOTOR",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 12: the ROM pulses it repeatedly and prints KNOCK DOWN",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 13: the ROM pulses it repeatedly and prints LEFT JET",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.4 SOLENOID TEST selects public 14: the ROM pulses it repeatedly and prints RIGHT JET",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 17: the ROM pulses it repeatedly (this frame caught the name line in its blink-off phase)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 18: the ROM pulses it repeatedly and prints 2 F.L. RIGHT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 19: the ROM pulses it repeatedly and prints 2 F.L. LEFT SLING",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 20: the ROM pulses it repeatedly and prints 2 F.L. LEFT LOCK",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 21: the ROM pulses it repeatedly and prints 2 F.L. GUN",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 22: the ROM pulses it repeatedly and prints 2 F.L. RIGHT RAMP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 23: the ROM pulses it repeatedly and prints 2 F.L. LEFT RAMP",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 24: the ROM pulses it repeatedly and prints F.L. C. BACKGLASS",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 25: the ROM pulses it repeatedly and prints 2 F.L. TARGETS",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 26: the ROM pulses it repeatedly and prints 2 F.L. LEFT POPPER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 27: the ROM pulses it repeatedly and prints F.L. RIGHT POPPER",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.5 FLASHER TEST selects public 17: the ROM pulses it repeatedly (this frame caught the name line in its blink-off phase)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 39,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "t2-l8-solenoid-flasher-tests",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/terminator-2-1991/harness/solenoid-flasher-tests/t2_l8/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-alpha/t2-solenoid-flasher-tests.json",
+        "scenario_sha256": "1668ed8a0fbfc82b4e60c91819f05a1de0bef5d5ab81fbb96bd5bf1bcbda14ef",
+        "self_test_pulses": 0,
+        "sha256": "b926b735d24eb315e27e049536a70c0f7526ece2eec895c130be53231bd1f893",
+        "snapshot_count": 40,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every retained DMD frame was visually checked, and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest t2_l8/manifest.json SHA-256 8bef421a3b1abdf11a55508ca756126dd82d388b5f350e3ee8c6b7fdbe8292b3 (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/terminator-2-1991/harness/solenoid-flasher-tests/t2_l8",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "b926b735d24eb315e27e049536a70c0f7526ece2eec895c130be53231bd1f893"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

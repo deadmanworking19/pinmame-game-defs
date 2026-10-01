@@ -33,7 +33,7 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
 		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
-		self.assertEqual({"conflict.solenoid-12-physical-presence", "conflict.lamp-schematic-connector-labels", "conflict.gi-string-routing", "conflict.flashing-channel-24"}, {item["id"] for item in self.definition["conflicts"]})
+		self.assertEqual({"conflict.solenoid-12-physical-presence", "conflict.lamp-schematic-connector-labels", "conflict.gi-string-routing"}, {item["id"] for item in self.definition["conflicts"]})
 		# The lamp sheets disagree only on connector labels, a wiring detail kept as an ignored conflict.
 		statuses = {item["id"]: item.get("status", "unresolved") for item in self.definition["conflicts"]}
 		self.assertEqual("ignored", statuses.pop("conflict.lamp-schematic-connector-labels"))
@@ -80,6 +80,17 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("optional", solenoids[12]["availability"])
 		self.assertNotIn("vpx-script.t2-vpw-0022", solenoids[12]["provenance"]["source_refs"])
 		self.assertIn("no SolCallback(12)", solenoids[12]["physical"]["notes"])
+		self.assertIn("KNOCK DOWN", solenoids[12]["physical"]["notes"])
+		self.assertIn("runtime.terminator-2.t2-l8.solenoid-flasher-tests", solenoids[12]["provenance"]["source_refs"])
+		# The manual and the ROM's flasher test agree on 24; the script's missing callback is a table gap.
+		self.assertEqual("used", solenoids[24]["availability"])
+		self.assertIn("F.L. C. BACKGLASS", solenoids[24]["physical"]["notes"])
+		self.assertIn("gap in the table", solenoids[24]["physical"]["notes"])
+		self.assertIn("runtime.terminator-2.t2-l8.solenoid-flasher-tests", solenoids[24]["provenance"]["source_refs"])
+		conflict = {item["id"]: item for item in self.definition["conflicts"]}["conflict.solenoid-12-physical-presence"]
+		resolution = conflict["description"].split("Resolution path:", 1)[1]
+		self.assertNotIn("harness", resolution)
+		self.assertIn("KNOCK DOWN", conflict["description"])
 		self.assertIn("Not Used", json.dumps(self.definition["conflicts"]))
 		self.assertEqual("flasher", solenoids[17]["kind"])
 		self.assertEqual("coil", solenoids[28]["kind"])
@@ -184,6 +195,56 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9", hashlib.sha256(canonical).hexdigest())
 		self.assertEqual(548, len(actual["files"]))
 		self.assertEqual(132477924, sum(item["size"] for item in actual["files"]))
+
+
+
+class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
+	"""Each test step ties a printed name to the address that pulsed; the raw run is checked when retained."""
+
+	PATH = ROOT / "evidence" / "runtime" / "wpc-alpha" / "terminator-2-t2_l8-solenoid-flasher-tests.json"
+	SCENARIO = ROOT / "tools" / "harness-scenarios" / "wpc-alpha" / "t2-solenoid-flasher-tests.json"
+	LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+
+	def test_the_rom_names_and_pulses_12_and_24(self) -> None:
+		import hashlib
+		import os
+
+		evidence = json.loads(self.PATH.read_text(encoding="utf-8"))
+		self.assertEqual(["t2_l8"], evidence["driver_ids"])
+		runtime = evidence["runtime"]
+		self.assertEqual(self.LIBRARY_SHA256, runtime["emulator"]["sha256"])
+		(raw,) = runtime["raw_runs"]
+		self.assertEqual(hashlib.sha256(self.SCENARIO.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+		actions = runtime["observations"]["named_action_observations"]
+		pulsed = [item["transitioned_solenoid_addresses"] for item in actions]
+		self.assertEqual([[n] for n in range(1, 15)] + [[17]] + [[n] for n in range(18, 28)] + [[17]], pulsed)
+		by_address = {item["transitioned_solenoid_addresses"][0]: item["label"] for item in actions}
+		self.assertIn("prints KNOCK DOWN", by_address[12])
+		self.assertIn("prints F.L. C. BACKGLASS", by_address[24])
+		texts = {item["label"]: item["interpreted_text"] for item in runtime["observations"]["diagnostic_snapshots"]}
+		self.assertEqual("KNOCK DOWN / T.4 12 REPEAT / BRN-YEL VIO-ORN", texts["T.4 SOLENOID TEST at solenoid 12"])
+		self.assertEqual("F.L. C. BACKGLASS / T.5 24 REPEAT / BLU-GRY RED-WHT", texts["T.5 FLASHER TEST at flasher 24"])
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		import build_external_evidence_manifest as manifest
+
+		path = Path(root) / raw["retained_from"][len("external:pinmame-review-artifacts/"):]
+		self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+		digest = manifest.check_manifest(path.parent, "t2_l8")
+		self.assertIn(f"t2_l8/manifest.json SHA-256 {digest}", evidence["source"]["attribution"])
+		run = json.loads(path.read_text(encoding="utf-8"))
+		self.assertIsNone(run["failure"])
+		self.assertEqual(self.LIBRARY_SHA256, run["library_sha256"])
+		steps = {step["label"]: step for step in run["steps"]}
+		for label, address in (("solenoid test up to 12", 12), ("flasher test up to 24", 24)):
+			fired = {item["number"] for item in steps[label]["transitions"]["solenoids"] if any(item["states"])}
+			self.assertEqual({address}, fired, label)
+		hashes = {snap["label"]: snap["displays"][0]["pixel_sha256"] for snap in run["snapshots"] if snap["displays"]}
+		summary = {item["label"]: item["pixel_sha256"] for item in runtime["observations"]["diagnostic_snapshots"]}
+		self.assertEqual(hashes["solenoid test up to 12"], summary["T.4 SOLENOID TEST at solenoid 12"])
+		self.assertEqual(hashes["flasher test up to 24"], summary["T.5 FLASHER TEST at flasher 24"])
 
 
 if __name__ == "__main__":
