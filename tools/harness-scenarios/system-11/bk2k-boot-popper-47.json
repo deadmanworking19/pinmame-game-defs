@@ -1,0 +1,26 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Black Knight 2000 power-up probe: ball popper switch 47 held at 1 from emulator start; observe the ROM's own power-up sequence for 20 s. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position, from emulator start. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 47,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20,
+      "label": "observe power-up sequence"
+    }
+  ]
+}

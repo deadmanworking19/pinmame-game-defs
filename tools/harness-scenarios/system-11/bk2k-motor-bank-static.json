@@ -1,0 +1,55 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Black Knight 2000 Williams System 11B MOTOR BANK TEST (test 08) probe: no host feedback: every switch stays at 0. Synthetic host stimulus; the harness models no bank travel.",
+  "watch_switches": [
+    -7,
+    -6,
+    16,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 16,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MOTOR BANK TEST"
+      ],
+      "max_pulses": 20,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "locate MOTOR BANK TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 20,
+      "label": "observe the ROM's response"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Black Knight 2000 Williams System 11B MOTOR BANK TEST (test 08) reactive probe, DOWN (24) first, then UP (16) after 1.0 s of presented travel. Synthetic host stimulus; the delays are chosen, not measured.",
+  "watch_switches": [
+    -7,
+    -6,
+    16,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 16,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MOTOR BANK TEST"
+      ],
+      "max_pulses": 20,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "locate MOTOR BANK TEST"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "bank reaches position: present switch 24 = 1"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "wait for the ROM to energize relay 16 again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "bank leaves position: switch 24 = 0, then 1.0 s of travel"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "bank reaches the other position: present switch 16 = 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "observe the ROM's response with switch 16 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "return switch 16 to 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "observe after the switches are back at 0"
+    }
+  ]
+}

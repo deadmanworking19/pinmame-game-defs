@@ -20,7 +20,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.p2k": 1,
 	"pinmame.sam": 7,  # World Poker Tour now declares SAM through its game-specific curator.
 	"pinmame.stern-mpu200": 23,
-	"pinmame.system-11": 24,
+	# Black Knight 2000 (curated 2026-10-01) now declares its platform from the curated definition.
+	"pinmame.system-11": 23,
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources.
 	"pinmame.wpc-95": 4,
 	"pinmame.wpc-dcs": 3,

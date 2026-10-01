@@ -1,0 +1,72 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Black Knight 2000 drop-target reset probe: only left 3-bank switch 44 held at 1; trough switches 11-13 held at 1 (full trough). Attract mode is observed, then two coins (switch 4) and Start (switch 3), then the first seconds of the game. No target or ball moves.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 44,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    3,
+    4,
+    53
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 16,
+      "label": "stabilize initialized ROM (attract mode is Game Over mode)"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "observe attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Start (Credit button)"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe game start"
+    }
+  ]
+}

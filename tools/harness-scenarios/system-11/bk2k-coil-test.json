@@ -1,0 +1,14 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Williams System 11B coil diagnostic for Black Knight 2000 from an initialized state: Manual-Down + Advance enters the tests, Auto-Up + Advance walks Music, Display, Sound, All Lamps, Single Lamps to COIL TEST (test 05), which then cycles A-side, C-side, controlled and special circuits by itself. The display checkpoint must be found before observation; no geometry, fitment or polarity claim follows from output activity. Keyboard handling stays off; the driver has no simulator and no mechanics.",
+  "watch_switches": [-7, -6],
+  "actions": [
+    { "type": "wait", "seconds": 16, "label": "stabilize initialized ROM" },
+    { "type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.3, "label": "manual down" },
+    { "type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2, "label": "enter tests" },
+    { "type": "set_switch", "switch": -6, "state": 1, "settle_s": 0.3, "label": "auto up" },
+    { "type": "pulse_until_display", "switch": -7, "texts": ["COIL TEST"], "max_pulses": 15, "hold_ms": 200, "settle_s": 1.5, "label": "locate COIL TEST" },
+    { "type": "wait", "seconds": 110, "label": "observe complete A/C, controlled and special coil cycle" }
+  ]
+}

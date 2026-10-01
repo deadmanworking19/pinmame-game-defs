@@ -1,0 +1,12 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Initialize factory defaults in one newly created isolated state directory. A fresh Williams System 11B ROM stops at FACTORY SETTING on its first power-up from empty NVRAM; this run only observes that and, on stop, leaves the NVRAM that every later diagnostic run inherits (and nothing else). No host switches.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "allow factory-settings initialization"
+    }
+  ]
+}
