@@ -108,7 +108,7 @@ def sources() -> list[dict[str, Any]]:
 				excerpt("excerpt.family-guy.coil-chart", "manual-coil-chart.md", "PDF pages 10, 11, 39 and 41: coils detailed chart table Q1-Q32, location legend, coil and Stewie motor test text"),
 				excerpt("excerpt.family-guy.gi-and-flippers", "manual-gi-and-flippers.md", "PDF pages 92-94, 123 and 127: general illumination circuits, flipper circuit and flipper assemblies"),
 				excerpt("excerpt.family-guy.mini-playfield-led-board", "manual-mini-playfield-led-board.md", "PDF pages 166-167 (and PinMAME sam.c): mini-playfield LED board 520-5264-00 nets and lamp addresses"),
-				excerpt("excerpt.family-guy.assemblies", "manual-assemblies.md", "PDF pages 3, 17, 29-30, 68-69, 72-73, 90-118: assembly parts, switch types and instruction card"),
+				excerpt("excerpt.family-guy.assemblies", "manual-assemblies.md", "PDF pages 3, 17, 29-30, 68-69, 72-73, 90-118, 169-170: assembly parts, switch types, instruction card and the auxiliary (ticket/meter) driver board"),
 			],
 		},
 		{
@@ -148,8 +148,8 @@ def sources() -> list[dict[str, Any]]:
 	result.append(runtime_source(RT_COIL, "family-guy-fg_1200ag-coil-test-sweep.json", "Fresh-NVRAM fg_1200ag Single Coil Test: 35 selector positions each fired once; every fired position is paired with the public solenoid addresses that changed."))
 	result.append(runtime_source(RT_LAMP, "family-guy-fg_1200ag-lamp-test-sweep.json", "Fresh-NVRAM fg_1200ag Single Lamp Test: all 80 selector positions; every position is paired with the public lamp addresses that changed."))
 	result.append(runtime_source(RT_BOOT, "family-guy-fg_1200ag-boot-start.json", "fg_1200ag boot, six coins and Start with trough switches 18-21 and mini-trough 55 closed: observes the 128x32 DMD, GI 0, the Stewie homing pulses on solenoid 20, the synthetic game-on solenoid 33 and the LED-board lamp channels 81-125."))
-	result.append(runtime_source(RT_EM_CLOSED, "family-guy-fg_1200ag-evil-monkey-probe-closed.json", "fg_1200ag probe with Evil Monkey switch 35 closed from power-up: six coins, Start, a modelled ball in and out of the shooter lane, the Chris target (switch 3) hit, switch 35 opened and closed. Q19 (public solenoid 19) never changes."))
-	result.append(runtime_source(RT_EM_OPEN, "family-guy-fg_1200ag-evil-monkey-probe-open.json", "The same probe with Evil Monkey switch 35 open from power-up: Q19 changes repeatedly from Start until switch 35 is closed, and not afterwards."))
+	result.append(runtime_source(RT_EM_CLOSED, "family-guy-fg_1200ag-evil-monkey-probe-closed.json", "fg_1200ag probe with Evil Monkey switch 35 closed by the scenario after the ROM has booted (the booted snapshot still reads 0) and before the coins and Start: six coins, Start, a modelled ball in and out of the shooter lane, the Chris target (switch 3) hit, switch 35 opened and closed. Q19 (public solenoid 19) never changes."))
+	result.append(runtime_source(RT_EM_OPEN, "family-guy-fg_1200ag-evil-monkey-probe-open.json", "The same probe with Evil Monkey switch 35 left open from the scenario's start through the coins and Start: Q19 changes repeatedly from Start until switch 35 is closed, and not afterwards."))
 	for driver in SWEEP_DRIVERS:
 		for kind, filename in (("switch", f"family-guy-{driver}-switch-test-sweep.json"), ("coil", f"family-guy-{driver}-coil-test-sweep.json"), ("lamp", f"family-guy-{driver}-lamp-test-sweep.json")):
 			if (RUNTIME_ROOT / filename).is_file():

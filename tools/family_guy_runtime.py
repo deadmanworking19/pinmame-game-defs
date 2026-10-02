@@ -204,10 +204,10 @@ def dedicated_summary(root: Path, driver: str) -> dict[str, Any]:
 		text = DEDICATED_TEXT[address]
 		records.append(snapshot_record(snaps[f"hold {address} (held)"], f"switch test while public {address} is held at 1", f"SWITCH TEST / {text}"))
 		step = steps[f"hold {address}"]
-		if address not in (81, -6) and (step["observed_while_held"] != 1 or step["observed_after_release"] != 0):
+		if address != -6 and (step["observed_while_held"] != 1 or step["observed_after_release"] != 0):
 			raise SystemExit(f"{driver}: public {address} did not read 1 while held and 0 after release")
 		actions.append(action(f"public {address} held at 1 for 1.2 s: the ROM prints {text.split(' / ')[0]}", "switch", [address], solenoids_changed(step), address=address))
-	return evidence_shell("dedicated-switch-sweep", driver, run, path, digest, command(driver, SCENARIOS["dedicated"]) + ". Public 81-88 are PinMAME's flipper column: the driver mirrors the coil state into the EOS bits, so the switch test names the EOS of the pair whichever bit is held; public 81 reads 0 right after the host write because the driver rewrites it every frame, and the slam-tilt write (-6) reads back 0 in some runs although the frame names SLAM TILT (a host-side readback, not ROM evidence).", {"diagnostic_snapshots": records, "named_action_observations": actions}, SCENARIOS["dedicated"], {})
+	return evidence_shell("dedicated-switch-sweep", driver, run, path, digest, command(driver, SCENARIOS["dedicated"]) + ". Public 81-88 are the flipper button and EOS pairs: pinned sam.c samswitch_r copies each button bit (D-9, D-11, D-13, D-15) into its EOS bit as the CPU reads the dedicated word, so the switch test names the EOS of the pair whichever bit is held; the two lower EOS bits are also rewritten by core_updateSw from the flipper coil timers. Every held write reads back 1 in this run except the slam-tilt write (-6), which reads back 0 in some runs although the frame names SLAM TILT (a host-side readback, not ROM evidence).", {"diagnostic_snapshots": records, "named_action_observations": actions}, SCENARIOS["dedicated"], {})
 
 
 def coil_summary(root: Path, driver: str) -> dict[str, Any]:

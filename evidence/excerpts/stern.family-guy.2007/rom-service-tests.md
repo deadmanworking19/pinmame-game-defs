@@ -107,7 +107,7 @@ Each row is the frame captured while the public address was held at 1. The third
 | -5 | TICKET NOTCH / LAST SW. D-19 |
 | -4 | DEDICATED SW. #20 / LAST SW. D-20 |
 
-Holding 82, 84, 86 or 88 (the flipper buttons D-11, D-9, D-15, D-13) shows the EOS of its pair because pinned PinMAME's flipper column mirrors the coil state into the EOS bit; the cabinet buttons themselves print no name. The bottom line of each frame prints the wire colour and `BLK`.
+Holding 82, 84, 86 or 88 (the flipper buttons D-11, D-9, D-15, D-13) shows the EOS of its pair because pinned PinMAME's `samswitch_r` copies each flipper button bit into its EOS bit as the CPU reads the dedicated word; the cabinet buttons themselves print no name. The bottom line of each frame prints the wire colour and `BLK`.
 
 ## Single Coil Test (V12.0)
 

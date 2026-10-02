@@ -187,7 +187,7 @@ class FamilyGuyDefinitionTests(unittest.TestCase):
 		for name, letters in LED_NAMES.items():
 			for letter, address in letters.items():
 				self.assertIn(f"{name} letter {letter} ", self.lamps[address]["label"], (name, letter))
-		self.assertEqual({"Peter": {"P": 114, "E (second)": 89, "T": 90, "E (first)": 91, "R": 92}}["Peter"], {self.lamps[address]["label"].split(" letter ")[1].split(" (LED")[0]: address for address in (114, 89, 90, 91, 92)})
+		self.assertEqual({"Peter": {"P": 114, "E (first)": 89, "T": 90, "E (second)": 91, "R": 92}}["Peter"], {self.lamps[address]["label"].split(" letter ")[1].split(" (LED")[0]: address for address in (114, 89, 90, 91, 92)})
 		# The knowledge note's table lists the same words and addresses as the definition.
 		for name, letters in LED_NAMES.items():
 			row = next(line for line in self.knowledge.splitlines() if line.startswith(f"| {name.upper()} |"))
@@ -238,6 +238,29 @@ class FamilyGuyDefinitionTests(unittest.TestCase):
 		for path in EXCERPT_ROOT.glob("*.md"):
 			self.assertNotIn(b"\r", path.read_bytes(), path.name)
 
+
+	def test_optional_ticket_outputs_are_physical_and_not_transported(self) -> None:
+		tickets = by_binding(self.definition, "outputs", "physical.output.ticket")
+		self.assertEqual({33, 35}, set(tickets))
+		for address, device in tickets.items():
+			self.assertEqual("optional", device["availability"], address)
+			self.assertEqual({"not_applicable"}, {device["spatial"]["status"]}, address)
+			self.assertIn(f"manual.service-output", {alias["namespace"] for alias in device["aliases"]})
+			self.assertIn("manual.stern-family-guy.2007-service", device["provenance"]["source_refs"])
+			for driver in FIRMWARE_WITH_AUX_COILS:
+				self.assertIn(f"runtime.family-guy.{driver}.coil-test-sweep", device["provenance"]["source_refs"])
+		# The public solenoid space is untouched: 33 stays the synthetic game-on state and 51-66 stay unused.
+		self.assertEqual("virtual", self.solenoids[33]["kind"])
+		self.assertEqual(self.solenoids[33]["binding"]["group"], "pinmame.output.solenoid")
+		for number in (33, 35):
+			self.assertEqual(1, sum(1 for item in self.definition["outputs"] if item["binding"] == {"group": "physical.output.ticket", "device": number}))
+
+	def test_matrix_and_eos_derivations_follow_the_pinned_read_path(self) -> None:
+		for device in self.inputs.values():
+			self.assertNotIn("uncomplemented", (device.get("physical") or {}).get("notes", ""), device["id"])
+		self.assertNotIn("uncomplemented", self.knowledge)
+		self.assertIn("samswitch_r", self.knowledge)
+		self.assertNotIn("flipper column mirrors the coil state", (EXCERPT_ROOT / "rom-service-tests.md").read_text(encoding="utf-8"))
 
 	def placement_of(self, device: dict) -> dict:
 		return device["spatial"]["placements"][0]

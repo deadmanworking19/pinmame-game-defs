@@ -39,9 +39,9 @@ PinMAME (`sam.c`, SAM_GAME_FG block) shifts four bytes through `latch[0..3]` on 
 | LED46 | R of CHRIS | R5 | pin 4 (3D) | 2 | B | 123 |
 | LED45 | H of CHRIS | R4 | pin 5 (4D) | 3 | B | 124 |
 | LED44 | C of CHRIS | R2 | pin 6 (5D) | 4 | B | 125 |
-| LED16 | E (second) of PETER | R13 (3.3 Ω) | 1Q of IC2 (pin 19) | 0 | A | 89 |
+| LED16 | E (first) of PETER | R13 (3.3 Ω) | 1Q of IC2 (pin 19) | 0 | A | 89 |
 | LED15 | T of PETER | R12 | 2Q (pin 18) | 1 | A | 90 |
-| LED14 | E (first) of PETER | R11 | 3Q (pin 17) | 2 | A | 91 |
+| LED14 | E (second) of PETER | R11 | 3Q (pin 17) | 2 | A | 91 |
 | LED13 | R of PETER | R10 | 4Q (pin 16) | 3 | A | 92 |
 | LED39 | P of PETER | R12 | 2Q (pin 18) | 1 | B | 114 |
 | LED8 | A of BRIAN | R20 (62 Ω) | 1Q of IC3 (pin 19) | 0 | A | 81 |

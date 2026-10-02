@@ -27,6 +27,7 @@ RT_LAMP = "runtime.family-guy.fg-1200ag.lamp-test-sweep"
 RT_BOOT = "runtime.family-guy.fg-1200ag.boot-start"
 RT_EM_CLOSED = "runtime.family-guy.fg-1200ag.evil-monkey-probe-closed"
 RT_EM_OPEN = "runtime.family-guy.fg-1200ag.evil-monkey-probe-open"
+TICKET_SOURCES = (MANUAL,) + tuple(f"runtime.family-guy.{driver}.coil-test-sweep" for driver in ("fg_300ai", "fg_400a", "fg_800al", "fg_1100al"))
 
 
 def slug(value: str) -> str:
@@ -141,7 +142,7 @@ def matrix_switch(number: int) -> dict[str, Any]:
 		note = f"Manual name \"{_manual_name(number)}\"; the ROM's switch test prints \"{spec[6]}\" with the wire colours {drive_wire} / {return_wire}. {spec[7]}".strip()
 		if number in DOTS_SWITCHES:
 			note += " Printed D.O.T.S.: the switch's diode is on a playfield terminal strip (PDF page 126)."
-		note += " normally_closed is false because pinned PinMAME hands the matrix to the CPU uncomplemented and the ROM treats public 1 as the active reading (held in the ROM switch test)."
+		note += " normally_closed is false: the public bit is active-high (pinned PinMAME's samswitch_r complements the matrix word on its way to the CPU's active-low port, and the ROM treats a held public 1 as the active reading in its switch test)."
 		physical["notes"] = note
 	else:
 		physical["notes"] = f"Printed NOT USED in the manual's grid; {ROM_UNUSED_SWITCH_NAMES.format(n=number)} and no hardware is listed."
@@ -226,9 +227,9 @@ def dedicated_switch(number: int) -> dict[str, Any]:
 	if number == 13:
 		notes.append("The upper-left flipper (coil Q14) carries no end-of-stroke switch: its parts list prints a plastic spacer where the lower assemblies carry the EOS switch.")
 	if number == 15:
-		notes.append("Printed \"NOT USED\"; the same row prints part 180-5164-01 greyed out. The ROM's switch test names public 86 as D-16 \"U.R. FLIPPER E.O.S.\" after it is held, a generic S.A.M. mirror; this machine fits no upper-right flipper (IPDB lists five flippers: two lower, one upper left, two mini).")
+		notes.append("Printed \"NOT USED\"; the same row prints part 180-5164-01 greyed out. The ROM's switch test names public 86 as D-16 \"U.R. FLIPPER E.O.S.\" after it is held, a generic S.A.M. name (samswitch_r copies the button bit D-15 into the EOS bit); this machine fits no upper-right flipper (IPDB lists five flippers: two lower, one upper left, two mini).")
 	if number in {14, 16}:
-		notes.append("Printed NOT USED. The ROM's switch test names the address as an upper-flipper EOS (a generic S.A.M. firmware name for the synthesized upper-flipper EOS pair); no such switch is fitted.")
+		notes.append("Printed NOT USED. The ROM's switch test names the address as an upper-flipper EOS (a generic S.A.M. firmware name; samswitch_r copies the flipper button bit into the EOS bit of an upper pair, which the core does not otherwise drive); no such switch is fitted.")
 	if number in {7, 8}:
 		notes.append("Printed NOT USED in the manual; the ROM's generic S.A.M. firmware names these addresses \"L. POST SAVE\" and \"R. POST SAVE\". This machine's ball saver post is driven by matrix switches 1 and 2, so no hardware is listed here.")
 	if number == 18:
@@ -346,7 +347,7 @@ def coil_wiring(address: int) -> dict[str, Any]:
 
 
 def make_output(address: int, label: str, kind: str, availability: str, sources: tuple[str, ...], group: str = "pinmame.output.solenoid", manual_address: str | None = None, physical: dict[str, Any] | None = None, wiring: dict[str, Any] | None = None, stable_id: str | None = None) -> dict[str, Any]:
-	namespace = "pinmame.lamp" if group == "pinmame.output.lamp" else "pinmame.gi" if group == "pinmame.output.gi" else "pinmame.solenoid"
+	namespace = {"pinmame.output.lamp": "pinmame.lamp", "pinmame.output.gi": "pinmame.gi", "physical.output.ticket": "manual.service-output"}.get(group, "pinmame.solenoid")
 	result: dict[str, Any] = {"id": stable_id or f"device.{slug(label)}", "label": label, "kind": kind, "binding": {"group": group, "device": address}, "aliases": aliases(namespace, address, manual_address), "availability": availability, "provenance": provenance(*sources)}
 	if physical:
 		result["physical"] = physical
@@ -381,8 +382,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			sources = sources + (RT_EM_CLOSED, RT_EM_OPEN)
 		items.append(make_output(address, label, kind, availability, sources, manual_address=f"Q{address}", physical=physical, wiring=coil_wiring(address), stable_id=output_id(address)))
 	items.append(make_output(33, "PinMAME S.A.M. game-on state", "virtual", "used", (CORE, RT_BOOT), physical={"notes": "Synthetic S.A.M. fast-flip game-on state that pinned PinMAME publishes on public solenoid 33 (sam.c SAM_FASTFLIPSOL) for the fg_1200 family: the retained boot-start run observes it asserted at game start. It is not a driver-board transistor."}, stable_id="virtual.game-on"))
+	for address, label, test_name in ((33, "Ticket advance", "AUX 1: TICKET ADVANCE"), (35, "Ticket enable", "AUX 3: TICKET ENABLE")):
+		items.append(make_output(address, f"{label} (optional ticket dispenser)", "coil", "optional", TICKET_SOURCES, group="physical.output.ticket", manual_address=f"#{address}", stable_id=f"output.ticket.{address}.{slug(label)}", physical={"notes": (
+			f"Optional output of the auxiliary (3X transistor) driver PCB 520-5068-01 in the backbox, which the manual's coin/ticket meter and ticket dispenser wiring diagram (PDF pages 169-170) shows driving the ticket dispenser and meters. The coil test of the older firmware (V3.00, V4.00, V8.00 and V11.0) lists it as \"{test_name} #{address}\" after Q32 and the retained sweeps fire it without changing any public solenoid; the V12.0 test omits it. It is a physical service identity: pinned PinMAME publishes nothing for it (public solenoid 33 is the synthetic game-on state and public 51-66 are unused compatibility addresses), so a consumer has no runtime state for it. The auxiliary board has a third transistor (AUX 2, #34) that no retained source names.")}))
 	for address in range(51, 67):
-		items.append(make_output(address, f"Unused S.A.M. auxiliary compatibility address {address}", "virtual", "unused", (CORE,), physical={"notes": "Public custom-solenoid space of the S.A.M. platform; Family Guy declares no custom solenoids, and its manual describes auxiliary coils only as optional positions #33-#35 of the coil test, which the ROM's test does not step into."}, stable_id=f"virtual.aux-{address}"))
+		items.append(make_output(address, f"Unused S.A.M. auxiliary compatibility address {address}", "virtual", "unused", (CORE,), physical={"notes": "Public custom-solenoid space of the S.A.M. platform; Family Guy declares no custom solenoids, and its manual describes auxiliary coils only as optional positions #33-#35 of the coil test. The older firmware's Single Coil Test lists #33 and #35, which are kept as the physical ticket outputs below; the V12.0 test lists neither."}, stable_id=f"virtual.aux-{address}"))
 	return items
 
 
@@ -494,7 +498,7 @@ _MANUAL_LAMP_NAMES = {
 LEDS: dict[int, tuple[str, str, str, str, int, str]] = {
 	97: ("LED24", "N", "Brian", "R1", 0, "A"), 98: ("LED23", "M", "Meg", "R6", 1, "A"), 99: ("LED22", "E", "Meg", "R5", 2, "A"), 100: ("LED21", "G", "Meg", "R4", 3, "A"),
 	121: ("LED48", "S", "Chris", "R1", 0, "B"), 122: ("LED47", "I", "Chris", "R6", 1, "B"), 123: ("LED46", "R", "Chris", "R5", 2, "B"), 124: ("LED45", "H", "Chris", "R4", 3, "B"), 125: ("LED44", "C", "Chris", "R2", 4, "B"),
-	89: ("LED16", "E (second)", "Peter", "R13", 0, "A"), 90: ("LED15", "T", "Peter", "R12", 1, "A"), 91: ("LED14", "E (first)", "Peter", "R11", 2, "A"), 92: ("LED13", "R", "Peter", "R10", 3, "A"), 114: ("LED39", "P", "Peter", "R12", 1, "B"),
+	89: ("LED16", "E (first)", "Peter", "R13", 0, "A"), 90: ("LED15", "T", "Peter", "R12", 1, "A"), 91: ("LED14", "E (second)", "Peter", "R11", 2, "A"), 92: ("LED13", "R", "Peter", "R10", 3, "A"), 114: ("LED39", "P", "Peter", "R12", 1, "B"),
 	81: ("LED8", "A", "Brian", "R20", 0, "A"), 82: ("LED7", "I", "Brian", "R19", 1, "A"), 83: ("LED6", "R", "Brian", "R18", 2, "A"), 84: ("LED5", "B", "Brian", "R17", 3, "A"),
 	105: ("LED32", "S", "Lois", "R20", 0, "B"), 106: ("LED31", "I", "Lois", "R19", 1, "B"), 107: ("LED30", "O", "Lois", "R18", 2, "B"), 108: ("LED29", "L", "Lois", "R17", 3, "B"),
 }

@@ -177,6 +177,8 @@ def attach(definition: dict[str, Any], seed: dict[str, Any]) -> dict[str, int]:
 			device["spatial"] = not_applicable("virtual", CORE)
 		elif device["availability"] == "unused":
 			device["spatial"] = not_applicable("unused", MANUAL if group == "pinmame.output.lamp" else CORE)
+		elif group == "physical.output.ticket":
+			device["spatial"] = not_applicable("cabinet_or_service", MANUAL)
 		elif group == "pinmame.output.solenoid":
 			if address in COIL_OBJECTS:
 				device["spatial"] = located(f"placement.coil-{address}.effect", "effect", seed, COIL_OBJECTS[address], *refs, SCRIPT)
