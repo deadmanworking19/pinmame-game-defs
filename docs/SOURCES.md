@@ -48,6 +48,7 @@ produced it instead.
 - **Read addenda, amendments and bulletins first.** They correct printed figures, part numbers and device identity (a printed relay amended to a coil). Give the correction its own source record, apply it, and keep the printed original in the device note. (archive L662, L900, L940)
 - **Use a secondary chart only where it reproduces the primary.** It may fill a gap the retained manual leaves only when its overlapping columns match the primary schematic exactly and runtime evidence groups the circuits the same way. Disclose it on every affected device. (archive L677)
 
+- **A relabelled schematic is this game's only when its list is.** The IPDB Lamp Driver Schematic for Quicksilver was drafted for a sister game and relabelled by hand (the old title is struck through), and it carries a fuller lamp list than the manual's typed one plus a hand-corrected pin. Compare the two lists row by row, take pin corrections from the hand marks, and read the decoder and connector blocks yourself rather than reusing a sibling record's SCR table. (knowledge note `knowledge/stern/quicksilver-1980.md`)
 ### Weighing sources and writing conflicts
 
 - **Check every table against its siblings.** Expect typos, transposed rows and reversed Left/Right inside one manual; settle a misspelling from its symmetric partner. Prefer the parts list, assembly page or schematic over matrix-page labels: a matrix "(EOS)" can name a part the assembly page identifies as something else. (archive L638, L693, L897)

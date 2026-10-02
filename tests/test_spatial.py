@@ -477,7 +477,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Jurassic Park's legacy record omitted it as well; the curated partial names the unplaced trough contacts,
 		# glow-only lamps and partial flash banks.
 		# Doctor Who's legacy record omitted it too; its curated partial names the unvalidated general-illumination bulbs.
-		self.assertEqual(702, report["missing_requirement_counts"]["spatial_placement"])
+		# Stern Quicksilver's legacy record omitted it too; the curated partial restores its gap.
+		self.assertEqual(703, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

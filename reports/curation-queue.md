@@ -589,7 +589,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 583 | 1980 | Flight 2000 | Stern | partial | 19% |
 | 584 | 1980 | Galaxy | Stern | partial | 19% |
 | 585 | 1980 | Nine Ball | Stern | partial | 19% |
-| 586 | 1980 | Quicksilver | Stern | partial | 19% |
+| 586 | 1980 | Quicksilver | Stern | partial | 88% |
 | 587 | 1980 | Seawitch | Stern | partial | 19% |
 | 588 | 1980 | Star Gazer | Stern | partial | 88% |
 | 589 | 1980 | Drakor | Taito | partial | 6% |

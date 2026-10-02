@@ -1,0 +1,397 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "quicksil",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "notes": "Fresh-state Stern MPU-200 gameplay switch exercise. The ball starts on the outhole switch (public 33) as the known-working tables initialize it. Three coins, the credit button and a released outhole start a game; then each playfield switch is closed alone and the score, the solenoids and the lamps are read from the snapshot after each step.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 4,
+      "label": "credit button starts a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right pop bumper sw9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "left pop bumper sw10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "bottom pop bumper sw11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "left slingshot sw12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right slingshot sw13"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right spinner sw4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "left spinner sw5"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "bottom left stand-up sw14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "center left stand-up sw15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "top left stand-up sw16"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "top lane Q sw17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "top lane U sw18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "top lane I sw19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "top lane C sw20"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right stand-up top sw25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right stand-up middle sw26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right stand-up bottom sw27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "special roll-over sw28"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "left outlane sw34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right outlane sw35"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "left return lane sw36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "right return lane sw37"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "10 point bounce sw38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "10 point roll-over sw39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "lane stand-up sw40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 2,
+      "label": "center drop target close 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 2,
+      "label": "center drop target close 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2,
+      "label": "center drop target close 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 2,
+      "label": "center drop target close 24"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "center drop target open 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "center drop target open 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "center drop target open 23"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "center drop target open 24"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "settle after the center bank"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 2,
+      "label": "right drop target close 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 2,
+      "label": "right drop target close 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 2,
+      "label": "right drop target close 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "right drop target open 30"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "right drop target open 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "right drop target open 32"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "settle after the right bank"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 4,
+      "label": "kick-out hole close 29"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 2,
+      "label": "kick-out hole open 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "lower left flipper button 84",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "lower right flipper button 82",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "upper left flipper position 83",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "upper right flipper position 81",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 3,
+      "label": "tilt close 7"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 3,
+      "label": "tilt open 7"
+    }
+  ]
+}

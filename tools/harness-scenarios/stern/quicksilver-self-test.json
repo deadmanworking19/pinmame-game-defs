@@ -1,0 +1,20 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "quicksil",
+  "notes": "Fresh-state Stern MPU-200 self-test. One Self Test press (public -7) after the power-up test has finished starts the ROM's looping diagnostic; 60 seconds cover three complete passes of the 19-step solenoid sequence while the feature lamps flash.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 60,
+      "label": "self test press 1"
+    }
+  ]
+}

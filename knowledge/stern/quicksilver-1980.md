@@ -1,155 +1,98 @@
-# Quicksilver
+# Quicksilver (Stern, 1980)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - the physical inventory, controller bindings, wiring and mechanisms are validated; one lamp circuit's fitment and the playfield placements are not**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Stern (1980). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the one physical Stern Quicksilver (IPDB 1895, June 1980, model 117, Stern M-200 MPU, 1,201 units). PinMAME `quicksil` is the production root and `quicksfp` its stock free-play clone; both use the same game-data line (`GEN_STMPU200`, seven-digit
+`dispst7` displays, `FLIP_SW(FLIP_L)`, ST300 sound), and the community rules revisions `quicksib` (07D, 2021) and `quicksic` (8.1, 2024) use the same line again, so all four are physically identical; only the rules ROMs differ. The ROM archives `quicksil.zip` and
+`quicksfp.zip` were available; `quicksib` and `quicksic` were not, so nothing here was measured on them.
 
-## Playfield devices
+The evidence order is the runbook's. The known-working VPW 1.0 script and the earlier retained tables give runtime semantics, this game's own manual, Lamp Driver Schematic (12B-432-S-116) and Solenoid Driver Schematic (12B-432-S-117 sheet 3) give construction and wiring, pinned PinMAME gives
+the controller topology, and three retained harness runs (a Self Test sweep, the stuck-switch test and a scripted game) give the public addresses. The Lamp Driver Schematic was drawn for a sister game, `CHEETAH`, and relabelled by hand for this one; its list is Quicksilver's own and its
+SCR numbering is the board's.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Address translations
 
-## Custom mechanisms
+**Switches.** The matrix is five strobes by eight returns, public 1-40, and the ROM's stuck-switch display shows the closed address's own number for every one of the forty (retained run). The printed Self Test numbers are therefore the public addresses.
+All forty positions are fitted: coin chutes 1-3, spinners 4-5, credit 6, tilt 7, slam 8, bumpers 9-11, slingshots 12-13, stand-ups 14-16, 25-27 and 40, top lanes 17-20, center drop targets 21-24, special roll-over 28, kick-out hole 29, right drop targets 30-32, out-hole 33,
+outlanes and return lanes 34-37, bounce rubbers 38 and roll-over button 39. Every matrix contact is drawn as a normally open contact with a series 1N4004 diode. The cabinet switches (1-3, 6-8) are wired on the cabinet sheet through the front-door jack to MPU connector A4J3, the others on the
+playfield sheet to A4J2. Service inputs are -7 (Self Test), -6 (CPU diagnostic NMI) and -5 (sound diagnostic); -6 and -5 are PinMAME routes whose physical buttons the manual does not document. The cabinet flipper buttons are PinMAME's synthetic 84 (left) and 82 (right); 81 and 83 are the
+unused upper positions. Each flipper's end-of-stroke contact is a hard-wired normally closed contact drawn across the first winding of its dual-winding coil and is not a PinMAME address.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+**Solenoids.** The printed solenoid list numbers the SDU transistors 1-19 and the public addresses do not follow it. The ROM's own Self Test energizes them in physical order, and the public addresses fire as `2,1,6,7,3,4,5,8,11,12,14,13,9,10,19,15,17,20,18`, so physical 1..19 map to public
+`1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18`. Nine of those positions were independently confirmed in play: the three thumpers and two slingshots fire on their own switches (public 1, 2, 3, 4, 5 for
+switches 9, 10, 11, 12, 13), the two drop-bank resets fire when their last target closes (7 and 8), the kick-out hole fires on its switch (9), the out-hole kicker fires from game start (10) and the flipper-enable relay rises at game start and drops on a tilt (19). Public 16 is an unaddressable decoder slot. Physical 9-12, 16, 17 and 18 are
+printed OPEN and are unused. The lower flippers are the synthetic held-coil outputs 46 (right) and 48 (left); PinMAME also asserts 45 and 47 for exactly the same interval as 46 and 48 (retained gameplay run; `core.c` asserts both bits of each pair while the button is closed), which the Stern MPU-200 controller profile does not declare and this definition does not bind.
 
-## Ball-state transitions
+**Lamps.** The Lamp Driver module has sixty discrete SCR outputs, not a matrix. A public lamp is `16 * k + a + 1` for decoder chip `U(k+1)` output `S(a)`, and each of the sixty output lines carries a resistor `R<n>` that ends at SCR `Q<n>` (the schematic's resistor and SCR numbers match on every line). The mapping from public address to SCR therefore
+comes from the decoder drawing, and the connector table gives each SCR its jack and pin. This definition gives all sixty. Public 16, 32, 48 and 64 are unaddressable decoder slots. Two of the schematic's readings are easy to transpose and were checked three ways: `U2` outputs S7 and S8 drive SCRs Q25 and Q24, so the right
+stand-up lamp V (J1 pin 6, Q25) is public 24 and the unused SCR Q24 is public 25, and `U3` and `U4` output S9 drive Q41 and Q46, so top divider 2 (Q41) is public 42 and top divider 1 (Q46) is public 58. The retained tables bind public 24 to the V insert, and the five dividers (10, 26, 42, 57, 58) light together in the ROM's coin-in lamp show.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+The playfield lamp wiring list prints fifty rows and the Lamp Driver Schematic's list prints fifty-four: it adds `GAME OVER` (public 45), `HIGH SCORE TO DATE` (13), `MATCH` (63) and `TILT` (61). The two lists disagree about one pin and one number only: `SHOOT AGAIN` is J1 pin 26 on the playfield list and J2 pin 21 on the schematic (one SCR, Q3, reaches both, and there is a
+playfield insert and a backbox bulb), and the playfield list prints jack J2 pin 6 for both spinner lamps while the schematic strikes the left spinner's 6 out by hand and writes 7. Those are wiring-detail differences and are resolved as device notes.
 
-## Controller interactions
+## Lamps with no printed load
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+Five SCRs have no row in either list and are driven by the ROM only in the power-up lamp flash (which ends about 12.6 s after power-up) and the self-test sweep, never in the attract pattern or in play (retained gameplay run): public 25, 27, 29, 41 and 43. They are recorded `unused`. Public 29 is the lamp a sister machine labels Ball in Play; here the ball in play is a digit on the Match/Ball display module.
+**Public 6 (SCR Q10, connector pin J1-15) is different.** No list prints a load for it, yet the ROM keeps toggling it in the attract-mode lamp pattern after the power-up flash, together with 38 lamps that are all listed (retained gameplay run). The evidence available cannot say whether a bulb is fitted behind it, so it is recorded with availability `unknown`
+and `output_semantics` stays in `coverage.missing`. A bulb-level answer needs a photograph of an unrestored machine's A5J1 harness at pin 15, or the ROM's lamp-show data decoded to see which feature it accompanies.
 
-## Service and setup information
+General illumination is a 6 VAC lamp string (`A2J1-8` to `A2J1-1`) with no driver-board connection and no controller address.
 
-Unknown; locate operator/service documentation.
+## Ball lifecycle
 
-## Timing and tuning observations
+Quicksilver is a single-ball game with no trough. The ball starts on the out-hole switch (public 33). When a game starts the ROM resets both drop banks (public 7 and 8), ejects the kick-out hole once (9) and kicks the out-hole (10) repeatedly for as long as 33 stays closed. A real ball leaves 33 after the first kick and rolls to the shooter lane,
+where the player launches it with the plunger. After a drain the ball returns to 33, the bonus is counted, the ball-in-play digit advances and the kick repeats. The retained tables release the ball from a shooter-lane kicker at 90 degrees. Tilt disqualifies the ball only: the ROM drops the flipper-enable relay (19) when switch 7 closes, and normal play resumes at the next serve.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Mechanisms
 
-## Recreation guidance
+- **Center bank:** four drop targets on a slant (switches 21 highest to 24 lowest, `4 Bank Target D-580-4`), closed while down, one reset coil (public 7, B-27-2300). The ROM resets the bank when the fourth target closes.
+- **Right bank:** three drop targets beside the right rail (30 highest to 32 lowest, `3 Bank Target D-580-3`), one reset coil (public 8). Reset when the third target closes. Downing it raises the bonus multiplier (instruction card).
+- **Kick-out hole:** a hole at the left edge with its switch (29) and an eject coil (public 9, J-28-2300) the ROM fires when a ball sits in it.
+- **Spinners:** two spin target assemblies, switch 4 on the right and 5 on the left, 200 points per rotation in the retained run. Their lamps are public 46 (right) and 62 (left).
+- **Pop bumpers and slingshots:** the ROM fires each coil when its own switch closes (public 1, 2, 3 for switches 9, 10, 11; public 4 and 5 for switches 12 and 13). The printed solenoid numbers are 2, 1 and 5 for the thumpers and 6 and 7 for the slingshots.
+- **Flippers:** two lower dual-winding flippers fed from the +43 VDC bus through the flipper-enable relay; the buttons are hard-wired on A3J2-2 (left) and A3J2-1 (right).
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+## Scoring checkpoints from the retained gameplay run
 
-## Evidence notes
+Pop bumpers score 1,000, slingshots 10, spinners 200, the stand-ups (14, 15, 16, 25, 26, 27, 40) and top lanes 500, the special roll-over 1,000, the outlanes 25,000, the return lanes 5,000, bounce rubbers and the roll-over button 10. Center-bank targets score 1,000 each when closed, and opening the completed bank pays a further 3,000 after its reset fires; right-bank targets 30 and 31 score 500 each, and closing the third target (32) scores 25,500 and fires the bank reset. The kick-out hole scores 5,000. These are first-ball ROM scores
+and only checkpoints: the instruction card governs the rules.
 
-- `games/quicksilver.json#/switches/0._note`: vpmTimer.PulseSw 4 on each sw4_Spin event. Spinner with damping physics (sw4hit_Hit manages spin decay). VPX spinner object with animated BP_SpinR primitives.
-- `games/quicksilver.json#/switches/1._note`: vpmTimer.PulseSw 5 on each sw5_Spin event. Spinner with damping physics (sw5hit_Hit manages spin decay). VPX spinner object with animated BP_SpinL primitives.
-- `games/quicksilver.json#/switches/2._note`: vpmNudge.TiltSwitch=7. Sensitivity=5. TiltObj includes all 3 bumpers and both slingshots.
-- `games/quicksilver.json#/switches/3._note`: vpmTimer.PulseSw(9) from Bumper1_Hit. Animated ring via BP_Bumper1_Ring.
-- `games/quicksilver.json#/switches/4._note`: vpmTimer.PulseSw(10) from Bumper2_Hit. Animated ring via BP_Bumper2_Ring.
-- `games/quicksilver.json#/switches/5._note`: vpmTimer.PulseSw(11) from Bumper3_Hit. Animated ring via BP_Bumper3_Ring.
-- `games/quicksilver.json#/switches/6._note`: STHit 14 via StandupTarget class. VPX target sw14 with BM_sw14 primitive. Animated via Rothbauerw standup target system.
-- `games/quicksilver.json#/switches/7._note`: STHit 15 via StandupTarget class. VPX target sw15 with BM_sw15 primitive.
-- `games/quicksilver.json#/switches/8._note`: STHit 16 via StandupTarget class. VPX target sw16 with BM_sw16 primitive. Illuminated by lamp L54.
-- `games/quicksilver.json#/switches/9._note`: Controller.Switch(17) on/off from sw17_hit/sw17_unhit. Wire trigger with animated BP_sw17 primitives.
-- `games/quicksilver.json#/switches/10._note`: Controller.Switch(18) on/off from sw18_hit/sw18_unhit. Wire trigger with animated BP_sw18 primitives.
-- `games/quicksilver.json#/switches/11._note`: Controller.Switch(19) on/off from sw19_hit/sw19_unhit. Wire trigger with animated BP_sw19 primitives.
-- `games/quicksilver.json#/switches/12._note`: Dual-purpose switch. Fires from LeftSlingShot_Slingshot (PulseSw 20) AND from sw20 wire trigger (Controller.Switch(20) on/off). Wire trigger has BP_sw20 animation. Slingshot has sling correction physics (apophis SlingshotCorrection class).
-- `games/quicksilver.json#/switches/13._note`: Dual-purpose switch. Fires from DTHit 21 (green drop target bank, first target) AND from RightSlingShot_Slingshot (PulseSw 21). Drop target uses Rothbauerw DTAnimate system with BM_sw21 primitive. Slingshot has sling correction physics. Illuminated by lamps L52, L62.
-- `games/quicksilver.json#/switches/14._note`: DTHit 22 via DropTarget class. Green drop target bank, second target. BM_sw22 primitive. Illuminated by lamps L07, L23, L52, L62.
-- `games/quicksilver.json#/switches/15._note`: DTHit 23 via DropTarget class. Green drop target bank, third target. BM_sw23 primitive. Illuminated by lamps L07, L23, L52, L62.
-- `games/quicksilver.json#/switches/16._note`: DTHit 24 via DropTarget class. Green drop target bank, fourth target. BM_sw24 primitive. Illuminated by lamps L07, L23, L52, L62.
-- `games/quicksilver.json#/switches/17._note`: STHit 25 via StandupTarget class. VPX target sw25 with BM_sw25 primitive.
-- `games/quicksilver.json#/switches/18._note`: STHit 26 via StandupTarget class. VPX target sw26 with BM_sw26 primitive.
-- `games/quicksilver.json#/switches/19._note`: STHit 27 via StandupTarget class. VPX target sw27 with BM_sw27 primitive.
-- `games/quicksilver.json#/switches/20._note`: Controller.Switch(28) on/off from sw28_hit/sw28_unhit. Star trigger with BP_sw28 animation.
-- `games/quicksilver.json#/switches/21._note`: Controller.Switch(29)=1 on hit, cleared by bsKicker solenoid (sol 9). Manual ball position tracking via KickerBall29 variable with timer-based wiggle prevention. Ball reflection disabled while in saucer. Physical saucer implementation by Sixtoe.
-- `games/quicksilver.json#/switches/22._note`: DTHit 30 via DropTarget class. Yellow drop target bank, first target. DTBM_sw30 primitive.
-- `games/quicksilver.json#/switches/23._note`: DTHit 31 via DropTarget class. Yellow drop target bank, second target. DTBM_sw31 primitive.
-- `games/quicksilver.json#/switches/24._note`: DTHit 32 via DropTarget class. Yellow drop target bank, third target. DTBM_sw32 primitive.
-- `games/quicksilver.json#/switches/25._note`: Controller.Switch(33) on/off from Drain_Hit/Drain_UnHit. bsTrough.InitSw 0,33,0,0,0,0,0,0 — single outhole switch. bsTrough.Balls=1 (single ball game). bsTrough.addball on drain hit.
-- `games/quicksilver.json#/switches/26._note`: Controller.Switch(34) on/off from sw34_hit/sw34_unhit. Wire trigger with BP_sw34 animation.
-- `games/quicksilver.json#/switches/27._note`: Controller.Switch(35) on/off from sw35_hit/sw35_unhit. Wire trigger with BP_sw35 animation.
-- `games/quicksilver.json#/switches/28._note`: Controller.Switch(36) on/off from sw36_hit/sw36_unhit. Wire trigger with BP_sw36 animation.
-- `games/quicksilver.json#/switches/29._note`: Controller.Switch(37) on/off from sw37_hit/sw37_unhit. Wire trigger with BP_sw37 animation.
-- `games/quicksilver.json#/switches/30._note`: vpmTimer.PulseSw 38 from five separate VPX objects: sw38a, sw38b, sw38c, sw38d, sw38e. All pulse the same switch 38. Multiple rubber band segments that score on contact.
-- `games/quicksilver.json#/switches/31._note`: Controller.Switch(39) on/off from sw39_hit/sw39_unhit. Star trigger with BP_sw39 animation.
-- `games/quicksilver.json#/switches/32._note`: STHit 40 via StandupTarget class. VPX target sw40 with BM_sw40 primitive.
-- `games/quicksilver.json#/coils/0._vbscript_callback`: GreenDropsUp
-- `games/quicksilver.json#/coils/0._inferred_type`: drop_target_reset
-- `games/quicksilver.json#/coils/0._note`: SolCallback(7)='GreenDropsUp'. Raises drop targets sw21-24 via DTRaise calls. Comment says 'Sol4 Center Drop Target Bank' but assigned to sol 7.
-- `games/quicksilver.json#/coils/1._vbscript_callback`: YellowDropsUp
-- `games/quicksilver.json#/coils/1._inferred_type`: drop_target_reset
-- `games/quicksilver.json#/coils/1._note`: SolCallback(8)='YellowDropsUp'. Raises drop targets sw30-32 via DTRaise calls. Comment says 'Sol8 Right Drop Target Bank'.
-- `games/quicksilver.json#/coils/2._vbscript_callback`: bsKicker
-- `games/quicksilver.json#/coils/2._inferred_type`: ball_management
-- `games/quicksilver.json#/coils/2._note`: SolCallback(9)='bsKicker'. Comment says 'Sol13 Kicker Hole'. Ejects ball from sw29 saucer via KickBall function (angle 150, vel 15, velz 5, zlift 20). Clears Controller.Switch(29) indirectly.
-- `games/quicksilver.json#/coils/3._vbscript_callback`: bsTrough.SolOut
-- `games/quicksilver.json#/coils/3._inferred_type`: ball_management
-- `games/quicksilver.json#/coils/3._note`: SolCallback(10)='bsTrough.SolOut'. Comment says 'Sol14 Outhole, BallRelease'. Ejects ball from trough via BallRelease kicker (angle 90, force 5). Single-ball trough system.
-- `games/quicksilver.json#/coils/4._vbscript_callback`: SolKnocker
-- `games/quicksilver.json#/coils/4._vbscript_name`: SolKnocker
-- `games/quicksilver.json#/coils/4._inferred_type`: knocker
-- `games/quicksilver.json#/coils/4._note`: SolCallback(6)='SolKnocker' is COMMENTED OUT in the script. SolKnocker sub exists and calls KnockerSolenoid. Likely disabled for testing or sound reasons.
-- `games/quicksilver.json#/coils/5._vbscript_callback`: SolRFlipper
-- `games/quicksilver.json#/coils/5._inferred_type`: flipper
-- `games/quicksilver.json#/coils/5._note`: SolCallback(sLRFlipper)='SolRFlipper'. sLRFlipper=16 from Stern.VBS framework. nFozzy flipper implementation (RF.Fire on enable, RotateToStart on disable). Includes reflip detection and live catch via CheckLiveCatch.
-- `games/quicksilver.json#/coils/6._vbscript_callback`: SolLFlipper
-- `games/quicksilver.json#/coils/6._inferred_type`: flipper
-- `games/quicksilver.json#/coils/6._note`: SolCallback(sLLFlipper)='SolLFlipper'. sLLFlipper=18 from Stern.VBS framework. nFozzy flipper implementation (LF.Fire on enable, RotateToStart on disable). Includes reflip detection and live catch via CheckLiveCatch.
-- `games/quicksilver.json#/coils/7._vbscript_callback`: FlipperRelay
-- `games/quicksilver.json#/coils/7._inferred_type`: mechanism
-- `games/quicksilver.json#/coils/7._note`: SolCallback(19)='FlipperRelay' is COMMENTED OUT. Comment says 'Sol19 sEnable'. This is the flipper enable relay for early Stern games.
-- `games/quicksilver.json#/lamps/0._note`: vpmMapLights insert lamp. BL_L_L01 lightmap array.
-- `games/quicksilver.json#/lamps/1._note`: vpmMapLights insert lamp. BL_L_L02 lightmap array.
-- `games/quicksilver.json#/lamps/2._note`: vpmMapLights insert lamp. BL_L_L03 lightmap array.
-- `games/quicksilver.json#/lamps/3._note`: vpmMapLights insert lamp. BL_L_L04 lightmap array.
-- `games/quicksilver.json#/lamps/4._note`: vpmMapLights insert lamp. BL_L_L05 lightmap array.
-- `games/quicksilver.json#/lamps/5._note`: vpmMapLights insert lamp. BL_L_L07 lightmap array. Illuminates area near drop targets sw22-24.
-- `games/quicksilver.json#/lamps/6._note`: vpmMapLights insert lamp. BL_L_L08 lightmap array.
-- `games/quicksilver.json#/lamps/7._note`: vpmMapLights insert lamp. BL_L_L09 lightmap array.
-- `games/quicksilver.json#/lamps/8._note`: Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(11) controls sa.state. Also has BL_L_L11 insert lightmap.
-- `games/quicksilver.json#/lamps/9._note`: vpmMapLights insert lamp. BL_L_L12 lightmap array.
-- `games/quicksilver.json#/lamps/10._note`: Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(13) controls hstd.state.
-- `games/quicksilver.json#/lamps/11._note`: vpmMapLights insert lamp. BL_L_L14 lightmap array.
-- `games/quicksilver.json#/lamps/12._note`: vpmMapLights insert lamp. BL_L_L17 lightmap array.
-- `games/quicksilver.json#/lamps/13._note`: vpmMapLights insert lamp. BL_L_L18 lightmap array.
-- `games/quicksilver.json#/lamps/14._note`: vpmMapLights insert lamp. BL_L_L19 lightmap array.
-- `games/quicksilver.json#/lamps/15._note`: vpmMapLights insert lamp. BL_L_L20 lightmap array.
-- `games/quicksilver.json#/lamps/16._note`: vpmMapLights insert lamp. BL_L_L21 lightmap array.
-- `games/quicksilver.json#/lamps/17._note`: vpmMapLights insert lamp. BL_L_L22 lightmap array.
-- `games/quicksilver.json#/lamps/18._note`: vpmMapLights insert lamp. BL_L_L23 lightmap array. Illuminates area near drop targets sw22-24.
-- `games/quicksilver.json#/lamps/19._note`: vpmMapLights insert lamp. BL_L_L24 lightmap array.
-- `games/quicksilver.json#/lamps/20._note`: vpmMapLights insert lamp. BL_L_L28 lightmap array.
-- `games/quicksilver.json#/lamps/21._note`: vpmMapLights insert lamp. BL_L_L30 lightmap array.
-- `games/quicksilver.json#/lamps/22._note`: vpmMapLights insert lamp. BL_L_L31 lightmap array.
-- `games/quicksilver.json#/lamps/23._note`: vpmMapLights insert lamp. BL_L_L33 lightmap array.
-- `games/quicksilver.json#/lamps/24._note`: vpmMapLights insert lamp. BL_L_L34 lightmap array.
-- `games/quicksilver.json#/lamps/25._note`: vpmMapLights insert lamp. BL_L_L35 lightmap array.
-- `games/quicksilver.json#/lamps/26._note`: vpmMapLights insert lamp. BL_L_L36 lightmap array.
-- `games/quicksilver.json#/lamps/27._note`: vpmMapLights insert lamp. BL_L_L37 lightmap array.
-- `games/quicksilver.json#/lamps/28._note`: vpmMapLights insert lamp. BL_L_L38 lightmap array.
-- `games/quicksilver.json#/lamps/29._note`: vpmMapLights insert lamp. BL_L_L39 lightmap array.
-- `games/quicksilver.json#/lamps/30._note`: vpmMapLights insert lamp. BL_L_L40 lightmap array. Also illuminates Plas_Over plastic overlay.
-- `games/quicksilver.json#/lamps/31._note`: vpmMapLights insert lamp. BL_L_L44 lightmap array.
-- `games/quicksilver.json#/lamps/32._note`: Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(45) controls go.state.
-- `games/quicksilver.json#/lamps/33._note`: vpmMapLights insert lamp. BL_L_L46 lightmap array.
-- `games/quicksilver.json#/lamps/34._note`: vpmMapLights insert lamp. BL_L_L47 lightmap array.
-- `games/quicksilver.json#/lamps/35._note`: vpmMapLights insert lamp. BL_L_L49 lightmap array.
-- `games/quicksilver.json#/lamps/36._note`: vpmMapLights insert lamp. BL_L_L50 lightmap array.
-- `games/quicksilver.json#/lamps/37._note`: vpmMapLights insert lamp. BL_L_L51 lightmap array.
-- `games/quicksilver.json#/lamps/38._note`: vpmMapLights insert lamp. BL_L_L52 lightmap array. Illuminates green drop target area (sw21-24).
-- `games/quicksilver.json#/lamps/39._note`: vpmMapLights insert lamp. BL_L_L53 lightmap array.
-- `games/quicksilver.json#/lamps/40._note`: vpmMapLights insert lamp. BL_L_L54 lightmap array. Illuminates standup target sw16 area.
-- `games/quicksilver.json#/lamps/41._note`: vpmMapLights insert lamp. BL_L_L55 lightmap array.
-- `games/quicksilver.json#/lamps/42._note`: vpmMapLights insert lamp. BL_L_L56 lightmap array.
-- `games/quicksilver.json#/lamps/43._note`: vpmMapLights insert lamp. BL_L_L59 lightmap array.
-- `games/quicksilver.json#/lamps/44._note`: vpmMapLights insert lamp. BL_L_L60 lightmap array.
-- `games/quicksilver.json#/lamps/45._note`: Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(61) controls tilt.state.
-- `games/quicksilver.json#/lamps/46._note`: vpmMapLights insert lamp. BL_L_L62 lightmap array. Illuminates green drop target area (sw21-24).
-- `games/quicksilver.json#/lamps/47._note`: Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(63) controls ma.state.
-- `games/quicksilver.json#/_source/confidence_notes`: High confidence extraction from VPW VBScript by MetaTed (with apophis, somatik, Sixtoe assistance). Platform detected as Stern pre-S11 era via LoadVPM '01560000','Stern.VBS',3.26. ROM name 'quicksic' from cGameName constant. Switches identified through multiple mechanisms: Controller.Switch() on/off calls for wire triggers and rollovers (sw17-20, sw28, sw29, sw33-37, sw39), vpmTimer.PulseSw for momentary switches (bumpers sw9-11, spinners sw4-5, slingshots sw20-21, scoring rubbers sw38), and custom STHit/DTHit class methods for standup targets (sw14-16, sw25-27, sw40) and drop targets (sw21-24, sw30-32). Trough is minimal single-ball cvpmBallStack design with bsTrough.InitSw using only sw33 as the outhole switch, with BallRelease kicker for eject (sol 10). No multi-ball trough stacking -- this is a 1980 Stern single-ball drain with bsTrough.Balls=1. Kicker/saucer at sw29 uses manual ball position tracking (KickerBall29 variable, timer-based wiggle prevention) with KickBall physics function for eject (sol 9 via bsKicker callback). Drop targets use elaborate Rothbauerw DTHit/DTAnimate class system with Controller.Switch(switchid)=1 on drop and =0 on raise. Green bank (sw21-24) reset by sol 7 (GreenDropsUp), yellow bank (sw30-32) reset by sol 8 (YellowDropsUp). Note sw20 is dual-purpose: fires from both LeftSlingShot_Slingshot event and sw20 wire trigger (Controller.Switch on/off). Similarly sw21 fires from RightSlingShot_Slingshot AND as green drop target 1. This likely reflects the actual Stern Quicksilver switch matrix where multiple playfield features share switch numbers. SolCallback(6)='SolKnocker' is commented out. SolCallback(19)='FlipperRelay' is commented out. Lamps use vpmMapLights with InsertLamps collection -- individual lamp IDs identified from VLM lightmap array names (BL_L_L01 through BL_L_L62). Five backglass flasher lamps handled via LampCallback/UpdateMultipleLamps: lamp 45 (Game Over), lamp 13 (High Score To Date), lamp 63 (Match), lamp 61 (Tilt), lamp 11 (Shoot Again) -- these drive VPX objects go, hstd, ma, tilt, sa respectively. GI is always on (UseGI=0, GI lights forced to state=1 at init). Flipper solenoids via Stern.VBS framework constants sLRFlipper and sLLFlipper (standard Stern values 16 and 18).
+## Rules summary (instruction card)
 
-## Unresolved questions
+Pop bumpers score 1,000. The bonus multiplier increases when the right three-bank is down. Q-U-I-C-K and S-I-L-V-E-R targets advance the bonus only when not already lit; the 75,000 bonus lights after the 20,000 step and a lit 75,000 does not collect the multiplier. Lighting all QUICK SILVER targets lights the top and outlane specials.
+A spinner's value increases when the ball enters the opposite return lane and must be re-lit after the spinner is hit. The kick-out target scores 5,000 and advances the center target value. Each center-bank target scores 1,000 plus its lit value, and downing all four spots the next letter. Spotting Q-U-I-C-K and then hitting the flashing target awards an extra ball. Tilt disqualifies the ball in play only.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+## Option switches
+
+The thirty-two MPU option switches are S1-8, S9-16, S17-24 and S25-32. Coin chutes 1, 2 and 3 take S1-4, S9-12 and S25-28 (the credit catalog); S5 add-a-ball memory, S6 high-score award, S7 balls per game (ON = 5), S8 maximum add-a-balls, S13 flashing-lite retention, S14 background sound, S15-16 high game to date, S17 QUICK extra ball
+per game, S18-19 maximum credits (10/15/25/40), S20 credit display, S21 match, S22 QUICK extra ball, S23-24 special lite alternation, S29 QUICK SILVER special carry-over, S30 special replay limit and S31-32 special award. S33 on the MPU is a memory-clear pushbutton.
+
+## Displays and sound
+
+Four seven-digit score displays at layout indices 0-3 and segment-memory starts 1, 9, 17 and 25, a two-digit credits display (index 4, start 35) and a two-digit match/ball-in-play display (index 5, start 38): PinMAME `dispst7`. Sound is the Stern ST300 board (sound module C-605); sound commands add no playfield devices.
+
+## Defects in consumed artifacts
+
+- The retained VPW 1.0 script pulses switches 20 and 21 from its slingshots; the correct addresses are 12 and 13 (the corpus 1.0 script and the older retained table pulse them, and the ROM fires the sling coils on them). It also drives the two right-side coil banks through custom animation code, which does not change the controller contract.
+- The older retained table names its two upper bumper objects the other way round: `Bumper1` stands at the left and pulses the right bumper's switch 9.
+- The playfield wiring sheet prints `A3J1-5 (B-G)` for the out-hole and `A3J5-12 (D-O)` for the right drop-target bank; the Solenoid Driver Schematic places them on J5 pins 11 and 10, which are the pins used.
+
+## Recreation checklist
+
+- Build the full inventory: 40 matrix switches, three service inputs, four flipper-button positions, 32 option switches, the 18 solenoid addresses and two flipper coils, the 60 SCR lamp addresses and the six displays.
+- Start with the ball on the out-hole switch, both drop banks up, the kick-out hole empty and the flipper-enable relay off until a game starts.
+- Reproduce the ROM-fired thumpers and slingshots, the two drop-bank resets, the kick-out eject, the out-hole serve loop and the tilt behaviour exactly as the harness runs show.
+- The slam quantity is left unstated: the location sheet lists a door and a tilt-board contact, while the operating text (manual page 5) also names one on the playfield, and no retained source settles whether that third contact was fitted. All of them share public address 8.
+- Treat the instruction card as the rules summary and the ROM as the rules authority; the community 07D and 8.1 ROMs change rules, not hardware.
+- Switch and solenoid placements are validated against the manual's two location drawings where they agree (46 of 48 checked); lamp placements are observed from the retained table only, and the five top-divider lamps have no placement.
 
 ## Sources
 
-- `legacy.game.quicksilver`: `games/quicksilver.json` at the pinned migration revision.
+- `manual.stern.quicksilver.1980`: the 35-page IPDB manual, SHA-256 `140216dc27e97084e0b523fe0d5ff5417961723fea069b1fad3dd594b9723728`, with transcribed excerpts of its identification tables, switch and solenoid drawings, playfield and cabinet wiring, option switches and parts list.
+- `schematic.stern.quicksilver.lamp-driver` and `schematic.stern.quicksilver.solenoid-driver`: the IPDB Lamp Driver and Solenoid Driver schematics, SHA-256 `bea05d384e1f7ddf2dc98793cc1c9c82a38aece048b6750fe67371b2262870ee` and `f71e59b6d72e7d1315eeb3eaca940479bd882d9d3bcbfb008905180f92078a5d`.
+- `manual.stern.quicksilver.instruction-card`: the rules card, SHA-256 `f85d0a60e1a03bf904623816fa5747d64020a0a81192964915cd717180be3f67`.
+- `vpx-table.quicksilver-vpw-1-0`, `vpx-script.quicksilver-vpw-1-0`, the corpus 1.0 script and the earlier archive table: geometry and runtime semantics.
+- `runtime.quicksilver.self-test`, `runtime.quicksilver.stuck-switch-test` and `runtime.quicksilver.gameplay`: three isolated harness runs of `quicksil` (ROM archive SHA-256 `691e06ac64f445cde8842934efdc3a7e223b408f442131bcb2903bde56b45ad3`) on the pinned `pinmame64.dll`; ROM bytes and raw NVRAM remain outside the repository.
+- `pinmame.core.8371478a7640`: driver declarations, MPU-200 implementation, public-address conversion and display layouts.
