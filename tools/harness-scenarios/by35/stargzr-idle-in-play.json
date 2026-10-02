@@ -1,0 +1,48 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute 1 (public 1)",
+      "settle_s": 1.5,
+      "switch": 1,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "label": "idle in play",
+      "seconds": 30.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "stargzr",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 33
+    }
+  ],
+  "notes": "Idle in play after the ball leaves the outhole, to read the vari-value lamp sweep.",
+  "version": 1,
+  "watch_switches": [
+    33
+  ]
+}

@@ -1,0 +1,6421 @@
+{
+  "driver_ids": [
+    "stargzr",
+    "stargzfp",
+    "stargzrb"
+  ],
+  "extractor": {
+    "id": "tools/star_gazer_runtime_summary.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.star-gazer.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <vpinmame-roms> --work-dir <new-isolated-state> {--boot-wait 20 --pulse=-7:250:1.2 --observe 60 | --scenario tools/harness-scenarios/by35/<scenario>.json} --output <external-run.json>; handle-mechanics 0 and keyboard handling off for every run. Runs of stargzfp and stargzrb used ROM archives with SHA-256 48b4fa75d949d2d8ebaf1df5cf112a46306897c505132e4fbd1bead987d1ad89 and 5092a41c0adf54ab117e21794c42068c8487c6228f8b743d8087d7d7eef874c5. Each set_switch or pulse is a host stimulus, never a ROM observation; the display values are the harness's seven-segment words for player 1 (display 0) read as digits.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+    },
+    "game": "stargzr",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48,
+        64
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "coin chute 1 (public 1)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "gameplay: coin chute 1 (public 1)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "credit button (public 6)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "gameplay: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "ball leaves the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "gameplay: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "10",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                63
+              ],
+              "snapshot_label": "public 15 right slingshot"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "gameplay: public 15 right slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "20",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                63
+              ],
+              "snapshot_label": "public 16 left slingshot"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "gameplay: public 16 left slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1020",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "public 12 left thumper"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "gameplay: public 12 left thumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "2020",
+              "segments": [
+                0,
+                0,
+                0,
+                219,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "public 13 right thumper"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "gameplay: public 13 right thumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "3020",
+              "segments": [
+                0,
+                0,
+                0,
+                207,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "public 14 center thumper"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "gameplay: public 14 center thumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "4020",
+              "segments": [
+                0,
+                0,
+                0,
+                230,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 22 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 22 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "5020",
+              "segments": [
+                0,
+                0,
+                0,
+                237,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 23 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 23 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12020",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 24 down completes"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 24 down completes",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12020",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 22 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 22 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12020",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 23 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 23 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "13020",
+              "segments": [
+                0,
+                0,
+                6,
+                207,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "lower-left 22-24: 24 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: lower-left 22-24: 24 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "14020",
+              "segments": [
+                0,
+                0,
+                6,
+                230,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 25 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 25 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "15020",
+              "segments": [
+                0,
+                0,
+                6,
+                237,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 26 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 26 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "85020",
+              "segments": [
+                0,
+                0,
+                127,
+                237,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 27 down completes"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 27 down completes",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "125020",
+              "segments": [
+                0,
+                6,
+                91,
+                237,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 25 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 25 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "127020",
+              "segments": [
+                0,
+                6,
+                91,
+                135,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 26 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 26 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "127020",
+              "segments": [
+                0,
+                6,
+                91,
+                135,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "upper-left 25-27: 27 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "gameplay: upper-left 25-27: 27 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "128020",
+              "segments": [
+                0,
+                6,
+                91,
+                255,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 28 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 28 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "139020",
+              "segments": [
+                0,
+                6,
+                79,
+                239,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 29 down"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 29 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "147020",
+              "segments": [
+                0,
+                6,
+                102,
+                135,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 30 down completes"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 30 down completes",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "149020",
+              "segments": [
+                0,
+                6,
+                102,
+                239,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 28 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 28 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "149020",
+              "segments": [
+                0,
+                6,
+                102,
+                239,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 29 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 29 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "149020",
+              "segments": [
+                0,
+                6,
+                102,
+                239,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "right 28-30: 30 reset up"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "gameplay: right 28-30: 30 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "168020",
+              "segments": [
+                0,
+                6,
+                125,
+                255,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "outhole drain: public 33 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "gameplay: outhole drain: public 33 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "190020",
+              "segments": [
+                0,
+                6,
+                111,
+                191,
+                63,
+                91,
+                63
+              ],
+              "snapshot_label": "outhole hold closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "gameplay: outhole hold closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "coin chute 1 (public 1)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "zodiac: coin chute 1 (public 1)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "credit button (public 6)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "zodiac: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "ball leaves the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "zodiac: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1000",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 10"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 10",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "2000",
+              "segments": [
+                0,
+                0,
+                0,
+                219,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 11"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 11",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "3000",
+              "segments": [
+                0,
+                0,
+                0,
+                207,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 17"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 17",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "4000",
+              "segments": [
+                0,
+                0,
+                0,
+                230,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 18"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 18",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "5000",
+              "segments": [
+                0,
+                0,
+                0,
+                237,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 19"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 19",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "6000",
+              "segments": [
+                0,
+                0,
+                0,
+                253,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 20"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 20",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "7000",
+              "segments": [
+                0,
+                0,
+                0,
+                135,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 21"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 21",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "8000",
+              "segments": [
+                0,
+                0,
+                0,
+                255,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 31"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 31",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "9000",
+              "segments": [
+                0,
+                0,
+                0,
+                239,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 32"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 32",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "10000",
+              "segments": [
+                0,
+                0,
+                6,
+                191,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 38"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 38",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "11000",
+              "segments": [
+                0,
+                0,
+                6,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 39"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 39",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12000",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "zodiac standup public 40"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "zodiac: zodiac standup public 40",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12200",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                91,
+                63,
+                63
+              ],
+              "snapshot_label": "public 4"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "zodiac: public 4",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12400",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                102,
+                63,
+                63
+              ],
+              "snapshot_label": "public 5"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "zodiac: public 5",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12600",
+              "segments": [
+                0,
+                0,
+                6,
+                219,
+                125,
+                63,
+                63
+              ],
+              "snapshot_label": "public 9"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "zodiac: public 9",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "17600",
+              "segments": [
+                0,
+                0,
+                6,
+                135,
+                125,
+                63,
+                63
+              ],
+              "snapshot_label": "public 34"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "zodiac: public 34",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "22600",
+              "segments": [
+                0,
+                0,
+                91,
+                219,
+                125,
+                63,
+                63
+              ],
+              "snapshot_label": "public 35"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "zodiac: public 35",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "24600",
+              "segments": [
+                0,
+                0,
+                91,
+                230,
+                125,
+                63,
+                63
+              ],
+              "snapshot_label": "public 36"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "zodiac: public 36",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "28600",
+              "segments": [
+                0,
+                0,
+                91,
+                255,
+                125,
+                63,
+                63
+              ],
+              "snapshot_label": "public 37"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "zodiac: public 37",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "attract: right flipper button 82"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "flippers: attract: right flipper button 82",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "attract: left flipper button 84"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "flippers: attract: left flipper button 84",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "coin chute 1 (public 1)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "flippers: coin chute 1 (public 1)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            12,
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "credit button (public 6)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "flippers: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "ball leaves the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "flippers: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "in play: right flipper button 82"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "flippers: in play: right flipper button 82",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "in play: left flipper button 84"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "flippers: in play: left flipper button 84",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "in play: upper-right 81"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "flippers: in play: upper-right 81",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "in play: upper-left 83"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            83
+          ],
+          "input_address": 83,
+          "input_kind": "switch",
+          "label": "flippers: in play: upper-left 83",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            4,
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "ball drains to the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "flippers: ball drains to the outhole",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "after drain: right flipper button 82"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "flippers: after drain: right flipper button 82",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            3,
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "after drain: left flipper button 84"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "flippers: after drain: left flipper button 84",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "coin chute 1 (public 1)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "tilt: coin chute 1 (public 1)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "credit button (public 6)"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "tilt: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "ball leaves the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "tilt: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "00",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                63
+              ],
+              "snapshot_label": "in play: right flipper button 82 before the tilt"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: in play: right flipper button 82 before the tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1000",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "in play: center thumper bumper 14 before the tilt"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "tilt: in play: center thumper bumper 14 before the tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1000",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "tilt switch 7 closed in play"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "tilt: tilt switch 7 closed in play",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1000",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "after the tilt: right flipper button 82"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: after the tilt: right flipper button 82",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "after the tilt: center thumper bumper 14"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "tilt: after the tilt: center thumper bumper 14",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "1000",
+              "segments": [
+                0,
+                0,
+                0,
+                134,
+                63,
+                63,
+                63
+              ],
+              "snapshot_label": "tilted ball drains to the outhole"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "tilt: tilted ball drains to the outhole",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            7,
+            18,
+            19
+          ],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "next ball: right flipper button 82"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: next ball: right flipper button 82",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3,
+            4,
+            7,
+            12,
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "01",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                6
+              ],
+              "snapshot_label": "public 1 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "switch test: public 1 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "01",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                6
+              ],
+              "snapshot_label": "public 1 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "switch test: public 1 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "02",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                91
+              ],
+              "snapshot_label": "public 2 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "switch test: public 2 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 2 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "switch test: public 2 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "03",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                79
+              ],
+              "snapshot_label": "public 3 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "switch test: public 3 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "3",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                79
+              ],
+              "snapshot_label": "public 3 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "switch test: public 3 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "04",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                102
+              ],
+              "snapshot_label": "public 4 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "switch test: public 4 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 4 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "switch test: public 4 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "05",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                109
+              ],
+              "snapshot_label": "public 5 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "switch test: public 5 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 5 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "switch test: public 5 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "06",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                125
+              ],
+              "snapshot_label": "public 6 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "switch test: public 6 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 6 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "switch test: public 6 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "07",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                7
+              ],
+              "snapshot_label": "public 7 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "switch test: public 7 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "07",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                7
+              ],
+              "snapshot_label": "public 7 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "switch test: public 7 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "08",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                127
+              ],
+              "snapshot_label": "public 8 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "switch test: public 8 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 8 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "switch test: public 8 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "09",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                111
+              ],
+              "snapshot_label": "public 9 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "switch test: public 9 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "09",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                63,
+                111
+              ],
+              "snapshot_label": "public 9 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            9
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "switch test: public 9 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "10",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                63
+              ],
+              "snapshot_label": "public 10 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "switch test: public 10 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 10 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "switch test: public 10 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "11",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                6
+              ],
+              "snapshot_label": "public 11 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "switch test: public 11 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "11",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                6
+              ],
+              "snapshot_label": "public 11 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            11
+          ],
+          "input_address": 11,
+          "input_kind": "switch",
+          "label": "switch test: public 11 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "12",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                91
+              ],
+              "snapshot_label": "public 12 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "switch test: public 12 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 12 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            12
+          ],
+          "input_address": 12,
+          "input_kind": "switch",
+          "label": "switch test: public 12 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "13",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                79
+              ],
+              "snapshot_label": "public 13 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "switch test: public 13 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "13",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                79
+              ],
+              "snapshot_label": "public 13 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            13
+          ],
+          "input_address": 13,
+          "input_kind": "switch",
+          "label": "switch test: public 13 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "14",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                102
+              ],
+              "snapshot_label": "public 14 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "switch test: public 14 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 14 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            14
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "switch test: public 14 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "15",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                109
+              ],
+              "snapshot_label": "public 15 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "switch test: public 15 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "15",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                109
+              ],
+              "snapshot_label": "public 15 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "switch test: public 15 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "16",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                125
+              ],
+              "snapshot_label": "public 16 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "switch test: public 16 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 16 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "switch test: public 16 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "17",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                7
+              ],
+              "snapshot_label": "public 17 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "switch test: public 17 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "17",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                7
+              ],
+              "snapshot_label": "public 17 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "switch test: public 17 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "18",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                127
+              ],
+              "snapshot_label": "public 18 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "switch test: public 18 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 18 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "switch test: public 18 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "19",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                111
+              ],
+              "snapshot_label": "public 19 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "switch test: public 19 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "19",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                6,
+                111
+              ],
+              "snapshot_label": "public 19 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "switch test: public 19 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "20",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                63
+              ],
+              "snapshot_label": "public 20 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "switch test: public 20 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 20 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "switch test: public 20 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "21",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                6
+              ],
+              "snapshot_label": "public 21 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "switch test: public 21 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "21",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                6
+              ],
+              "snapshot_label": "public 21 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            21
+          ],
+          "input_address": 21,
+          "input_kind": "switch",
+          "label": "switch test: public 21 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "22",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                91
+              ],
+              "snapshot_label": "public 22 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "switch test: public 22 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 22 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "switch test: public 22 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "23",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                79
+              ],
+              "snapshot_label": "public 23 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "switch test: public 23 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "23",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                79
+              ],
+              "snapshot_label": "public 23 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "switch test: public 23 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "24",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                102
+              ],
+              "snapshot_label": "public 24 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "switch test: public 24 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 24 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "switch test: public 24 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "25",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                109
+              ],
+              "snapshot_label": "public 25 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "switch test: public 25 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "25",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                109
+              ],
+              "snapshot_label": "public 25 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "switch test: public 25 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "26",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                125
+              ],
+              "snapshot_label": "public 26 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "switch test: public 26 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 26 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "switch test: public 26 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "27",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                7
+              ],
+              "snapshot_label": "public 27 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "switch test: public 27 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "27",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                7
+              ],
+              "snapshot_label": "public 27 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "switch test: public 27 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "28",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                127
+              ],
+              "snapshot_label": "public 28 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "switch test: public 28 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 28 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "switch test: public 28 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "29",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                111
+              ],
+              "snapshot_label": "public 29 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "switch test: public 29 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "29",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                91,
+                111
+              ],
+              "snapshot_label": "public 29 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "switch test: public 29 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "30",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                63
+              ],
+              "snapshot_label": "public 30 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "switch test: public 30 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 30 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "switch test: public 30 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "31",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                6
+              ],
+              "snapshot_label": "public 31 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "switch test: public 31 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "31",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                6
+              ],
+              "snapshot_label": "public 31 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "switch test: public 31 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "32",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                91
+              ],
+              "snapshot_label": "public 32 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "switch test: public 32 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 32 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "switch test: public 32 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "33",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                79
+              ],
+              "snapshot_label": "public 33 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "switch test: public 33 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "33",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                79
+              ],
+              "snapshot_label": "public 33 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "switch test: public 33 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "34",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                102
+              ],
+              "snapshot_label": "public 34 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "switch test: public 34 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 34 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "switch test: public 34 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "35",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                109
+              ],
+              "snapshot_label": "public 35 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "switch test: public 35 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "35",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                109
+              ],
+              "snapshot_label": "public 35 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "switch test: public 35 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "36",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                125
+              ],
+              "snapshot_label": "public 36 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "switch test: public 36 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 36 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "switch test: public 36 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "37",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                7
+              ],
+              "snapshot_label": "public 37 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "switch test: public 37 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 37 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "switch test: public 37 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "38",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                127
+              ],
+              "snapshot_label": "public 38 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "switch test: public 38 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 38 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "switch test: public 38 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "39",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                79,
+                111
+              ],
+              "snapshot_label": "public 39 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "switch test: public 39 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 39 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "switch test: public 39 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "40",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                102,
+                63
+              ],
+              "snapshot_label": "public 40 closed"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "switch test: public 40 closed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_responses": [
+            {
+              "decoded_segment_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "display_index": 0,
+              "interpreted_text": "",
+              "segments": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "snapshot_label": "public 40 open"
+            }
+          ],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "switch test: public 40 open",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 2,
+        "10": 12,
+        "11": 14,
+        "12": 13,
+        "13": 9,
+        "14": 10,
+        "15": 19,
+        "16": 15,
+        "17": 17,
+        "18": 20,
+        "19": 18,
+        "2": 1,
+        "3": 6,
+        "4": 7,
+        "5": 3,
+        "6": 4,
+        "7": 5,
+        "8": 8,
+        "9": 11
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "runs": {
+        "idle-in-play-stargzr": {
+          "note": "No input after the ball leaves the outhole. The value-lamp sweep over the eight spinner-and-bank lamps ran 7, 23, 39, 55, 8, 24, 40, 56 in that order (verified from the lamp events), and lamps 31 and 47 changed state at the same moments as lamps 9 and 41 (31-9: 16 changes, 47-41: 33 changes)."
+        },
+        "solenoid-test-stargzr": {
+          "note": "Paired with the number the ROM shows on player 1's display 0.25 s after each pulse, in test order 1 to 19: 1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18. The display is multiplexed, so the pairing reads the stable value at 0.25 s after the output turns on.",
+          "ordered_solenoid_on_sequence": [
+            2,
+            1,
+            6,
+            7,
+            3,
+            4,
+            5,
+            8,
+            11,
+            12,
+            14,
+            13,
+            9,
+            10,
+            19,
+            15,
+            17,
+            20,
+            18
+          ]
+        },
+        "switch-test-stargzr": {
+          "note": "Self-test pressed five times to reach the switch test; closing each of public matrix switches 1 to 40 in turn made the ROM display that same number (verified for every address from the run's snapshots), and the ball/match display showed 0 (the flashing 0 of 'all switches open') at the end of some releases."
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20
+      ],
+      "switch_to_lamp": {
+        "10": 1,
+        "11": 17,
+        "17": 33,
+        "18": 49,
+        "19": 2,
+        "20": 18,
+        "21": 34,
+        "31": 50,
+        "32": 3,
+        "38": 19,
+        "39": 35,
+        "40": 51
+      }
+    },
+    "raw_runs": [
+      {
+        "name": "burn-in-one-pulse-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/burn-in-one-pulse/stargzr/run.json",
+        "self_test_pulses": 1,
+        "sha256": "45d66599afb8a8b7aadba0b5d5e0b0e718865bb8f0331cca2eab986fa3c133df",
+        "snapshot_count": 3
+      },
+      {
+        "name": "burn-in-one-pulse-stargzfp",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/burn-in-one-pulse/stargzfp/run.json",
+        "self_test_pulses": 1,
+        "sha256": "2e79c78719b163ad30170871a67690fefc79875196a121250142669d1daa545d",
+        "snapshot_count": 3
+      },
+      {
+        "name": "burn-in-one-pulse-stargzrb",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/burn-in-one-pulse/stargzrb/run.json",
+        "self_test_pulses": 1,
+        "sha256": "97f7400028aa2aee5fd50e7fddc2a2ff9fff22e9b3960abd23da0d5eb9be3d8b",
+        "snapshot_count": 3
+      },
+      {
+        "name": "solenoid-test-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/solenoid-test/stargzr/run.json",
+        "self_test_pulses": 4,
+        "sha256": "3d0c18bef0eeba9c0be7819d5caab15bc341c204a7e3a031f6b342416bf4e564",
+        "snapshot_count": 6
+      },
+      {
+        "action_count": 87,
+        "name": "switch-test-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/switch-test/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-switch-test.json",
+        "scenario_sha256": "dc848d6e02fbef3b4845fb54a6e7495c67e4a48179e268004c8d212712acdc3b",
+        "self_test_pulses": 5,
+        "sha256": "ef55762349e5b6a3991d9eef07167fe927d40be3cf2141a9cc1a04ae39725895",
+        "snapshot_count": 88,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "action_count": 32,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "gameplay-coils-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/gameplay-coils/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-gameplay-coils.json",
+        "scenario_sha256": "30517ef4e14b84c7aa701855f0362738b1e2ad397a45144747b756a907d933cb",
+        "self_test_pulses": 0,
+        "sha256": "afdc8ee62f956cc5eb981bdb99efb7d7d0a680bf679b903545df27c901f575e5",
+        "snapshot_count": 33,
+        "watch_switches": [
+          1,
+          6,
+          12,
+          13,
+          14,
+          15,
+          16,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          33
+        ]
+      },
+      {
+        "action_count": 25,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "zodiac-lamps-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/zodiac-lamps/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-zodiac-lamps.json",
+        "scenario_sha256": "b9d780456a088c35213cfa33810aa4bf427fa850330964cdbcb472b090bd931d",
+        "self_test_pulses": 0,
+        "sha256": "b98a243aefef5eaa061cbd35b83512e46f8c573f3524b4cb4ecd24ba1649e9c9",
+        "snapshot_count": 26,
+        "watch_switches": [
+          1,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11,
+          17,
+          18,
+          19,
+          20,
+          21,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "action_count": 5,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "idle-in-play-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/idle-in-play/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-idle-in-play.json",
+        "scenario_sha256": "01099ff21af42be5f55e40ed1e92b1934155978fe1c99c4a51f6d20da4ddfd77",
+        "self_test_pulses": 0,
+        "sha256": "b064b83aec366c2647c05b60b6a04c7abfcf96769b9c8bd2b7c55edf3103c8b1",
+        "snapshot_count": 6,
+        "watch_switches": [
+          1,
+          6,
+          33
+        ]
+      },
+      {
+        "action_count": 13,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "flippers-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/flippers/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-flippers.json",
+        "scenario_sha256": "84872cdb2c61335f5a1d1f6d487b60b0a8953e23295944e77d43fe03a940f739",
+        "self_test_pulses": 0,
+        "sha256": "48be00e237f39746d63497cfb3f408f9f1dae50326b09b37b4378457903e9e29",
+        "snapshot_count": 14,
+        "watch_switches": [
+          1,
+          6,
+          33,
+          81,
+          82,
+          83,
+          84
+        ]
+      },
+      {
+        "action_count": 11,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "tilt-stargzr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/star-gazer-1980/harness/tilt/stargzr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/stargzr-tilt.json",
+        "scenario_sha256": "e1c524440688693386ece64bfc22c24851189aa602b87936e2fc0e7b2b650301",
+        "self_test_pulses": 0,
+        "sha256": "ed71db3e00a4159a7a8c68936e91d449cb9b9e64ce737dd702d0f386dd492d95",
+        "snapshot_count": 12,
+        "watch_switches": [
+          1,
+          6,
+          7,
+          14,
+          33,
+          82
+        ]
+      }
+    ],
+    "rom_archive_sha256": "6ff8f643dd0cbfef6088d0b275c3923aca421c5766d0a4f69d753627184869f8"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Gameplay runs also published the generic flipper states 45 and 47 beside 46 and 48; they are outside the controller profile's address rules and are not listed. The runs were produced under runtime-evidence/star-gazer-1980/runs and moved unchanged to this directory, so the work_dir field inside each run records the original location.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: the SHA-256 recorded in manifest.sha256 beside manifest.json, built by tools/build_external_evidence_manifest.py, which lists every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sorted by path, serialised as compact canonical JSON (separators=(',',':'), sort_keys=True, ensure_ascii=False) plus a newline, encoded UTF-8. At capture time the tree held 62 files totalling 7481939 bytes. Individual run hashes are in runtime.raw_runs[].sha256.",
+    "path": "external:pinmame-review-artifacts/star-gazer-1980/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "284453ecbff8dcaea7802a935ff19a57d9e0af4050e8dd4fe53b7339758f1a4d"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

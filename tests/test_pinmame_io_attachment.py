@@ -19,7 +19,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.dataeast": 13,
 	"pinmame.p2k": 1,
 	"pinmame.sam": 6,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
-	"pinmame.stern-mpu200": 23,
+	"pinmame.stern-mpu200": 22,
 	# Black Knight 2000 (curated 2026-10-01) now declares its platform from the curated definition.
 	"pinmame.system-11": 23,
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources.

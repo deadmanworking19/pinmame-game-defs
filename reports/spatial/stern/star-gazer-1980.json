@@ -1,0 +1,159 @@
+{
+  "callout_check": {
+    "checked": 42,
+    "excluded": {
+      "switch.left-slingshot.sensor": "the factory switch drawing prints no number at the left slingshot",
+      "switch.libra-stand-up-target.sensor": "the switch is in an open conflict about which of the two arch targets it is; its placement is not promoted by this check",
+      "switch.scorpio-stand-up-target.sensor": "the switch is in an open conflict about which of the two arch targets it is; its placement is not promoted by this check"
+    },
+    "limit": 0.07,
+    "pages": {
+      "pdf-19": {
+        "image_sha256": "5fc2d5ba723c0bd1e0081e29fd14b86d9c0421749d3521c31966f38a1ec358fe",
+        "locator": "Stern_1980_Star_Gazer_Manual.pdf PDF 19, printed 18: switch location drawing"
+      },
+      "pdf-21": {
+        "image_sha256": "97339dfafcb56c3128b796a63793636752f73524ea3d6fee412ae54e07f7f662",
+        "locator": "Stern_1980_Star_Gazer_Manual.pdf PDF 21, printed 20: solenoid location drawing"
+      }
+    },
+    "validated": 35
+  },
+  "coordinate_convention": {
+    "space": "playfield",
+    "x": "0=left, 1=right in player view",
+    "y": "0=rear/backglass end, 1=apron end in player view"
+  },
+  "coverage": {
+    "missing": [
+      "spatial_placement",
+      "unresolved_conflicts"
+    ],
+    "status": "partial"
+  },
+  "definition_sha256": "dc11664ef5b0e45605298c6580cd3d89c3b9b37f7fde19a7d97a7d7debfc2849",
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "stern.star-gazer.1980",
+  "not_applicable_counts": {
+    "cabinet_or_service": 18,
+    "dip_switch": 32,
+    "unused": 10
+  },
+  "open_conflicts": [
+    "conflict.stand-up-switches-19-20-order"
+  ],
+  "placement_status_counts": {
+    "observed": 47,
+    "validated": 57
+  },
+  "projection_disclosures": [
+    {
+      "class": "hidden assembly projected onto the bank's middle drop target (sw26, sw29, sw23)",
+      "devices": [
+        "device.upper-left-drop-bank-reset",
+        "device.right-drop-bank-reset",
+        "device.left-drop-bank-reset"
+      ]
+    },
+    {
+      "class": "placed on the table's Drain kicker, the outhole hole, not on the BallRelease kicker the script binds switch 33 to",
+      "devices": [
+        "switch.outhole",
+        "device.outhole-kicker"
+      ]
+    },
+    {
+      "class": "one SCR drives a playfield insert and a backglass lamp; only the playfield bulb is placed",
+      "devices": [
+        "lamp.shoot-again"
+      ]
+    },
+    {
+      "class": "one lamp number lights a bulb in each lower lane; both lights are placements",
+      "devices": [
+        "lamp.star-roll-over-bottom",
+        "lamp.left-3-from-top-star-roll-over",
+        "lamp.left-b-3-star-roll-over",
+        "lamp.left-right-b-4-star-roll-over"
+      ]
+    }
+  ],
+  "promotion_decision": "Not promotable. Lamp circuits 31 and 47 are fitted and wired but no retained source places them, and the order of the two upper-right arch stand-ups (switches 19 and 20) is an open conflict between the factory pages and the ROM and table. Seven checked placements and five unchecked ones (the left slingshot switch, the two end-of-stroke contacts and the two arch stand-ups) stay observed.",
+  "source_hashes": {
+    "callout_seed_sha256": "d856f44b08c12affb393402c66c57ffdda38a3b7cdeb34066946c6c001a75521",
+    "extraction_manifest_sha256": "0d5764e06bd013668c6d43ed552125533be59396e2915b812755de4c2bcb43ec",
+    "manual_sha256": "0cd28e0b807c9674727a1888c90d0c95697939c4db95a98cdace3a6738ccf8f8",
+    "schematic_sha256": "d99a94939a23cf00455eb19eb33f0019e62de1db0b6324c0082d0926c330109b",
+    "spatial_seed_sha256": "23d4d828649e00ef67981c800d832ec2dd3ce8d18d76f0deb61128de92651dfa",
+    "vpx_table_sha256": "b15a49d6902164ae27b946b2f67d1c5682f92bd382288f2c94e2641045128085"
+  },
+  "transformation": "x = raw_x / 952.941, y = raw_y / 1976.471 (playfield left=0 top=0), rounded to six places by extract_spatial_candidates; objects frozen in tools/seeds/stern/star-gazer-1980-spatial.json",
+  "unplaced_physical_devices": [
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-b-1-lamp",
+      "reason": "no retained source places this used device"
+    },
+    {
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-b-3-star-roll-lamp",
+      "reason": "no retained source places this used device"
+    }
+  ],
+  "unvalidated_placements": [
+    "device.left-drop-bank-reset.effect",
+    "device.left-flipper.effect",
+    "device.left-slingshot.effect",
+    "device.outhole-kicker.effect",
+    "device.right-drop-bank-reset.effect",
+    "device.right-flipper.effect",
+    "lamp.bonus-10k.emitter-1",
+    "lamp.bonus-11k.emitter-1",
+    "lamp.bonus-12-000.emitter-1",
+    "lamp.bonus-12k.emitter-1",
+    "lamp.bonus-1k.emitter-1",
+    "lamp.bonus-24-000.emitter-1",
+    "lamp.bonus-2k.emitter-1",
+    "lamp.bonus-3k.emitter-1",
+    "lamp.bonus-4k.emitter-1",
+    "lamp.bonus-5k.emitter-1",
+    "lamp.bonus-6k.emitter-1",
+    "lamp.bonus-7k.emitter-1",
+    "lamp.bonus-8k.emitter-1",
+    "lamp.bonus-9k.emitter-1",
+    "lamp.bonus-multiplier-1x.emitter-1",
+    "lamp.bonus-multiplier-2x.emitter-1",
+    "lamp.bonus-multiplier-3x.emitter-1",
+    "lamp.bonus-multiplier-4x.emitter-1",
+    "lamp.left-3-from-top-star-roll-over.emitter-1",
+    "lamp.left-3-from-top-star-roll-over.emitter-2",
+    "lamp.left-b-3-star-roll-over.emitter-1",
+    "lamp.left-b-3-star-roll-over.emitter-2",
+    "lamp.left-outlane-lite.emitter-1",
+    "lamp.left-right-b-4-star-roll-over.emitter-1",
+    "lamp.left-right-b-4-star-roll-over.emitter-2",
+    "lamp.left-spinner-lite.emitter-1",
+    "lamp.right-outlane-lite.emitter-1",
+    "lamp.right-spinner-lite.emitter-1",
+    "lamp.shoot-again.emitter-1",
+    "lamp.star-roll-over-bottom.emitter-1",
+    "lamp.star-roll-over-bottom.emitter-2",
+    "lamp.zodiac-target-1000.emitter-1",
+    "lamp.zodiac-target-2000.emitter-1",
+    "lamp.zodiac-target-3000.emitter-1",
+    "lamp.zodiac-target-4000.emitter-1",
+    "switch.left-flipper-end-of-stroke.sensor",
+    "switch.left-slingshot.sensor",
+    "switch.libra-stand-up-target.sensor",
+    "switch.outhole.sensor",
+    "switch.right-flipper-end-of-stroke.sensor",
+    "switch.scorpio-stand-up-target.sensor"
+  ],
+  "version": 1
+}

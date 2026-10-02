@@ -1,0 +1,95 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute 1 (public 1)",
+      "settle_s": 1.5,
+      "switch": 1,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: right flipper button 82 before the tilt",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: center thumper bumper 14 before the tilt",
+      "settle_s": 1.5,
+      "switch": 14,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "tilt switch 7 closed in play",
+      "settle_s": 3.0,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "after the tilt: right flipper button 82",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "after the tilt: center thumper bumper 14",
+      "settle_s": 1.5,
+      "switch": 14,
+      "type": "pulse"
+    },
+    {
+      "label": "tilted ball drains to the outhole",
+      "settle_s": 25.0,
+      "state": 1,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "next ball: right flipper button 82",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "stargzr",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 33
+    }
+  ],
+  "notes": "Tilt probe: start a game, flip and bump once, close the tilt switch, then flip and bump again and drain the ball to see when the flippers come back.",
+  "version": 1,
+  "watch_switches": [
+    7,
+    14,
+    33,
+    82
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 300,
+      "label": "attract: right flipper button 82",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "attract: left flipper button 84",
+      "settle_s": 1.0,
+      "switch": 84,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute 1 (public 1)",
+      "settle_s": 1.5,
+      "switch": 1,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: right flipper button 82",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: left flipper button 84",
+      "settle_s": 1.0,
+      "switch": 84,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: upper-right 81",
+      "settle_s": 1.0,
+      "switch": 81,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "in play: upper-left 83",
+      "settle_s": 1.0,
+      "switch": 83,
+      "type": "pulse"
+    },
+    {
+      "label": "ball drains to the outhole",
+      "settle_s": 25.0,
+      "state": 1,
+      "switch": 33,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "after drain: right flipper button 82",
+      "settle_s": 1.0,
+      "switch": 82,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "after drain: left flipper button 84",
+      "settle_s": 1.0,
+      "switch": 84,
+      "type": "pulse"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "stargzr",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 33
+    }
+  ],
+  "notes": "Flipper probe: lower flipper buttons in attract mode, in play, and after a drain; the outhole drain is held for 25 s to see the serve.",
+  "version": 1,
+  "watch_switches": [
+    33,
+    81,
+    82,
+    83,
+    84
+  ]
+}

@@ -591,7 +591,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 585 | 1980 | Nine Ball | Stern | partial | 19% |
 | 586 | 1980 | Quicksilver | Stern | partial | 19% |
 | 587 | 1980 | Seawitch | Stern | partial | 19% |
-| 588 | 1980 | Star Gazer | Stern | partial | 19% |
+| 588 | 1980 | Star Gazer | Stern | partial | 88% |
 | 589 | 1980 | Drakor | Taito | partial | 6% |
 | 590 | 1980 | Meteor (Taito) | Taito | partial | 6% |
 | 591 | 1980 | Oba-Oba | Taito | partial | 6% |

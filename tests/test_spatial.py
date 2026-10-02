@@ -522,7 +522,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Beat the Clock's gameplay run settles its three legacy switch conflicts, removing one more.
 		# Spectrum's gameplay run settles both of its legacy switch conflicts, removing one more.
 		# Jurassic Park's curation adds one: the bank 1R bulb-count disagreement between its schematic, drawing and ROM.
-		self.assertEqual(37, report["missing_requirement_counts"]["unresolved_conflicts"])
+		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

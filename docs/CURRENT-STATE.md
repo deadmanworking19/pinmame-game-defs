@@ -63,6 +63,7 @@ entry in the commit that finishes it.
   `normally_closed: true` on switch inputs 112 and 114 (archive L452 lists the ones known then).
   Find them by scanning `machines/` for that pair, and correct each through its curator and seed.
 - **Harness-reachable conflicts still open.** A 2026-10-01 pass triaged every conflict whose resolution path names a harness run and ran the probes the authorized ROM library allowed; it settled fourteen machines and left these: Elvira's flip-up roles (complete both targets and collect the award), 24's suitcase stepper order (re-derive the S.A.M. key navigation to the Suitcase Motor Test), the STTNG ship-mode mission run, and the ROM half of Judge Dredd's L-1 switch fitment, Scared Stiff's auxiliary lamp columns and Flash Gordon's lamp 100. The full triage is in the working root's `review-artifacts/harness-conflicts-2026-10-01/triage.md`.
+- **Ali lamps 24 and 25.** `curate_ali.py` pairs public lamps 24 and 25 with transistors Q24 and Q25. Star Gazer's ROM proves the pair is crossed on the same LDA-100 board (public 24 reaches Q25 and the 3000 value lamp, public 25 reaches Q24). Ali leaves both unused, so nothing there tested it; compare its chart rows and the lamp-driver schematic's J1 pins 5 and 6 before swapping them through its curator.
 - **Out-of-range clamps.** `curate_cirqus_voltaire.py` clamps sole objects that lie 6-8 % beyond the
   right rail. Check each against the out-of-range lesson in `docs/SPATIAL.md`; the record is
   `author_ready`.

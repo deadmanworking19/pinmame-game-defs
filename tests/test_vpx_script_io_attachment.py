@@ -19,9 +19,9 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 # Kingpin and Firepower were curated on 2026-09-25 and Black Knight 2000 on 2026-10-01, so none carries this pass's candidates any more.
-EXPECTED_ATTACHED_MACHINES = 277
-EXPECTED_ATTACHED_DEVICES = 12971
-EXPECTED_ATTACHED_SCRIPTS = 348
+EXPECTED_ATTACHED_MACHINES = 276
+EXPECTED_ATTACHED_DEVICES = 12935
+EXPECTED_ATTACHED_SCRIPTS = 346
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
