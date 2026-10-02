@@ -1,0 +1,278 @@
+{
+  "driver_ids": [
+    "dw_l2"
+  ],
+  "extractor": {
+    "id": "tools/doctor_who_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.doctor-who.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dw_l2 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/dw-mini-playfield-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The scenario starts T.14 MINI-PLAYFIELD TEST, confirms its warning and holds both flipper buttons (112 and 114), which the test requires before it moves the mini-playfield. The test's own sub-tests are timing-dependent: a rerun may stop after its second fault before it reaches the later sub-tests, so this run, not the scenario, is the evidence. With built-in mechanisms disabled no feedback switch answers the motor, so the ROM reports faults; the run shows which outputs it drives, not the mini-playfield's travel or timing.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "dw_l2",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Dr. Who / 20006 REV. L-2",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 230,
+          "pixel_sha256": "79eae41c46ecfee83f6d05d69b2b15d8b82386ed58b13d50a197831b8520ae77"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CW MidL / T.14 RUNNING / MINIPLYFLD.FAULTS 00 / PRESS BOTH FLIPPERS",
+          "label": "T.14 sub-test 1, frame 1",
+          "nonzero_pixels": 887,
+          "pixel_sha256": "184bed106b54a461a3650c1909c5c58ac43faa12a11c218860ec408c774b2771"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "CW MidL / T.14 RUNNING / MINIPLYFLD.FAULTS 01 / ERROR",
+          "label": "T.14 sub-test 1 with both flipper buttons held, second 1",
+          "nonzero_pixels": 766,
+          "pixel_sha256": "84c4d3fbd678b39e982942be2ecd5acb02fca01d93cce716c5a8ed788cd094df"
+        },
+        {
+          "active_solenoid_addresses": [
+            27,
+            28,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "CCW Down / T.14 RUNNING / MINIPLYFLD.FAULTS 01 / MOVING",
+          "label": "T.14 sub-test 1 with both flipper buttons held, second 4",
+          "nonzero_pixels": 789,
+          "pixel_sha256": "5096913accff4fc43b0f41dee69ef2fe518a961b89936b59932975d6ccd117ec"
+        },
+        {
+          "active_solenoid_addresses": [
+            4,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L Kicker / T.14 RUNNING / MINIPLYFLD.FAULTS 01 / KICKING",
+          "label": "T.14 sub-test 2, frame 1",
+          "nonzero_pixels": 772,
+          "pixel_sha256": "c83d01890a720597bc18ae948b580fcea39b593820d0bd06aa705134d256b220"
+        },
+        {
+          "active_solenoid_addresses": [
+            5,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "R Kicker / T.14 RUNNING / MINIPLYFLD.FAULTS 01 / KICKING",
+          "label": "T.14 sub-test 2 with both flipper buttons held, second 1",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "e883d95e9ca6232419e7d6063cbd30bd99013c42aab2b9654fbb1a4c83d63d6b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Flasher / T.14 RUNNING / MINIPLYFLD.FAULTS 01",
+          "label": "T.14 sub-test 3, frame 1",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "950a974ab03f6477dd9cf22ee0207c51eb3abdfc5a26b8322bb697b556128fe5"
+        },
+        {
+          "active_solenoid_addresses": [
+            27,
+            28,
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "CCW MidR / T.14 RUNNING / MINIPLYFLD.FAULTS 01 / MOVING",
+          "label": "T.14 sub-test 3 with both flipper buttons held, second 1",
+          "nonzero_pixels": 796,
+          "pixel_sha256": "f8955f4270e647e24bc65052513fe838c78122d613922bae4f64d52d4bd941a8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            46,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "CCW Up / T.14 STOPPED / MINIPLYFLD.FAULTS 02 / ERROR",
+          "label": "T.14 sub-test 4 with both flipper buttons held, second 2",
+          "nonzero_pixels": 755,
+          "pixel_sha256": "558d8286c9cd21eea50d030f886045e263aef5c4de6a307acde73aea33c10d9a"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112,
+            114
+          ],
+          "input_address": 114,
+          "input_kind": "switch",
+          "label": "T.14 sub-test 1 with both flipper buttons held: the ROM moves the mini-playfield clockwise with 28 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112,
+            114
+          ],
+          "input_address": 114,
+          "input_kind": "switch",
+          "label": "After its error (no feedback switch answers with built-in mechanisms off) T.14 moves counter-clockwise with 27 and 28 together",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27,
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.14 L Kicker sub-test pulses 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            112,
+            114
+          ],
+          "input_address": 114,
+          "input_kind": "switch",
+          "label": "T.14 R Kicker sub-test pulses 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.14 Flasher sub-test pulses 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        25,
+        27,
+        28,
+        31,
+        35,
+        36,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 130,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dw-l2-mini-playfield-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/doctor-who-1992/harness/mini-playfield-test-exploratory/dw_l2/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/dw-mini-playfield-test.json",
+        "scenario_sha256": "97ca9fa8977145f60374fb56f9e6884641f825fdbc1e782e8a7077bafced7d80",
+        "self_test_pulses": 0,
+        "sha256": "1ce4b17febdc03f8391bb90199767e20cc7e9f577f8542bdafc7b6ca72a510e4",
+        "snapshot_count": 131,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          32,
+          112,
+          114
+        ]
+      }
+    ],
+    "rom_archive_sha256": "9e0a1e1257ca595f06f1367d7f96773ceb12d20be43061a9630216a8f0c5a162"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dw_l2/manifest.json SHA-256 36f518926293c99f99631490ac687e6331a964f862622c6f19f218c4c1b0a60f.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/doctor-who-1992/harness/mini-playfield-test-exploratory/dw_l2",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "1ce4b17febdc03f8391bb90199767e20cc7e9f577f8542bdafc7b6ca72a510e4"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

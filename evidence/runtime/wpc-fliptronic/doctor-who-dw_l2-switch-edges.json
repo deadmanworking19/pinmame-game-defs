@@ -1,0 +1,904 @@
+{
+  "driver_ids": [
+    "dw_l2"
+  ],
+  "extractor": {
+    "id": "tools/doctor_who_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.doctor-who.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game dw_l2 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/dw-switch-edges-optos.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled. Each set_switch holds one public level for 2 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels. The ROM names a switch on its top line while it reads the switch as active; the ten optos PinMAME's mask inverts are each driven 1, 0, 1.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "dw_l2",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Dr. Who / 20006 REV. L-2",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 230,
+          "pixel_sha256": "79eae41c46ecfee83f6d05d69b2b15d8b82386ed58b13d50a197831b8520ae77"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1",
+          "label": "T.1 started, every watched switch at public 0",
+          "nonzero_pixels": 474,
+          "pixel_sha256": "d21b620f0e256d509f6da508cb045c5658591683c3be9ad165d5e30f369f935d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "<E>S-C-A-P-E / T.1 LAST SW 41 / WHT-BRN GRN-YEL",
+          "label": "41 -> 1",
+          "nonzero_pixels": 756,
+          "pixel_sha256": "5fdfa995f7749be7450de631168a0f32dddb7a622bf3108a75a34f88266c4e28"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL",
+          "label": "41 -> 0",
+          "nonzero_pixels": 788,
+          "pixel_sha256": "b56ac194d2a29e6adf42a304d36e3d57c97541a91989ad11027ebdceba2f6db5"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. Lites Lock / T.1 LAST SW 78 / WHT-GRY GRN-VIO",
+          "label": "78 -> 1",
+          "nonzero_pixels": 769,
+          "pixel_sha256": "120bc15aa66329851a2927270c0aab5ce3dbcb99b9492a0f8be8aff928a4d611"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 78 / WHT-GRY GRN-VIO",
+          "label": "78 -> 0",
+          "nonzero_pixels": 782,
+          "pixel_sha256": "98c01335d92cae26fc6da2cf9ed5375e9609be16e7217b2b74e477a3942cd87d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Trap Door. Down / T.1 LAST SW 57 / WHT-VIO GRN-BLK",
+          "label": "57 -> 1",
+          "nonzero_pixels": 776,
+          "pixel_sha256": "3ba39a494e438fa5d4395a2852d74c2aabf4165f5a88044bdc4cd26be99528ef"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 57 / WHT-VIO GRN-BLK",
+          "label": "57 -> 0",
+          "nonzero_pixels": 783,
+          "pixel_sha256": "340f3c7cc7aa71354134b015fe4798d4c0b2e144ceb18f1a81acd6a639853f15"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Hangon Score / T.1 LAST SW 47 / WHT-VIO GRN-YEL",
+          "label": "47 -> 1",
+          "nonzero_pixels": 755,
+          "pixel_sha256": "96a58cf63ed1589e89af2682fe283a5fd6d266e3a12e300efba52ac22fd4450b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 47 / WHT-VIO GRN-YEL",
+          "label": "47 -> 0",
+          "nonzero_pixels": 774,
+          "pixel_sha256": "c8e7390adae462f30207eaddeca58847fa1456b35342c06002b5e8c42914ea26"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Playfield Glass / T.1 LAST SW 82 / WHT-RED GRN-GRY",
+          "label": "82 -> 1",
+          "nonzero_pixels": 815,
+          "pixel_sha256": "15f5a2bed9afbc108bff5e296a021d2b7716b9add8ca01ecff4afaeadcdcdb17"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 82 / WHT-RED GRN-GRY",
+          "label": "82 -> 0",
+          "nonzero_pixels": 800,
+          "pixel_sha256": "59c686b014dec7dbae50dfc47ed27f2d6de929564fc4f1b737d2c8ae4aeaf841"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. Door. Left / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "68 -> 1",
+          "nonzero_pixels": 776,
+          "pixel_sha256": "dcf53b46021414349872e08981ded5963f630d8e22d8a997e70871f666dca0a6"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 68 / WHT-GRY GRN-BLU",
+          "label": "68 -> 0",
+          "nonzero_pixels": 792,
+          "pixel_sha256": "0ba79d4393b6f863d4cf9bc88aa59bfba9dfecd34c812de42bf8227d394ff943"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. Door. Right / T.1 LAST SW 88 / WHT-GRY GRN-GRY",
+          "label": "88 -> 1",
+          "nonzero_pixels": 795,
+          "pixel_sha256": "810a59c43b5cac87126379a72acf74a218e1a3a748950b4bf1b2f9cfbdea76f2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 88 / WHT-GRY GRN-GRY",
+          "label": "88 -> 0",
+          "nonzero_pixels": 792,
+          "pixel_sha256": "54fce0e9bf283006e08bf5bdc8b00d4af6113d81cd833abcb3aef597cf300585"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. Door. Mid / T.1 LAST SW 38 / WHT-GRY GRN-ORN",
+          "label": "38 -> 1",
+          "nonzero_pixels": 777,
+          "pixel_sha256": "9dbb57fef046b3d97f0749cd2d3d80fd8cf7080bef457d99aa605172cdb605f9"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 38 / WHT-GRY GRN-ORN",
+          "label": "38 -> 0",
+          "nonzero_pixels": 796,
+          "pixel_sha256": "717257963d11fce9b9b3f6bd083d62268930f92887d8103f4dd50e0820b6e210"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R FLIPPER EOS / T.1 LAST SW F1 / BLK-GRN BLK",
+          "label": "112 -> 1",
+          "nonzero_pixels": 750,
+          "pixel_sha256": "777a608296909fa55d42efce03c87f61754a75365c9151448ee57c051aa22a18"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN BLK",
+          "label": "112 -> 0",
+          "nonzero_pixels": 733,
+          "pixel_sha256": "046830afb630b3df960997e1a7936964faa7fde88a72fd57c344935b66e42b50"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L FLIPPER EOS / T.1 LAST SW F3 / BLK-BLU BLK",
+          "label": "114 -> 1",
+          "nonzero_pixels": 742,
+          "pixel_sha256": "2aacddcc74b9f6ff0013a30efb1ef17923704b17630f9bcd56c4c1b81e429196"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU BLK",
+          "label": "114 -> 0",
+          "nonzero_pixels": 732,
+          "pixel_sha256": "10d82dfde7e5a8feceecfa88ce3b62b9a8ec06102f37dbd21c31f478b9e971cc"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Opto Popper / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "31 -> 1",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "aa686b0f09a7d479ae64b741e287f2f78961bb451c17532890000b189b22aaed"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "31 -> 0",
+          "nonzero_pixels": 800,
+          "pixel_sha256": "9bf2f14c06ff0648d92c48a5e986358b010eb8b2b90655fa7c45977a10d2486d"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Opto Popper / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "31 -> 1 again",
+          "nonzero_pixels": 754,
+          "pixel_sha256": "aa686b0f09a7d479ae64b741e287f2f78961bb451c17532890000b189b22aaed"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Opto Popper / T.1 LAST SW 31 / WHT-BRN GRN-ORN",
+          "label": "32 -> 1",
+          "nonzero_pixels": 747,
+          "pixel_sha256": "4416cb41add0264d98a2d5ce583243be416fcf336579c502c771188237abd55c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. Home Opto / T.1 LAST SW 32 / WHT-RED GRN-ORN",
+          "label": "32 -> 0",
+          "nonzero_pixels": 785,
+          "pixel_sha256": "a6442599a7ba074dacde1f74a33fa8ec5f4c416cf8346a4a86138cd93b34a023"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 32 / WHT-RED GRN-ORN",
+          "label": "32 -> 1 again",
+          "nonzero_pixels": 790,
+          "pixel_sha256": "bd561f6a4bc6a54289f8cbc65993161c36ca9993b70edc62a72639f43f6c1443"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Enter T.Ramp Opto / T.1 LAST SW 33 / WHT-ORN GRN-ORN",
+          "label": "33 -> 1",
+          "nonzero_pixels": 798,
+          "pixel_sha256": "43b8db68a97d3e686dce2cb477de1f468323842b389228ac30ca0a5bc4e774f8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 33 / WHT-ORN GRN-ORN",
+          "label": "33 -> 0",
+          "nonzero_pixels": 786,
+          "pixel_sha256": "f4997fa5fe6ba682c0333f33de60b3e3b620ecc7e50b07159019cd891813be82"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Enter T.Ramp Opto / T.1 LAST SW 33 / WHT-ORN GRN-ORN",
+          "label": "33 -> 1 again",
+          "nonzero_pixels": 798,
+          "pixel_sha256": "43b8db68a97d3e686dce2cb477de1f468323842b389228ac30ca0a5bc4e774f8"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank R1 / T.1 LAST SW 71 / WHT-BRN GRN-VIO",
+          "label": "71 -> 1",
+          "nonzero_pixels": 792,
+          "pixel_sha256": "b2f335d6596fd4140e3cad4ef8d82449f1dc87e38121f58d9e60aea3d09e0fb9"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 71 / WHT-BRN GRN-VIO",
+          "label": "71 -> 0",
+          "nonzero_pixels": 765,
+          "pixel_sha256": "0cddcd2f0684463a0840231feb3c1e0bf1af7cd40ededb8c505e0e5fe8c4bd8b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank R1 / T.1 LAST SW 71 / WHT-BRN GRN-VIO",
+          "label": "71 -> 1 again",
+          "nonzero_pixels": 792,
+          "pixel_sha256": "b2f335d6596fd4140e3cad4ef8d82449f1dc87e38121f58d9e60aea3d09e0fb9"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank R2 / T.1 LAST SW 72 / WHT-RED GRN-VIO",
+          "label": "72 -> 1",
+          "nonzero_pixels": 794,
+          "pixel_sha256": "64290d30ab429a63eebc06dbf449d729b8070d3000439b8b4c3cd35af9faec2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 72 / WHT-RED GRN-VIO",
+          "label": "72 -> 0",
+          "nonzero_pixels": 762,
+          "pixel_sha256": "8d41722329dfd3d7be40f645309a051930ee0a1b8823ae5ed2932d49179d9aa7"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank R2 / T.1 LAST SW 72 / WHT-RED GRN-VIO",
+          "label": "72 -> 1 again",
+          "nonzero_pixels": 794,
+          "pixel_sha256": "64290d30ab429a63eebc06dbf449d729b8070d3000439b8b4c3cd35af9faec2c"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank M / T.1 LAST SW 73 / WHT-ORN GRN-VIO",
+          "label": "73 -> 1",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "fe2372332065136e60bd432a19f981537faa2c4ab3aabbf3683aca9da1a412ba"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 73 / WHT-ORN GRN-VIO",
+          "label": "73 -> 0",
+          "nonzero_pixels": 751,
+          "pixel_sha256": "c3fb6f7427ac1b5a76e36e9b94ebe258ebc6d5a7c8164c97e9c1db9797b0059b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank M / T.1 LAST SW 73 / WHT-ORN GRN-VIO",
+          "label": "73 -> 1 again",
+          "nonzero_pixels": 768,
+          "pixel_sha256": "fe2372332065136e60bd432a19f981537faa2c4ab3aabbf3683aca9da1a412ba"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank L2 / T.1 LAST SW 74 / WHT-YEL GRN-VIO",
+          "label": "74 -> 1",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "96bf56feef4442e3b40523e11351ceda9f1280276ede05a2d11e1dd0d3a342dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 74 / WHT-YEL GRN-VIO",
+          "label": "74 -> 0",
+          "nonzero_pixels": 732,
+          "pixel_sha256": "09f416dda810b278da7cac4caef2b5dd84cbb5b17d78106bb9ba7c1f1d4e8783"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank L2 / T.1 LAST SW 74 / WHT-YEL GRN-VIO",
+          "label": "74 -> 1 again",
+          "nonzero_pixels": 757,
+          "pixel_sha256": "96bf56feef4442e3b40523e11351ceda9f1280276ede05a2d11e1dd0d3a342dd"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank L1 / T.1 LAST SW 75 / WHT-GRN GRN-VIO",
+          "label": "75 -> 1",
+          "nonzero_pixels": 760,
+          "pixel_sha256": "ac90ad0dbd2bef09e4c0157fe43e66f2b8998a4a88f0f1cb028b13d6aaba81d2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 75 / WHT-GRN GRN-VIO",
+          "label": "75 -> 0",
+          "nonzero_pixels": 740,
+          "pixel_sha256": "8ece101ffd730e982cd2aba3caa66cebb3363ebbe633d0dc444db9dd0139ecf2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini.Opto.5Bank L1 / T.1 LAST SW 75 / WHT-GRN GRN-VIO",
+          "label": "75 -> 1 again",
+          "nonzero_pixels": 760,
+          "pixel_sha256": "ac90ad0dbd2bef09e4c0157fe43e66f2b8998a4a88f0f1cb028b13d6aaba81d2"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. L. OptoEject / T.1 LAST SW 76 / WHT-BLU GRN-VIO",
+          "label": "76 -> 1",
+          "nonzero_pixels": 725,
+          "pixel_sha256": "bd4a42a6c8b7ac66ae09e3c9968d51d4b12a40497e55a3d2260bf194065f7a5e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 76 / WHT-BLU GRN-VIO",
+          "label": "76 -> 0",
+          "nonzero_pixels": 726,
+          "pixel_sha256": "c8afb4ebbc038fb83f0314bce32cac64dc861060fb43cb918422b43d17a1894e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. L. OptoEject / T.1 LAST SW 76 / WHT-BLU GRN-VIO",
+          "label": "76 -> 1 again",
+          "nonzero_pixels": 725,
+          "pixel_sha256": "bd4a42a6c8b7ac66ae09e3c9968d51d4b12a40497e55a3d2260bf194065f7a5e"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. R. OptoEject / T.1 LAST SW 77 / WHT-VIO GRN-VIO",
+          "label": "77 -> 1",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "1b3db9e48c2827e66032509bfed32a85e9113235785c6236c2bdab8c41338a5b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 77 / WHT-VIO GRN-VIO",
+          "label": "77 -> 0",
+          "nonzero_pixels": 709,
+          "pixel_sha256": "d8229c214020b8638371fc83a50353716a254170cf4be38797dbd81ed8a6f6e0"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Mini. R. OptoEject / T.1 LAST SW 77 / WHT-VIO GRN-VIO",
+          "label": "77 -> 1 again",
+          "nonzero_pixels": 715,
+          "pixel_sha256": "1b3db9e48c2827e66032509bfed32a85e9113235785c6236c2bdab8c41338a5b"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "<E>S-C-A-P-E / T.1 LAST SW 41 / WHT-BRN GRN-YEL",
+          "label": "41 -> 1 again",
+          "nonzero_pixels": 686,
+          "pixel_sha256": "731dbc25485bf37101a47fb2f854070b8dc696ef1cfecfd56390bea3cb575b71"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 41 / WHT-BRN GRN-YEL",
+          "label": "41 -> 0 again",
+          "nonzero_pixels": 718,
+          "pixel_sha256": "7e3edc0a2e7e2622e1ea492cb0c5549fbd9b7aff3d725db98e59a655b4ce7927"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            41
+          ],
+          "input_address": 41,
+          "input_kind": "switch",
+          "label": "T.1 names '<E>S-C-A-P-E' while host public 41 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            78
+          ],
+          "input_address": 78,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. Lites Lock' while host public 78 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            57
+          ],
+          "input_address": 57,
+          "input_kind": "switch",
+          "label": "T.1 names 'Trap Door. Down' while host public 57 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            47
+          ],
+          "input_address": 47,
+          "input_kind": "switch",
+          "label": "T.1 names 'Hangon Score' while host public 47 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "T.1 names 'Playfield Glass' while host public 82 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            68
+          ],
+          "input_address": 68,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. Door. Left' while host public 68 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            88
+          ],
+          "input_address": 88,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. Door. Right' while host public 88 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. Door. Mid' while host public 38 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            112
+          ],
+          "input_address": 112,
+          "input_kind": "switch",
+          "label": "T.1 with host public 112 set to 1: the ROM fires the flipper and names F1 (R FLIPPER EOS); at 0 the name clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            48
+          ],
+          "host_stimulus_switch_addresses": [
+            114
+          ],
+          "input_address": 114,
+          "input_kind": "switch",
+          "label": "T.1 with host public 114 set to 1: the ROM fires the flipper and names F3 (L FLIPPER EOS); at 0 the name clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "T.1 names 'Opto Popper' while host public 31 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. Home Opto' while host public 32 is 0 and clears it at 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "T.1 names 'Enter T.Ramp Opto' while host public 33 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            71
+          ],
+          "input_address": 71,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini.Opto.5Bank R1' while host public 71 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            72
+          ],
+          "input_address": 72,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini.Opto.5Bank R2' while host public 72 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            73
+          ],
+          "input_address": 73,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini.Opto.5Bank M' while host public 73 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            74
+          ],
+          "input_address": 74,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini.Opto.5Bank L2' while host public 74 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            75
+          ],
+          "input_address": 75,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini.Opto.5Bank L1' while host public 75 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            76
+          ],
+          "input_address": 76,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. L. OptoEject' while host public 76 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            77
+          ],
+          "input_address": 77,
+          "input_kind": "switch",
+          "label": "T.1 names 'Mini. R. OptoEject' while host public 77 is 1 and clears it at 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        25,
+        31,
+        35,
+        36,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 63,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "dw-l2-switch-edges",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/doctor-who-1992/harness/switch-edges/dw_l2/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/dw-switch-edges-optos.json",
+        "scenario_sha256": "3155b3387c8347a19c1d5b4afe0ed95744f9a7c7db62188f1b386fdd110195c0",
+        "self_test_pulses": 0,
+        "sha256": "999f3c6e7d5e3f361ba03d112a6d970670ce4a169306dcf3f033283e229304b8",
+        "snapshot_count": 64,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          31,
+          32,
+          33,
+          38,
+          41,
+          47,
+          57,
+          68,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          82,
+          88,
+          112,
+          114
+        ]
+      }
+    ],
+    "rom_archive_sha256": "9e0a1e1257ca595f06f1367d7f96773ceb12d20be43061a9630216a8f0c5a162"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest dw_l2/manifest.json SHA-256 5409a6c470b9563a7249eb0d14eaff6cf1fe2bded2eba24855f8e7e52286e2d1.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/doctor-who-1992/harness/switch-edges/dw_l2",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "999f3c6e7d5e3f361ba03d112a6d970670ce4a169306dcf3f033283e229304b8"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

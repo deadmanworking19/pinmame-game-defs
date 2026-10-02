@@ -71,7 +71,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 120 | Family Guy | `stern.family-guy.2007` | 88% |
 | 121 | Star Gazer | `stern.star-gazer.1980` | 88% |
 | 122 | Quicksilver | `stern.quicksilver.1980` | 19% |
-| 123 | Doctor Who | `bally.doctor-who.1992` | 19% |
+| 123 | Doctor Who | `bally.doctor-who.1992` | 94% |
 | 124 | Swords of Fury | `williams.swords-of-fury.1988` | 19% |
 | 125 | Pinbot | `williams.pinbot.1986` | 19% |
 | 126 | Terminator 2: Judgment Day | `williams.terminator-2-judgment-day.1991` | 88% |
