@@ -73,6 +73,24 @@ test('memory maps carry the ODbL/DbCL licences and mirror both texts', () => {
 	}
 })
 
+test('the pinned commit is mirrored, never a converted or edited working tree', () => {
+	const { root, checkout, output, commit } = fixture()
+	try {
+		// What a Windows checkout with core.autocrlf=true holds, plus a local edit
+		// and a deleted file: none of it is in the commit.
+		writeFileSync(join(checkout, 'LICENSE-ODbL.md'), '## ODC Open Database License (ODbL)\r\n')
+		writeFileSync(join(checkout, 'maps', 'wpc', 'tz.map.json'), '{"edited": true}')
+		rmSync(join(checkout, 'LICENSE-DbCL'))
+		const data = loadPinballMemoryMaps(checkout, commit, new Set(['tz_92']), output)
+		assert.equal(data?.maps[0]?.sections.join(), 'game_state')
+		assert.equal(readFileSync(join(output, 'memory-maps', 'LICENSE-ODbL.md'), 'utf8'), '## ODC Open Database License (ODbL)\n')
+		assert.equal(readFileSync(join(output, 'memory-maps', 'LICENSE-DbCL'), 'utf8'), 'Database Contents License (DbCL)\n')
+		assert.ok(!readFileSync(join(output, 'memory-maps', 'maps', 'wpc', 'tz.map.json'), 'utf8').includes('edited'))
+	} finally {
+		rmSync(root, { recursive: true, force: true })
+	}
+})
+
 for (const missing of ['LICENSE-ODbL.md', 'LICENSE-DbCL']) {
 	test(`a checkout without ${missing} fails closed`, () => {
 		const { root, checkout, output, commit } = fixture({ omit: [missing] })
