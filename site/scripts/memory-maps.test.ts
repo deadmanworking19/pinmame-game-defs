@@ -33,10 +33,21 @@ function fixture(options: { omit?: string[], mapLicense?: string | null } = {}) 
 		mkdirSync(dirname(join(checkout, path)), { recursive: true })
 		writeFileSync(join(checkout, path), body)
 	}
-	const git = (...args: string[]) => execFileSync('git', ['-C', checkout, ...args], { encoding: 'utf8' }).trim()
+	// Inherited GIT_* variables (a test run from a hook exports GIT_DIR and
+	// GIT_INDEX_FILE) would point these commands at the outer repository, and
+	// user or system config could add hooks or rewrite line endings.
+	const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.startsWith('GIT_')))
+	Object.assign(env, { GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: join(root, 'empty.gitconfig') })
+	writeFileSync(env.GIT_CONFIG_GLOBAL!, '')
+	const git = (...args: string[]) => execFileSync('git', [
+		'-C', checkout,
+		'-c', 'core.autocrlf=false', '-c', 'commit.gpgsign=false',
+		'-c', 'user.name=fixture', '-c', 'user.email=fixture@example.invalid',
+		...args,
+	], { encoding: 'utf8', env }).trim()
 	git('init', '-q')
-	git('-c', 'core.autocrlf=false', 'add', '-A')
-	git('-c', 'user.name=fixture', '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-q', '-m', 'fixture')
+	git('add', '-A')
+	git('commit', '-q', '--no-verify', '-m', 'fixture')
 	return { root, checkout, output: join(root, 'out'), commit: git('rev-parse', 'HEAD') }
 }
 
@@ -67,13 +78,18 @@ for (const missing of ['LICENSE-ODbL.md', 'LICENSE-DbCL']) {
 		const { root, checkout, output, commit } = fixture({ omit: [missing] })
 		try {
 			assert.throws(() => loadPinballMemoryMaps(checkout, commit, new Set(['tz_92']), output), new RegExp(missing.replace('.', '\\.')))
+			assert.ok(!existsSync(join(output, 'memory-maps', 'maps')), 'no map is mirrored without both licence texts')
 		} finally {
 			rmSync(root, { recursive: true, force: true })
 		}
 	})
 }
 
-for (const [label, mapLicense] of [['an LGPL', 'GNU Lesser General Public License v3.0'], ['no', null]] as const) {
+for (const [label, mapLicense] of [
+	['an LGPL', 'GNU Lesser General Public License v3.0'],
+	['a mixed', `LGPL-3.0 or ${ODBL}`],
+	['no', null],
+] as const) {
 	test(`a map declaring ${label} licence fails closed`, () => {
 		const { root, checkout, output, commit } = fixture({ mapLicense })
 		try {
