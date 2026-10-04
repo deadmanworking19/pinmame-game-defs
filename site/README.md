@@ -239,7 +239,7 @@ so the four cannot drift. `NUXT_PUBLIC_SITE_URL` (default `https://games.visualp
 | --- | --- |
 | `data/index.json` | Catalog v2: every machine with its kind, status, platform, root drivers, complete ROM-set list and detail URL |
 | `data/machines/<slug>.json` | Full resolved definition — drivers joined, related machines, note as HTML |
-| `data/drivers.json` | Every PinMAME ROM set mapped to its machine |
+| `data/drivers.json` | Every PinMAME ROM set mapped to its machine; a set's `memoryMap` join comes from the Pinball Memory Maps index (ODbL-1.0, provenance in `data/memory-maps/source.json`) |
 | `data/platforms.json` | Controller profiles and address ranges |
 | `data/search.json` | Compact search index |
 | `data/memory-maps/index.json` | Optional build-time index joining exact PinMAME driver IDs to pinned external memory maps |
