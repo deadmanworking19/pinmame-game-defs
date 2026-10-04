@@ -1316,7 +1316,7 @@ The index contract is \`format: "pinmame-machine-reference-index"\` with \`versi
 - Provenance is per assertion (\`unknown\`, \`candidate\`, \`observed\`, \`validated\`, \`conflicted\`).
   Observing an output toggle is not the same as knowing what it drives.
 - Addresses are the values PinMAME's public API reports, not hardware pins.
-${memoryMaps ? `- \`externalData.pinballMemoryMaps\` is LGPL-licensed supplemental data from a pinned external source. Its presence does not change machine-definition coverage and does not prove that sibling ROMs share a memory layout.\n` : ''}
+${memoryMaps ? `- \`externalData.pinballMemoryMaps\` is supplemental data from a pinned external source, licensed under the ODbL 1.0 with its contents under the DbCL 1.0 (see \`licenseFiles\`). Its presence does not change machine-definition coverage and does not prove that sibling ROMs share a memory layout.\n` : ''}
 - The canonical source is https://github.com/vpinball/pinmame-game-defs — this site is a rendering.
 `,
 )

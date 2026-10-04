@@ -28,7 +28,16 @@ const families = readIndex<{ slug: string }[]>('families.json')
 const site = readIndex<{ summary: { machine_count: number, driver_count: number } }>('site.json')
 const memoryMapIndexPath = join(projectRoot, 'public', 'data', 'memory-maps', 'index.json')
 const memoryMaps = existsSync(memoryMapIndexPath)
-	? JSON.parse(readFileSync(memoryMapIndexPath, 'utf8')) as { maps?: { dataUrl?: string, platformDataUrl?: string }[] }
+	? JSON.parse(readFileSync(memoryMapIndexPath, 'utf8')) as {
+		source?: {
+			license?: string
+			contentsLicense?: string
+			licenseFiles?: { license?: string, sourcePath?: string, dataUrl?: string }[]
+			attribution?: string
+		}
+		maps?: { dataUrl?: string, platformDataUrl?: string }[]
+		drivers?: { machineSlug?: string }[]
+	}
 	: null
 
 const expected = [
@@ -100,7 +109,8 @@ for (const asset of [
 		? [
 			'data/memory-maps/index.json',
 			'data/memory-maps/source.json',
-			'data/memory-maps/LICENSE',
+			'data/memory-maps/LICENSE-ODbL.md',
+			'data/memory-maps/LICENSE-DbCL',
 			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.dataUrl).filter((path): path is string => typeof path === 'string'),
 			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.platformDataUrl).filter((path): path is string => typeof path === 'string'),
 		]
@@ -209,6 +219,32 @@ if (existsSync(publicIndexPath) && existsSync(publicDriversPath)) {
 		}
 	} catch (error) {
 		invalid.push(`Catalog v2 validation failed: ${error instanceof Error ? error.message : String(error)}`)
+	}
+}
+
+// The memory maps are mirrored under upstream's ODbL/DbCL terms, which ask for
+// the licence and attribution wherever the content is shown.
+if (memoryMaps) {
+	const source = memoryMaps.source ?? {}
+	const attribution = 'This program makes use of content from the Pinball Memory Maps project.'
+	if (source.license !== 'ODbL-1.0') invalid.push(`Memory maps declare licence ${source.license}, expected ODbL-1.0.`)
+	if (source.contentsLicense !== 'DbCL-1.0') invalid.push(`Memory maps declare contents licence ${source.contentsLicense}, expected DbCL-1.0.`)
+	if (source.attribution !== attribution) invalid.push('Memory maps omit the upstream attribution sentence.')
+	const files = new Map((source.licenseFiles ?? []).map(file => [file.license, file]))
+	for (const [license, path] of [['ODbL-1.0', 'LICENSE-ODbL.md'], ['DbCL-1.0', 'LICENSE-DbCL']] as const) {
+		const file = files.get(license)
+		if (file?.sourcePath !== path || file.dataUrl !== `data/memory-maps/${path}`) invalid.push(`Memory maps do not list ${path} as the ${license} text.`)
+	}
+	for (const slug of new Set((memoryMaps.drivers ?? []).map(driver => driver.machineSlug))) {
+		const pagePath = join(outRoot, 'machines', String(slug), 'index.html')
+		if (!slug || !existsSync(pagePath)) continue
+		const html = readFileSync(pagePath, 'utf8')
+		const section = /<section\b[^>]*\bid="memory-maps"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1]
+		// Stub pages render no memory-map section at all.
+		if (!section) continue
+		if (!section.includes('ODbL-1.0') || !section.includes('DbCL-1.0') || !section.includes(attribution)) {
+			invalid.push(`Machine ${slug} shows memory maps without their ODbL/DbCL licences and attribution.`)
+		}
 	}
 }
 
