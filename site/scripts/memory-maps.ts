@@ -3,7 +3,20 @@ import { copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, realpathS
 import { dirname, join, resolve, sep } from 'node:path'
 
 export const PINBALL_MEMORY_MAPS_REPOSITORY = 'https://github.com/tomlogic/pinball-memory-maps'
-export const PINBALL_MEMORY_MAPS_LICENSE = 'LGPL-3.0-only'
+/**
+ * Since August 2026 upstream licenses the map database under ODbL 1.0 and its
+ * individual contents under DbCL 1.0; its LGPL now covers only `tools/`, which
+ * this build never reads. Both licence texts sit at the upstream root and are
+ * mirrored beside the generated maps.
+ */
+export const PINBALL_MEMORY_MAPS_LICENSE = 'ODbL-1.0'
+export const PINBALL_MEMORY_MAPS_CONTENTS_LICENSE = 'DbCL-1.0'
+const LICENSE_FILES = [
+	{ license: PINBALL_MEMORY_MAPS_LICENSE, sourcePath: 'LICENSE-ODbL.md' },
+	{ license: PINBALL_MEMORY_MAPS_CONTENTS_LICENSE, sourcePath: 'LICENSE-DbCL' },
+] as const
+/** What every copied map must declare in `_metadata.license`. */
+const MAP_LICENSE = /Open Database License \(ODbL\) v1\.0/
 export const PINBALL_MEMORY_MAPS_ATTRIBUTION = 'This program makes use of content from the Pinball Memory Maps project.'
 
 export type MemoryMapSummary = {
@@ -19,10 +32,19 @@ export type MemoryMapSummary = {
 	sections: string[]
 }
 
+export type MemoryMapsLicenseFile = {
+	license: string
+	sourcePath: string
+	sourceUrl: string
+	dataUrl: string
+}
+
 export type MemoryMapsSource = {
 	repository: string
 	commit: string
 	license: string
+	contentsLicense: string
+	licenseFiles: MemoryMapsLicenseFile[]
 	attribution: string
 }
 
@@ -38,6 +60,7 @@ type MemoryMapDocument = {
 	_metadata?: {
 		version?: unknown
 		platform?: unknown
+		license?: unknown
 		roms?: unknown
 	}
 	[key: string]: unknown
@@ -139,6 +162,9 @@ export function loadPinballMemoryMaps(
 			const metadata = requirePlainObject(document._metadata, `${sourcePath}._metadata`)
 			const platform = metadata.platform
 			if (typeof platform !== 'string' || !PLATFORM_ID.test(platform)) throw new Error(`${sourcePath} has an invalid _metadata.platform.`)
+			if (typeof metadata.license !== 'string' || !MAP_LICENSE.test(metadata.license)) {
+				throw new Error(`${sourcePath} does not declare the ODbL v1.0 in _metadata.license: ${String(metadata.license)}`)
+			}
 			const platformSourcePath = `platforms/${platform}.json`
 			const platformPath = resolveFileWithin(root, platformSourcePath, 'platforms/')
 			if (!copiedPlatforms.has(platformSourcePath)) {
@@ -177,14 +203,26 @@ export function loadPinballMemoryMaps(
 		else unmatchedRoms.push(driver)
 	}
 
-	const licensePath = resolveFileWithin(root, 'LICENSE')
-	copyExternalFile(licensePath, generatedOutputRoot, 'memory-maps/LICENSE')
+	// Both texts are required: a checkout missing either is not one this build
+	// knows how to license, so it fails rather than mirroring maps without them.
+	const licenseFiles = LICENSE_FILES.map(({ license, sourcePath }) => {
+		const outputPath = `memory-maps/${sourcePath}`
+		copyExternalFile(resolveFileWithin(root, sourcePath), generatedOutputRoot, outputPath)
+		return {
+			license,
+			sourcePath,
+			sourceUrl: `${PINBALL_MEMORY_MAPS_REPOSITORY}/blob/${commit}/${sourcePath}`,
+			dataUrl: `data/${outputPath}`,
+		}
+	})
 
 	return {
 		source: {
 			repository: PINBALL_MEMORY_MAPS_REPOSITORY,
 			commit,
 			license: PINBALL_MEMORY_MAPS_LICENSE,
+			contentsLicense: PINBALL_MEMORY_MAPS_CONTENTS_LICENSE,
+			licenseFiles,
 			attribution: PINBALL_MEMORY_MAPS_ATTRIBUTION,
 		},
 		maps: [...mapCache.values()].sort((a, b) => a.sourcePath.localeCompare(b.sourcePath)),
