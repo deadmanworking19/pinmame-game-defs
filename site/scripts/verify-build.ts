@@ -265,6 +265,11 @@ if (memoryMaps) {
 		}
 	}
 	if (!panels && memoryMaps.drivers?.length) licenseProblems.push('No machine page renders a memory-map panel, although the build mirrored matched maps.')
+	const llmsPath = join(outRoot, 'llms.txt')
+	const llms = existsSync(llmsPath) ? readFileSync(llmsPath, 'utf8') : ''
+	if (!llms.includes(PINBALL_MEMORY_MAPS_LICENSE) || !llms.includes(PINBALL_MEMORY_MAPS_CONTENTS_LICENSE)) {
+		licenseProblems.push(`llms.txt does not name the memory maps' ${PINBALL_MEMORY_MAPS_LICENSE}/${PINBALL_MEMORY_MAPS_CONTENTS_LICENSE} licences.`)
+	}
 }
 
 if (missing.length || invalid.length || licenseProblems.length) {
