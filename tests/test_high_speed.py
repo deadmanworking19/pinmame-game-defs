@@ -3,8 +3,11 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+
+from scratch_repository import copy_curator_files
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -648,29 +651,34 @@ class HighSpeedCuratorTests(unittest.TestCase):
 	def test_curator_check_mode_refuses_drift(self) -> None:
 		import curate_high_speed as curator
 
-		original = DEFINITION_PATH.read_bytes()
-		try:
-			DEFINITION_PATH.write_bytes(original.replace(b"High Speed", b"Hgih Speed", 1))
+		with tempfile.TemporaryDirectory() as directory:
+			root = copy_curator_files(curator, Path(directory))
+			curator.check(root)
+			definition = root / DEFINITION_PATH.relative_to(ROOT)
+			original = definition.read_bytes()
+			drifted = original.replace(b"High Speed", b"Hgih Speed", 1)
+			self.assertNotEqual(original, drifted)
+			definition.write_bytes(drifted)
 			with self.assertRaises(RuntimeError):
-				curator.check(ROOT)
-		finally:
-			DEFINITION_PATH.write_bytes(original)
-		curator.check(ROOT)
+				curator.check(root)
 
 	def test_curator_refuses_to_overwrite_an_author_ready_artifact(self) -> None:
 		import curate_high_speed as curator
 
 		self.assertFalse(AUTHOR_READY_PATH.exists())
-		AUTHOR_READY_PATH.parent.mkdir(parents=True, exist_ok=True)
-		AUTHOR_READY_PATH.write_text("{}", encoding="utf-8")
-		try:
-			with self.assertRaises(RuntimeError):
-				curator.generate(ROOT)
-			with self.assertRaises(RuntimeError):
-				curator.check(ROOT)
-		finally:
-			AUTHOR_READY_PATH.unlink()
-		curator.check(ROOT)
+		with tempfile.TemporaryDirectory() as directory:
+			root = copy_curator_files(curator, Path(directory))
+			curator.check(root)
+			before = {path: path.read_bytes() for path in root.rglob("*") if path.is_file()}
+			author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
+			author_ready.parent.mkdir(parents=True, exist_ok=True)
+			author_ready.write_text("{}", encoding="utf-8")
+			with self.assertRaisesRegex(RuntimeError, "author-ready"):
+				curator.generate(root)
+			with self.assertRaisesRegex(RuntimeError, "author-ready"):
+				curator.check(root)
+			self.assertEqual(before, {path: path.read_bytes() for path in before})
+			self.assertEqual("{}", author_ready.read_text(encoding="utf-8"))
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:
 		import curate_high_speed as curator

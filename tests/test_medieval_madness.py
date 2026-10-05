@@ -3,8 +3,11 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+
+from scratch_repository import copy_curator_files
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -428,14 +431,16 @@ class MedievalMadnessCuratorTests(unittest.TestCase):
 	def test_curator_check_mode_refuses_drift(self) -> None:
 		import curate_medieval_madness as curator
 
-		original = DEFINITION_PATH.read_bytes()
-		try:
-			DEFINITION_PATH.write_bytes(original.replace(b"Medieval Madness", b"Medieval Sadness", 1))
+		with tempfile.TemporaryDirectory() as directory:
+			root = copy_curator_files(curator, Path(directory))
+			curator.check(root)
+			definition = root / DEFINITION_PATH.relative_to(ROOT)
+			original = definition.read_bytes()
+			drifted = original.replace(b"Medieval Madness", b"Medieval Sadness", 1)
+			self.assertNotEqual(original, drifted)
+			definition.write_bytes(drifted)
 			with self.assertRaises(RuntimeError):
-				curator.check(ROOT)
-		finally:
-			DEFINITION_PATH.write_bytes(original)
-		curator.check(ROOT)
+				curator.check(root)
 
 	def test_visual_review_cache_is_pinned_and_present_when_the_artifact_root_is_configured(self) -> None:
 		import curate_medieval_madness as curator

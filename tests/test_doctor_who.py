@@ -4,8 +4,12 @@ import hashlib
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from scratch_repository import copy_repository_files
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -277,13 +281,13 @@ class DoctorWhoTests(unittest.TestCase):
 		note = KNOWLEDGE_PATH.read_text(encoding="utf-8")
 		for phrase in ("Time Expander mini-playfield", "is the exception", "Prototype hardware this definition does not declare", "spatial_placement"):
 			self.assertTrue(phrase.casefold() in note.casefold(), phrase)
-		with self.assertRaises(RuntimeError):
-			original = KNOWLEDGE_PATH.read_bytes()
-			try:
-				KNOWLEDGE_PATH.write_bytes(original + b"\n")
+		with tempfile.TemporaryDirectory() as directory:
+			knowledge = copy_repository_files(Path(directory), KNOWLEDGE_PATH) / KNOWLEDGE_PATH.relative_to(ROOT)
+			with patch.object(curator, "KNOWLEDGE_PATH", knowledge):
 				curator.check()
-			finally:
-				KNOWLEDGE_PATH.write_bytes(original)
+				knowledge.write_bytes(knowledge.read_bytes() + b"\n")
+				with self.assertRaisesRegex(RuntimeError, "doctor-who-1992.md"):
+					curator.check()
 
 	def test_compact_runtime_evidence_is_tied_to_its_scenario_and_pinned_binary(self) -> None:
 		for filename, (scenario, _directory) in RUNTIME_FILES.items():

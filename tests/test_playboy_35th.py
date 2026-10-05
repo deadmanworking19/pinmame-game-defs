@@ -8,6 +8,9 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from scratch_repository import copy_repository_files, copy_repository_trees
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +48,17 @@ def sha256(path: Path) -> str:
 
 def bindings(definition: dict[str,object], collection: str, group: str) -> dict[int,dict[str,object]]:
     return {item["binding"]["device"]:item for item in definition[collection] if item["binding"]["group"] == group}
+
+
+def _scratch_root(curator,root: Path) -> Path:
+    """Copy what the curator's generate and check read into root, so no test writes a tracked file.
+
+    check rebuilds the coverage report and curation queue, which read the catalog and every machine
+    record, so those trees come along whole.
+    """
+    copy_repository_trees(root,"catalog","machines","reports")
+    copy_repository_files(root,*[path for path in curator.desired_files() if not (root/path).exists()],curator.MANIFEST_PATH)
+    return root
 
 
 class PlayboyDefinitionTests(unittest.TestCase):
@@ -490,14 +504,14 @@ class PlayboyCuratorTests(unittest.TestCase):
 
     def test_check_refuses_drift_and_crlf_is_folded(self) -> None:
         import curate_playboy_35th as curator
-        original = KNOWLEDGE_PATH.read_bytes()
-        try:
-            KNOWLEDGE_PATH.write_bytes(original+b"drift\n")
-            with self.assertRaises(SystemExit):
+        with tempfile.TemporaryDirectory() as directory:
+            root = _scratch_root(curator,Path(directory))
+            with patch.object(curator,"ROOT",root):
                 curator.check()
-        finally:
-            KNOWLEDGE_PATH.write_bytes(original)
-        curator.check()
+                knowledge = root/KNOWLEDGE_PATH.relative_to(ROOT)
+                knowledge.write_bytes(knowledge.read_bytes()+b"drift\n")
+                with self.assertRaisesRegex(SystemExit,"knowledge/data-east/playboy-35th-anniversary-1989.md"):
+                    curator.check()
         # The system temp directory, not ROOT/"tmp": that path is gitignored (.gitignore line 2),
         # so it exists only on a machine that happens to have created it and is never present in a
         # clean checkout. Pinning the scratch directory inside the repository made this test pass
@@ -510,18 +524,19 @@ class PlayboyCuratorTests(unittest.TestCase):
 
     def test_curator_refuses_an_author_ready_twin(self) -> None:
         import curate_playboy_35th as curator
-        path = ROOT/curator.AUTHOR_READY_PATH
-        self.assertFalse(path.exists())
-        path.parent.mkdir(parents=True,exist_ok=True)
-        path.write_text("{}\n",encoding="utf-8")
-        try:
-            with self.assertRaises(RuntimeError):
-                curator.generate()
-            with self.assertRaises(SystemExit):
-                curator.check()
-        finally:
-            path.unlink()
-        curator.check()
+        self.assertFalse((ROOT/curator.AUTHOR_READY_PATH).exists())
+        with tempfile.TemporaryDirectory() as directory:
+            root = _scratch_root(curator,Path(directory))
+            path = root/curator.AUTHOR_READY_PATH
+            path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_text("{}\n",encoding="utf-8")
+            before = {item:item.read_bytes() for item in root.rglob("*") if item.is_file()}
+            with patch.object(curator,"ROOT",root):
+                with self.assertRaises(RuntimeError):
+                    curator.generate()
+                with self.assertRaisesRegex(SystemExit,curator.AUTHOR_READY_PATH.as_posix()):
+                    curator.check()
+            self.assertEqual(before,{item:item.read_bytes() for item in root.rglob("*") if item.is_file()})
 
 
 @unittest.skipUnless(VPX_EVIDENCE_ROOT,"retained VPX evidence root is not configured")

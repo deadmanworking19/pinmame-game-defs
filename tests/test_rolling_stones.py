@@ -329,20 +329,38 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 		self.assertIsNotNone(spatial_spec)
 		self.assertIsNotNone(spatial_spec.loader)
 		spatial = importlib.util.module_from_spec(spatial_spec)
+		# base.main() promotes the Standard edition too whenever its author-ready record is missing,
+		# which it always is under a scratch root. Load that module privately as well and point it at
+		# the scratch root, or the promotion writes the tracked Standard record and knowledge note.
+		standard_spec = importlib.util.spec_from_file_location("curate_rolling_stones_standard_spatial_lifecycle_test", ROOT / "tools" / "curate_rolling_stones_standard_spatial.py")
+		self.assertIsNotNone(standard_spec)
+		self.assertIsNotNone(standard_spec.loader)
+		standard = importlib.util.module_from_spec(standard_spec)
+
+		def use_scratch_standard(root: Path) -> None:
+			standard.ROOT = root
+			standard.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-standard-2011.json"
+			standard.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-standard-2011.json"
+			standard.KNOWLEDGE_PATH = root / "knowledge/stern/the-rolling-stones-standard-2011.md"
+
 		previous_base = sys.modules.get("curate_rolling_stones")
 		previous_spatial = sys.modules.get("curate_rolling_stones_le_spatial")
+		previous_standard = sys.modules.get("curate_rolling_stones_standard_spatial")
 		src_path = str(ROOT / "src")
 		path_was_present = src_path in sys.path
 		if not path_was_present:
 			sys.path.insert(0, src_path)
 		sys.modules["curate_rolling_stones"] = base
 		sys.modules["curate_rolling_stones_le_spatial"] = spatial
+		sys.modules["curate_rolling_stones_standard_spatial"] = standard
 		try:
 			base_spec.loader.exec_module(base)
 			spatial_spec.loader.exec_module(spatial)
+			standard_spec.loader.exec_module(standard)
 			with tempfile.TemporaryDirectory() as temporary:
 				root = Path(temporary)
 				base.ROOT = root
+				use_scratch_standard(root)
 				spatial.ROOT = root
 				spatial.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
@@ -357,6 +375,7 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 			with tempfile.TemporaryDirectory() as temporary:
 				root = Path(temporary)
 				base.ROOT = root
+				use_scratch_standard(root)
 				spatial.ROOT = root
 				spatial.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
@@ -370,6 +389,7 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 			with tempfile.TemporaryDirectory() as temporary:
 				root = Path(temporary)
 				base.ROOT = root
+				use_scratch_standard(root)
 				le_path = root / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
 				le_path.parent.mkdir(parents=True)
 				le_path.write_text("{\"promoted\":true}\n", encoding="utf-8")
@@ -385,6 +405,10 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 				sys.modules.pop("curate_rolling_stones_le_spatial", None)
 			else:
 				sys.modules["curate_rolling_stones_le_spatial"] = previous_spatial
+			if previous_standard is None:
+				sys.modules.pop("curate_rolling_stones_standard_spatial", None)
+			else:
+				sys.modules["curate_rolling_stones_standard_spatial"] = previous_standard
 			if not path_was_present:
 				sys.path.remove(src_path)
 

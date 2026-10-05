@@ -3,8 +3,12 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from scratch_repository import copy_repository_files
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -462,14 +466,18 @@ class AddamsFamilyCuratorTests(unittest.TestCase):
 	def test_curator_check_mode_refuses_drift(self) -> None:
 		import curate_addams_family as curator
 
-		original = DEFINITION_PATH.read_bytes()
-		try:
-			DEFINITION_PATH.write_bytes(original.replace(b"The Addams Family", b"The Addams Fam1ly", 1))
-			with self.assertRaises(RuntimeError):
-				curator.check(ROOT)
-		finally:
-			DEFINITION_PATH.write_bytes(original)
-		curator.check(ROOT)
+		# This curator's check reads its artifacts through module constants and ignores its root
+		# argument, so the scratch copy is wired in by patching the constant instead.
+		with tempfile.TemporaryDirectory() as directory:
+			definition = copy_repository_files(Path(directory), DEFINITION_PATH) / DEFINITION_PATH.relative_to(ROOT)
+			with patch.object(curator, "DEFINITION_PATH", definition):
+				curator.check()
+				original = definition.read_bytes()
+				drifted = original.replace(b"The Addams Family", b"The Addams Fam1ly", 1)
+				self.assertNotEqual(original, drifted)
+				definition.write_bytes(drifted)
+				with self.assertRaisesRegex(RuntimeError, "out of date"):
+					curator.check()
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:
 		import curate_addams_family as curator
