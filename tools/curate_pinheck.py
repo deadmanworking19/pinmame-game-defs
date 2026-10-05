@@ -896,8 +896,12 @@ def runtime_excerpt(game: str) -> str:
 	rows = "".join(f"| {test} | {run['run_sha256']} | {run['scenario_sha256']} | {run['manifest_sha256']} |\n"
 	               for test, run in runs(game).items())
 	library = {run["library_sha256"] for run in runs(game).values()}
+	seed = RUNTIME["games"][game]["baseline_state"]
+	start = "an empty state directory" if seed is None else (
+		"a copy of the retained post-update state, session-20261005/baseline-state (canonical manifest SHA-256 "
+		f"{seed['manifest_sha256']}; " + "; ".join(f"{f['path']} {f['sha256']}" for f in seed["files"]) + ")")
 	return (f"# Runtime provenance: {GAMES[game]['name']}\n\nLibPinMAME built from PinMAME {REVISION} (pinmame64.dll SHA-256 "
-	        f"{', '.join(sorted(library))}), ROM set {GAMES[game]['rom']}. Each run started from {'an empty state directory' if game == 'amh' else 'a copy of the retained post-update NVRAM (session-20261005/baseline-state)'} "
+	        f"{', '.join(sorted(library))}), ROM set {GAMES[game]['rom']}. Each run started from {start} "
 	        "and is retained with its scenario, DMD frames, state and a canonical manifest under the working root's "
 	        f"review-artifacts/{GAMES[game]['machine']}/session-20261005/runtime/.\n\n| Test | run.json SHA-256 | scenario SHA-256 | manifest SHA-256 |\n|---|---|---|---|\n" + rows)
 

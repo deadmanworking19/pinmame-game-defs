@@ -40,6 +40,8 @@ GRID_RIGHT = 38
 # Switch Edge grid layout per firmware: x of matrix column 7 (columns step +4 towards column 0), and the x of the
 # cabinet column holding cabinet inputs 0-7 and of the one holding 8-15. Rows step +4 from y=1 everywhere.
 LAYOUTS = {"amh": (1, 37, 33), "dominos": (1, 37, 33), "rzspook": (1, 37, 33), "jetsons": (9, 5, 1)}
+# Games whose runs start from an empty state directory; every other game's runs copy session-20261005/baseline-state.
+EMPTY_STATE = {"amh"}
 
 
 def read_frame(path: Path) -> tuple[int, int, list[tuple[int, ...]]]:
@@ -57,8 +59,13 @@ def read_frame(path: Path) -> tuple[int, int, list[tuple[int, ...]]]:
 		offset = end
 	offset += 1
 	magic, width, height = fields[0], int(fields[1]), int(fields[2])
+	expected_magic = {".pgm": b"P5", ".ppm": b"P6"}.get(path.suffix)
+	if magic != expected_magic or fields[3] != b"255":
+		raise ValueError(f"{path}: not a {path.suffix} frame with maximum value 255")
 	channels = 3 if magic == b"P6" else 1
-	body = data[offset:offset + width * height * channels]
+	body = data[offset:]
+	if len(body) != width * height * channels:
+		raise ValueError(f"{path}: payload is {len(body)} bytes, not {width}x{height}x{channels}")
 	pixels = [tuple(body[i:i + channels]) for i in range(0, len(body), channels)]
 	return width, height, pixels
 
@@ -79,7 +86,10 @@ def frame_of(snapshot: dict[str, Any], run_dir: Path) -> tuple[Path, str]:
 	0-255 (P5), so the P5 body is scaled back by the layout depth before hashing."""
 	display = snapshot["displays"][0]
 	path = run_dir / "dmd" / Path(display["artifact"]).name
-	_width, _height, pixels = read_frame(path)
+	width, height, pixels = read_frame(path)
+	layout = display["layout"]
+	if (width, height) != (layout["width"], layout["height"]):
+		raise ValueError(f"{path}: {width}x{height} frame, but the run recorded a {layout['width']}x{layout['height']} layout")
 	body = bytes(value for pixel in pixels for value in pixel)
 	candidates = [body]
 	if path.suffix == ".pgm":
@@ -149,10 +159,25 @@ def decode_switches(game: str, switch_steps: list[dict[str, Any]]) -> dict[str, 
 	        "mismatches": {key: decoded.get(key) for key, value in expected.items() if decoded.get(key) != value}}
 
 
+def baseline_state(review_root: Path, game: str) -> dict[str, Any] | None:
+	"""The retained post-update NVRAM every run of a flashed game was copied from, verified against its manifest.
+
+	America's Most Haunted programs its PIC32 at every start, so its runs start from an empty state and have no seed."""
+	directory = review_root / GAMES[game][0] / SESSION / "baseline-state"
+	if game in EMPTY_STATE:
+		if directory.exists():
+			raise ValueError(f"{game}: runs start from an empty state, yet {directory} exists")
+		return None
+	digest = check_manifest(directory, game)
+	manifest = json.loads((directory / "manifest.json").read_bytes())
+	return {"manifest_sha256": digest, "files": manifest["files"]}
+
+
 def build(review_root: Path) -> dict[str, Any]:
 	texts = json.loads(TEXTS.read_bytes()) if TEXTS.is_file() else {}
 	result: dict[str, Any] = {"format": "pinheck-runtime-summary", "version": 1, "games": {}}
 	for game, (machine, tests) in GAMES.items():
+		seed = baseline_state(review_root, game)
 		runs = {}
 		for test in tests:
 			run_dir = review_root / machine / SESSION / "runtime" / f"{game}-{test}"
@@ -169,7 +194,7 @@ def build(review_root: Path) -> dict[str, Any]:
 			for label, text in held.items():
 				by_label[label]["held_displayed_text"] = text
 		runs["switch"]["grid"] = decode_switches(game, runs["switch"]["steps"])
-		result["games"][game] = {"machine_id": machine, "runs": runs}
+		result["games"][game] = {"machine_id": machine, "runs": runs, "baseline_state": seed}
 	return result
 
 

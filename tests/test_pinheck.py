@@ -167,14 +167,17 @@ class PinheckDefinitionTests(unittest.TestCase):
 		from build_external_evidence_manifest import write_manifest
 		source = Path(review_root) / GAMES["jetsons"]["machine"] / pinheck_runtime.SESSION / "runtime" / "jetsons-rgb"
 		with tempfile.TemporaryDirectory() as scratch:
-			# "remanifested" alters a summarized frame and rebuilds the manifest, so only the pixel digest can catch it.
-			for damage in ("missing", "altered", "remanifested"):
+			# The remanifested cases rebuild the manifest after the damage, so only the frame checks can catch it.
+			for damage in ("missing", "altered", "remanifested", "transposed header"):
 				run_dir = Path(scratch) / damage
 				shutil.copytree(source, run_dir)
 				pinheck_runtime.summarize(run_dir)
 				frame = next((run_dir / "dmd").glob("*-item-01-display-0.ppm"))
 				if damage == "missing":
 					frame.unlink()
+				elif damage == "transposed header":
+					frame.write_bytes(frame.read_bytes().replace(b"P6\n128 64\n", b"P6\n64 128\n", 1))
+					write_manifest(run_dir, "jetsons")
 				else:
 					data = bytearray(frame.read_bytes())
 					data[-1] ^= 0xFF
@@ -183,6 +186,40 @@ class PinheckDefinitionTests(unittest.TestCase):
 						write_manifest(run_dir, "jetsons")
 				with self.subTest(damage=damage), self.assertRaises(ValueError):
 					pinheck_runtime.summarize(run_dir)
+
+	def test_runtime_summary_pins_and_verifies_the_starting_state(self) -> None:
+		for game in GAMES:
+			seed = RUNTIME["games"][game]["baseline_state"]
+			with self.subTest(game=game):
+				if game == "amh":
+					self.assertIsNone(seed)
+				else:
+					self.assertIn(f"nvram/{game}.nv", [f["path"] for f in seed["files"]])
+					excerpt = (ROOT / CURATOR.excerpt_dir(game) / "runtime-provenance.md").read_text(encoding="utf-8")
+					self.assertIn(seed["manifest_sha256"], excerpt)
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("retained harness runs are not available")
+		import shutil
+		import tempfile
+		import pinheck_runtime
+		machine = GAMES["dominos"]["machine"]
+		source = Path(review_root) / machine / pinheck_runtime.SESSION / "baseline-state"
+		with tempfile.TemporaryDirectory() as scratch:
+			for damage in ("missing", "altered"):
+				root = Path(scratch) / damage
+				seed_dir = root / machine / pinheck_runtime.SESSION / "baseline-state"
+				shutil.copytree(source, seed_dir)
+				self.assertEqual(RUNTIME["games"]["dominos"]["baseline_state"], pinheck_runtime.baseline_state(root, "dominos"))
+				nvram = seed_dir / "nvram" / "dominos.nv"
+				if damage == "missing":
+					nvram.unlink()
+				else:
+					data = bytearray(nvram.read_bytes())
+					data[0] ^= 0xFF
+					nvram.write_bytes(bytes(data))
+				with self.subTest(damage=damage), self.assertRaises(ValueError):
+					pinheck_runtime.baseline_state(root, "dominos")
 
 	def test_scenarios_are_generated(self) -> None:
 		completed = subprocess.run([sys.executable, "-B", str(ROOT / "tools" / "pinheck_harness_scenarios.py"), "--check"],
