@@ -9,8 +9,8 @@ International (2016) and The Jetsons (2017) run on one board and one PinMAME pla
 - tools/pinheck_runtime.json: the compact summary of the retained LibPinMAME service-test and game-start
   runs (tools/pinheck_runtime.py), including the curator's reading of every frame it relies on;
 - the pinned PinMAME source (b7a60eb0) for the controller contract;
-- tools/rz_photo_placements.json: for Rob Zombie's Spookshow International, positions measured on a rectified
-  photograph of a whitewood playfield, with a production photograph mapped onto it to identify each insert and part;
+- tools/pinheck_photo_placements.json: for Rob Zombie's Spookshow International and The Jetsons, positions measured on
+  playfield photographs rectified at playfield level (each game's frame method and uncertainty are stated in it);
 - tools/amh_lw_placements.json: for America's Most Haunted, the LW recreation table object that places each device
   and the script line that binds it (the only pinHeck game with a retained recreation).
 
@@ -53,9 +53,8 @@ AMH_TABLE = {
 	"obj_sha256": "6ed05f976f7b5d01ed85c31449ebe3e5334953eaa95df310f7c8228c730adfa1", "obj_bytes": 65869696,
 	"obj": "obj-vpu/America's Most Haunted (Spooky Pinball 2014) LW.obj",
 }
-# Rob Zombie's Spookshow International: positions measured on photographs (see tools/rz_photo_placements.json).
-RZ_PHOTO = load_json(ROOT / "tools/rz_photo_placements.json")
-RZ_WHITEWOOD_SOURCE, RZ_PRODUCTION_SOURCE = "photo.rz-whitewood-ipdb-6416", "photo.rz-production-pinside"
+# Rob Zombie's Spookshow International and The Jetsons: positions measured on photographs (tools/pinheck_photo_placements.json).
+PHOTO = load_json(ROOT / "tools/pinheck_photo_placements.json")["games"]
 
 # How each kind of placement point is taken from the table (the spatial report's projection classes).
 AMH_PROJECTIONS = {
@@ -960,38 +959,27 @@ def placements_excerpt() -> str:
 	        "\n## Used devices without a placement\n\n" + unplaced)
 
 
-def rz_photo_excerpt() -> str:
-	r, w, prod = RZ_PHOTO, RZ_PHOTO["whitewood"], RZ_PHOTO["production"]
-	corners = "; ".join(f"{name.replace('_', ' ')} ({x:g}, {y:g})" for name, (x, y) in w["corners_px"].items())
-	labels = {(SWITCH if e["group"] == "switch" else SOLENOID if e["group"] == "solenoid" else LAMP, e["address"]): e for e in r["placements"]}
-	rows = "".join(f"| {e['group']} {e['address']} | {e['x']}, {e['y']} | {e['frame_px'][0]}, {e['frame_px'][1]} | {e['source']} | {e['confidence']} | {e['feature']} |\n"
-	               for e in r["placements"])
+def photo_excerpt(game: str) -> str:
+	r = PHOTO[game]
+	photos = "".join(f"- {ph['id']} ({ph['role']}): {ph['title']}, {ph['url']}, original file `{ph['original_filename']}`, "
+	                 f"{ph['size_px'][0]} x {ph['size_px'][1]} px, SHA-256 {ph['sha256']}. {ph['notes']}\n" for ph in r["photos"])
+	rows = "".join(f"| {e['group']} {e['address']} | {e['x']}, {e['y']} | {e['frame_px'][0]}, {e['frame_px'][1]} | {e['level']} | "
+	               f"{e['confidence']} | {e['feature']} |\n" for e in r["placements"])
 	unplaced = "".join(f"- {e['group']} {e['address']}: {e['reason']}\n" for e in r["unplaced"])
-	return (f"# Photo placements: Rob Zombie's Spookshow International\n\n"
-	        f"Frame: {w['photo']} ({w['url']}, SHA-256 {w['sha256']}, {w['size_px'][0]} x {w['size_px'][1]} px), a near top-down photograph "
-	        f"of a whitewood playfield fitted in a cabinet, rectified by a four-corner homography onto a {r['frame']['width']} x "
-	        f"{r['frame']['height']} px frame ({r['frame']['inches_per_px']} inch per px, a 20.25 inch playfield width). Photo corners: {corners}. "
-	        f"{w['corners_note']}\n\n"
-	        f"Identification: {prod['photo']} ({prod['url']}, SHA-256 {prod['sha256']}, {prod['size_px'][0]} x {prod['size_px'][1]} px), a "
-	        f"production playfield photographed from the front, mapped onto the frame by a homography fitted on {prod['control_points']} "
-	        f"features both photographs share on the playfield plane (insert holes, lane slots), RMS {prod['rms_px']} px. The whitewood "
-	        "carries hand-written labels rather than artwork, so the production photo says which insert or part each hole is. "
-	        "Where the whitewood has no hole for a production insert (Living Dead Girl, Murder Ride, 2X, 5X, 10X) the position is the "
-	        "mapped production centre (source production-mapped); where both show the part the whitewood position is used (source both "
-	        "or whitewood). Raised parts (plastics, standups, toys, the elevated upper playfield) are displaced in the angled production "
-	        "photo and were only placed from their whitewood bases. Normalization: " + r['frame']['normalization'] + ". The measurement "
-	        f"files (rectified frame, control points, overlays) are retained under the working root's review-artifacts/"
-	        f"{GAMES['rzspook']['machine']}/photo-measurement-20261005/ (manifest SHA-256 {r['measurement_manifest_sha256']}).\n\n"
-	        "| Device | Normalized | Frame px | Source | Confidence | Feature |\n|---|---|---|---|---|---|\n" + rows +
+	return (f"# Photo placements: {GAMES[game]['name']}\n\n## Photographs\n\n{photos}\n## Frame\n\n{r['method']} Normalization: "
+	        f"{r['frame']['normalization']}. The measurement files (rectified frame, boundary readings, homographies, overlays) are "
+	        f"retained under the working root's review-artifacts/{GAMES[game]['machine']}/{r['measurement_dir']}/ (manifest SHA-256 "
+	        f"{r['measurement_manifest_sha256']}).\n\n## Placements\n\nOnly playfield-level parts read at medium or high confidence are "
+	        "placed, and flipper pivots and sling centres, which stand about an inch above the playfield.\n\n"
+	        "| Device | Normalized | Frame px | Level | Confidence | Feature |\n|---|---|---|---|---|---|\n" + rows +
 	        "\n## Used devices without a placement\n\n" + unplaced)
-
 
 def transcriptions(game: str) -> dict[str, str]:
 	texts = {"rom-service-tests.md": rom_excerpt(game), "runtime-provenance.md": runtime_excerpt(game), "ipdb.md": ipdb_excerpt(game)}
 	if game == "amh":
 		texts["table-placements.md"] = placements_excerpt()
-	if game == "rzspook":
-		texts["photo-placements.md"] = rz_photo_excerpt()
+	if game in PHOTO:
+		texts["photo-placements.md"] = photo_excerpt(game)
 	if "solenoid_list" in GAMES[game]:
 		texts["solenoid-list.md"] = solenoid_list_excerpt(game)
 	return texts
@@ -1072,23 +1060,13 @@ def sources(game: str) -> list[dict[str, Any]]:
 			 "attribution": "freneticamnesic, Shoopity and LoadedWeapon", "license": "NOASSERTION", "rights": "NOASSERTION",
 			 "known_working": False, "excerpts": [placements]},
 		]
-	if game == "rzspook":
-		w, prod = RZ_PHOTO["whitewood"], RZ_PHOTO["production"]
+	if game in PHOTO:
 		photos = excerpt(game, "photo-placements.md", "Every measured placement and every unplaced device", texts["photo-placements.md"], "manual", True, CURATOR)
-		result += [
-			{"id": RZ_WHITEWOOD_SOURCE, "kind": "human_review", "uri": w["url"], "sha256": w["sha256"],
-			 "original_filename": "image-13.jpg", "acquired_at": "2026-10-05T00:00:00Z",
-			 "locator": (f"{w['photo']}: IPDB machine 6416's 'Whitewood Playfield' photograph, {w['size_px'][0]} x {w['size_px'][1]} px. "
-			             "The geometry source of every placement: rectified onto a 952 x 2185 frame by its cabinet corners, positions read on "
-			             "the rectified image. A whitewood may predate production; the production photograph decides identity."),
-			 "attribution": "The Internet Pinball Database", "license": "NOASSERTION", "rights": "NOASSERTION", "excerpts": [photos]},
-			{"id": RZ_PRODUCTION_SOURCE, "kind": "human_review", "uri": prod["url"], "sha256": prod["sha256"],
-			 "original_filename": "RobZombie_Playfield (resized).jpg", "acquired_at": "2026-10-05T00:00:00Z",
-			 "locator": (f"{prod['photo']}, {prod['size_px'][0]} x {prod['size_px'][1]} px: a lit production playfield, mapped onto the "
-			             f"whitewood frame by a {prod['control_points']}-point homography (RMS {prod['rms_px']} px). Identifies each insert "
-			             "by its artwork and supplies the inserts the whitewood lacks."),
-			 "attribution": "Pinside gallery contributor", "license": "NOASSERTION", "rights": "NOASSERTION", "excerpts": [photos]},
-		]
+		result += [{"id": ph["id"], "kind": "human_review", "uri": ph["url"], "sha256": ph["sha256"], "original_filename": ph["original_filename"],
+		            "acquired_at": "2026-10-05T00:00:00Z",
+		            "locator": f"{ph['title']}, {ph['size_px'][0]} x {ph['size_px'][1]} px. {ph['notes']}",
+		            "attribution": ph["attribution"], "license": "NOASSERTION", "rights": "NOASSERTION", "excerpts": [photos]}
+		           for ph in PHOTO[game]["photos"]]
 	for test, run in runs(game).items():
 		result.append({"id": i[f"rt-{test}"], "kind": "runtime_scenario",
 		               "uri": f"external:pinmame-review-artifacts/{g['machine']}/session-20261005/runtime/{game}-{test}/run.json",
@@ -1134,32 +1112,30 @@ def place_amh(ins: list[dict[str, Any]], outs: list[dict[str, Any]]) -> None:
 		raise ValueError(f"used America's Most Haunted devices with neither a placement nor a reason: {missing}")
 
 
-def place_rz(ins: list[dict[str, Any]], outs: list[dict[str, Any]]) -> None:
-	"""Rob Zombie placements measured on photographs (observed: photographs, no factory drawing or recreation)."""
+def place_photo(game: str, ins: list[dict[str, Any]], outs: list[dict[str, Any]]) -> None:
+	"""Placements measured on photographs (observed: photographs, no factory drawing or recreation table)."""
 	groups = {"switch": SWITCH, "solenoid": SOLENOID, "lamp": LAMP}
 	by_binding = {(d["binding"]["group"], d["binding"]["device"]): d for d in ins + outs}
-	for entry in RZ_PHOTO["placements"]:
+	for entry in PHOTO[game]["placements"]:
 		item = by_binding[(groups[entry["group"]], entry["address"])]
 		if item["availability"] not in ("used", "optional"):
 			raise ValueError(f"{item['id']}: a placement for a device that is not used")
 		role = "sensor" if entry["group"] == "switch" else "emitter" if item["kind"] in ("lamp", "flasher", "rgb_lamp", "gi") else "effect"
-		refs = [RZ_WHITEWOOD_SOURCE] if entry["source"] == "whitewood" else [RZ_WHITEWOOD_SOURCE, RZ_PRODUCTION_SOURCE]
 		item["spatial"] = {"status": "observed", "placements": [
 			{"id": f"{item['id']}.{role}", "role": role, "space": "playfield", "x": entry["x"], "y": entry["y"],
-			 "provenance": prov(*refs, status="observed")}]}
-	listed = {(groups[e["group"]], e["address"]) for e in RZ_PHOTO["unplaced"]}
+			 "provenance": prov(*entry["photos"], status="observed")}]}
+	listed = {(groups[e["group"]], e["address"]) for e in PHOTO[game]["unplaced"]}
 	missing = [key for key, d in by_binding.items() if d["availability"] in ("used", "optional") and "spatial" not in d and key not in listed]
 	if missing:
-		raise ValueError(f"used Rob Zombie devices with neither a placement nor a reason: {missing}")
-
+		raise ValueError(f"used {GAMES[game]['name']} devices with neither a placement nor a reason: {missing}")
 
 def build(game: str) -> dict[str, Any]:
 	g, i = GAMES[game], ids(game)
 	ins, outs = inputs(game), outputs(game)
 	if game == "amh":
 		place_amh(ins, outs)
-	if game == "rzspook":
-		place_rz(ins, outs)
+	if game in PHOTO:
+		place_photo(game, ins, outs)
 	catalog = load_json(ROOT / "catalog/pinmame.json")
 	record = next(d for d in catalog["drivers"] if d["id"] == game)
 	editions = "; ".join(f"IPDB {number} {title}" for number, title, _ in g["editions"])
@@ -1178,7 +1154,7 @@ def build(game: str) -> dict[str, Any]:
 		"coverage": {"status": "partial", "missing": g.get("missing", ["mechanism_behavior", "output_semantics", "spatial_placement"]),
 		             "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated",
 		                            "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "validated",
-		                            "recreation_knowledge": "observed", "spatial_placement": "observed" if game in ("amh", "rzspook") else "unknown",
+		                            "recreation_knowledge": "observed", "spatial_placement": "observed" if game == "amh" or game in PHOTO else "unknown",
 		                            "runtime_observation": "observed",
 		                            "causal_exercise": "observed"}},
 		"conflicts": [],
@@ -1228,12 +1204,10 @@ AMH_SPATIAL_NOTE = ("the placements come from the LW recreation table (v2.0), wh
                     "so those stay unplaced")
 
 
-RZ_SPATIAL_NOTE = ("the placements are measured on photographs: IPDB's whitewood playfield photo, rectified by its cabinet "
-                   "corners, gives the positions, and a production photo mapped onto it says which insert or part each one is "
-                   "(`photo-placements.md` lists both, the homography and every device left out). They stay observed: the frame rests "
-                   "on the cabinet walls, so positions carry about one to two percent of uncertainty, and the trough, shooter lane, "
-                   "upper playfield, raised standups, GI, the cabinet and Living Dead Girl RGB and parts read only at low confidence "
-                   "stay unplaced")
+PHOTO_SPATIAL_NOTE = ("the placements are measured on photographs rectified at playfield level (`photo-placements.md` names the "
+                      "photographs, the frame and its uncertainty, and every device left out). They stay observed: no factory "
+                      "location drawing or recreation table checks them, a position can be off by a few percent, and raised parts, "
+                      "parts hidden under the apron or ramps, GI and the RGB strings are not placed")
 
 
 def unknown_summary(machine: dict[str, Any]) -> str:
@@ -1248,7 +1222,7 @@ def knowledge(game: str, machine: dict[str, Any]) -> str:
 This definition covers the physical machine (IPDB {', '.join(str(e[0]) for e in g['editions'])}, model {g['model']}) and its one
 PinMAME driver, `{game}`, the {g['firmware']} code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but {'the placements come from one recreation table and are not yet checked against a factory drawing' if game == 'amh' else 'the placements are measured on photographs, not a factory drawing' if game == 'rzspook' else 'no placement exists'}, the mechanisms are inventoried
+tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but {'the placements come from one recreation table and are not yet checked against a factory drawing' if game == 'amh' else 'the placements are measured on photographs, not a factory drawing' if game in PHOTO else 'no placement exists'}, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
@@ -1290,7 +1264,7 @@ pulsing its trough feed coil repeatedly while no ball reaches the shooter lane.
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `{excerpt_dir(game)}/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: {AMH_SPATIAL_NOTE if game == 'amh' else RZ_SPATIAL_NOTE if game == 'rzspook' else 'no placement (no factory-layout table is retained)'};
+`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: {AMH_SPATIAL_NOTE if game == 'amh' else PHOTO_SPATIAL_NOTE if game in PHOTO else 'no placement (no factory-layout table is retained)'};
 {MECHANISM_GAP} The outputs whose fitment stays unknown: {unknown_summary(machine)}.
 """
 	return text
@@ -1332,21 +1306,20 @@ def report(game: str, machine: dict[str, Any]) -> dict[str, Any]:
 			                   "formula": "x / 952, y / 2185, rounded to six decimals"},
 			"projection_classes": {key: {"method": AMH_PROJECTIONS[key], "records": records} for key, records in classes.items()},
 		}
-	elif game == "rzspook":
+	elif game in PHOTO:
+		r = PHOTO[game]
 		spatial = [
 			{"dimension": "spatial_placement", "records": observed,
-			 "reason": ("Measured on photographs: IPDB's whitewood photo, rectified by its cabinet corners, and a production photo mapped "
-			            "onto it to identify each part. No factory location drawing or recreation table is retained to check them, so they stay observed."),
+			 "reason": f"Measured on photographs rectified at playfield level. {r['method']} No factory location drawing or recreation table is retained to check them, so they stay observed.",
 			 "resolution": "Spooky Pinball's playfield location drawing, a measured playfield scan, or a faithful recreation table."},
 			{"dimension": "spatial_placement", "records": used,
-			 "reason": "Each record's reason is listed in photo-placements.md: hidden under the apron or the upper playfield, raised, or read only at low confidence.",
+			 "reason": "Each record's reason is listed in photo-placements.md: raised, hidden under the apron, ramps or upper playfield, not a point device, or read only at low confidence.",
 			 "resolution": "Close-up photographs of those parts with the playfield glass off, or a playfield scan."}]
 		decision = "partial; placements observed on rectified photographs"
-		audit = {"evidence": {"seed": "tools/rz_photo_placements.json", "excerpt": f"{excerpt_dir(game)}/photo-placements.md",
-		                      "measurement_manifest_sha256": RZ_PHOTO["measurement_manifest_sha256"],
-		                      "whitewood_photo_sha256": RZ_PHOTO["whitewood"]["sha256"], "production_photo_sha256": RZ_PHOTO["production"]["sha256"]},
-		         "transformation": {"frame": [RZ_PHOTO["frame"]["width"], RZ_PHOTO["frame"]["height"]], "formula": RZ_PHOTO["frame"]["normalization"],
-		                            "production_homography_rms_px": RZ_PHOTO["production"]["rms_px"]}}
+		audit = {"evidence": {"seed": "tools/pinheck_photo_placements.json", "excerpt": f"{excerpt_dir(game)}/photo-placements.md",
+		                      "measurement_dir": r["measurement_dir"], "measurement_manifest_sha256": r["measurement_manifest_sha256"],
+		                      "photographs": {ph["id"]: ph["sha256"] for ph in r["photos"]}},
+		         "transformation": {"frame": [r["frame"]["width"], r["frame"]["height"]], "formula": r["frame"]["normalization"]}}
 	else:
 		spatial = [{"dimension": "spatial_placement", "records": used,
 		            "reason": "No retained factory-layout geometry: no VPX table that runs this ROM exists.",

@@ -3,7 +3,7 @@
 This definition covers the physical machine (IPDB 6577, 6608, model 00004) and its one
 PinMAME driver, `jetsons`, the V4 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests and named, but no placement exists, the mechanisms are inventoried
+tests and named, but the placements are measured on photographs, not a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
@@ -94,5 +94,5 @@ Servo 0 (57) drives the backbox topper, which IPDB lists only on the Special Edi
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `evidence/excerpts/spooky-pinball.the-jetsons.2017/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/jetsons-*.json`. Remaining: no placement (no factory-layout table is retained);
+`tools/harness-scenarios/pinheck/jetsons-*.json`. Remaining: the placements are measured on photographs rectified at playfield level (`photo-placements.md` names the photographs, the frame and its uncertainty, and every device left out). They stay observed: no factory location drawing or recreation table checks them, a position can be off by a few percent, and raised parts, parts hidden under the apron or ramps, GI and the RGB strings are not placed;
 the mechanism inventory names each mechanism's coils, switches and service-test positions, but no retained source gives its home and startup state, its timing, how the ROM resets it or how it fails, so mechanism behaviour stays open until a manual, a known-working table or a gameplay harness run supplies it. The outputs whose fitment stays unknown: 25 (Backbox GI Output 0), 26 (Backbox GI Output 1), 27 (Backbox GI Output 2), 28 (Backbox GI Output 3), 29 (Backbox GI Output 4), 30 (Backbox GI Output 5), 31 (Backbox GI Output 6), 32 (Backbox GI Output 7), 41 (Playfield GI Output 12), 42 (Playfield GI Output 13), 43 (Playfield GI Output 14), 44 (Playfield GI Output 15), 58 (Servo 1 (chart: Open)), 62 (External RGB LED 0 red), 63 (External RGB LED 0 green), 64 (External RGB LED 0 blue).

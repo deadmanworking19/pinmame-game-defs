@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 import unittest
@@ -242,26 +243,33 @@ class PinheckDefinitionTests(unittest.TestCase):
 		self.assertEqual([51], [lamp for lamp in steps["Close 61"]["active_lamps"] if 51 <= lamp <= 53])
 		self.assertEqual([51, 52], [lamp for lamp in steps["Close 62"]["active_lamps"] if 51 <= lamp <= 53])
 
-	def test_rz_places_photo_measurements_or_says_why_not(self) -> None:
-		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['rzspook']['stem']}.json")
-		devices = {(d["binding"]["group"], d["binding"]["device"]): d for d in definition["inputs"] + definition["outputs"]}
+	def test_photo_games_place_playfield_measurements_or_say_why_not(self) -> None:
 		groups = {"switch": "pinmame.input.switch", "solenoid": "pinmame.output.solenoid", "lamp": "pinmame.output.lamp"}
-		seed = CURATOR.RZ_PHOTO
-		placed = {(groups[e["group"]], e["address"]) for e in seed["placements"]}
-		listed = {(groups[e["group"]], e["address"]) for e in seed["unplaced"]}
-		self.assertFalse(placed & listed)
-		used = {key for key, d in devices.items() if d["availability"] in ("used", "optional") and d.get("spatial", {}).get("status") != "not_applicable"}
-		self.assertEqual(used, placed | listed)
-		self.assertIn("spatial_placement", definition["coverage"]["missing"])
-		for entry in seed["placements"]:
-			item = devices[(groups[entry["group"]], entry["address"])]
-			with self.subTest(device=item["id"]):
-				placement = item["spatial"]["placements"][0]
-				self.assertEqual("observed", item["spatial"]["status"])
-				self.assertEqual((entry["x"], entry["y"]), (placement["x"], placement["y"]))
-				self.assertEqual((round(entry["frame_px"][0] / 952, 3), round(entry["frame_px"][1] / 2185, 3)), (entry["x"], entry["y"]))
-				self.assertIn(entry["confidence"], ("medium", "high"))
-				self.assertIn(CURATOR.RZ_WHITEWOOD_SOURCE, placement["provenance"]["source_refs"])
+		self.assertEqual({"rzspook", "jetsons"}, set(CURATOR.PHOTO))
+		for game, seed in CURATOR.PHOTO.items():
+			definition = load_json(ROOT / "machines" / "partial" / f"{GAMES[game]['stem']}.json")
+			devices = {(d["binding"]["group"], d["binding"]["device"]): d for d in definition["inputs"] + definition["outputs"]}
+			placed = {(groups[e["group"]], e["address"]) for e in seed["placements"]}
+			listed = {(groups[e["group"]], e["address"]) for e in seed["unplaced"]}
+			geometry = {ph["id"] for ph in seed["photos"] if ph["role"] == "geometry"}
+			with self.subTest(game=game):
+				self.assertFalse(placed & listed)
+				used = {key for key, d in devices.items() if d["availability"] in ("used", "optional") and d.get("spatial", {}).get("status") != "not_applicable"}
+				self.assertEqual(used, placed | listed)
+				self.assertIn("spatial_placement", definition["coverage"]["missing"])
+				self.assertEqual(1, len(geometry))
+			for entry in seed["placements"]:
+				item = devices[(groups[entry["group"]], entry["address"])]
+				with self.subTest(game=game, device=item["id"]):
+					placement = item["spatial"]["placements"][0]
+					self.assertEqual("observed", item["spatial"]["status"])
+					self.assertEqual((entry["x"], entry["y"]), (placement["x"], placement["y"]))
+					# frame_px is rounded to whole pixels, the normalized value to three decimals.
+					self.assertAlmostEqual(entry["frame_px"][0] / 952, entry["x"], delta=0.001)
+					self.assertAlmostEqual(entry["frame_px"][1] / 2185, entry["y"], delta=0.001)
+					self.assertIn(entry["confidence"], ("medium", "high"))
+					self.assertTrue(entry["level"] == "playfield" or re.search(r"flipper|sling", entry["feature"], re.I))
+					self.assertTrue(geometry <= set(placement["provenance"]["source_refs"]))
 
 	def test_amh_lw_table_extraction_and_coordinates(self) -> None:
 		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")

@@ -2,7 +2,7 @@
   "blockers": [
     {
       "dimension": "spatial_placement",
-      "reason": "Measured on photographs: IPDB's whitewood photo, rectified by its cabinet corners, and a production photo mapped onto it to identify each part. No factory location drawing or recreation table is retained to check them, so they stay observed.",
+      "reason": "Measured on photographs rectified at playfield level. The whitewood photograph is corrected for barrel distortion (one radial term) and rectified onto a 952 x 2185 frame at playfield level. The left and right edges are measured where the bare wood meets the cabinet walls (the right edge is the shooter lane floor's outer edge). The main playfield's rear edge is hidden under the upper playfield and its front end under the apron, so those two lines come from a parallax estimate based on the wall tops, with the camera's foot placed at the front wall; that leaves a uniform uncertainty of about 45 px (2 percent of the length) in y, and the measured side edges are not quite parallel, so a position can be off by up to a few percent near the rear. Raised parts are not placed: parallax displaces them. No factory location drawing or recreation table is retained to check them, so they stay observed.",
       "records": [
         "switch.021-right-out-lane",
         "switch.022-right-in-lane",
@@ -14,12 +14,8 @@
         "switch.028-left-out-lane",
         "switch.035-right-inner-orbit",
         "switch.036-right-pop-bumper",
-        "switch.046-right-living-dead-girl",
-        "switch.047-left-living-dead-girl",
-        "switch.054-lower-left-pop",
         "switch.057-left-upper-sling",
         "coil.06-right-pop-bumper",
-        "coil.09-left-lower-pop",
         "coil.11-left-upper-sling",
         "coil.12-left-lower-sling",
         "coil.13-left-flipper-low",
@@ -27,7 +23,6 @@
         "coil.19-right-flipper-low",
         "coil.20-right-flipper-high-center",
         "coil.21-right-lower-sling",
-        "gi.41-purple-flasher",
         "lamp.11-rock-again",
         "lamp.12-ldg",
         "lamp.13-red-hot",
@@ -78,7 +73,7 @@
     },
     {
       "dimension": "spatial_placement",
-      "reason": "Each record's reason is listed in photo-placements.md: hidden under the apron or the upper playfield, raised, or read only at low confidence.",
+      "reason": "Each record's reason is listed in photo-placements.md: raised, hidden under the apron, ramps or upper playfield, not a point device, or read only at low confidence.",
       "records": [
         "switch.011-shooter-lane",
         "switch.012-trough-1",
@@ -99,9 +94,12 @@
         "switch.043-vuk",
         "switch.044-secret-passage",
         "switch.045-left-inner-orbit",
+        "switch.046-right-living-dead-girl",
+        "switch.047-left-living-dead-girl",
         "switch.048-drop-target",
         "switch.051-ramp-target",
         "switch.052-right-rattle-switch",
+        "switch.054-lower-left-pop",
         "switch.055-upper-left-pop",
         "switch.056-pop-target",
         "switch.058-left-orbit",
@@ -113,6 +111,7 @@
         "coil.05-stop-post-inner-orbit-right",
         "coil.07-drop-target",
         "coil.08-upper-flipper-low",
+        "coil.09-left-lower-pop",
         "coil.10-left-upper-pop",
         "coil.17-autolauncher",
         "coil.18-ball-trough",
@@ -120,6 +119,7 @@
         "gi.38-bottom-pf-gi-1",
         "gi.39-bottom-pf-gi-2",
         "gi.40-red-gi-lamps",
+        "gi.41-purple-flasher",
         "gi.42-red-flasher",
         "gi.43-white-gi-lamps",
         "rgb.51-rgb1-red",
@@ -185,10 +185,13 @@
   "decision": "partial; placements observed on rectified photographs",
   "evidence": {
     "excerpt": "evidence/excerpts/spooky-pinball.rob-zombie-s-spookshow-international.2016/photo-placements.md",
-    "measurement_manifest_sha256": "e657b07d7c4e89c5f13c8f72b37da33094d595e08f658ee06a7ab42a37b41483",
-    "production_photo_sha256": "3d8c166d72be3bb7d659e28d11871f30b41ebac3eb9e73413b439c77dac2ecfb",
-    "seed": "tools/rz_photo_placements.json",
-    "whitewood_photo_sha256": "ade333f758cc5fe5f70fbe741a6cab3ab35851f1f1f9e45391d2a8cab32358ce"
+    "measurement_dir": "photo-measurement-20261005",
+    "measurement_manifest_sha256": "95d543e45e3cc4f9bca5564a8171cfc93ff3f86282c2efd345d364d051034060",
+    "photographs": {
+      "photo.rz-production-pinside": "3d8c166d72be3bb7d659e28d11871f30b41ebac3eb9e73413b439c77dac2ecfb",
+      "photo.rz-whitewood-ipdb-6416": "ade333f758cc5fe5f70fbe741a6cab3ab35851f1f1f9e45391d2a8cab32358ce"
+    },
+    "seed": "tools/pinheck_photo_placements.json"
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "spooky-pinball.rob-zombie-s-spookshow-international.2016",
@@ -201,12 +204,11 @@
     ]
   },
   "transformation": {
-    "formula": "x / 952 and y / 2185 of the rectified whitewood frame, rounded to three decimals (about 5 px, 0.1 inch)",
+    "formula": "x / 952 and y / 2185 of the playfield-level frame, rounded to three decimals",
     "frame": [
       952,
       2185
-    ],
-    "production_homography_rms_px": 3.19
+    ]
   },
   "unplaced_records": [
     "switch.011-shooter-lane",
@@ -228,9 +230,12 @@
     "switch.043-vuk",
     "switch.044-secret-passage",
     "switch.045-left-inner-orbit",
+    "switch.046-right-living-dead-girl",
+    "switch.047-left-living-dead-girl",
     "switch.048-drop-target",
     "switch.051-ramp-target",
     "switch.052-right-rattle-switch",
+    "switch.054-lower-left-pop",
     "switch.055-upper-left-pop",
     "switch.056-pop-target",
     "switch.058-left-orbit",
@@ -242,6 +247,7 @@
     "coil.05-stop-post-inner-orbit-right",
     "coil.07-drop-target",
     "coil.08-upper-flipper-low",
+    "coil.09-left-lower-pop",
     "coil.10-left-upper-pop",
     "coil.17-autolauncher",
     "coil.18-ball-trough",
@@ -249,6 +255,7 @@
     "gi.38-bottom-pf-gi-1",
     "gi.39-bottom-pf-gi-2",
     "gi.40-red-gi-lamps",
+    "gi.41-purple-flasher",
     "gi.42-red-flasher",
     "gi.43-white-gi-lamps",
     "rgb.51-rgb1-red",
