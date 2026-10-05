@@ -3,7 +3,7 @@
 This definition covers the physical machine (IPDB 6416, 6417, model 00002) and its one
 PinMAME driver, `rzspook`, the V26 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests and named, but no placement exists, the mechanisms are inventoried
+tests and named, but the placements are measured on photographs, not a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
@@ -110,5 +110,5 @@ The Living Dead Girl figure with targets 46 (right) and 47 (left), lit by the fi
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `evidence/excerpts/spooky-pinball.rob-zombie-s-spookshow-international.2016/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/rzspook-*.json`. Remaining: no placement (no factory-layout table is retained);
+`tools/harness-scenarios/pinheck/rzspook-*.json`. Remaining: the placements are measured on photographs: IPDB's whitewood playfield photo, rectified by its cabinet corners, gives the positions, and a production photo mapped onto it says which insert or part each one is (`photo-placements.md` lists both, the homography and every device left out). They stay observed: the frame rests on the cabinet walls, so positions carry about one to two percent of uncertainty, and the trough, shooter lane, upper playfield, raised standups, GI, the cabinet and Living Dead Girl RGB and parts read only at low confidence stay unplaced;
 the mechanism inventory names each mechanism's coils, switches and service-test positions, but no retained source gives its home and startup state, its timing, how the ROM resets it or how it fails, so mechanism behaviour stays open until a manual, a known-working table or a gameplay harness run supplies it. The outputs whose fitment stays unknown: 25 (Backbox GI Output 0), 26 (Backbox GI Output 1), 27 (Backbox GI Output 2), 28 (Backbox GI Output 3), 29 (Backbox GI Output 4), 30 (Backbox GI Output 5), 31 (Backbox GI Output 6), 32 (Backbox GI Output 7), 37 (Playfield GI Output 8), 44 (Playfield GI Output 15).

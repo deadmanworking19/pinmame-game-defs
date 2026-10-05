@@ -242,6 +242,27 @@ class PinheckDefinitionTests(unittest.TestCase):
 		self.assertEqual([51], [lamp for lamp in steps["Close 61"]["active_lamps"] if 51 <= lamp <= 53])
 		self.assertEqual([51, 52], [lamp for lamp in steps["Close 62"]["active_lamps"] if 51 <= lamp <= 53])
 
+	def test_rz_places_photo_measurements_or_says_why_not(self) -> None:
+		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['rzspook']['stem']}.json")
+		devices = {(d["binding"]["group"], d["binding"]["device"]): d for d in definition["inputs"] + definition["outputs"]}
+		groups = {"switch": "pinmame.input.switch", "solenoid": "pinmame.output.solenoid", "lamp": "pinmame.output.lamp"}
+		seed = CURATOR.RZ_PHOTO
+		placed = {(groups[e["group"]], e["address"]) for e in seed["placements"]}
+		listed = {(groups[e["group"]], e["address"]) for e in seed["unplaced"]}
+		self.assertFalse(placed & listed)
+		used = {key for key, d in devices.items() if d["availability"] in ("used", "optional") and d.get("spatial", {}).get("status") != "not_applicable"}
+		self.assertEqual(used, placed | listed)
+		self.assertIn("spatial_placement", definition["coverage"]["missing"])
+		for entry in seed["placements"]:
+			item = devices[(groups[entry["group"]], entry["address"])]
+			with self.subTest(device=item["id"]):
+				placement = item["spatial"]["placements"][0]
+				self.assertEqual("observed", item["spatial"]["status"])
+				self.assertEqual((entry["x"], entry["y"]), (placement["x"], placement["y"]))
+				self.assertEqual((round(entry["frame_px"][0] / 952, 3), round(entry["frame_px"][1] / 2185, 3)), (entry["x"], entry["y"]))
+				self.assertIn(entry["confidence"], ("medium", "high"))
+				self.assertIn(CURATOR.RZ_WHITEWOOD_SOURCE, placement["provenance"]["source_refs"])
+
 	def test_amh_lw_table_extraction_and_coordinates(self) -> None:
 		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
 		if not root:
