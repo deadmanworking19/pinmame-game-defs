@@ -49,6 +49,17 @@ AMH_TABLE = {
 	"manifest_sha256": "b717aa8414042919fc8fd55e9de9a469d078f819f9c61908163d04a9ceb470e2", "file_count": 2185, "total_bytes": 388534248,
 	"script_sha256": "ffaeea988c8e27d2d7768c4cfcdfe280776e4b108921c1f728ec51bfff099a0d", "script_bytes": 618900,
 	"obj_sha256": "6ed05f976f7b5d01ed85c31449ebe3e5334953eaa95df310f7c8228c730adfa1", "obj_bytes": 65869696,
+	"obj": "obj-vpu/America's Most Haunted (Spooky Pinball 2014) LW.obj",
+}
+# How each kind of placement point is taken from the table (the spatial report's projection classes).
+AMH_PROJECTIONS = {
+	"object_centre": "The object's own centre (Light, Trigger, Kicker and Bumper centre fields): the bulb, switch or kicker itself.",
+	"wall_centroid": "The mean of a target or slingshot wall's drag points: the target face or slingshot the switch sits on.",
+	"flipper_pivot": "The flipper's centre, its pivot: the end-of-stroke contacts and both windings sit on the flipper assembly and have no object of their own.",
+	"servo_axis": "A primitive's position about which the script turns it (ObjRotZ): the Spooky Door's hinge and the ghost's spindle, where each servo sits; their mesh centres are recorded beside them.",
+	"servo_assembly": "A primitive the script moves vertically, at its position, which agrees with its exported mesh centre within two units: the Hellevator car and the target bank.",
+	"flasher_bulb": "The light a timer copies from the flasher lamp's placeholder, beside the modelled dome base.",
+	"shared_rgb": "One point for the ghost LED's three channels, declared as a shared RGB emitter.",
 }
 AMH_TABLE_SOURCE, AMH_SCRIPT_SOURCE = "vpx-table.amh-lw-2-0", "vpx-script.amh-lw-2-0"
 AMH_PLACEMENTS = load_json(ROOT / "tools/amh_lw_placements.json")
@@ -1055,6 +1066,10 @@ def place_amh(ins: list[dict[str, Any]], outs: list[dict[str, Any]]) -> None:
 		refs = [AMH_TABLE_SOURCE, AMH_SCRIPT_SOURCE, *([runtime] if entry["address"] in (61, 62, 63) and entry["group"] == "switch" else [])]
 		item["spatial"] = {"status": "observed", "placements": [
 			{"id": f"{item['id']}.{role}", "role": role, "space": "playfield", "x": x, "y": y, "provenance": prov(*refs, status="observed")}]}
+		if entry["group"] == "solenoid" and entry["address"] in (62, 63, 64):
+			item["physical"].update({"quantity": 1, "shared_emitter_group": "ghost-led", "co_located_addresses": [62, 63, 64],
+			                         "shared_physical_quantity": 1,
+			                         "emitter_channel": {62: "red", 63: "green", 64: "blue"}[entry["address"]]})
 		if entry["group"] == "switch" and entry["address"] in (61, 62, 63):
 			item["physical"]["notes"] += (" The LW recreation names its top-lane triggers out of order (TrSw40 is its B lane, TrSw41 its O lane), "
 			                              "a defect of that table: its own code and lamps, and the ROM's lanes run, put this lane at "
@@ -1215,13 +1230,36 @@ def report(game: str, machine: dict[str, Any]) -> dict[str, Any]:
 			 "reason": " ".join(dict.fromkeys(AMH_UNPLACED.values())),
 			 "resolution": "A photograph of the basement subway and of the cabinet RGB strip harness, or a harness run that tells RGB1 from RGB2 by side."}]
 		decision = "partial; placements observed on the LW recreation table"
+		t, groups = AMH_TABLE, {"switch": SWITCH, "solenoid": SOLENOID, "lamp": LAMP}
+		by_binding = {(d["binding"]["group"], d["binding"]["device"]): d["id"] for d in machine["inputs"] + machine["outputs"]}
+		classes: dict[str, list[str]] = {key: [] for key in AMH_PROJECTIONS}
+		for entry in AMH_PLACEMENTS["placements"]:
+			key = ("flipper_pivot" if entry["object_kind"] == "Flipper" else "servo_axis" if entry["object"] in ("PrDoor", "PrGhost")
+			       else "servo_assembly" if entry["object_kind"] == "Primitive" else "flasher_bulb" if entry["object"].endswith("a")
+			       else "shared_rgb" if entry["object"] == "GILight1" else "wall_centroid" if entry["object_kind"] == "Wall" else "object_centre")
+			classes[key].append(by_binding[(groups[entry["group"]], entry["address"])])
+		audit = {
+			"evidence": {
+				"table": {"uri": f"external:pinmame-vpx-sources/{t['relative']}/{t['filename']}", "sha256": t["sha256"], "bytes": t["bytes"]},
+				"extraction_manifest": {"uri": f"external:pinmame-vpx-sources/{t['relative']}/{t['filename'].removesuffix('.vpx')}.manifest.json",
+				                        "sha256": t["manifest_sha256"], "files": t["file_count"], "bytes": t["total_bytes"],
+				                        "algorithm": "Canonical JSON of format, version and every extracted file as sorted relative POSIX path, size and SHA-256."},
+				"script": {"path": "script.vbs", "sha256": t["script_sha256"], "bytes": t["script_bytes"]},
+				"mesh_export": {"uri": f"external:pinmame-vpx-sources/{t['relative']}/{t['obj']}", "sha256": t["obj_sha256"], "bytes": t["obj_bytes"],
+				                "tool": "vpxtool 0.33.3 export obj --units vpu"},
+				"seed": "tools/amh_lw_placements.json", "excerpt": f"{excerpt_dir(game)}/table-placements.md"},
+			"transformation": {"bounds": {"left": 0, "top": 0, "right": t["width"], "bottom": t["height"]},
+			                   "formula": "x / 952, y / 2185, rounded to six decimals"},
+			"projection_classes": {key: {"method": AMH_PROJECTIONS[key], "records": records} for key, records in classes.items()},
+		}
 	else:
 		spatial = [{"dimension": "spatial_placement", "records": used,
 		            "reason": "No retained factory-layout geometry: no VPX table that runs this ROM exists.",
 		            "resolution": "A factory-layout table, the playfield drawing with switch and lamp locations, or a measured playfield scan."}]
 		decision = "partial; no placement evidence is retained"
+		audit = {}
 	return {"format": "pinmame-spatial-blockers", "version": 1, "machine_id": GAMES[game]["machine"],
-	        "decision": decision,
+	        "decision": decision, **audit,
 	        "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
 	        "unplaced_records": used,
 	        "blockers": [

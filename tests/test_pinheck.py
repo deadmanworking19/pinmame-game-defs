@@ -244,12 +244,18 @@ class PinheckDefinitionTests(unittest.TestCase):
 
 	def test_amh_lw_table_extraction_and_coordinates(self) -> None:
 		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
-		table = CURATOR.AMH_TABLE
-		base = Path(root) / table["relative"] if root else None
-		if base is None or not (base / table["filename"].removesuffix(".vpx")).is_dir():
-			self.skipTest("the retained LW extraction is not available")
+		if not root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not set")
+		# A configured root must hold the retained table: a missing table fails rather than skips.
 		import hashlib
+		table = CURATOR.AMH_TABLE
+		base = Path(root) / table["relative"]
 		extraction = base / table["filename"].removesuffix(".vpx")
+		self.assertTrue(extraction.is_dir(), f"retained LW extraction missing under {base}")
+		for name, digest, size in ((table["filename"], table["sha256"], table["bytes"]), (table["obj"], table["obj_sha256"], table["obj_bytes"])):
+			with self.subTest(artifact=name):
+				data = (base / name).read_bytes()
+				self.assertEqual((digest, size), (hashlib.sha256(data).hexdigest(), len(data)))
 		paths = sorted((p for p in extraction.rglob("*") if p.is_file()), key=lambda p: p.relative_to(extraction).as_posix())
 		manifest = {"format": "pinmame-vpx-extraction-manifest", "version": 1,
 		            "files": [{"path": p.relative_to(extraction).as_posix(), "size": p.stat().st_size,
