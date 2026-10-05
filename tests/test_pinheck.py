@@ -245,7 +245,7 @@ class PinheckDefinitionTests(unittest.TestCase):
 
 	def test_photo_games_place_playfield_measurements_or_say_why_not(self) -> None:
 		groups = {"switch": "pinmame.input.switch", "solenoid": "pinmame.output.solenoid", "lamp": "pinmame.output.lamp"}
-		self.assertEqual({"rzspook", "jetsons"}, set(CURATOR.PHOTO))
+		self.assertEqual({"rzspook", "jetsons", "dominos"}, set(CURATOR.PHOTO))
 		for game, seed in CURATOR.PHOTO.items():
 			definition = load_json(ROOT / "machines" / "partial" / f"{GAMES[game]['stem']}.json")
 			devices = {(d["binding"]["group"], d["binding"]["device"]): d for d in definition["inputs"] + definition["outputs"]}
