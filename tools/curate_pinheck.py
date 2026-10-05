@@ -8,7 +8,9 @@ International (2016) and The Jetsons (2017) run on one board and one PinMAME pla
   PDFs' text layer and checked against their renders (the excerpts under evidence/excerpts/<machine>/);
 - tools/pinheck_runtime.json: the compact summary of the retained LibPinMAME service-test and game-start
   runs (tools/pinheck_runtime.py), including the curator's reading of every frame it relies on;
-- the pinned PinMAME source (b7a60eb0) for the controller contract.
+- the pinned PinMAME source (b7a60eb0) for the controller contract;
+- tools/amh_lw_placements.json: for America's Most Haunted, the LW recreation table object that places each device
+  and the script line that binds it (the only pinHeck game with a retained recreation).
 
 ``--check`` regenerates in memory and refuses drift; ``--regenerate`` writes; ``--game`` limits either to
 one game. Bare CI needs no external files.
@@ -38,6 +40,26 @@ CORE = f"pinmame.core.{REV12}"
 BOARD = f"pinmame.board.{REV12}"
 PINHECK_GEN = "0x10000000000000"
 SWITCH, SOLENOID, LAMP = "pinmame.input.switch", "pinmame.output.solenoid", "pinmame.output.lamp"
+
+# America's Most Haunted's LW recreation (v2.0 by freneticamnesic, Shoopity and LoadedWeapon): its own game code, no ROM, but
+# laid out like the real machine and numbered after the factory charts. Every canonical coordinate is x/952 and y/2185.
+AMH_TABLE = {
+	"filename": "America's Most Haunted (Spooky Pinball 2014) LW.vpx", "sha256": "c677c6b98bfd563f4ae83dc93bd5c6f807b9bce6b380063655b9e40e595d0500",
+	"bytes": 347865088, "width": 952.0, "height": 2185.0, "relative": "spooky-pinball/america-s-most-haunted-2014/lw",
+	"manifest_sha256": "b717aa8414042919fc8fd55e9de9a469d078f819f9c61908163d04a9ceb470e2", "file_count": 2185, "total_bytes": 388534248,
+	"script_sha256": "ffaeea988c8e27d2d7768c4cfcdfe280776e4b108921c1f728ec51bfff099a0d", "script_bytes": 618900,
+	"obj_sha256": "6ed05f976f7b5d01ed85c31449ebe3e5334953eaa95df310f7c8228c730adfa1", "obj_bytes": 65869696,
+}
+AMH_TABLE_SOURCE, AMH_SCRIPT_SOURCE = "vpx-table.amh-lw-2-0", "vpx-script.amh-lw-2-0"
+AMH_PLACEMENTS = load_json(ROOT / "tools/amh_lw_placements.json")
+# Used devices the table cannot place, and why.
+AMH_UNPLACED = {
+	(SWITCH, 54): "BASEMENT UPPER [35] is a switch in the basement subway under the playfield; the table models the subway off the playfield (TrSw35 at x=1026.5), so it has no playfield position.",
+	(SWITCH, 55): "BASEMENT LOWER [36] is a switch in the basement subway; the table's TrSw36 sits off the playfield at x=1027.",
+	**{(SOLENOID, address): ("The on-board RGB LEDs light the cabinet's left and right playfield edges (the script's leftRGB and rightRGB, "
+	                         "'cabinet GI'); nothing retained says which LED feeds which side, and the table draws each side as a row of "
+	                         "about 35 lights, not as the physical strip.") for address in range(51, 57)},
+}
 CORE_FILES = {
 	CORE: ("src/wpc/pinheck.c", "e4c62b1ad6ab0cd77a5092468f1f163a3b4cafeb6ad4744918298e63a41d495f",
 	       "file header; PINHECK_SOL_*, PINHECK_LAMP_ST; pinheck_brd_swcol/cab/lamps/sols/gi/start/rgb/servo; pinheck_sw2m/lamp2m/m2sw; "
@@ -906,8 +928,25 @@ def runtime_excerpt(game: str) -> str:
 	        f"review-artifacts/{GAMES[game]['machine']}/session-20261005/runtime/.\n\n| Test | run.json SHA-256 | scenario SHA-256 | manifest SHA-256 |\n|---|---|---|---|\n" + rows)
 
 
+def placements_excerpt() -> str:
+	t = AMH_TABLE
+	rows = "".join(f"| {e['group']} {e['address']} | {e['object']} ({e['object_kind']}, {e['read_from']}) | {e['x']}, {e['y']} | "
+	               f"{', '.join(str(v) for v in normalized(e['x'], e['y']))} | {e['binding']} |\n" for e in AMH_PLACEMENTS["placements"])
+	unplaced = "".join(f"- {group.split('.')[-1]} {address}: {reason}\n" for (group, address), reason in AMH_UNPLACED.items())
+	return (f"# LW recreation placements: America's Most Haunted\n\nTable `{t['filename']}` (SHA-256 {t['sha256']}, {t['bytes']} bytes), "
+	        f"version 2.0 by freneticamnesic, Shoopity and LoadedWeapon; extracted with vpxtool 0.33.3 (manifest SHA-256 {t['manifest_sha256']}, "
+	        f"{t['file_count']} files, {t['total_bytes']} bytes); its script.vbs SHA-256 {t['script_sha256']}. Playfield bounds left=0 top=0 "
+	        f"right={t['width']:g} bottom={t['height']:g}; normalized = (x/{t['width']:g}, y/{t['height']:g}). The table runs its own port of the "
+	        "game code, not the ROM, so each object was chosen by what its script does, checked against the factory chart's label. "
+	        f"The primitives' stated mesh centres come from `vpxtool export obj --units vpu` (OBJ SHA-256 {t['obj_sha256']}).\n\n"
+	        "| Device | Table object | Raw VPX | Normalized | Script binding |\n|---|---|---|---|---|\n" + rows +
+	        "\n## Used devices without a placement\n\n" + unplaced)
+
+
 def transcriptions(game: str) -> dict[str, str]:
 	texts = {"rom-service-tests.md": rom_excerpt(game), "runtime-provenance.md": runtime_excerpt(game), "ipdb.md": ipdb_excerpt(game)}
+	if game == "amh":
+		texts["table-placements.md"] = placements_excerpt()
 	if "solenoid_list" in GAMES[game]:
 		texts["solenoid-list.md"] = solenoid_list_excerpt(game)
 	return texts
@@ -964,6 +1003,30 @@ def sources(game: str) -> list[dict[str, Any]]:
 		               "locator": "Whole page", "attribution": "Ken Layton (IPDB)", "license": "NOASSERTION", "rights": "NOASSERTION",
 		               "original_filename": g["solenoid_list"], "acquired_at": record["acquired_at"], "source_id": record["download_url"],
 		               "excerpts": [gen["solenoid-list.md"]]})
+	if game == "amh":
+		t = AMH_TABLE
+		placements = excerpt(game, "table-placements.md", "Every placement and its script binding", texts["table-placements.md"], "manual", True, CURATOR)
+		result += [
+			{"id": AMH_TABLE_SOURCE, "kind": "vpx_table", "uri": f"external:pinmame-vpx-sources/{t['relative']}/{t['filename']}",
+			 "original_filename": t["filename"], "sha256": t["sha256"], "revision": "2.0",
+			 "locator": (f"America's Most Haunted v2.0 (released 2025-10-29), {t['bytes']} bytes, from the operator's table folder: the "
+			             "freneticamnesic and Shoopity table updated by LoadedWeapon. It runs its own port of the game code, not the ROM; the "
+			             "operator reviewed its layout as faithful to the machine. Playfield bounds left=0 top=0 right=952 bottom=2185; "
+			             f"normalized coordinates are x/952 and y/2185. Extraction manifest SHA-256 {t['manifest_sha256']} "
+			             f"(external:pinmame-vpx-sources/{t['relative']}/{t['filename'].removesuffix('.vpx')}.manifest.json). The geometry "
+			             "source of every placement; the older table in the operator's archive is this one's ancestor and adds nothing independent."),
+			 "attribution": "freneticamnesic, Shoopity and LoadedWeapon", "license": "NOASSERTION", "rights": "NOASSERTION",
+			 "known_working": False, "excerpts": [placements]},
+			{"id": AMH_SCRIPT_SOURCE, "kind": "vpx_script",
+			 "uri": f"external:pinmame-vpx-sources/{t['relative']}/{t['filename'].removesuffix('.vpx')}/script.vbs",
+			 "original_filename": "script.vbs", "sha256": t["script_sha256"],
+			 "locator": (f"The LW table's embedded script, {t['script_bytes']} bytes: a port of the original game code with switch handlers "
+			             "named after the factory switch numbers (TrSwN, WaSwN and the trough, drain, door and scoop kickers), "
+			             "light(n) driving the n-th member of Light_Inserts, and the magnet, autoplunger and servo animations. It does not "
+			             "run the ROM, so it identifies objects, never public addresses or causality."),
+			 "attribution": "freneticamnesic, Shoopity and LoadedWeapon", "license": "NOASSERTION", "rights": "NOASSERTION",
+			 "known_working": False, "excerpts": [placements]},
+		]
 	for test, run in runs(game).items():
 		result.append({"id": i[f"rt-{test}"], "kind": "runtime_scenario",
 		               "uri": f"external:pinmame-review-artifacts/{g['machine']}/session-20261005/runtime/{game}-{test}/run.json",
@@ -974,9 +1037,42 @@ def sources(game: str) -> list[dict[str, Any]]:
 	return result
 
 
+def normalized(x: float, y: float) -> tuple[float, float]:
+	return round(x / AMH_TABLE["width"], 6), round(y / AMH_TABLE["height"], 6)
+
+
+def place_amh(ins: list[dict[str, Any]], outs: list[dict[str, Any]]) -> None:
+	"""Give each America's Most Haunted device its LW table placement (observed: one recreation, no factory drawing)."""
+	groups = {"switch": SWITCH, "solenoid": SOLENOID, "lamp": LAMP}
+	by_binding = {(d["binding"]["group"], d["binding"]["device"]): d for d in ins + outs}
+	runtime = ids("amh")["rt-lanes"]
+	for entry in AMH_PLACEMENTS["placements"]:
+		item = by_binding[(groups[entry["group"]], entry["address"])]
+		if item["availability"] not in ("used", "optional"):
+			raise ValueError(f"{item['id']}: a placement for a device that is not used")
+		role = "sensor" if entry["group"] == "switch" else "emitter" if item["kind"] in ("lamp", "flasher", "rgb_lamp", "gi") else "effect"
+		x, y = normalized(entry["x"], entry["y"])
+		refs = [AMH_TABLE_SOURCE, AMH_SCRIPT_SOURCE, *([runtime] if entry["address"] in (61, 62, 63) and entry["group"] == "switch" else [])]
+		item["spatial"] = {"status": "observed", "placements": [
+			{"id": f"{item['id']}.{role}", "role": role, "space": "playfield", "x": x, "y": y, "provenance": prov(*refs, status="observed")}]}
+		if entry["group"] == "switch" and entry["address"] in (61, 62, 63):
+			item["physical"]["notes"] += (" The LW recreation names its top-lane triggers out of order (TrSw40 is its B lane, TrSw41 its O lane), "
+			                              "a defect of that table: its own code and lamps, and the ROM's lanes run, put this lane at "
+			                              f"{ {61: 'the left', 62: 'the middle', 63: 'the right'}[entry['address']] }.")
+	for (group, address), reason in AMH_UNPLACED.items():
+		item = by_binding[(group, address)]
+		if "spatial" in item:
+			raise ValueError(f"{item['id']}: both placed and listed as unplaced")
+	missing = [key for key, d in by_binding.items() if d["availability"] in ("used", "optional") and "spatial" not in d and key not in AMH_UNPLACED]
+	if missing:
+		raise ValueError(f"used America's Most Haunted devices with neither a placement nor a reason: {missing}")
+
+
 def build(game: str) -> dict[str, Any]:
 	g, i = GAMES[game], ids(game)
 	ins, outs = inputs(game), outputs(game)
+	if game == "amh":
+		place_amh(ins, outs)
 	catalog = load_json(ROOT / "catalog/pinmame.json")
 	record = next(d for d in catalog["drivers"] if d["id"] == game)
 	editions = "; ".join(f"IPDB {number} {title}" for number, title, _ in g["editions"])
@@ -995,7 +1091,8 @@ def build(game: str) -> dict[str, Any]:
 		"coverage": {"status": "partial", "missing": g.get("missing", ["mechanism_behavior", "output_semantics", "spatial_placement"]),
 		             "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated",
 		                            "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "validated",
-		                            "recreation_knowledge": "observed", "spatial_placement": "unknown", "runtime_observation": "observed",
+		                            "recreation_knowledge": "observed", "spatial_placement": "observed" if game == "amh" else "unknown",
+		                            "runtime_observation": "observed",
 		                            "causal_exercise": "observed"}},
 		"conflicts": [],
 	}
@@ -1035,6 +1132,15 @@ MECHANISM_GAP = ("the mechanism inventory names each mechanism's coils, switches
                  "open until a manual, a known-working table or a gameplay harness run supplies it.")
 
 
+AMH_SPATIAL_NOTE = ("the placements come from the LW recreation table (v2.0), whose layout the operator reviewed as faithful but "
+                    "which no factory location drawing or second independent table checks, so they stay observed. Its script ports the "
+                    "game code and names objects after the factory switch and lamp numbers; each object was taken from what its handler "
+                    "does (`table-placements.md` cites the line), and where the table's names disagree the ROM decides: its top-lane "
+                    "triggers are named out of order, and the lanes run proves the chart's 40 \"O\", 41 \"R\", 42 \"B\". The basement "
+                    "subway switches (54, 55) are modelled off the playfield and the two side RGB strips (51-56) are not tied to an LED, "
+                    "so those stay unplaced")
+
+
 def unknown_summary(machine: dict[str, Any]) -> str:
 	return ", ".join(f"{d['binding']['device']} ({d['label']})" for d in machine["outputs"] if d["availability"] == "unknown")
 
@@ -1047,7 +1153,7 @@ def knowledge(game: str, machine: dict[str, Any]) -> str:
 This definition covers the physical machine (IPDB {', '.join(str(e[0]) for e in g['editions'])}, model {g['model']}) and its one
 PinMAME driver, `{game}`, the {g['firmware']} code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but no placement exists, the mechanisms are inventoried
+tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but {'the placements come from one recreation table and are not yet checked against a factory drawing' if game == 'amh' else 'no placement exists'}, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
@@ -1089,24 +1195,37 @@ pulsing its trough feed coil repeatedly while no ball reaches the shooter lane.
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `{excerpt_dir(game)}/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: no placement (no factory-layout table is retained{' that runs the ROM; the retained VPX recreations are original-code tables' if game == 'amh' else ''});
+`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: {AMH_SPATIAL_NOTE if game == 'amh' else 'no placement (no factory-layout table is retained)'};
 {MECHANISM_GAP} The outputs whose fitment stays unknown: {unknown_summary(machine)}.
 """
 	return text
 
 
 def report(game: str, machine: dict[str, Any]) -> dict[str, Any]:
-	used = [d["id"] for d in machine["inputs"] + machine["outputs"] if d.get("availability") == "used" and "spatial" not in d]
+	used = [d["id"] for d in machine["inputs"] + machine["outputs"] if d.get("availability") in ("used", "optional") and "spatial" not in d]
 	unknown = [d["id"] for d in machine["outputs"] if d.get("availability") == "unknown"]
+	observed = [d["id"] for d in machine["inputs"] + machine["outputs"] if d.get("spatial", {}).get("status") == "observed"]
+	if game == "amh":
+		spatial = [
+			{"dimension": "spatial_placement", "records": observed,
+			 "reason": ("Placed from one recreation table, the LW v2.0 table, whose layout the operator reviewed as faithful; no factory "
+			            "location drawing or second independent factory-layout table is retained to check them, so every placement stays observed."),
+			 "resolution": "Spooky Pinball's playfield location drawing, a second independent recreation, or a measured playfield scan, overlaid as docs/SPATIAL.md describes."},
+			{"dimension": "spatial_placement", "records": used,
+			 "reason": " ".join(dict.fromkeys(AMH_UNPLACED.values())),
+			 "resolution": "A photograph of the basement subway and of the cabinet RGB strip harness, or a harness run that tells RGB1 from RGB2 by side."}]
+		decision = "partial; placements observed on the LW recreation table"
+	else:
+		spatial = [{"dimension": "spatial_placement", "records": used,
+		            "reason": "No retained factory-layout geometry: no VPX table that runs this ROM exists.",
+		            "resolution": "A factory-layout table, the playfield drawing with switch and lamp locations, or a measured playfield scan."}]
+		decision = "partial; no placement evidence is retained"
 	return {"format": "pinmame-spatial-blockers", "version": 1, "machine_id": GAMES[game]["machine"],
-	        "decision": "partial; no placement evidence is retained",
+	        "decision": decision,
 	        "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
 	        "unplaced_records": used,
 	        "blockers": [
-		        {"dimension": "spatial_placement", "records": used,
-		         "reason": "No retained factory-layout geometry: no VPX table that runs this ROM exists" + (
-			         ", and the retained America's Most Haunted VPX tables are original-code recreations whose geometry was not reviewed." if game == "amh" else "."),
-		         "resolution": "A factory-layout table, the playfield drawing with switch and lamp locations, or a measured playfield scan."},
+		        *spatial,
 		        {"dimension": "output_semantics", "records": unknown,
 		         "reason": ("The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of those outputs open; "
 		                    "an RGB or servo output listed here is one whose load no chart names while PinMAME can still publish state there."),

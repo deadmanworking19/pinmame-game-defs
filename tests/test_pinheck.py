@@ -221,6 +221,55 @@ class PinheckDefinitionTests(unittest.TestCase):
 				with self.subTest(damage=damage), self.assertRaises(ValueError):
 					pinheck_runtime.baseline_state(root, "dominos")
 
+	def test_amh_places_every_used_device_from_the_lw_table_or_says_why_not(self) -> None:
+		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['amh']['stem']}.json")
+		devices = {(d["binding"]["group"], d["binding"]["device"]): d for d in definition["inputs"] + definition["outputs"]}
+		placed = {key for key, d in devices.items() if d.get("spatial", {}).get("status") == "observed"}
+		used = {key for key, d in devices.items() if d["availability"] in ("used", "optional") and d.get("spatial", {}).get("status") != "not_applicable"}
+		self.assertEqual(used - placed, set(CURATOR.AMH_UNPLACED))
+		self.assertEqual(len(CURATOR.AMH_PLACEMENTS["placements"]), len(placed))
+		self.assertIn("spatial_placement", definition["coverage"]["missing"])
+		for key in placed:
+			for placement in devices[key]["spatial"]["placements"]:
+				with self.subTest(device=devices[key]["id"]):
+					self.assertEqual("observed", placement["provenance"]["status"])
+					self.assertIn(CURATOR.AMH_TABLE_SOURCE, placement["provenance"]["source_refs"])
+		# The top lanes follow the ROM, not the table's trigger names: the chart's 40 "O" is the left lane.
+		lanes = {address: devices[("pinmame.input.switch", address)]["spatial"]["placements"][0]["x"] for address in (61, 62, 63)}
+		self.assertLess(lanes[61], lanes[62])
+		self.assertLess(lanes[62], lanes[63])
+		steps = {step["label"]: step for step in RUNTIME["games"]["amh"]["runs"]["lanes"]["steps"]}
+		self.assertEqual([51], [lamp for lamp in steps["Close 61"]["active_lamps"] if 51 <= lamp <= 53])
+		self.assertEqual([51, 52], [lamp for lamp in steps["Close 62"]["active_lamps"] if 51 <= lamp <= 53])
+
+	def test_amh_lw_table_extraction_and_coordinates(self) -> None:
+		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		table = CURATOR.AMH_TABLE
+		base = Path(root) / table["relative"] if root else None
+		if base is None or not (base / table["filename"].removesuffix(".vpx")).is_dir():
+			self.skipTest("the retained LW extraction is not available")
+		import hashlib
+		extraction = base / table["filename"].removesuffix(".vpx")
+		paths = sorted((p for p in extraction.rglob("*") if p.is_file()), key=lambda p: p.relative_to(extraction).as_posix())
+		manifest = {"format": "pinmame-vpx-extraction-manifest", "version": 1,
+		            "files": [{"path": p.relative_to(extraction).as_posix(), "size": p.stat().st_size,
+		                       "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in paths]}
+		self.assertEqual(canonical_bytes(manifest), (base / f"{table['filename'].removesuffix('.vpx')}.manifest.json").read_bytes())
+		self.assertEqual((table["manifest_sha256"], table["file_count"], table["total_bytes"]),
+		                 (hashlib.sha256(canonical_bytes(manifest)).hexdigest(), len(paths), sum(p.stat().st_size for p in paths)))
+		self.assertEqual(table["script_sha256"], hashlib.sha256((extraction / "script.vbs").read_bytes()).hexdigest())
+		for entry in CURATOR.AMH_PLACEMENTS["placements"]:
+			item = json.loads((extraction / "gameitems" / f"{entry['object_kind']}.{entry['object']}.json").read_text(encoding="utf-8"))
+			item = item.get(entry["object_kind"], item)
+			if entry["read_from"] == "drag_point_centroid":
+				points = item["drag_points"]
+				x, y = sum(p["x"] for p in points) / len(points), sum(p["y"] for p in points) / len(points)
+			else:
+				x, y = item[entry["read_from"]]["x"], item[entry["read_from"]]["y"]
+			with self.subTest(object=entry["object"]):
+				self.assertEqual((round(x, 6), round(y, 6)), (entry["x"], entry["y"]))
+				self.assertTrue(0 <= entry["x"] <= table["width"] and 0 <= entry["y"] <= table["height"])
+
 	def test_scenarios_are_generated(self) -> None:
 		completed = subprocess.run([sys.executable, "-B", str(ROOT / "tools" / "pinheck_harness_scenarios.py"), "--check"],
 		                           capture_output=True, text=True, encoding="utf-8")

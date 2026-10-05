@@ -3,7 +3,7 @@
 This definition covers the physical machine (IPDB 6161, model AMH01) and its one
 PinMAME driver, `amh`, the V23 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests and named, but no placement exists, the mechanisms are inventoried
+tests and named, but the placements come from one recreation table and are not yet checked against a factory drawing, the mechanisms are inventoried
 without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
@@ -106,5 +106,5 @@ The balcony jump: 52 senses the approach, 51 a successful jump and 53 a ball tha
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/amh-*.json`. Remaining: no placement (no factory-layout table is retained that runs the ROM; the retained VPX recreations are original-code tables);
+`tools/harness-scenarios/pinheck/amh-*.json`. Remaining: the placements come from the LW recreation table (v2.0), whose layout the operator reviewed as faithful but which no factory location drawing or second independent table checks, so they stay observed. Its script ports the game code and names objects after the factory switch and lamp numbers; each object was taken from what its handler does (`table-placements.md` cites the line), and where the table's names disagree the ROM decides: its top-lane triggers are named out of order, and the lanes run proves the chart's 40 "O", 41 "R", 42 "B". The basement subway switches (54, 55) are modelled off the playfield and the two side RGB strips (51-56) are not tied to an LED, so those stay unplaced;
 the mechanism inventory names each mechanism's coils, switches and service-test positions, but no retained source gives its home and startup state, its timing, how the ROM resets it or how it fails, so mechanism behaviour stays open until a manual, a known-working table or a gameplay harness run supplies it. The outputs whose fitment stays unknown: 7 (Proto Bg 1), 8 (Proto Bg 1), 25 (Backbox GI Output 0), 26 (Backbox GI Output 1), 27 (Backbox GI Output 2), 28 (Backbox GI Output 3), 29 (Backbox GI Output 4), 30 (Backbox GI Output 5), 31 (Backbox GI Output 6), 32 (Backbox GI Output 7), 37 (Playfield GI Output 8), 38 (Playfield GI Output 9), 39 (Playfield GI Output 10), 40 (Playfield GI Output 11), 41 (Playfield GI Output 12), 42 (Playfield GI Output 13), 43 (Playfield GI Output 14), 44 (Playfield GI Output 15).

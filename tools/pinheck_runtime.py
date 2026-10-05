@@ -29,7 +29,7 @@ OUTPUT = ROOT / "tools" / "pinheck_runtime.json"
 TEXTS = ROOT / "tools" / "pinheck_frame_texts.json"
 SESSION = "session-20261005"
 GAMES = {
-	"amh": ("spooky-pinball.america-s-most-haunted.2014", ("switch", "solenoid", "lamp", "servo", "rgb", "game")),
+	"amh": ("spooky-pinball.america-s-most-haunted.2014", ("switch", "solenoid", "lamp", "servo", "rgb", "game", "lanes")),
 	"dominos": ("spooky-pinball.domino-s-spectacular-pinball-adventure.2016", ("switch", "solenoid", "lamp", "servo", "rgb", "game")),
 	"rzspook": ("spooky-pinball.rob-zombie-s-spookshow-international.2016", ("switch", "solenoid", "lamp", "servo", "rgb", "game")),
 	"jetsons": ("spooky-pinball.the-jetsons.2017", ("switch", "solenoid", "lamp", "rgb", "game")),

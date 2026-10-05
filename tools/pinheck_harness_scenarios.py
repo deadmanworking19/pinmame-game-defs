@@ -71,9 +71,31 @@ def game_scenario(game: str) -> dict:
 	        "watch_switches": [1, 94, *TROUGHS[game]], "actions": actions}
 
 
+# America's Most Haunted's top lanes: which of the O, R and B lamps (public 51-53) each lane switch lights in a game.
+LANE_SWITCHES = [61, 62, 63]
+
+
+def lanes_scenario(game: str) -> dict:
+	result = game_scenario(game)
+	result["actions"] = result["actions"][:2] + [
+		{"type": "wait", "seconds": 2.0, "label": "Game running"},
+		{"type": "set_switch", "switch": 84, "state": 0, "settle_s": 0.5, "label": "Ball leaves trough position 1 (84 open)"},
+		{"type": "set_switch", "switch": 82, "state": 1, "settle_s": 2.0, "label": "Ball on the shooter lane (82 closed)"},
+		{"type": "set_switch", "switch": 82, "state": 0, "settle_s": 2.0, "label": "Ball plunged (82 open)"}]
+	result["actions"] += [pulse(switch, f"Close {switch}", hold_ms=300, settle_s=1.5) for switch in LANE_SWITCHES]
+	result["notes"] = result["notes"].replace(
+		"is pressed in attract mode and the ball serve is observed once per second; nothing else is touched",
+		"is pressed in attract mode, the serve is simulated (84 opens, 82 closes, then opens as the ball is plunged), then "
+		f"the top-lane switches {LANE_SWITCHES} are closed one at a time to see which of the O, R and B lamps (public 51-53) "
+		"each one lights")
+	return result
+
+
 def scenario(game: str, test: str) -> dict:
 	if test == "game":
 		return game_scenario(game)
+	if test == "lanes":
+		return lanes_scenario(game)
 	actions = [{"type": "wait", "seconds": 3, "label": "Attract mode"}, pulse(ENTER, "Open the operator menu", settle_s=2.5)]
 	actions += [pulse(NEXT, f"Menu step {index + 1}") for index in range(MENUS[game][test])]
 	actions.append(pulse(ENTER, f"Start the {test} test", settle_s=2.5))
@@ -96,7 +118,7 @@ def scenario(game: str, test: str) -> dict:
 
 def artifacts() -> dict[Path, bytes]:
 	return {DIRECTORY / f"{game}-{test}.json": (json.dumps(scenario(game, test), indent=2) + "\n").encode()
-	        for game, tests in MENUS.items() for test in (*tests, "game")}
+	        for game, tests in MENUS.items() for test in (*tests, "game", *(("lanes",) if game == "amh" else ()))}
 
 
 def main() -> None:
