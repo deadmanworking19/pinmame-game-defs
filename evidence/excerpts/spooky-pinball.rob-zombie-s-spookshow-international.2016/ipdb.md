@@ -1,6 +1,6 @@
 # IPDB identity: Rob Zombie's Spookshow International
 
-Read from the IPDB machine pages saved on 2026-10-05 by primary Opus 5.5 curator, 2026-10-05.
+Read from the IPDB machine pages saved by the curator on 2026-10-05.
 
 - IPDB 6416: Standard Edition; 250 units (confirmed), February 2016.
 - IPDB 6417: Limited Edition; 50 units (confirmed); IPDB: a different backglass, different side rails and a numbered plaque.

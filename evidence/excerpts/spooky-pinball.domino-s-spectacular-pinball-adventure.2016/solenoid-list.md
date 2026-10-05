@@ -1,6 +1,6 @@
 # Ken Layton's solenoid list (2016_Domino_s_Spectacular_Pinball_Adventure_Standard_Edition_Domino_s_Pinball_Solenoid_List.pdf)
 
-Transcribed from the PDF's text layer and checked against its render by primary Opus 5.5 curator, 2026-10-05. One page; every row as printed, including Not Used rows.
+Transcribed from the PDF's text layer and checked against its render by the curator on 2026-10-05. One page; every row as printed, including Not Used rows.
 
 | SOL # | FUNCTION | WIRE COLOR | DRIVER | COIL # | BANK # | FUSE # |
 |---|---|---|---|---|---|---|

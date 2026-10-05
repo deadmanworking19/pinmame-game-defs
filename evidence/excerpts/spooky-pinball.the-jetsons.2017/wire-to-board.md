@@ -1,6 +1,6 @@
 # Jetson’s wire-to-board chart (JETSONS-WIRE-TO-BOARD.pdf)
 
-Transcribed by a Sonnet 5.5 worker from the chart's text layer (the RZ chart from its raster), every pin aligned by its tick; the Opus 5.5 curator spot-checked the coil banks, the cabinet header and the GI_1 header (at 300 dpi) against the render, not every pin. Uncertain readings are listed at the end.
+Transcribed from the chart's text layer (the RZ chart from its raster), every pin aligned by its tick; the coil banks, the cabinet header and the GI_1 header were spot-checked against the render at 300 dpi, not every pin. Uncertain readings are listed at the end.
 
 Pins are listed in tick order as drawn on the chart (connector header lines run left to right as printed, vertical headers top to bottom). '(blank)' means no wire text is printed at that tick; '(unlabeled tick)' means a tick with no pin label.
 

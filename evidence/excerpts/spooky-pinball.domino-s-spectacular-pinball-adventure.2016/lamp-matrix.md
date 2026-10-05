@@ -1,6 +1,6 @@
 # Domino’s LIGHT MATRIX (Dominos-Lamp-Matrix.pdf)
 
-Transcribed by a Sonnet 5.5 worker from the chart's text layer, each word placed by the cell number it sits under; the Opus 5.5 curator compared every cell with the 110 dpi render on 2026-10-05. Blank cells are written (blank).
+Transcribed from the chart's text layer, each word placed by the cell number it sits under, and every cell compared with the 110 dpi render on 2026-10-05. Blank cells are written (blank).
 
 Column headers (wire colours, as printed): COLUMN 7: YELLOW GRAY; COLUMN 6: YELLOW VIOLET; COLUMN 5: YELLOW BLUE; COLUMN 4: YELLOW GREEN; COLUMN 3: YELLOW BLACK; COLUMN 2: YELLOW WHITE; COLUMN 1: YELLOW RED; COLUMN 0: YELLOW BROWN
 

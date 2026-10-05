@@ -32,8 +32,8 @@ REVISION = "b7a60eb0dd9722f5397fc296987d94528ab111ff"
 REV12 = REVISION[:12]
 CHARTS = load_json(ROOT / "tools/pinheck_charts.json")
 RUNTIME = load_json(ROOT / "tools/pinheck_runtime.json")
-CURATOR = "primary Opus 5.5 curator, 2026-10-05"
-CHART_READER = "Sonnet 5.5 worker from the PDF text layer (raster for the RZ wiring chart), checked against the renders by the Opus 5.5 curator, 2026-10-05"
+CURATOR = "the curator on 2026-10-05"
+CHART_READER = "transcribed from the PDF text layer (the RZ wiring chart from its raster) and checked against the renders on 2026-10-05"
 PROFILE = "controller-profile.pinmame-pinheck"
 CATALOG = f"pinmame.catalog.{REV12}"
 CORE = f"pinmame.core.{REV12}"
@@ -906,7 +906,7 @@ def solenoid_list_excerpt(game: str) -> str:
 def ipdb_excerpt(game: str) -> str:
 	g = GAMES[game]
 	lines = "".join(f"- IPDB {number}: {title}; {detail}.\n" for number, title, detail in g["editions"])
-	return (f"# IPDB identity: {g['name']}\n\nRead from the IPDB machine pages saved on 2026-10-05 by {CURATOR}.\n\n{lines}\n"
+	return (f"# IPDB identity: {g['name']}\n\nRead from the IPDB machine pages saved by {CURATOR}.\n\n{lines}\n"
 	        f"MPU: PinHeck System. Model number {g['model']}. Every edition runs the same code update and shares the playfield; "
 	        "IPDB lists the editions' differences as cosmetic or, for The Jetsons' Special Edition, a backbox topper.\n")
 
@@ -988,7 +988,7 @@ def sources(game: str) -> list[dict[str, Any]]:
 		return {"id": i[kind], "kind": "manual", "uri": f"external:manuals/{record['relative_path']}", "sha256": record["sha256"],
 		        "locator": locator, "attribution": record["attribution"], "license": "NOASSERTION", "rights": "NOASSERTION",
 		        "original_filename": filename, "acquired_at": record["acquired_at"], "source_id": record["download_url"],
-		        "excerpts": [excerpt(game, f"{name}.md", "Whole chart", chart_excerpt(game, name), "model", reviewed, CHART_READER)]}
+		        "excerpts": [excerpt(game, f"{name}.md", "Whole chart", chart_excerpt(game, name), "mixed", reviewed, CHART_READER)]}
 
 	result = [
 		{"id": CATALOG, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": REVISION,

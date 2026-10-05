@@ -1,6 +1,6 @@
 # ROM service tests: The Jetsons (V4)
 
-Derived from tools/pinheck_runtime.json, which pins every retained run and frame by SHA-256; frame texts read by primary Opus 5.5 curator, 2026-10-05.
+Derived from tools/pinheck_runtime.json, which pins every retained run and frame by SHA-256; frame texts read by the curator on 2026-10-05.
 
 ## Switch Edge test: what the ROM drew for each closed public switch
 

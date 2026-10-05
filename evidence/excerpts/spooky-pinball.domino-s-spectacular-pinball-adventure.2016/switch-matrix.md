@@ -1,6 +1,6 @@
 # Domino’s SWITCH MATRIX (Dominos-Switch-Matrix.pdf)
 
-Transcribed by a Sonnet 5.5 worker from the chart's text layer, each word placed by the cell number it sits under; the Opus 5.5 curator compared every cell with the 110 dpi render on 2026-10-05. Blank cells are written (blank).
+Transcribed from the chart's text layer, each word placed by the cell number it sits under, and every cell compared with the 110 dpi render on 2026-10-05. Blank cells are written (blank).
 
 Column headers (wire colours, as printed): COLUMN 7: (blank); COLUMN 6: (blank); COLUMN 5: GREEN GRAY; COLUMN 4: GREEN VIOLET; COLUMN 3: GREEN BLUE; COLUMN 2: GREEN BLACK; COLUMN 1: GREEN YELLOW; COLUMN 0: GREEN WHITE
 

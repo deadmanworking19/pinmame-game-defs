@@ -1,6 +1,6 @@
 # IPDB identity: The Jetsons
 
-Read from the IPDB machine pages saved on 2026-10-05 by primary Opus 5.5 curator, 2026-10-05.
+Read from the IPDB machine pages saved by the curator on 2026-10-05.
 
 - IPDB 6577: Regular Edition; 75 units (confirmed), charcoal grey armour.
 - IPDB 6608: Special Edition; 25 units (confirmed), purple armour and a backbox topper.

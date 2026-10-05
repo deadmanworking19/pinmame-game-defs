@@ -1,6 +1,6 @@
 # IPDB identity: America's Most Haunted
 
-Read from the IPDB machine pages saved on 2026-10-05 by primary Opus 5.5 curator, 2026-10-05.
+Read from the IPDB machine pages saved by the curator on 2026-10-05.
 
 - IPDB 6161: America's Most Haunted; 150 units (confirmed), first produced March 21, 2014, two art packages (Reality Green and Animated Blue).
 
