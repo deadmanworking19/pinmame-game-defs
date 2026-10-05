@@ -65,7 +65,7 @@ def sha256_file(path: Path) -> str:
 	return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def excerpt(identifier: str, filename: str, locator: str, method: str = "mixed", reviewed: bool = False, transcribed_by: str = "Claude Sonnet 5.5 (Claude Code session 2026-10-02)") -> dict[str, Any]:
+def excerpt(identifier: str, filename: str, locator: str, method: str = "mixed", reviewed: bool = False, transcribed_by: str = "curator, 2026-10-02") -> dict[str, Any]:
 	path = EXCERPT_ROOT / filename
 	if not path.is_file():
 		raise FileNotFoundError(f"missing excerpt {path}")
@@ -143,7 +143,7 @@ def sources() -> list[dict[str, Any]]:
 		"locator": "2026-10-02 factory location-drawing callout check of DR.5 (switches) and DR.7 (lamps), PDF pages 7 and 9: every numbered box transcribed independently on the retained 200 dpi renders, verifier corrections recorded with their reasons, per-page control and callout fits; a table placement whose own box lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). The DR.9 coil page was transcribed too but cannot be fitted (its only top-down view is an inset cut off at the page edge showing three bumpers), so no coil or flasher placement is checked. Reads, overlays and generator are retained under review-artifacts with a pinned manifest.",
 		"license": "NOASSERTION", "attribution": "PinMAME game definitions contributors",
 	})
-	result.append(runtime_source(RT_SWITCH, "family-guy-fg_1200ag-switch-test-sweep.json", "Fresh-NVRAM fg_1200ag switch test: every matrix switch 1-64 held for 1.2 s; the ROM prints its own name and wire colours for the switch it reads closed. Names are transcribed in the ROM service-test excerpt.", [excerpt("excerpt.family-guy.rom-service-tests", "rom-service-tests.md", "ROM switch, dedicated-switch, coil and lamp test names transcribed from the retained DMD frames", transcribed_by="Claude Sonnet 5.5 (Claude Code session 2026-10-02); frames read visually and re-read by the runtime builder's OCR cross-check")]))
+	result.append(runtime_source(RT_SWITCH, "family-guy-fg_1200ag-switch-test-sweep.json", "Fresh-NVRAM fg_1200ag switch test: every matrix switch 1-64 held for 1.2 s; the ROM prints its own name and wire colours for the switch it reads closed. Names are transcribed in the ROM service-test excerpt.", [excerpt("excerpt.family-guy.rom-service-tests", "rom-service-tests.md", "ROM switch, dedicated-switch, coil and lamp test names transcribed from the retained DMD frames", transcribed_by="curator, 2026-10-02; frames read visually and re-read by the runtime builder's OCR cross-check")]))
 	result.append(runtime_source(RT_DEDICATED, "family-guy-fg_1200ag-dedicated-switch-sweep.json", "Fresh-NVRAM fg_1200ag switch test: public 65-72, 81-88 and -7 to -4 held for 1.2 s each."))
 	result.append(runtime_source(RT_COIL, "family-guy-fg_1200ag-coil-test-sweep.json", "Fresh-NVRAM fg_1200ag Single Coil Test: 35 selector positions each fired once; every fired position is paired with the public solenoid addresses that changed."))
 	result.append(runtime_source(RT_LAMP, "family-guy-fg_1200ag-lamp-test-sweep.json", "Fresh-NVRAM fg_1200ag Single Lamp Test: all 80 selector positions; every position is paired with the public lamp addresses that changed."))

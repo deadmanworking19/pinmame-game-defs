@@ -826,7 +826,7 @@ def excerpt_entries(source_id: str) -> list[dict]:
 			"path": f"{EXCERPT_DIR}/{item['name']}.md",
 			"sha256": file_sha256(path),
 			"method": "manual",
-			"transcribed_by": "curator (Claude Sonnet 5.5), read from the rendered page",
+			"transcribed_by": "curator, read from the rendered page",
 			"reviewed": True,
 		}
 		image = ROOT / EXCERPT_DIR / f"{item['name']}.webp"

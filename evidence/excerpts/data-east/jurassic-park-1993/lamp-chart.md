@@ -1,6 +1,6 @@
 # Lamp matrix and locations: printed pages 28-29 / PDF 32-33
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. The printed matrix names 6 only 'Map', 50 only '#2' and 48 '"C" Arch'; the matrix prints 'Raptor Pit 5 Milion' where the list prints '5 Million'; the list spells 18 'Left scoop Top' and 'Lite Extra Ball'.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. The printed matrix names 6 only 'Map', 50 only '#2' and 48 '"C" Arch'; the matrix prints 'Raptor Pit 5 Milion' where the list prints '5 Million'; the list spells 18 'Left scoop Top' and 'Lite Extra Ball'.
 
 | Address | Printed matrix name | Printed location-list name | Bulbs | Column | Row | Drive wire | Drive connection | Drive transistor | Return wire | Return connection | Return transistor | ROM single-lamp test name |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

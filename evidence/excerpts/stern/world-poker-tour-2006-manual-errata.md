@@ -1,6 +1,6 @@
 # World Poker Tour SW56 footnote reconciliation
 
-Primary Sol curator visually checked the original pages on 2026-09-30. Attribution: Stern Pinball, Inc.; license: NOASSERTION. Original PDFs and derived full-page renders remain outside Git.
+The curator visually checked the original pages on 2026-09-30. Attribution: Stern Pinball, Inc.; license: NOASSERTION. Original PDFs and derived full-page renders remain outside Git.
 
 | Retained manufacturer manual | Original PDF SHA-256 | PDF / printed page |
 | --- | --- | --- |

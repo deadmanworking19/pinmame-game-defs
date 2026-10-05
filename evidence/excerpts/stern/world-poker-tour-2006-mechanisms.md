@@ -10,7 +10,7 @@
 | PDF SHA-256 | `4cf31702805e75d37aef1c0c1624426000fec6cabf71a47e27691f5d5f8b6d01` |
 | License | NOASSERTION |
 | Method | Visual inspection of PDF pages and derived `tools/render_excerpt_image.py` renders; text extraction only secondarily cross-checked. |
-| Transcriber / model | GPT Terra manual-research worker (Codex session 2026-09-30) |
+| Transcriber | manual research pass, 2026-09-30 |
 | Review distinction | Images/pages named below were visually checked by the transcriber. Every fact remains a candidate pending high-tier curation. |
 | Spatial rule | The manual’s “upper/lower,” “left/right,” “above/below P/F,” and drawing statements are kept as source language; no x/y coordinates are supplied or inferred. |
 
@@ -62,7 +62,7 @@ All images are in `terra-renders/assemblies/`, include source PDF one-based page
 
 ## Contact construction reconciliation
 
-Primary Sol curator visually checked PDF p98 / printed p74 and p101 / printed p77 on 2026-09-30. The p98 10-point assembly drawing shows the exposed stacked leaf blades of slingshot switch 180-5054-00, fitted at SW14/SW41. The p6 chart identifies the same exact part at SW26/SW27, two contacts per slingshot; the leaf classification follows the part's drawn construction, not the slingshot label alone.
+The curator visually checked PDF p98 / printed p74 and p101 / printed p77 on 2026-09-30. The p98 10-point assembly drawing shows the exposed stacked leaf blades of slingshot switch 180-5054-00, fitted at SW14/SW41. The p6 chart identifies the same exact part at SW26/SW27, two contacts per slingshot; the leaf classification follows the part's drawn construction, not the slingshot label alone.
 
 The p101 shooter-tube parts table explicitly calls 180-5010-01 a micro switch with a 1-5/8-inch flat actuator. The p6 chart identifies that same part at SW9/SW51/SW53, so all three share this construction. In contrast, p6 gives only 180-5015-04 for bumper switches SW30–32; no retained WPT assembly drawing establishes their contact construction, which stays unknown.
 

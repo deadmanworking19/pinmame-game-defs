@@ -1,6 +1,6 @@
 # Assembly and parts regions
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Repeated item numbers and generic alternates are retained; do not infer fitment from a generic part list alone.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Repeated item numbers and generic alternates are retained; do not infer fitment from a generic part list alone.
 
 ## PDF 37 / printed page 33: Playfield - Major Assemblies
 

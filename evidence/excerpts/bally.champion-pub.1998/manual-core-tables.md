@@ -1,6 +1,6 @@
 # Champion Pub manual table transcription
 
-Source PDF SHA-256: `2f7029091efbb371d612504dbd09d44b7eda3528e896c924fb8fccef1afc1dbf`; path: manuals/by-machine/bally.champion-pub.1998/ipdb-4358/Bally_1998_The_Champion_Pub_Manual_OCR_searchable.pdf (166 PDF pages). Transcribed by Codex GPT-6 delegated mechanical extraction worker. Curator review: `true` (primary curator visually checked every accepted row against native render pages 120, 124–125 and 127–129).
+Source PDF SHA-256: `2f7029091efbb371d612504dbd09d44b7eda3528e896c924fb8fccef1afc1dbf`; path: manuals/by-machine/bally.champion-pub.1998/ipdb-4358/Bally_1998_The_Champion_Pub_Manual_OCR_searchable.pdf (166 PDF pages). Transcribed by a delegated mechanical extraction pass. Curator review: `true` (primary curator visually checked every accepted row against native render pages 120, 124–125 and 127–129).
 
 Full-PDF text extraction was used only to locate candidate table pages. Literal table content was transcribed from native-resolution rendered page images and visually inspected. OCR was not used to fill cells. Printed blanks, dash strings, repeated item numbers, and merged cells are represented explicitly.
 

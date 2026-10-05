@@ -1,6 +1,6 @@
 # Coil / flash-lamp schematic: printed page 31 / PDF 35
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. The drawing (retained crop) is the claim; this text states what was read from it.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. The drawing (retained crop) is the claim; this text states what was read from it.
 
 - Drives 1-8: CPU board 'SIDE L 0n / SIDE R 0n' transistor Q46..Q39 -> GRY wire -> PPB board J1 pin n; from the left/right relay the left side reaches the coil (VIO wire from J2, coil 'BRN' return at J6-3 +32 VL) and the right side the flash-lamp bank (BLK wire from J9, bulbs returned on ORG to J6-4/5 +32 VR).
 - 1 TOP EJECT 23-840, 2 BALL RELEASE 23-840, 3 AUTO LAUNCH 23-840 (WHT-ORG -> J8 Q5 TIP SEC -> VIO-ORG, YEL-VIO to J7-8/9), 4 LEFT SCOOP 23-840, 5 RIGHT VUK 23-840 (WHT-GRN -> J8 Q3 TIP SEC -> VIO-GRN, YEL-VIO to J7-8/9), 6 DIVERTER 23-840, 7 DINO EJECT 23-840, 8 KNOCKER 23-840.

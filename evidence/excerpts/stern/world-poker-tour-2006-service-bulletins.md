@@ -1,6 +1,6 @@
 # Stern World Poker Tour service bulletins 163–165
 
-Curator GPT-6-Sol visually checked PDF page 1 of each retained Stern bulletin on 2026-09-30, with page 2 of bulletin 164 checked against its text extraction. All are manufacturer documents, rights NOASSERTION, retained externally under `manuals/by-machine/stern.world-poker-tour.2006/`. Original Stern publication links and acquisition times are in the external manual manifest. These compact facts are not a copy of the PDFs.
+The curator visually checked PDF page 1 of each retained Stern bulletin on 2026-09-30, with page 2 of bulletin 164 checked against its text extraction. All are manufacturer documents, rights NOASSERTION, retained externally under `manuals/by-machine/stern.world-poker-tour.2006/`. Original Stern publication links and acquisition times are in the external manual manifest. These compact facts are not a copy of the PDFs.
 
 | Source and SHA-256 | Exact locator | Material WPT assertion |
 | --- | --- | --- |

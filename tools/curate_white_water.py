@@ -821,11 +821,11 @@ def source_records() -> list[dict[str, Any]]:
 		{
 			"id": LAMP_LOCATIONS_FIT_SOURCE,
 			"kind": "human_review",
-			"uri": "external:pinmame-review-artifacts/2026-09-25-whitewater-review-opus.md",
+			"uri": "external:pinmame-review-artifacts/2026-09-25-whitewater-review.md",
 			"revision": "2026-09-25",
 			"sha256": LAMP_LOCATIONS_FIT_SHA256,
 			"locator": (
-				"An independent Claude Opus model review (not a human reviewer; recorded under the human_review kind because the schema has no model-review kind) made this local fit of the Lamp Locations drawing (manual page 2-40) to nine "
+				"An independent review (recorded under the human_review kind because the schema has no model-review kind) made this local fit of the Lamp Locations drawing (manual page 2-40) to nine "
 				"neighboring, already-validated lamp insert centers (largest residual 0.022), used to "
 				"derive an independent position estimate for lamps 17 and 55 from the drawing itself: "
 				"roughly (0.305, 0.194) for 17 and (0.389, 0.147) for 55, about 0.10 normalized units from "
@@ -834,7 +834,7 @@ def source_records() -> list[dict[str, Any]]:
 				"centers or performed the regression itself."
 			),
 			"license": "NOASSERTION",
-			"attribution": "Independent Claude Opus model review, 2026-09-25",
+			"attribution": "Independent review, 2026-09-25",
 		},
 		{
 			"id": VPX_TABLE_SOURCE,

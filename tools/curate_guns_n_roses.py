@@ -528,7 +528,7 @@ def mechanisms(ins: list, outs: list) -> list:
 
 
 def table_text(title: str, headers: list, rows: list) -> str:
-    return (f"# {title}\n\nVisually checked against the factory PDF by primary Sol curator "
+    return (f"# {title}\n\nVisually checked against the factory PDF by the curator "
             "(2026-09-30). Literal full table region; zero-population and Not Used rows "
             "are retained. OCR was navigation only.\n\n"
             + "| " + " | ".join(headers) + " |\n"
@@ -565,7 +565,7 @@ def transcriptions() -> dict[str, str]:
     }
     result["assembly-tables.md"] = (
         "# Complete checked stock and assembly regions\n\nSource: original main manual; "
-        "PDF page number precedes each region. Visually checked by primary Sol "
+        "PDF page number precedes each region. Visually checked by the "
         "curator, 2026-09-30. Repeated item numbers and generic alternate parts are "
         "retained; do not infer fitment from a generic BOM alone.\n\n"
         + "\n\n".join(f"## PDF {page} / printed {page-4}\n\n```text\n{text}\n```"
@@ -668,7 +668,7 @@ The printed flipper table's power connector cells disagree with these
 schematic labels; no unverified power-pin cell is promoted onto a virtual alias.
 
 Transcription method: visually checked native-DPI full-page PDF renders,
-primary Sol curator, 2026-09-30; candidate OCR used only to find regions.
+the curator, 2026-09-30; candidate OCR used only to find regions.
 """
     result["transport-and-runtime.md"] = """# Exact runtime and transport contract
 
@@ -755,7 +755,7 @@ def excerpt(name: str, locator: str, text: str) -> dict:
     return {"id": "excerpt.guns-n-roses."+name.removesuffix(".md"), "locator": locator,
             "path": f"{EXCERPTS}/{name}", "sha256": hashlib.sha256(text.encode()).hexdigest(),
             "method": "manual",
-            "transcribed_by": "primary Sol curator, 2026-09-30", "reviewed": True}
+            "transcribed_by": "curator, 2026-09-30", "reviewed": True}
 
 
 IMAGES = {

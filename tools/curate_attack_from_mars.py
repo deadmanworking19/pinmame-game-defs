@@ -2078,7 +2078,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 					"insert-panel strings assert no bulb count at all."
 				),
 				"independent_review_dissent": (
-					"The independent gpt-5.6-sol review of contribution HEAD 7faacbb held that this unknown "
+					"The independent review of contribution HEAD 7faacbb held that this unknown "
 					"should block promotion and that the machine ought to stay partial until the three bulbs are "
 					"resolved. The maintainer decided to promote, on the grounds that every other dimension is "
 					"complete and validated and that the identical class of unknown was already accepted for "

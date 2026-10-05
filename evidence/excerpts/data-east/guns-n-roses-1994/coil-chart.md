@@ -1,6 +1,6 @@
 # Full solenoid/flash table: printed page 37 / PDF 41
 
-Visually checked against the factory PDF by primary Sol curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
+Visually checked against the factory PDF by the curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
 
 | No | Name | D.T. | Board | Control wire | Control connection | Power wire | Power connection | Voltage | Coil / bulb |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -37,7 +37,7 @@ Visually checked against the factory PDF by primary Sol curator (2026-09-30). Li
 
 # Full flipper-solenoid table: printed page 37 / PDF 41
 
-Visually checked against the factory PDF by primary Sol curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
+Visually checked against the factory PDF by the curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
 
 | Flipper | Coil | Cabinet | SW drive | SW return | EOS | Ground | Power input | Holding input | Outputs | Coil wires |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

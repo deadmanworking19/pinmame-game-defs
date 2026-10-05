@@ -13,8 +13,8 @@ Status: **curator-checked against rendered factory pages 6, 8, 10, and 125; addi
 | Discovery URL / downloaded | https://sternpinball.com/manuals/ / 2026-09-30 UTC |
 | Attribution / license | Stern Pinball / NOASSERTION |
 | Method | Visual transcription from derived renders made with `tools/render_excerpt_image.py`; existing PDF text layer used only as a secondary check. |
-| Transcriber / model | GPT Terra manual-research worker (Codex session 2026-09-30); Sol curator corrected selected cells against factory renders |
-| Review distinction | Sol curator visually checked the switch, lamp, coil and GI source pages. Table transcription remains secondary to the retained factory PDF. |
+| Transcriber | manual research pass, 2026-09-30; the curator corrected selected cells against factory renders |
+| Review distinction | The curator visually checked the switch, lamp, coil and GI source pages. Table transcription remains secondary to the retained factory PDF. |
 | Blank-cell convention | `— (printed blank)` means the source cell was visibly blank. It is never filled from a neighboring/repeated row. |
 
 ## Switch matrix grid (01–64)

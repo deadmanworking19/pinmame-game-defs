@@ -96,4 +96,4 @@ The printed flipper table's power connector cells disagree with these
 schematic labels; no unverified power-pin cell is promoted onto a virtual alias.
 
 Transcription method: visually checked native-DPI full-page PDF renders,
-primary Sol curator, 2026-09-30; candidate OCR used only to find regions.
+the curator, 2026-09-30; candidate OCR used only to find regions.

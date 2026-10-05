@@ -1,6 +1,6 @@
 # Switch matrix and parts: printed pages 32-33 / PDF 36-37
 
-Visually checked against the factory PDF by primary Sol curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
+Visually checked against the factory PDF by the curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
 
 | Address | Name | Part | Column | Row | Drive | Drive pin | Transistor | Return | Return pin |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

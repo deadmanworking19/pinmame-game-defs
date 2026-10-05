@@ -1,6 +1,6 @@
 # Coil / flash-lamp drives 1-8: printed page 31 / PDF 35, drive schematic
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. Drives 1-8 drive a left-set coil and a right-set flash-lamp bank through the PPB board's left/right relay (public 10). Drives 3 and 5 pass through PPB board transistors Q5 and Q3 ('TIP SEC') at J8 and connect at J7; the printed PPB boxes show +32 VL / +32 VR. The J2 and J9 pin boxes are in the retained crop (coil-schematic) and are not transcribed.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. Drives 1-8 drive a left-set coil and a right-set flash-lamp bank through the PPB board's left/right relay (public 10). Drives 3 and 5 pass through PPB board transistors Q5 and Q3 ('TIP SEC') at J8 and connect at J7; the printed PPB boxes show +32 VL / +32 VR. The J2 and J9 pin boxes are in the retained crop (coil-schematic) and are not transcribed.
 
 | Drive | Printed left-set coil | ROM cycle-test coil name | CPU transistor | CPU connector pin | Control wire to PPB J1 | Coil lead wire | Flash-lamp lead wire | Printed right-set bulb text | ROM cycle-test flash name |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -15,7 +15,7 @@ Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator,
 
 # Drives 9-16: printed page 31 / PDF 35 and CPU CN12 (PDF 51)
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
 
 | Drive | Printed name | ROM cycle-test name | CPU transistor | CPU connection | Wire | What it switches |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -30,7 +30,7 @@ Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator,
 
 # CPU Controlled Auxiliary Solenoids: printed page 30 / PDF 34
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
 
 | Coil | Printed name | Control wire | Control connection | Power wire | Power connection | Drive transistor | Printed coil type |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -43,7 +43,7 @@ Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator,
 
 # Flipper solenoids: printed page 30 / PDF 34
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only.
 
 | Coil | Part | Flipper GND (CPU to flip switch) | Flip switch to flip PCB | Power lines flip PCB to coil | Printed coil type | Power input to flip PCB |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -53,7 +53,7 @@ Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator,
 
 # Coil parts from the unique-parts assembly pages: printed pages 33-43 / PDF 41-47
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. The schematic prints coil type 23-840 for the whole left set; the unique-parts pages give each assembly's own coil.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01. Literal full table region; Not Used rows and printed misprints are retained. OCR was navigation only. The schematic prints coil type 23-840 for the whole left set; the unique-parts pages give each assembly's own coil.
 
 | Coil | Assembly | Coil printed on that page | Coil part |
 | --- | --- | --- | --- |

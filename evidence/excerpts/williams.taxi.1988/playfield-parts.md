@@ -2,7 +2,7 @@
 
 Williams_1988_Taxi_Manual.pdf, PDF page 65, printed TAXI 62, **Playfield Parts**. Source PDF SHA-256: `7620bb010bb4188d6cb7356a3682f52efe2888e65686e7f7154ec618840751dd`.
 
-Literal factual transcription visually checked by GPT-6.1-Sol against the retained native render `renders/Williams_1988_Taxi_Manual-page-65-native.webp` (SHA-256 `771a811d00499caf1d7b13cba7d5f471a12af708137009498138778288a2912b`). OCR is a search candidate, not transcription authority. Source order is the left table (1..40, including subrows), then the lower-right continuation (41..52, including subrows).
+Literal factual transcription visually checked by the curator against the retained native render `renders/Williams_1988_Taxi_Manual-page-65-native.webp` (SHA-256 `771a811d00499caf1d7b13cba7d5f471a12af708137009498138778288a2912b`). OCR is a search candidate, not transcription authority. Source order is the left table (1..40, including subrows), then the lower-right continuation (41..52, including subrows).
 
 The first three columns preserve the printed cells. The separate **Parent item (normalized)** column associates each lettered subrow with its preceding numbered item; it repeats the item's own number on a primary row. No item numbers have been inserted into the literal **Item** cells. `[blank]` denotes a genuinely blank printed cell; this table has none. Item 7's printed asterisk is retained; no footnote text is printed on this page. Spelling, capitalization and the distinct descriptions on subrows 3 a) and 47 a) are retained.
 

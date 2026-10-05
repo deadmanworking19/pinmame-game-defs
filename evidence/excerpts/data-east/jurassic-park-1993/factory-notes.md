@@ -1,6 +1,6 @@
 # Factory notes read from the manual
 
-Visually checked against the rendered factory PDF by primary Sonnet 5.5 curator, 2026-10-01.
+Visually checked against the rendered factory PDF by the curator, 2026-10-01.
 
 ## PDF 2 / front matter: CPU jumper table and fuse chart
 

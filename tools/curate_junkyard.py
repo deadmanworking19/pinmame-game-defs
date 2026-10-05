@@ -693,7 +693,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/switch-matrix.md",
 					"sha256": "ec89129e4b28e82ddcee93024b53d7d0969956ff616f5ae1c96f31039ec5d0f0",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page; cross-checked against two repeated copies",
+					"transcribed_by": "transcribed from the rendered page; cross-checked against two repeated copies",
 					"reviewed": False,
 				},
 				{
@@ -702,7 +702,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
 					"sha256": "14669b28fa11a9f840a3e932de914fb4fb7f6aae6c1e4400402a18c1eebcbf59",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
+					"transcribed_by": "transcribed from the rendered page",
 					"reviewed": False,
 				},
 				{
@@ -711,7 +711,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/lamp-matrix.md",
 					"sha256": "3ffc96bfbbbdaa6eef8ed918678010fb3259fcca68700dd32d8837c293b469bf",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page; cross-checked against repeated copies",
+					"transcribed_by": "transcribed from the rendered page; cross-checked against repeated copies",
 					"reviewed": False,
 				},
 				{
@@ -720,7 +720,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/lamp-locations.md",
 					"sha256": "70815d934c020da7f47a47d47096ee673ca2fdec6b97d326eaee05311fbbefc6",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
+					"transcribed_by": "transcribed from the rendered page",
 					"reviewed": False,
 				},
 				{
@@ -729,7 +729,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/solenoid-flasher-table.md",
 					"sha256": "ce85a949fb9f252721966d672bbf12caf90c51b7711ae024dc705564196939ec",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page; cross-checked against the front-matter and Section-3 copies",
+					"transcribed_by": "transcribed from the rendered page; cross-checked against the front-matter and Section-3 copies",
 					"reviewed": False,
 				},
 				{
@@ -738,7 +738,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/solenoid-locations.md",
 					"sha256": "8216b87751a54358b91014bba29dc70b2404c4700aaa359a74ec5379ebf36f1e",
 					"method": "model",
-					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
+					"transcribed_by": "transcribed from the rendered page",
 					"reviewed": False,
 				},
 				{
@@ -747,7 +747,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/wrecking-ball-back-panel-parts.md",
 					"sha256": "5021574af638a6f4b55b0c29377036371cd885549a8b901f002af8ec166850d5",
 					"method": "manual",
-					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"transcribed_by": "curator read the native 200 dpi render",
 					"reviewed": True,
 				},
 				{
@@ -763,7 +763,7 @@ def source_records() -> list[dict[str, Any]]:
 						"grayscale, 1375x968 WebP quality 80"
 					),
 					"method": "manual",
-					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"transcribed_by": "curator read the native 200 dpi render",
 					"reviewed": True,
 				},
 				{
@@ -772,7 +772,7 @@ def source_records() -> list[dict[str, Any]]:
 					"path": "evidence/excerpts/williams.junkyard.1996/upper-playfield-parts.md",
 					"sha256": "e1d3d56792778fd8282767275b91f8a77c8e8e70d3ba096cc8391e6274f44046",
 					"method": "manual",
-					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"transcribed_by": "curator read the native 200 dpi render",
 					"reviewed": True,
 				},
 				{
@@ -788,7 +788,7 @@ def source_records() -> list[dict[str, Any]]:
 						"grayscale, 967x561 WebP quality 80"
 					),
 					"method": "manual",
-					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"transcribed_by": "curator read the native 200 dpi render",
 					"reviewed": True,
 				},
 				{
@@ -804,7 +804,7 @@ def source_records() -> list[dict[str, Any]]:
 						"grayscale, 764x429 WebP quality 80"
 					),
 					"method": "manual",
-					"transcribed_by": "curating model (Claude Opus 5.5) read the native 200 dpi render",
+					"transcribed_by": "curator read the native 200 dpi render",
 					"reviewed": True,
 				},
 			],
@@ -1939,8 +1939,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns "
 		"controller topology; the retained table supplies geometry.",
 		"- The retained manual (146 pages, 16-50052-101 FINAL) carries a usable OCR text layer but every "
-		"printed table used here was read from 200 dpi renders and transcribed (by a vision-capable model "
-		"worker) into `evidence/excerpts/williams.junkyard.1996/`, cross-checked across the repeated copies.",
+		"printed table used here was read from 200 dpi renders and transcribed into "
+		"`evidence/excerpts/williams.junkyard.1996/`, cross-checked across the repeated copies.",
 		"- The trough and lock/scoop multi-position sensors have no dedicated playfield trigger objects "
 		"because the retained script's cvpmBallStack helpers model ball sensing purely as an internal switch "
 		"array. Those addresses are explicit documented projections onto the real kicker object that carries "
@@ -1967,7 +1967,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"Junk Yard is a deterministic partial. The lamp-86 plane conflict and the trough/crane projections "
 		"must be resolved before promotion. Before any promotion, a "
-		"vision-capable curator must also visually re-check the six manual transcriptions (recorded "
+		"curator must also visually re-check the six manual transcriptions (recorded "
 		"`reviewed: false` / `method: model`) against the rendered pages, since the manual-derived device "
 		"labels and wiring rest on those unchecked transcriptions.",
 		"",

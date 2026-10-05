@@ -1,6 +1,6 @@
 # Complete checked stock and assembly regions
 
-Source: original main manual; PDF page number precedes each region. Visually checked by primary Sol curator, 2026-09-30. Repeated item numbers and generic alternate parts are retained; do not infer fitment from a generic BOM alone.
+Source: original main manual; PDF page number precedes each region. Visually checked by the curator, 2026-09-30. Repeated item numbers and generic alternate parts are retained; do not infer fitment from a generic BOM alone.
 
 ## PDF 52 / printed 48
 

@@ -559,7 +559,7 @@ class JunkyardDefinitionTests(unittest.TestCase):
 
 			digest = hashlib.sha256(path.read_bytes()).hexdigest()
 			self.assertEqual(excerpt["sha256"], digest, excerpt["id"])
-			# Vision-worker transcriptions stay unreviewed until a curator checks them; the crane-page
+			# Delegated transcriptions stay unreviewed until a curator checks them; the crane-page
 			# excerpts were read by the curator from the native render.
 			self.assertEqual(excerpt["method"] == "manual", excerpt["reviewed"], excerpt["id"])
 			if "image" in excerpt:

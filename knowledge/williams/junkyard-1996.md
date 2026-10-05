@@ -15,11 +15,10 @@ retained script is runtime/causality ground truth, the Williams manual is
 physical-construction/wiring/quantity ground truth, pinned PinMAME source is
 controller-topology ground truth, and the retained table supplies geometry.
 The retained manual (146 pages) carries a usable OCR text layer, but every
-printed table cited here was read from 200 dpi renders and transcribed by a
-vision-capable model worker into
+printed table cited here was read from 200 dpi renders and transcribed into
 `evidence/excerpts/williams.junkyard.1996/`, cross-checked across the repeated
 copies (front matter, printed 2-38, and Section 3). **These transcriptions are
-recorded with `reviewed: false` / `method: model`** — a vision-capable curator
+recorded with `reviewed: false` / `method: model`** — a curator
 has not yet visually re-checked them against the rendered pages. The
 polarity, spatial, controller-topology, and mechanism-causality conclusions
 rest on pinned PinMAME source, the retained VPX geometry/script, and the

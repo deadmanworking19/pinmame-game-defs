@@ -1,6 +1,6 @@
 # Lamp matrix: printed pages 34-35 / PDF 38-39
 
-Visually checked against the factory PDF by primary Sol curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
+Visually checked against the factory PDF by the curator (2026-09-30). Literal full table region; zero-population and Not Used rows are retained. OCR was navigation only.
 
 | Address | Name | Column | Row | Drive | Drive pin | Transistor | Return | Return pin | Return transistor |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
