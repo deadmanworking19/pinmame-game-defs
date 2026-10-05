@@ -854,7 +854,14 @@ const derivedFamilies = [...familyBuckets.entries()]
 	.filter(([, members]) => members.length > 1)
 	.map(([key, members]) => {
 		const sorted = members.slice().sort((a, b) => (a.year ?? 0) - (b.year ?? 0) || a.name.localeCompare(b.name))
-		const title = commonTitle(sorted.map(m => m.name))
+		return { key, sorted, title: commonTitle(sorted.map(m => m.name)) }
+	})
+	// A short prefix can be a manufacturer's house style rather than a title:
+	// Recel and Inder name unrelated games `r_*`. Members that share no title
+	// are not editions of one game, and an empty title would also become an
+	// empty slug, a `/families/` route that does not exist.
+	.filter(({ title }) => title.length > 0)
+	.map(({ key, sorted, title }) => {
 		let slug = slugify(title)
 		if (familySlugs.has(slug)) slug = slugify(`${title}-${key.split('::')[1]}`)
 		familySlugs.add(slug)

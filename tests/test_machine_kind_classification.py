@@ -52,9 +52,10 @@ class MachineKindClassificationTests(unittest.TestCase):
 	def test_non_game_kinds_are_excluded_from_physical_coverage(self) -> None:
 		report = build_coverage_report(ROOT)
 		self.assertEqual(self.catalog["summary"]["game_count"], report["machine_count"])
-		self.assertEqual(13, report["non_game_record_count"])
+		self.assertEqual(14, report["non_game_record_count"])
 		self.assertEqual(13, sum(1 for machine in self.catalog["machines"] if machine["machine_kind"] == "diagnostic_software"))
-		self.assertEqual(775, report["machine_count"])
+		self.assertEqual(1, sum(1 for machine in self.catalog["machines"] if machine["machine_kind"] == "system_software"))
+		self.assertEqual(795, report["machine_count"])
 
 
 if __name__ == "__main__":

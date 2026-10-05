@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import subprocess
 import json
 from pathlib import Path
 
@@ -220,7 +221,7 @@ def build(review_root: Path) -> dict:
 			"snapshot_count": len(run["snapshots"]), "retained_from": f"taxi-1988/runtime-pinned-8371478/{name}.json"})
 	return {"format": "pinmame-machine-evidence", "version": 1, "extractor": {"id": "taxi-runtime-evidence", "version": 3},
 		"source": {"kind": "runtime_scenario", "repository": "https://github.com/vpinball/pinmame-game-defs",
-			"revision": HARNESS_REVISION, "path": "tools/run_pinmame_harness.py", "sha256": hashlib.sha256((ROOT / "tools/run_pinmame_harness.py").read_bytes()).hexdigest(), "license": "MIT", "quality": "full"},
+			"revision": HARNESS_REVISION, "path": "tools/run_pinmame_harness.py", "sha256": hashlib.sha256(_harness_at_revision()).hexdigest(), "license": "MIT", "quality": "full"},
 		"driver_ids": ["taxi_l4"], "machine_ids": ["williams.taxi.1988"], "switches": [], "outputs": [], "states": [], "mechanisms": [],
 		"recreation_notes": [],
 		"runtime": {"game": "taxi_l4", "rom_archive_sha256": ROM_SHA256,
@@ -231,6 +232,12 @@ def build(review_root: Path) -> dict:
 				"runs": {"l4-coil": {"diagnostic_checkpoints": _checkpoints(coil), "solenoid_addresses_seen": coil_seen},
 					"l4-labels-v3": {"diagnostic_checkpoints": _checkpoints(labels), "named_action_observations": checks,
 						"limitation": "Static host stimuli; physical movement, socket population and prototype hardware are not measured."}}}}}
+
+
+def _harness_at_revision() -> bytes:
+	"""The runner as of HARNESS_REVISION, the version these runs were recorded with, not the working copy."""
+	return subprocess.run(["git", "-C", str(ROOT), "show", f"{HARNESS_REVISION}:tools/run_pinmame_harness.py"],
+		check=True, capture_output=True).stdout
 
 
 def check(review_root: Path) -> None:

@@ -21,6 +21,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## Drivers this record holds
 
 - `sleicpin` (1993, Sleic (Spain)).
+- `sleicpnf` (1993, Sleic (Spain), clone of `sleicpin`).
 
 ## What a curator must establish next
 

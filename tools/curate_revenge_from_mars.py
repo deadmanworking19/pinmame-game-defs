@@ -11,14 +11,17 @@ from pinmame_game_defs.jsonio import write_json, write_text
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
-CATALOG_SOURCE = "pinmame.catalog.8371478a7640"
-CORE_SOURCE = "pinmame.core.8371478a7640"
+PINMAME_REVISION = "b7a60eb0dd9722f5397fc296987d94528ab111ff"
+# The retained runtime traces were recorded on a LibPinMAME built from the previous pin and stay
+# attributed to it: their opto levels, service-key presses and video depth are that revision's.
+RUNTIME_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+CATALOG_SOURCE = "pinmame.catalog.b7a60eb0dd97"
+CORE_SOURCE = "pinmame.core.b7a60eb0dd97"
 MANUAL_SOURCE = "manual.rfm.operations-1999"
 REJECTED_VPX_SOURCE = "vpx-table.attack-and-revenge-v600-rejected"
 MANUAL_SHA256 = "6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df"
 MANUAL_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-service-tables.md"
-MANUAL_EXCERPT_SHA256 = "e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b"
+MANUAL_EXCERPT_SHA256 = "7d123a3295b57c7ee6f4b2436e6dcba55aef4dc36fc1d9509b96f740516b9f2f"
 MANUAL_POLARITY_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-switch-polarity.md"
 MANUAL_POLARITY_EXCERPT_SHA256 = "ebeaa81f508e100314320e2014e86f0cff8bfc8726e5c47d103f0499047db88a"
 MANUAL_LOCATION_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md"
@@ -395,7 +398,7 @@ def build_inputs() -> list[dict[str, object]]:
 			physical["assembly_part_number"] = construction["assembly_part_number"]
 		if availability != "unused":
 			physical["notes"] = (
-				"PinMAME's P2K driver publishes this per-game opto at its raw active-low level: beam blocked/active is 0 and inactive is 1. A recreation must drive that public level without applying a controller-wide inversion."
+				"Rest-closed opto: the board reads it raw active-low, and PinMAME's P2K driver declares it in coreGlobals.invSw (MACHINE_INIT(p2k) via core_updInvSw), so the public switch is active-high like every other P2K input: beam blocked/active is 1 and clear/inactive is 0. Consume it exactly as delivered; do not invert it again. Runtime traces recorded on PinMAME 8371478a predate that change and carry the old raw public level (0 when blocked)."
 				if address in OPTO_SWITCHES
 				else "PinMAME's P2K driver publishes this grounded contact active-high: closed/active is 1 and open/inactive is 0."
 			)
@@ -613,122 +616,122 @@ def build_outputs() -> list[dict[str, object]]:
 
 
 LAMP_NAMES = parse_numbered_names("""
-2|Start Button
-4|Right Top Lane
-5|Left Top Lane
-6|Martian Target 4 (Center)
-7|Center Loop Arrow
-8|Secret Weapon
-9|Tower Struggle
-10|Center Saucer Beam (Left)
-11|Question Mark
-12|Center Saucer Beam (Right)
-13|Drive-In Demolition
-14|Paris In Peril
-15|Right Slingshot Spotlight
-16|Tickets Low
-18|Launch Button
-19|Coin Door Illumination
-20|Mothership Multiball (Right)
-21|Mothership Multiball (Left)
-22|Left Return Lane
-23|Left Outlane
-24|Big-O-Beam
-25|Right Saucer Beam (Left)
-26|Weapons
-27|Saucer
-28|Fuel
-29|Left Saucer Beam (Right)
-30|Center Saucer Beam (Center)
-31|Left Slingshot Spotlight
-36|Left Drain To Trough
-37|Right Drain To Trough
-38|Right Return Lane
-39|Right Outlane
-40|Mars Kneads Women
-41|Right Saucer Beam (Right)
-42|Saucer Rim 9 (Right)
-43|Saucer Rim 8
-44|Saucer Rim 7
-45|Saucer Rim 6
-46|Saucer Rim 5
-48|Right Popper Arrow
-49|Extra Ball
-50|Martian Attack
-51|Stroke Of Luck
-52|Left Side Spotlight
-53|Center Arrow
-54|Right Martian (High)
-55|Right Martian (Low)
-56|Martian Happy Hour
-57|Alien Abduction
-58|Left Saucer Beam (Left)
-59|Saucer Rim 1 (Left)
-60|Saucer Rim 2
-61|Saucer Rim 3
-62|Saucer Rim 4
-64|Multiball
-65|Capture 2
-66|Capture 1
-67|Capture Zone Active
-68|Shoot Again
-69|Behind Center Targets
-70|Upper Right Corner (Middle)
-72|Right Loop Arrow
-73|Right Loop Circle
-74|Right Ramp Arrow
-75|Right Ramp Circle
-76|Left Loop Arrow
-77|Left Ramp Arrow
-78|Left Loop Circle
-79|Left Ramp Circle
-80|Shooter Lane 9 (Top)
-81|Under Right Ramp (Low)
-82|Under Right Ramp (High)
-83|Upper Right Corner (Low)
-84|Right Arch (Right)
-85|Right Arch (Left)
-86|Left Arch (Right)
-87|Left Arch (Left)
-88|Martian Target 5 (Right Top)
-89|Martian Target 6 (Right Mid.)
-90|Martian Target 7 (Right Bot.)
-91|Martian Target 3 (Left Top)
-92|Martian Target 2 (Left Mid.)
-93|Martian Target 1 (Left Bot.)
-94|Right Martian Eye
-95|Left Martian Eye
-96|Left Side 1 (Bottom)
-97|Left Side 2
-98|Left Side 3
-99|Left Side 4 (Top)
-100|Under Left Ramp (Bottom)
-101|Under Left Ramp (Top)
-102|Between Left/Bottom Jets
-103|Upper Left Corner
-104|Bottom Jet Bumper
-106|Left Jet Bumper
-107|Left of Left Top Lane
-108|Between Upper/Right Top Lanes
-109|Right of Right Top Lane
-110|Top of Center Loop
-111|Upper Right Corner (High)
-112|Right Slingshot (Bottom)
-113|Right Slingshot (Saucer)
-114|Right Return Lane (Right)
-115|Right Return Lane (Left)
-116|Left Return Lane (Right)
-117|Left Return Lane (Left)
-118|Left Slingshot (Saucer)
-119|Left Slingshot (Bottom)
-120|Shooter Lane 1 (Bottom)
-121|Shooter Lane 2
-122|Shooter Lane 3
-123|Shooter Lane 4
-124|Shooter Lane 5
-125|Shooter Lane 6
-126|Shooter Lane 7
-127|Shooter Lane 8
+3|Start Button
+5|Right Top Lane
+6|Left Top Lane
+7|Martian Target 4 (Center)
+8|Center Loop Arrow
+9|Secret Weapon
+10|Tower Struggle
+11|Center Saucer Beam (Left)
+12|Question Mark
+13|Center Saucer Beam (Right)
+14|Drive-In Demolition
+15|Paris In Peril
+16|Right Slingshot Spotlight
+17|Tickets Low
+19|Launch Button
+20|Coin Door Illumination
+21|Mothership Multiball (Right)
+22|Mothership Multiball (Left)
+23|Left Return Lane
+24|Left Outlane
+25|Big-O-Beam
+26|Right Saucer Beam (Left)
+27|Weapons
+28|Saucer
+29|Fuel
+30|Left Saucer Beam (Right)
+31|Center Saucer Beam (Center)
+32|Left Slingshot Spotlight
+37|Left Drain To Trough
+38|Right Drain To Trough
+39|Right Return Lane
+40|Right Outlane
+41|Mars Kneads Women
+42|Right Saucer Beam (Right)
+43|Saucer Rim 9 (Right)
+44|Saucer Rim 8
+45|Saucer Rim 7
+46|Saucer Rim 6
+47|Saucer Rim 5
+49|Right Popper Arrow
+50|Extra Ball
+51|Martian Attack
+52|Stroke Of Luck
+53|Left Side Spotlight
+54|Center Arrow
+55|Right Martian (High)
+56|Right Martian (Low)
+57|Martian Happy Hour
+58|Alien Abduction
+59|Left Saucer Beam (Left)
+60|Saucer Rim 1 (Left)
+61|Saucer Rim 2
+62|Saucer Rim 3
+63|Saucer Rim 4
+65|Multiball
+66|Capture 2
+67|Capture 1
+68|Capture Zone Active
+69|Shoot Again
+70|Behind Center Targets
+71|Upper Right Corner (Middle)
+73|Right Loop Arrow
+74|Right Loop Circle
+75|Right Ramp Arrow
+76|Right Ramp Circle
+77|Left Loop Arrow
+78|Left Ramp Arrow
+79|Left Loop Circle
+80|Left Ramp Circle
+81|Shooter Lane 9 (Top)
+82|Under Right Ramp (Low)
+83|Under Right Ramp (High)
+84|Upper Right Corner (Low)
+85|Right Arch (Right)
+86|Right Arch (Left)
+87|Left Arch (Right)
+88|Left Arch (Left)
+89|Martian Target 5 (Right Top)
+90|Martian Target 6 (Right Mid.)
+91|Martian Target 7 (Right Bot.)
+92|Martian Target 3 (Left Top)
+93|Martian Target 2 (Left Mid.)
+94|Martian Target 1 (Left Bot.)
+95|Right Martian Eye
+96|Left Martian Eye
+97|Left Side 1 (Bottom)
+98|Left Side 2
+99|Left Side 3
+100|Left Side 4 (Top)
+101|Under Left Ramp (Bottom)
+102|Under Left Ramp (Top)
+103|Between Left/Bottom Jets
+104|Upper Left Corner
+105|Bottom Jet Bumper
+107|Left Jet Bumper
+108|Left of Left Top Lane
+109|Between Left/Right Top Lanes
+110|Right of Right Top Lane
+111|Top of Center Loop
+112|Upper Right Corner (High)
+113|Right Slingshot (Bottom)
+114|Right Slingshot (Saucer)
+115|Right Return Lane (Right)
+116|Right Return Lane (Left)
+117|Left Return Lane (Right)
+118|Left Return Lane (Left)
+119|Left Slingshot (Saucer)
+120|Left Slingshot (Bottom)
+121|Shooter Lane 1 (Bottom)
+122|Shooter Lane 2
+123|Shooter Lane 3
+124|Shooter Lane 4
+125|Shooter Lane 5
+126|Shooter Lane 6
+127|Shooter Lane 7
+128|Shooter Lane 8
 """)
 
 LAMP_COLUMN_WIRING = {
@@ -739,20 +742,30 @@ LAMP_ROW_WIRING = {
 	"A": [("BRN-BLK", "J108-1", "Q3"), ("BRN-RED", "J108-2", "Q7"), ("BRN-ORG", "J108-3", "Q11"), ("BRN-YEL", "J108-4", "Q15"), ("BRN-GRN", "J108-5", "Q19"), ("BRN-BLU", "J108-6", "Q23"), ("BRN-VIO", "J108-7", "Q27"), ("BRN-GRY", "J108-8", "Q31")],
 	"B": [("RED-BRN", "J107-1", "Q4"), ("RED-BLK", "J107-2", "Q8"), ("RED-ORG", "J107-3", "Q12"), ("RED-YEL", "J107-4", "Q16"), ("RED-GRN", "J107-5", "Q20"), ("RED-BLU", "J107-6", "Q24"), ("RED-VIO", "J107-7", "Q28"), ("RED-GRY", "J107-8", "Q32")],
 }
-CABINET_LAMPS = {2, 16, 18, 19}
+CABINET_LAMPS = {3, 17, 19, 20}
 
 
 def lamp_manual_address(address: int) -> tuple[str, int, int]:
-	column = address // 16 + 1
-	within = address % 16
+	# PinMAME numbers lamps from one: public lamp n is matrix bit index n - 1
+	# (core.c core_swSeq2m/core_m2swSeq, vpintf.c vp_getLampIndex).
+	if not 1 <= address <= 128:
+		raise ValueError(address)
+	index = address - 1
+	column = index // 16 + 1
+	within = index % 16
 	bank = "A" if within < 8 else "B"
 	row = within + 1 if bank == "A" else within - 7
 	return f"{column}{row}{bank}", column, row
 
 
+LAMP_NOTES = {
+	109: " At 400 dpi the printed cell reads BETWEEN L/R TOP LANES, and the drawing places it between Left Top Lane (public 6) and Right Top Lane (public 5). PinMAME's p2k_names.h now takes the same L/R wording from the game's own lamp table; its earlier U/R reading, which this record carried as Upper/Right, is a misreading of the tightly set slash.",
+}
+
+
 def build_lamps() -> list[dict[str, object]]:
 	result: list[dict[str, object]] = []
-	for address in range(128):
+	for address in range(1, 129):
 		manual_address, column, row = lamp_manual_address(address)
 		bank = manual_address[-1]
 		label = LAMP_NAMES.get(address, f"Unused lamp {manual_address}")
@@ -766,7 +779,7 @@ def build_lamps() -> list[dict[str, object]]:
 			"binding": {"group": "pinmame.output.lamp", "device": address},
 			"aliases": aliases("pinmame.lamp", address, manual_address),
 			"availability": availability,
-			"physical": {"location": label if availability == "used" else f"Unpopulated manual cell {manual_address}", "notes": f"Manual lamp-matrix position {manual_address}."},
+			"physical": {"location": label if availability == "used" else f"Unpopulated manual cell {manual_address}", "notes": f"Manual lamp-matrix position {manual_address}, matrix bit index {address - 1}." + LAMP_NOTES.get(address, "")},
 			"wiring": {
 				"board": "Pinball 2000 power driver board",
 				"driver_transistor": transistor,
@@ -850,21 +863,21 @@ def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, ob
 		},
 		{
 			"id": "mechanism.ball-trough", "label": "Four-ball trough", "kind": "kicker", "actuators": [solenoid(9)], "sensors": [switch(number) for number in (41, 42, 43, 44, 45)],
-			"behavior": "The stock A-19963-4 assembly has a jam beam at public switch 41 and four sequential active-low ball beams at 42-45. Ball 1 at 42 is the leading eject position; balls 2-4 queue behind it. Driver 9 energizes the bell-armature eject and the return spring homes it, serving the leading ball into the shooter lane. The retained release trace observes the ROM request driver 9 after Start, and the isolated debug trace supplies the controller-facing 42-45 to 18 serve/drain cycle without claiming physical timing. Optional switches 53-54 extend the same linear sequence for six-ball community firmware. Coil force, travel time, and the exact ball trajectory are table-owned tuning parameters.",
+			"behavior": "The stock A-19963-4 assembly has a jam beam at public switch 41 and four sequential rest-closed ball optos at 42-45, each published as 1 while a ball blocks it. Ball 1 at 42 is the leading eject position; balls 2-4 queue behind it. Driver 9 energizes the bell-armature eject and the return spring homes it, serving the leading ball into the shooter lane. The retained release trace observes the ROM request driver 9 after Start, and the isolated debug trace supplies the controller-facing 42-45 to 18 serve/drain cycle without claiming physical timing. Optional switches 53-54 extend the same linear sequence for six-ball community firmware. Coil force, travel time, and the exact ball trajectory are table-owned tuning parameters.",
 			"assembly_part_number": "A-19963-4",
 			"positions": [
 				{"id": "position.trough-jam", "label": "Jam beam", "sensors": [switch(41)], "description": "Ball blocks the trough-jam beam ahead of the queued position sensors."},
-				*({"id": f"position.trough-ball-{index}", "label": f"Ball {index}", "sensors": [switch(41 + index)], "description": f"Occupied active-low trough position; Ball {index} is nearest the eject." if index == 1 else f"Occupied active-low trough position; Ball {index} is queued behind Ball {index - 1}."} for index in range(1, 5)),
+				*({"id": f"position.trough-ball-{index}", "label": f"Ball {index}", "sensors": [switch(41 + index)], "description": f"Occupied trough position, opto blocked (public 1); Ball {index} is nearest the eject." if index == 1 else f"Occupied trough position, opto blocked (public 1); Ball {index} is queued behind Ball {index - 1}."} for index in range(1, 5)),
 			],
 			"provenance": runtime_prov,
 		},
 		{
 			"id": "mechanism.right-popper", "label": "Right popper", "kind": "kicker", "actuators": [solenoid(8)], "sensors": [switch(46)],
-			"behavior": "The active-low Right Popper opto reports a ball in the A-23156 cup. Driver 8 drives the armature-and-extension eject; the plunger spring returns it after the pulse. The factory service trace proves that the ROM test requests public output 8. The cup position and playfield geometry define the physical exit vector, while pulse strength and timing remain table-owned tuning.",
+			"behavior": "The rest-closed Right Popper opto reports a ball in the A-23156 cup, published as 1 while the beam is blocked. Driver 8 drives the armature-and-extension eject; the plunger spring returns it after the pulse. The factory service trace proves that the ROM test requests public output 8. The cup position and playfield geometry define the physical exit vector, while pulse strength and timing remain table-owned tuning.",
 			"assembly_part_number": "A-23156",
 			"positions": [
 				{"id": "position.right-popper-empty", "label": "Empty", "sensors": [], "description": "Opto beam clear."},
-				{"id": "position.right-popper-occupied", "label": "Occupied", "sensors": [switch(46)], "description": "Ball in the popper cup blocks the active-low opto beam."},
+				{"id": "position.right-popper-occupied", "label": "Occupied", "sensors": [switch(46)], "description": "Ball in the popper cup blocks the opto beam; switch 46 reads 1."},
 			],
 			"provenance": prov,
 		},
@@ -880,7 +893,7 @@ def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, ob
 		},
 		{
 			"id": "mechanism.jet-exit-post", "label": "Jet exit post", "kind": "other", "actuators": [solenoid(3)], "sensors": [switch(47)],
-			"behavior": "Driver 3 pulls the A-22977 bell armature upward into its coil, raising the post above the playfield to hold a ball; the plunger spring lowers the post when unpowered. The factory service trace proves the ROM requests output 3. Active-low switch 47 is a ball-path opto at the jet exit and is not a post-position sensor. The authored playfield owns the post's exact physical travel and collision geometry.",
+			"behavior": "Driver 3 pulls the A-22977 bell armature upward into its coil, raising the post above the playfield to hold a ball; the plunger spring lowers the post when unpowered. The factory service trace proves the ROM requests output 3. Switch 47 is a rest-closed ball-path opto at the jet exit, published as 1 while blocked, and is not a post-position sensor. The authored playfield owns the post's exact physical travel and collision geometry.",
 			"assembly_part_number": "A-22977",
 			"positions": [
 				{"id": "position.jet-exit-post-down", "label": "Down", "sensors": [], "description": "Unpowered spring-return position below the ball path."},
@@ -910,7 +923,7 @@ def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, ob
 		},
 		{
 			"id": "mechanism.right-lockup", "label": "Right lockup", "kind": "kicker", "actuators": [solenoid(16)], "sensors": [switch(51), switch(55), switch(56)],
-			"behavior": "The A-20680-1 assembly is a three-ball popper with one spring-returned coil/cup eject. Stock RFM populates active-low Right Lockup 1 opto 51 and uses driver 16 to eject the leading captured ball. The documented four-opto expansion populates the production lock weldment's two omitted sensor positions as Right Lockup 2 and 3 on switches 55-56; firmware 2.60 requires all three physical lock positions. The factory service trace proves the ROM requests output 16. Eject force, timing, and the downstream ball vector remain table-owned tuning and geometry.",
+			"behavior": "The A-20680-1 assembly is a three-ball popper with one spring-returned coil/cup eject. Stock RFM populates rest-closed Right Lockup 1 opto 51 and uses driver 16 to eject the leading captured ball. The documented four-opto expansion populates the production lock weldment's two omitted sensor positions as Right Lockup 2 and 3 on switches 55-56; firmware 2.60 requires all three physical lock positions. The factory service trace proves the ROM requests output 16. Eject force, timing, and the downstream ball vector remain table-owned tuning and geometry.",
 			"assembly_part_number": "A-20680-1",
 			"positions": [
 				{"id": "position.right-lockup-empty", "label": "Empty", "sensors": [], "description": "No populated lock-position opto is blocked."},
@@ -954,44 +967,92 @@ def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, ob
 PRISM_NOTE = " PinMAME composes this set with its current revision-1 Prism banks; the pinned source explicitly leaves the authentic factory revision-1/revision-2 shipping pairing unverified. PinMAME notes that the pairing does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots."
 
 
+FALLBACK_NOTE = " This set has no update flash: PinMAME boots the fallback game copy that every Prism card carries in its bank-0 pair, so the Prism ROMs themselves are its game code rather than a boot image an update overrides."
+PROTOTYPE_NOTE = " One of six March-April 1999 pre-production update packages on XINA 1.04 or older; all six use their own pre-production sound flash (pin2000_50070_0070_sf.rom) instead of the stock one. The pinned source documents no sample-machine playfield hardware for them, so their physical fitment is not established."
+PROTOTYPE_ODD_NOTE = " This is the odd member of its parallel pair: its two award_switch() jump tables carry 36 cases where the even build and shipped 1.20/1.60 carry 34, i.e. it was compiled against a switch enum with two extra members that the shipped line dropped."
+PROTOTYPE_EVEN_NOTE = " This is the even member of its parallel pair, on the line that became the shipped releases (34-case award_switch() jump tables, as in 1.20 and 1.60)."
+
+
 VARIANT_NOTES = {
-	"rfm_120": "Factory 1.20 update for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash." + PRISM_NOTE,
+	"rfm_010": "Version 0.1, the fallback copy in the revision-1 Prism bank-0 pair (bootstrap loader V3.2, January 1999); it predates the 0.50 Waukegan-startup release, and PinMAME loads it from the parent set's Prism chips." + FALLBACK_NOTE + " Physical fitment for this pre-production game code is not documented.",
+	"rfm_070": "Pre-production 0.70 (28 March 1999 build, XINA 1.02)." + PROTOTYPE_NOTE + PROTOTYPE_EVEN_NOTE + PRISM_NOTE,
+	"rfm_071": "Pre-production 0.71 (28 March 1999 build, 26 minutes after 0.70, XINA 1.02), unknown to the factory revision history." + PROTOTYPE_NOTE + PROTOTYPE_ODD_NOTE + PRISM_NOTE,
+	"rfm_080": "Version 0.80, the fallback copy in the second(?) revision Prism bank-0 pair rfm_u100r2/rfm_u101r2 (bootstrap loader V3.4, April 1999), with the shared revision-1 banks 1-3; PinMAME calls that revision label itself unconfirmed." + FALLBACK_NOTE + " Physical fitment for this pre-production game code is not documented.",
+	"rfm_084": "Pre-production 0.84 (6 April 1999 build, XINA 1.04, linked after 0.85)." + PROTOTYPE_NOTE + PROTOTYPE_EVEN_NOTE + PRISM_NOTE,
+	"rfm_085": "Pre-production 0.85 (5 April 1999 build, XINA 1.04)." + PROTOTYPE_NOTE + PROTOTYPE_ODD_NOTE + PRISM_NOTE,
+	"rfm_086": "Pre-production 0.86 (6 April 1999 build, XINA 1.04, linked after 0.87)." + PROTOTYPE_NOTE + PROTOTYPE_EVEN_NOTE + PRISM_NOTE,
+	"rfm_087": "Pre-production 0.87 (6 April 1999 build, XINA 1.04)." + PROTOTYPE_NOTE + PROTOTYPE_ODD_NOTE + PRISM_NOTE,
+	"rfm_120": "Factory 1.20 update (XINA 1.12) for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash." + PRISM_NOTE,
+	"rfm_121": "Unofficial hemtoni build numbered 1.21 but built in May 2016 on the January 2016 XINA 1.22 that only swep1_200h shares; its game image carries a GRUB2 Multiboot header, and PinMAME flags it GAME_NOT_WORKING because it drops into the Fatal monitor after the loader starts it. The pinned source leaves open whether it was ever meant to boot the stock way, so its physical compatibility is not established. It uses the stock sound flash." + PRISM_NOTE,
+	"rfm_130": "Factory 1.30 update (24 November 1999, XINA 1.17) for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash; it adds Martian Champion, a jet bumper rule, a ball saver, and a victory lap." + PRISM_NOTE,
 	"rfm_140": "Factory 1.40 update for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash." + PRISM_NOTE,
 	"rfm_150": "Factory 1.50 update documented by the February 1999 operations manual; stock model 50070 I/O, four-ball playfield, and sound flash." + PRISM_NOTE,
 	"rfm_160": "Last official update and PinMAME parent for the stock model 50070 cabinet; canonical four-ball physical baseline with the stock sound flash." + PRISM_NOTE,
+	"rfm_170": "Tom Uban 1.70 update (built February 2006, released April 2006, \"This version includes JTS\") for the unmodified stock playfield; still on 1.60's XINA 1.19, so it predates the 8 MB requirement that arrives with 1.80. It uses the stock sound flash." + PRISM_NOTE,
 	"rfm_180": "Tom Uban EPC 2006 tournament update for the unmodified stock playfield; requires 8 MB RAM and uses the stock sound flash." + PRISM_NOTE,
-	"rfm_190": "hemtoni update for the unmodified stock playfield; removes the 1.80-era 8 MB requirement and uses the stock sound flash." + PRISM_NOTE,
-	"rfm_191": "hemtoni update for the unmodified stock playfield with its own 1.91 sound flash and additional sounds; that same sound image is reused by 2.00 and 2.10." + PRISM_NOTE,
-	"rfm_195": "hemtoni German retranslation branch based on the 1.90-era software for the unmodified stock playfield; it uses the stock sound flash and is not the newest 1.x branch." + PRISM_NOTE,
+	"rfm_190r1": "hemtoni 1.90, original 21 November 2017 build, for the unmodified stock playfield; removes the 1.80-era 8 MB requirement and uses the stock sound flash." + PRISM_NOTE,
+	"rfm_190r2": "hemtoni 1.90, 22 November 2017 respin, for the unmodified stock playfield; uses the stock sound flash." + PRISM_NOTE,
+	"rfm_190r3": "hemtoni 1.90 repackaged on 29 March 2018 (the build PinMAME previously carried as plain rfm_190) for the unmodified stock playfield; uses the stock sound flash." + PRISM_NOTE,
+	"rfm_191": "hemtoni update for the unmodified stock playfield with its own 1.91 sound flash and additional sounds; that same sound image is reused by 2.00, the 2.10 release build, 2.20, and 2.21." + PRISM_NOTE,
+	"rfm_195r1": "hemtoni 1.95 German retranslation, 27 March 2018 build, based on the 1.90-era software for the unmodified stock playfield; it uses the stock sound flash and is not the newest 1.x branch." + PRISM_NOTE,
+	"rfm_195r2": "hemtoni 1.95 German retranslation, 29 March 2018 build (the 1.95 that circulated), for the unmodified stock playfield; it uses the stock sound flash and is not the newest 1.x branch." + PRISM_NOTE,
 	"rfm_200": "First myPinballs update for the unmodified stock playfield; reuses the 1.91 sound flash and does not yet enable the optional shaker/knocker outputs introduced in 2.10." + PRISM_NOTE,
-	"rfm_210": "myPinballs update for the unmodified stock playfield; reuses the 1.91 sound flash and can drive an optional knocker on 18 and shaker on 19 when fitted." + PRISM_NOTE,
+	"rfm_210r1": "myPinballs 2.10 pre-release build of 19 January 2019 (no package of its own) for the unmodified stock playfield, on XINA 1.31 with a sound flash that is 1.91's with two sample bytes changed (pin2000_50070_0210_sf.rom). The pinned source does not say whether this pre-release already drives the optional knocker and shaker; PinMAME notes it wedges on the first boot of an empty CMOS and comes up normally from the second." + PRISM_NOTE,
+	"rfm_210r2": "myPinballs 2.10 pre-release build of 24 January 2019 for the unmodified stock playfield, on XINA 1.31 with the 2.10 pre-release sound flash shared by r1-r3. The pinned source does not say whether this pre-release already drives the optional knocker and shaker; PinMAME notes it wedges on the first boot of an empty CMOS and comes up normally from the second." + PRISM_NOTE,
+	"rfm_210r3": "myPinballs 2.10 pre-release build of 6 April 2019 for the unmodified stock playfield, on XINA 1.31 with the 2.10 pre-release sound flash shared by r1-r3. The pinned source does not say whether this pre-release already drives the optional knocker and shaker." + PRISM_NOTE,
+	"rfm_210r4": "myPinballs 2.10 release build of 11 April 2019 (the build PinMAME previously carried as plain rfm_210) for the unmodified stock playfield; reuses the 1.91 sound flash and can drive an optional knocker on 18 and shaker on 19 when fitted." + PRISM_NOTE,
+	"rfm_220": "myPinballs 2.20 update for the unmodified stock playfield; reuses the 1.91 sound flash and predates the six-ball trough recognition added in 2.22." + PRISM_NOTE,
+	"rfm_221": "myPinballs 2.21 update for the unmodified stock playfield; reuses the 1.91 sound flash and predates the six-ball trough recognition added in 2.22." + PRISM_NOTE,
 	"rfm_222": "First myPinballs line, also released as 2.30, that recognizes six balls when the optional trough expansion is installed; it remains compatible with the stock four-ball playfield and returns to the stock sound flash." + PRISM_NOTE,
 	"rfm_223": "myPinballs update, also released as 2.40, retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
-	"rfm_224": "myPinballs update, also released as 2.42, retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
+	"rfm_224r1": "myPinballs 2.24 initial build of 19 December 2021, retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
+	"rfm_224r2": "myPinballs 2.24 build of 13 January 2022, which fixes an extra ball being awarded twice; it retains stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
+	"rfm_224r3": "myPinballs 2.24 final build of 29 January 2022, also released as 2.42, which adds a Lyman Sheats tribute; it retains stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
 	"rfm_250": "myPinballs update retaining stock four-ball compatibility; with the optional six-ball trough fitted, Capture Multiball can use the additional balls. It uses the stock sound flash." + PRISM_NOTE,
 	"rfm_260": "myPinballs update that requires the full four-opto expansion: switches 53-54 extend the trough to six balls and 55-56 extend the right lock to three physical ball positions. It uses the stock sound flash." + PRISM_NOTE,
 }
 
+IDENTICAL_DRIVERS = {"rfm_120", "rfm_130", "rfm_140", "rfm_150", "rfm_160"}
+DIFFERENT_DRIVERS = {"rfm_260"}
+# Pre-production game code, the 2016 build that does not boot, and the Prism-card fallback images:
+# the pinned source documents no hardware they were built for, so compatibility stays unknown.
+UNKNOWN_COMPATIBILITY_DRIVERS = {"rfm_010", "rfm_070", "rfm_071", "rfm_080", "rfm_084", "rfm_085", "rfm_086", "rfm_087", "rfm_121"}
+FALLBACK_DRIVERS = {"rfm_010", "rfm_080"}
+
+
+def physical_compatibility(driver_id: str) -> str:
+	if driver_id in IDENTICAL_DRIVERS:
+		return "identical"
+	if driver_id in DIFFERENT_DRIVERS:
+		return "different"
+	if driver_id in UNKNOWN_COMPATIBILITY_DRIVERS:
+		return "unknown"
+	return "compatible"
+
+
+def catalog_rfm_rows() -> list[dict[str, object]]:
+	catalog = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
+	return [row for row in catalog["drivers"] if row["id"].startswith("rfm_")]
+
 
 def build_drivers() -> list[dict[str, object]]:
-	catalog = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
-	rows = sorted((row for row in catalog["drivers"] if row["id"].startswith("rfm_")), key=lambda row: row["id"])
+	rows = sorted(catalog_rfm_rows(), key=lambda row: row["id"])
 	if {row["id"] for row in rows} != set(VARIANT_NOTES):
 		raise RuntimeError("catalog RFM driver set no longer matches the curated variant table")
 	result: list[dict[str, object]] = []
 	for row in rows:
 		driver = {key: row[key] for key in ("id", "description", "year", "manufacturer", "flags")}
-		if "clone_of" in row:
+		if row.get("clone_of"):
 			driver["clone_of"] = row["clone_of"]
-		driver["physical_compatibility"] = "identical" if row["id"] in {"rfm_120", "rfm_140", "rfm_150", "rfm_160"} else "different" if row["id"] == "rfm_260" else "compatible"
+		driver["physical_compatibility"] = physical_compatibility(str(row["id"]))
 		driver["variant_notes"] = VARIANT_NOTES[row["id"]]
 		result.append(driver)
 	return result
 
 
 SOURCES = [
-	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames: exact 15-driver rfm_120 through rfm_260 clone family", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
-	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/p2k.c: public switch translation, opto polarity, output publication, video layout, exact emulated update/sound/Prism ROM composition, and hardware-generation contract; src/wpc/p2k_names.h: machine-test-verified RFM switch, coil, and lamp tables; src/p2k/README.md lines 7-26, 117-163, and 269-363: driver lineage, update-flash identity, stock versus 1.91 sound-flash reuse, the factory r2 Prism pair's non-pairing with any game update, the warning that every driver's current revision-1 composition is an unchecked factory-shipping assumption, and the qualifier that boot-bank pairing does not change update-flash gameplay", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
+	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames: exact 36-driver rfm_010 through rfm_260 clone family under parent rfm_160; descriptions, years, manufacturers, and flags as reported by a LibPinMAME built from this revision", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
+	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/p2k.c: p2k_sw2m/p2k_m2sw public switch translation; p2k_optoList and MACHINE_INIT(p2k) declaring the per-game optos in coreGlobals.invSw through core_updInvSw, so every public switch is active-high; SWITCH_UPDATE(p2k) cabinet and diagnostic columns (keys 7/8/9/0 = Enter/Down/Up/Escape); p2k_sync_io lamp and solenoid publication with P2K_LAMPSMOOTH/P2K_SOLSMOOTH; p2k_getSol and p2k_solIndex driver-to-public solenoid mapping; p2k_disp, MDRV_SCREEN_SIZE, and p2kGameData video layout and hardware-generation contract; the ROM_START declarations and their notes for the exact emulated update, sound-flash, and Prism composition of every set. src/wpc/core.c core_swSeq2m/core_m2swSeq (the default MDRV_LAMP_CONV P2K inherits) and src/wpc/vpintf.c vp_getLampIndex/vp_getChangedLamps: public lamp number = matrix bit index + 1. src/wpc/p2k_names.h: RFM switch, coil, and lamp tables numbered as PinMAME publishes them, the lamp rule lamp = (column - 1) * 16 + (matrix == B ? 8 : 0) + (row - 1) + 1, and the machine-test walk notes. src/wpc/driver.c RFM entries and comments: driver lineage and the six-ball expansion statement. src/p2k/README.md lines 7-69, 117-155, and 436-505: driver table and boot status, fallback Prism game copies, and the r2 Prism pair, including the warning that each update set's revision-1 composition is an unchecked factory-shipping assumption and the qualifier that boot-bank pairing does not change update-flash gameplay. src/libpinmame/libpinmame.cpp IsPacked565Display: the P2K frame is handed over as 16-bit 5.6.5 at layout depth 16", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	{
 		"id": MANUAL_SOURCE,
 		"kind": "manual",
@@ -1067,9 +1128,9 @@ SOURCES = [
 		"rights": "NOASSERTION",
 		"attribution": "Pinside user oohlou and technical-thread participants",
 	},
-	{"id": RUNTIME_STOCK_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-stock-ball-serve.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 scenario: four active-low trough positions, driver 9 serve, shooter-lane switch 18, driver 15 auto-launch, a 640x480x24 type-15 video frame, a public-output-5 transition in the complete callback set, and live virtual power-driver register-state channels 29-32; raw run SHA-256 a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
-	{"id": RUNTIME_DEBUG_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-debug-ball-cycle.json", "revision": PINMAME_REVISION, "locator": "Pinned isolated PINMAME_P2K_DEBUG build and scenario: model-owned trough, shooter-lane, launch, drain, and trough-return states; raw run SHA-256 3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9; debug frame delays are explicitly non-physical", "license": "BSD-3-Clause", "attribution": "PinMAME contributors and local harness execution"},
-	{"id": RUNTIME_SERVICE_SOURCE, "kind": "service_diagnostic", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-solenoid-service-test.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 factory Solenoid Test walk on empty isolated state: selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54 transition; traversal also records 10-14, 46, and 48, while the complete callback set includes live virtual register-state channels 29, 30, and 32; public output 5 alone does not transition when its documented Left Gate service entry is crossed, although the separate production trace records public 5; raw run SHA-256 47df7e4c1139f14e227334d2d87b809cc78c66ed5c0f334b31bc6a435d654afc", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
+	{"id": RUNTIME_STOCK_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-stock-ball-serve.json", "revision": RUNTIME_PINMAME_REVISION, "locator": "Historical release-DLL rfm_160 scenario recorded on the previous pin 8371478a: four trough positions held by that revision's Balls In Trough input at its raw active-low public opto level (the current pin publishes the optos active-high), driver 9 serve, shooter-lane switch 18, driver 15 auto-launch, a 640x480 type-15 video frame at that revision's layout depth 24 (the current pin hands Pinball 2000 frames over as 16-bit 5.6.5 at depth 16), a public-output-5 transition in the complete callback set, and live virtual power-driver register-state channels 29-32; raw run SHA-256 a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
+	{"id": RUNTIME_DEBUG_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-debug-ball-cycle.json", "revision": RUNTIME_PINMAME_REVISION, "locator": "Historical isolated PINMAME_P2K_DEBUG build and scenario on the previous pin 8371478a: model-owned trough, shooter-lane, launch, drain, and trough-return states; raw run SHA-256 3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9; debug frame delays are explicitly non-physical", "license": "BSD-3-Clause", "attribution": "PinMAME contributors and local harness execution"},
+	{"id": RUNTIME_SERVICE_SOURCE, "kind": "service_diagnostic", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-solenoid-service-test.json", "revision": RUNTIME_PINMAME_REVISION, "locator": "Historical release-DLL rfm_160 factory Solenoid Test walk on empty isolated state, recorded on the previous pin 8371478a, whose KEYCODE_8 was the Up button (public 103); the current pin maps KEYCODE_8 to Down and KEYCODE_9 to Up: selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54 transition; traversal also records 10-14, 46, and 48, while the complete callback set includes live virtual register-state channels 29, 30, and 32; public output 5 alone does not transition when its documented Left Gate service entry is crossed, although the separate production trace records public 5; raw run SHA-256 47df7e4c1139f14e227334d2d87b809cc78c66ed5c0f334b31bc6a435d654afc", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 	{"id": REJECTED_VPX_SOURCE, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/bally/revenge-from-mars-1999/source/Attack%20and%20Revenge%20from%20Mars%20%28Midway-Williams%29%20v600.vpx", "sha256": REJECTED_VPX_SHA256, "locator": "12,959,744-byte hybrid JPSalas v6.0.0 table; embedded script cGameName=afm_113b and AFM switch/solenoid callbacks; visually confirmed Attack from Mars geometry, rejected for RFM spatial or controller evidence", "original_filename": "Attack and Revenge from Mars (Midway-Williams) v600.vpx", "known_working": False, "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "JPSalas and credited table contributors"},
 ]
 
@@ -1092,7 +1153,7 @@ def build_definition() -> dict[str, object]:
 		"relationships": [],
 		"sources": SOURCES,
 		"knowledge": {"path": "knowledge/bally/revenge-from-mars-1999.md", "status": "partial"},
-		"conflicts": [{"id": "conflict.slingshot-spotlight-lamp-pair", "path": "$.outputs[manual.address=18B|28B].label", "description": "The operations manual's table and physical location drawing place Left Slingshot Spotlight at 18B on the left slingshot and Right at 28B on the right. PinMAME's complete machine lamp-test walk reports the opposite semantic pair: public 15/manual 18B is Right and public 31/manual 28B is Left. Canonical labels follow the measured machine test, while coordinates follow the manual's physical addresses and drawing.", "source_refs": [MANUAL_SOURCE, CORE_SOURCE], "status": "ignored", "rationale": "The deterministic split resolves recreation without inventing a wiring swap: runtime controls semantic labels, and the factory drawing controls physical positions. The record explains why each runtime-named spotlight appears on the opposite physical slingshot."}],
+		"conflicts": [{"id": "conflict.slingshot-spotlight-lamp-pair", "path": "$.outputs[manual.address=18B|28B].label", "description": "The operations manual's table and physical location drawing place Left Slingshot Spotlight at 18B on the left slingshot and Right at 28B on the right. PinMAME's complete machine lamp-test walk reports the opposite semantic pair: public 16/manual 18B is Right and public 32/manual 28B is Left. Canonical labels follow the measured machine test, while coordinates follow the manual's physical addresses and drawing.", "source_refs": [MANUAL_SOURCE, CORE_SOURCE], "status": "ignored", "rationale": "The deterministic split resolves recreation without inventing a wiring swap: runtime controls semantic labels, and the factory drawing controls physical positions. The record explains why each runtime-named spotlight appears on the opposite physical slingshot."}],
 	}
 
 
@@ -1161,7 +1222,7 @@ def build_spatial_report(definition: dict[str, object]) -> dict[str, object]:
 			"reason": "Every stock device and documented expansion opto has a source-reconciled authoring point. The retained assembly drawings, physical-machine diverter observation, and pinned factory service walk resolve mechanism topology and controller behavior. The record remains partial only because PinMAME's pinned source explicitly says its revision-1 Prism composition is exact emulator behavior but an unchecked assumption about authentic factory revision-1/revision-2 shipping history; PinMAME also says that choice does not change gameplay because the update flash overrides game code.",
 		},
 		"unresolved_blockers": [
-			{"id": "variant-prism-factory-pairing", "dimension": "variant_differences", "blocker": "The official 1.20, 1.40, 1.50, and 1.60 update packages are exactly identified, and all supported PinMAME drivers currently use revision-1 Prism banks. PinMAME's pinned README says no update package is tied to a boot ROM, but also says the actual factory shipping date and software pairing of the dumped revision-2 U100/U101 Prism pair is unknown and every current revision-1 declaration is an unchecked assumption. It explicitly notes that the choice does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots."},
+			{"id": "variant-prism-factory-pairing", "dimension": "variant_differences", "blocker": "The official 1.20, 1.30, 1.40, 1.50, and 1.60 update packages are exactly identified, and every PinMAME driver with an update flash currently uses revision-1 Prism banks; the only set on the dumped revision-2(?) bank-0 pair is rfm_080, that card's own fallback game copy with no update flash. PinMAME's pinned README says no update package is tied to a boot ROM, but also says the actual factory shipping date and software pairing of the dumped revision-2 U100/U101 Prism pair is unknown and every current revision-1 declaration is an unchecked assumption. It explicitly notes that the choice does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots."},
 		],
 	}
 
@@ -1172,17 +1233,17 @@ Coverage: **partial (94%) - complete public address inventory, polarity, wiring,
 
 ## Identity and Pinball 2000 architecture
 
-This is Bally model 50070, *Revenge from Mars*, the first Pinball 2000 title. A MediaGX PC renders a 640x240 game framebuffer onto a monitor in the head; the cabinet optics reflect that image onto a partly transparent playfield surface. PinMAME exports one 640x480 video display because each native row is doubled in the current layout. VPE should consume that exported video surface as the overlay texture, preserve its 2:1 logical pixel shape, and place the rendered plane through table-specific scene geometry rather than treating it as a DMD.
+This is Bally model 50070, *Revenge from Mars*, the first Pinball 2000 title. A MediaGX PC renders a 640x240 game framebuffer onto a monitor in the head; the cabinet optics reflect that image onto a partly transparent playfield surface. PinMAME exports one 640x480 video display because each native row is doubled in the current layout; at the pinned revision LibPinMAME hands each frame over as 16-bit 5.6.5 pixels (layout depth 16), where revisions before b7a60eb0 delivered 24-bit RGB. VPE should consume that exported video surface as the overlay texture, preserve its 2:1 logical pixel shape, and place the rendered plane through table-specific scene geometry rather than treating it as a DMD.
 
 The power-driver board still exposes conventional playfield switches, coils, flashers, and lamps. PinMAME publishes those through the normal switch, solenoid, and lamp groups while the video frame is a separate display output. No general-illumination group is currently exported by the P2K driver, so this definition does not invent one.
 
 ## Public controller numbering
 
-Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; the later optional expansion positions 53-56 use the same opto convention. PinMAME publishes every per-game P2K opto at its raw active-low level (`0` active/beam blocked, `1` inactive), not at a normalized active-high level. Every other fitted contact is recorded normally open: the manual requires an open gap for playfield blade contacts and explicitly calls both EOS switches normally open, while PinMAME's P2K input map uses inactive `0` / active `1` for the remaining grounded controls. The controller's `inversion_applied_by_emulator` flag still means consumers use the mixed public levels as delivered and do not apply one controller-wide inversion.
+Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; the later optional expansion positions 53-56 use the same opto convention. The board reads those optos raw active-low, but PinMAME's P2K driver declares the per-game opto list in `coreGlobals.invSw` (`MACHINE_INIT(p2k)` calls `core_updInvSw` for each), so the public API is active-high for every P2K switch: `1` means beam blocked, contact closed, or button pressed, and `0` means inactive. Every other fitted contact is recorded normally open: the manual requires an open gap for playfield blade contacts and explicitly calls both EOS switches normally open. `normally_closed` stays the construction fact, so the optos keep `true` while their public level is active-high. Consumers use the public state exactly as delivered and apply no further inversion. PinMAME revisions before b7a60eb0 (upstream ccba7199) published the optos at their raw active-low level instead, and the retained runtime traces, recorded on 8371478a, carry that older level.
 
 Board drivers 1-32 retain public solenoid numbers 1-32. Board drivers 33-36 are exported through PinMAME's lower-flipper public addresses 45-48. Board drivers 37-48 become custom public outputs 51-62. Do not remap the printed driver numbers directly for 33-48; the JSON preserves both values as separate aliases.
 
-The lamp board is not two contiguous 8x8 matrices. It is eight columns of sixteen bits, interleaving Bank A and Bank B per column. Convert printed notation with `public = (column - 1) * 16 + (Bank B ? 8 : 0) + (row - 1)`. The public range is zero-based `0-127` and the definition includes every cell, including all twelve printed unused positions.
+The lamp board is not two contiguous 8x8 matrices. It is eight columns of sixteen bits, interleaving Bank A and Bank B per column. Convert printed notation with `public = (column - 1) * 16 + (Bank B ? 8 : 0) + (row - 1) + 1`: the term before `+ 1` is the matrix bit index, and PinMAME numbers lamps from one (`vp_getLampIndex(n)` reads bit `n - 1`, and changed-lamp reports return bit index plus one through the default `core_m2swSeq` conversion P2K inherits). Manual `11A` is public `1` and `88B` is public `128`; the range is `1-128` and the definition includes every cell, including all twelve printed unused positions. This rule holds at every PinMAME revision; upstream cc2296d8 corrected `p2k_names.h`, whose zero-based table this record previously followed.
 
 ## Stock spatial map
 
@@ -1194,21 +1255,21 @@ The switch drawing has no devices at optional addresses 53-56 because the stock 
 
 The February 1999 manual validates the complete moving inventory: stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, passive center ball catcher, two Martian toys, two ball gates, two slingshots, three jet bumpers, and two lower flippers. Seventeen reviewed assembly crops derived from manual pages 52-68 prove the topology: exact assembly/component names, power/hold pairs, springs, armatures, cups, flaps, sensors, and unpowered return paths. The A-22977 drawing shows the post's bell armature pulled upward into the coil and spring-returned down; the post rises to hold a ball and falls below the path after release. A retained physical-machine service observation completes the A-22993 direction: its factory Power test pulls the lock diverter fully open and its master/gate springs return it closed. The corrected trough identity is complete assembly `A-19963-4`, not an inferred subassembly number. Position records describe controller-observable states without inventing a fixed startup timer.
 
-Three pinned traces divide the runtime claims cleanly. The production serve/launch scenario observes drivers 9 and 15 while marking its supplied switches as host stimuli; its complete callback set also records public output 5 and live register-state channels 29-32. The isolated `PINMAME_P2K_DEBUG=ON` run owns the synthetic trough/shooter/drain state cycle and labels its delays non-physical. The production-DLL factory Solenoid Test walk records explicit transitions at selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54, plus incidental transitions at 10-14, 46, and 48 while advancing; it also records live virtual channels 29, 30, and 32, but output 5 does not transition when its Left Gate service entry is crossed. That negative result is scoped to the service-menu walk because the production trace independently records public 5. The service trace proves address activity, while names remain grounded in the manual and `p2k_names.h` because the video frames provide no decoded test text. PinMAME's register decode and the two production traces further establish public 29-32 as live virtual state mirroring bits 4-7 of the power-driver board's solenoid-D register 0x0D; RFM has no fitted named load on those four channels, so a recreation must expose their state but must not instantiate playfield coils for them. Coil force, travel timing, launch vectors, and exact collision meshes remain table-owned geometry and tuning under the repository rules, so they are not curation blockers.
+Three retained traces, all recorded on a LibPinMAME built from the previous pin 8371478a, divide the runtime claims cleanly; their opto levels, service-key presses, and video depth are that revision's. The switch and solenoid address mapping they exercise (p2k_sw2m, p2k_getSol, p2k_solIndex) is unchanged at the current pin, though they have not been re-recorded on it. The production serve/launch scenario observes drivers 9 and 15 while marking its supplied switches as host stimuli; its complete callback set also records public output 5 and live register-state channels 29-32. The isolated `PINMAME_P2K_DEBUG=ON` run owns the synthetic trough/shooter/drain state cycle and labels its delays non-physical. The production-DLL factory Solenoid Test walk records explicit transitions at selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54, plus incidental transitions at 10-14, 46, and 48 while advancing; it also records live virtual channels 29, 30, and 32, but output 5 does not transition when its Left Gate service entry is crossed. That negative result is scoped to the service-menu walk because the production trace independently records public 5. The service trace proves address activity, while names remain grounded in the manual and `p2k_names.h` because the video frames provide no decoded test text. PinMAME's register decode and the two production traces further establish public 29-32 as live virtual state mirroring bits 4-7 of the power-driver board's solenoid-D register 0x0D; RFM has no fitted named load on those four channels, so a recreation must expose their state but must not instantiate playfield coils for them. Coil force, travel timing, launch vectors, and exact collision meshes remain table-owned geometry and tuning under the repository rules, so they are not curation blockers.
 
-Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. The official myPinballs update log says 2.22 begins recognizing six balls when the optional trough hardware is fitted and 2.50 can use those extra balls during Capture Multiball. Version 2.60 and later requires the complete four-opto expansion to operate correctly: 53-54 are trough balls 5-6 and 55-56 are right-lock positions 2-3 for a physical three-ball lock. Consequently `rfm_260` is marked physically different rather than stock-compatible.
+PinMAME's pinned source documents no hardware for the six 0.7x/0.8x pre-production packages, the two Prism-card fallback sets `rfm_010` and `rfm_080`, or the 2016 `rfm_121` build that PinMAME flags as not working, so those nine drivers are marked physical compatibility `unknown`; the odd pre-production builds 0.71, 0.85, and 0.87 were compiled against a switch enum with two extra members that the shipped line dropped. Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. The official myPinballs update log says 2.22 begins recognizing six balls when the optional trough hardware is fitted and 2.50 can use those extra balls during Capture Multiball. Version 2.60 and later requires the complete four-opto expansion to operate correctly: 53-54 are trough balls 5-6 and 55-56 are right-lock positions 2-3 for a physical three-ball lock. Consequently `rfm_260` is marked physically different rather than stock-compatible.
 
-Pinned PinMAME source resolves the emulated variant composition but deliberately does not claim complete factory history. The four update-package files form the per-version update flash. Every supported driver currently uses revision-1 Prism banks, while the separately dumped `rfm_u100r2.rom`/`rfm_u101r2.rom` pair is a factory Prism-card revision rather than a game version. No update package is tied to a boot ROM, and the source explicitly says the shipping date and official-version pairing of revision 2 are unknown; it calls every current revision-1 declaration an unchecked assumption. The same source says this pairing does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots. Versions 1.91, 2.00, and 2.10 use the same distinct 1.91 sound flash; 2.22 and later return to the stock sound flash. Driver 48 remains a game-table ticket option and is not a firmware-specific physical variant. The per-driver notes therefore preserve exact PinMAME behavior and every known sound/hardware difference while the definition remains partial on `variant_differences` until authentic factory revision-1/revision-2 fitment evidence is found.
+Pinned PinMAME source resolves the emulated variant composition but deliberately does not claim complete factory history. The four update-package files form the per-version update flash. Every driver with an update flash currently uses revision-1 Prism banks, while the separately dumped `rfm_u100r2.rom`/`rfm_u101r2.rom` pair is a factory Prism-card revision rather than a game version. Two sets carry no update flash and boot the fallback game copy held in a Prism bank-0 pair instead: `rfm_010` (0.1 on the revision-1 pair) and `rfm_080` (0.80 on the revision-2(?) pair). No update package is tied to a boot ROM, and the source explicitly says the shipping date and official-version pairing of revision 2 are unknown; it calls every current revision-1 declaration an unchecked assumption. The same source says this pairing does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots. Versions 1.91, 2.00, the 2.10 release build, 2.20, and 2.21 use the same distinct 1.91 sound flash; the three 2.10 pre-release builds use a copy of it with two sample bytes changed, the six 0.7x/0.8x pre-production packages use an older pre-production sound flash, and 2.22 and later return to the stock sound flash. Driver 48 remains a game-table ticket option and is not a firmware-specific physical variant. The per-driver notes therefore preserve exact PinMAME behavior and every known sound/hardware difference while the definition remains partial on `variant_differences` until authentic factory revision-1/revision-2 fitment evidence is found.
 
 ## Display and rendering contract
 
-PinMAME's P2K video source is 640x240. The exported CORE_VIDEO layout is 640x480 with rows doubled so legacy display sizing does not halve the output. The frame is already turned into readable row order by the driver; VPE must not mirror or vertically flip it again. A CRT-style filter may reconstruct scanline and shadow-mask character at the logical 640x240 resolution, but geometry, keystone, reflection plane, and cabinet occlusion belong to the authored Unity scene.
+PinMAME's P2K video source is 640x240. The exported CORE_VIDEO layout is 640x480 with rows doubled so legacy display sizing does not halve the output. At the pinned revision LibPinMAME reports layout depth 16 for this display and hands each frame over as 640x480 16-bit 5.6.5 pixels (two bytes per pixel); the retained stock trace shows depth 24 because it was recorded on an older revision that converted the frame to 24-bit RGB. The frame is already turned into readable row order by the driver; VPE must not mirror or vertically flip it again. A CRT-style filter may reconstruct scanline and shadow-mask character at the logical 640x240 resolution, but geometry, keystone, reflection plane, and cabinet occlusion belong to the authored Unity scene.
 
 ## Evidence precedence and known discrepancy
 
-PinMAME's current `p2k_names.h` tables were walked completely against the games' own switch, coil, and lamp tests. Those measured runtime names and public addresses take precedence over visual inference. The manual remains physical truth for connectors, wires, driver transistors, parts, and stock-vs-unused fitment.
+PinMAME's `p2k_names.h` tables were walked completely against the games' own switch, coil, and lamp tests, and the lamp table has since been confirmed against the game's own lamp table read out of the 1.60 image. Since upstream cc2296d8 the lamp table is numbered as PinMAME publishes lamps, from one. Those measured runtime names take precedence over visual inference. The manual's lamp grid and the game's lamp table both name 75B (public 109) Between L/R Top Lanes. The manual remains physical truth for connectors, wires, driver transistors, parts, and stock-vs-unused fitment.
 
-The operations manual's table and location drawing place 18B on the left slingshot and 28B on the right, while the machine lamp test reports the opposite semantic names. The definition therefore binds public 15/manual 18B to the runtime name Right Slingshot Spotlight at the manual's left-side coordinate and public 31/manual 28B to the runtime name Left Slingshot Spotlight at the manual's right-side coordinate. This deterministic split keeps machine-test semantics and factory physical positions without inventing a wiring swap, and the ignored conflict records why the names and sides appear crossed.
+The operations manual's table and location drawing place 18B on the left slingshot and 28B on the right, while the machine lamp test reports the opposite semantic names. The definition therefore binds public 16/manual 18B to the runtime name Right Slingshot Spotlight at the manual's left-side coordinate and public 32/manual 28B to the runtime name Left Slingshot Spotlight at the manual's right-side coordinate. This deterministic split keeps machine-test semantics and factory physical positions without inventing a wiring swap, and the ignored conflict records why the names and sides appear crossed.
 
 The supplied `Attack and Revenge from Mars (Midway-Williams) v600.vpx` is not RFM geometry. Its embedded script runs `afm_113b`, its callbacks are Attack from Mars addresses, and its extracted screenshot shows the AFM playfield. It is retained at SHA-256 `9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be` as a rejected candidate and contributes no RFM spatial or controller assertion.
 
@@ -1222,10 +1283,11 @@ The definition is complete enough to implement the stock and documented aftermar
 - `manual.rfm.mypinballs-opto-expansion-v2`: myPinballs Opto Expansion Upgrade Install Instructions v2.0, SHA-256 `00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf`; retrofit wiring tables and installed trough/lock photographs.
 - `service-bulletin.rfm.mypinballs-code-updates`: official myPinballs code-update log acquired 2026-08-15; quoted knocker, shaker, six-ball trough, and physical-lock firmware milestones.
 - `human-review.rfm.pinside-lock-diverter`: retained physical-machine service observation that the factory Power test pulls the diverter open and the return mechanism closes it.
-- `pinmame.core.8371478a7640`: pinned P2K implementation and machine-test-verified device tables at revision `8371478a7640f1896dcdf565aed340dc5df989ba`.
-- `runtime.rfm.stock-ball-serve`: pinned release-DLL stock serve/launch scenario and 640x480 video trace.
-- `runtime.rfm.debug-ball-cycle`: isolated P2K debug-model trace covering eject, shooter lane, launch, drain, and trough return.
-- `service-diagnostic.rfm.solenoid-test`: pinned release-DLL factory solenoid-test walk covering every curated moving-assembly output.
+- `pinmame.catalog.b7a60eb0dd97`: the 36-driver RFM clone family as LibPinMAME reports it at revision `b7a60eb0dd9722f5397fc296987d94528ab111ff`.
+- `pinmame.core.b7a60eb0dd97`: pinned P2K implementation, lamp numbering, opto declaration, ROM composition, and machine-test-verified device tables at revision `b7a60eb0dd9722f5397fc296987d94528ab111ff`.
+- `runtime.rfm.stock-ball-serve`: historical release-DLL stock serve/launch scenario and 640x480 video trace, recorded on revision 8371478a.
+- `runtime.rfm.debug-ball-cycle`: historical isolated P2K debug-model trace covering eject, shooter lane, launch, drain, and trough return, recorded on revision 8371478a.
+- `service-diagnostic.rfm.solenoid-test`: historical release-DLL factory solenoid-test walk covering every curated moving-assembly output, recorded on revision 8371478a.
 - `vpx-table.attack-and-revenge-v600-rejected`: exact user-supplied hybrid VPX, rejected because it runs AFM ROM semantics and AFM geometry.
 """
 

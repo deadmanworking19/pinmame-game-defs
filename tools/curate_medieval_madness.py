@@ -926,9 +926,9 @@ def input_devices() -> list[dict[str, Any]]:
 			notes = f"Printed dedicated grounded switch D{address}. {note}"
 		else:
 			notes = (
-				f"Printed dedicated grounded switch D{address}. {note} PinMAME's MAME-only keyboard port "
-				"(WPC_COMPORTS) labels these four service bits in the opposite order; that is a MAME key binding, not "
-				"public address semantics. The pinned harness resolved the whole group: holding public switch 8 with "
+				f"Printed dedicated grounded switch D{address}. {note} Before PinMAME b7a60eb0 the MAME-only keyboard "
+				"port (WPC_COMPORTS) labelled these four service bits in the opposite order (fixed upstream in bd2ebd65); "
+				"that was a MAME key binding, not public address semantics. The pinned harness resolved the whole group: holding public switch 8 with "
 				'the coin door open produced the ROM prompt "TO RESET SCORES- HOLD ENTER", pulsing public switch 7 '
 				"raised the ROM's own VOLUME display from 12 to 15, and pulsing public switch 6 lowered it back to 12."
 			)

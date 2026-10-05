@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_bytes
+from pinmame_game_defs.workspace import pinmame_source_at
 from pinmame_flipper_column import flipper_column_inputs, flipper_column_relationships
 from jurassic_park_data import (
     AUX_COILS, ASSEMBLY_COILS, DIRECT_DRIVES, FLIPPER_CHART, LAMP_COLUMNS, LAMP_LABEL_OVERRIDES,
@@ -1231,9 +1232,9 @@ def verify_external(working: Path) -> None:
         if uri.startswith("external:"):
             path = working / uri.removeprefix("external:").replace("pinmame-review-artifacts/", "review-artifacts/", 1)
         elif source["id"] == PIN:
-            path = working / "source-checkouts/pinmame/src/wpc/degames.c"
+            path = pinmame_source_at(REVISION, ROOT) / "src/wpc/degames.c"
         elif source["id"] in PIN_REFS[1:]:
-            path = working / "source-checkouts/pinmame/src/wpc" / PIN_FILES[PIN_REFS[1:].index(source["id"])][0]
+            path = pinmame_source_at(REVISION, ROOT) / "src/wpc" / PIN_FILES[PIN_REFS[1:].index(source["id"])][0]
         elif source["id"] in (CORPUS, VPW):
             path = working / "source-checkouts/vpxtable_scripts" / (CORPUS_FILE if source["id"] == CORPUS else VPW_FILE)
         else:

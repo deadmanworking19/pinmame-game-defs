@@ -17,6 +17,7 @@ from .scope import is_in_scope_driver
 
 PINMAME_MAX_PATH = 512
 PINMAME_CALLBACK_COUNT = 12
+NOT_A_DRIVER = 0x4000
 DRIVER_ID_PATTERN = re.compile(r"^[a-z0-9_]+$")
 UNKNOWN_YEAR_PATTERN = re.compile(r"^[?]+$")
 VERSION_PATTERN = re.compile(r"^\s*#define\s+VERSION_(MAJOR|MINOR|REV)\s+(\d+)\s*(?://.*)?$", re.MULTILINE)
@@ -149,6 +150,11 @@ def resolve_root_driver(driver_id: str, drivers: dict[str, Driver]) -> str:
 		if driver is None:
 			return visited[-2] if len(visited) > 1 else driver_id
 		if driver.clone_of is None:
+			return current
+		parent = drivers.get(driver.clone_of)
+		# A reported system/BIOS parent (MAME's NOT_A_DRIVER) groups unrelated games, as Recel's
+		# System III does; PinMAME's own root lookups stop below such a parent too.
+		if parent is not None and parent.flags & NOT_A_DRIVER:
 			return current
 		current = driver.clone_of
 

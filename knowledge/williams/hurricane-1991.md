@@ -21,6 +21,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## Drivers this record holds
 
 - `hurr_d2` (1991, Williams, clone of `hurr_l2`).
+- `hurr_d2bs` (2026, Williams / whaslbeck, clone of `hurr_l2`).
 - `hurr_l2` (1991, Williams).
 
 ## PinMAME source contract (candidate)

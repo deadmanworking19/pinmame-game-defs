@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ctypes
 import importlib.util
 import hashlib
 import json
@@ -251,8 +252,8 @@ class RuntimeHarnessTests(unittest.TestCase):
 				"service_green": 33,
 				"service_enter": 33,
 				"service_black": 34,
-				"service_up": 34,
-				"service_down": 35,
+				"service_up": 35,
+				"service_down": 34,
 				"launch": 66,
 				"coin_door": 78,
 				"left_flipper": 93,
@@ -351,6 +352,21 @@ class RuntimeHarnessTests(unittest.TestCase):
 		recorder.record_video_frame(1, bytes([1, 0, 0]))
 		self.assertEqual(2, recorder.video_change_counts[1])
 		self.assertEqual(hashlib.sha256(bytes([1, 0, 0])).hexdigest(), recorder.video_frame_hashes[1])
+
+	def test_packed_565_video_frames_widen_to_rgb24(self) -> None:
+		# Since b7a60eb0 Pinball 2000 and the pinHeck colour displays hand over depth-16 frames.
+		words = (ctypes.c_uint16 * 3)(0xF800, 0x07E0, 0x001F)
+		self.assertEqual(
+			bytes([255, 0, 0, 0, 255, 0, 0, 0, 255]),
+			HARNESS._video_frame_rgb24(ctypes.addressof(words), 3, 16),
+		)
+		rgb = (ctypes.c_uint8 * 3)(1, 2, 3)
+		self.assertEqual(bytes([1, 2, 3]), HARNESS._video_frame_rgb24(ctypes.addressof(rgb), 1, 24))
+
+	def test_only_the_running_state_marks_the_emulator_ready(self) -> None:
+		# PinmameRun reports 2 (starting) before 1 (running); the getters crash while it is starting.
+		source = (ROOT / "tools/run_pinmame_harness.py").read_text(encoding="utf-8")
+		self.assertIn("if state == 1:\n\t\t\trecorder.ready.set()", source)
 
 	def test_video_snapshot_records_rgb_hash_and_optional_pixmap(self) -> None:
 		recorder = HARNESS.Recorder()

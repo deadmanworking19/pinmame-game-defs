@@ -56,12 +56,13 @@ EXTRACTION_TOTAL_BYTES = 247600334
 TABLE_BOUNDS = "left=0 top=0 right=1093 bottom=2162"
 
 DRIVER_IDS = (
-	"sttng_l7", "sttng_d1", "sttng_d2", "sttng_d7", "sttng_dx", "sttng_g7", "sttng_h7",
+	"sttng_l7", "sttng_la7", "sttng_d1", "sttng_d2", "sttng_d7", "sttng_dx", "sttng_g7", "sttng_h7",
 	"sttng_l1", "sttng_l2", "sttng_l3", "sttng_l5", "sttng_l7c", "sttng_p4", "sttng_p5",
 	"sttng_p6", "sttng_p8", "sttng_x7", "sttng_x8", "sttng_x9",
 )
 DRIVER_COMPATIBILITY = {
 	"sttng_l7": ("identical", "Williams production LX-7 game ROM (Sound L-1), the parent driver, shipped with the physical machine."),
+	"sttng_la7": ("identical", "LA-7 game ROM (Sound L-1), added to PinMAME in 2026 as a CORE_CLONEDEF of LX-7 on the same game data; the pinned source documents no hardware or I/O difference."),
 	"sttng_d1": ("identical", "DX-1 LED Ghost Fix revision of LX-1; same physical machine and I/O map, a display-defect fix."),
 	"sttng_d2": ("identical", "DX-2 LED Ghost Fix revision of LX-2; same physical machine and I/O map."),
 	"sttng_d7": ("identical", "DX-7 LED Ghost Fix revision of LX-7, Sound L-1; same physical machine and I/O map."),

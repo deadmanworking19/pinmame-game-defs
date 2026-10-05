@@ -18,7 +18,7 @@ CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-dcs.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "star-trek-the-next-generation-1993.json"
 
 DRIVER_IDS = {
-	"sttng_l7", "sttng_d1", "sttng_d2", "sttng_d7", "sttng_dx", "sttng_g7", "sttng_h7",
+	"sttng_l7", "sttng_la7", "sttng_d1", "sttng_d2", "sttng_d7", "sttng_dx", "sttng_g7", "sttng_h7",
 	"sttng_l1", "sttng_l2", "sttng_l3", "sttng_l5", "sttng_l7c", "sttng_p4", "sttng_p5",
 	"sttng_p6", "sttng_p8", "sttng_x7", "sttng_x8", "sttng_x9",
 }

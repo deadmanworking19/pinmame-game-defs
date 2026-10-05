@@ -27,6 +27,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `trek_200` (1992, Data East, clone of `trek_201`).
 - `trek_201` (1992, Data East).
 - `trek_300` (2020, Data East, clone of `trek_201`).
+- `trek_301` (2026, Data East, clone of `trek_201`).
 
 ## PinMAME source contract (candidate)
 

@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
-from pinmame_game_defs.workspace import resolve_working_root
+from pinmame_game_defs.workspace import pinmame_source_at, resolve_working_root
 import drawing_callouts
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -955,12 +955,11 @@ def verify_opto_evidence(base: Path) -> None:
 
 
 def verify_core_checkout() -> None:
-    core_root=resolve_working_root(ROOT,required=True)/"source-checkouts/pinmame"
-    if not (core_root/"src/wpc").is_dir():
-        raise RuntimeError(f"authoritative pinned WHO dunnit core checkout missing: {core_root}")
-    revision=subprocess.run(["git","-C",str(core_root),"rev-parse","HEAD"],capture_output=True,text=True,check=True).stdout.strip()
-    if revision!=PIN:
-        raise RuntimeError("authoritative pinned WHO dunnit core checkout mismatch")
+    checkout=resolve_working_root(ROOT,required=True)/"source-checkouts/pinmame"
+    if not (checkout/"src/wpc").is_dir():
+        raise RuntimeError(f"authoritative pinned WHO dunnit core checkout missing: {checkout}")
+    # The checkout at PIN, or PIN exported from its history once the project pin moves on.
+    core_root=pinmame_source_at(PIN,ROOT)
     for artifact,(_,digest,_) in CORE_ARTIFACTS.items():
         path=core_root/artifact
         if not path.is_file() or sha(path)!=digest:

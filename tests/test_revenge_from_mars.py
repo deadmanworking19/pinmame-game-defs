@@ -57,9 +57,19 @@ MECHANISM_IMAGES = {
 	"mechanism-jet-bumper-b13123-2-assembly.webp": "d871a51a91c9c8c4ab9e70e83ec9e534f84fda269dbd3c5cf2d391639f0f5f78",
 }
 RFM_DRIVERS = {
-	"rfm_120", "rfm_140", "rfm_150", "rfm_160", "rfm_180", "rfm_190", "rfm_191", "rfm_195",
-	"rfm_200", "rfm_210", "rfm_222", "rfm_223", "rfm_224", "rfm_250", "rfm_260",
+	"rfm_010", "rfm_070", "rfm_071", "rfm_080", "rfm_084", "rfm_085", "rfm_086", "rfm_087",
+	"rfm_120", "rfm_121", "rfm_130", "rfm_140", "rfm_150", "rfm_160", "rfm_170", "rfm_180",
+	"rfm_190r1", "rfm_190r2", "rfm_190r3", "rfm_191", "rfm_195r1", "rfm_195r2", "rfm_200",
+	"rfm_210r1", "rfm_210r2", "rfm_210r3", "rfm_210r4", "rfm_220", "rfm_221", "rfm_222",
+	"rfm_223", "rfm_224r1", "rfm_224r2", "rfm_224r3", "rfm_250", "rfm_260",
 }
+# Driver IDs PinMAME b7a60eb0 split into revision-suffixed sets; none may survive in the record.
+REMOVED_RFM_DRIVERS = {"rfm_190", "rfm_195", "rfm_210", "rfm_224"}
+PREPRODUCTION_DRIVERS = {"rfm_070", "rfm_071", "rfm_084", "rfm_085", "rfm_086", "rfm_087"}
+FALLBACK_DRIVERS = {"rfm_010", "rfm_080"}
+OPTO_SWITCHES = {41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}
+CORE_SOURCE = "pinmame.core.b7a60eb0dd97"
+OLD_PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -82,6 +92,7 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.p2k", self.definition["controller"]["platform"])
 		self.assertEqual("0x8000000000000", self.definition["controller"]["hardware_generation"])
 		self.assertEqual(RFM_DRIVERS, {driver["id"] for driver in self.definition["drivers"]})
+		self.assertFalse(REMOVED_RFM_DRIVERS & {driver["id"] for driver in self.definition["drivers"]})
 
 	def test_curator_is_deterministic_and_matches_the_committed_outputs(self) -> None:
 		import curate_revenge_from_mars as curator
@@ -95,14 +106,22 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 	def test_controller_exposes_only_the_p2k_public_ranges(self) -> None:
 		groups = {group["id"]: group for group in self.controller["groups"]}
 		self.assertEqual({"pinmame.input.switch", "pinmame.output.solenoid", "pinmame.output.lamp"}, set(groups))
-		self.assertEqual([{"minimum": 0, "maximum": 127}], groups["pinmame.output.lamp"]["address_rules"])
+		self.assertEqual([{"minimum": 1, "maximum": 128}], groups["pinmame.output.lamp"]["address_rules"])
+		lamp_notes = groups["pinmame.output.lamp"]["notes"]
+		for token in ("(row - 1) + 1", "`11A` is public `1`", "`88B` is public `128`", "vp_getLampIndex"):
+			self.assertIn(token, lamp_notes)
+		for stale in ("zero-based", "no one-based offset", "public `0`"):
+			self.assertNotIn(stale, lamp_notes)
 		self.assertEqual(
 			[{"minimum": 1, "maximum": 32}, {"minimum": 45, "maximum": 48}, {"minimum": 51, "maximum": 62}],
 			groups["pinmame.output.solenoid"]["address_rules"],
 		)
 		polarity_notes = groups["pinmame.input.switch"]["notes"]
-		for token in ("mixed raw public levels", "active-low", "active-high", "exactly as delivered"):
+		for token in ("active-high for every switch", "coreGlobals.invSw", "core_updInvSw", "exactly as delivered", "`1` beam blocked"):
 			self.assertIn(token, polarity_notes)
+		for stale in ("mixed raw public levels", "refreshes those optos", "is active-low (`0` active"):
+			self.assertNotIn(stale, polarity_notes)
+		self.assertEqual("b7a60eb0dd9722f5397fc296987d94528ab111ff", self.controller["sources"][0]["revision"])
 
 	def test_all_switch_driver_and_lamp_positions_are_explicit(self) -> None:
 		inputs = {item["binding"]["device"]: item for item in self.definition["inputs"]}
@@ -113,7 +132,12 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual({41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}, {address for address, item in inputs.items() if item.get("normally_closed")})
 		self.assertTrue(all(item["normally_closed"] is False for item in inputs.values() if item["availability"] == "used" and item["binding"]["device"] not in {41, 42, 43, 44, 45, 46, 47, 51, 52}))
 		self.assertTrue(all("normally_closed" not in item for item in inputs.values() if item["availability"] == "unused"))
-		self.assertTrue(all("active-low" in inputs[address]["physical"]["notes"] for address in {41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}))
+		for address in OPTO_SWITCHES:
+			notes = inputs[address]["physical"]["notes"]
+			self.assertTrue(inputs[address]["normally_closed"], address)
+			for token in ("coreGlobals.invSw", "public switch is active-high", "beam blocked/active is 1", "do not invert it again"):
+				self.assertIn(token, notes, address)
+			self.assertNotIn("publishes this per-game opto at its raw active-low level", notes)
 		self.assertTrue(all("active-high" in item["physical"]["notes"] for item in inputs.values() if item["availability"] == "used" and item["binding"]["device"] not in {41, 42, 43, 44, 45, 46, 47, 51, 52}))
 		expected_manual_types = {15: "microswitch", 38: "microswitch", 63: "leaf", 64: "leaf", 65: "leaf", 75: "microswitch", 105: "leaf", 106: "leaf"}
 		self.assertEqual(expected_manual_types, {address: inputs[address]["physical"]["switch_type"] for address in expected_manual_types})
@@ -140,16 +164,26 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertNotIn("service-diagnostic.rfm.solenoid-test", solenoids[31]["provenance"]["source_refs"])
 
 		lamps = {item["binding"]["device"]: item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"}
-		self.assertEqual(set(range(128)), set(lamps))
-		self.assertEqual("Start Button", lamps[2]["label"])
-		self.assertEqual("Right Slingshot Spotlight", lamps[15]["label"])
-		self.assertEqual("Left Slingshot Spotlight", lamps[31]["label"])
-		self.assertEqual("11A", next(alias["value"] for alias in lamps[0]["aliases"] if alias["namespace"] == "manual.address"))
-		self.assertEqual("88B", next(alias["value"] for alias in lamps[127]["aliases"] if alias["namespace"] == "manual.address"))
+		self.assertEqual(set(range(1, 129)), set(lamps))
+		self.assertEqual("Start Button", lamps[3]["label"])
+		self.assertEqual("Right Slingshot Spotlight", lamps[16]["label"])
+		self.assertEqual("Left Slingshot Spotlight", lamps[32]["label"])
+		self.assertEqual("Between Left/Right Top Lanes", lamps[109]["label"])
+		self.assertIn("BETWEEN L/R TOP LANES", lamps[109]["physical"]["notes"])
+		self.assertEqual("11A", next(alias["value"] for alias in lamps[1]["aliases"] if alias["namespace"] == "manual.address"))
+		self.assertEqual("88B", next(alias["value"] for alias in lamps[128]["aliases"] if alias["namespace"] == "manual.address"))
+		# PinMAME numbers lamps from one: public = (column - 1) * 16 + (bank B ? 8 : 0) + (row - 1) + 1.
+		for address, lamp in lamps.items():
+			manual = next(alias["value"] for alias in lamp["aliases"] if alias["namespace"] == "manual.address")
+			column, row, bank = int(manual[0]), int(manual[1]), manual[2]
+			self.assertEqual((column - 1) * 16 + (8 if bank == "B" else 0) + (row - 1) + 1, address, manual)
+			self.assertEqual([str(address)], [alias["value"] for alias in lamp["aliases"] if alias["namespace"] == "pinmame.lamp"])
+			self.assertTrue(lamp["id"].startswith(f"lamp.{address}."), lamp["id"])
+			self.assertIn(f"matrix bit index {address - 1}.", lamp["physical"]["notes"])
 
 	def test_video_contract_preserves_the_line_doubled_export(self) -> None:
 		self.assertEqual(
-			[{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}, "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}],
+			[{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}, "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}],
 			self.definition["displays"],
 		)
 
@@ -178,23 +212,23 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 			self.assertIn("reviewed", inputs[address]["physical"]["notes"])
 
 		outputs = {(item["binding"]["group"], item["binding"]["device"]): item for item in self.definition["outputs"]}
-		self.assertEqual((0.5, 0.86, "emitter"), self._placement(outputs[("pinmame.output.lamp", 68)]))
+		self.assertEqual((0.5, 0.86, "emitter"), self._placement(outputs[("pinmame.output.lamp", 69)]))
 		self.assertEqual((0.5, 0.43, "emitter"), self._placement(outputs[("pinmame.output.solenoid", 17)]))
 		self.assertEqual((0.65, 0.82, "effect"), self._placement(outputs[("pinmame.output.solenoid", 45)]))
 		self.assertEqual(self._placement(outputs[("pinmame.output.solenoid", 45)]), self._placement(outputs[("pinmame.output.solenoid", 46)]))
 
 	def test_matrix_b_lower_cluster_follows_the_drawing_depth(self) -> None:
 		lamps = {item["binding"]["device"]: item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"}
-		self.assertEqual((0.574, 0.62, "emitter"), self._placement(lamps[26]))
-		self.assertEqual((0.4, 0.66, "emitter"), self._placement(lamps[58]))
-		self.assertEqual((0.4, 0.58, "emitter"), self._placement(lamps[60]))
-		self.assertEqual((0.22, 0.73, "emitter"), self._placement(lamps[15]))
-		self.assertEqual((0.78, 0.73, "emitter"), self._placement(lamps[31]))
-		rim = {42, 43, 44, 45, 46, 59, 60, 61, 62}
-		weapons = {26, 27, 28}
-		wedges = {25, 29, 30, 41, 58}
-		arc = {8, 10, 12, 14, 24, 40, 56, 57}
-		front = {9, 11, 13}
+		self.assertEqual((0.574, 0.62, "emitter"), self._placement(lamps[27]))
+		self.assertEqual((0.4, 0.66, "emitter"), self._placement(lamps[59]))
+		self.assertEqual((0.4, 0.58, "emitter"), self._placement(lamps[61]))
+		self.assertEqual((0.22, 0.73, "emitter"), self._placement(lamps[16]))
+		self.assertEqual((0.78, 0.73, "emitter"), self._placement(lamps[32]))
+		rim = {43, 44, 45, 46, 47, 60, 61, 62, 63}
+		weapons = {27, 28, 29}
+		wedges = {26, 30, 31, 42, 59}
+		arc = {9, 11, 13, 15, 25, 41, 57, 58}
+		front = {10, 12, 14}
 		depth = lambda addresses: [self._placement(lamps[address])[1] for address in addresses]
 		self.assertLess(max(depth(rim)), min(depth(weapons)))
 		self.assertLess(max(depth(weapons)), min(depth(wedges)))
@@ -228,7 +262,7 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual("9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be", sources["vpx-table.attack-and-revenge-v600-rejected"]["sha256"])
 		self.assertFalse(sources["vpx-table.attack-and-revenge-v600-rejected"]["known_working"])
 		self.assertIn("cGameName=afm_113b", sources["vpx-table.attack-and-revenge-v600-rejected"]["locator"])
-		self.assertEqual("e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b", hashlib.sha256(EXCERPT_PATH.read_bytes()).hexdigest())
+		self.assertEqual("7d123a3295b57c7ee6f4b2436e6dcba55aef4dc36fc1d9509b96f740516b9f2f", hashlib.sha256(EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("ebeaa81f508e100314320e2014e86f0cff8bfc8726e5c47d103f0499047db88a", hashlib.sha256(POLARITY_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("7977b64e33308e8ee163a197d6c2426f9ce236e85cfcf47bcede5dd003776815", hashlib.sha256(LOCATION_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("4d4622669b0bd622d132d5c1543ec22651cefb5446051141c4e1c4f92da6040d", hashlib.sha256(AFTERMARKET_EXCERPT_PATH.read_bytes()).hexdigest())
@@ -276,10 +310,32 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual("different", drivers["rfm_260"]["physical_compatibility"])
 		for token in ("requires", "53-54", "55-56", "three physical"):
 			self.assertIn(token, drivers["rfm_260"]["variant_notes"])
-		for driver in drivers.values():
+		self.assertIn("knocker on 18 and shaker on 19", drivers["rfm_210r4"]["variant_notes"])
+		self.assertIn("also released as 2.42", drivers["rfm_224r3"]["variant_notes"])
+		self.assertIn("GAME_NOT_WORKING", drivers["rfm_121"]["variant_notes"])
+		self.assertEqual(8, drivers["rfm_121"]["flags"])
+		self.assertEqual(
+			{"rfm_120", "rfm_130", "rfm_140", "rfm_150", "rfm_160"},
+			{driver_id for driver_id, driver in drivers.items() if driver["physical_compatibility"] == "identical"},
+		)
+		self.assertEqual(
+			PREPRODUCTION_DRIVERS | FALLBACK_DRIVERS | {"rfm_121"},
+			{driver_id for driver_id, driver in drivers.items() if driver["physical_compatibility"] == "unknown"},
+		)
+		for driver_id in PREPRODUCTION_DRIVERS:
+			self.assertIn("pre-production sound flash", drivers[driver_id]["variant_notes"])
+			self.assertIn("physical fitment is not established", drivers[driver_id]["variant_notes"])
+		for driver_id in ("rfm_071", "rfm_085", "rfm_087"):
+			self.assertIn("two extra members", drivers[driver_id]["variant_notes"])
+		for driver_id, driver in drivers.items():
+			if driver_id in FALLBACK_DRIVERS:
+				self.assertIn("has no update flash", driver["variant_notes"])
+				self.assertNotIn("revision-1 Prism banks", driver["variant_notes"])
+				continue
 			self.assertIn("revision-1 Prism banks", driver["variant_notes"])
 			self.assertIn("shipping pairing unverified", driver["variant_notes"])
 			self.assertIn("does not change gameplay", driver["variant_notes"])
+		self.assertIn("rfm_u100r2/rfm_u101r2", drivers["rfm_080"]["variant_notes"])
 
 	def test_runtime_evidence_pins_release_debug_and_service_cycles(self) -> None:
 		stock = load_json(STOCK_RUNTIME_PATH)
@@ -288,7 +344,22 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual("deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c", stock["runtime"]["emulator"]["sha256"])
 		self.assertEqual("a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", stock["runtime"]["raw_runs"][0]["sha256"])
 		self.assertEqual("642645d81cdc10189c6592e4e1407b399e19ef7ec6f3eae2bf42dda78bedb3f7", stock["runtime"]["raw_runs"][0]["scenario_sha256"])
+		# Recorded on the previous pin, which still converted Pinball 2000 frames to 24-bit RGB; the
+		# current pin hands them over as 16-bit 5.6.5 at depth 16, which the record and knowledge state.
 		self.assertEqual([{"depth": 24, "height": 480, "type": 15, "width": 640}], stock["runtime"]["observations"]["display_layouts_seen"])
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		for source_id in ("runtime.rfm.stock-ball-serve", "runtime.rfm.debug-ball-cycle", "service-diagnostic.rfm.solenoid-test"):
+			self.assertEqual(OLD_PINMAME_REVISION, sources[source_id]["revision"], source_id)
+			self.assertIn("8371478a", sources[source_id]["locator"], source_id)
+		self.assertIn("depth 16", sources["runtime.rfm.stock-ball-serve"]["locator"])
+		self.assertNotIn("640x480x24", sources["runtime.rfm.stock-ball-serve"]["locator"])
+		self.assertIn("KEYCODE_8 was the Up button", sources["service-diagnostic.rfm.solenoid-test"]["locator"])
+		self.assertEqual("b7a60eb0dd9722f5397fc296987d94528ab111ff", sources[CORE_SOURCE]["revision"])
+		knowledge = (ROOT / "knowledge" / "bally" / "revenge-from-mars-1999.md").read_text(encoding="utf-8")
+		for token in ("layout depth 16", "16-bit 5.6.5", "`11A` is public `1`", "active-high for every P2K switch"):
+			self.assertIn(token, knowledge)
+		for stale in ("zero-based `0-127`", "raw active-low level (`0` active", "mixed public levels", "public 15/manual 18B"):
+			self.assertNotIn(stale, knowledge)
 		self.assertEqual("057ead79397dce64cdd6798dbb8d1042b9224304c3fd7c3daa43aae2875a494c", debug["runtime"]["emulator"]["sha256"])
 		self.assertEqual("3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9", debug["runtime"]["raw_runs"][0]["sha256"])
 		self.assertEqual("f7df41e0c3ba6afd9aa36066fc57d52ea5a3f49ef1ec52b1b1c9b27c63589a85", debug["runtime"]["raw_runs"][0]["scenario_sha256"])

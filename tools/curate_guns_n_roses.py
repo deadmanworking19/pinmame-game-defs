@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_bytes
+from pinmame_game_defs.workspace import pinmame_source_at
 from pinmame_flipper_column import flipper_column_inputs, flipper_column_relationships
 import drawing_callouts
 from guns_n_roses_data import (
@@ -1204,10 +1205,10 @@ def verify_external(working: Path) -> None:
             relative = relative.replace("pinmame-review-artifacts/","review-artifacts/",1)
             path = working/relative
         elif source["id"] == PIN:
-            path = working/"source-checkouts/pinmame/src/wpc/degames.c"
+            path = pinmame_source_at(REVISION, ROOT)/"src/wpc/degames.c"
         elif source["id"] in PIN_REFS[1:]:
             name = PIN_FILES[PIN_REFS[1:].index(source["id"])][0]
-            path = working/"source-checkouts/pinmame/src/wpc"/name
+            path = pinmame_source_at(REVISION, ROOT)/"src/wpc"/name
         elif source["id"] == VPW:
             path = working/"source-checkouts/vpxtable_scripts/Guns N Roses (Data East 1994) VPW 1.2.1.vbs"
         else:continue
