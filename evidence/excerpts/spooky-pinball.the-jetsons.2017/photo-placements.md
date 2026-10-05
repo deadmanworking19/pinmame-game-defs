@@ -63,12 +63,12 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 
 ## Used devices without a placement
 
-- switch 11: Orbit switch sits in or under the right wireform/ramp (the lane entry slot with the blue Jetsons sign at about x 760-770, y 1050-1110 is visible but no switch part is). Not visible.
+- switch 11: Orbit switch sits in or under the right wireform/ramp (the lane entry slot with the blue Jetsons sign at about x 760-770, y 1050-1110 is visible but no switch part is). Not visible. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - switch 12: Not placed: chrome captive ball, centre; raised (above the playfield), so parallax displaces it.
 - switch 13: Not placed: top lane rollover slot (right slot), centre; read only at low confidence.
 - switch 14: Not placed: top lane rollover slot (middle slot), centre; read only at low confidence.
 - switch 15: Not placed: top lane rollover slot (left slot), centre; read only at low confidence.
-- switch 16: Elroy loop switch is inside the wireform/ramp loop; no switch part is visible. (The tall white post with black cable at x 575-590, y 380-600 is some actuator or support, not identified as the loop switch.)
+- switch 16: Elroy loop switch is inside the wireform/ramp loop; no switch part is visible. (The tall white post with black cable at x 575-590, y 380-600 is some actuator or support, not identified as the loop switch.). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - switch 17: Not placed: brown saucer cup in the left channel under the clear ramp, centre; read only at low confidence.
 - switch 21: Not placed: black scoop pocket under the RUDI screen, centre of the opening; raised (above the playfield), so parallax displaces it.
 - switch 22: Not placed: blue round standup target face (EXTRA BALL), centre; raised (above the playfield), so parallax displaces it.
@@ -84,14 +84,14 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 - switch 52: Ball trough contact is under the apron; not visible.
 - switch 53: Ball trough contact is under the apron; not visible.
 - switch 54: Ball trough contact is under the apron; not visible.
-- switch 56: Orbit switch sits in or under the left wireform/ramp (the lane entry slot with the blue Jetsons sign at about x 116-150, y 1006-1076 is visible but no switch part is). Not visible.
+- switch 56: Orbit switch sits in or under the left wireform/ramp (the lane entry slot with the blue Jetsons sign at about x 116-150, y 1006-1076 is visible but no switch part is). Not visible. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - switch 92: Trough opto: inside the trough under the apron; not visible.
 - switch 93: Trough jam opto: inside the trough under the apron; not visible.
 - switch 96: Scoop opto: inside the scoop hole, not visible. (The scoop opening is at about (180,1313).). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - solenoid 5: Ball Load (trough feed) coil is in the trough under the apron; not visible.
-- solenoid 6: Ball Launch coil: the launcher at the bottom of the shooter lane is in the dark right-hand gap and not distinguishable (a dark blue cylinder near photo (1215,1755), frame about (929,2136), is the only candidate and cannot be identified). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
+- solenoid 6: Ball Launch coil: the launcher at the bottom of the shooter lane is in the dark right-hand gap and not distinguishable (a dark blue cylinder near photo (1215,1755), frame about (929,2136), is the only candidate and cannot be identified). Frame coordinates quoted in this description are in the first, wall-top rectification, not this frame; coordinates marked photo are pixels of the original photograph.
 - solenoid 9: Not placed: black scoop pocket under the RUDI screen; raised (above the playfield), so parallax displaces it.
-- solenoid 17: Up Post: no identifiable up-post. A tall white arm/post with black cable at the top centre (rect x 575-590, y 380-600, its foot hidden behind the right pop cap) might be the actuator, but nothing proves it, so it is left unplaced.
+- solenoid 17: Up Post: no identifiable up-post. A tall white arm/post with black cable at the top centre (rect x 575-590, y 380-600, its foot hidden behind the right pop cap) might be the actuator, but nothing proves it, so it is left unplaced. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - solenoid 18: Not placed: lower pop bumper (estimated base); read only at low confidence.
 - solenoid 20: Not placed: brown saucer cup in the left channel; read only at low confidence.
 - solenoid 21: Not placed: right pop bumper (estimated base); read only at low confidence.
