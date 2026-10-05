@@ -337,11 +337,22 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 		self.assertIsNotNone(standard_spec.loader)
 		standard = importlib.util.module_from_spec(standard_spec)
 
+		def assert_inside(module: object, root: Path) -> None:
+			# A *_PATH constant added to either promoter later would otherwise still name the tracked tree.
+			# Other Path globals, such as the LE module's TOOLS import directory, are inputs and stay put.
+			stray = sorted(
+				name
+				for name, value in vars(module).items()
+				if (name == "ROOT" or name.endswith("_PATH")) and isinstance(value, Path) and not value.is_relative_to(root)
+			)
+			self.assertEqual([], stray, f"{module.__name__} names a path outside the scratch root")
+
 		def use_scratch_standard(root: Path) -> None:
 			standard.ROOT = root
 			standard.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-standard-2011.json"
 			standard.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-standard-2011.json"
 			standard.KNOWLEDGE_PATH = root / "knowledge/stern/the-rolling-stones-standard-2011.md"
+			assert_inside(standard, root)
 
 		previous_base = sys.modules.get("curate_rolling_stones")
 		previous_spatial = sys.modules.get("curate_rolling_stones_le_spatial")
@@ -365,9 +376,11 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 				spatial.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.KNOWLEDGE_PATH = root / "knowledge/stern/the-rolling-stones-limited-edition-2011.md"
+				assert_inside(spatial, root)
 				spatial.PARTIAL_PATH.parent.mkdir(parents=True)
 				spatial.PARTIAL_PATH.write_text("fail-closed partial\n", encoding="utf-8")
 				base.main()
+				self.assertTrue(standard.AUTHOR_READY_PATH.is_file())
 				self.assertTrue(spatial.AUTHOR_READY_PATH.is_file())
 				self.assertFalse(spatial.PARTIAL_PATH.exists())
 				self.assertEqual("author_ready", load_json(spatial.AUTHOR_READY_PATH)["coverage"]["status"])
@@ -380,6 +393,7 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 				spatial.PARTIAL_PATH = root / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.AUTHOR_READY_PATH = root / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
 				spatial.KNOWLEDGE_PATH = root / "knowledge/stern/the-rolling-stones-limited-edition-2011.md"
+				assert_inside(spatial, root)
 				spatial.promote()
 				promoted_bytes = spatial.AUTHOR_READY_PATH.read_bytes()
 				base.main()

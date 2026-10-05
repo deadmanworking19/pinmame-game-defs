@@ -669,16 +669,17 @@ class HighSpeedCuratorTests(unittest.TestCase):
 		with tempfile.TemporaryDirectory() as directory:
 			root = copy_curator_files(curator, Path(directory))
 			curator.check(root)
-			before = {path: path.read_bytes() for path in root.rglob("*") if path.is_file()}
 			author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
 			author_ready.parent.mkdir(parents=True, exist_ok=True)
 			author_ready.write_text("{}", encoding="utf-8")
+			# A stale definition proves generate wrote nothing: an identical rewrite would be invisible.
+			(root / DEFINITION_PATH.relative_to(ROOT)).write_bytes(b"stale\n")
+			before = {path: path.read_bytes() for path in root.rglob("*") if path.is_file()}
 			with self.assertRaisesRegex(RuntimeError, "author-ready"):
 				curator.generate(root)
 			with self.assertRaisesRegex(RuntimeError, "author-ready"):
 				curator.check(root)
-			self.assertEqual(before, {path: path.read_bytes() for path in before})
-			self.assertEqual("{}", author_ready.read_text(encoding="utf-8"))
+			self.assertEqual(before, {path: path.read_bytes() for path in root.rglob("*") if path.is_file()})
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:
 		import curate_high_speed as curator

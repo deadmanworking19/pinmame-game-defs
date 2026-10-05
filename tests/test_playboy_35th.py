@@ -504,7 +504,7 @@ class PlayboyCuratorTests(unittest.TestCase):
 
     def test_check_refuses_drift_and_crlf_is_folded(self) -> None:
         import curate_playboy_35th as curator
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
             root = _scratch_root(curator,Path(directory))
             with patch.object(curator,"ROOT",root):
                 curator.check()
@@ -525,11 +525,13 @@ class PlayboyCuratorTests(unittest.TestCase):
     def test_curator_refuses_an_author_ready_twin(self) -> None:
         import curate_playboy_35th as curator
         self.assertFalse((ROOT/curator.AUTHOR_READY_PATH).exists())
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory:
             root = _scratch_root(curator,Path(directory))
             path = root/curator.AUTHOR_READY_PATH
             path.parent.mkdir(parents=True,exist_ok=True)
             path.write_text("{}\n",encoding="utf-8")
+            # A stale knowledge note proves generate wrote nothing: an identical rewrite would be invisible.
+            (root/KNOWLEDGE_PATH.relative_to(ROOT)).write_bytes(b"stale\n")
             before = {item:item.read_bytes() for item in root.rglob("*") if item.is_file()}
             with patch.object(curator,"ROOT",root):
                 with self.assertRaises(RuntimeError):

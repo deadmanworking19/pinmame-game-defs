@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -476,7 +477,7 @@ class AddamsFamilyCuratorTests(unittest.TestCase):
 				drifted = original.replace(b"The Addams Family", b"The Addams Fam1ly", 1)
 				self.assertNotEqual(original, drifted)
 				definition.write_bytes(drifted)
-				with self.assertRaisesRegex(RuntimeError, "out of date"):
+				with self.assertRaisesRegex(RuntimeError, re.escape(f"{definition} is out of date")):
 					curator.check()
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:

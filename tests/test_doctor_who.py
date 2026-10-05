@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -286,7 +287,7 @@ class DoctorWhoTests(unittest.TestCase):
 			with patch.object(curator, "KNOWLEDGE_PATH", knowledge):
 				curator.check()
 				knowledge.write_bytes(knowledge.read_bytes() + b"\n")
-				with self.assertRaisesRegex(RuntimeError, "doctor-who-1992.md"):
+				with self.assertRaisesRegex(RuntimeError, re.escape(str(knowledge))):
 					curator.check()
 
 	def test_compact_runtime_evidence_is_tied_to_its_scenario_and_pinned_binary(self) -> None:
