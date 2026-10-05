@@ -5,11 +5,11 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | Order | Year | Machine | Manufacturer | Status | Complete |
 | ---: | ---: | --- | --- | --- | ---: |
 | 1 | 2018 | AC/DC Vault Edition | Stern | author_ready | 100% |
-| 2 | 2017 | The Jetsons | Spooky Pinball | partial | 88% |
-| 3 | 2016 | Domino's Spectacular Pinball Adventure | Spooky Pinball | partial | 81% |
-| 4 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 88% |
+| 2 | 2017 | The Jetsons | Spooky Pinball | partial | 81% |
+| 3 | 2016 | Domino's Spectacular Pinball Adventure | Spooky Pinball | partial | 75% |
+| 4 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
 | 5 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
-| 6 | 2014 | America's Most Haunted | Spooky Pinball | partial | 88% |
+| 6 | 2014 | America's Most Haunted | Spooky Pinball | partial | 81% |
 | 7 | 2014 | AC/DC LED Pro | Stern | author_ready | 100% |
 | 8 | 2014 | Iron Man Pro Vault Edition | Stern | author_ready | 100% |
 | 9 | 2014 | Mustang Premium / Limited Edition / Boss | Stern | author_ready | 100% |

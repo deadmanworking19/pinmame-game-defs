@@ -19,6 +19,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
+      "mechanism_behavior",
       "output_semantics",
       "spatial_placement"
     ],
@@ -3852,7 +3853,7 @@
   ],
   "knowledge": {
     "path": "knowledge/spooky-pinball/rob-zombie-s-spookshow-international-2016.md",
-    "status": "complete"
+    "status": "partial"
   },
   "machine": {
     "id": "spooky-pinball.rob-zombie-s-spookshow-international.2016",
@@ -6125,20 +6126,21 @@
           "value": "49"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 49,
         "group": "pinmame.output.solenoid"
       },
-      "id": "solenoid.49-simulator-shooter-output",
+      "id": "solenoid.49-simulator-shooter-release",
       "kind": "virtual",
-      "label": "Simulator Shooter Output",
+      "label": "Simulator Shooter Release",
       "physical": {
-        "notes": "PinMAME's built-in playfield simulator's shooter release; the ROM never drives it."
+        "notes": "PinMAME's built-in playfield simulator: the game's simulator declaration enables the manual plunger, and core.c publishes sim_getSol(49), the shooter-release state the simulator raises when its shooter key is released. It carries state only while PinMAME's keyboard handling drives the simulator; there is no board output and the ROM never drives it."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.b7a60eb0dd97",
+          "pinmame.sim.rzspook.b7a60eb0dd97",
           "controller-profile.pinmame-pinheck"
         ],
         "status": "validated"
@@ -6147,11 +6149,11 @@
         "provenance": {
           "source_refs": [
             "pinmame.core.b7a60eb0dd97",
-            "controller-profile.pinmame-pinheck"
+            "pinmame.sim.rzspook.b7a60eb0dd97"
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },

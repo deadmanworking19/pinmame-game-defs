@@ -115,9 +115,74 @@ class PinheckDefinitionTests(unittest.TestCase):
 			with self.subTest(game=game):
 				self.assertEqual("partial", definition["coverage"]["status"])
 				expected = ["input_semantics"] if game == "dominos" else []
-				self.assertEqual([*expected, "output_semantics", "spatial_placement"], definition["coverage"]["missing"])
+				self.assertEqual([*expected, "mechanism_behavior", "output_semantics", "spatial_placement"], definition["coverage"]["missing"])
+				self.assertEqual("partial", definition["knowledge"]["status"])
 				unknown = [d for d in definition["outputs"] if d["availability"] == "unknown"]
 				self.assertTrue(unknown)
+
+	def test_amh_ghost_channels_follow_the_ghost_type_setting(self) -> None:
+		steps = {step["label"]: step for step in RUNTIME["games"]["amh"]["runs"]["rgb"]["steps"]}
+		ghost = lambda label: [a for a in steps[label]["active_solenoids"] if a >= 62]
+		self.assertEqual("GHOST TYPE REV 1", steps["Item 10"]["displayed_text"])
+		self.assertEqual("GHOST TYPE REV 2", steps["Enter on item 10"]["displayed_text"])
+		for label, text, address in (("Item 01", "GHOST=RED", 62), ("Item 02", "GHOST=GREEN", 63), ("Item 03", "GHOST=BLUE", 64),
+		                             ("Item 11", "GHOST=RED", 62), ("Item 12", "GHOST=GREEN", 64), ("Item 13", "GHOST=BLUE", 63)):
+			with self.subTest(label=label):
+				self.assertEqual(text, steps[label]["displayed_text"])
+				self.assertEqual([address], ghost(label))
+		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['amh']['stem']}.json")
+		labels = {d["binding"]["device"]: d["label"] for d in definition["outputs"] if d["binding"]["group"] == "pinmame.output.solenoid"}
+		self.assertEqual("Ghost green (REV 1) or blue (REV 2)", labels[63])
+		self.assertEqual("Ghost blue (REV 1) or green (REV 2)", labels[64])
+
+	def test_unnamed_servo_and_rgb_outputs_are_not_declared_unused_from_silence(self) -> None:
+		definition = load_json(ROOT / "machines" / "partial" / f"{GAMES['jetsons']['stem']}.json")
+		outputs = {d["binding"]["device"]: d for d in definition["outputs"] if d["binding"]["group"] == "pinmame.output.solenoid"}
+		self.assertEqual("optional", outputs[57]["availability"])
+		self.assertEqual("unknown", outputs[58]["availability"])
+		self.assertNotIn("quantity", outputs[58]["physical"])
+		self.assertNotIn("spatial", outputs[58])
+		attract = RUNTIME["games"]["jetsons"]["runs"]["game"]["steps"][0]
+		self.assertIn(58, attract["active_solenoids"])
+		for address in (62, 63, 64):
+			with self.subTest(address=address):
+				self.assertEqual("unknown", outputs[address]["availability"])
+				self.assertNotIn("spatial", outputs[address])
+
+	def test_simulator_shooter_follows_the_manual_plunger_declaration(self) -> None:
+		for game, config in GAMES.items():
+			definition = load_json(ROOT / "machines" / "partial" / f"{config['stem']}.json")
+			shooter = next(d for d in definition["outputs"] if d["binding"] == {"group": "pinmame.output.solenoid", "device": 49})
+			with self.subTest(game=game):
+				self.assertEqual("used" if config["manual_plunger"] else "unused", shooter["availability"])
+				self.assertEqual("virtual" if config["manual_plunger"] else "unused", shooter["spatial"]["reason"])
+
+	def test_runtime_summary_refuses_missing_or_altered_frames(self) -> None:
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("retained harness runs are not available")
+		import shutil
+		import tempfile
+		import pinheck_runtime
+		from build_external_evidence_manifest import write_manifest
+		source = Path(review_root) / GAMES["jetsons"]["machine"] / pinheck_runtime.SESSION / "runtime" / "jetsons-rgb"
+		with tempfile.TemporaryDirectory() as scratch:
+			# "remanifested" alters a summarized frame and rebuilds the manifest, so only the pixel digest can catch it.
+			for damage in ("missing", "altered", "remanifested"):
+				run_dir = Path(scratch) / damage
+				shutil.copytree(source, run_dir)
+				pinheck_runtime.summarize(run_dir)
+				frame = next((run_dir / "dmd").glob("*-item-01-display-0.ppm"))
+				if damage == "missing":
+					frame.unlink()
+				else:
+					data = bytearray(frame.read_bytes())
+					data[-1] ^= 0xFF
+					frame.write_bytes(bytes(data))
+					if damage == "remanifested":
+						write_manifest(run_dir, "jetsons")
+				with self.subTest(damage=damage), self.assertRaises(ValueError):
+					pinheck_runtime.summarize(run_dir)
 
 	def test_scenarios_are_generated(self) -> None:
 		completed = subprocess.run([sys.executable, "-B", str(ROOT / "tools" / "pinheck_harness_scenarios.py"), "--check"],

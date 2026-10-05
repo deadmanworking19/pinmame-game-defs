@@ -19,6 +19,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
+      "mechanism_behavior",
       "output_semantics",
       "spatial_placement"
     ],
@@ -3868,7 +3869,7 @@
   ],
   "knowledge": {
     "path": "knowledge/spooky-pinball/america-s-most-haunted-2014.md",
-    "status": "complete"
+    "status": "partial"
   },
   "machine": {
     "id": "spooky-pinball.america-s-most-haunted.2014",
@@ -4214,10 +4215,10 @@
       "actuators": [
         "servo.59-ghost",
         "rgb.62-ghost-red",
-        "rgb.63-ghost-green",
-        "rgb.64-ghost-blue"
+        "rgb.63-ghost-green-rev-1-or-blue-rev-2",
+        "rgb.64-ghost-blue-rev-1-or-green-rev-2"
       ],
-      "behavior": "The ghost figure turns on servo 2 (59: GHOST LEFT 14, MIDDLE 128, RIGHT 242 in the Servo test) and glows from on-board WS2801 LED 2 (62-64 red, green, blue: the RGB test's GHOST=RED/GREEN/BLUE). IPDB calls it a colour-changing ghost.",
+      "behavior": "The ghost figure turns on servo 2 (59: GHOST LEFT 14, MIDDLE 128, RIGHT 242 in the Servo test) and glows from on-board WS2801 LED 2. Red is 62; green and blue are 63 and 64 under the RGB test's default GHOST TYPE REV 1 and swap to 64 and 63 under REV 2, an operator setting. IPDB calls it a colour-changing ghost.",
       "id": "mechanism.ghost",
       "kind": "toy",
       "label": "Ghost figure",
@@ -6094,20 +6095,21 @@
           "value": "49"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 49,
         "group": "pinmame.output.solenoid"
       },
-      "id": "solenoid.49-simulator-shooter-output",
+      "id": "solenoid.49-simulator-shooter-release",
       "kind": "virtual",
-      "label": "Simulator Shooter Output",
+      "label": "Simulator Shooter Release",
       "physical": {
-        "notes": "PinMAME's built-in playfield simulator's shooter release; the ROM never drives it."
+        "notes": "PinMAME's built-in playfield simulator: the game's simulator declaration enables the manual plunger, and core.c publishes sim_getSol(49), the shooter-release state the simulator raises when its shooter key is released. It carries state only while PinMAME's keyboard handling drives the simulator; there is no board output and the ROM never drives it."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.b7a60eb0dd97",
+          "pinmame.sim.amh.b7a60eb0dd97",
           "controller-profile.pinmame-pinheck"
         ],
         "status": "validated"
@@ -6116,11 +6118,11 @@
         "provenance": {
           "source_refs": [
             "pinmame.core.b7a60eb0dd97",
-            "controller-profile.pinmame-pinheck"
+            "pinmame.sim.amh.b7a60eb0dd97"
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -6177,7 +6179,7 @@
       "kind": "rgb_lamp",
       "label": "RGB1 red",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6204,7 +6206,7 @@
       "kind": "rgb_lamp",
       "label": "RGB1 green",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6231,7 +6233,7 @@
       "kind": "rgb_lamp",
       "label": "RGB1 blue",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6258,7 +6260,7 @@
       "kind": "rgb_lamp",
       "label": "RGB2 red",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6285,7 +6287,7 @@
       "kind": "rgb_lamp",
       "label": "RGB2 green",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6312,7 +6314,7 @@
       "kind": "rgb_lamp",
       "label": "RGB2 blue",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6513,7 +6515,7 @@
       "kind": "rgb_lamp",
       "label": "Ghost red",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63."
       },
       "provenance": {
         "source_refs": [
@@ -6536,11 +6538,11 @@
         "device": 63,
         "group": "pinmame.output.solenoid"
       },
-      "id": "rgb.63-ghost-green",
+      "id": "rgb.63-ghost-green-rev-1-or-blue-rev-2",
       "kind": "rgb_lamp",
-      "label": "Ghost green",
+      "label": "Ghost green (REV 1) or blue (REV 2)",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63. The ROM swaps the ghost LED's green and blue bytes between the two GHOST TYPE settings, so what this channel shows depends on the operator setting: green under REV 1 (the default), blue under REV 2. The setting presumably matches two revisions of the ghost LED; no retained source says which revision a given machine carries."
       },
       "provenance": {
         "source_refs": [
@@ -6563,11 +6565,11 @@
         "device": 64,
         "group": "pinmame.output.solenoid"
       },
-      "id": "rgb.64-ghost-blue",
+      "id": "rgb.64-ghost-blue-rev-1-or-green-rev-2",
       "kind": "rgb_lamp",
-      "label": "Ghost blue",
+      "label": "Ghost blue (REV 1) or green (REV 2)",
       "physical": {
-        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56."
+        "notes": "On-board ws2801 led channel, published as a 0-255 level. The ROM's RGB test: RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63. The ROM swaps the ghost LED's green and blue bytes between the two GHOST TYPE settings, so what this channel shows depends on the operator setting: blue under REV 1 (the default), green under REV 2. The setting presumably matches two revisions of the ghost LED; no retained source says which revision a given machine carries."
       },
       "provenance": {
         "source_refs": [
@@ -9290,7 +9292,7 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],
@@ -9320,7 +9322,7 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],
@@ -9350,16 +9352,16 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],
       "id": "runtime.amh.rgb",
       "kind": "runtime_scenario",
       "license": "NOASSERTION",
-      "locator": "tools/harness-scenarios/pinheck/amh-rgb.json (scenario 90bcc6fa2965fa5edef6a8f6ccbd3dbcc7cddd62a48aebbe70aad3d4e0bae5dd); directory manifest c6718da86e2d3f63e961179bd1d60a75e246ca35f722278e1b554d0b049ee12c",
+      "locator": "tools/harness-scenarios/pinheck/amh-rgb.json (scenario d8a9ffccf49a2758be4049959dda54e97b7ebee683c81a620ac9ebf595896019); directory manifest 921075e163f0a85baf4b464e26fe01a033e4592a51a8464f1114c046235c9f31",
       "revision": "b7a60eb0dd9722f5397fc296987d94528ab111ff",
-      "sha256": "13751989fc90f71c43154f8e0e30be4578ebc2850b4cdc60eac5f0d940462b13",
+      "sha256": "eb89fd794361c1806e363d504c5712f7bbf2ef924b3e409c9630fc1e4cc226e5",
       "uri": "external:pinmame-review-artifacts/spooky-pinball.america-s-most-haunted.2014/session-20261005/runtime/amh-rgb/run.json"
     },
     {
@@ -9380,7 +9382,7 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],
@@ -9410,7 +9412,7 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],
@@ -9440,7 +9442,7 @@
           "method": "manual",
           "path": "evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/runtime-provenance.md",
           "reviewed": true,
-          "sha256": "207b90de1c983042d40f3cd1fde26e4da722f78dbe6c288b96d0829d8f1a9a02",
+          "sha256": "b1a7e50aefcd32a1eb07d6992b1fc9c034c961a737745b337e6f9fd555115cb6",
           "transcribed_by": "primary Opus 5.5 curator, 2026-10-05"
         }
       ],

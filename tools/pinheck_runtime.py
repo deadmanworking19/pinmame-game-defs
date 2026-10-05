@@ -22,6 +22,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from build_external_evidence_manifest import check_manifest
+
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "tools" / "pinheck_runtime.json"
 TEXTS = ROOT / "tools" / "pinheck_frame_texts.json"
@@ -71,14 +73,29 @@ def changed_dots(before: Path, after: Path) -> list[list[int]]:
 
 
 def frame_of(snapshot: dict[str, Any], run_dir: Path) -> tuple[Path, str]:
+	"""The snapshot's retained frame file and pixel SHA-256, refusing a frame whose bytes do not carry that digest.
+
+	The harness writes a colour frame's RGB24 pixels verbatim (P6) and a dot-matrix frame's levels scaled onto
+	0-255 (P5), so the P5 body is scaled back by the layout depth before hashing."""
 	display = snapshot["displays"][0]
-	return run_dir / "dmd" / Path(display["artifact"]).name, display["pixel_sha256"]
+	path = run_dir / "dmd" / Path(display["artifact"]).name
+	_width, _height, pixels = read_frame(path)
+	body = bytes(value for pixel in pixels for value in pixel)
+	candidates = [body]
+	if path.suffix == ".pgm":
+		max_level = max((1 << max(int(display["layout"].get("depth", 1)), 1)) - 1, 1)
+		candidates.append(bytes(round(value * max_level / 255) for value in body))
+	if display["pixel_sha256"] not in {hashlib.sha256(candidate).hexdigest() for candidate in candidates}:
+		raise ValueError(f"{path}: frame bytes do not match the run's pixel_sha256")
+	return path, display["pixel_sha256"]
 
 
 def summarize(run_dir: Path) -> dict[str, Any]:
 	run = json.loads((run_dir / "run.json").read_bytes())
 	if run["failure"] is not None:
 		raise ValueError(f"{run_dir.name}: failed run")
+	# Every retained file, frames included, must still match the run directory's canonical manifest.
+	check_manifest(run_dir, run["game"])
 	snapshots = run["snapshots"]
 	steps = []
 	for step in run["steps"]:

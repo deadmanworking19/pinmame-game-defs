@@ -38,6 +38,9 @@ TROUGHS = {"amh": [84, 85, 86, 87], "dominos": [12, 13, 14], "rzspook": [12, 13,
 START = 94
 # Items to walk; a walk that passes the end wraps back to the first item, which the snapshots show.
 ITEMS = {"solenoid": 28, "lamp": 96, "servo": 12, "rgb": 12}
+# America's Most Haunted's RGB test has a GHOST TYPE item (item 10) whose Enter switches the ghost LED from REV 1 to
+# REV 2; the longer walk shows every ghost colour again under REV 2.
+GAME_ITEMS = {("amh", "rgb"): 16}
 # Host-writable switches: 1 (coin door) is toggled separately, 3/4 are overwritten from 112/114 every vblank,
 # 5/6 would leave or restart the test.
 SWITCHES = [2, 7, 8, *[d * 10 + r for d in range(1, 10) for r in range(1, 9)], 112, 114]
@@ -79,7 +82,7 @@ def scenario(game: str, test: str) -> dict:
 		actions += [{"type": "set_switch", "switch": 1, "state": 0, "settle_s": 1.0, "label": "Open the coin door (1 released)"},
 		            {"type": "set_switch", "switch": 1, "state": 1, "settle_s": 1.0, "label": "Close the coin door (1 held)"}]
 	else:
-		for index in range(1, ITEMS[test] + 1):
+		for index in range(1, GAME_ITEMS.get((game, test), ITEMS[test]) + 1):
 			actions.append({"type": "wait", "seconds": 0.4, "label": f"Item {index:02d}"})
 			if test != "lamp":
 				actions.append(pulse(ENTER, f"Enter on item {index:02d}", settle_s=1.5))

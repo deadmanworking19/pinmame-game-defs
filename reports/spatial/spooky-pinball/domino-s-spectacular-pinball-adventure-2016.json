@@ -117,7 +117,7 @@
     },
     {
       "dimension": "output_semantics",
-      "reason": "The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of these outputs open.",
+      "reason": "The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of those outputs open; an RGB or servo output listed here is one whose load no chart names while PinMAME can still publish state there.",
       "records": [
         "gi.25-backbox-gi-output-0",
         "gi.26-backbox-gi-output-1",
@@ -136,7 +136,28 @@
         "rgb.63-external-led-0-green",
         "rgb.64-external-led-0-blue"
       ],
-      "resolution": "A photograph of the GI_0/GI_1 harness on a production machine, or an owner's check of which pins carry wires."
+      "resolution": "A photograph of the GI_0/GI_1, servo and RGB Com Out harnesses on a production machine, or an owner's check of which pins carry wires."
+    },
+    {
+      "dimension": "mechanism_behavior",
+      "reason": "No retained manual or known-working table describes home and startup states, timing, resets or failure modes.",
+      "records": [
+        "mechanism.trough",
+        "mechanism.shooter-lane",
+        "mechanism.right-flipper",
+        "mechanism.left-flipper",
+        "mechanism.left-slingshot",
+        "mechanism.right-slingshot",
+        "mechanism.lower-pop",
+        "mechanism.left-pop",
+        "mechanism.right-pop",
+        "mechanism.left-scoop",
+        "mechanism.right-scoop",
+        "mechanism.up-post",
+        "mechanism.noid",
+        "mechanism.noid-bank"
+      ],
+      "resolution": "The game's operations manual, a known-working table, or gameplay harness runs that exercise each mechanism."
     },
     {
       "dimension": "input_semantics",
@@ -156,6 +177,7 @@
     "allowed": false,
     "missing": [
       "input_semantics",
+      "mechanism_behavior",
       "output_semantics",
       "spatial_placement"
     ]

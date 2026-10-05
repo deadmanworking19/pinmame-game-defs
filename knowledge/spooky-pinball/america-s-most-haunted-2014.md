@@ -3,8 +3,8 @@
 This definition covers the physical machine (IPDB 6161, model AMH01) and its one
 PinMAME driver, `amh`, the V23 code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests and named, but no placement exists and the fitment of the unlabelled GI outputs is not
-settled.
+tests and named, but no placement exists, the mechanisms are inventoried
+without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
 
@@ -23,7 +23,7 @@ The platform contract is `controllers/pinmame/pinheck.json`. In short: factory s
 `(n / 8 + 1) * 10 + n % 8 + 1` (11-88); cabinet inputs are 1-8 and 91-97; the host drives the flipper buttons at 112 (right) and 114
 (left), which PinMAME copies to cabinet inputs 3 and 4; factory coil `n` is public `n + 1` (1-24); GI outputs 0-7 are 25-32 and 8-15
 are 37-44; 51-56 are the on-board RGB LEDs, 57-61 the servos (0-255 position), 62-64 the external or third RGB LED; the Start lamp
-is 91. On every switch public 1 is the closed contact; no switch is inverted. 50 inputs, 28 solenoid-group
+is 91. On every switch public 1 is the closed contact; no switch is inverted. 50 inputs, 29 solenoid-group
 outputs and 64 lamps are used.
 
 ## What the ROM itself proves
@@ -92,7 +92,7 @@ LOOP MAGNET (1) on the ghost loop, with the Ghost Loop opto 95 (opto 1 on the au
 
 ### Ghost figure
 
-The ghost figure turns on servo 2 (59: GHOST LEFT 14, MIDDLE 128, RIGHT 242 in the Servo test) and glows from on-board WS2801 LED 2 (62-64 red, green, blue: the RGB test's GHOST=RED/GREEN/BLUE). IPDB calls it a colour-changing ghost.
+The ghost figure turns on servo 2 (59: GHOST LEFT 14, MIDDLE 128, RIGHT 242 in the Servo test) and glows from on-board WS2801 LED 2. Red is 62; green and blue are 63 and 64 under the RGB test's default GHOST TYPE REV 1 and swap to 64 and 63 under REV 2, an operator setting. IPDB calls it a colour-changing ghost.
 
 ### Three-target bank
 
@@ -106,5 +106,5 @@ The balcony jump: 52 senses the approach, 51 a successful jump and 53 a ball tha
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `evidence/excerpts/spooky-pinball.america-s-most-haunted.2014/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/amh-*.json`. Remaining: no placement (no factory-layout table is retained that runs the ROM; the retained VPX recreations are original-code tables), and the GI outputs whose
-header pin the wire chart leaves blank keep an unknown fitment.
+`tools/harness-scenarios/pinheck/amh-*.json`. Remaining: no placement (no factory-layout table is retained that runs the ROM; the retained VPX recreations are original-code tables);
+the mechanism inventory names each mechanism's coils, switches and service-test positions, but no retained source gives its home and startup state, its timing, how the ROM resets it or how it fails, so mechanism behaviour stays open until a manual, a known-working table or a gameplay harness run supplies it. The outputs whose fitment stays unknown: 7 (Proto Bg 1), 8 (Proto Bg 1), 25 (Backbox GI Output 0), 26 (Backbox GI Output 1), 27 (Backbox GI Output 2), 28 (Backbox GI Output 3), 29 (Backbox GI Output 4), 30 (Backbox GI Output 5), 31 (Backbox GI Output 6), 32 (Backbox GI Output 7), 37 (Playfield GI Output 8), 38 (Playfield GI Output 9), 39 (Playfield GI Output 10), 40 (Playfield GI Output 11), 41 (Playfield GI Output 12), 42 (Playfield GI Output 13), 43 (Playfield GI Output 14), 44 (Playfield GI Output 15).

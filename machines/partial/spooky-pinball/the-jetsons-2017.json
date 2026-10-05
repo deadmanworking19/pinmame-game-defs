@@ -19,6 +19,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
+      "mechanism_behavior",
       "output_semantics",
       "spatial_placement"
     ],
@@ -3932,7 +3933,7 @@
   ],
   "knowledge": {
     "path": "knowledge/spooky-pinball/the-jetsons-2017.md",
-    "status": "complete"
+    "status": "partial"
   },
   "machine": {
     "id": "spooky-pinball.the-jetsons.2017",
@@ -4250,7 +4251,7 @@
       "actuators": [
         "servo.57-orbitty-topper-special-edition"
       ],
-      "behavior": "Servo 0 (57) drives the backbox topper, which IPDB lists only on the Special Edition; the ROM's firmware has no Servo test, so its travel is not observed.",
+      "behavior": "Servo 0 (57) drives the backbox topper, which IPDB lists only on the Special Edition, so the output is optional; the ROM's firmware has no Servo test, so its travel is not observed.",
       "id": "mechanism.orbitty-topper",
       "kind": "toy",
       "label": "Orbitty topper (Special Edition)",
@@ -6179,11 +6180,12 @@
       "kind": "virtual",
       "label": "Simulator Shooter Output",
       "physical": {
-        "notes": "PinMAME's built-in playfield simulator's shooter release; the ROM never drives it."
+        "notes": "The simulator declaration disables the manual plunger, so sim_getSol never raises the shooter release and core.c publishes a constant 0 here; the ROM never drives it."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.b7a60eb0dd97",
+          "pinmame.sim.jetsons.b7a60eb0dd97",
           "controller-profile.pinmame-pinheck"
         ],
         "status": "validated"
@@ -6192,7 +6194,7 @@
         "provenance": {
           "source_refs": [
             "pinmame.core.b7a60eb0dd97",
-            "controller-profile.pinmame-pinheck"
+            "pinmame.sim.jetsons.b7a60eb0dd97"
           ],
           "status": "validated"
         },
@@ -6406,7 +6408,7 @@
           "value": "57"
         }
       ],
-      "availability": "used",
+      "availability": "optional",
       "binding": {
         "device": 57,
         "group": "pinmame.output.solenoid"
@@ -6415,7 +6417,7 @@
       "kind": "servo",
       "label": "Orbitty topper (Special Edition)",
       "physical": {
-        "notes": "Servo 0: pinheck_brd_servo scales the pulse width between the game's servoMin and servoMax onto 0-255 and holds the last level when pulses stop. The charts name it 'Orbitty topper (Special Edition)'.",
+        "notes": "Servo 0: pinheck_brd_servo scales the pulse width between the game's servoMin and servoMax onto 0-255 and holds the last level when pulses stop. The charts name it 'Orbitty topper (Special Edition)'. IPDB lists the topper only on the Special Edition (IPDB 6608), so only those 25 machines carry this servo.",
         "quantity": 1
       },
       "provenance": {
@@ -6439,26 +6441,29 @@
           "value": "58"
         }
       ],
-      "availability": "used",
+      "availability": "unknown",
       "binding": {
         "device": 58,
         "group": "pinmame.output.solenoid"
       },
-      "id": "servo.58-open",
+      "id": "servo.58-servo-1",
       "kind": "servo",
-      "label": "Open",
+      "label": "Servo 1 (chart: Open)",
       "physical": {
-        "notes": "Servo 1: pinheck_brd_servo scales the pulse width between the game's servoMin and servoMax onto 0-255 and holds the last level when pulses stop. The charts name it 'Open'.",
-        "quantity": 1
+        "notes": "Servo 1. The wire chart's SERVOS box reads 'Topper - 0 / Open - 1' and the switch chart leaves SERVO 1 unnamed, so no retained source names a load; yet the ROM holds a non-zero position here from attract mode on in every run, which nothing explains. This firmware has no Servo test."
       },
       "provenance": {
         "source_refs": [
           "spooky.switch-matrix.the-jetsons",
           "spooky.wire-to-board.the-jetsons",
           "pinmame.core.b7a60eb0dd97",
-          "pinmame.sim.jetsons.b7a60eb0dd97"
+          "runtime.jetsons.game",
+          "runtime.jetsons.lamp",
+          "runtime.jetsons.rgb",
+          "runtime.jetsons.solenoid",
+          "runtime.jetsons.switch"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "range": {
         "maximum": 255,
@@ -6481,7 +6486,7 @@
       "kind": "servo",
       "label": "Unused Servo 2",
       "physical": {
-        "notes": "Servo header 2 carries no name on the charts and the ROM's Servo test never drives it, so PinMAME publishes a constant 0."
+        "notes": "Servo header 2 carries no name on the charts and the ROM holds it at 0 in every retained run (this firmware has no Servo test), so PinMAME publishes a constant 0."
       },
       "provenance": {
         "source_refs": [
@@ -6518,7 +6523,7 @@
       "kind": "servo",
       "label": "Unused Servo 3",
       "physical": {
-        "notes": "Servo header 3 carries no name on the charts and the ROM's Servo test never drives it, so PinMAME publishes a constant 0."
+        "notes": "Servo header 3 carries no name on the charts and the ROM holds it at 0 in every retained run (this firmware has no Servo test), so PinMAME publishes a constant 0."
       },
       "provenance": {
         "source_refs": [
@@ -6555,7 +6560,7 @@
       "kind": "servo",
       "label": "Unused Servo 4",
       "physical": {
-        "notes": "Servo header 4 carries no name on the charts and the ROM's Servo test never drives it, so PinMAME publishes a constant 0."
+        "notes": "Servo header 4 carries no name on the charts and the ROM holds it at 0 in every retained run (this firmware has no Servo test), so PinMAME publishes a constant 0."
       },
       "provenance": {
         "source_refs": [
@@ -6583,33 +6588,24 @@
           "value": "62"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 62,
         "group": "pinmame.output.solenoid"
       },
-      "id": "rgb.62-unused",
+      "id": "rgb.62-external-led-0-red",
       "kind": "rgb_lamp",
-      "label": "Unused RGB Channel 62",
+      "label": "External RGB LED 0 red",
       "physical": {
-        "notes": "The ROM's RGB test never lights this channel."
+        "notes": "First LED of the external WS2801 chain. The ROM's RGB test never names or lights this channel and it stays at 0 in every run, but the wire chart prints an RGB Com Out header for an external WS2801 chain and PinMAME publishes only that chain's first LED, so a constant 0 here does not show that nothing is connected."
       },
       "provenance": {
         "source_refs": [
+          "spooky.wire-to-board.the-jetsons",
           "pinmame.core.b7a60eb0dd97",
           "runtime.jetsons.rgb"
         ],
-        "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.b7a60eb0dd97"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "status": "observed"
       }
     },
     {
@@ -6619,33 +6615,24 @@
           "value": "63"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 63,
         "group": "pinmame.output.solenoid"
       },
-      "id": "rgb.63-unused",
+      "id": "rgb.63-external-led-0-green",
       "kind": "rgb_lamp",
-      "label": "Unused RGB Channel 63",
+      "label": "External RGB LED 0 green",
       "physical": {
-        "notes": "The ROM's RGB test never lights this channel."
+        "notes": "First LED of the external WS2801 chain. The ROM's RGB test never names or lights this channel and it stays at 0 in every run, but the wire chart prints an RGB Com Out header for an external WS2801 chain and PinMAME publishes only that chain's first LED, so a constant 0 here does not show that nothing is connected."
       },
       "provenance": {
         "source_refs": [
+          "spooky.wire-to-board.the-jetsons",
           "pinmame.core.b7a60eb0dd97",
           "runtime.jetsons.rgb"
         ],
-        "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.b7a60eb0dd97"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "status": "observed"
       }
     },
     {
@@ -6655,33 +6642,24 @@
           "value": "64"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 64,
         "group": "pinmame.output.solenoid"
       },
-      "id": "rgb.64-unused",
+      "id": "rgb.64-external-led-0-blue",
       "kind": "rgb_lamp",
-      "label": "Unused RGB Channel 64",
+      "label": "External RGB LED 0 blue",
       "physical": {
-        "notes": "The ROM's RGB test never lights this channel."
+        "notes": "First LED of the external WS2801 chain. The ROM's RGB test never names or lights this channel and it stays at 0 in every run, but the wire chart prints an RGB Com Out header for an external WS2801 chain and PinMAME publishes only that chain's first LED, so a constant 0 here does not show that nothing is connected."
       },
       "provenance": {
         "source_refs": [
+          "spooky.wire-to-board.the-jetsons",
           "pinmame.core.b7a60eb0dd97",
           "runtime.jetsons.rgb"
         ],
-        "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.b7a60eb0dd97"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "status": "observed"
       }
     },
     {

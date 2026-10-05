@@ -134,7 +134,7 @@
     },
     {
       "dimension": "output_semantics",
-      "reason": "The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of these outputs open.",
+      "reason": "The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of those outputs open; an RGB or servo output listed here is one whose load no chart names while PinMAME can still publish state there.",
       "records": [
         "gi.25-backbox-gi-output-0",
         "gi.26-backbox-gi-output-1",
@@ -147,7 +147,31 @@
         "gi.37-playfield-gi-output-8",
         "gi.44-playfield-gi-output-15"
       ],
-      "resolution": "A photograph of the GI_0/GI_1 harness on a production machine, or an owner's check of which pins carry wires."
+      "resolution": "A photograph of the GI_0/GI_1, servo and RGB Com Out harnesses on a production machine, or an owner's check of which pins carry wires."
+    },
+    {
+      "dimension": "mechanism_behavior",
+      "reason": "No retained manual or known-working table describes home and startup states, timing, resets or failure modes.",
+      "records": [
+        "mechanism.trough",
+        "mechanism.shooter-lane",
+        "mechanism.right-flipper",
+        "mechanism.left-flipper",
+        "mechanism.upper-flipper",
+        "mechanism.left-lower-slingshot",
+        "mechanism.left-upper-slingshot",
+        "mechanism.right-lower-slingshot",
+        "mechanism.right-upper-slingshot",
+        "mechanism.right-pop",
+        "mechanism.lower-left-pop",
+        "mechanism.upper-left-pop",
+        "mechanism.vuk",
+        "mechanism.drop-target-lock",
+        "mechanism.upper-playfield-gate",
+        "mechanism.robot",
+        "mechanism.living-dead-girl"
+      ],
+      "resolution": "The game's operations manual, a known-working table, or gameplay harness runs that exercise each mechanism."
     }
   ],
   "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
@@ -157,6 +181,7 @@
   "promotion": {
     "allowed": false,
     "missing": [
+      "mechanism_behavior",
       "output_semantics",
       "spatial_placement"
     ]

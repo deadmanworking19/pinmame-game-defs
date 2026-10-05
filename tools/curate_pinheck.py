@@ -57,10 +57,19 @@ GAMES: dict[str, dict[str, Any]] = {
 		"documents": {"switch": "AMH_Switch_Matrix_Production.pdf", "lamp": "AMH_Light_Matrix_Production.pdf", "wiring": "AMH-WIRE-TO-BOARD.pdf"},
 		"servos": {57: "Hellevator", 58: "Spooky Door", 59: "Ghost", 60: "Target"},
 		"servo_rom": {57: ["HELL UP", "HELL DOWN"], 58: ["DOOR OPEN", "DOOR CLOSE"], 59: ["GHOST LEFT", "GHOST MIDDLE", "GHOST RIGHT"], 60: ["TARGET UP", "TARGET DOWN"]},
-		"rgb": {51: "RGB1 red", 52: "RGB1 green", 53: "RGB1 blue", 54: "RGB2 red", 55: "RGB2 green", 56: "RGB2 blue", 62: "Ghost red", 63: "Ghost green", 64: "Ghost blue"},
-		"rgb_rom": "GHOST=RED/GREEN/BLUE light 62/63/64 (on-board WS2801 LED 2, onbLed2); RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56",
+		"rgb": {51: "RGB1 red", 52: "RGB1 green", 53: "RGB1 blue", 54: "RGB2 red", 55: "RGB2 green", 56: "RGB2 blue", 62: "Ghost red",
+		        63: "Ghost green (REV 1) or blue (REV 2)", 64: "Ghost blue (REV 1) or green (REV 2)"},
+		"rgb_rom": ("RGB1=RED/GREEN/BLUE light 51/52/53; RGB2=RED/GREEN/BLUE light 54/55/56; the ghost is on-board WS2801 LED 2 (onbLed2), "
+		            "and the test's GHOST TYPE item, REV 1 on a fresh NVRAM, selects its channel order: under REV 1 GHOST=RED/GREEN/BLUE "
+		            "light 62/63/64, and after Enter on that item switches it to REV 2 they light 62/64/63"),
+		"rgb_notes": {address: ("The ROM swaps the ghost LED's green and blue bytes between the two GHOST TYPE settings, so what this "
+		                        f"channel shows depends on the operator setting: {colours}. The setting presumably matches two "
+		                        "revisions of the ghost LED; no retained source says which revision a given machine carries.")
+		              for address, colours in ((63, "green under REV 1 (the default), blue under REV 2"),
+		                                       (64, "blue under REV 1 (the default), green under REV 2"))},
 		"optos": {95: "the Ghost Loop opto (opto 1 on the aux board, yellow/red)", 96: "the Spooky Door opto (opto 2 on the aux board, yellow/blue)"},
 		"trough": [84, 85, 86, 87],
+		"manual_plunger": True,
 	},
 	"dominos": {
 		"machine": "spooky-pinball.domino-s-spectacular-pinball-adventure.2016", "stem": "spooky-pinball/domino-s-spectacular-pinball-adventure-2016",
@@ -82,9 +91,10 @@ GAMES: dict[str, dict[str, Any]] = {
 		               "simulator calls 95 the center ramp opto and 96 the oven ramp opto"),
 		          96: "the other of the two cabinet optos (see 95)"},
 		"cabinet_labels": {13: "Opto (cabinet 13)", 14: "Opto (cabinet 14)"},
-		"missing": ["input_semantics", "output_semantics", "spatial_placement"],
+		"missing": ["input_semantics", "mechanism_behavior", "output_semantics", "spatial_placement"],
 		"rgb_unnamed": "The ROM holds all three channels at full, white, from attract mode through its RGB test, which never names them; the wire chart's RGB Com Out header leads to an external WS2801 chain whose load neither chart names.",
 		"trough": [12, 13, 14],
+		"manual_plunger": True,
 	},
 	"rzspook": {
 		"machine": "spooky-pinball.rob-zombie-s-spookshow-international.2016", "stem": "spooky-pinball/rob-zombie-s-spookshow-international-2016",
@@ -101,6 +111,7 @@ GAMES: dict[str, dict[str, Any]] = {
 		"rgb_rom": "RGB1 RED/GREEN/BLUE light 51/52/53, RGB2 RED/GREEN/BLUE light 54/55/56; LDG RED lights 62, LDG GREEN 64 and LDG BLUE 63, so the Living Dead Girl LED's green and blue arrive on PinMAME's B and G slots",
 		"optos": {95: "the Spaulding opto at the upper playfield gate (Opto - 4)", 96: "the upper playfield exit opto (Opto - 3)"},
 		"trough": [12, 13, 14, 15, 16, 17, 18],
+		"manual_plunger": True,
 	},
 	"jetsons": {
 		"machine": "spooky-pinball.the-jetsons.2017", "stem": "spooky-pinball/the-jetsons-2017",
@@ -112,11 +123,19 @@ GAMES: dict[str, dict[str, Any]] = {
 		             (6608, "Special Edition", "25 units (confirmed), purple armour and a backbox topper")],
 		"documents": {"switch": "Jetsons_Switch_Matrix_Production.pdf", "lamp": "Jetsons_Light_Matrix_Production.pdf", "wiring": "JETSONS-WIRE-TO-BOARD.pdf"},
 		"solenoid_list": "2017_The_Jetsons_Regular_Edition_Jetsons_Solenoid_List.pdf",
-		"servos": {57: "Orbitty topper (Special Edition)", 58: "Open"},
+		"servos": {57: "Orbitty topper (Special Edition)"},
+		"optional_servos": {57: "IPDB lists the topper only on the Special Edition (IPDB 6608), so only those 25 machines carry this servo."},
+		"unknown_servos": {58: ("Servo 1 (chart: Open)", "The wire chart's SERVOS box reads 'Topper - 0 / Open - 1' and the switch chart "
+		                        "leaves SERVO 1 unnamed, so no retained source names a load; yet the ROM holds a non-zero position "
+		                        "here from attract mode on in every run, which nothing explains. This firmware has no Servo test.")},
 		"rgb": {51: "RGB1 red", 52: "RGB1 green", 53: "RGB1 blue", 54: "RGB2 red", 55: "RGB2 green", 56: "RGB2 blue"},
 		"rgb_rom": "RGB1 RED/GREEN/BLUE light 51/52/53 (WHITE all three), RGB2 RED/GREEN/BLUE light 54/55/56",
+		"rgb_unnamed": ("The ROM's RGB test never names or lights this channel and it stays at 0 in every run, but the wire chart "
+		                "prints an RGB Com Out header for an external WS2801 chain and PinMAME publishes only that chain's first LED, "
+		                "so a constant 0 here does not show that nothing is connected."),
 		"optos": {92: "the first trough position (Opto6, Trough emitter/receiver)", 93: "the trough jam opto (Opto5)", 96: "the scoop opto (Opto - 3)"},
 		"trough": [52, 53, 54, 92],
+		"manual_plunger": False,
 	},
 }
 
@@ -562,6 +581,23 @@ def virtual_output(address: int, label: str, notes: str) -> dict[str, Any]:
 	return item
 
 
+def simulator_shooter(game: str) -> dict[str, Any]:
+	i = ids(game)
+	if not GAMES[game]["manual_plunger"]:
+		item = virtual_output(49, "Simulator Shooter Output", "The simulator declaration disables the manual plunger, so sim_getSol "
+		                      "never raises the shooter release and core.c publishes a constant 0 here; the ROM never drives it.")
+		item["provenance"] = prov(CORE, i["sim"], PROFILE)
+		item["spatial"] = na("unused", CORE, i["sim"])
+		return item
+	item = device("solenoid.49-simulator-shooter-release", "Simulator Shooter Release", "virtual", SOLENOID, 49, "used", (CORE, i["sim"], PROFILE))
+	item["physical"] = {"notes": ("PinMAME's built-in playfield simulator: the game's simulator declaration enables the manual plunger, "
+	                              "and core.c publishes sim_getSol(49), the shooter-release state the simulator raises when its "
+	                              "shooter key is released. It carries state only while PinMAME's keyboard handling drives the "
+	                              "simulator; there is no board output and the ROM never drives it.")}
+	item["spatial"] = na("virtual", CORE, i["sim"])
+	return item
+
+
 def custom_output(game: str, address: int) -> dict[str, Any]:
 	g, i = GAMES[game], ids(game)
 	if 57 <= address <= 61:
@@ -573,14 +609,23 @@ def custom_output(game: str, address: int) -> dict[str, Any]:
 			         "and holds the last level when pulses stop. The charts name it " + repr(name) + ".")
 			if rom:
 				notes += f" The ROM's Servo test moves only this address for {', '.join(rom)}."
-			item = device(f"servo.{address:02d}-{slug(name)}", name, "servo", SOLENOID, address, "used",
-			              (i["switch"], i["wiring"], CORE, i["sim"], *((i["rt-servo"],) if "rt-servo" in i else ())))
+			optional = g.get("optional_servos", {}).get(address)
+			refs = (i["switch"], i["wiring"], CORE, i["sim"], *((i["rt-servo"],) if "rt-servo" in i else ()))
+			item = device(f"servo.{address:02d}-{slug(name)}", name, "servo", SOLENOID, address, "optional" if optional else "used", refs)
 			item["range"] = {"minimum": 0, "maximum": 255}
-			item["physical"] = {"notes": notes, "quantity": 1}
+			item["physical"] = {"notes": notes + (f" {optional}" if optional else ""), "quantity": 1}
+		elif address in g.get("unknown_servos", {}):
+			label, why = g["unknown_servos"][address]
+			item = device(f"servo.{address:02d}-servo-{servo}", label, "servo", SOLENOID, address, "unknown",
+			              (i["switch"], i["wiring"], CORE, *(i[f"rt-{test}"] for test in RUNTIME["games"][game]["runs"])), "observed")
+			item["range"] = {"minimum": 0, "maximum": 255}
+			item["physical"] = {"notes": f"Servo {servo}. {why}"}
 		else:
 			item = device(f"servo.{address:02d}-unused-servo-{servo}", f"Unused Servo {servo}", "servo", SOLENOID, address, "unused",
 			              (i["wiring"], CORE, *((i["rt-servo"],) if "rt-servo" in i else ())))
-			item["physical"] = {"notes": f"Servo header {servo} carries no name on the charts and the ROM's Servo test never drives it, so PinMAME publishes a constant 0."}
+			driven = ("the ROM's Servo test never drives it" if "rt-servo" in i else
+			          "the ROM holds it at 0 in every retained run (this firmware has no Servo test)")
+			item["physical"] = {"notes": f"Servo header {servo} carries no name on the charts and {driven}, so PinMAME publishes a constant 0."}
 			item["spatial"] = na("unused", i["wiring"], CORE)
 		return item
 	names = g.get("rgb", {})
@@ -588,7 +633,8 @@ def custom_output(game: str, address: int) -> dict[str, Any]:
 		item = device(f"rgb.{address:02d}-{slug(names[address])}", names[address], "rgb_lamp", SOLENOID, address, "used",
 		              (i["wiring"], CORE, i["rt-rgb"]))
 		source = "on-board WS2801 LED" if address <= 56 or game == "amh" else "first LED of the external WS2801 chain"
-		item["physical"] = {"notes": (f"{source.capitalize()} channel, published as a 0-255 level. The ROM's RGB test: {g['rgb_rom']}.")}
+		item["physical"] = {"notes": (f"{source.capitalize()} channel, published as a 0-255 level. The ROM's RGB test: {g['rgb_rom']}."
+		                              + (f" {g['rgb_notes'][address]}" if address in g.get("rgb_notes", {}) else ""))}
 		return item
 	if "rgb_unnamed" in g and address >= 62:
 		channel = "red green blue".split()[address - 62]
@@ -596,10 +642,8 @@ def custom_output(game: str, address: int) -> dict[str, Any]:
 		              "unknown", (i["wiring"], CORE, i["rt-rgb"]), "observed")
 		item["physical"] = {"notes": "First LED of the external WS2801 chain. " + g["rgb_unnamed"]}
 		return item
-	item = device(f"rgb.{address:02d}-unused", f"Unused RGB Channel {address}", "rgb_lamp", SOLENOID, address, "unused", (CORE, i["rt-rgb"]))
-	item["physical"] = {"notes": "The ROM's RGB test never lights this channel."}
-	item["spatial"] = na("unused", CORE)
-	return item
+	# A dark channel is never declared unused from the RGB test alone: give the game a name or an rgb_unnamed reason.
+	raise ValueError(f"{game}: RGB channel {address} has neither a name nor an rgb_unnamed reason")
 
 
 def lamp_output(game: str, address: int, rom_lamps: dict[int, str]) -> dict[str, Any]:
@@ -639,7 +683,7 @@ def outputs(game: str) -> list[dict[str, Any]]:
 	records += [virtual_output(address, f"Dead Lower Flipper Slot {address}",
 	                           "Lower-flipper solenoid bits; the vblank calls core_updateSw(0), so none is fabricated; always 0.")
 	            for address in range(45, 49)]
-	records.append(virtual_output(49, "Simulator Shooter Output", "PinMAME's built-in playfield simulator's shooter release; the ROM never drives it."))
+	records.append(simulator_shooter(game))
 	records.append(virtual_output(50, "Reserved Simulator Output", "Reserved; nothing writes it."))
 	records += [custom_output(game, address) for address in range(51, 65)]
 	records += [lamp_output(game, address, lamps) for address in [public_number(n) for n in range(64)]]
@@ -693,7 +737,8 @@ MECHANISMS: dict[str, list[tuple[str, str, str, list[int], list[int], str]]] = {
 		 "LOOP MAGNET (1) on the ghost loop, with the Ghost Loop opto 95 (opto 1 on the aux board) seeing the ball pass."),
 		("ghost", "Ghost figure", "toy", [59, 62, 63, 64], [],
 		 "The ghost figure turns on servo 2 (59: GHOST LEFT 14, MIDDLE 128, RIGHT 242 in the Servo test) and glows from on-board "
-		 "WS2801 LED 2 (62-64 red, green, blue: the RGB test's GHOST=RED/GREEN/BLUE). IPDB calls it a colour-changing ghost."),
+		 "WS2801 LED 2. Red is 62; green and blue are 63 and 64 under the RGB test's default GHOST TYPE REV 1 and swap to 64 and 63 "
+		 "under REV 2, an operator setting. IPDB calls it a colour-changing ghost."),
 		("ghost-targets", "Three-target bank", "drop_target_bank", [60], [33, 34, 35],
 		 "Ghost targets 1-3 (33-35) on a bank that servo 3 (60) raises and lowers: TARGET UP (level 7) and TARGET DOWN (level 228). "
 		 "IPDB: the 3-target bank drops into the playfield."),
@@ -771,8 +816,8 @@ MECHANISMS: dict[str, list[tuple[str, str, str, list[int], list[int], str]]] = {
 		("up-post", "Orbit up-post", "other", [17], [11, 56, 16],
 		 "BALL STOP (17, the chart's Up Post) between the orbits (11 right, 56 left) and the Elroy loop (16)."),
 		("orbitty-topper", "Orbitty topper (Special Edition)", "toy", [57], [],
-		 "Servo 0 (57) drives the backbox topper, which IPDB lists only on the Special Edition; the ROM's firmware has no Servo test, "
-		 "so its travel is not observed."),
+		 "Servo 0 (57) drives the backbox topper, which IPDB lists only on the Special Edition, so the output is optional; the ROM's "
+		 "firmware has no Servo test, so its travel is not observed."),
 	],
 }
 
@@ -942,8 +987,8 @@ def build(game: str) -> dict[str, Any]:
 		"controller": {"platform": "pinmame.pinheck", "hardware_generation": PINHECK_GEN, "inversion_applied_by_emulator": True},
 		"drivers": [driver], "inputs": ins, "outputs": outs, "displays": displays(game),
 		"mechanisms": mechanisms(game, ins, outs), "relationships": [], "sources": sources(game),
-		"knowledge": {"path": f"knowledge/{g['stem']}.md", "status": "complete"},
-		"coverage": {"status": "partial", "missing": g.get("missing", ["output_semantics", "spatial_placement"]),
+		"knowledge": {"path": f"knowledge/{g['stem']}.md", "status": "partial"},
+		"coverage": {"status": "partial", "missing": g.get("missing", ["mechanism_behavior", "output_semantics", "spatial_placement"]),
 		             "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated",
 		                            "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "validated",
 		                            "recreation_knowledge": "observed", "spatial_placement": "unknown", "runtime_observation": "observed",
@@ -981,6 +1026,15 @@ GAME_NOTES = {
 }
 
 
+MECHANISM_GAP = ("the mechanism inventory names each mechanism's coils, switches and service-test positions, but no retained source "
+                 "gives its home and startup state, its timing, how the ROM resets it or how it fails, so mechanism behaviour stays "
+                 "open until a manual, a known-working table or a gameplay harness run supplies it.")
+
+
+def unknown_summary(machine: dict[str, Any]) -> str:
+	return ", ".join(f"{d['binding']['device']} ({d['label']})" for d in machine["outputs"] if d["availability"] == "unknown")
+
+
 def knowledge(game: str, machine: dict[str, Any]) -> str:
 	g = GAMES[game]
 	used = lambda group: sum(1 for d in machine["inputs"] + machine["outputs"] if d["binding"]["group"] == group and d["availability"] == "used")
@@ -989,8 +1043,8 @@ def knowledge(game: str, machine: dict[str, Any]) -> str:
 This definition covers the physical machine (IPDB {', '.join(str(e[0]) for e in g['editions'])}, model {g['model']}) and its one
 PinMAME driver, `{game}`, the {g['firmware']} code update on the Spooky Pinball pinHeck board (PIC32MX795 game CPU, Parallax Propeller
 display/sound/media CPU). It is partial: every controller address is enumerated and checked against the ROM's own service
-tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but no placement exists and the fitment of the unlabelled GI outputs is not
-settled.
+tests{', and all but the two cabinet optos are named,' if 'input_semantics' in machine['coverage']['missing'] else ' and named,'} but no placement exists, the mechanisms are inventoried
+without their full behaviour, and some outputs keep an unknown fitment.
 
 ## Machine
 
@@ -1031,8 +1085,8 @@ pulsing its trough feed coil repeatedly while no ball reaches the shooter lane.
 
 Factory chart transcriptions, the ROM service-test tables and the IPDB identity are under `{excerpt_dir(game)}/`; the runtime
 summary is `tools/pinheck_runtime.json` (rebuilt by `tools/pinheck_runtime.py` from the retained runs), the scenarios are
-`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: no placement (no factory-layout table is retained{' that runs the ROM; the retained VPX recreations are original-code tables' if game == 'amh' else ''}), and the GI outputs whose
-header pin the wire chart leaves blank keep an unknown fitment.
+`tools/harness-scenarios/pinheck/{game}-*.json`. Remaining: no placement (no factory-layout table is retained{' that runs the ROM; the retained VPX recreations are original-code tables' if game == 'amh' else ''});
+{MECHANISM_GAP} The outputs whose fitment stays unknown: {unknown_summary(machine)}.
 """
 	return text
 
@@ -1050,8 +1104,12 @@ def report(game: str, machine: dict[str, Any]) -> dict[str, Any]:
 			         ", and the retained America's Most Haunted VPX tables are original-code recreations whose geometry was not reviewed." if game == "amh" else "."),
 		         "resolution": "A factory-layout table, the playfield drawing with switch and lamp locations, or a measured playfield scan."},
 		        {"dimension": "output_semantics", "records": unknown,
-		         "reason": "The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of these outputs open.",
-		         "resolution": "A photograph of the GI_0/GI_1 harness on a production machine, or an owner's check of which pins carry wires."},
+		         "reason": ("The ROM drives every GI output, so the wire chart's blank GI header pins leave the fitment of those outputs open; "
+		                    "an RGB or servo output listed here is one whose load no chart names while PinMAME can still publish state there."),
+		         "resolution": "A photograph of the GI_0/GI_1, servo and RGB Com Out harnesses on a production machine, or an owner's check of which pins carry wires."},
+		        {"dimension": "mechanism_behavior", "records": [m["id"] for m in machine["mechanisms"]],
+		         "reason": "No retained manual or known-working table describes home and startup states, timing, resets or failure modes.",
+		         "resolution": "The game's operations manual, a known-working table, or gameplay harness runs that exercise each mechanism."},
 		        *([{"dimension": "input_semantics", "records": [d["id"] for d in machine["inputs"] if d["binding"]["device"] in (95, 96)],
 		            "reason": "The charts name a scoop opto and a Noid loop opto but not which cabinet input each reaches.",
 		            "resolution": "A gameplay harness run that lets a ball reach the scoop or the Noid loop, or an owner's check of the Opto3/Opto4 harness."}]
