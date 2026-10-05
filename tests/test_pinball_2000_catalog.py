@@ -61,7 +61,8 @@ class Pinball2000CatalogTests(unittest.TestCase):
 	def test_catalog_baseline_counts(self) -> None:
 		# The 2026-08-29 catalog-wide identity promotion converted every residual
 		# stub into an identity-resolved partial. The 2026-10-05 b7a60eb0 baseline
-		# adds nineteen honest stubs for its new roots and a non-game System III record.
+		# adds a non-game System III record and honest stubs for its new roots; the four Spooky
+		# pinHeck games among them were curated the same day.
 		self.assertEqual(
 			{
 				"author_ready_count": 33,
@@ -69,9 +70,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				"game_count": 795,
 				"machine_count": 809,
 				"non_game_count": 14,
-				"partial_count": 757,
+				"partial_count": 761,
 				"root_driver_count": 796,
-				"stub_count": 19,
+				"stub_count": 15,
 			},
 			self.catalog["summary"],
 		)

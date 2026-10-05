@@ -1,0 +1,12 @@
+# Runtime provenance: Rob Zombie's Spookshow International
+
+LibPinMAME built from PinMAME b7a60eb0dd9722f5397fc296987d94528ab111ff (pinmame64.dll SHA-256 1c5de97a199e292679cc37771d4135fd079d14a27be4d9101311704b3982e338), ROM set Spooky's rzupdate_V26.zip code update (Google Drive link on spookypinball.com), renamed rzspook.zip: RZO_V026.PRG, PRP_V008.BIN and the SD card's DMD/ and sound folders. Each run started from a copy of the retained post-update NVRAM (session-20261005/baseline-state) and is retained with its scenario, DMD frames, state and a canonical manifest under the working root's review-artifacts/spooky-pinball.rob-zombie-s-spookshow-international.2016/session-20261005/runtime/.
+
+| Test | run.json SHA-256 | scenario SHA-256 | manifest SHA-256 |
+|---|---|---|---|
+| game | e2181d1cd563019ebd9f5d44c2cfa9fdc2f6c0e2ab87065eb6a8e2121cfd8e44 | 8c86a864db45260b6c5466b807b30286a48dc83886c98d3e70de8d83eb963df3 | 5c1b1ae751f59dcaec4c829c52ab09743a7a4512caeb40c6f787b99c6d062286 |
+| lamp | 28b7044090555af4894647ab50ed6e09050e7685986259d536438119b31b40d3 | 6778b7d19be0057b3f73119164d2fcaead3553496d0a426b6f4b7fd7eaa3eed2 | 9f0fa22d38974243bcdc675d95ec627edabd2ce4a74fbb6183773824737026a5 |
+| rgb | 68f886a8b0cc84fc054896bbdf4b0f8943be2a4cb7c3a21793ea6325957e2cff | 44f0f2f56371da00dc4bbd0a76004ae2fa8b1645c86f38ff2064b5b0f9c7d1aa | f2d3b2594fa4e34a8d15071feda8fc077cdaaf6a0828c17d1ecfee04adfd163c |
+| servo | 840b25c2b3e2dbcae8c970dde28b0cef3f36c449047a1a82d9be5a8be86a4ac4 | c53fe2ac8b28e68495752f54f6c60480b41498b2de54af85939e8853f9d9b64a | 52b90a9c2c586bd017df8a9988830ca177d0c0a61ab075be5344b073ac4f72a5 |
+| solenoid | 3d14f6f9d7f17f94d047b67b4625c522a18cf5b16c3989536909f5907645238a | 35989dc933d8d01ec2aa9df46e513354567441fab5c083b4e88b3e1f7291ce95 | 14aa9a69200c26a98b6fbccb60fbb0b5176773333a40c7237b807bcda544daec |
+| switch | 18d1ce9d365e6941ea25eb5100d156c66c91df6248021292f8ab2b4e892a56a4 | b219ab6905d08eae36306034b19285361f4796579ef2e4f97ce592ecbfebd8d4 | 6e8173eec3659e3015091dac316e33d425e0a65d70ca396344b73f9681cbad59 |

@@ -386,8 +386,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(743, report["partial_count"])
-		self.assertEqual(19, report["stub_count"])
+		self.assertEqual(747, report["partial_count"])
+		self.assertEqual(15, report["stub_count"])
 		self.assertEqual(14, report["non_game_record_count"])
 		self.assertEqual(809, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
@@ -481,7 +481,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# glow-only lamps and partial flash banks.
 		# Doctor Who's legacy record omitted it too; its curated partial names the unvalidated general-illumination bulbs.
 		# Stern Quicksilver's legacy record omitted it too; the curated partial restores its gap.
-		self.assertEqual(703, report["missing_requirement_counts"]["spatial_placement"])
+		# The four Spooky pinHeck games replace stubs with partials that have no placement yet.
+		self.assertEqual(707, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -532,7 +533,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(795, catalog["summary"]["game_count"])
 		self.assertEqual(809, catalog["summary"]["machine_count"])
 		self.assertEqual(33, catalog["summary"]["author_ready_count"])
-		self.assertEqual(19, catalog["summary"]["stub_count"])
+		self.assertEqual(15, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
 		# fixes; coverage counts only the physical games and therefore reports the partial count
@@ -540,7 +541,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775.
-		self.assertEqual(757, catalog["summary"]["partial_count"])
+		self.assertEqual(761, catalog["summary"]["partial_count"])
 		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))
