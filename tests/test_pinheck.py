@@ -271,6 +271,13 @@ class PinheckDefinitionTests(unittest.TestCase):
 					self.assertTrue(entry["level"] == "playfield" or re.search(r"flipper|sling", entry["feature"], re.I))
 					self.assertTrue(geometry <= set(placement["provenance"]["source_refs"]))
 
+	def test_dominos_scoops_cite_the_close_up_they_were_read_on(self) -> None:
+		# Both scoop holes were read on thread photo 011 as well as the geometry photo; their coils share the holes.
+		placements = {(e["group"], e["address"]): e for e in CURATOR.PHOTO["dominos"]["placements"]}
+		for key in (("switch", 25), ("switch", 48), ("solenoid", 9), ("solenoid", 13)):
+			with self.subTest(device=key):
+				self.assertIn("photo.dominos-pinside-011", placements[key]["photos"])
+
 	def test_photo_evidence_matches_the_retained_files(self) -> None:
 		manuals = os.environ.get("PINMAME_MANUALS_ROOT")
 		review = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
