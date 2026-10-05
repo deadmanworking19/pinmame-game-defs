@@ -375,7 +375,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
-		self.assertEqual(775, report["machine_count"])
+		# The 2026-10-05 PinMAME b7a60eb0 baseline adds 71 in-scope drivers and drops 5. Most join existing records; the new
+		# roots are the four Spooky pinHeck games, Recreativos Franco's Super Star, the Recel System III BIOS
+		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record.
+		self.assertEqual(795, report["machine_count"])
 		self.assertEqual(33, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
@@ -383,10 +386,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(742, report["partial_count"])
-		self.assertEqual(0, report["stub_count"])
-		self.assertEqual(13, report["non_game_record_count"])
-		self.assertEqual(788, report["catalog_record_count"])
+		self.assertEqual(743, report["partial_count"])
+		self.assertEqual(19, report["stub_count"])
+		self.assertEqual(14, report["non_game_record_count"])
+		self.assertEqual(809, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -525,11 +528,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Spectrum's gameplay run settles both of its legacy switch conflicts, removing one more.
 		# Jurassic Park's curation adds one: the bank 1R bulb-count disagreement between its schematic, drawing and ROM.
 		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
-		self.assertEqual(788, len(catalog["machines"]))
-		self.assertEqual(775, catalog["summary"]["game_count"])
-		self.assertEqual(788, catalog["summary"]["machine_count"])
+		self.assertEqual(809, len(catalog["machines"]))
+		self.assertEqual(795, catalog["summary"]["game_count"])
+		self.assertEqual(809, catalog["summary"]["machine_count"])
 		self.assertEqual(33, catalog["summary"]["author_ready_count"])
-		self.assertEqual(0, catalog["summary"]["stub_count"])
+		self.assertEqual(19, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
 		# fixes; coverage counts only the physical games and therefore reports the partial count
@@ -537,8 +540,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775.
-		self.assertEqual(755, catalog["summary"]["partial_count"])
-		self.assertEqual(13, catalog["summary"]["non_game_count"])
+		self.assertEqual(757, catalog["summary"]["partial_count"])
+		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))
 		for relative_path in note_paths:

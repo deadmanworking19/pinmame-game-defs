@@ -4,7 +4,7 @@ Source: *Revenge From Mars Operations Manual*, February 1999, model 50070. Trans
 
 ## Lamp matrix wiring, printed page 2-46
 
-The manual presents eight columns, each with eight Bank A rows and eight Bank B rows. The PinMAME public bit index is `(column - 1) * 16 + (Bank B ? 8 : 0) + (row - 1)`.
+The manual presents eight columns, each with eight Bank A rows and eight Bank B rows. The PinMAME matrix bit index is `(column - 1) * 16 + (Bank B ? 8 : 0) + (row - 1)`; PinMAME's public lamp number is that bit index plus one, so `11A` is public lamp 1 and `88B` is public lamp 128.
 
 | Column | Bank A wire | Bank A connector | Bank A transistor | Bank B wire | Bank B connector | Bank B transistor |
 | --- | --- | --- | --- | --- | --- | --- |

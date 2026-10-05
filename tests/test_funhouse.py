@@ -19,7 +19,7 @@ SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990.md"
 
 DRIVER_IDS = {
-	"fh_l9", "fh_d9", "fh_l9b", "fh_d9b", "fh_905h", "fh_906h", "fh_907h", "fh_pa1",
+	"fh_l9", "fh_d9", "fh_l9b", "fh_d9b", "fh_905h", "fh_905hbs", "fh_906h", "fh_907h", "fh_pa1",
 	"fh_l2", "fh_l3", "fh_d3", "fh_l4", "fh_d4", "fh_l5", "fh_d5", "fh_f91",
 }
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}

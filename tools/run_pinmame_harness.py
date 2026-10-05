@@ -59,7 +59,11 @@ P2K_DEBUG_ENVIRONMENT_NAMES = (
 # The Data East service bindings are corroborated by src/wpc/s11.h DE_COMPORTS:
 # Green=KEYCODE_7, Black=KEYCODE_8; flippers come from src/wpc/core.h CORE_PORTS
 # at the CORE_FLIPINPORT index. The Pinball 2000 bindings follow src/wpc/p2k.c's
-# input_ports_rfm declaration and its measured diagnostic-button ordering.
+# input_ports_rfm declaration and its SWITCH_UPDATE(p2k) diagnostic mapping: since
+# PinMAME 4ea35501 (pinned b7a60eb0) KEYCODE_8 is Down (public 102) and KEYCODE_9 is
+# Up (public 103). Before that commit the two were the other way round, so traces
+# recorded on 8371478a pressed KEYCODE_8 (34) for Up; service_up/service_down are
+# only used by the Pinball 2000 scenarios.
 KEY_ALIASES = {
 	"balls_in_trough": 1,
 	"service_escape": 26,
@@ -68,8 +72,8 @@ KEY_ALIASES = {
 	"service_green": 33,
 	"service_enter": 33,
 	"service_black": 34,
-	"service_up": 34,
-	"service_down": 35,
+	"service_up": 35,
+	"service_down": 34,
 	"launch": 66,
 	"coin_door": 78,
 	"left_flipper": 93,
@@ -731,6 +735,22 @@ def _append_output_snapshot(
 	)
 
 
+def _video_frame_rgb24(data: int, pixels: int, depth: int) -> bytes:
+	"""Return a LibPinMAME video frame as rgb24 bytes.
+
+	Since b7a60eb0, PinmameDisplayLayout.depth 16 means one little-endian uint16 per pixel, 5.6.5 with red
+	in the high bits (Pinball 2000 and the pinHeck colour displays); 24 means three bytes per pixel.
+	"""
+	if depth == 16:
+		words = ctypes.cast(data, ctypes.POINTER(ctypes.c_uint16))
+		return bytes(
+			channel
+			for word in words[:pixels]
+			for channel in (((word >> 11) & 0x1F) * 255 // 31, ((word >> 5) & 0x3F) * 255 // 63, (word & 0x1F) * 255 // 31)
+		)
+	return ctypes.string_at(data, pixels * 3)
+
+
 def _path_bytes(path: Path) -> bytes:
 	encoded = str(path).encode("utf-8")
 	if len(encoded) >= PINMAME_MAX_PATH:
@@ -801,7 +821,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 	@StateCallback
 	def on_state_updated(state: int, _user_data: int) -> None:
 		recorder.record("emulator_state", state=state)
-		if state:
+		# Since b7a60eb0 PinmameRun reports 2 (starting) before 1 (running), and the output
+		# getters dereference the not yet initialized core while starting.
+		if state == 1:
 			recorder.ready.set()
 
 	@DisplayAvailableCallback
@@ -845,7 +867,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		if display_type == 15:
 			if layout.width <= 0 or layout.height <= 0:
 				return
-			frame = ctypes.string_at(data, layout.width * layout.height * 3)
+			frame = _video_frame_rgb24(data, layout.width * layout.height, layout.depth)
 			recorder.record_video_frame(index, frame)
 			return
 		if layout.length <= 0:

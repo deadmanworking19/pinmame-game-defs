@@ -13,10 +13,17 @@ SWEP1_PATH = ROOT / "machines" / "partial" / "midway" / "pinball-2000-star-wars-
 TAF_PATH = ROOT / "machines" / "author-ready" / "bally" / "the-addams-family-1992.json"
 
 RFM_DRIVERS = {
-	"rfm_120", "rfm_140", "rfm_150", "rfm_160", "rfm_180", "rfm_190", "rfm_191", "rfm_195",
-	"rfm_200", "rfm_210", "rfm_222", "rfm_223", "rfm_224", "rfm_250", "rfm_260",
+	"rfm_010", "rfm_070", "rfm_071", "rfm_080", "rfm_084", "rfm_085", "rfm_086", "rfm_087",
+	"rfm_120", "rfm_121", "rfm_130", "rfm_140", "rfm_150", "rfm_160", "rfm_170", "rfm_180",
+	"rfm_190r1", "rfm_190r2", "rfm_190r3", "rfm_191", "rfm_195r1", "rfm_195r2", "rfm_200",
+	"rfm_210r1", "rfm_210r2", "rfm_210r3", "rfm_210r4", "rfm_220", "rfm_221", "rfm_222",
+	"rfm_223", "rfm_224r1", "rfm_224r2", "rfm_224r3", "rfm_250", "rfm_260",
 }
-SWEP1_DRIVERS = {"swep1_130", "swep1_140", "swep1_150", "swep1_200", "swep1_201", "swep1_210"}
+SWEP1_DRIVERS = {
+	"swep1_040", "swep1_100", "swep1_110", "swep1_120", "swep1_130", "swep1_140", "swep1_150",
+	"swep1_160", "swep1_165r1", "swep1_165r2", "swep1_166r1", "swep1_166r2", "swep1_200h",
+	"swep1_200m", "swep1_201", "swep1_210",
+}
 IDENTITY_PARTIAL_MISSING = [
 	"identity",
 	"driver_mapping",
@@ -53,17 +60,18 @@ class Pinball2000CatalogTests(unittest.TestCase):
 
 	def test_catalog_baseline_counts(self) -> None:
 		# The 2026-08-29 catalog-wide identity promotion converted every residual
-		# stub into an identity-resolved partial, so no generated stubs remain.
+		# stub into an identity-resolved partial. The 2026-10-05 b7a60eb0 baseline
+		# adds nineteen honest stubs for its new roots and a non-game System III record.
 		self.assertEqual(
 			{
 				"author_ready_count": 33,
-				"driver_count": 2888,
-				"game_count": 775,
-				"machine_count": 788,
-				"non_game_count": 13,
-				"partial_count": 755,
-				"root_driver_count": 774,
-				"stub_count": 0,
+				"driver_count": 2954,
+				"game_count": 795,
+				"machine_count": 809,
+				"non_game_count": 14,
+				"partial_count": 757,
+				"root_driver_count": 796,
+				"stub_count": 19,
 			},
 			self.catalog["summary"],
 		)

@@ -11,7 +11,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## Identity
 
 - PinMAME catalog: root driver `iomoon`, description "Io Moon", manufacturer
-  "Sleic (Spain)", catalog year "1994".
+  "Sleic (Spain)", catalog year "1996".
 - OPDB record `G42W2-MLzj5` (IPDB 4122) names this machine "Io Moon"
   (Sleic, manufacture date 1996-01-01); the resolved identity rests on the
   agreement of the PinMAME catalog and this reviewed mapping.
@@ -20,7 +20,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Drivers this record holds
 
-- `iomoon` (1994, Sleic (Spain)).
+- `iomoon` (1996, Sleic (Spain)).
+- `iomoona` (1996, Sleic (Spain), clone of `iomoon`).
+- `iomoont` (1996, Sleic (Spain), clone of `iomoon`).
+- `iomoontf` (1996, Sleic (Spain), clone of `iomoon`).
 
 ## What a curator must establish next
 

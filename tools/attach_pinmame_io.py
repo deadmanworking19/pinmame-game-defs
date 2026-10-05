@@ -42,10 +42,11 @@ from pinmame_game_defs.identifiers import slug  # noqa: E402
 from pinmame_game_defs.jsonio import file_sha256, load_json, write_json, write_text  # noqa: E402
 from pinmame_game_defs.pinmame_source import _read_source, _symbol_label  # noqa: E402
 from pinmame_game_defs.registry import rebuild_catalog  # noqa: E402
-from pinmame_game_defs.workspace import resolve_working_root  # noqa: E402
+from pinmame_game_defs.workspace import pinmame_source_at, resolve_working_root  # noqa: E402
 
 WORKING_ROOT = resolve_working_root(REPOSITORY_ROOT)
-PINMAME_SOURCE = WORKING_ROOT / "source-checkouts" / "pinmame"
+PINMAME_CHECKOUT = WORKING_ROOT / "source-checkouts" / "pinmame"
+PINMAME_SOURCE = PINMAME_CHECKOUT
 
 GAMEDEF_PATTERN = re.compile(r"\bCORE_GAMEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
 CLONEDEF_PATTERN = re.compile(r"\bCORE_CLONEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
@@ -55,6 +56,7 @@ DEFINE_PATTERN = re.compile(r"^\s*#\s*define\s+([A-Za-z][A-Za-z0-9_]*)\s+(-?\d+)
 
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 PINMAME_URI = "https://github.com/vpinball/pinmame"
+
 
 # Reviewed mapping from PinMAME machine-module symbol to controller profile ID.
 # Modules whose generation the existing profiles do not cover (System 3-7, Bally
@@ -394,12 +396,12 @@ def main() -> None:
 	parser.add_argument("--check", action="store_true", help="Verify controller platforms against the module derivation without writing.")
 	args = parser.parse_args()
 
-	actual_revision = pinmame_revision(PINMAME_SOURCE)
-	if actual_revision != PINMAME_REVISION:
-		raise SystemExit(f"Pinned PinMAME checkout drifted: {actual_revision}")
+	global PINMAME_SOURCE
+	# The pass is pinned to PINMAME_REVISION; read exactly that tree even after the managed checkout moves on.
+	PINMAME_SOURCE = pinmame_source_at(PINMAME_REVISION, REPOSITORY_ROOT)
+	if pinmame_revision(PINMAME_CHECKOUT) != PINMAME_REVISION and not (args.check or args.dry_run):
+		raise SystemExit(f"This pass is pinned to {PINMAME_REVISION}; only --check and --dry-run run against a later checkout.")
 	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
-	if catalog["source"]["pinmame_revision"] != PINMAME_REVISION:
-		raise SystemExit("Catalog pins a different PinMAME revision.")
 	profiles = {profile["id"]: profile for profile in (load_json(path) for path in sorted((REPOSITORY_ROOT / "controllers" / "pinmame").glob("*.json")))}
 	declarations, file_defines = parse_driver_files()
 	if args.check:

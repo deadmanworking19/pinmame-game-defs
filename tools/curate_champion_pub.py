@@ -18,7 +18,7 @@ from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
 from pinmame_game_defs.spatial import _round_point
-from pinmame_game_defs.workspace import resolve_working_root
+from pinmame_game_defs.workspace import pinmame_source_at, resolve_working_root
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -297,13 +297,11 @@ def extraction_manifest(directory: Path) -> list[dict[str, Any]]:
 def verify_evidence(root: Path = ROOT) -> None:
 	data = facts(root)
 	working = resolve_working_root(root)
-	checkout = working / "source-checkouts/pinmame"
-	revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=checkout, check=True, capture_output=True, text=True).stdout.strip()
-	dirty = subprocess.run(["git", "status", "--porcelain"], cwd=checkout, check=True, capture_output=True, text=True).stdout.strip()
-	if revision != REVISION or dirty:
-		raise RuntimeError("Pinned PinMAME evidence checkout must match the revision and be clean")
+	# The clean managed checkout at REVISION, or that revision exported from its history once the pin moves on.
+	source = pinmame_source_at(REVISION, root)
 	for artifact in data["artifacts"]:
-		path = working / artifact["path"]
+		relative = artifact["path"]
+		path = source / relative.removeprefix("source-checkouts/pinmame/") if relative.startswith("source-checkouts/pinmame/") else working / relative
 		if not path.is_file() or sha256(path) != artifact["sha256"]:
 			raise RuntimeError(f"Retained Champion Pub artifact drift: {path}")
 	extraction = data["extraction"]

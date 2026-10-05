@@ -28,7 +28,7 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "#### Playfield matrix\n\nAddresses `11-88` use column-times-ten plus one-based row notation. Values ending in `9` or `0` are not matrix positions. PinMAME translates those public addresses through `p2k_sw2m` and `p2k_m2sw`.\n\n#### Dedicated inputs\n\nThe board's 24 direct inputs are exposed as three public columns: printed `D1-D8` become `91-98`, `D9-D16` become `101-108`, and `D17-D24` become `111-118`. They carry coin, diagnostic, EOS, cabinet, and action-button inputs.\n\n#### Polarity\n\nP2K publishes mixed raw public levels. Every switch in the per-game opto list is active-low (`0` active/beam blocked, `1` inactive); `SWITCH_UPDATE(p2k)` refreshes those optos to `1` each frame before game/model activity drives them low. Grounded contacts outside that list are active-high (`1` closed/active). The profile's `inversion_applied_by_emulator` field means consumers use the public state exactly as delivered and must not apply one controller-wide inversion; it does not claim that every public input is active-high.",
+      "notes": "#### Playfield matrix\n\nAddresses `11-88` use column-times-ten plus one-based row notation. Values ending in `9` or `0` are not matrix positions. PinMAME translates those public addresses through `p2k_sw2m` and `p2k_m2sw`.\n\n#### Dedicated inputs\n\nThe board's 24 direct inputs are exposed as three public columns: printed `D1-D8` become `91-98`, `D9-D16` become `101-108`, and `D17-D24` become `111-118`. They carry coin, diagnostic, EOS, cabinet, and action-button inputs.\n\n#### Polarity\n\nP2K publishes every public switch active-high: `1` beam blocked, contact closed, or button pressed, and `0` inactive. The optos rest closed and the board reads them raw active-low, so `MACHINE_INIT(p2k)` declares the per-game opto list (`p2k_optoList`) in `coreGlobals.invSw` through `core_updInvSw`; `core_getSw` and `core_setSw` apply that inversion, so the board keeps its raw level while the public API is active-high for every switch, opto or not. Revisions before upstream ccba7199 instead published the optos at their raw active-low level and refreshed them to `1` every frame, so runtime evidence recorded on such a revision carries the opposite opto level. The profile's `inversion_applied_by_emulator` field means consumers use the public state exactly as delivered and apply no further inversion; a switch's `normally_closed` remains a construction fact about the contact.\n\n#### Diagnostic keys\n\nPinMAME's keyboard port maps keys 7, 8, 9 and 0 to Enter (public `104`), Down (`102`), Up (`103`) and Escape (`101`). Before upstream 4ea35501 keys 8 and 9 were the other way round; the public switch numbers did not change.",
       "notes_format": "markdown"
     },
     {
@@ -54,21 +54,21 @@
       "kind": "lamp",
       "label": "Eight columns of two interleaved eight-row lamp banks",
       "address_rules": [
-        { "minimum": 0, "maximum": 127 }
+        { "minimum": 1, "maximum": 128 }
       ],
       "transports": {
         "libpinmame": { "channel": "lamp" },
         "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "The public address is a zero-based bit index in the sixteen exported lamp bytes. For the manual's column, bank, and row notation use `address = (column - 1) * 16 + (bank B ? 8 : 0) + (row - 1)`. Thus manual `11A` is public `0`; there is no one-based offset. PinMAME's machine-test walk verified all 128 positions.",
+      "notes": "PinMAME numbers Pinball 2000 lamps from one. The sixteen exported lamp bytes hold the board's eight columns of two interleaved eight-row banks (bank A at byte `2c`, bank B at `2c+1`), and the public lamp number is the bit index plus one: P2K inherits the default `MDRV_LAMP_CONV(core_swSeq2m, core_m2swSeq)`, so `vp_getLampIndex(n)` reads bit `n - 1` and changed-lamp reports return bit index plus one. For the manual's column, bank, and row notation use `address = (column - 1) * 16 + (bank B ? 8 : 0) + (row - 1) + 1`. Thus manual `11A` is public `1` and `88B` is public `128`; there is no public lamp `0`. Upstream cc2296d8 renumbered `p2k_names.h` to match; its earlier table counted from 0 and sat one below every public lamp number. PinMAME's machine-test walk verified all 128 positions.",
       "notes_format": "markdown"
     }
   ],
   "sources": [
     {
       "uri": "https://github.com/vpinball/pinmame",
-      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
-      "locator": "src/wpc/p2k.c p2k_sw2m/p2k_m2sw, p2k_sync_io, p2k_getSol, P2K_CUSTSOL_COUNT, p2kGameData, and p2k_disp; src/wpc/p2k_names.h measured device-table notes; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_P2K"
+      "revision": "b7a60eb0dd9722f5397fc296987d94528ab111ff",
+      "locator": "src/wpc/p2k.c p2k_sw2m/p2k_m2sw, p2k_optoList and MACHINE_INIT(p2k) core_updInvSw opto declaration, SWITCH_UPDATE(p2k) diagnostic and cabinet columns, p2k_sync_io, p2k_getSol, p2k_solIndex, P2K_CUSTSOL_COUNT, p2kGameData, and p2k_disp; src/wpc/core.c core_getSw/core_setSw/core_updInvSw and the default MDRV_LAMP_CONV(core_swSeq2m, core_m2swSeq); src/wpc/vpintf.c vp_getLampIndex and vp_getChangedLamps; src/wpc/p2k_names.h measured device-table notes and one-based lamp rule; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_P2K"
     },
     {
       "uri": "https://github.com/vpinball/pinmame",

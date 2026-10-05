@@ -21,7 +21,9 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## Drivers this record holds
 
 - `bikerac2` (1992, Sleic (Spain), clone of `bikerace`).
+- `bikerac3` (1992, Sleic (Spain), clone of `bikerace`).
 - `bikerace` (1992, Sleic (Spain)).
+- `bikerc3f` (1992, Sleic (Spain), clone of `bikerace`).
 
 ## What a curator must establish next
 

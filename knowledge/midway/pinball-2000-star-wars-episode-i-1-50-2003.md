@@ -11,7 +11,9 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## Identity
 
 - PinMAME catalog: root driver `swep1_150`, description "Pinball 2000: Star Wars Episode I (1.50)", manufacturer
-  "Midway", catalog year "2003".
+  "Williams", catalog year "2003". Revisions before b7a60eb0 reported every `swep1_*` driver's manufacturer as
+  "Midway" ("Midway / mypinballs" for the community sets); the machine record keeps the identity (`Midway`, and the `midway.` ID prefix) it
+  was created with.
 - No OPDB record is mapped for this driver in `machines/opdb_id.csv`, so the name above comes
   from the PinMAME catalog alone and is unverified.
 - The definition's driver list is exactly the clone tree PinMAME declares under `swep1_150`;
@@ -19,16 +21,30 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Drivers this record holds
 
-- `swep1_130` (1999, Midway, clone of `swep1_150`).
-- `swep1_140` (2000, Midway, clone of `swep1_150`).
-- `swep1_150` (2003, Midway).
-- `swep1_200` (2025, Midway / mypinballs, clone of `swep1_150`).
-- `swep1_201` (2025, Midway / mypinballs, clone of `swep1_150`).
-- `swep1_210` (2025, Midway / mypinballs, clone of `swep1_150`).
+- `swep1_040` (1999, Williams, clone of `swep1_150`).
+- `swep1_100` (1999, Williams, clone of `swep1_150`).
+- `swep1_110` (1999, Williams, clone of `swep1_150`).
+- `swep1_120` (1999, Williams, clone of `swep1_150`).
+- `swep1_130` (1999, Williams, clone of `swep1_150`).
+- `swep1_140` (2000, Williams, clone of `swep1_150`).
+- `swep1_150` (2003, Williams).
+- `swep1_160` (2006, Williams, clone of `swep1_150`).
+- `swep1_165r1` (2018, Williams / hemtoni, clone of `swep1_150`).
+- `swep1_165r2` (2021, Williams / hemtoni, clone of `swep1_150`).
+- `swep1_166r1` (2021, Williams / hemtoni, clone of `swep1_150`).
+- `swep1_166r2` (2022, Williams / hemtoni, clone of `swep1_150`).
+- `swep1_200h` (2016, Williams / hemtoni, clone of `swep1_150`).
+- `swep1_200m` (2025, Williams / mypinballs, clone of `swep1_150`).
+- `swep1_201` (2025, Williams / mypinballs, clone of `swep1_150`).
+- `swep1_210` (2025, Williams / mypinballs, clone of `swep1_150`).
+
+PinMAME b7a60eb0 renamed the former `swep1_200` (myPinballs' 2025 2.00, the same update files) to `swep1_200m`,
+added hemtoni's unrelated 2016 2.00 as `swep1_200h`, and added the official 1.00-1.20 sets, the 0.40 Prism-ROM
+fallback `swep1_040`, and the unofficial 1.60/1.65/1.66 sets. Whether each of them runs on this physical machine is still unverified.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `swep1_150` at `src/wpc/p2k.c:1584` with machine module `p2k`; the definition declares controller platform `pinmame.p2k` from it.
+- The PinMAME source declares `swep1_150` at `src/wpc/p2k.c:1584` at revision 8371478a (line 2473 at b7a60eb0) with machine module `p2k`; the definition declares controller platform `pinmame.p2k` from it.
 
 ## What a curator must establish next
 

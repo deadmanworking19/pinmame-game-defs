@@ -196,8 +196,10 @@ def check_promoted_records(*, structural_only: bool = False) -> None:
 	catalog_driver_by_id = {record["id"]: record for record in catalog["drivers"]}
 	machine_drivers: dict[str, set[str]] = {}
 	for record in catalog["drivers"]:
+		# A later PinMAME pin adds drivers this point-in-time pass never saw; they stay honest
+		# residual stubs until curated, and the pass authored nothing about them.
 		if record["machine_id"].startswith("stub."):
-			raise SystemExit(f"Catalog still maps {record['id']} to residual stub {record['machine_id']}")
+			continue
 		machine_drivers.setdefault(record["machine_id"], set()).add(record["id"])
 	opdb_owners: dict[str, list[str]] = {}
 	ipdb_owners: dict[int, list[str]] = {}

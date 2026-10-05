@@ -922,8 +922,9 @@ def input_devices() -> list[dict[str, Any]]:
 		notes = f"Printed dedicated grounded switch D{address}. {note}"
 		if address in {5, 6, 7, 8}:
 			notes += (
-				" PinMAME's MAME-only keyboard port (WPC_COMPORTS) labels these four service bits in the opposite "
-				"order; that is a MAME key binding, not public address semantics, and the printed matrix governs."
+				" Before PinMAME b7a60eb0 the MAME-only keyboard port (WPC_COMPORTS) labelled these four service bits in "
+				"the opposite order (fixed upstream in bd2ebd65); that was a MAME key binding, not public address "
+				"semantics, and the printed matrix governs."
 			)
 		items.append(
 			_device(

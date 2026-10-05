@@ -62,7 +62,7 @@ TABLE_BOUNDS = "left=0 top=0 right=964 bottom=2162"
 
 # --- Driver tree -----------------------------------------------------------------------------
 DRIVER_IDS = (
-	"fh_l9", "fh_d9", "fh_l9b", "fh_d9b", "fh_905h", "fh_906h", "fh_907h", "fh_pa1",
+	"fh_l9", "fh_d9", "fh_l9b", "fh_d9b", "fh_905h", "fh_905hbs", "fh_906h", "fh_907h", "fh_pa1",
 	"fh_l2", "fh_l3", "fh_d3", "fh_l4", "fh_d4", "fh_l5", "fh_d5", "fh_f91",
 )
 DRIVER_COMPATIBILITY = {
@@ -72,7 +72,8 @@ DRIVER_COMPATIBILITY = {
 	"fh_d9b": ("identical", "D-9 with the same unofficial improved German translation MOD and LED ghost fix; no controller-address or playfield change."),
 	"fh_905h": ("identical", "9.05H game ROM. This is the driver the retained known-working script binds to (Const cGameName=\"fh_905h\"); it drives the identical I/O inventory as L-9."),
 	"fh_906h": ("identical", "9.06H Coin Play game ROM; a later firmware revision of the same physical machine with no controller-address or playfield change."),
-	"fh_907h": ("identical", "9.07H LED ghost fix plus ball-saver MOD, a community patch of 9.05H; no controller-address or playfield change."),
+	"fh_905hbs": ("identical", "9.05H with a 2026 ball-saver MOD by whaslbeck, made independently of 9.07H; the pinned source declares it a CORE_CLONEDEF of L-9 on the same game data, so no controller-address or playfield change."),
+	"fh_907h": ("identical", "9.07H ball-saver MOD, a community patch of 9.05H (which already carries the LED ghost fix); no controller-address or playfield change."),
 	"fh_pa1": ("compatible", "Prototype PA-1 game ROM (labeled L-2, System 11 sound). Pinned PinMAME binds it to a distinct GEN_WPCALPHA_1 core_tGameData (fhpa1GameData) rather than the production fhGameData, reflecting the earlier WPC-Alpha-1/System-11 sound-board generation used before the machine's WPC-Alpha-2 sound board shipped. The switch, solenoid, lamp, and mechanism definitions transcribed here are unchanged between the two structs. The prototype struct also retains a stale gameSpecific1=1 copied before production FunHouse was corrected: pinned wpc.c therefore executes the unrelated WPC_CFTBL chase-light integrator and writes internal PWM lamp slots 65-72 from solenoids 20/24 and G.I. bits 0/3, but lampCol=0 keeps the public lamp count at 64. Those internal slots are a pinned-source defect, not fitted FunHouse lamps. This remains the same physical playfield with an earlier sound subsystem, not a different machine."),
 	"fh_l2": ("identical", "L-2 game ROM, the earliest production-generation firmware retained by PinMAME; no controller-address or playfield change from L-9."),
 	"fh_l3": ("identical", "L-3 game ROM; no controller-address or playfield change."),
