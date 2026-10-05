@@ -209,7 +209,9 @@ class OpdbImportTests(unittest.TestCase):
 		"""A root spelled differently from its resolved form must still name the offending files.
 
 		Windows hands out 8.3 short temp paths (``C:\\Users\\NAME~1``) while ``resolve()`` returns the
-		long form; an unresolved ``..`` segment reproduces the same mismatch on every platform.
+		long form; an unresolved ``..`` segment reproduces the same mismatch on every platform. The
+		stale-family message is the regression guard: it compares resolved paths. The drift message never
+		resolved anything and passed before the fix; it is checked here for coverage of the same spelling.
 		"""
 		with tempfile.TemporaryDirectory() as directory:
 			root = Path(directory)
