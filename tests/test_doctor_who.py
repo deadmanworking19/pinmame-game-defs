@@ -328,13 +328,15 @@ class DoctorWhoTests(unittest.TestCase):
 	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
 	def test_compact_runtime_evidence_matches_the_retained_raw_runs(self) -> None:
 		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"])
+		# Hash every run before evidence_tool rebuilds from them, so a stale copy fails here by name.
+		runs = {filename: self.retained_run(filename) for filename in RUNTIME_FILES}
 		evidence_tool.check(root)
 		for filename, (_scenario, directory) in RUNTIME_FILES.items():
 			path = root / "doctor-who-1992" / "harness" / directory / "dw_l2"
 			from build_external_evidence_manifest import check_manifest
 
 			check_manifest(path, "dw_l2")
-			run = self.retained_run(filename)
+			run = runs[filename]
 			self.assertIsNone(run["failure"], filename)
 			self.assertEqual(0, run["handle_mechanics"], filename)
 			self.assertEqual([{"state": 0, "switch": 22}], run["initial_switches"], filename)
