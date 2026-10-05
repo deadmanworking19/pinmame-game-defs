@@ -271,6 +271,35 @@ class PinheckDefinitionTests(unittest.TestCase):
 					self.assertTrue(entry["level"] == "playfield" or re.search(r"flipper|sling", entry["feature"], re.I))
 					self.assertTrue(geometry <= set(placement["provenance"]["source_refs"]))
 
+	def test_photo_evidence_matches_the_retained_files(self) -> None:
+		manuals = os.environ.get("PINMAME_MANUALS_ROOT")
+		review = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not manuals and not review:
+			self.skipTest("no evidence roots are set")
+		import hashlib
+		from build_external_evidence_manifest import check_manifest
+		for game, seed in CURATOR.PHOTO.items():
+			if manuals:
+				# A configured root must hold every photograph: a missing file fails rather than skips.
+				for photo in seed["photos"]:
+					with self.subTest(game=game, photo=photo["id"]):
+						data = (Path(manuals) / photo["local_path"]).read_bytes()
+						self.assertEqual(photo["sha256"], hashlib.sha256(data).hexdigest())
+						from PIL import Image
+						with Image.open(Path(manuals) / photo["local_path"]) as image:
+							self.assertEqual(photo["size_px"], list(image.size))
+			if review:
+				directory = Path(review) / GAMES[game]["machine"] / seed["measurement_dir"]
+				with self.subTest(game=game, check="manifest"):
+					self.assertEqual(seed["measurement_manifest_sha256"], check_manifest(directory, game))
+				candidates = {(e["group"], e["address"]): e for e in json.loads((directory / seed["candidates_file"]).read_text(encoding="utf-8"))}
+				for entry in seed["placements"]:
+					measured = candidates[(entry["group"], entry["address"])]
+					with self.subTest(game=game, device=f"{entry['group']} {entry['address']}"):
+						self.assertEqual("placed", measured["status"])
+						self.assertEqual(entry["frame_px"], [round(measured["x"]), round(measured["y"])])
+						self.assertEqual((entry["x"], entry["y"]), (round(measured["x"] / 952, 3), round(measured["y"] / 2185, 3)))
+
 	def test_amh_lw_table_extraction_and_coordinates(self) -> None:
 		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
 		if not root:

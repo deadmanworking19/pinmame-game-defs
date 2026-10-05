@@ -17,17 +17,17 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 |---|---|---|---|---|---|
 | switch 21 | 0.878, 0.719 | 836, 1572 | playfield | medium | right outlane rollover slot (outer slot right of the right lane-guide strip) |
 | switch 22 | 0.797, 0.709 | 758, 1549 | playfield | medium | right inlane rollover slot (slot between the right lane-guide strip and the right lower sling) |
-| switch 23 | 0.706, 0.695 | 672, 1519 | raised | medium | right lower slingshot, midpoint between its two posts (post screws at about (677,1470) and (614,1680)) |
+| switch 23 | 0.706, 0.695 | 672, 1519 | raised | medium | right lower slingshot, midpoint between its two posts (post screws at about (677,1470) and (614,1680)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame. |
 | switch 24 | 0.634, 0.827 | 604, 1808 | raised | medium | right flipper pivot (wide end of the right bat) |
 | switch 25 | 0.262, 0.825 | 250, 1802 | raised | medium | left flipper pivot (wide end of the left bat) |
-| switch 26 | 0.188, 0.691 | 179, 1511 | raised | medium | left lower slingshot, midpoint between its two posts (post screws at about (200,1482) and (264,1690)) |
+| switch 26 | 0.188, 0.691 | 179, 1511 | raised | medium | left lower slingshot, midpoint between its two posts (post screws at about (200,1482) and (264,1690)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame. |
 | switch 27 | 0.111, 0.706 | 106, 1542 | playfield | high | left inlane rollover slot (slot inside the left lane-guide strip) |
 | switch 28 | 0.03, 0.715 | 28, 1562 | playfield | high | left outlane rollover slot (outer slot left of the left lane-guide strip) |
 | switch 35 | 0.831, 0.195 | 791, 427 | playfield | medium | rollover slot in the lane floor under the wooden arch (inner orbit entry), above the Inner Right Arrow |
 | switch 36 | 0.672, 0.252 | 640, 550 | playfield | high | centre of the blue base ring under the Captain Spaulding bucket (pop bumper) |
-| switch 57 | 0.058, 0.567 | 55, 1239 | raised | medium | midpoint between the two screw posts of the red upper-left sling plastic (posts at (172,1329) and (92,1372)) |
+| switch 57 | 0.058, 0.567 | 55, 1239 | raised | medium | midpoint between the two screw posts of the red upper-left sling plastic (posts at (172,1329) and (92,1372)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame. |
 | solenoid 6 | 0.672, 0.252 | 640, 550 | playfield | high | centre of the blue base ring under the Captain Spaulding bucket (pop bumper) |
-| solenoid 11 | 0.058, 0.567 | 55, 1239 | raised | medium | midpoint between the two screw posts of the red upper-left sling plastic (posts at (172,1329) and (92,1372)) |
+| solenoid 11 | 0.058, 0.567 | 55, 1239 | raised | medium | midpoint between the two screw posts of the red upper-left sling plastic (posts at (172,1329) and (92,1372)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame. |
 | solenoid 12 | 0.188, 0.691 | 179, 1511 | raised | medium | left lower slingshot centre (shared with switch 26) |
 | solenoid 13 | 0.262, 0.825 | 250, 1802 | raised | medium | left flipper pivot |
 | solenoid 14 | 0.262, 0.825 | 250, 1802 | raised | medium | left flipper pivot |

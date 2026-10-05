@@ -18,7 +18,7 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 | switch 24 | 0.149, 0.73 | 142, 1596 | playfield | high | left inlane rollover slot, centre |
 | switch 25 | 0.069, 0.74 | 66, 1617 | playfield | high | left outlane rollover slot, centre |
 | switch 26 | 0.304, 0.84 | 290, 1836 | raised | medium | left flipper pivot (rounded bat end) |
-| switch 35 | 0.496, 0.182 | 472, 399 | playfield | medium | left pop bumper: base ring centre (cap-top centre (441,628)) |
+| switch 35 | 0.496, 0.182 | 472, 399 | playfield | medium | left pop bumper: base ring centre (cap-top centre (441,628)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame. |
 | switch 44 | 0.719, 0.718 | 684, 1569 | raised | medium | right slingshot: midpoint of the active (left) edge between the top and lower-left post |
 | switch 45 | 0.816, 0.73 | 776, 1595 | playfield | high | right inlane rollover slot, centre |
 | switch 46 | 0.896, 0.735 | 853, 1606 | playfield | high | right outlane rollover slot, centre |
@@ -75,8 +75,8 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 - switch 31: Not placed: centre target G (left blue disc), face centre; raised (above the playfield), so parallax displaces it.
 - switch 32: Not placed: centre target E (white disc), face centre; raised (above the playfield), so parallax displaces it.
 - switch 33: Not placed: centre target O (right blue disc), face centre; raised (above the playfield), so parallax displaces it.
-- switch 34: Not placed: lower pop bumper: estimated base centre (cap-top centre (513,782) plus +58 px in y); read only at low confidence.
-- switch 36: Not placed: right pop bumper: estimated base centre (cap-top centre (628,666) plus +58 px in y); read only at low confidence.
+- switch 34: Not placed: lower pop bumper: estimated base centre (cap-top centre (513,782) plus +58 px in y); read only at low confidence. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
+- switch 36: Not placed: right pop bumper: estimated base centre (cap-top centre (628,666) plus +58 px in y); read only at low confidence. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - switch 41: Not placed: right target R: white disc face, centre; raised (above the playfield), so parallax displaces it.
 - switch 42: Not placed: right target G: white disc face, centre; raised (above the playfield), so parallax displaces it.
 - switch 43: The third white disc (beside the E insert) is not visible: it is hidden behind the clear right ramp/guide and shadow. Do not infer it by spacing.
@@ -87,16 +87,16 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 - switch 56: Orbit switch sits in or under the left wireform/ramp (the lane entry slot with the blue Jetsons sign at about x 116-150, y 1006-1076 is visible but no switch part is). Not visible.
 - switch 92: Trough opto: inside the trough under the apron; not visible.
 - switch 93: Trough jam opto: inside the trough under the apron; not visible.
-- switch 96: Scoop opto: inside the scoop hole, not visible. (The scoop opening is at about (180,1313).)
+- switch 96: Scoop opto: inside the scoop hole, not visible. (The scoop opening is at about (180,1313).). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - solenoid 5: Ball Load (trough feed) coil is in the trough under the apron; not visible.
-- solenoid 6: Ball Launch coil: the launcher at the bottom of the shooter lane is in the dark right-hand gap and not distinguishable (a dark blue cylinder near photo (1215,1755), frame about (929,2136), is the only candidate and cannot be identified).
+- solenoid 6: Ball Launch coil: the launcher at the bottom of the shooter lane is in the dark right-hand gap and not distinguishable (a dark blue cylinder near photo (1215,1755), frame about (929,2136), is the only candidate and cannot be identified). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - solenoid 9: Not placed: black scoop pocket under the RUDI screen; raised (above the playfield), so parallax displaces it.
 - solenoid 17: Up Post: no identifiable up-post. A tall white arm/post with black cable at the top centre (rect x 575-590, y 380-600, its foot hidden behind the right pop cap) might be the actuator, but nothing proves it, so it is left unplaced.
 - solenoid 18: Not placed: lower pop bumper (estimated base); read only at low confidence.
 - solenoid 20: Not placed: brown saucer cup in the left channel; read only at low confidence.
 - solenoid 21: Not placed: right pop bumper (estimated base); read only at low confidence.
-- solenoid 37: Flasher domes: three white round domes are visible, two in the left channel at (229,752) and (242,851) (both lit white in the lit photo) and a white bubble at (686,1110) on the right; nothing says which is the ramp flasher and which the scoop flasher, so neither is placed.
-- solenoid 38: Flasher domes: see solenoid 37; candidates (229,752), (242,851), (686,1110). Which one is the scoop flasher is not determined.
+- solenoid 37: Flasher domes: three white round domes are visible, two in the left channel at (229,752) and (242,851) (both lit white in the lit photo) and a white bubble at (686,1110) on the right; nothing says which is the ramp flasher and which the scoop flasher, so neither is placed. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
+- solenoid 38: Flasher domes: see solenoid 37; candidates (229,752), (242,851), (686,1110). Which one is the scoop flasher is not determined. Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - solenoid 39: General illumination string (Left GI): not a point device.
 - solenoid 40: General illumination string (Right GI): not a point device.
 - solenoid 51: Cabinet/backbox RGB LED channel (RGB1 red): not on the playfield.
@@ -106,8 +106,8 @@ Only playfield-level parts read at medium or high confidence are placed, and fli
 - solenoid 55: Cabinet/backbox RGB LED channel (RGB2 green): not on the playfield.
 - solenoid 56: Cabinet/backbox RGB LED channel (RGB2 blue): not on the playfield.
 - solenoid 57: Orbitty topper servo is in the backbox: not on the playfield.
-- lamp 42: LEFT ORBIT ARROW: five arrow-like triangles could be lamps 42, 44, 46, 54, 56 and nothing printed names them. Visible triangles: (359,864) and (305,1075) on the left, (687,900) and (784,902) on the right (plus one hidden under the clear ramp at the upper left); the only printed one is JACKPOT (lamp 52).
+- lamp 42: LEFT ORBIT ARROW: five arrow-like triangles could be lamps 42, 44, 46, 54, 56 and nothing printed names them. Visible triangles: (359,864) and (305,1075) on the left, (687,900) and (784,902) on the right (plus one hidden under the clear ramp at the upper left); the only printed one is JACKPOT (lamp 52). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - lamp 44: RAMP ARROW: ambiguous triangle, see lamp 42.
 - lamp 46: ELROY LOOP ARROW: ambiguous triangle, see lamp 42.
-- lamp 54: KICKOUT ARROW: ambiguous triangle, see lamp 42 (candidates beside the C gear: the salmon triangle at (687,900) and the dark one at (784,902)).
+- lamp 54: KICKOUT ARROW: ambiguous triangle, see lamp 42 (candidates beside the C gear: the salmon triangle at (687,900) and the dark one at (784,902)). Coordinates quoted in this description are in the first, wall-top rectification, not this frame.
 - lamp 56: RIGHT ORBIT ARROW: ambiguous triangle, see lamp 42.
