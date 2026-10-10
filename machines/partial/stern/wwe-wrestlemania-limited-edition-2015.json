@@ -25,14 +25,17 @@
       "status": "ignored"
     },
     {
-      "description": "Exact ROM lamp5 and22 each publish two distinct mapped rows: motor2/200Thousand at5 and motor1/SpecialWhenRedRight at22. Binary OR and modulated last-traversal overwrite differ; one canonical binding per public address retains all load aliases without independent physical output state. Resolution path: A machine owner or factory service technician can trace the two loads on each shared node/position and document their independent or shared physical control.",
+      "description": "Exact ROM lamp5 and22 each publish two distinct mapped rows: motor2/200Thousand at5 and motor1/SpecialWhenRedRight at22. Binary OR and modulated last-traversal overwrite differ; one canonical binding per public address retains all load aliases without independent physical output state.",
       "id": "wwe.led-aliases",
       "path": "outputs.lamp.005",
+      "rationale": "The factory tables describe distinct motor-control and feature-light circuits. The pinned PinMAME adapter publishes their rows at the same public addresses and deterministically combines their state. This is a consumed-artifact transport limitation, not an unresolved physical-machine disagreement. Independent output states remain unavailable; the separate extension-address crosswalk remains candidate.",
       "source_refs": [
         "manual.driver",
-        "rom.routing"
+        "manual.light",
+        "rom.routing",
+        "pinmame.core"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     },
     {
       "description": "Manual extension8a LED printed positions16..47 consistently match ROMnode8 positions8..39 by channel name/reference. Candidate translation subtracts8; source proving factory-to-ROM address translation is still required. This does not apply to extension switches or other titles. Resolution path: Stern service or a machine owner can provide the exact extension8a pin-to-channel factory schematic or inspect the board/harness channels against the printed names.",
@@ -9661,7 +9664,7 @@
           "manual.light",
           "pinmame.core"
         ],
-        "status": "conflicted"
+        "status": "candidate"
       },
       "range": {
         "maximum": 255,
@@ -10653,7 +10656,7 @@
           "manual.light",
           "pinmame.core"
         ],
-        "status": "conflicted"
+        "status": "candidate"
       },
       "range": {
         "maximum": 255,

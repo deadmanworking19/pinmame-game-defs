@@ -210,7 +210,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.002 | pinmame.output.lamp:2 | observed | not_applicable (not_applicable) |
 | outputs | lamp.003 | pinmame.output.lamp:3 | candidate | absent |
 | outputs | lamp.004 | pinmame.output.lamp:4 | candidate | absent |
-| outputs | lamp.005 | pinmame.output.lamp:5 | conflicted | absent |
+| outputs | lamp.005 | pinmame.output.lamp:5 | candidate | absent |
 | outputs | lamp.006 | pinmame.output.lamp:6 | candidate | absent |
 | outputs | lamp.007 | pinmame.output.lamp:7 | candidate | absent |
 | outputs | lamp.008 | pinmame.output.lamp:8 | candidate | absent |
@@ -227,7 +227,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.019 | pinmame.output.lamp:19 | candidate | absent |
 | outputs | lamp.020 | pinmame.output.lamp:20 | candidate | absent |
 | outputs | lamp.021 | pinmame.output.lamp:21 | candidate | absent |
-| outputs | lamp.022 | pinmame.output.lamp:22 | conflicted | absent |
+| outputs | lamp.022 | pinmame.output.lamp:22 | candidate | absent |
 | outputs | lamp.023 | pinmame.output.lamp:23 | candidate | absent |
 | outputs | lamp.024 | pinmame.output.lamp:24 | candidate | absent |
 | outputs | lamp.025 | pinmame.output.lamp:25 | candidate | absent |

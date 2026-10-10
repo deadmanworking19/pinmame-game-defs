@@ -14,6 +14,18 @@ class WrestlemaniaLEFactsTests(unittest.TestCase):
 		lamps = {v['binding']['device']: v for v in d['outputs'] if v['binding']['group'] == 'pinmame.output.lamp'}
 		for n, names in [(5, {'MOTOR 2', '200 THOUSAND'}), (22, {'MOTOR 1', 'SPECIAL WHEN RED(RIGHT)'})]:
 			self.assertEqual(names, {a['value'] for a in lamps[n]['aliases'] if a['namespace'] == 'rom.name'})
+			self.assertEqual('candidate', lamps[n]['provenance']['status'])
+			self.assertIn('no independent state is available', lamps[n]['physical']['notes'])
+			self.assertIn('Binary value ORs', lamps[n]['physical']['notes'])
+			self.assertIn('overwritten by later LED-table traversal', lamps[n]['physical']['notes'])
+		conflicts = {c['id']: c for c in d['conflicts']}
+		self.assertEqual('ignored', conflicts['wwe.led-aliases']['status'])
+		self.assertIn('transport limitation', conflicts['wwe.led-aliases']['rationale'])
+		self.assertNotIn('shared node/position', conflicts['wwe.led-aliases']['description'])
+		for conflict_id in ('wwe.extension-lp-addresses', 'wwe.ring-assembly-caption'):
+			self.assertEqual('unresolved', conflicts[conflict_id]['status'])
+		for gap in ('output_semantics', 'mechanism_behavior'):
+			self.assertIn(gap, d['coverage']['missing'])
 		for n in range(83, 88):
 			self.assertEqual('gi', lamps[n]['kind'])
 		for n, quantity in [(83, 2), (86, 3), (87, 3)]:
