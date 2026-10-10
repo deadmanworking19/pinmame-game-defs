@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PrimusFactsTests(unittest.TestCase):
-	def test_own_title_reels_and_apron_lcd_preserve_internal_transport_limits(self):
+	def test_own_title_reels_and_lcd_preserve_internal_transport_and_mounting_limits(self):
 		definition = load_json(ROOT / 'machines/partial/stern/primus-2018.json')
 		self.assertEqual('GRYX4-MvBpz', definition['machine']['opdb_id'])
 		self.assertEqual(6610, definition['machine']['ipdb_id'])
@@ -17,8 +17,8 @@ class PrimusFactsTests(unittest.TestCase):
 		self.assertTrue(all(not m['actuators'] for m in reels))
 		self.assertTrue(all(len(m['sensors']) == 1 for m in reels))
 		self.assertEqual(1, len(definition['displays']))
-		self.assertEqual('playfield', definition['displays'][0]['physical_location'])
-		self.assertIn('apron', definition['displays'][0]['id'])
+		self.assertNotIn('physical_location', definition['displays'][0])
+		self.assertEqual('display.mini-lcd', definition['displays'][0]['id'])
 		outputs = {d['binding']['device']: d for d in definition['outputs'] if d['binding']['group'] == 'pinmame.output.solenoid'}
 		for address in (51, 52, 53):
 			self.assertEqual('control_signal', outputs[address]['kind'])

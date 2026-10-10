@@ -14,11 +14,12 @@
       "description": "The manual CPU DIP/service numbering omits 0-SW-1 and shifts the subsequent printed addresses; exact ROM Node 0 positions 0–7 mirror physical DIP ordinals 1–8 as public 101–108 and positions 8–11 are Select/Plus/Minus/Back public 109–112. Canonical public bindings follow verified ROM routing; source-literal addresses remain aliases. Resolution path: check factory CPU mapping documentation or exact machine wiring to resolve the printed numbering discrepancy; do not remap the API from printed IDs alone.",
       "id": "conflict.cpu-printed-address",
       "path": "inputs/switch.dip-2/aliases",
+      "rationale": "The ordinal and function joins establish the physical DIP/service identity and exact public routing. The remaining printed address shift is an alias/wiring-detail discrepancy without uncertainty about the recreation-facing functions.",
       "source_refs": [
         "manual.switch",
         "rom.routing"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     }
   ],
   "controller": {
@@ -53,10 +54,9 @@
     {
       "controller_index": 0,
       "height": 32,
-      "id": "display.apron-mini-lcd",
+      "id": "display.mini-lcd",
       "kind": "video",
-      "label": "Apron mini diagnostics LCD520-6964-00 (PinMAME DMD transport)",
-      "physical_location": "playfield",
+      "label": "Mini diagnostics LCD520-6964-00 (PinMAME DMD transport)",
       "provenance": {
         "source_refs": [
           "manual.reel-controller",

@@ -286,7 +286,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.unused-78 | pinmame.output.lamp:78 | observed | not_applicable (not_applicable) |
 | outputs | lamp.unused-79 | pinmame.output.lamp:79 | observed | not_applicable (not_applicable) |
 | outputs | lamp.unused-80 | pinmame.output.lamp:80 | observed | not_applicable (not_applicable) |
-| displays | display.apron-mini-lcd |  | observed | absent |
+| displays | display.mini-lcd |  | observed | absent |
 
 ## Sources
 
