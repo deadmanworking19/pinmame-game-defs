@@ -9,7 +9,7 @@ This note was generated from PinMAME catalog identity only. It deliberately cont
 - Candidate root driver: `got_137h`
 - Candidate manufacturer: Stern
 - Candidate year: 2015
-- Drivers currently grouped by the PinMAME clone chain: `got_137`, `got_137h`
+- Drivers currently grouped by the PinMAME clone chain: `got_137`
 
 ## Playfield devices
 
