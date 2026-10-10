@@ -1,0 +1,3795 @@
+{
+  "authority_limits": [
+    "Exact ROM device-table identity and emulator public routing only; no physical polarity, fitment, emitter quantity or spatial inference.",
+    "reference is the number printed by --list-switches after CPU +100 and topper +120 adjustment; manual_reference is the pre-adjustment ROM mapping, null if not remapped.",
+    "Closed-at-rest and active-high annotations are retained as literal emulator log annotations, not physical contact construction.",
+    "ROM labels and class bits may describe optional or generic hardware; preserve per-machine manual verification."
+  ],
+  "coils": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "manualnum",
+      "name",
+      "public_address",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "effective_public_address",
+      "source_device_index"
+    ],
+    "device_type": 2,
+    "group": "pinmame.output.solenoid",
+    "rows": [
+      [
+        0,
+        1,
+        0,
+        8,
+        "SHAKER MOTOR",
+        8,
+        true,
+        8,
+        95,
+        8,
+        1
+      ],
+      [
+        1,
+        1,
+        4,
+        32,
+        "TICKET DISPENSER",
+        32,
+        true,
+        0,
+        96,
+        32,
+        2
+      ],
+      [
+        2,
+        8,
+        0,
+        15,
+        "LEFT FLIPPER",
+        15,
+        true,
+        15,
+        97,
+        15,
+        3
+      ],
+      [
+        3,
+        8,
+        1,
+        16,
+        "RIGHT FLIPPER",
+        16,
+        true,
+        16,
+        98,
+        16,
+        4
+      ],
+      [
+        4,
+        8,
+        2,
+        20,
+        "LEFT FLIPPER HOLD",
+        20,
+        true,
+        20,
+        99,
+        20,
+        5
+      ],
+      [
+        5,
+        8,
+        3,
+        21,
+        "RIGHT FLIPPER HOLD",
+        21,
+        true,
+        21,
+        100,
+        21,
+        6
+      ],
+      [
+        6,
+        8,
+        4,
+        2,
+        "AUTO PLUNGER",
+        2,
+        true,
+        2,
+        101,
+        2,
+        7
+      ],
+      [
+        7,
+        8,
+        5,
+        1,
+        "TROUGH",
+        1,
+        true,
+        1,
+        102,
+        1,
+        8
+      ],
+      [
+        8,
+        8,
+        6,
+        18,
+        "RIGHT SLINGSHOT",
+        18,
+        true,
+        18,
+        103,
+        18,
+        9
+      ],
+      [
+        9,
+        8,
+        7,
+        17,
+        "LEFT SLINGSHOT",
+        17,
+        true,
+        17,
+        104,
+        17,
+        10
+      ],
+      [
+        10,
+        9,
+        0,
+        9,
+        "LEFT POP BUMPER",
+        9,
+        true,
+        9,
+        105,
+        9,
+        11
+      ],
+      [
+        11,
+        9,
+        1,
+        10,
+        "RIGHT POP BUMPER",
+        10,
+        true,
+        10,
+        106,
+        10,
+        12
+      ],
+      [
+        12,
+        9,
+        2,
+        11,
+        "BOTTOM POP BUMPER",
+        11,
+        true,
+        11,
+        107,
+        11,
+        13
+      ],
+      [
+        13,
+        9,
+        3,
+        3,
+        "3-BANK DROP TARGET RESET",
+        3,
+        true,
+        3,
+        108,
+        3,
+        14
+      ],
+      [
+        14,
+        10,
+        0,
+        12,
+        "LEFT RING SLINGSHOT",
+        12,
+        true,
+        12,
+        109,
+        12,
+        15
+      ],
+      [
+        15,
+        10,
+        1,
+        14,
+        "RING EJECT",
+        14,
+        true,
+        14,
+        110,
+        14,
+        16
+      ],
+      [
+        16,
+        10,
+        2,
+        13,
+        "RIGHT RING SLINGSHOT",
+        13,
+        true,
+        13,
+        111,
+        13,
+        17
+      ],
+      [
+        17,
+        10,
+        3,
+        22,
+        "UPPER LEFT FLIPPER",
+        22,
+        true,
+        19,
+        112,
+        22,
+        18
+      ],
+      [
+        18,
+        12,
+        1,
+        23,
+        "LEFT EJECT",
+        23,
+        true,
+        4,
+        113,
+        23,
+        19
+      ],
+      [
+        19,
+        12,
+        2,
+        24,
+        "RAMP CONTROL GATE LEFT",
+        24,
+        true,
+        6,
+        114,
+        24,
+        20
+      ],
+      [
+        20,
+        12,
+        3,
+        25,
+        "RAMP CONTROL GATE RIGHT",
+        25,
+        true,
+        7,
+        115,
+        25,
+        21
+      ]
+    ]
+  },
+  "controller": {
+    "custom_count": 0,
+    "distinct_exported_lamp_addresses": 102,
+    "distinct_public_switch_addresses": 89,
+    "exported_led_rows": 104,
+    "highest_light_reference_config": 102,
+    "lamp_alias_behavior": "Binary lamp state ORs every mapped row with nonzero level; modulated level is overwritten by later rows in LED-table traversal.",
+    "lower_buttons": [
+      10,
+      11
+    ],
+    "lower_flippers": [
+      {
+        "actual_coils": {
+          "hold": {
+            "coil_index": 4,
+            "name": "LEFT FLIPPER HOLD",
+            "public_address": 20,
+            "reference": 20
+          },
+          "power": {
+            "coil_index": 2,
+            "name": "LEFT FLIPPER",
+            "public_address": 15,
+            "reference": 15
+          }
+        },
+        "binary_mirrors": [
+          47,
+          48
+        ],
+        "rule": "Either named power or hold coil asserts both mirrors; mirrors are virtual copies.",
+        "side": "left"
+      },
+      {
+        "actual_coils": {
+          "hold": {
+            "coil_index": 5,
+            "name": "RIGHT FLIPPER HOLD",
+            "public_address": 21,
+            "reference": 21
+          },
+          "power": {
+            "coil_index": 3,
+            "name": "RIGHT FLIPPER",
+            "public_address": 16,
+            "reference": 16
+          }
+        },
+        "binary_mirrors": [
+          45,
+          46
+        ],
+        "rule": "Either named power or hold coil asserts both mirrors; mirrors are virtual copies.",
+        "side": "right"
+      }
+    ],
+    "nSolenoids": 32,
+    "padded_lamp_limit": 104,
+    "platform": "pinmame.spike1",
+    "switch_alias_behavior": "The subsystem setter updates every device-table row matching the reference; repeated public references fan out to all those node/position pairs.",
+    "synthesized_lower_eos": [
+      65,
+      66
+    ],
+    "unmapped_coil_references": [
+      4,
+      5,
+      6,
+      7,
+      19,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "unmapped_custom_addresses": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72
+    ],
+    "unmapped_lamp_addresses": [
+      103,
+      104
+    ],
+    "upper_button_leaves": [
+      74,
+      75
+    ]
+  },
+  "driver": "wwe_135h",
+  "folder": "WWE_LE",
+  "format": "spike1-rom-routing-facts",
+  "leds": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "light_reference",
+      "class_bits",
+      "class_labels",
+      "name",
+      "public_address",
+      "unavailable_reasons",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "source_device_index"
+    ],
+    "device_type": 4,
+    "group": "pinmame.output.lamp",
+    "rows": [
+      [
+        0,
+        12,
+        5,
+        22,
+        0,
+        [],
+        "MOTOR 1",
+        22,
+        [],
+        false,
+        22,
+        116,
+        22
+      ],
+      [
+        1,
+        12,
+        6,
+        5,
+        0,
+        [],
+        "MOTOR 2",
+        5,
+        [],
+        false,
+        5,
+        117,
+        23
+      ],
+      [
+        2,
+        1,
+        1,
+        83,
+        2,
+        [
+          "gi"
+        ],
+        "COIN DOOR GI(X2)",
+        83,
+        [],
+        true,
+        82,
+        118,
+        24
+      ],
+      [
+        3,
+        1,
+        2,
+        1,
+        1,
+        [
+          "lamp"
+        ],
+        "START BUTTON",
+        1,
+        [],
+        true,
+        1,
+        119,
+        25
+      ],
+      [
+        4,
+        1,
+        3,
+        2,
+        1,
+        [
+          "lamp"
+        ],
+        "TOURNAMENT START BUTTON",
+        2,
+        [],
+        true,
+        2,
+        120,
+        26
+      ],
+      [
+        5,
+        8,
+        8,
+        13,
+        1,
+        [
+          "lamp"
+        ],
+        "1 MILLION",
+        13,
+        [],
+        true,
+        13,
+        121,
+        27
+      ],
+      [
+        6,
+        8,
+        9,
+        9,
+        1,
+        [
+          "lamp"
+        ],
+        "600 THOUSAND",
+        9,
+        [],
+        true,
+        9,
+        122,
+        28
+      ],
+      [
+        7,
+        8,
+        10,
+        8,
+        1,
+        [
+          "lamp"
+        ],
+        "500 THOUSAND",
+        8,
+        [],
+        true,
+        8,
+        123,
+        29
+      ],
+      [
+        8,
+        8,
+        11,
+        7,
+        1,
+        [
+          "lamp"
+        ],
+        "400 THOUSAND",
+        7,
+        [],
+        true,
+        7,
+        124,
+        30
+      ],
+      [
+        9,
+        8,
+        12,
+        6,
+        1,
+        [
+          "lamp"
+        ],
+        "300 THOUSAND",
+        6,
+        [],
+        true,
+        6,
+        125,
+        31
+      ],
+      [
+        10,
+        8,
+        13,
+        20,
+        1,
+        [
+          "lamp"
+        ],
+        "5X",
+        20,
+        [],
+        true,
+        20,
+        126,
+        32
+      ],
+      [
+        11,
+        8,
+        14,
+        18,
+        1,
+        [
+          "lamp"
+        ],
+        "3X",
+        18,
+        [],
+        true,
+        18,
+        127,
+        33
+      ],
+      [
+        12,
+        8,
+        15,
+        16,
+        1,
+        [
+          "lamp"
+        ],
+        "4 MILLION",
+        16,
+        [],
+        true,
+        16,
+        128,
+        34
+      ],
+      [
+        13,
+        8,
+        16,
+        14,
+        1,
+        [
+          "lamp"
+        ],
+        "2 MILLION",
+        14,
+        [],
+        true,
+        14,
+        129,
+        35
+      ],
+      [
+        14,
+        8,
+        17,
+        12,
+        1,
+        [
+          "lamp"
+        ],
+        "900 THOUSAND",
+        12,
+        [],
+        true,
+        12,
+        130,
+        36
+      ],
+      [
+        15,
+        8,
+        18,
+        19,
+        1,
+        [
+          "lamp"
+        ],
+        "4X",
+        19,
+        [],
+        true,
+        19,
+        131,
+        37
+      ],
+      [
+        16,
+        8,
+        19,
+        17,
+        1,
+        [
+          "lamp"
+        ],
+        "2X",
+        17,
+        [],
+        true,
+        17,
+        132,
+        38
+      ],
+      [
+        17,
+        8,
+        20,
+        15,
+        1,
+        [
+          "lamp"
+        ],
+        "3 MILLION",
+        15,
+        [],
+        true,
+        15,
+        133,
+        39
+      ],
+      [
+        18,
+        8,
+        21,
+        11,
+        1,
+        [
+          "lamp"
+        ],
+        "800 THOUSAND",
+        11,
+        [],
+        true,
+        11,
+        134,
+        40
+      ],
+      [
+        19,
+        8,
+        22,
+        10,
+        1,
+        [
+          "lamp"
+        ],
+        "700 THOUSAND",
+        10,
+        [],
+        true,
+        10,
+        135,
+        41
+      ],
+      [
+        20,
+        8,
+        23,
+        93,
+        4,
+        [
+          "flasher"
+        ],
+        "WORLD HEAVYWEIGHT CHAMPION",
+        93,
+        [],
+        true,
+        39,
+        136,
+        42
+      ],
+      [
+        21,
+        8,
+        24,
+        92,
+        4,
+        [
+          "flasher"
+        ],
+        "INTERCONTINENTAL CHAMPION",
+        92,
+        [],
+        true,
+        37,
+        137,
+        43
+      ],
+      [
+        22,
+        8,
+        25,
+        90,
+        4,
+        [
+          "flasher"
+        ],
+        "UNITED STATES CHAMPION",
+        90,
+        [],
+        true,
+        23,
+        138,
+        44
+      ],
+      [
+        23,
+        8,
+        26,
+        91,
+        4,
+        [
+          "flasher"
+        ],
+        "TAG TEAM CHAMPION",
+        91,
+        [],
+        true,
+        36,
+        139,
+        45
+      ],
+      [
+        24,
+        8,
+        27,
+        25,
+        1,
+        [
+          "lamp"
+        ],
+        "YE(S)!",
+        25,
+        [],
+        true,
+        25,
+        140,
+        46
+      ],
+      [
+        25,
+        8,
+        28,
+        26,
+        1,
+        [
+          "lamp"
+        ],
+        "YES(!)",
+        26,
+        [],
+        true,
+        26,
+        141,
+        47
+      ],
+      [
+        26,
+        8,
+        29,
+        28,
+        1,
+        [
+          "lamp"
+        ],
+        "BREAK HOLD",
+        28,
+        [],
+        true,
+        28,
+        142,
+        48
+      ],
+      [
+        27,
+        8,
+        30,
+        22,
+        1,
+        [
+          "lamp"
+        ],
+        "SPECIAL WHEN RED(RIGHT)",
+        22,
+        [],
+        true,
+        22,
+        143,
+        49
+      ],
+      [
+        28,
+        8,
+        31,
+        89,
+        4,
+        [
+          "flasher"
+        ],
+        "RIGHT OUTLANE",
+        89,
+        [],
+        true,
+        25,
+        144,
+        50
+      ],
+      [
+        29,
+        8,
+        32,
+        24,
+        1,
+        [
+          "lamp"
+        ],
+        "Y(E)S!",
+        24,
+        [],
+        true,
+        24,
+        145,
+        51
+      ],
+      [
+        30,
+        8,
+        33,
+        23,
+        1,
+        [
+          "lamp"
+        ],
+        "(Y)ES!",
+        23,
+        [],
+        true,
+        23,
+        146,
+        52
+      ],
+      [
+        31,
+        8,
+        34,
+        27,
+        1,
+        [
+          "lamp"
+        ],
+        "KICK OUT",
+        27,
+        [],
+        true,
+        27,
+        147,
+        53
+      ],
+      [
+        32,
+        8,
+        35,
+        21,
+        1,
+        [
+          "lamp"
+        ],
+        "SPECIAL WHEN RED(LEFT)",
+        21,
+        [],
+        true,
+        21,
+        148,
+        54
+      ],
+      [
+        33,
+        8,
+        36,
+        88,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT OUTLANE",
+        88,
+        [],
+        true,
+        26,
+        149,
+        55
+      ],
+      [
+        34,
+        8,
+        37,
+        5,
+        1,
+        [
+          "lamp"
+        ],
+        "200 THOUSAND",
+        5,
+        [],
+        true,
+        5,
+        150,
+        56
+      ],
+      [
+        35,
+        8,
+        38,
+        4,
+        1,
+        [
+          "lamp"
+        ],
+        "100 THOUSAND",
+        4,
+        [],
+        true,
+        4,
+        151,
+        57
+      ],
+      [
+        36,
+        8,
+        39,
+        3,
+        1,
+        [
+          "lamp"
+        ],
+        "SHOOT AGAIN",
+        3,
+        [],
+        true,
+        3,
+        152,
+        58
+      ],
+      [
+        37,
+        8,
+        4,
+        102,
+        2,
+        [
+          "gi"
+        ],
+        "BACK PANEL GI",
+        102,
+        [],
+        true,
+        0,
+        153,
+        59
+      ],
+      [
+        38,
+        8,
+        2,
+        87,
+        2,
+        [
+          "gi"
+        ],
+        "RIGHT SLINGSHOT GI(X3)",
+        87,
+        [],
+        true,
+        86,
+        154,
+        60
+      ],
+      [
+        39,
+        8,
+        3,
+        86,
+        2,
+        [
+          "gi"
+        ],
+        "LEFT SLINGSHOT GI(X3)",
+        86,
+        [],
+        true,
+        85,
+        155,
+        61
+      ],
+      [
+        40,
+        9,
+        0,
+        84,
+        2,
+        [
+          "gi"
+        ],
+        "LEFT PLAYFIELD GI",
+        84,
+        [],
+        true,
+        83,
+        156,
+        62
+      ],
+      [
+        41,
+        9,
+        1,
+        35,
+        1,
+        [
+          "lamp"
+        ],
+        "CENTER 3-BANK(LEFT)",
+        35,
+        [],
+        true,
+        35,
+        157,
+        63
+      ],
+      [
+        42,
+        9,
+        2,
+        36,
+        1,
+        [
+          "lamp"
+        ],
+        "CENTER 3-BANK(CENTER)",
+        36,
+        [],
+        true,
+        36,
+        158,
+        64
+      ],
+      [
+        43,
+        9,
+        3,
+        37,
+        1,
+        [
+          "lamp"
+        ],
+        "CENTER 3-BANK(RIGHT)",
+        37,
+        [],
+        true,
+        37,
+        159,
+        65
+      ],
+      [
+        44,
+        9,
+        4,
+        47,
+        1,
+        [
+          "lamp"
+        ],
+        "TAG(LEFT)",
+        47,
+        [],
+        true,
+        47,
+        160,
+        66
+      ],
+      [
+        45,
+        9,
+        5,
+        56,
+        1,
+        [
+          "lamp"
+        ],
+        "TAG(RIGHT)",
+        56,
+        [],
+        true,
+        56,
+        161,
+        67
+      ],
+      [
+        46,
+        9,
+        6,
+        48,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW(RED)",
+        48,
+        [],
+        true,
+        48,
+        162,
+        68
+      ],
+      [
+        47,
+        9,
+        7,
+        49,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW(GREEN)",
+        49,
+        [],
+        true,
+        49,
+        163,
+        69
+      ],
+      [
+        48,
+        9,
+        8,
+        50,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW(BLUE)",
+        50,
+        [],
+        true,
+        50,
+        164,
+        70
+      ],
+      [
+        49,
+        9,
+        9,
+        51,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT(REF)",
+        51,
+        [],
+        true,
+        51,
+        165,
+        71
+      ],
+      [
+        50,
+        9,
+        10,
+        52,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW(RED)",
+        52,
+        [],
+        true,
+        52,
+        166,
+        72
+      ],
+      [
+        51,
+        9,
+        11,
+        53,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW(GREEN)",
+        53,
+        [],
+        true,
+        53,
+        167,
+        73
+      ],
+      [
+        52,
+        9,
+        12,
+        54,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW(BLUE)",
+        54,
+        [],
+        true,
+        54,
+        168,
+        74
+      ],
+      [
+        53,
+        9,
+        13,
+        55,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT (REF)",
+        55,
+        [],
+        true,
+        55,
+        169,
+        75
+      ],
+      [
+        54,
+        9,
+        14,
+        94,
+        4,
+        [
+          "flasher"
+        ],
+        "POP BUMPER",
+        94,
+        [],
+        true,
+        40,
+        170,
+        76
+      ],
+      [
+        55,
+        10,
+        0,
+        85,
+        2,
+        [
+          "gi"
+        ],
+        "RIGHT PLAYFIELD GI",
+        85,
+        [],
+        true,
+        84,
+        171,
+        77
+      ],
+      [
+        56,
+        10,
+        1,
+        68,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 1(LEFT)",
+        68,
+        [],
+        true,
+        68,
+        172,
+        78
+      ],
+      [
+        57,
+        10,
+        2,
+        69,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 2",
+        69,
+        [],
+        true,
+        69,
+        173,
+        79
+      ],
+      [
+        58,
+        10,
+        3,
+        70,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 3",
+        70,
+        [],
+        true,
+        70,
+        174,
+        80
+      ],
+      [
+        59,
+        10,
+        4,
+        71,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 4",
+        71,
+        [],
+        true,
+        71,
+        175,
+        81
+      ],
+      [
+        60,
+        10,
+        5,
+        72,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 5",
+        72,
+        [],
+        true,
+        72,
+        176,
+        82
+      ],
+      [
+        61,
+        10,
+        6,
+        73,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 6",
+        73,
+        [],
+        true,
+        73,
+        177,
+        83
+      ],
+      [
+        62,
+        10,
+        7,
+        74,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 7",
+        74,
+        [],
+        true,
+        74,
+        178,
+        84
+      ],
+      [
+        63,
+        10,
+        8,
+        75,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 8",
+        75,
+        [],
+        true,
+        75,
+        179,
+        85
+      ],
+      [
+        64,
+        10,
+        9,
+        76,
+        1,
+        [
+          "lamp"
+        ],
+        "RING 9(RIGHT)",
+        76,
+        [],
+        true,
+        76,
+        180,
+        86
+      ],
+      [
+        65,
+        10,
+        10,
+        66,
+        1,
+        [
+          "lamp"
+        ],
+        "FLIPPER WHEN LIT(LEFT)",
+        66,
+        [],
+        true,
+        66,
+        181,
+        87
+      ],
+      [
+        66,
+        10,
+        11,
+        67,
+        1,
+        [
+          "lamp"
+        ],
+        "FLIPPER WHEN LIT(RIGHT)",
+        67,
+        [],
+        true,
+        67,
+        182,
+        88
+      ],
+      [
+        67,
+        10,
+        12,
+        100,
+        4,
+        [
+          "flasher"
+        ],
+        "BELL",
+        100,
+        [],
+        true,
+        32,
+        183,
+        89
+      ],
+      [
+        68,
+        10,
+        13,
+        101,
+        4,
+        [
+          "flasher"
+        ],
+        "LADDER",
+        101,
+        [],
+        true,
+        27,
+        184,
+        90
+      ],
+      [
+        69,
+        10,
+        14,
+        98,
+        4,
+        [
+          "flasher"
+        ],
+        "TOP LANE(LEFT)",
+        98,
+        [],
+        true,
+        28,
+        185,
+        91
+      ],
+      [
+        70,
+        10,
+        15,
+        99,
+        4,
+        [
+          "flasher"
+        ],
+        "TOP LANE(RIGHT)",
+        99,
+        [],
+        true,
+        29,
+        186,
+        92
+      ],
+      [
+        71,
+        11,
+        0,
+        42,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW(RED)",
+        42,
+        [],
+        true,
+        42,
+        187,
+        93
+      ],
+      [
+        72,
+        11,
+        1,
+        43,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW(GREEN)",
+        43,
+        [],
+        true,
+        43,
+        188,
+        94
+      ],
+      [
+        73,
+        11,
+        2,
+        44,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW(BLUE)",
+        44,
+        [],
+        true,
+        44,
+        189,
+        95
+      ],
+      [
+        74,
+        11,
+        3,
+        29,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT LANE ARROW(RED)",
+        29,
+        [],
+        true,
+        29,
+        190,
+        96
+      ],
+      [
+        75,
+        11,
+        4,
+        30,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT LANE ARROW(GREEN)",
+        30,
+        [],
+        true,
+        30,
+        191,
+        97
+      ],
+      [
+        76,
+        11,
+        5,
+        31,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT LANE ARROW(BLUE)",
+        31,
+        [],
+        true,
+        31,
+        192,
+        98
+      ],
+      [
+        77,
+        11,
+        6,
+        32,
+        1,
+        [
+          "lamp"
+        ],
+        "TAG TEAM",
+        32,
+        [],
+        true,
+        32,
+        193,
+        99
+      ],
+      [
+        78,
+        11,
+        7,
+        33,
+        1,
+        [
+          "lamp"
+        ],
+        "EXTRA BALL",
+        33,
+        [],
+        true,
+        33,
+        194,
+        100
+      ],
+      [
+        79,
+        11,
+        8,
+        57,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW(RED)",
+        57,
+        [],
+        true,
+        57,
+        195,
+        101
+      ],
+      [
+        80,
+        11,
+        9,
+        58,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW(GREEN)",
+        58,
+        [],
+        true,
+        58,
+        196,
+        102
+      ],
+      [
+        81,
+        11,
+        10,
+        59,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW(BLUE)",
+        59,
+        [],
+        true,
+        59,
+        197,
+        103
+      ],
+      [
+        82,
+        11,
+        11,
+        77,
+        1,
+        [
+          "lamp"
+        ],
+        "TOP LANE 1(LEFT)",
+        77,
+        [],
+        true,
+        77,
+        198,
+        104
+      ],
+      [
+        83,
+        11,
+        12,
+        78,
+        1,
+        [
+          "lamp"
+        ],
+        "TOP LANE 2",
+        78,
+        [],
+        true,
+        78,
+        199,
+        105
+      ],
+      [
+        84,
+        11,
+        13,
+        79,
+        1,
+        [
+          "lamp"
+        ],
+        "TOP LANE 3",
+        79,
+        [],
+        true,
+        79,
+        200,
+        106
+      ],
+      [
+        85,
+        11,
+        14,
+        80,
+        1,
+        [
+          "lamp"
+        ],
+        "TOP LANE 4",
+        80,
+        [],
+        true,
+        80,
+        201,
+        107
+      ],
+      [
+        86,
+        11,
+        15,
+        81,
+        1,
+        [
+          "lamp"
+        ],
+        "TOP LANE 5(RIGHT)",
+        81,
+        [],
+        true,
+        81,
+        202,
+        108
+      ],
+      [
+        87,
+        11,
+        16,
+        95,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT RAMP",
+        95,
+        [],
+        true,
+        30,
+        203,
+        109
+      ],
+      [
+        88,
+        11,
+        17,
+        97,
+        4,
+        [
+          "flasher"
+        ],
+        "RIGHT RAMP",
+        97,
+        [],
+        true,
+        31,
+        204,
+        110
+      ],
+      [
+        89,
+        11,
+        18,
+        96,
+        4,
+        [
+          "flasher"
+        ],
+        "LADDER(BOTTOM)",
+        96,
+        [],
+        true,
+        38,
+        205,
+        111
+      ],
+      [
+        90,
+        11,
+        19,
+        45,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP(RING)",
+        45,
+        [],
+        true,
+        45,
+        206,
+        112
+      ],
+      [
+        91,
+        11,
+        20,
+        46,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP(REF)",
+        46,
+        [],
+        true,
+        46,
+        207,
+        113
+      ],
+      [
+        92,
+        11,
+        21,
+        34,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT KICK OUT",
+        34,
+        [],
+        true,
+        34,
+        208,
+        114
+      ],
+      [
+        93,
+        11,
+        22,
+        38,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT BREAK HOLD",
+        38,
+        [],
+        true,
+        38,
+        209,
+        115
+      ],
+      [
+        94,
+        11,
+        23,
+        39,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT LANE ARROW",
+        39,
+        [],
+        true,
+        39,
+        210,
+        116
+      ],
+      [
+        95,
+        11,
+        28,
+        60,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP(RING)",
+        60,
+        [],
+        true,
+        60,
+        211,
+        117
+      ],
+      [
+        96,
+        11,
+        29,
+        61,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP(REF)",
+        61,
+        [],
+        true,
+        61,
+        212,
+        118
+      ],
+      [
+        97,
+        11,
+        30,
+        40,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT 2-BANK TARGET(TOP)",
+        40,
+        [],
+        true,
+        40,
+        213,
+        119
+      ],
+      [
+        98,
+        11,
+        31,
+        41,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT 2-BANK TARGET(BOTTOM)",
+        41,
+        [],
+        true,
+        41,
+        214,
+        120
+      ],
+      [
+        99,
+        12,
+        1,
+        62,
+        1,
+        [
+          "lamp"
+        ],
+        "LADDER 1(BOTTOM)",
+        62,
+        [],
+        true,
+        62,
+        215,
+        121
+      ],
+      [
+        100,
+        12,
+        2,
+        63,
+        1,
+        [
+          "lamp"
+        ],
+        "LADDER 2",
+        63,
+        [],
+        true,
+        63,
+        216,
+        122
+      ],
+      [
+        101,
+        12,
+        3,
+        64,
+        1,
+        [
+          "lamp"
+        ],
+        "LADDER 3",
+        64,
+        [],
+        true,
+        64,
+        217,
+        123
+      ],
+      [
+        102,
+        12,
+        4,
+        65,
+        1,
+        [
+          "lamp"
+        ],
+        "LADDER 4(TOP)",
+        65,
+        [],
+        true,
+        65,
+        218,
+        124
+      ],
+      [
+        103,
+        12,
+        7,
+        82,
+        1,
+        [
+          "lamp"
+        ],
+        "WHAM!",
+        82,
+        [],
+        true,
+        87,
+        219,
+        125
+      ]
+    ]
+  },
+  "provenance": {
+    "archive": {
+      "all_source_entry_metadata_match": true,
+      "crc_validation_evidence": "The hashed ROM-build log reports all CRCs match, and the hashed extraction log reports Everything is Ok; this extraction independently verifies every ZIP entry's size/CRC metadata and the program's source CRC/SHA1, not every archive payload again.",
+      "game_bytes_equal_extracted": true,
+      "path": "working-root:roms/spike1/wwe_135h.zip",
+      "sha256": "108fa8856d73787b2bd74658dab53693de79a471607a2cff3c0d7eb01c3c2393",
+      "size": 2866991472
+    },
+    "executable": {
+      "path": "working-root:builds/spike1boot-pr728/Release/spike1boot.exe",
+      "sha256": "f79c4f05ad9a293294651e674d8697e7637eae46d1a3bb6fa8c9f40233e42e24",
+      "size": 551424
+    },
+    "extraction_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/extract-wwe_135h.log",
+      "sha256": "18135bde10de75470b842ca546ed1431c27ebda286e2e607555e474ebcf49e86",
+      "size": 437
+    },
+    "extractor": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/rom-maps/extract_routing_facts.py",
+      "sha256": "59e4d5940064443b1ad2c1d6aaf05b7a3a594e71b890ec3d4287989166b40446",
+      "size": 22901
+    },
+    "map_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/wwe_135h-map.log",
+      "sha256": "18236fc6231f6f1619f59188c38c8216b29257eac1cb0dd32881d893813f6301",
+      "size": 16602
+    },
+    "program": {
+      "path": "working-root:roms/spike1/extracted/WWE_LE/game",
+      "sha256": "1d3610b8dc90fd8c5fc7d5700dbe2d5cd03673ab3c1192273cd6b5dd547cbcf3",
+      "size": 5670338,
+      "source_expected": {
+        "crc32": "edc2c801",
+        "name": "game",
+        "sha1": "23e2936810e3869d52d39bc3ff7863d9de59951b",
+        "size": 5670338
+      }
+    },
+    "rom_build_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/rom-build-WWE_LE-1_35.iso.zip.log",
+      "sha256": "8bd0acbc7f0a45f21677399d14b90f02f4af2c2a5269621b8feee8d1af07c67d",
+      "size": 245
+    },
+    "source_clean": true,
+    "source_files": [
+      {
+        "locator": "src/wpc/spike1.c:191-225,275-313,511-564,717-991",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/spike1.c",
+        "sha256": "756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9",
+        "size": 60607
+      },
+      {
+        "locator": "src/spike1/spike1_boot.cpp:247-254",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_boot.cpp",
+        "sha256": "227a1382faee0f4099ea239132c37803a22b1f2bfcfd7b036aec11cbd814c3af",
+        "size": 19461
+      },
+      {
+        "locator": "src/spike1/spike1_devices.cpp:848-956,1632-1726",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_devices.cpp",
+        "sha256": "4435f0bd0576a14fa42bf5a32b85bbc2162f59e5c31e263831219f8811496a91",
+        "size": 82030
+      },
+      {
+        "locator": "src/spike1/spike1_devices.h:78-105",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_devices.h",
+        "sha256": "57c2e4a699989203f043f4ca30ed1447921fbf9cd26012ca5a6c7653c7e60269",
+        "size": 20551
+      },
+      {
+        "locator": "src/spike1/spike1_memory.cpp:186-197",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_memory.cpp",
+        "sha256": "14182514c64bbc0837fc02d470fdd4905546131d1d229eca6589ed52eb140928",
+        "size": 9097
+      },
+      {
+        "locator": "src/spike1/spike1_linux.cpp:228-258,327-339",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_linux.cpp",
+        "sha256": "aac42a35e9d5b478bfa58e43220d00fc4c91768723fe2446a8f08e77dde49548",
+        "size": 59164
+      },
+      {
+        "locator": "src/spike1/spike1_pinmame.cpp:126-207",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_pinmame.cpp",
+        "sha256": "46f527dd495fe98bb8aef4ae85602dd6f7601b3c296d8256d8a7ea35c0941797",
+        "size": 10063
+      },
+      {
+        "locator": "src/spike1/spike1_public.h:65-96",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_public.h",
+        "sha256": "645a712e6144777e2cbef3b1e8446710277882cda0e2cd58df91e05758b3010a",
+        "size": 6916
+      },
+      {
+        "locator": "src/wpc/core.c:1778-1858,2336-2380",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/core.c",
+        "sha256": "9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a",
+        "size": 246644
+      },
+      {
+        "locator": "src/wpc/core.h:149-169,298-358",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/core.h",
+        "sha256": "982fc37728942a3a1aee7ccc635fbbe961370f6dced1ca6bc54c4dc7a40042ea",
+        "size": 37218
+      },
+      {
+        "locator": "src/wpc/vpintf.c:71-165",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/vpintf.c",
+        "sha256": "78bed0988de6763f2daaf1b52f00c20820515904c83a97e9c1de647a5464e3b0",
+        "size": 13535
+      },
+      {
+        "locator": "src/libpinmame/PinMAMEPlugin.h:56-66",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/libpinmame/PinMAMEPlugin.h",
+        "sha256": "e6c9f436bc5277bdb9d32e13710149873b66b41f4b5f5f099faae078da89b6d2",
+        "size": 3833
+      }
+    ],
+    "source_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
+    "table_descriptors": {
+      "coil_table_count": 24,
+      "device_layout_position_first": false,
+      "node_board_device_cl_table_data": 3025212,
+      "node_board_device_led_table": [
+        3025884,
+        103,
+        24
+      ],
+      "node_board_device_sw_table": [
+        3037424,
+        90,
+        64
+      ],
+      "node_board_device_table": [
+        3043184,
+        215,
+        24
+      ],
+      "node_board_table": [
+        3024492,
+        8,
+        16
+      ],
+      "topper_nodes": []
+    }
+  },
+  "retained_artifacts": [
+    {
+      "bytes": 27233,
+      "path": "review-artifacts/spike1-2026-10-10/rom-maps/wwe_135h.json",
+      "sha256": "1d3766394a4dbbc71cd447513246e4649e6814668b8faf69cb56cf6cde6aa9c1"
+    }
+  ],
+  "switches": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "reference",
+      "name",
+      "public_address",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "log_annotations",
+      "manual_reference",
+      "namespace",
+      "source_device_index"
+    ],
+    "device_type": 7,
+    "group": "pinmame.input.switch",
+    "rows": [
+      [
+        0,
+        0,
+        0,
+        101,
+        "DIP 1",
+        101,
+        true,
+        153,
+        6,
+        [],
+        1,
+        "cpu_C",
+        126
+      ],
+      [
+        1,
+        0,
+        2,
+        102,
+        "DIP 2",
+        102,
+        true,
+        154,
+        7,
+        [],
+        2,
+        "cpu_C",
+        127
+      ],
+      [
+        2,
+        0,
+        3,
+        103,
+        "DIP 3",
+        103,
+        true,
+        155,
+        8,
+        [],
+        3,
+        "cpu_C",
+        128
+      ],
+      [
+        3,
+        0,
+        4,
+        104,
+        "DIP 4",
+        104,
+        true,
+        156,
+        9,
+        [],
+        4,
+        "cpu_C",
+        129
+      ],
+      [
+        4,
+        0,
+        5,
+        105,
+        "DIP 5",
+        105,
+        true,
+        157,
+        10,
+        [],
+        5,
+        "cpu_C",
+        130
+      ],
+      [
+        5,
+        0,
+        6,
+        106,
+        "DIP 6",
+        106,
+        true,
+        158,
+        11,
+        [],
+        6,
+        "cpu_C",
+        131
+      ],
+      [
+        6,
+        0,
+        7,
+        107,
+        "DIP 7",
+        107,
+        true,
+        159,
+        12,
+        [],
+        7,
+        "cpu_C",
+        132
+      ],
+      [
+        7,
+        0,
+        8,
+        108,
+        "DIP 8",
+        108,
+        true,
+        160,
+        13,
+        [
+          "active high"
+        ],
+        8,
+        "cpu_C",
+        133
+      ],
+      [
+        8,
+        0,
+        9,
+        109,
+        "SERVICE SELECT",
+        109,
+        true,
+        152,
+        14,
+        [],
+        9,
+        "cpu_C",
+        134
+      ],
+      [
+        9,
+        0,
+        10,
+        110,
+        "SERVICE PLUS",
+        110,
+        true,
+        151,
+        15,
+        [],
+        10,
+        "cpu_C",
+        135
+      ],
+      [
+        10,
+        0,
+        11,
+        111,
+        "SERVICE MINUS",
+        111,
+        true,
+        150,
+        16,
+        [],
+        11,
+        "cpu_C",
+        136
+      ],
+      [
+        11,
+        0,
+        12,
+        112,
+        "SERVICE BACK",
+        112,
+        true,
+        149,
+        17,
+        [],
+        12,
+        "cpu_C",
+        137
+      ],
+      [
+        12,
+        0,
+        16,
+        116,
+        "POWER INTERLOCK",
+        116,
+        true,
+        148,
+        18,
+        [
+          "closed at rest"
+        ],
+        16,
+        "cpu_C",
+        138
+      ],
+      [
+        13,
+        1,
+        8,
+        76,
+        "TICKET NOTCH",
+        76,
+        true,
+        147,
+        19,
+        [],
+        76,
+        "game_switch_reference",
+        139
+      ],
+      [
+        14,
+        1,
+        11,
+        62,
+        "START BUTTON",
+        62,
+        true,
+        62,
+        20,
+        [],
+        62,
+        "game_switch_reference",
+        140
+      ],
+      [
+        15,
+        1,
+        12,
+        15,
+        "TOURNAMENT START BUTTON",
+        15,
+        true,
+        15,
+        21,
+        [],
+        15,
+        "game_switch_reference",
+        141
+      ],
+      [
+        16,
+        1,
+        14,
+        72,
+        "TILT PENDULUM",
+        72,
+        true,
+        145,
+        22,
+        [],
+        72,
+        "game_switch_reference",
+        142
+      ],
+      [
+        17,
+        1,
+        16,
+        67,
+        "LEFT COIN",
+        67,
+        true,
+        129,
+        23,
+        [],
+        67,
+        "game_switch_reference",
+        143
+      ],
+      [
+        18,
+        1,
+        17,
+        69,
+        "CENTER COIN",
+        69,
+        true,
+        130,
+        24,
+        [],
+        69,
+        "game_switch_reference",
+        144
+      ],
+      [
+        19,
+        1,
+        18,
+        68,
+        "RIGHT COIN",
+        68,
+        true,
+        131,
+        25,
+        [],
+        68,
+        "game_switch_reference",
+        145
+      ],
+      [
+        20,
+        1,
+        19,
+        70,
+        "FOURTH COIN",
+        70,
+        true,
+        132,
+        26,
+        [],
+        70,
+        "game_switch_reference",
+        146
+      ],
+      [
+        21,
+        1,
+        20,
+        71,
+        "FIFTH COIN",
+        71,
+        true,
+        133,
+        27,
+        [],
+        71,
+        "game_switch_reference",
+        147
+      ],
+      [
+        22,
+        1,
+        21,
+        77,
+        "SLAM TILT",
+        77,
+        true,
+        146,
+        28,
+        [],
+        77,
+        "game_switch_reference",
+        148
+      ],
+      [
+        23,
+        8,
+        0,
+        65,
+        "LEFT FLIPPER EOS",
+        65,
+        true,
+        138,
+        29,
+        [],
+        65,
+        "game_switch_reference",
+        149
+      ],
+      [
+        24,
+        8,
+        1,
+        66,
+        "RIGHT FLIPPER EOS",
+        66,
+        true,
+        140,
+        30,
+        [],
+        66,
+        "game_switch_reference",
+        150
+      ],
+      [
+        25,
+        8,
+        2,
+        10,
+        "LEFT FLIPPER BUTTON",
+        10,
+        true,
+        137,
+        31,
+        [],
+        10,
+        "game_switch_reference",
+        151
+      ],
+      [
+        26,
+        8,
+        3,
+        11,
+        "RIGHT FLIPPER BUTTON",
+        11,
+        true,
+        139,
+        32,
+        [],
+        11,
+        "game_switch_reference",
+        152
+      ],
+      [
+        27,
+        8,
+        4,
+        23,
+        "SHOOTER LANE",
+        23,
+        true,
+        23,
+        33,
+        [],
+        23,
+        "game_switch_reference",
+        153
+      ],
+      [
+        28,
+        8,
+        5,
+        0,
+        "BACK PANEL GI ADAPTER CABLE",
+        0,
+        false,
+        0,
+        34,
+        [],
+        null,
+        "game_switch_reference",
+        154
+      ],
+      [
+        29,
+        8,
+        6,
+        6,
+        "RIGHT SLINGSHOT",
+        6,
+        true,
+        6,
+        35,
+        [],
+        6,
+        "game_switch_reference",
+        155
+      ],
+      [
+        30,
+        8,
+        7,
+        5,
+        "LEFT SLINGSHOT",
+        5,
+        true,
+        5,
+        36,
+        [],
+        5,
+        "game_switch_reference",
+        156
+      ],
+      [
+        31,
+        9,
+        17,
+        16,
+        "TROUGH 6",
+        16,
+        true,
+        16,
+        37,
+        [],
+        16,
+        "game_switch_reference",
+        157
+      ],
+      [
+        32,
+        9,
+        18,
+        17,
+        "TROUGH 5",
+        17,
+        true,
+        17,
+        38,
+        [],
+        17,
+        "game_switch_reference",
+        158
+      ],
+      [
+        33,
+        9,
+        19,
+        18,
+        "TROUGH 4",
+        18,
+        true,
+        18,
+        39,
+        [
+          "closed at rest"
+        ],
+        18,
+        "game_switch_reference",
+        159
+      ],
+      [
+        34,
+        9,
+        20,
+        19,
+        "TROUGH 3",
+        19,
+        true,
+        19,
+        40,
+        [
+          "closed at rest"
+        ],
+        19,
+        "game_switch_reference",
+        160
+      ],
+      [
+        35,
+        9,
+        21,
+        20,
+        "TROUGH 2",
+        20,
+        true,
+        20,
+        41,
+        [
+          "closed at rest"
+        ],
+        20,
+        "game_switch_reference",
+        161
+      ],
+      [
+        36,
+        9,
+        22,
+        21,
+        "TROUGH 1",
+        21,
+        true,
+        21,
+        42,
+        [
+          "closed at rest"
+        ],
+        21,
+        "game_switch_reference",
+        162
+      ],
+      [
+        37,
+        9,
+        23,
+        22,
+        "TROUGH JAM",
+        22,
+        true,
+        22,
+        43,
+        [],
+        22,
+        "game_switch_reference",
+        163
+      ],
+      [
+        38,
+        9,
+        0,
+        30,
+        "LEFT POP BUMPER",
+        30,
+        true,
+        30,
+        44,
+        [],
+        30,
+        "game_switch_reference",
+        164
+      ],
+      [
+        39,
+        9,
+        1,
+        31,
+        "RIGHT POP BUMPER",
+        31,
+        true,
+        31,
+        45,
+        [],
+        31,
+        "game_switch_reference",
+        165
+      ],
+      [
+        40,
+        9,
+        2,
+        32,
+        "BOTTOM POP BUMPER",
+        32,
+        true,
+        32,
+        46,
+        [],
+        32,
+        "game_switch_reference",
+        166
+      ],
+      [
+        41,
+        9,
+        4,
+        9,
+        "3-BANK TARGET-L",
+        9,
+        true,
+        9,
+        47,
+        [],
+        9,
+        "game_switch_reference",
+        167
+      ],
+      [
+        42,
+        9,
+        5,
+        8,
+        "3 BANK TARGET-M",
+        8,
+        true,
+        8,
+        48,
+        [],
+        8,
+        "game_switch_reference",
+        168
+      ],
+      [
+        43,
+        9,
+        6,
+        7,
+        "3 BANK TARGET-R",
+        7,
+        true,
+        7,
+        49,
+        [],
+        7,
+        "game_switch_reference",
+        169
+      ],
+      [
+        44,
+        9,
+        7,
+        63,
+        "L. RETURN RING EXIT",
+        63,
+        true,
+        63,
+        50,
+        [],
+        63,
+        "game_switch_reference",
+        170
+      ],
+      [
+        45,
+        9,
+        8,
+        64,
+        "R. RETURN RING EXIT",
+        64,
+        true,
+        64,
+        51,
+        [],
+        64,
+        "game_switch_reference",
+        171
+      ],
+      [
+        46,
+        9,
+        9,
+        38,
+        "LEFT RAMP STANDUP",
+        38,
+        true,
+        38,
+        52,
+        [],
+        38,
+        "game_switch_reference",
+        172
+      ],
+      [
+        47,
+        9,
+        10,
+        39,
+        "RIGHT RAMP STANDUP",
+        39,
+        true,
+        39,
+        53,
+        [],
+        39,
+        "game_switch_reference",
+        173
+      ],
+      [
+        48,
+        9,
+        11,
+        14,
+        "LEFT ORBIT",
+        14,
+        true,
+        14,
+        54,
+        [],
+        14,
+        "game_switch_reference",
+        174
+      ],
+      [
+        49,
+        9,
+        12,
+        24,
+        "RIGHT ORBIT",
+        24,
+        true,
+        24,
+        55,
+        [],
+        24,
+        "game_switch_reference",
+        175
+      ],
+      [
+        50,
+        9,
+        13,
+        48,
+        "LEFT RAMP EXIT",
+        48,
+        true,
+        48,
+        56,
+        [],
+        48,
+        "game_switch_reference",
+        176
+      ],
+      [
+        51,
+        9,
+        14,
+        49,
+        "RIGHT RAMP EXIT",
+        49,
+        true,
+        49,
+        57,
+        [],
+        49,
+        "game_switch_reference",
+        177
+      ],
+      [
+        52,
+        10,
+        0,
+        25,
+        "LEFT RING SLINGSHOT",
+        25,
+        true,
+        25,
+        58,
+        [],
+        25,
+        "game_switch_reference",
+        178
+      ],
+      [
+        53,
+        10,
+        1,
+        27,
+        "RING EJECT",
+        27,
+        true,
+        27,
+        59,
+        [],
+        27,
+        "game_switch_reference",
+        179
+      ],
+      [
+        54,
+        10,
+        2,
+        26,
+        "RIGHT RING SLINGSHOT",
+        26,
+        true,
+        26,
+        60,
+        [],
+        26,
+        "game_switch_reference",
+        180
+      ],
+      [
+        55,
+        10,
+        3,
+        78,
+        "UPPER LEFT FLIPPER EOS",
+        78,
+        true,
+        142,
+        61,
+        [],
+        78,
+        "game_switch_reference",
+        181
+      ],
+      [
+        56,
+        10,
+        4,
+        54,
+        "RING STANDUP LEFT 1",
+        54,
+        true,
+        54,
+        62,
+        [],
+        54,
+        "game_switch_reference",
+        182
+      ],
+      [
+        57,
+        10,
+        5,
+        55,
+        "RING STANDUP LEFT 2",
+        55,
+        true,
+        55,
+        63,
+        [],
+        55,
+        "game_switch_reference",
+        183
+      ],
+      [
+        58,
+        10,
+        6,
+        56,
+        "RING STANDUP LEFT 3",
+        56,
+        true,
+        56,
+        64,
+        [],
+        56,
+        "game_switch_reference",
+        184
+      ],
+      [
+        59,
+        10,
+        7,
+        58,
+        "RING STANDUP RIGHT 1",
+        58,
+        true,
+        58,
+        65,
+        [],
+        58,
+        "game_switch_reference",
+        185
+      ],
+      [
+        60,
+        10,
+        8,
+        59,
+        "RING STANDUP RIGHT 2",
+        59,
+        true,
+        59,
+        66,
+        [],
+        59,
+        "game_switch_reference",
+        186
+      ],
+      [
+        61,
+        10,
+        9,
+        60,
+        "RING STANDUP RIGHT 3",
+        60,
+        true,
+        60,
+        67,
+        [],
+        60,
+        "game_switch_reference",
+        187
+      ],
+      [
+        62,
+        10,
+        10,
+        74,
+        "L. FLIPPER BUTTON",
+        74,
+        true,
+        50,
+        68,
+        [],
+        74,
+        "game_switch_reference",
+        188
+      ],
+      [
+        63,
+        10,
+        11,
+        75,
+        "R. FLIPPER BUTTON",
+        75,
+        true,
+        51,
+        69,
+        [],
+        75,
+        "game_switch_reference",
+        189
+      ],
+      [
+        64,
+        10,
+        12,
+        57,
+        "TOP LANE LEFT EXIT",
+        57,
+        true,
+        57,
+        70,
+        [],
+        57,
+        "game_switch_reference",
+        190
+      ],
+      [
+        65,
+        10,
+        13,
+        47,
+        "LEFT RING EXIT",
+        47,
+        true,
+        47,
+        71,
+        [],
+        47,
+        "game_switch_reference",
+        191
+      ],
+      [
+        66,
+        10,
+        14,
+        61,
+        "TOP LANE RIGHT EXIT",
+        61,
+        true,
+        61,
+        72,
+        [],
+        61,
+        "game_switch_reference",
+        192
+      ],
+      [
+        67,
+        10,
+        15,
+        28,
+        "BOTTOM RING EXIT",
+        28,
+        true,
+        28,
+        73,
+        [],
+        28,
+        "game_switch_reference",
+        193
+      ],
+      [
+        68,
+        11,
+        0,
+        1,
+        "LEFT RETURN LANE",
+        1,
+        true,
+        1,
+        74,
+        [],
+        1,
+        "game_switch_reference",
+        194
+      ],
+      [
+        69,
+        11,
+        1,
+        3,
+        "LEFT OUTLANE",
+        3,
+        true,
+        3,
+        75,
+        [],
+        3,
+        "game_switch_reference",
+        195
+      ],
+      [
+        70,
+        11,
+        2,
+        37,
+        "LEFT SINGLE STANDUP",
+        37,
+        true,
+        37,
+        76,
+        [],
+        37,
+        "game_switch_reference",
+        196
+      ],
+      [
+        71,
+        11,
+        8,
+        2,
+        "RIGHT RETURN LANE",
+        2,
+        true,
+        2,
+        77,
+        [],
+        2,
+        "game_switch_reference",
+        197
+      ],
+      [
+        72,
+        11,
+        9,
+        4,
+        "RIGHT OUTLANE",
+        4,
+        true,
+        4,
+        78,
+        [],
+        4,
+        "game_switch_reference",
+        198
+      ],
+      [
+        73,
+        11,
+        10,
+        36,
+        "RIGHT SINGLE STANDUP",
+        36,
+        true,
+        36,
+        79,
+        [],
+        36,
+        "game_switch_reference",
+        199
+      ],
+      [
+        74,
+        11,
+        11,
+        35,
+        "SHOOTER EXIT",
+        35,
+        true,
+        35,
+        80,
+        [],
+        35,
+        "game_switch_reference",
+        200
+      ],
+      [
+        75,
+        11,
+        12,
+        29,
+        "RIGHT 2-BANK TOP",
+        29,
+        true,
+        29,
+        81,
+        [],
+        29,
+        "game_switch_reference",
+        201
+      ],
+      [
+        76,
+        11,
+        13,
+        33,
+        "RIGHT 2-BANK BOTTOM",
+        33,
+        true,
+        33,
+        82,
+        [],
+        33,
+        "game_switch_reference",
+        202
+      ],
+      [
+        77,
+        11,
+        16,
+        41,
+        "TOP LANE 1",
+        41,
+        true,
+        41,
+        83,
+        [],
+        41,
+        "game_switch_reference",
+        203
+      ],
+      [
+        78,
+        11,
+        17,
+        42,
+        "TOP LANE 2",
+        42,
+        true,
+        42,
+        84,
+        [],
+        42,
+        "game_switch_reference",
+        204
+      ],
+      [
+        79,
+        11,
+        18,
+        43,
+        "TOP LANE 3",
+        43,
+        true,
+        43,
+        85,
+        [],
+        43,
+        "game_switch_reference",
+        205
+      ],
+      [
+        80,
+        11,
+        19,
+        44,
+        "TOP LANE 4",
+        44,
+        true,
+        44,
+        86,
+        [],
+        44,
+        "game_switch_reference",
+        206
+      ],
+      [
+        81,
+        11,
+        20,
+        45,
+        "TOP LANE 5",
+        45,
+        true,
+        45,
+        87,
+        [],
+        45,
+        "game_switch_reference",
+        207
+      ],
+      [
+        82,
+        11,
+        21,
+        34,
+        "RIGHT RING EXIT",
+        34,
+        true,
+        34,
+        88,
+        [],
+        34,
+        "game_switch_reference",
+        208
+      ],
+      [
+        83,
+        11,
+        22,
+        46,
+        "LADDER EXIT",
+        46,
+        true,
+        46,
+        89,
+        [],
+        46,
+        "game_switch_reference",
+        209
+      ],
+      [
+        84,
+        12,
+        1,
+        40,
+        "LEFT EJECT",
+        40,
+        true,
+        12,
+        90,
+        [],
+        40,
+        "game_switch_reference",
+        210
+      ],
+      [
+        85,
+        12,
+        4,
+        50,
+        "LADDER 1",
+        50,
+        true,
+        10,
+        91,
+        [],
+        50,
+        "game_switch_reference",
+        211
+      ],
+      [
+        86,
+        12,
+        5,
+        51,
+        "LADDER 2",
+        51,
+        true,
+        11,
+        92,
+        [],
+        51,
+        "game_switch_reference",
+        212
+      ],
+      [
+        87,
+        12,
+        6,
+        52,
+        "LADDER 3",
+        52,
+        true,
+        52,
+        93,
+        [],
+        52,
+        "game_switch_reference",
+        213
+      ],
+      [
+        88,
+        12,
+        7,
+        53,
+        "LADDER 4",
+        53,
+        true,
+        53,
+        94,
+        [],
+        53,
+        "game_switch_reference",
+        214
+      ]
+    ]
+  },
+  "validation": {
+    "duplicate_report": {
+      "coils": {
+        "duplicate_exported_addresses": [],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [],
+        "truncated_names": []
+      },
+      "leds": {
+        "duplicate_exported_addresses": [
+          {
+            "indices": [
+              0,
+              27
+            ],
+            "value": 22
+          },
+          {
+            "indices": [
+              1,
+              34
+            ],
+            "value": 5
+          }
+        ],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [
+          {
+            "indices": [
+              0,
+              27
+            ],
+            "value": 22
+          },
+          {
+            "indices": [
+              1,
+              34
+            ],
+            "value": 5
+          }
+        ],
+        "truncated_names": []
+      },
+      "switches": {
+        "duplicate_exported_addresses": [],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [],
+        "truncated_names": []
+      }
+    },
+    "elf_and_log_rows_match": true,
+    "extracted_counts": {
+      "coils": 21,
+      "leds": 104,
+      "switches": 89
+    },
+    "names_checked_against_full_english_strings": true,
+    "printed_counts": {
+      "coils": 21,
+      "leds": 104,
+      "switches": 89
+    },
+    "remapped_counts": {
+      "coils": 21,
+      "leds": 102,
+      "switches": 88
+    }
+  },
+  "version": 1
+}
