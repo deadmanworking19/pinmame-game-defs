@@ -12,8 +12,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 6 | 2016 | Domino's Spectacular Pinball Adventure | Spooky Pinball | partial | 75% |
 | 7 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
 | 8 | 2016 | Ghostbusters (Limited Edition) | Stern | partial | 50% |
-| 9 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
-| 10 | 2016 | STUB - Pabst Can Crusher (1.01.0) | Stern | stub | 0% |
+| 9 | 2016 | Pabst Can Crusher | Stern | partial | 50% |
+| 10 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
 | 11 | 2015 | STUB - Game of Thrones (Limited Edition 1.37.0) | Stern | stub | 0% |
 | 12 | 2015 | STUB - KISS (Limited Edition 1.41.0) | Stern | stub | 0% |
 | 13 | 2015 | STUB - Whoa Nellie! Big Juicy Melons (1.55.0) | Stern | stub | 0% |
