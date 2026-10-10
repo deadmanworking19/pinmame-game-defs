@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
-from pinmame_game_defs.catalog import NOT_A_DRIVER, Driver, resolve_root_driver
+from pinmame_game_defs.catalog import NOT_A_DRIVER, Driver, make_stub_definition, make_stub_knowledge, resolve_root_driver
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +15,15 @@ def _driver(driver_id: str, clone_of: str | None = None, flags: int = 0) -> Driv
 
 
 class CatalogRootTests(unittest.TestCase):
+	def test_abstract_parent_stubs_are_non_game_containers(self) -> None:
+		root = _driver("pinheck", flags=NOT_A_DRIVER)
+		definition = make_stub_definition(root, [root], "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53")
+		self.assertEqual("system_software", definition["machine"]["kind"])
+		self.assertEqual([], definition["inputs"])
+		self.assertIn("not a physical machine", make_stub_knowledge(root, [root], "revision"))
+		physical = _driver("amh_030")
+		self.assertNotIn("kind", make_stub_definition(physical, [physical], "revision")["machine"])
+
 	def test_a_reported_not_a_driver_parent_does_not_group_its_games(self) -> None:
 		drivers = {
 			"recel": _driver("recel", flags=NOT_A_DRIVER),

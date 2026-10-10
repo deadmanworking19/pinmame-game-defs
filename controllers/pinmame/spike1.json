@@ -1,0 +1,118 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.spike1",
+  "authority": "pinmame",
+  "hardware_family": "Stern Spike 1",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Factory-reference switches, CPU inputs and topper inputs",
+      "address_rules": [
+        {
+          "minimum": 0,
+          "maximum": 95
+        },
+        {
+          "minimum": 101,
+          "maximum": 132
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 5,
+          "contract_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53"
+        }
+      },
+      "notes": "The conversion exposes 128 matrix positions as public 0-95 and 101-132; documented game Switch Reference numbers start at 1. Each title swaps its declared flipper buttons and EOS numbers with internal slots 88-95, so consumers use the title's public references directly. CPU DIP inputs are 101-108, Service Select/Plus/Minus/Back are 109/110/111/112, and the power interlock is 116 (1 while the door is shut). Optional topper references start at 121. The conversion admits padding and reserved positions; conversion alone does not prove that a game reads or fits an input. Numbers outside the stated ranges all alias internal position 127 (public 132) and must not be used as extra addresses. Public nonzero means the subsystem's closed state; per-game invSw remains zero and the subsystem converts this state to the ROM's wire level with switch-table flags. Startup closed state includes installed trough balls, firmware rest flags and the power interlock; it does not establish physical normally_closed construction. DIP switch writes to 101-108 are replaced from DIP bank 0 each frame. The core synthesizes lower EOS from the lower flipper mirrors after two VBLANKs and overwrites direct EOS writes. With keyboard handling disabled, declared lower and upper button leaves round-trip; with it enabled, keyboard state rewrites them and upper leaves follow the lower keys. Cabinet and service inputs are rewritten only while keyboard handling is enabled. Internal motor and stepper home state is generated in the subsystem, but the driver copies that state to the public matrix only during initial mapping; public input readback does not prove later internally generated sensor movement."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "CPU board DIP switches",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "Physical ordinals 1-8 correspond to bits 0-7 of LibPinMAME DIP bank 0; the API reads and writes a bank byte. The driver copies these bits to switch addresses 101-108 every frame. The exact-head plugin's group 6 declares IDs 1-8 but its accessors use the ID as a zero-based bit index without subtracting one, shifting IDs 1-7 to physical DIP 2-8 and ID 8 to bank 1 bit 0. A faithful ordinal plugin transport is therefore omitted at this revision."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Coil references, mirrored flippers and custom coil outputs",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 32
+        },
+        {
+          "minimum": 45,
+          "maximum": 48
+        },
+        {
+          "minimum": 51,
+          "maximum": 72
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53"
+        }
+      },
+      "notes": "Driver Reference 1-32 maps directly to public 1-32. A reference numbered 0 or 33-63 is allocated at 51 and up in the ROM device-table traversal order, up to 72; references outside 0-63 are ignored. Although source prose calls this number order, the implementation does not sort the coil vector, so the exact ROM must prove a custom binding. Addresses 33-44 and 49-50 have no Spike 1 driver output; the plugin does not declare those holes. Named lower right and left flipper power/hold coils also publish binary mirrors at 45/46 and 47/48 respectively: either named winding being on sets both bits of its pair. These mirrors are not additional physical windings or independently modulated channels. Upper flippers use their own Driver Reference coils, with no 33-36 mirror. Actual coil outputs store PWM duty divided by 255; binary state is any nonzero duty. Physical-output mode exposes the actual coil level through modulated paths, while lower mirrors remain binary. With no custom coils nSolenoids is 32, so the modulated changed-solenoid poll omits 45-48 even though direct reads and the plugin expose them. The binary all-solenoids representation is 64 bits and cannot represent custom outputs 65-72; use direct or modulated paths if an exact ROM allocates them. Unmapped addresses require a per-game disposition; API capacity is not fitment evidence."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "LED lamp, GI and flasher channels",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 272
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 3,
+          "contract_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53"
+        }
+      },
+      "notes": "Public lamp n is Light Reference n and internal matrix/physical-output index n-1. Each game rounds its declared highest Light Reference up to a whole eight-channel block: 168 Ghostbusters, 80 Whoa Nellie/Primus/Pabst, 272 Game of Thrones LE/Pro, 176 KISS, 104 WWE, 112 Heavy Metal and 136 Supreme. Padding and absent references are address slots, not proof of fitted emitters. The driver visits at most 256 ROM LED entries. It exports references from 1 through that game's padded limit, excluding entries whose class includes motor-drive bit 0x08; Light Reference 0 is also omitted. GI and flashers are LED channels in this group; nGI is zero and no separate GI group is exported. RGB emitters use three ordinary channels; do not infer channel color or quantity from consecutive numbers alone. Preserve individual channels with unique IDs and establish shared-emitter/color metadata from the game's own manual or exact table evidence. LED levels are linear values 0-255, with node-model fade timing; physical-output mode exposes the stored level divided by 255 in the plugin and byte levels through LibPinMAME, while binary mode reports any nonzero level as on. A documented physical motor can therefore be absent from the public lamp export even when the subsystem uses its LED channel internally."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
+      "locator": "src/wpc/spike1.c:191-225,259-364,511-564,685-707,717-991; src/spike1/spike1_devices.cpp:848-987,1036-1099,1652-1752; src/wpc/core.c:1778-1858,2197-2304,2336-2445,2619-2625; src/wpc/core.h:149-169,298-358,393-414; src/wpc/vpintf.c:33-44,71-165,238-244,323-330"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
+      "locator": "src/libpinmame/PinMAMEPlugin.h:56-66; src/libpinmame/libpinmame.cpp:1475-1562,1992-2011,2062-2091,2182-2424"
+    }
+  ]
+}

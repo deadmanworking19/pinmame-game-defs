@@ -252,6 +252,7 @@ def make_stub_definition(root: Driver, family: list[Driver], revision: str) -> d
 			"name": f"STUB - {root.description}",
 			"manufacturer": root.manufacturer,
 			"year": _integer_year(root.year),
+			**({"kind": "system_software"} if root.flags & NOT_A_DRIVER else {}),
 		},
 		"coverage": {
 			"status": "stub",
@@ -283,6 +284,17 @@ def make_stub_definition(root: Driver, family: list[Driver], revision: str) -> d
 
 def make_stub_knowledge(root: Driver, family: list[Driver], revision: str) -> str:
 	driver_ids = ", ".join(f"`{driver.id}`" for driver in family)
+	if root.flags & NOT_A_DRIVER:
+		return f"""# STUB - {root.description}
+
+Coverage: **stub**. This is an abstract system container, not a physical machine or a playable game. It is retained because the public API reports it; `system_software` excludes it from physical-game coverage.
+
+PinMAME `{revision}` reports `{root.id}` with `NOT_A_DRIVER` (0x4000). `src/driver.h` defines this flag as a fake root/container. Physical children retain their own identities because clone-root resolution stops below this flag. No playfield, fitted devices, mechanisms or physical construction is asserted here.
+
+Reported manufacturer: {root.manufacturer}. Reported year: {root.year}. Container drivers: {driver_ids}.
+
+Source: `PinmameGetGames`, https://github.com/vpinball/pinmame/tree/{revision}; flag contract: `src/driver.h`, `NOT_A_DRIVER`.
+"""
 	return f"""# STUB - {root.description}
 
 Coverage: **stub - not usable to recreate this machine**

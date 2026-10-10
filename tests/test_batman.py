@@ -102,9 +102,9 @@ class BatmanDefinitionTests(unittest.TestCase):
     def test_catalog_retains_the_pinned_pinmame_baseline(self) -> None:
         self.assertEqual(
             {
-                "library_sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead",
+				"library_sha256": "1875e0961759cbd21b566d31a60c7f9e7c59c26c7f1e0d21f97b1b50118db005",
                 "library_version": "3.7.0",
-                "pinmame_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+				"pinmame_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
             },
             load_json(CATALOG_PATH)["source"],
         )

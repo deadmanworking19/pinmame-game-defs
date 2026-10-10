@@ -768,7 +768,13 @@ def validate_controller_profile(profile: dict[str, Any]) -> list[str]:
 				_expect(rule["minimum"] <= rule["maximum"], f"{path}.address_rules[{rule_index}]", "minimum must not exceed maximum", errors)
 		plugin = group.get("transports", {}).get("controller_plugin")
 		if isinstance(plugin, dict) and isinstance(plugin.get("group_id"), int):
-			expected_group_id = canonical_plugin_group_ids.get(group_id) if isinstance(group_id, str) else None
+			# Plugin enum values are part of the pinned adapter contract, not stable
+			# physical group identities. Keep historical profiles on their old contract.
+			contract_ids = canonical_plugin_group_ids
+			if plugin.get("contract_revision") == "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53":
+				contract_ids = {"pinmame.input.switch": 5, "pinmame.input.dip": 6,
+					"pinmame.output.solenoid": 1, "pinmame.output.gi": 2, "pinmame.output.lamp": 3}
+			expected_group_id = contract_ids.get(group_id) if isinstance(group_id, str) else None
 			if expected_group_id is not None and plugin["group_id"] != expected_group_id:
 				errors.append(
 					f"{path}.transports.controller_plugin.group_id: canonical group {group_id!r} "
