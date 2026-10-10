@@ -7,7 +7,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 1 | 2020 | STUB - Heavy Metal (1.02.0) | Stern | stub | 0% |
 | 2 | 2018 | AC/DC Vault Edition | Stern | author_ready | 100% |
 | 3 | 2018 | STUB - Primus (1.03.0) | Stern | stub | 0% |
-| 4 | 2018 | STUB - Supreme (1.01.0) | Stern | stub | 0% |
+| 4 | 2018 | Supreme x Stern | Stern | partial | 38% |
 | 5 | 2017 | The Jetsons | Spooky Pinball | partial | 81% |
 | 6 | 2016 | Domino's Spectacular Pinball Adventure | Spooky Pinball | partial | 75% |
 | 7 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
