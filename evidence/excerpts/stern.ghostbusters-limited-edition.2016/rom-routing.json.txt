@@ -1,0 +1,4374 @@
+{
+  "authority_limits": [
+    "Exact ROM device-table identity and emulator public routing only; no physical polarity, fitment, emitter quantity or spatial inference.",
+    "reference is the number printed by --list-switches after CPU +100 and topper +120 adjustment; manual_reference is the pre-adjustment ROM mapping, null if not remapped.",
+    "Closed-at-rest and active-high annotations are retained as literal emulator log annotations, not physical contact construction.",
+    "ROM labels and class bits may describe optional or generic hardware; preserve per-machine manual verification."
+  ],
+  "coils": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "manualnum",
+      "name",
+      "public_address",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "effective_public_address",
+      "source_device_index"
+    ],
+    "device_type": 2,
+    "group": "pinmame.output.solenoid",
+    "rows": [
+      [
+        0,
+        1,
+        0,
+        7,
+        "SHAKER MOTOR",
+        7,
+        true,
+        8,
+        93,
+        7,
+        2
+      ],
+      [
+        1,
+        1,
+        4,
+        32,
+        "TICKET DISPENSER",
+        32,
+        true,
+        0,
+        94,
+        32,
+        3
+      ],
+      [
+        2,
+        8,
+        0,
+        4,
+        "RIGHT FLIPPER",
+        4,
+        true,
+        16,
+        95,
+        4,
+        4
+      ],
+      [
+        3,
+        8,
+        1,
+        1,
+        "TROUGH",
+        1,
+        true,
+        1,
+        96,
+        1,
+        5
+      ],
+      [
+        4,
+        8,
+        2,
+        10,
+        "LEFT SCOOP",
+        10,
+        true,
+        22,
+        97,
+        10,
+        6
+      ],
+      [
+        5,
+        8,
+        3,
+        18,
+        "ELECTRIC GATE",
+        18,
+        true,
+        6,
+        98,
+        18,
+        7
+      ],
+      [
+        6,
+        8,
+        4,
+        2,
+        "AUTO PLUNGER",
+        2,
+        true,
+        2,
+        99,
+        2,
+        8
+      ],
+      [
+        7,
+        8,
+        5,
+        3,
+        "LEFT FLIPPER",
+        3,
+        true,
+        15,
+        100,
+        3,
+        9
+      ],
+      [
+        8,
+        8,
+        6,
+        15,
+        "RIGHT POP BUMPER",
+        15,
+        true,
+        10,
+        101,
+        15,
+        10
+      ],
+      [
+        9,
+        8,
+        7,
+        16,
+        "BOTTOM POP BUMPER",
+        16,
+        true,
+        11,
+        102,
+        16,
+        11
+      ],
+      [
+        10,
+        8,
+        8,
+        22,
+        "SUBWAY EJECT",
+        22,
+        true,
+        23,
+        103,
+        22,
+        12
+      ],
+      [
+        11,
+        9,
+        0,
+        11,
+        "LOCK POST",
+        11,
+        true,
+        24,
+        104,
+        11,
+        13
+      ],
+      [
+        12,
+        9,
+        1,
+        24,
+        "L 1-BANK DROP UP",
+        24,
+        true,
+        4,
+        105,
+        24,
+        14
+      ],
+      [
+        13,
+        9,
+        2,
+        26,
+        "R 1-BANK DROP UP",
+        26,
+        true,
+        20,
+        106,
+        26,
+        15
+      ],
+      [
+        14,
+        9,
+        3,
+        27,
+        "R 1-BANK DROP DOWN",
+        27,
+        true,
+        21,
+        107,
+        27,
+        16
+      ],
+      [
+        15,
+        9,
+        4,
+        25,
+        "L 1-BANK DROP DOWN",
+        25,
+        true,
+        5,
+        108,
+        25,
+        17
+      ],
+      [
+        16,
+        9,
+        5,
+        12,
+        "UP POST (SPINNER)",
+        12,
+        true,
+        7,
+        109,
+        12,
+        18
+      ],
+      [
+        17,
+        9,
+        6,
+        5,
+        "LEFT SLING MAGNET",
+        5,
+        true,
+        17,
+        110,
+        5,
+        19
+      ],
+      [
+        18,
+        9,
+        7,
+        6,
+        "RIGHT SLING MAGNET",
+        6,
+        true,
+        18,
+        111,
+        6,
+        20
+      ],
+      [
+        19,
+        9,
+        8,
+        14,
+        "LEFT POP BUMPER",
+        14,
+        true,
+        9,
+        112,
+        14,
+        21
+      ],
+      [
+        20,
+        10,
+        0,
+        20,
+        "SUBWAY DIVERTER",
+        20,
+        true,
+        25,
+        113,
+        20,
+        22
+      ],
+      [
+        21,
+        10,
+        1,
+        21,
+        "SUBWAY LOCK",
+        21,
+        true,
+        26,
+        114,
+        21,
+        23
+      ]
+    ]
+  },
+  "controller": {
+    "custom_count": 0,
+    "distinct_exported_lamp_addresses": 137,
+    "distinct_public_switch_addresses": 85,
+    "exported_led_rows": 137,
+    "highest_light_reference_config": 165,
+    "lamp_alias_behavior": "Binary lamp state ORs every mapped row with nonzero level; modulated level is overwritten by later rows in LED-table traversal.",
+    "lower_buttons": [
+      9,
+      10
+    ],
+    "lower_flippers": [
+      {
+        "actual_coils": {
+          "power": {
+            "coil_index": 7,
+            "name": "LEFT FLIPPER",
+            "public_address": 3,
+            "reference": 3
+          }
+        },
+        "binary_mirrors": [
+          47,
+          48
+        ],
+        "rule": "Either named power or hold coil asserts both mirrors; mirrors are virtual copies.",
+        "side": "left"
+      },
+      {
+        "actual_coils": {
+          "power": {
+            "coil_index": 2,
+            "name": "RIGHT FLIPPER",
+            "public_address": 4,
+            "reference": 4
+          }
+        },
+        "binary_mirrors": [
+          45,
+          46
+        ],
+        "rule": "Either named power or hold coil asserts both mirrors; mirrors are virtual copies.",
+        "side": "right"
+      }
+    ],
+    "nSolenoids": 32,
+    "padded_lamp_limit": 168,
+    "platform": "pinmame.spike1",
+    "switch_alias_behavior": "The subsystem setter updates every device-table row matching the reference; repeated public references fan out to all those node/position pairs.",
+    "synthesized_lower_eos": [
+      11,
+      12
+    ],
+    "unmapped_coil_references": [
+      8,
+      9,
+      13,
+      17,
+      19,
+      23,
+      28,
+      29,
+      30,
+      31
+    ],
+    "unmapped_custom_addresses": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72
+    ],
+    "unmapped_lamp_addresses": [
+      7,
+      8,
+      9,
+      12,
+      29,
+      34,
+      44,
+      48,
+      53,
+      55,
+      67,
+      74,
+      83,
+      90,
+      93,
+      99,
+      111,
+      114,
+      115,
+      124,
+      135,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      166,
+      167,
+      168
+    ],
+    "upper_button_leaves": []
+  },
+  "driver": "gbust_117h",
+  "folder": "ghostbusters_le",
+  "format": "spike1-rom-routing-facts",
+  "leds": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "light_reference",
+      "class_bits",
+      "class_labels",
+      "name",
+      "public_address",
+      "unavailable_reasons",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "source_device_index"
+    ],
+    "device_type": 4,
+    "group": "pinmame.output.lamp",
+    "rows": [
+      [
+        0,
+        0,
+        0,
+        0,
+        32,
+        [
+          "cabinet_0x20"
+        ],
+        "BACKBOX GI",
+        null,
+        [
+          "reference_zero"
+        ],
+        true,
+        0,
+        115,
+        1
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        16,
+        [
+          "cabinet_0x10"
+        ],
+        "COIN ENABLE",
+        1,
+        [],
+        true,
+        0,
+        116,
+        24
+      ],
+      [
+        2,
+        1,
+        1,
+        116,
+        2,
+        [
+          "gi"
+        ],
+        "COIN DOOR GI",
+        116,
+        [],
+        true,
+        0,
+        117,
+        25
+      ],
+      [
+        3,
+        1,
+        2,
+        2,
+        1,
+        [
+          "lamp"
+        ],
+        "START BUTTON",
+        2,
+        [],
+        true,
+        0,
+        118,
+        26
+      ],
+      [
+        4,
+        1,
+        3,
+        3,
+        1,
+        [
+          "lamp"
+        ],
+        "TOURNAMENT START",
+        3,
+        [],
+        true,
+        0,
+        119,
+        27
+      ],
+      [
+        5,
+        1,
+        4,
+        5,
+        1,
+        [
+          "lamp"
+        ],
+        "LOCKDOWN BUTTON-G(OPTIONAL)",
+        5,
+        [],
+        true,
+        0,
+        120,
+        28
+      ],
+      [
+        6,
+        1,
+        5,
+        4,
+        1,
+        [
+          "lamp"
+        ],
+        "LOCKDOWN BUTTON-R(OPTIONAL)",
+        4,
+        [],
+        true,
+        0,
+        121,
+        29
+      ],
+      [
+        7,
+        1,
+        7,
+        6,
+        1,
+        [
+          "lamp"
+        ],
+        "LOCKDOWN BUTTON-B(OPTIONAL)",
+        6,
+        [],
+        true,
+        0,
+        122,
+        30
+      ],
+      [
+        8,
+        8,
+        5,
+        122,
+        1,
+        [
+          "lamp"
+        ],
+        "SLIMER",
+        122,
+        [],
+        true,
+        0,
+        123,
+        31
+      ],
+      [
+        9,
+        8,
+        6,
+        117,
+        2,
+        [
+          "gi"
+        ],
+        "PLAYFIELD GI-L SLING",
+        117,
+        [],
+        true,
+        0,
+        124,
+        32
+      ],
+      [
+        10,
+        8,
+        7,
+        121,
+        2,
+        [
+          "gi"
+        ],
+        "PLAYFIELD GI-R SLING",
+        121,
+        [],
+        true,
+        0,
+        125,
+        33
+      ],
+      [
+        11,
+        8,
+        8,
+        16,
+        1,
+        [
+          "lamp"
+        ],
+        "60 GHOSTS",
+        16,
+        [],
+        true,
+        0,
+        126,
+        34
+      ],
+      [
+        12,
+        8,
+        9,
+        15,
+        1,
+        [
+          "lamp"
+        ],
+        "40 GHOSTS",
+        15,
+        [],
+        true,
+        0,
+        127,
+        35
+      ],
+      [
+        13,
+        8,
+        10,
+        14,
+        1,
+        [
+          "lamp"
+        ],
+        "20 GHOSTS",
+        14,
+        [],
+        true,
+        0,
+        128,
+        36
+      ],
+      [
+        14,
+        8,
+        11,
+        13,
+        1,
+        [
+          "lamp"
+        ],
+        "SHOOT AGAIN",
+        13,
+        [],
+        true,
+        0,
+        129,
+        37
+      ],
+      [
+        15,
+        8,
+        12,
+        20,
+        1,
+        [
+          "lamp"
+        ],
+        "WE ARE READY",
+        20,
+        [],
+        true,
+        0,
+        130,
+        38
+      ],
+      [
+        16,
+        8,
+        13,
+        19,
+        1,
+        [
+          "lamp"
+        ],
+        "WE CAME WE SAW",
+        19,
+        [],
+        true,
+        0,
+        131,
+        39
+      ],
+      [
+        17,
+        8,
+        14,
+        18,
+        1,
+        [
+          "lamp"
+        ],
+        "100 GHOSTS",
+        18,
+        [],
+        true,
+        0,
+        132,
+        40
+      ],
+      [
+        18,
+        8,
+        15,
+        17,
+        1,
+        [
+          "lamp"
+        ],
+        "80 GHOSTS",
+        17,
+        [],
+        true,
+        0,
+        133,
+        41
+      ],
+      [
+        19,
+        8,
+        16,
+        41,
+        1,
+        [
+          "lamp"
+        ],
+        "LT SCOOP ARROW-BLU",
+        41,
+        [],
+        true,
+        0,
+        134,
+        42
+      ],
+      [
+        20,
+        8,
+        17,
+        42,
+        1,
+        [
+          "lamp"
+        ],
+        "LT SCOOP ARROW-GRN",
+        42,
+        [],
+        true,
+        0,
+        135,
+        43
+      ],
+      [
+        21,
+        8,
+        18,
+        43,
+        1,
+        [
+          "lamp"
+        ],
+        "LT SCOOP ARROW-RED",
+        43,
+        [],
+        true,
+        0,
+        136,
+        44
+      ],
+      [
+        22,
+        8,
+        19,
+        40,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARIAN",
+        40,
+        [],
+        true,
+        0,
+        137,
+        45
+      ],
+      [
+        23,
+        8,
+        20,
+        39,
+        1,
+        [
+          "lamp"
+        ],
+        "BACK OFF MAN",
+        39,
+        [],
+        true,
+        0,
+        138,
+        46
+      ],
+      [
+        24,
+        8,
+        21,
+        38,
+        1,
+        [
+          "lamp"
+        ],
+        "SPOOKED LIBRARIAN",
+        38,
+        [],
+        true,
+        0,
+        139,
+        47
+      ],
+      [
+        25,
+        8,
+        22,
+        36,
+        1,
+        [
+          "lamp"
+        ],
+        "ADD-A-BALL",
+        36,
+        [],
+        true,
+        0,
+        140,
+        48
+      ],
+      [
+        26,
+        8,
+        23,
+        37,
+        1,
+        [
+          "lamp"
+        ],
+        "TOBIN",
+        37,
+        [],
+        true,
+        0,
+        141,
+        49
+      ],
+      [
+        27,
+        8,
+        24,
+        26,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY ARROW-BLU",
+        26,
+        [],
+        true,
+        0,
+        142,
+        50
+      ],
+      [
+        28,
+        8,
+        25,
+        27,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY ARROW-GRN",
+        27,
+        [],
+        true,
+        0,
+        143,
+        51
+      ],
+      [
+        29,
+        8,
+        26,
+        28,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY ARROW-RED",
+        28,
+        [],
+        true,
+        0,
+        144,
+        52
+      ],
+      [
+        30,
+        8,
+        27,
+        33,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT 3 BANK-TOP",
+        33,
+        [],
+        true,
+        0,
+        145,
+        53
+      ],
+      [
+        31,
+        8,
+        28,
+        32,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT 3 BANK-MID",
+        32,
+        [],
+        true,
+        0,
+        146,
+        54
+      ],
+      [
+        32,
+        8,
+        29,
+        31,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT 3 BANK-BOTTOM",
+        31,
+        [],
+        true,
+        0,
+        147,
+        55
+      ],
+      [
+        33,
+        8,
+        30,
+        25,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY GHOST",
+        25,
+        [],
+        true,
+        0,
+        148,
+        56
+      ],
+      [
+        34,
+        8,
+        31,
+        30,
+        1,
+        [
+          "lamp"
+        ],
+        "PROTON PACK",
+        30,
+        [],
+        true,
+        0,
+        149,
+        57
+      ],
+      [
+        35,
+        8,
+        32,
+        10,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RETURN LANE GHOST",
+        10,
+        [],
+        true,
+        0,
+        150,
+        58
+      ],
+      [
+        36,
+        8,
+        33,
+        133,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT OUTLANE",
+        133,
+        [],
+        true,
+        0,
+        151,
+        59
+      ],
+      [
+        37,
+        8,
+        34,
+        140,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT SLING",
+        140,
+        [],
+        true,
+        0,
+        152,
+        60
+      ],
+      [
+        38,
+        8,
+        35,
+        24,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT S JACKPOT",
+        24,
+        [],
+        true,
+        0,
+        153,
+        61
+      ],
+      [
+        39,
+        8,
+        36,
+        23,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT MULTIPLIERS",
+        23,
+        [],
+        true,
+        0,
+        154,
+        62
+      ],
+      [
+        40,
+        8,
+        37,
+        22,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT ADD-A-BALL",
+        22,
+        [],
+        true,
+        0,
+        155,
+        63
+      ],
+      [
+        41,
+        8,
+        38,
+        21,
+        1,
+        [
+          "lamp"
+        ],
+        "LIGHT STORAGE F",
+        21,
+        [],
+        true,
+        0,
+        156,
+        64
+      ],
+      [
+        42,
+        8,
+        39,
+        35,
+        1,
+        [
+          "lamp"
+        ],
+        "EXTRA BALL",
+        35,
+        [],
+        true,
+        0,
+        157,
+        65
+      ],
+      [
+        43,
+        8,
+        40,
+        94,
+        1,
+        [
+          "lamp"
+        ],
+        "SUBWAY GHOST",
+        94,
+        [],
+        true,
+        0,
+        158,
+        66
+      ],
+      [
+        44,
+        8,
+        41,
+        95,
+        1,
+        [
+          "lamp"
+        ],
+        "NEGATIVE REINFORCEMENT",
+        95,
+        [],
+        true,
+        0,
+        159,
+        67
+      ],
+      [
+        45,
+        8,
+        42,
+        96,
+        1,
+        [
+          "lamp"
+        ],
+        "SUBWAY ARROW-RED",
+        96,
+        [],
+        true,
+        0,
+        160,
+        68
+      ],
+      [
+        46,
+        8,
+        43,
+        97,
+        1,
+        [
+          "lamp"
+        ],
+        "SUBWAY ARROW-GRN",
+        97,
+        [],
+        true,
+        0,
+        161,
+        69
+      ],
+      [
+        47,
+        8,
+        44,
+        98,
+        1,
+        [
+          "lamp"
+        ],
+        "SUBWAY ARROW-BLU",
+        98,
+        [],
+        true,
+        0,
+        162,
+        70
+      ],
+      [
+        48,
+        8,
+        45,
+        11,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RETURN LANE GHOST",
+        11,
+        [],
+        true,
+        0,
+        163,
+        71
+      ],
+      [
+        49,
+        8,
+        46,
+        134,
+        4,
+        [
+          "flasher"
+        ],
+        "RIGHT OUTLANE",
+        134,
+        [],
+        true,
+        0,
+        164,
+        72
+      ],
+      [
+        50,
+        8,
+        47,
+        141,
+        4,
+        [
+          "flasher"
+        ],
+        "RIGHT SLING",
+        141,
+        [],
+        true,
+        0,
+        165,
+        73
+      ],
+      [
+        51,
+        8,
+        48,
+        129,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT SCOOP",
+        129,
+        [],
+        true,
+        0,
+        166,
+        74
+      ],
+      [
+        52,
+        8,
+        49,
+        45,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY LOCK ARROW-RED",
+        45,
+        [],
+        true,
+        0,
+        167,
+        75
+      ],
+      [
+        53,
+        8,
+        50,
+        46,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY LOCK ARROW-GRN",
+        46,
+        [],
+        true,
+        0,
+        168,
+        76
+      ],
+      [
+        54,
+        8,
+        51,
+        47,
+        1,
+        [
+          "lamp"
+        ],
+        "LIBRARY LOCK ARROW-BLU",
+        47,
+        [],
+        true,
+        0,
+        169,
+        77
+      ],
+      [
+        55,
+        8,
+        52,
+        131,
+        4,
+        [
+          "flasher"
+        ],
+        "SPINNER",
+        131,
+        [],
+        true,
+        0,
+        170,
+        78
+      ],
+      [
+        56,
+        8,
+        53,
+        132,
+        4,
+        [
+          "flasher"
+        ],
+        "FIREHOUSE",
+        132,
+        [],
+        true,
+        0,
+        171,
+        79
+      ],
+      [
+        57,
+        8,
+        54,
+        54,
+        1,
+        [
+          "lamp"
+        ],
+        "FIREHOUSE BUILDING",
+        54,
+        [],
+        true,
+        0,
+        172,
+        80
+      ],
+      [
+        58,
+        8,
+        55,
+        127,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT RAMP-L",
+        127,
+        [],
+        true,
+        0,
+        173,
+        81
+      ],
+      [
+        59,
+        8,
+        56,
+        128,
+        4,
+        [
+          "flasher"
+        ],
+        "LEFT RAMP-R",
+        128,
+        [],
+        true,
+        0,
+        174,
+        82
+      ],
+      [
+        60,
+        8,
+        57,
+        137,
+        4,
+        [
+          "flasher"
+        ],
+        "GOZER THE GOZERIAN P/F",
+        137,
+        [],
+        true,
+        0,
+        175,
+        83
+      ],
+      [
+        61,
+        8,
+        58,
+        138,
+        4,
+        [
+          "flasher"
+        ],
+        "GOZER THE GOZERIAN BACK",
+        138,
+        [],
+        true,
+        0,
+        176,
+        84
+      ],
+      [
+        62,
+        8,
+        59,
+        125,
+        4,
+        [
+          "flasher"
+        ],
+        "BACKPANEL L",
+        125,
+        [],
+        true,
+        0,
+        177,
+        85
+      ],
+      [
+        63,
+        8,
+        60,
+        126,
+        4,
+        [
+          "flasher"
+        ],
+        "BACKPANEL R",
+        126,
+        [],
+        true,
+        0,
+        178,
+        86
+      ],
+      [
+        64,
+        8,
+        61,
+        100,
+        1,
+        [
+          "lamp"
+        ],
+        "(P)KE",
+        100,
+        [],
+        true,
+        0,
+        179,
+        87
+      ],
+      [
+        65,
+        8,
+        62,
+        101,
+        1,
+        [
+          "lamp"
+        ],
+        "P(K)E",
+        101,
+        [],
+        true,
+        0,
+        180,
+        88
+      ],
+      [
+        66,
+        8,
+        63,
+        102,
+        1,
+        [
+          "lamp"
+        ],
+        "PK(E)",
+        102,
+        [],
+        true,
+        0,
+        181,
+        89
+      ],
+      [
+        67,
+        9,
+        0,
+        119,
+        2,
+        [
+          "gi"
+        ],
+        "PLAYFIELD GI-3",
+        119,
+        [],
+        true,
+        0,
+        182,
+        90
+      ],
+      [
+        68,
+        9,
+        1,
+        120,
+        2,
+        [
+          "gi"
+        ],
+        "BACKPANEL GI",
+        120,
+        [],
+        true,
+        0,
+        183,
+        91
+      ],
+      [
+        69,
+        9,
+        2,
+        118,
+        2,
+        [
+          "gi"
+        ],
+        "PLAYFIELD GI-2",
+        118,
+        [],
+        true,
+        0,
+        184,
+        92
+      ],
+      [
+        70,
+        9,
+        3,
+        107,
+        1,
+        [
+          "lamp"
+        ],
+        "STAY PUFT-RED",
+        107,
+        [],
+        true,
+        0,
+        185,
+        93
+      ],
+      [
+        71,
+        9,
+        4,
+        108,
+        1,
+        [
+          "lamp"
+        ],
+        "STAY PUFT-GRN",
+        108,
+        [],
+        true,
+        0,
+        186,
+        94
+      ],
+      [
+        72,
+        9,
+        5,
+        109,
+        1,
+        [
+          "lamp"
+        ],
+        "STAY PUFT-BLU",
+        109,
+        [],
+        true,
+        0,
+        187,
+        95
+      ],
+      [
+        73,
+        9,
+        6,
+        139,
+        4,
+        [
+          "flasher"
+        ],
+        "STAY PUFT",
+        139,
+        [],
+        true,
+        0,
+        188,
+        96
+      ],
+      [
+        74,
+        10,
+        1,
+        110,
+        1,
+        [
+          "lamp"
+        ],
+        "ECTO BACKLIGHT",
+        110,
+        [],
+        true,
+        0,
+        189,
+        97
+      ],
+      [
+        75,
+        9,
+        8,
+        62,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW-BLU",
+        62,
+        [],
+        true,
+        0,
+        190,
+        98
+      ],
+      [
+        76,
+        9,
+        9,
+        63,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW-GRN",
+        63,
+        [],
+        true,
+        0,
+        191,
+        99
+      ],
+      [
+        77,
+        9,
+        10,
+        64,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP ARROW-RED",
+        64,
+        [],
+        true,
+        0,
+        192,
+        100
+      ],
+      [
+        78,
+        9,
+        11,
+        50,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW-BLU",
+        50,
+        [],
+        true,
+        0,
+        193,
+        101
+      ],
+      [
+        79,
+        9,
+        12,
+        51,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW-GRN",
+        51,
+        [],
+        true,
+        0,
+        194,
+        102
+      ],
+      [
+        80,
+        9,
+        13,
+        52,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT ARROW-RED",
+        52,
+        [],
+        true,
+        0,
+        195,
+        103
+      ],
+      [
+        81,
+        9,
+        14,
+        65,
+        1,
+        [
+          "lamp"
+        ],
+        "2X PLAYFIELD",
+        65,
+        [],
+        true,
+        0,
+        196,
+        104
+      ],
+      [
+        82,
+        9,
+        15,
+        49,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT ORBIT GHOST",
+        49,
+        [],
+        true,
+        0,
+        197,
+        105
+      ],
+      [
+        83,
+        9,
+        16,
+        61,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP GHOST",
+        61,
+        [],
+        true,
+        0,
+        198,
+        106
+      ],
+      [
+        84,
+        9,
+        17,
+        60,
+        1,
+        [
+          "lamp"
+        ],
+        "THE BALLROOM",
+        60,
+        [],
+        true,
+        0,
+        199,
+        107
+      ],
+      [
+        85,
+        9,
+        18,
+        59,
+        1,
+        [
+          "lamp"
+        ],
+        "HE SLIMED ME",
+        59,
+        [],
+        true,
+        0,
+        200,
+        108
+      ],
+      [
+        86,
+        9,
+        19,
+        58,
+        1,
+        [
+          "lamp"
+        ],
+        "WE GOT ONE",
+        58,
+        [],
+        true,
+        0,
+        201,
+        109
+      ],
+      [
+        87,
+        9,
+        20,
+        72,
+        1,
+        [
+          "lamp"
+        ],
+        "GHOS(T)",
+        72,
+        [],
+        true,
+        0,
+        202,
+        110
+      ],
+      [
+        88,
+        9,
+        21,
+        71,
+        1,
+        [
+          "lamp"
+        ],
+        "GHO(S)T",
+        71,
+        [],
+        true,
+        0,
+        203,
+        111
+      ],
+      [
+        89,
+        9,
+        22,
+        70,
+        1,
+        [
+          "lamp"
+        ],
+        "GH(O)ST",
+        70,
+        [],
+        true,
+        0,
+        204,
+        112
+      ],
+      [
+        90,
+        9,
+        23,
+        69,
+        1,
+        [
+          "lamp"
+        ],
+        "G(H)OST",
+        69,
+        [],
+        true,
+        0,
+        205,
+        113
+      ],
+      [
+        91,
+        9,
+        24,
+        68,
+        1,
+        [
+          "lamp"
+        ],
+        "(G)HOST",
+        68,
+        [],
+        true,
+        0,
+        206,
+        114
+      ],
+      [
+        92,
+        9,
+        25,
+        66,
+        1,
+        [
+          "lamp"
+        ],
+        "3X PLAYFIELD",
+        66,
+        [],
+        true,
+        0,
+        207,
+        115
+      ],
+      [
+        93,
+        9,
+        26,
+        136,
+        4,
+        [
+          "flasher"
+        ],
+        "GHOST",
+        136,
+        [],
+        true,
+        0,
+        208,
+        116
+      ],
+      [
+        94,
+        9,
+        27,
+        57,
+        1,
+        [
+          "lamp"
+        ],
+        "STORAGE FACILITY",
+        57,
+        [],
+        true,
+        0,
+        209,
+        117
+      ],
+      [
+        95,
+        9,
+        28,
+        56,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT RAMP SUPER JACKPOT",
+        56,
+        [],
+        true,
+        0,
+        210,
+        118
+      ],
+      [
+        96,
+        9,
+        29,
+        112,
+        1,
+        [
+          "lamp"
+        ],
+        "TONY SCOLERI",
+        112,
+        [],
+        true,
+        0,
+        211,
+        119
+      ],
+      [
+        97,
+        9,
+        30,
+        73,
+        1,
+        [
+          "lamp"
+        ],
+        "BOOK DRAWN",
+        73,
+        [],
+        true,
+        0,
+        212,
+        120
+      ],
+      [
+        98,
+        9,
+        31,
+        113,
+        1,
+        [
+          "lamp"
+        ],
+        "NUNZIO SCOLERI",
+        113,
+        [],
+        true,
+        0,
+        213,
+        121
+      ],
+      [
+        99,
+        9,
+        32,
+        91,
+        1,
+        [
+          "lamp"
+        ],
+        "GHOST STORAGE-R",
+        91,
+        [],
+        true,
+        0,
+        214,
+        122
+      ],
+      [
+        100,
+        9,
+        33,
+        92,
+        1,
+        [
+          "lamp"
+        ],
+        "GHOST STORAGE-G",
+        92,
+        [],
+        true,
+        0,
+        215,
+        123
+      ],
+      [
+        101,
+        9,
+        34,
+        142,
+        4,
+        [
+          "flasher"
+        ],
+        "GHOST STORAGE",
+        142,
+        [],
+        true,
+        0,
+        216,
+        124
+      ],
+      [
+        102,
+        9,
+        35,
+        103,
+        1,
+        [
+          "lamp"
+        ],
+        "LEFT POP BUMPER",
+        103,
+        [],
+        true,
+        0,
+        217,
+        125
+      ],
+      [
+        103,
+        9,
+        36,
+        104,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT POP BUMPER",
+        104,
+        [],
+        true,
+        0,
+        218,
+        126
+      ],
+      [
+        104,
+        9,
+        37,
+        105,
+        1,
+        [
+          "lamp"
+        ],
+        "BOTTOM POP BUMPER",
+        105,
+        [],
+        true,
+        0,
+        219,
+        127
+      ],
+      [
+        105,
+        9,
+        38,
+        106,
+        1,
+        [
+          "lamp"
+        ],
+        "POP BUMPER GHOST",
+        106,
+        [],
+        true,
+        0,
+        220,
+        128
+      ],
+      [
+        106,
+        9,
+        39,
+        130,
+        4,
+        [
+          "flasher"
+        ],
+        "POP BUMPER",
+        130,
+        [],
+        true,
+        0,
+        221,
+        129
+      ],
+      [
+        107,
+        9,
+        40,
+        75,
+        1,
+        [
+          "lamp"
+        ],
+        "OK WHO BROUGHT THE DOG",
+        75,
+        [],
+        true,
+        0,
+        222,
+        130
+      ],
+      [
+        108,
+        9,
+        41,
+        76,
+        1,
+        [
+          "lamp"
+        ],
+        "SPOOK CENTRAL",
+        76,
+        [],
+        true,
+        0,
+        223,
+        131
+      ],
+      [
+        109,
+        9,
+        42,
+        77,
+        1,
+        [
+          "lamp"
+        ],
+        "GOZER THE GOZERIAN",
+        77,
+        [],
+        true,
+        0,
+        224,
+        132
+      ],
+      [
+        110,
+        9,
+        43,
+        78,
+        1,
+        [
+          "lamp"
+        ],
+        "STAY PUFT MARSHMALLOW",
+        78,
+        [],
+        true,
+        0,
+        225,
+        133
+      ],
+      [
+        111,
+        9,
+        44,
+        80,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW-BLU",
+        80,
+        [],
+        true,
+        0,
+        226,
+        134
+      ],
+      [
+        112,
+        9,
+        45,
+        81,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW-GRN",
+        81,
+        [],
+        true,
+        0,
+        227,
+        135
+      ],
+      [
+        113,
+        9,
+        46,
+        82,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT ARROW-RED",
+        82,
+        [],
+        true,
+        0,
+        228,
+        136
+      ],
+      [
+        114,
+        9,
+        47,
+        79,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT ORBIT GHOST",
+        79,
+        [],
+        true,
+        0,
+        229,
+        137
+      ],
+      [
+        115,
+        9,
+        50,
+        84,
+        1,
+        [
+          "lamp"
+        ],
+        "PKE",
+        84,
+        [],
+        true,
+        0,
+        230,
+        138
+      ],
+      [
+        116,
+        9,
+        51,
+        89,
+        1,
+        [
+          "lamp"
+        ],
+        "TERROR DOG",
+        89,
+        [],
+        true,
+        0,
+        231,
+        139
+      ],
+      [
+        117,
+        9,
+        52,
+        85,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP GHOST",
+        85,
+        [],
+        true,
+        0,
+        232,
+        140
+      ],
+      [
+        118,
+        9,
+        53,
+        86,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW-BLU",
+        86,
+        [],
+        true,
+        0,
+        233,
+        141
+      ],
+      [
+        119,
+        9,
+        54,
+        87,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW-GRN",
+        87,
+        [],
+        true,
+        0,
+        234,
+        142
+      ],
+      [
+        120,
+        9,
+        55,
+        88,
+        1,
+        [
+          "lamp"
+        ],
+        "RIGHT RAMP ARROW-RED",
+        88,
+        [],
+        true,
+        0,
+        235,
+        143
+      ],
+      [
+        121,
+        10,
+        0,
+        123,
+        2,
+        [
+          "gi"
+        ],
+        "ECTO GI",
+        123,
+        [],
+        true,
+        0,
+        236,
+        144
+      ],
+      [
+        122,
+        8,
+        3,
+        1,
+        8,
+        [
+          "motor_drive"
+        ],
+        "SLIMER MOTOR FORWARD",
+        null,
+        [
+          "motor_drive_class_0x08"
+        ],
+        true,
+        0,
+        237,
+        230
+      ],
+      [
+        123,
+        8,
+        4,
+        2,
+        8,
+        [
+          "motor_drive"
+        ],
+        "SLIMER MOTOR BACKWARD",
+        null,
+        [
+          "motor_drive_class_0x08"
+        ],
+        true,
+        0,
+        238,
+        231
+      ],
+      [
+        124,
+        12,
+        0,
+        150,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 1",
+        150,
+        [],
+        true,
+        0,
+        239,
+        232
+      ],
+      [
+        125,
+        12,
+        1,
+        151,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 2",
+        151,
+        [],
+        true,
+        0,
+        240,
+        233
+      ],
+      [
+        126,
+        12,
+        2,
+        152,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 3",
+        152,
+        [],
+        true,
+        0,
+        241,
+        234
+      ],
+      [
+        127,
+        12,
+        3,
+        153,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 4",
+        153,
+        [],
+        true,
+        0,
+        242,
+        235
+      ],
+      [
+        128,
+        12,
+        4,
+        154,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 5",
+        154,
+        [],
+        true,
+        0,
+        243,
+        236
+      ],
+      [
+        129,
+        12,
+        5,
+        155,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 6",
+        155,
+        [],
+        true,
+        0,
+        244,
+        237
+      ],
+      [
+        130,
+        12,
+        6,
+        156,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 7",
+        156,
+        [],
+        true,
+        0,
+        245,
+        238
+      ],
+      [
+        131,
+        12,
+        7,
+        157,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 8",
+        157,
+        [],
+        true,
+        0,
+        246,
+        239
+      ],
+      [
+        132,
+        12,
+        8,
+        158,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 9",
+        158,
+        [],
+        true,
+        0,
+        247,
+        240
+      ],
+      [
+        133,
+        12,
+        9,
+        159,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 10",
+        159,
+        [],
+        true,
+        0,
+        248,
+        241
+      ],
+      [
+        134,
+        12,
+        10,
+        160,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 11",
+        160,
+        [],
+        true,
+        0,
+        249,
+        242
+      ],
+      [
+        135,
+        12,
+        11,
+        161,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 12",
+        161,
+        [],
+        true,
+        0,
+        250,
+        243
+      ],
+      [
+        136,
+        12,
+        12,
+        162,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 13",
+        162,
+        [],
+        true,
+        0,
+        251,
+        244
+      ],
+      [
+        137,
+        12,
+        13,
+        163,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 14",
+        163,
+        [],
+        true,
+        0,
+        252,
+        245
+      ],
+      [
+        138,
+        12,
+        14,
+        164,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 15",
+        164,
+        [],
+        true,
+        0,
+        253,
+        246
+      ],
+      [
+        139,
+        12,
+        15,
+        165,
+        4,
+        [
+          "flasher"
+        ],
+        "TOPPER 16",
+        165,
+        [],
+        true,
+        0,
+        254,
+        247
+      ]
+    ]
+  },
+  "provenance": {
+    "archive": {
+      "all_source_entry_metadata_match": true,
+      "crc_validation_evidence": "The hashed ROM-build log reports all CRCs match, and the hashed extraction log reports Everything is Ok; this extraction independently verifies every ZIP entry's size/CRC metadata and the program's source CRC/SHA1, not every archive payload again.",
+      "game_bytes_equal_extracted": true,
+      "path": "working-root:roms/spike1/gbust_117h.zip",
+      "sha256": "b6dc795f91c21e15321abac5df7ba3ca470abba5af1ca7c14372a3d3b629884d",
+      "size": 1204008836
+    },
+    "executable": {
+      "path": "working-root:builds/spike1boot-pr728/Release/spike1boot.exe",
+      "sha256": "f79c4f05ad9a293294651e674d8697e7637eae46d1a3bb6fa8c9f40233e42e24",
+      "size": 551424
+    },
+    "extraction_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/extract-gbust_117h.log",
+      "sha256": "34bdc9892fc8c6ea66cef278d85cf49603df90f875270d6ba54924f5e123b0c0",
+      "size": 441
+    },
+    "extractor": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/rom-maps/extract_routing_facts.py",
+      "sha256": "59e4d5940064443b1ad2c1d6aaf05b7a3a594e71b890ec3d4287989166b40446",
+      "size": 22901
+    },
+    "map_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/gbust_117h-map.log",
+      "sha256": "b2a3ace3602d11b0ab2085d7a07ba2d8ecea1168e629ddc2bbcf384ff14b4350",
+      "size": 16104
+    },
+    "program": {
+      "path": "working-root:roms/spike1/extracted/ghostbusters_le/game",
+      "sha256": "164cea6e6fcbd7786007854c489cb0452eef34a5de7ebf30b341961f2d0c3725",
+      "size": 7090458,
+      "source_expected": {
+        "crc32": "0b6958ba",
+        "name": "game",
+        "sha1": "6f94dbcdaa85e95073534032d74a2dab390b7a4a",
+        "size": 7090458
+      }
+    },
+    "rom_build_log": {
+      "path": "working-root:review-artifacts/spike1-2026-10-10/rom-build-ghostbusters_le-1_17.iso.zip.log",
+      "sha256": "ab39d63be307b57d1363436ab0d227d9b12c1ea453774d7998a2e2119e94f871",
+      "size": 272
+    },
+    "source_clean": true,
+    "source_files": [
+      {
+        "locator": "src/wpc/spike1.c:191-225,275-313,511-564,717-991",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/spike1.c",
+        "sha256": "756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9",
+        "size": 60607
+      },
+      {
+        "locator": "src/spike1/spike1_boot.cpp:247-254",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_boot.cpp",
+        "sha256": "227a1382faee0f4099ea239132c37803a22b1f2bfcfd7b036aec11cbd814c3af",
+        "size": 19461
+      },
+      {
+        "locator": "src/spike1/spike1_devices.cpp:848-956,1632-1726",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_devices.cpp",
+        "sha256": "4435f0bd0576a14fa42bf5a32b85bbc2162f59e5c31e263831219f8811496a91",
+        "size": 82030
+      },
+      {
+        "locator": "src/spike1/spike1_devices.h:78-105",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_devices.h",
+        "sha256": "57c2e4a699989203f043f4ca30ed1447921fbf9cd26012ca5a6c7653c7e60269",
+        "size": 20551
+      },
+      {
+        "locator": "src/spike1/spike1_memory.cpp:186-197",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_memory.cpp",
+        "sha256": "14182514c64bbc0837fc02d470fdd4905546131d1d229eca6589ed52eb140928",
+        "size": 9097
+      },
+      {
+        "locator": "src/spike1/spike1_linux.cpp:228-258,327-339",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_linux.cpp",
+        "sha256": "aac42a35e9d5b478bfa58e43220d00fc4c91768723fe2446a8f08e77dde49548",
+        "size": 59164
+      },
+      {
+        "locator": "src/spike1/spike1_pinmame.cpp:126-207",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_pinmame.cpp",
+        "sha256": "46f527dd495fe98bb8aef4ae85602dd6f7601b3c296d8256d8a7ea35c0941797",
+        "size": 10063
+      },
+      {
+        "locator": "src/spike1/spike1_public.h:65-96",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/spike1/spike1_public.h",
+        "sha256": "645a712e6144777e2cbef3b1e8446710277882cda0e2cd58df91e05758b3010a",
+        "size": 6916
+      },
+      {
+        "locator": "src/wpc/core.c:1778-1858,2336-2380",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/core.c",
+        "sha256": "9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a",
+        "size": 246644
+      },
+      {
+        "locator": "src/wpc/core.h:149-169,298-358",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/core.h",
+        "sha256": "982fc37728942a3a1aee7ccc635fbbe961370f6dced1ca6bc54c4dc7a40042ea",
+        "size": 37218
+      },
+      {
+        "locator": "src/wpc/vpintf.c:71-165",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/wpc/vpintf.c",
+        "sha256": "78bed0988de6763f2daaf1b52f00c20820515904c83a97e9c1de647a5464e3b0",
+        "size": 13535
+      },
+      {
+        "locator": "src/libpinmame/PinMAMEPlugin.h:56-66",
+        "path": "working-root:source-checkouts/pinmame-spike1-pr728/src/libpinmame/PinMAMEPlugin.h",
+        "sha256": "e6c9f436bc5277bdb9d32e13710149873b66b41f4b5f5f099faae078da89b6d2",
+        "size": 3833
+      }
+    ],
+    "source_revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
+    "table_descriptors": {
+      "coil_table_count": 23,
+      "device_layout_position_first": false,
+      "node_board_device_cl_table_data": 3354432,
+      "node_board_device_led_table": [
+        3355800,
+        141,
+        24
+      ],
+      "node_board_device_sw_table": [
+        3359200,
+        86,
+        52
+      ],
+      "node_board_device_table": [
+        3363672,
+        248,
+        24
+      ],
+      "node_board_table": [
+        3353148,
+        9,
+        16
+      ],
+      "topper_nodes": []
+    }
+  },
+  "retained_artifacts": [
+    {
+      "bytes": 29123,
+      "path": "review-artifacts/spike1-2026-10-10/rom-maps/gbust_117h.json",
+      "sha256": "417bf954e4d3a1a3b3d76c2492c5f582af46ff7e08f7d61251e6c59110920ee3"
+    }
+  ],
+  "switches": {
+    "columns": [
+      "index",
+      "node",
+      "position",
+      "reference",
+      "name",
+      "public_address",
+      "manual_number_applied",
+      "original_device_number",
+      "log_line",
+      "log_annotations",
+      "manual_reference",
+      "namespace",
+      "source_device_index"
+    ],
+    "device_type": 7,
+    "group": "pinmame.input.switch",
+    "rows": [
+      [
+        0,
+        0,
+        0,
+        101,
+        "DIP 1",
+        101,
+        true,
+        153,
+        8,
+        [],
+        1,
+        "cpu_C",
+        145
+      ],
+      [
+        1,
+        0,
+        1,
+        102,
+        "DIP 2",
+        102,
+        true,
+        154,
+        9,
+        [],
+        2,
+        "cpu_C",
+        146
+      ],
+      [
+        2,
+        0,
+        2,
+        103,
+        "DIP 3",
+        103,
+        true,
+        155,
+        10,
+        [],
+        3,
+        "cpu_C",
+        147
+      ],
+      [
+        3,
+        0,
+        3,
+        104,
+        "DIP 4",
+        104,
+        true,
+        156,
+        11,
+        [],
+        4,
+        "cpu_C",
+        148
+      ],
+      [
+        4,
+        0,
+        4,
+        105,
+        "DIP 5",
+        105,
+        true,
+        157,
+        12,
+        [],
+        5,
+        "cpu_C",
+        149
+      ],
+      [
+        5,
+        0,
+        5,
+        106,
+        "DIP 6",
+        106,
+        true,
+        158,
+        13,
+        [],
+        6,
+        "cpu_C",
+        150
+      ],
+      [
+        6,
+        0,
+        6,
+        107,
+        "DIP 7",
+        107,
+        true,
+        159,
+        14,
+        [],
+        7,
+        "cpu_C",
+        151
+      ],
+      [
+        7,
+        0,
+        7,
+        108,
+        "DIP 8",
+        108,
+        true,
+        160,
+        15,
+        [
+          "active high"
+        ],
+        8,
+        "cpu_C",
+        152
+      ],
+      [
+        8,
+        0,
+        8,
+        109,
+        "SERVICE SELECT",
+        109,
+        true,
+        152,
+        16,
+        [],
+        9,
+        "cpu_C",
+        153
+      ],
+      [
+        9,
+        0,
+        9,
+        110,
+        "SERVICE PLUS",
+        110,
+        true,
+        151,
+        17,
+        [],
+        10,
+        "cpu_C",
+        154
+      ],
+      [
+        10,
+        0,
+        10,
+        111,
+        "SERVICE MINUS",
+        111,
+        true,
+        150,
+        18,
+        [],
+        11,
+        "cpu_C",
+        155
+      ],
+      [
+        11,
+        0,
+        11,
+        112,
+        "SERVICE BACK",
+        112,
+        true,
+        149,
+        19,
+        [],
+        12,
+        "cpu_C",
+        156
+      ],
+      [
+        12,
+        0,
+        16,
+        116,
+        "DC SENSE",
+        116,
+        true,
+        148,
+        20,
+        [
+          "closed at rest"
+        ],
+        16,
+        "cpu_C",
+        157
+      ],
+      [
+        13,
+        1,
+        2,
+        76,
+        "LOCKDOWN BUTTON (OPTIONAL)",
+        76,
+        true,
+        135,
+        21,
+        [],
+        76,
+        "game_switch_reference",
+        158
+      ],
+      [
+        14,
+        1,
+        8,
+        88,
+        "TICKET NOTCH",
+        88,
+        true,
+        0,
+        22,
+        [],
+        88,
+        "game_switch_reference",
+        159
+      ],
+      [
+        15,
+        1,
+        11,
+        78,
+        "START BUTTON",
+        78,
+        true,
+        32,
+        23,
+        [],
+        78,
+        "game_switch_reference",
+        160
+      ],
+      [
+        16,
+        1,
+        12,
+        79,
+        "TOURNAMENT START BUTTON",
+        79,
+        true,
+        80,
+        24,
+        [],
+        79,
+        "game_switch_reference",
+        161
+      ],
+      [
+        17,
+        1,
+        14,
+        86,
+        "TILT PENDULUM",
+        86,
+        true,
+        145,
+        25,
+        [],
+        86,
+        "game_switch_reference",
+        162
+      ],
+      [
+        18,
+        1,
+        16,
+        81,
+        "LEFT COIN",
+        81,
+        true,
+        129,
+        26,
+        [],
+        81,
+        "game_switch_reference",
+        163
+      ],
+      [
+        19,
+        1,
+        17,
+        83,
+        "CENTER COIN",
+        83,
+        true,
+        130,
+        27,
+        [],
+        83,
+        "game_switch_reference",
+        164
+      ],
+      [
+        20,
+        1,
+        18,
+        82,
+        "RIGHT COIN",
+        82,
+        true,
+        131,
+        28,
+        [],
+        82,
+        "game_switch_reference",
+        165
+      ],
+      [
+        21,
+        1,
+        19,
+        84,
+        "FOURTH COIN",
+        84,
+        true,
+        132,
+        29,
+        [],
+        84,
+        "game_switch_reference",
+        166
+      ],
+      [
+        22,
+        1,
+        20,
+        85,
+        "FIFTH COIN",
+        85,
+        true,
+        133,
+        30,
+        [],
+        85,
+        "game_switch_reference",
+        167
+      ],
+      [
+        23,
+        1,
+        21,
+        89,
+        "SLAM TILT",
+        89,
+        true,
+        146,
+        31,
+        [],
+        89,
+        "game_switch_reference",
+        168
+      ],
+      [
+        24,
+        1,
+        22,
+        80,
+        "SIXTH COIN",
+        80,
+        true,
+        134,
+        32,
+        [],
+        80,
+        "game_switch_reference",
+        169
+      ],
+      [
+        25,
+        8,
+        0,
+        68,
+        "SLIMER HIT",
+        68,
+        true,
+        68,
+        33,
+        [
+          "active high"
+        ],
+        68,
+        "game_switch_reference",
+        170
+      ],
+      [
+        26,
+        8,
+        5,
+        69,
+        "SLIMER HOME",
+        69,
+        true,
+        33,
+        34,
+        [],
+        69,
+        "game_switch_reference",
+        171
+      ],
+      [
+        27,
+        8,
+        3,
+        71,
+        "SLIMER ENCODER WHEEL 1",
+        71,
+        true,
+        12,
+        35,
+        [],
+        71,
+        "game_switch_reference",
+        172
+      ],
+      [
+        28,
+        8,
+        4,
+        72,
+        "SLIMER ENCODER WHEEL 2",
+        72,
+        true,
+        13,
+        36,
+        [],
+        72,
+        "game_switch_reference",
+        173
+      ],
+      [
+        29,
+        8,
+        8,
+        28,
+        "LOCK STAGE 1",
+        28,
+        true,
+        71,
+        37,
+        [],
+        28,
+        "game_switch_reference",
+        174
+      ],
+      [
+        30,
+        8,
+        9,
+        29,
+        "LOCK STAGE 2",
+        29,
+        true,
+        72,
+        38,
+        [],
+        29,
+        "game_switch_reference",
+        175
+      ],
+      [
+        31,
+        8,
+        10,
+        30,
+        "LOCK STAGE 3",
+        30,
+        true,
+        73,
+        39,
+        [],
+        30,
+        "game_switch_reference",
+        176
+      ],
+      [
+        32,
+        8,
+        11,
+        63,
+        "SUBWAY EJECT",
+        63,
+        true,
+        39,
+        40,
+        [],
+        63,
+        "game_switch_reference",
+        177
+      ],
+      [
+        33,
+        8,
+        12,
+        43,
+        "RIGHT RAMP",
+        43,
+        true,
+        64,
+        41,
+        [],
+        43,
+        "game_switch_reference",
+        178
+      ],
+      [
+        34,
+        8,
+        13,
+        34,
+        "LEFT SCOOP",
+        34,
+        true,
+        47,
+        42,
+        [],
+        34,
+        "game_switch_reference",
+        179
+      ],
+      [
+        35,
+        8,
+        14,
+        64,
+        "TERROR DOG TARGET",
+        64,
+        true,
+        10,
+        43,
+        [],
+        64,
+        "game_switch_reference",
+        180
+      ],
+      [
+        36,
+        8,
+        16,
+        11,
+        "LEFT FLIPPER EOS",
+        11,
+        true,
+        138,
+        44,
+        [],
+        11,
+        "game_switch_reference",
+        181
+      ],
+      [
+        37,
+        8,
+        17,
+        1,
+        "LEFT OUTLANE",
+        1,
+        true,
+        1,
+        45,
+        [],
+        1,
+        "game_switch_reference",
+        182
+      ],
+      [
+        38,
+        8,
+        18,
+        2,
+        "LEFT RETURN OUTER",
+        2,
+        true,
+        2,
+        46,
+        [],
+        2,
+        "game_switch_reference",
+        183
+      ],
+      [
+        39,
+        8,
+        19,
+        5,
+        "RIGHT RETURN OUTER",
+        5,
+        true,
+        5,
+        47,
+        [],
+        5,
+        "game_switch_reference",
+        184
+      ],
+      [
+        40,
+        8,
+        20,
+        6,
+        "RIGHT OUTLANE",
+        6,
+        true,
+        6,
+        48,
+        [],
+        6,
+        "game_switch_reference",
+        185
+      ],
+      [
+        41,
+        8,
+        21,
+        3,
+        "LEFT RETURN INNER",
+        3,
+        true,
+        3,
+        49,
+        [],
+        3,
+        "game_switch_reference",
+        186
+      ],
+      [
+        42,
+        8,
+        22,
+        4,
+        "RIGHT RETURN INNER",
+        4,
+        true,
+        4,
+        50,
+        [],
+        4,
+        "game_switch_reference",
+        187
+      ],
+      [
+        43,
+        8,
+        23,
+        24,
+        "LEFT 3 BANK-TOP",
+        24,
+        true,
+        24,
+        51,
+        [],
+        24,
+        "game_switch_reference",
+        188
+      ],
+      [
+        44,
+        8,
+        24,
+        10,
+        "R FLIPPER BUTTON",
+        10,
+        true,
+        139,
+        52,
+        [],
+        10,
+        "game_switch_reference",
+        189
+      ],
+      [
+        45,
+        8,
+        25,
+        9,
+        "L FLIPPER BUTTON",
+        9,
+        true,
+        137,
+        53,
+        [],
+        9,
+        "game_switch_reference",
+        190
+      ],
+      [
+        46,
+        8,
+        26,
+        26,
+        "LEFT 3 BANK-BOT",
+        26,
+        true,
+        26,
+        54,
+        [],
+        26,
+        "game_switch_reference",
+        191
+      ],
+      [
+        47,
+        8,
+        27,
+        25,
+        "LEFT 3 BANK-MID",
+        25,
+        true,
+        25,
+        55,
+        [],
+        25,
+        "game_switch_reference",
+        192
+      ],
+      [
+        48,
+        8,
+        28,
+        22,
+        "SHOOTER LANE",
+        22,
+        true,
+        22,
+        56,
+        [],
+        22,
+        "game_switch_reference",
+        193
+      ],
+      [
+        49,
+        8,
+        29,
+        50,
+        "RIGHT POP BUMPER",
+        50,
+        true,
+        50,
+        57,
+        [],
+        50,
+        "game_switch_reference",
+        194
+      ],
+      [
+        50,
+        8,
+        30,
+        51,
+        "BOTTOM POP BUMPER",
+        51,
+        true,
+        51,
+        58,
+        [],
+        51,
+        "game_switch_reference",
+        195
+      ],
+      [
+        51,
+        8,
+        31,
+        12,
+        "RIGHT FLIPPER EOS",
+        12,
+        true,
+        140,
+        59,
+        [],
+        12,
+        "game_switch_reference",
+        196
+      ],
+      [
+        52,
+        8,
+        32,
+        15,
+        "TROUGH 6",
+        15,
+        true,
+        15,
+        60,
+        [
+          "closed at rest"
+        ],
+        15,
+        "game_switch_reference",
+        197
+      ],
+      [
+        53,
+        8,
+        33,
+        16,
+        "TROUGH 5",
+        16,
+        true,
+        16,
+        61,
+        [
+          "closed at rest"
+        ],
+        16,
+        "game_switch_reference",
+        198
+      ],
+      [
+        54,
+        8,
+        34,
+        17,
+        "TROUGH 4",
+        17,
+        true,
+        17,
+        62,
+        [
+          "closed at rest"
+        ],
+        17,
+        "game_switch_reference",
+        199
+      ],
+      [
+        55,
+        8,
+        35,
+        18,
+        "TROUGH 3",
+        18,
+        true,
+        18,
+        63,
+        [
+          "closed at rest"
+        ],
+        18,
+        "game_switch_reference",
+        200
+      ],
+      [
+        56,
+        8,
+        36,
+        19,
+        "TROUGH 2",
+        19,
+        true,
+        19,
+        64,
+        [
+          "closed at rest"
+        ],
+        19,
+        "game_switch_reference",
+        201
+      ],
+      [
+        57,
+        8,
+        37,
+        20,
+        "TROUGH 1",
+        20,
+        true,
+        20,
+        65,
+        [
+          "closed at rest"
+        ],
+        20,
+        "game_switch_reference",
+        202
+      ],
+      [
+        58,
+        8,
+        38,
+        21,
+        "TROUGH JAM",
+        21,
+        true,
+        21,
+        66,
+        [],
+        21,
+        "game_switch_reference",
+        203
+      ],
+      [
+        59,
+        9,
+        0,
+        65,
+        "LEFT 1-BANK DROP OPTO",
+        65,
+        true,
+        40,
+        67,
+        [],
+        65,
+        "game_switch_reference",
+        204
+      ],
+      [
+        60,
+        9,
+        1,
+        66,
+        "RIGHT 1-BANK DROP OPTO",
+        66,
+        true,
+        41,
+        68,
+        [],
+        66,
+        "game_switch_reference",
+        205
+      ],
+      [
+        61,
+        9,
+        9,
+        40,
+        "LEFT RAMP 1",
+        40,
+        true,
+        91,
+        69,
+        [],
+        40,
+        "game_switch_reference",
+        206
+      ],
+      [
+        62,
+        9,
+        12,
+        45,
+        "GHOST TARGET",
+        45,
+        true,
+        42,
+        70,
+        [],
+        45,
+        "game_switch_reference",
+        207
+      ],
+      [
+        63,
+        9,
+        13,
+        46,
+        "CAPTIVE BALL TARGET",
+        46,
+        true,
+        36,
+        71,
+        [],
+        46,
+        "game_switch_reference",
+        208
+      ],
+      [
+        64,
+        9,
+        14,
+        37,
+        "LEFT RAMP-LEFT TARGET",
+        37,
+        true,
+        27,
+        72,
+        [],
+        37,
+        "game_switch_reference",
+        209
+      ],
+      [
+        65,
+        9,
+        15,
+        38,
+        "LEFT RAMP-RIGHT TARGET",
+        38,
+        true,
+        28,
+        73,
+        [],
+        38,
+        "game_switch_reference",
+        210
+      ],
+      [
+        66,
+        9,
+        16,
+        52,
+        "POP BUMPER EXIT",
+        52,
+        true,
+        77,
+        74,
+        [],
+        52,
+        "game_switch_reference",
+        211
+      ],
+      [
+        67,
+        9,
+        17,
+        35,
+        "SPINNER",
+        35,
+        true,
+        35,
+        75,
+        [],
+        35,
+        "game_switch_reference",
+        212
+      ],
+      [
+        68,
+        9,
+        18,
+        36,
+        "UP POST OPTO",
+        36,
+        true,
+        9,
+        76,
+        [],
+        36,
+        "game_switch_reference",
+        213
+      ],
+      [
+        69,
+        9,
+        19,
+        54,
+        "LEFT ORBIT",
+        54,
+        true,
+        54,
+        77,
+        [],
+        54,
+        "game_switch_reference",
+        214
+      ],
+      [
+        70,
+        9,
+        20,
+        56,
+        "(P)KE",
+        56,
+        true,
+        56,
+        78,
+        [],
+        56,
+        "game_switch_reference",
+        215
+      ],
+      [
+        71,
+        9,
+        21,
+        57,
+        "P(K)E",
+        57,
+        true,
+        57,
+        79,
+        [],
+        57,
+        "game_switch_reference",
+        216
+      ],
+      [
+        72,
+        9,
+        22,
+        58,
+        "PK(E)",
+        58,
+        true,
+        58,
+        80,
+        [],
+        58,
+        "game_switch_reference",
+        217
+      ],
+      [
+        73,
+        9,
+        23,
+        55,
+        "RIGHT ORBIT",
+        55,
+        true,
+        55,
+        81,
+        [],
+        55,
+        "game_switch_reference",
+        218
+      ],
+      [
+        74,
+        9,
+        24,
+        31,
+        "LOCK 1",
+        31,
+        true,
+        74,
+        82,
+        [],
+        31,
+        "game_switch_reference",
+        219
+      ],
+      [
+        75,
+        9,
+        25,
+        32,
+        "LOCK 2",
+        32,
+        true,
+        75,
+        83,
+        [],
+        32,
+        "game_switch_reference",
+        220
+      ],
+      [
+        76,
+        9,
+        26,
+        33,
+        "LOCK 3",
+        33,
+        true,
+        76,
+        84,
+        [],
+        33,
+        "game_switch_reference",
+        221
+      ],
+      [
+        77,
+        9,
+        27,
+        48,
+        "GOZER TARGET",
+        48,
+        true,
+        95,
+        85,
+        [],
+        48,
+        "game_switch_reference",
+        222
+      ],
+      [
+        78,
+        9,
+        29,
+        49,
+        "LEFT POP BUMPER",
+        49,
+        true,
+        49,
+        86,
+        [],
+        49,
+        "game_switch_reference",
+        223
+      ],
+      [
+        79,
+        9,
+        30,
+        8,
+        "RIGHT SLINGSHOT",
+        8,
+        true,
+        8,
+        87,
+        [],
+        8,
+        "game_switch_reference",
+        224
+      ],
+      [
+        80,
+        9,
+        31,
+        7,
+        "LEFT SLINGSHOT",
+        7,
+        true,
+        7,
+        88,
+        [],
+        7,
+        "game_switch_reference",
+        225
+      ],
+      [
+        81,
+        10,
+        4,
+        59,
+        "ECTO GOGGLES",
+        59,
+        true,
+        11,
+        89,
+        [],
+        59,
+        "game_switch_reference",
+        226
+      ],
+      [
+        82,
+        10,
+        5,
+        60,
+        "SUBWAY LOCK 1",
+        60,
+        true,
+        61,
+        90,
+        [],
+        60,
+        "game_switch_reference",
+        227
+      ],
+      [
+        83,
+        10,
+        6,
+        61,
+        "SUBWAY LOCK 2",
+        61,
+        true,
+        62,
+        91,
+        [],
+        61,
+        "game_switch_reference",
+        228
+      ],
+      [
+        84,
+        10,
+        7,
+        62,
+        "SUBWAY LOCK 3",
+        62,
+        true,
+        63,
+        92,
+        [],
+        62,
+        "game_switch_reference",
+        229
+      ]
+    ]
+  },
+  "validation": {
+    "duplicate_report": {
+      "coils": {
+        "duplicate_exported_addresses": [],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [],
+        "truncated_names": []
+      },
+      "leds": {
+        "duplicate_exported_addresses": [],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [
+          {
+            "indices": [
+              1,
+              122
+            ],
+            "value": 1
+          },
+          {
+            "indices": [
+              3,
+              123
+            ],
+            "value": 2
+          }
+        ],
+        "truncated_names": []
+      },
+      "switches": {
+        "duplicate_exported_addresses": [],
+        "duplicate_names": [],
+        "duplicate_node_positions": [],
+        "duplicate_references": [],
+        "truncated_names": []
+      }
+    },
+    "elf_and_log_rows_match": true,
+    "extracted_counts": {
+      "coils": 22,
+      "leds": 140,
+      "switches": 85
+    },
+    "names_checked_against_full_english_strings": true,
+    "printed_counts": {
+      "coils": 22,
+      "leds": 140,
+      "switches": 85
+    },
+    "remapped_counts": {
+      "coils": 22,
+      "leds": 140,
+      "switches": 85
+    }
+  },
+  "version": 1
+}
