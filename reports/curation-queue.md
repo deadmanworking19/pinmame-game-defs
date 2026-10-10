@@ -4,7 +4,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 
 | Order | Year | Machine | Manufacturer | Status | Complete |
 | ---: | ---: | --- | --- | --- | ---: |
-| 1 | 2020 | STUB - Heavy Metal (1.02.0) | Stern | stub | 0% |
+| 1 | 2020 | Heavy Metal | Stern | partial | 50% |
 | 2 | 2018 | AC/DC Vault Edition | Stern | author_ready | 100% |
 | 3 | 2018 | STUB - Primus (1.03.0) | Stern | stub | 0% |
 | 4 | 2018 | Supreme x Stern | Stern | partial | 38% |
