@@ -93,6 +93,13 @@ class Spike1DefinitionTests(unittest.TestCase):
 		for game, definition in definitions():
 			with self.subTest(game=game):
 				for source in definition['sources']:
+					if source['uri'].startswith('working-root:'):
+						path = (working_root / source['uri'].removeprefix('working-root:')).resolve()
+						self.assertTrue(path.is_relative_to(working_root), source['uri'])
+						self.assertTrue(path.is_file(), source['uri'])
+						if path not in checked:
+							checked[path] = sha256(path)
+						self.assertEqual(source['sha256'], checked[path], source['uri'])
 					for excerpt in source.get('excerpts', []):
 						if not excerpt['path'].endswith('.json.txt'):
 							continue
