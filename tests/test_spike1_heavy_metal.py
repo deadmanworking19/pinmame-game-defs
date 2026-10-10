@@ -21,7 +21,13 @@ class HeavyMetalFactsTests(unittest.TestCase):
 		for address, quantity in [(85, 10), (86, 12), (87, 17)]:
 			self.assertEqual('gi', outputs['pinmame.output.lamp', address]['kind'])
 			self.assertEqual(quantity, outputs['pinmame.output.lamp', address]['physical']['quantity'])
-		self.assertGreaterEqual(len([c for c in definition['conflicts'] if c['status'] == 'unresolved']), 2)
+		self.assertGreaterEqual(len([c for c in definition['conflicts'] if c['status'] == 'unresolved']), 1)
+		interlock = next(d for d in definition['inputs'] if d['binding']['device'] == 116 and d['binding']['group'] == 'pinmame.input.switch')
+		self.assertEqual({'board': 'SPIKE Node 0', 'control_connection': 'CN7 pin 4'}, interlock['wiring'])
+		self.assertIn('pin5', interlock['physical']['notes'])
+		service = next(c for c in definition['conflicts'] if c['id'] == 'conflict.cpu-service-pinout')
+		self.assertEqual('ignored', service['status'])
+		self.assertIn('rationale', service)
 		for device in definition['inputs']:
 			if 'normally_closed' in device:
 				self.assertTrue(device['normally_closed'])

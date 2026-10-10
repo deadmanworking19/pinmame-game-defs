@@ -4,11 +4,12 @@
       "description": "Switch Reference p16 assigns service Select/Plus/Minus/Back CN25 input pins 4/3/2/1, ground pin 6 BLK; direct CPU mapping p22 assigns pins 1/2/3/4, ground pin 11 BLK-WHT. No canonical service contact pinout selected. Resolution path: compare factory harness/revision documentation or inspect actual CN25 and service-button assembly. Public CPU functions 109–112 are separately established by exact ROM routing.",
       "id": "conflict.cpu-service-pinout",
       "path": "inputs/switch.service-select/wiring",
+      "rationale": "Both factory readings agree on service functions, public addresses and fitment. The disagreement concerns connector pins and wire colors only; it does not change recreation behavior.",
       "source_refs": [
         "manual.switch",
         "manual.cpu-connectors"
       ],
-      "status": "unresolved"
+      "status": "ignored"
     },
     {
       "description": "Switch Reference p15 trough sensor rows 16–22 print receiver 520-8516-00 with transmitter 520-5344-00; own trough 500-9820-00 BOM p38 prints receiver 520-8509-00 and the same transmitter. No canonical receiver PN selected. Resolution path: inspect factory trough revision/parts documentation or the actual receiver-board marking. Exact ROM routing cannot resolve physical part fitment.",
@@ -4376,14 +4377,15 @@
       "label": "Coin Door Interlock",
       "physical": {
         "location": "Cabinet",
-        "notes": "Printed name: Coin Door Interlock. Printed type: [blank]. Manual circuit 0-SW-16; printed node extension -. Full literal cells remain in the reviewed excerpt. Public116 is closed-door power interlock sense; establish1 for the closed-door running condition. This does not prove physical normally-closed contact construction.",
+        "notes": "Printed name: Coin Door Interlock. Printed type: [blank]. Manual circuit 0-SW-16; printed node extension -. Full literal cells remain in the reviewed excerpt. Public116 is closed-door power interlock sense; establish1 for the closed-door running condition. This does not prove physical normally-closed contact construction. Own Switch Reference p16 prints CN7 pin4 GRY RED input and pin1 BLK ground; own CPU mapping p22 prints pin4 GRY input and pin5 GRY RED ground. Only the agreeing CN7 pin4 endpoint is retained; disputed wires and return pin remain unset. Both readings agree on device, fitment and public routing, so this wiring-detail discrepancy does not block recreation behavior.",
         "part_number": "180-5248-00",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "rom.routing",
-          "manual.switch"
+          "manual.switch",
+          "manual.cpu-connectors"
         ],
         "status": "observed"
       },
@@ -4400,10 +4402,7 @@
       },
       "wiring": {
         "board": "SPIKE Node 0",
-        "control_connection": "CN7 pin 4",
-        "control_wire": "GRY RED",
-        "return_connection": "CN7 pin 1",
-        "return_wire": "BLK"
+        "control_connection": "CN7 pin 4"
       }
     },
     {
