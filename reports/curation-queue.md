@@ -15,9 +15,9 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 9 | 2016 | Pabst Can Crusher | Stern | partial | 50% |
 | 10 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
 | 11 | 2015 | Game of Thrones (Limited Edition) | Stern | partial | 44% |
-| 12 | 2015 | KISS (Limited Edition) | Stern | partial | 50% |
-| 13 | 2015 | Legends of Wrestlemania | Stern | partial | 44% |
-| 14 | 2015 | STUB - Game of Thrones (Limited Edition 1.37.0) | Stern | stub | 0% |
+| 12 | 2015 | Game of Thrones (Pro) | Stern | partial | 50% |
+| 13 | 2015 | KISS (Limited Edition) | Stern | partial | 50% |
+| 14 | 2015 | Legends of Wrestlemania | Stern | partial | 44% |
 | 15 | 2015 | Whoa Nellie! Big Juicy Melons | Stern | partial | 50% |
 | 16 | 2014 | America's Most Haunted | Spooky Pinball | partial | 81% |
 | 17 | 2014 | AC/DC LED Pro | Stern | author_ready | 100% |
