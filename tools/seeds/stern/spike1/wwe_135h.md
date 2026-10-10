@@ -93,11 +93,11 @@ These factual rows stay in the reviewed excerpt. They are not new API bindings, 
 | driver_reference | 30 | Meter 1 | 1-DR-2 | 11 | No supported exact circuit reconciliation in this draft; see full row facts for all columns. |
 | driver_reference | 31 | Meter 2 | 1-DR-3 | 11 | No supported exact circuit reconciliation in this draft; see full row facts for all columns. |
 
-## Evidence import contract
+## Evidence retention
 
-Copy external reviewed `stern.wwe-wrestlemania-limited-edition.2015.json` and `stern.wwe-wrestlemania-limited-edition.2015.md` byte-for-byte to `evidence/excerpts/stern.wwe-wrestlemania-limited-edition.2015/factory-tables.json` and `factory-tables.md`; copy exact `rom-maps/wwe_135h.json` to `evidence/excerpts/stern.wwe-wrestlemania-limited-edition.2015/rom-routing.json`. Draft sources already pin their actual external bytes. These are proposed portable destinations, currently absent in the read-only repository; root must verify imported hashes and run repository validation before installation. Source/manual URIs retain actual external identities for traceability.
+Whole-table factory transcriptions and exact ROM routing facts are committed under `evidence/excerpts/stern.wwe-wrestlemania-limited-edition.2015/` as `factory-reference.json.txt` and `rom-routing.json.txt`. Unbound physical rows, identity facts and runtime observations have separate factual excerpts. Source records below pin the actual excerpt digests and the retained external originals. Source-owned manuals, ROMs and tables remain outside Git.
 
-No acquisition time was invented; retained manifest/log identities govern evidence time. No runtime motion scenario is claimed by this draft. OPDB identity snapshot and exact ROM/source program/log hashes are retained in sources. A source hash proves bytes, not physical truth or rendering correctness. Root independent manual and draft review remains required.
+Retained manifest and log identities govern evidence time. Runtime scenarios are cited separately and do not establish measured physical motion or complete game behavior. The OPDB identity snapshot and exact ROM, source, program and log hashes are retained in sources. A source hash proves bytes, not physical truth or rendering correctness. Independent cross-provider review remains pending before PR submission.
 
 Recorded wiring/printed-number discrepancies ignored for author-readiness under the runbook: `wwe.cpu-address-shift`, `wwe.cpu-interlock-pinout`. Functions and public routing agree; the literal disagreements remain visible in excerpts and device notes.
 
