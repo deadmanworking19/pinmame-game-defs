@@ -349,6 +349,17 @@ class RuntimeHarnessTests(unittest.TestCase):
 	def test_non_segment_display_is_not_decoded(self) -> None:
 		self.assertIsNone(HARNESS._decode_segment_frame(14, [0x0877]))
 
+	def test_plain_seven_segment_one_decodes_on_a_sixteen_segment_row(self) -> None:
+		"""Data East alpha ROMs write the digit 1 as bare segments b+c.
+
+		Observed on Laser War (lwar_a83) in Switch Test, where the name row for
+		public switch 12 reads TROUGH 1. Before 0x0006 was mapped, every such
+		digit decoded as "?", which is indistinguishable from a genuinely
+		unreadable glyph and so blocked committing the name at all.
+		"""
+		segments = [0x2201, 0x1873, 0x003F, 0x003E, 0x083D, 0x0876, 0x0006]
+		self.assertEqual("TROUGH1", HARNESS._decode_segment_frame(1, segments))
+
 	def test_current_display_text_uses_a_cheap_segment_only_snapshot(self) -> None:
 		recorder = HARNESS.Recorder()
 		recorder.display_layouts[0] = {"type": 1}
