@@ -257,6 +257,23 @@ class SwordsOfFuryMaterializerMutationTests(unittest.TestCase):
 	"Swords of Fury authored seed inputs are not present yet",
 )
 class SwordsOfFurySeededDefinitionTests(unittest.TestCase):
+	def test_unused_physical_drivers_and_location_list_are_literal(self) -> None:
+		for address in (3, 13):
+			device = self.solenoids[address]
+			self.assertEqual(("coil", "unused"), (device["kind"], device["availability"]))
+			self.assertIn("unfitted", device["physical"]["location"])
+			self.assertIn("driver_transistor", device["wiring"])
+		for address in (8, 25):
+			self.assertIn("location list explicitly prints (Not Used)", self.lamps[address]["physical"]["notes"])
+		text = (ROOT / "evidence/excerpts/williams.swords-of-fury.1988/lamp-location-list.md").read_text(encoding="utf-8")
+		rows = re.findall(r"^\| (\d+) \| (.*?) \|$", text, re.MULTILINE)
+		self.assertEqual(list(range(1, 65)), [int(number) for number, _label in rows])
+		self.assertEqual("(Not Used)", dict(rows)["8"])
+		self.assertEqual("(Not Used)", dict(rows)["25"])
+		knowledge = KNOWLEDGE_SEED_PATH.read_text(encoding="utf-8")
+		self.assertIn("y0 rear/y1 apron", knowledge)
+		self.assertEqual(5, (ROOT / "evidence/excerpts/williams.swords-of-fury.1988/switch-parts.md").read_text(encoding="utf-8").count("| p/o C-111844 |"))
+
 	@classmethod
 	def setUpClass(cls) -> None:
 		cls.definition = curator.build(ROOT)

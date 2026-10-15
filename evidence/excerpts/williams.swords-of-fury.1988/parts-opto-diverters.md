@@ -1,6 +1,6 @@
 # Opto board, standup and diverter assemblies
 
-Parts Information Manual PDF pages 17-18, printed pages 15-16. Complete printed parts-table regions below; spacing and line wrapping normalized. Transcribed and visually checked by GPT-6.1-Sol against native renders on 2026-10-15.
+Parts Information Manual PDF pages 17-18, printed pages 15-16. Complete printed parts-table regions below; spacing and line wrapping normalized. Transcribed and visually checked by the curator against native renders on 2026-10-15.
 
 ## PDF 17 / printed 15: 5-Bank Drop Target Opto Board, p/n C-11844
 
@@ -27,7 +27,7 @@ The component layout labels OP-1 through OP-5 and Q1 through Q5, with connectors
 | 1 | B-11696-5 | Standup Target (White) |
 | 2 | 5070-06258-00 | Diode, 1N4001 |
 
-The Operations Manual PDF42 switch list prints `p/o C-11184` for switches17-21. This parts page positively titles the matching five-opto board `C-11844`; the definition uses the parts drawing's assembly identity and preserves the earlier spelling in the switch-parts excerpt. The number disagreement changes no controller binding, construction or topology.
+The Operations Manual PDF42 switch list prints `p/o C-111844` for switches17-21. This parts page positively titles the matching five-opto board `C-11844`; the definition uses the parts drawing's assembly identity and preserves the earlier spelling in the switch-parts excerpt. The number disagreement changes no controller binding, construction or topology.
 
 ## PDF 18 / printed 16: Top and Bottom Diverters
 

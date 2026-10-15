@@ -1,7 +1,7 @@
 # Switch parts and physical construction
 
-Operations Manual, PDF page 42, printed page 38, complete switch parts list and notes.
-Transcribed by GPT-6.1-Sol; visually checked against the native scan on 2026-10-15.
+Operations Manual, PDF page 42, printed page 38, complete switch location/parts list and notes. The Item / Part No. / Description list accompanies the switch-location drawing on the same page and is the switch location list cited by this definition.
+Transcribed by the curator; visually checked against the native scan on 2026-10-15.
 Column spacing and wrapped lines are normalized. `[blank]` means a visibly blank cell.
 The matrix reprints on PDF pages 34 and 43 are retained separately, including their German Score Board row.
 
@@ -23,11 +23,11 @@ The matrix reprints on PDF pages 34 and 43 are retained separately, including th
 | 14 | 5647-12073-04 | Ball Shooter Lane |
 | 15 | 5647-12073-01 | Top Tube |
 | 16 | 5647-12073-01 | Bottom Tube |
-| 17 | p/o C-11184 | L Red, 5-bank Opto |
-| 18 | p/o C-11184 | Yellow, 5-bank Opto |
-| 19 | p/o C-11184 | Blue, 5-bank Opto |
-| 20 | p/o C-11184 | Orange, 5-bank Opto |
-| 21 | p/o C-11184 | R Red, 5-bank Opto |
+| 17 | p/o C-111844 | L Red, 5-bank Opto |
+| 18 | p/o C-111844 | Yellow, 5-bank Opto |
+| 19 | p/o C-111844 | Blue, 5-bank Opto |
+| 20 | p/o C-111844 | Orange, 5-bank Opto |
+| 21 | p/o C-111844 | R Red, 5-bank Opto |
 | 22 | Not Used | [blank] |
 | 23 | 5647-12133-08 | Left Loop "Left" |
 | 24 | 5647-12133-08 | Left Loop "Right" |
@@ -77,4 +77,4 @@ Notes: `*` Part Number is for entire Diagnostic Switch Assembly, including H.S. 
 `**` with Flipper Button Switch on cabinet side;
 `***` identifies separate kicker-actuating switch parts A-4834-H and B-8734-1. The scoring-switch rows themselves have blank Part No. cells; those cells were not filled from the note.
 
-Construction conclusion is separate from the transcription: 17-21 belong to the C-11184 opto assembly. Their matrix-contact rest state follows the game's uninverted System 11 read path and the retained ROM-active-level probes, not an assumption about an unobstructed optical beam.
+Construction conclusion is separate from the transcription: 17-21 are five opto inputs. This list prints C-111844; Parts Information PDF 17 identifies their board as C-11844. Their matrix-contact rest state follows the game's uninverted System 11 read path and the retained ROM-active-level probes, not an assumption about an unobstructed optical beam.

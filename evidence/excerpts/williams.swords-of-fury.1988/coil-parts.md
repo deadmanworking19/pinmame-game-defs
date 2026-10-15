@@ -1,6 +1,6 @@
 # Solenoids/Flashers parts list
 
-Operations Manual PDF page 41, printed page 37, complete Item / Part No. / Description region and its footnotes. Transcribed by GPT-6.1-Sol, visually checked against the native scan on 2026-10-15. Column spacing and line wrapping are normalized; literal spelling is retained. `(i)` is insert board, `(p)` playfield and `(b)` backbox, as the location list and drawing identify them.
+Operations Manual PDF page 41, printed page 37, complete Item / Part No. / Description region and its footnotes. Transcribed by the curator, visually checked against the native scan on 2026-10-15. Column spacing and line wrapping are normalized; literal spelling is retained. `(i)` is insert board, `(p)` playfield and `(b)` backbox, as the location list and drawing identify them.
 
 | Item | Part No. | Description |
 | --- | --- | --- |

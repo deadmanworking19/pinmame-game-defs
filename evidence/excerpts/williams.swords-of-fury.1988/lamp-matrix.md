@@ -1,6 +1,6 @@
 # Reviewed literal transcription — Lamp-Matrix Table
 
-`reviewed: true`; transcribed by GPT-5.6-Terra; visually checked by GPT-6.1-Sol against the retained native scan on 2026-10-15
+`reviewed: true`; transcribed by the transcription pass; visually checked by the curator against the retained native scan on 2026-10-15
 `source: Operations Manual PDF page 31; printed folio 27`
 
 Full retained render: `external:pinmame-manuals/by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-031.webp`.
