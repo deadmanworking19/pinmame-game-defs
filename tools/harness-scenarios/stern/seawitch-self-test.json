@@ -1,0 +1,20 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "seawitch",
+  "notes": "Fresh-state Seawitch production ROM: wait for power-up checks, then one self-test press starts burn-in. Record its 19-position repeating solenoid sequence and lamp test without inferring physical fitment.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 150,
+      "settle_s": 60,
+      "label": "self test press 1"
+    }
+  ]
+}

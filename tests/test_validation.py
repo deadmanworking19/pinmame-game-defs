@@ -399,7 +399,7 @@ class RepositoryValidationTests(unittest.TestCase):
 		groups = [group for profile in profiles for group in profile["groups"]]
 		self.assertEqual(18, len(profiles))
 		self.assertEqual(60, sum(group.get("notes_format") == "markdown" for group in groups))
-		self.assertEqual(9, sum("notes" in group and "notes_format" not in group for group in groups))
+		self.assertEqual(10, sum("notes" in group and "notes_format" not in group for group in groups))
 		self.assertEqual(9, sum("notes" not in group for group in groups))
 		for group in groups:
 			if group.get("notes_format") != "markdown":

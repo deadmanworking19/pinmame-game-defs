@@ -77,7 +77,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 126 | Terminator 2: Judgment Day | `williams.terminator-2-judgment-day.1991` | 88% |
 | 128 | Diner | `williams.diner.1990` | 88% |
 | 129 | Banzai Run | `williams.banzai-run.1988` | 19% |
-| 131 | Seawitch | `stern.seawitch.1980` | 19% |
+| 131 | Seawitch | `stern.seawitch.1980` | 88% |
 | 132 | Dirty Harry | `williams.dirty-harry.1995` | 19% |
 | 134 | Avatar | `stern.avatar-limited-edition.2010` | 94% |
 | 134 | Avatar | `stern.avatar-pro.2010` | 88% |

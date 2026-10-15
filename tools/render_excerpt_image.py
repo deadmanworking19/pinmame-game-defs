@@ -89,6 +89,7 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 	they cover and anything covering almost none of it is ignored.
 	"""
 	best: tuple[float, float, str] | None = None
+	tiles: list[tuple[float, fitz.Rect, str]] = []
 	for image in page.get_images(full=True):
 		xref = image[0]
 		try:
@@ -120,17 +121,47 @@ def _native_raster_dpi(page: fitz.Page, region: fitz.Rect) -> tuple[float, str] 
 			if overlap.is_empty:
 				continue
 			covered = (overlap.width * overlap.height) / max(region.width * region.height, 1e-9)
-			if covered < 0.5:
-				continue
 			# The placed width in points is what maps pixels onto the page.
 			dpi = pixel_width / (rect.width / POINTS_PER_INCH)
 			detail = f"embedded image xref {xref}{mask_note}, {pixel_width}px across {rect.width / POINTS_PER_INCH:.2f}in"
+			tiles.append((dpi, overlap, detail))
+			if covered < 0.5:
+				continue
 			# Equal coverage (a mixed-raster page stacks its layers) goes to the finer image.
 			if best is None or (covered, dpi) > (best[1], best[0]):
 				best = (dpi, covered, detail)
-	if best is None:
-		return None
-	return best[0], best[2]
+	if best is not None:
+		return best[0], best[2]
+	# Some scans are stored as adjacent strips. No single strip covers half a
+	# large crop, but their union does. Count union area (not summed area) so
+	# repeated xrefs, masks and stacked copies cannot manufacture coverage.
+	for dpi, _rect, _detail in tiles:
+		cohort = [tile for tile in tiles if abs(tile[0] / dpi - 1) <= 0.01]
+		if len(cohort) < 2:
+			continue
+		covered = _rectangle_union_area([tile[1] for tile in cohort]) / max(region.width * region.height, 1e-9)
+		if covered < 0.5:
+			continue
+		finest = max(tile[0] for tile in cohort)
+		detail = "tiled scan at consistent native resolution: " + "; ".join(sorted({tile[2] for tile in cohort}))
+		if best is None or (covered, finest) > (best[1], best[0]):
+			best = (finest, covered, detail)
+	return (best[0], best[2]) if best is not None else None
+
+
+def _rectangle_union_area(rectangles: list[fitz.Rect]) -> float:
+	"""Area of the union of axis-aligned clipped raster placements."""
+	edges = sorted({coordinate for rect in rectangles for coordinate in (rect.x0, rect.x1)})
+	area = 0.0
+	for left, right in zip(edges, edges[1:]):
+		intervals = sorted((r.y0, r.y1) for r in rectangles if r.x0 < right and r.x1 > left)
+		end = float("-inf")
+		height = 0.0
+		for top, bottom in intervals:
+			height += max(0.0, bottom - max(top, end))
+			end = max(end, bottom)
+		area += (right - left) * height
+	return area
 
 
 def _legible_vector_dpi(page: fitz.Page, region: fitz.Rect, min_glyph_pixels: float) -> tuple[float, str]:

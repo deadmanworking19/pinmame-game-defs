@@ -1,0 +1,442 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "seawitch",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "notes": "Fresh-state single-ball Seawitch game with no keyboard handling or built-in mechanics. Move the ball off outhole after start; close each playfield switch individually, complete each latched drop bank, press both flipper-button columns, tilt and drain. Host readback is not ROM evidence.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 4,
+      "label": "start game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball leaves outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "isolated switch 37"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 21 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 23 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 24 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 21 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 22 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 23 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 24 reset"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "bank reset settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 38 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 39 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 40 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 38 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 39 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 40 reset"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "bank reset settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 29 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 30 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 31 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 2,
+      "label": "bank target 32 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 29 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 30 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 31 reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "bank target 32 reset"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "bank reset settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "flipper button position 84",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "flipper button position 82",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "flipper button position 83",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 300,
+      "settle_s": 2,
+      "label": "flipper button position 81",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 3,
+      "label": "tilt closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 2,
+      "label": "tilt clears"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 10,
+      "label": "ball drains"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "next ball leaves outhole"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "post-serve play and lamp sweep"
+    }
+  ]
+}

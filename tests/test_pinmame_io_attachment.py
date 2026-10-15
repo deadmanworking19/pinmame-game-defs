@@ -19,7 +19,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.dataeast": 13,
 	"pinmame.p2k": 1,
 	"pinmame.sam": 6,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
-	"pinmame.stern-mpu200": 22,
+	# Seawitch now declares its platform through its game-specific curator.
+	"pinmame.stern-mpu200": 21,
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.
 	"pinmame.system-11": 21,  # Swords of Fury now cites its pinned game-specific core source.
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources, and Jack*Bot and Safe Cracker (both curated

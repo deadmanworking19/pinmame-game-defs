@@ -28,9 +28,9 @@
       "direction": "input",
       "kind": "switch",
       "label": "Hard-wired physical contacts outside the MPU input API",
-      "address_rules": [{ "values": [1, 2] }],
+      "address_rules": [{ "values": [1, 2, 3] }],
       "transports": {},
-      "notes": "#### Profile-local identities\n\n| Address | Contact |\n| --- | --- |\n| `1` | Left flipper end-of-stroke |\n| `2` | Right flipper end-of-stroke |\n\nThese contacts switch the dual-winding flipper circuits directly and are not PinMAME switch addresses.",
+      "notes": "#### Profile-local identities\n\n| Address | Contact |\n| --- | --- |\n| `1` | Left flipper winding-bypass end-of-stroke contacts |\n| `2` | Right flipper winding-bypass end-of-stroke contacts |\n| `3` | Remote memory-clear contact, where documented |\n\nThese are physical identities outside the public switch API. The machine supplies the fitted quantities and wiring. Flipper contacts switch the dual-winding circuits directly; the remote memory-clear contact reaches the MPU external bookkeeping-reset pin rather than a matrix position.",
       "notes_format": "markdown"
     },
     {
@@ -49,14 +49,23 @@
       "address_rules": [
         { "minimum": 1, "maximum": 15 },
         { "minimum": 17, "maximum": 20 },
-        { "values": [46, 48] }
+        { "minimum": 45, "maximum": 48 }
       ],
       "transports": {
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "#### Public outputs\n\n| Outputs | Public addresses |\n| --- | --- |\n| Decoder | `1-15` |\n| Continuous | `17-20` |\n| Generic VPinMAME lower-right flipper callback | `46` |\n| Generic VPinMAME lower-left flipper callback | `48` |\n\nValue `16` is an unaddressable decoder slot.\n\n**Service diagnostics:** Physical service-diagnostic numbering is game wiring and remains a machine-level alias.",
+      "notes": "#### Public outputs\n\n| Outputs | Public addresses |\n| --- | --- |\n| Decoder | `1-15` |\n| Continuous | `17-20` |\n| Synthetic right flipper power and held callbacks | `45`, `46` |\n| Synthetic left flipper power and held callbacks | `47`, `48` |\n\nValue `16` is an unaddressable decoder slot. For cabinet-wired flippers, `core_updateSw` asserts both outputs of each pair together for the full enabled button closure. These callbacks do not measure physical power/hold winding current or end-of-stroke timing. A physical side may contain more than one flipper; the machine definition supplies the quantity and placements.\n\n**Service diagnostics:** Physical service-diagnostic numbering is game wiring and remains a machine-level alias.",
       "notes_format": "markdown"
+    },
+    {
+      "id": "physical.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "Uncontrolled physical general illumination",
+      "address_rules": [{ "values": [1] }],
+      "transports": {},
+      "notes": "Profile-local physical identity 1 describes the transformer-fed general-illumination circuit when a machine documents it. It is not a PinMAME output address and has no controller transport. The machine definition supplies the fitted regions, wiring and emitter evidence."
     },
     {
       "id": "pinmame.output.lamp",
@@ -78,6 +87,11 @@
     }
   ],
   "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "locator": "src/wpc/core.h CORE_FIRSTLFLIPSOL, CORE_LRFLIPSOLBITS, CORE_LLFLIPSOLBITS; src/wpc/core.c core_updateSw fake solenoids"
+    },
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",

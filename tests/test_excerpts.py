@@ -25,6 +25,12 @@ IMAGE_LIMIT = 100_000
 # every table crop, which is where tightening the crop is the right answer.
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
+	"excerpt.seawitch.lamp-circuit",
+	"excerpt.seawitch.coil-circuit",
+	"excerpt.seawitch.playfield-circuit",
+	"excerpt.seawitch.cabinet-circuit",
+	"excerpt.seawitch.switch-locations",
+	"excerpt.seawitch.solenoid-locations",
 	"excerpt.black-hole.controlled-solenoids-and-illumination",
 	"excerpt.black-hole.driver-board-outputs",
 	"excerpt.black-hole.non-controlled-solenoids-and-illumination",
