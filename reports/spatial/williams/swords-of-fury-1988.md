@@ -1,0 +1,681 @@
+# Spatial report — williams.swords-of-fury.1988
+
+Format: `pinmame-spatial-blockers` v1
+Definition SHA-256: `2f0246d8572ad5c0da5f53acaebb797581f33bf2e17789c5118cbabea960759c`
+
+## Coordinate convention
+
+- `left=0, right=1 in player view`
+- `rear=0, front=1 in player view`
+
+## Coverage and promotion decision
+
+- Seed status: `partial`
+- Missing coverage: `["polarity", "spatial_placement"]`
+- Decision: Partial: the seed remains unpromoted while coverage.missing is non-empty; this materializer does not make promotion decisions.
+
+## External evidence binding
+
+- `manuals:by-machine/williams.swords-of-fury.1988/Williams_1988_Swords_of_Fury_Operations_Manual.pdf` — 3911409 bytes, SHA-256 `4a33475af365ffe21b0227c457004e067f1c15ca98b9825b3a9cfc8454360423`
+- `manuals:by-machine/williams.swords-of-fury.1988/Williams_1988_Swords_of_Fury_Parts_Information_Manual_no_schematics.pdf` — 2926195 bytes, SHA-256 `9911781ac0d4b07ca512ed22a8d8dde125f826289140b945bb258a5c57d4ac4a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-001.webp` — 504776 bytes, SHA-256 `236c1ec43d29846e5b8ee12355be25646855ad7561ab6b3ca96cc78fff4daf48`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-002.webp` — 653334 bytes, SHA-256 `987973c6b489379dc787105e296f0df2d1ba30b3873891e0b20de375f16f7ec4`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-003.webp` — 330274 bytes, SHA-256 `d8f94e7dc1510e000345732edfb2a9d28fee5c4514f2acdb9ed9c4b2d968b291`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-004.webp` — 215752 bytes, SHA-256 `03ea0505a6b0e5dd7eaf843e488677f958446d7fca8ade2e52ac2af5cec7a4de`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-005.webp` — 245874 bytes, SHA-256 `0cf22926153551d8ba822be1342daaf3801190b2dcc5d954ed2a00fbbeda01ad`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-006.webp` — 545304 bytes, SHA-256 `bc5f54f52df024d3520251c4509f325ac68cca8859a1dec2eea21ab10a197a93`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-007.webp` — 317756 bytes, SHA-256 `b2ea693257f1ad0a55b312620527ebe96624becf3e972786a6a1ab730b667f13`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-008.webp` — 623808 bytes, SHA-256 `c2190242e795590b28836e85885049898c88e7dcecb88dc805ffbaaf7ca0ca15`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-009.webp` — 457044 bytes, SHA-256 `23bb6720e70827a62c5dc5d571830087ce783d8059ef2e98b35a4f4293b68d5a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-010.webp` — 767846 bytes, SHA-256 `d4cd833b766b29973309c299071ec246b5cd77b2a6bd84aa718646399a87d0a1`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-011.webp` — 403618 bytes, SHA-256 `e8915444c800d46d4de07374dd690c1281b2e8c6145fb9ceb8ca6b83d15e70ad`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-012.webp` — 473952 bytes, SHA-256 `ec33995b534fec08dc7ad5ecdab6b47db43628149a90a227597b541182f5fcdb`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-013.webp` — 243798 bytes, SHA-256 `05b634abc46babd45350c1a3f96dee4eea03f6060a735a60e6fbb35a15868e8b`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-014.webp` — 687142 bytes, SHA-256 `4d695ade1ef8239405907bf4b6a14eacf5400c7dcb12cbbca6e4284731218f26`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-015.webp` — 552044 bytes, SHA-256 `8fc3e482949a2c7273f6daa1cfcb812bf8ccc8504ecd4e3d9c0b70923f83e933`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-016.webp` — 467906 bytes, SHA-256 `2e6cc4473159bbfbcc8c42b5a574db1f9e39a554152c18aa0d33907cd54b40e7`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-017.webp` — 447610 bytes, SHA-256 `2111a677826168f99855ee0b460e390495cc8164096c38384a55699bbdb83797`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-018.webp` — 543640 bytes, SHA-256 `b3fc860efeb3005ae02b983a754152965c9ba4bf2807c3485acb8b0811258029`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-019.webp` — 463276 bytes, SHA-256 `ffdc9647f96c59d054cfd109ea358db6f54729f013f6bfa2c9edf65b8b9ac878`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-020.webp` — 422306 bytes, SHA-256 `0f36521ad0412dea03ed1f58a28d185f019f13dcd620156022f5ce9409749b5b`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-021.webp` — 487552 bytes, SHA-256 `4d1ef2bcbbb5740e55ee39f33a05f44291b04989c80847e63343c0d5bb5aed77`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-022.webp` — 621406 bytes, SHA-256 `a0842359999e03416ea5a739c20c62f765a874129a195e2a9523e4e3ca839f04`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-023.webp` — 541204 bytes, SHA-256 `0396e9f31ca12cba130c69460ef766c7b28721a04f9ff84de64f534610cacc90`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-024.webp` — 448658 bytes, SHA-256 `475bde0a126dc5a1f741651ba8fbb6872cca7876d0235eb85052e0b02eab048d`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-025.webp` — 588972 bytes, SHA-256 `64ab680b985d38ebcc8c1e7d8e8efcd68a0404a684563ef0a2d1eb931a14e05a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-026.webp` — 228314 bytes, SHA-256 `96af917d4bd4991cf59fd9bdac6541ecee986757cf2ad1adb915b4c2101ac4ac`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-027.webp` — 395110 bytes, SHA-256 `ed822c5b76a7d52808bc1fea09668cd65e877e6fa90dee3005b0418fee6d5e5a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-028.webp` — 395034 bytes, SHA-256 `00a0d9a75bd3ab41ecb9ae2c2fded7f9de52cde75f01208936924fbce3b68df1`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-029.webp` — 1354934 bytes, SHA-256 `226943dee11ebc244965dc15e4658f0e2e9a577fc005672e697aa36986585aaf`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-030.webp` — 679796 bytes, SHA-256 `0726d616dfbc0af6c8b54904cb0c8e53976c87a5a0c54d01aa0320d27720559a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-031.webp` — 480616 bytes, SHA-256 `33ad8d0092b9a9fd276cc2d67b62d828d5087f4aee9fbbeebf6d31e1a0a10830`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-032.webp` — 693044 bytes, SHA-256 `76cbc1111a07ed655b47f4e1fc8975b75d19329d00452ef5f4218937a906011c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-033.webp` — 447882 bytes, SHA-256 `49073495587adc722e35fb07f93277c9bffdde6b48a743f937a5e6dece212732`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-034.webp` — 534856 bytes, SHA-256 `9255965f002b50af9ccffa8993160dd963ce13937f812e51564db744f5962b22`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-035.webp` — 650534 bytes, SHA-256 `450f252611d2b327f9c2835ffc14de2baa8205149094e0ad5136aff5807efc8c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-036.webp` — 615988 bytes, SHA-256 `c7c54baac7fcf2c46c002762b4bfdbb7d19b745e7135eb777242fd26392b78a2`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-037.webp` — 416530 bytes, SHA-256 `479107a5d85974b2d67def1e595893ff72042c998b521470688a271895dcdeb2`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-038.webp` — 295154 bytes, SHA-256 `621926a00c50e5c0d293c7130f6b61172cf12613b8b84fde561341e0613bf638`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-039.webp` — 157336 bytes, SHA-256 `dfdacbe30458b054cbba52f5aca6f3a7d075174196492ad7adaaaf333ada0029`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-040.webp` — 478764 bytes, SHA-256 `5b4f51377873b2712c53b06cb77253398796df10d26a3006e024de306a61f99a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-041.webp` — 581352 bytes, SHA-256 `f42fbebe07fab03536e42f991382388ed338d3c7c193320a0033bbc1e58f5e77`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-042.webp` — 628948 bytes, SHA-256 `748546c40b3795acb1f72cdd25658ef42613e9225349c6cf0e2d6c80f7c451fe`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-043.webp` — 352142 bytes, SHA-256 `fd2f19c95d85ab2e8c9d94b90fffc91499f878f953c3d7854ed96db2c14c17f7`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-044.webp` — 419272 bytes, SHA-256 `e504e937385821ba5a426011e72eaeffa2c1e2066e1ac292008a3f99dd311c5c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-045.webp` — 608682 bytes, SHA-256 `b631af6478cf008d9b1be5f05bb6d62bc7f7c5909090267e70e4023ee3b8a041`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-046.webp` — 288398 bytes, SHA-256 `194bb9d87df29d1aaf70cea06586a2db2f242b23183178ae6325f6c13cca84a3`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-047.webp` — 197228 bytes, SHA-256 `2540d08c57676268eebf7caf420b386329a2cb15084fb805a0ab2b35442d6ba1`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-048.webp` — 217568 bytes, SHA-256 `dbea20cf8acdede183c9e33f6d190f4c506afa1dd25835c72e749790b20607da`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-049.webp` — 255706 bytes, SHA-256 `e0cb4c0eba0f1922ce7bb1639f6167e01ccdc827765850e0745e51eb4d91dbb9`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-050.webp` — 399796 bytes, SHA-256 `42ced1c26cf24d44ee66502b488103866e9fd5b5f27b88045525c5125cfcff85`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-051.webp` — 251176 bytes, SHA-256 `95c3625740be7ab9202d6b8a48b00b5ab3a3b2cca18ac3380c9a0b859ecdc82f`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-052.webp` — 334320 bytes, SHA-256 `ecbcfdc437f1f65658c5b8fbe355cb6c2d8c5a3cb8e3ae326aecc3892a3ae2b7`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-053.webp` — 334162 bytes, SHA-256 `85f52b61608663f076bfb19fa7fe112f4587079d6ccf3afa5ea1bbb0e9e90895`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-054.webp` — 348108 bytes, SHA-256 `effd883a9a7a23f9b3964be66f0f407e6e1d2cd53cde861a85de07f4d0e04227`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-055.webp` — 418268 bytes, SHA-256 `938336fe8f9528c2dacfce614c1bbc3b343ed0db08e938dc08050d6c52064dfb`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-056.webp` — 544162 bytes, SHA-256 `06bfffd81b4386b52fa4e51a76784648a80de58783be3834f95e7758e1384124`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-057.webp` — 583456 bytes, SHA-256 `efe9b535e1a0298d10a43140c462c9890e05b9b335f2ce66e33ec94ca515eea6`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-058.webp` — 567850 bytes, SHA-256 `a1c9cde3213c3dd4aefc2524551c943f5e8b5fd3aaa7c685b83d3bab446798f3`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-059.webp` — 540474 bytes, SHA-256 `0501f4a5af312d916566135ba5681cabca8f5010e9be9facd6d90c7cfb4ecf1b`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-060.webp` — 242510 bytes, SHA-256 `bdf84a9bb2f9a8b2d794f89604286af52c094559136ce397418640e2aa7c063c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-061.webp` — 327116 bytes, SHA-256 `1901cf3f18620546e983f0013e97b7b62579de20c64ae5b725ab622c7f27ffcc`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-062.webp` — 294406 bytes, SHA-256 `5f4d2ca79662efaf5500404777ea1bf248775c89060440c6405a28ba4addeb4e`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-063.webp` — 185298 bytes, SHA-256 `2de582d921b91842be69f03f984b77378c9a748326a9999f3098aae49b647ed7`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-064.webp` — 244306 bytes, SHA-256 `59ca4aebe271bbef6cae65cc12076bb4f30b465a3d4636fc4d140f5dd55a9a13`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-065.webp` — 428062 bytes, SHA-256 `ae0618e5044aa1003911c73a5bcca7e618f5d7791740e3ed1f412533a6bf6261`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-066.webp` — 407374 bytes, SHA-256 `c17a2765587f99c62dc3e750d730777db5b1ad18e6100f99db8f6d288b312315`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-067.webp` — 306836 bytes, SHA-256 `90628e1ad19a64d78b3e1f0b372c81902eb784fb6077f4e708f8327c8aa8180d`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-068.webp` — 173736 bytes, SHA-256 `1193d1c9e9ad703dd71079c669c3f2151b302fac56eff9e39fb73011ca5c69c6`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-069.webp` — 226942 bytes, SHA-256 `274d86578c2413884f6f4093a18779c1e1fb7ab31b144cdf6ed602d463cafb0f`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-070.webp` — 276872 bytes, SHA-256 `82804b8288424979f35c32c3bae53c3dba714dab446c98d8199cb0bfc87bbaa4`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/operations/page-071.webp` — 456658 bytes, SHA-256 `9f5bf7c4bcca6d06538ffe69941e540ff1565d52cbe6ab129be6356fdbcfa85d`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-001.webp` — 1524828 bytes, SHA-256 `dd103c08a483cd69bac8ef0be652c3dc5637adc3cd69ce320b94eb78a386d6bd`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-002.webp` — 474576 bytes, SHA-256 `2504aba80e25b41ca42ef9dabc41242815972d55ea3b8335ac1f8740686ff03f`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-003.webp` — 322282 bytes, SHA-256 `c9456794f46e81b5c546479788008efa9c9727920757e8615281098922af460c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-004.webp` — 437018 bytes, SHA-256 `a7ffc674a05511151f4c25e1db25795016db4d311b3cb4b1dbb62da164a5eabc`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-005.webp` — 542578 bytes, SHA-256 `899acbb5e8b4fd915e15f074a8dd10a5094cb594d47cf71d446c35bbb4a5d58d`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-006.webp` — 804160 bytes, SHA-256 `94b49f82e81d4fdaf23cf930a546d3d056efb852a8d7f1f35b1a2950cc62a0ad`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-007.webp` — 404474 bytes, SHA-256 `00b66a06ce77e8663d03f4f6d42108f896e1c745a64e3fb65d4ab58d9ce1d54a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-008.webp` — 305882 bytes, SHA-256 `ef77ce6543a53716e8052a107c68ba24345203e86626f1dcb0ef25e8d1f65d6c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-009.webp` — 291698 bytes, SHA-256 `8068ae9069243fcdf3f2d2d9aca46b49facebcbc5ce23c65e76de8d63d790f96`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-010.webp` — 239152 bytes, SHA-256 `67def80a587d34bded367bf147056a16d7f40f729da2bb885be87259b2413cbf`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-011.webp` — 142768 bytes, SHA-256 `ebfd131901688cd453733663ce5808ee6ea0e1be07149fda2e9a29bcb3582dc6`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-012.webp` — 206654 bytes, SHA-256 `b38ef7f2188c56bad6305ec0fa33304ddec773d6a6af5f61084d6ab33865a202`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-013.webp` — 321990 bytes, SHA-256 `2ab486b61455b9a9dcc651c02dff59f30afd4e638158f82c04957a11ce835359`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-014.webp` — 324208 bytes, SHA-256 `1f69918c37179756a00110065c25d10db8ad261b81eed9bb148cc3f2e8e37e2c`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-015.webp` — 607204 bytes, SHA-256 `89522602f6b4a51c8f9402f70286e3ebc74360385d413a1e821594d81fa3398f`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-016.webp` — 266762 bytes, SHA-256 `d77a6f71beb9aa0b7074160e1fa2d9466308e4036330e9786fc2430ab50793fb`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-017.webp` — 222170 bytes, SHA-256 `c48e3e75eff9e826929c71b30eadbeee76bbd61b16c1f4c591393e57de14eb6a`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-018.webp` — 203512 bytes, SHA-256 `8f4e294356ce7091d9605b334a46462db86248fff28e2e0d98f1e73e34cf5e59`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-019.webp` — 244556 bytes, SHA-256 `92acf348d64f90aad6e03460f68b5a41f048629cabf9b4bdc07e9c0e9726948b`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-020.webp` — 692858 bytes, SHA-256 `37c2fe3f0ec04608626e037ed592d90f9664f12c88cbed88bdc1cfd47c79650e`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-021.webp` — 173500 bytes, SHA-256 `8c2b3647e75c6a6c5225a333f1531b0065621aacdad7aa4c9388cf47c4f60fbb`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-022.webp` — 366850 bytes, SHA-256 `93ba17243be9d2f0a762a81b96c243f300ddb7fa11e1cf08625219a9fa736efc`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-023.webp` — 618490 bytes, SHA-256 `377b36de0186f9e6b876b9effff0171c3cb0e45c7f3e420c98a0d76a858f6091`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-024.webp` — 518632 bytes, SHA-256 `36e35bd4f7e705d43aec49c57bafe8d2a2583075634130fb3bf898faa01742bd`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-025.webp` — 343584 bytes, SHA-256 `8ca0fcc38ce6637e1ece9d1b70c92897a584fa6c008583096ab11784762b06ec`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-026.webp` — 607410 bytes, SHA-256 `0dd9281a5048e0c6d8772e3b3d319fc500900ca7865ccd7f42c281d2a2f1d061`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-027.webp` — 345152 bytes, SHA-256 `3a13013c7a1aa29751daa6d64acdd8bbe4260836fe27f8b813e91b612f0b0abc`
+- `manuals:by-machine/williams.swords-of-fury.1988/rendered-native/parts-information/page-028.webp` — 517122 bytes, SHA-256 `0896fd7fcc6ec86d5b45118c1f6fda30de2f712b0228571f0f505dedb2adfdd9`
+- `review:vpm-script-libs/core.vbs` — 104981 bytes, SHA-256 `a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69`
+- `review:vpm-script-libs/s11.vbs` — 6417 bytes, SHA-256 `5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91`
+- `review:williams.swords-of-fury.1988/ipdb-page-2026-10-15.json` — 12516 bytes, SHA-256 `0b233d0cf08f9acc7d1d6ce69226461be471cd47da6b20f16b75c0a5d11f56cf`
+- `review:williams.swords-of-fury.1988/photos/ipdb-31484-upper-playfield.jpg` — 233581 bytes, SHA-256 `4f8f501a6a59300255698995e8ec79feb3385a9f69b5872ecec022d36df1a65c`
+- `review:williams.swords-of-fury.1988/photos/ipdb-70430-partially-stripped-playfield.jpg` — 412335 bytes, SHA-256 `2f1f79f6e2d5a3fcffc3b2d5f3ecc8ec1299e3d4692b44ecb41cc5accfa93c73`
+- `review:williams.swords-of-fury.1988/photos/pinside-4086267.jpg` — 2011852 bytes, SHA-256 `d122ca3f314ae1f59c4b9d03a7747dce570810d3231896f32df4c64dca115261`
+- `review:williams.swords-of-fury.1988/pinside-gallery-2026-10-15.json` — 27836 bytes, SHA-256 `fb0df90116f55a4a470c66bfc4e0935a887de7ff0c7976bfa0fe53308927163d`
+- `review:williams.swords-of-fury.1988/runtime-research/artifact-manifest.json` — 24448 bytes, SHA-256 `983900a3ba861be0e7382ccc1f733c7685796bc7dcaed9237e5c02820804a45c`
+- `review:williams.swords-of-fury.1988/runtime-research/build-source-manifest.json` — 437118 bytes, SHA-256 `793590455a2fc2773d2e0b98041cb009c7218400b3f0def86aa23a39b3b4c56d`
+- `review:williams.swords-of-fury.1988/runtime-research/coil-order.json` — 13968 bytes, SHA-256 `25db849aa743137ba56f6d58dbca8793eeebe7f82e6b73f74ab03ee27a156cd1`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l1-coil.command.json` — 1545 bytes, SHA-256 `e0794a4076e77760a87df73e30bdc668dd9cc256d2cee9d66bdcf23fa6c0dd53`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l1-gameplay-v2.command.json` — 1566 bytes, SHA-256 `7f83d36826cbe841bd32e45c8109d2dcdc9326bc9f21411065393b75dc8d7d6e`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l1-init.command.json` — 1134 bytes, SHA-256 `d2a662c5754793fb21efffbde9b37e4820829a94b59de23f0bd3d9d0efcc9028`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l1-switch-edges.command.json` — 1569 bytes, SHA-256 `9ddcd6c2057d4579fba1f9becdc707f6c41827f9c321f97100510e1635a22d7c`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-coil.command.json` — 1545 bytes, SHA-256 `575b3c6edbea61f92727a557656976d146b14a2fa976fe3c069269088e181c58`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-gameplay-v1.command.json` — 1566 bytes, SHA-256 `0b9b4f440b1c9114259d12a9a882e9e3193d24e6e5209263dd276ce2f97cd011`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-gameplay-v2.command.json` — 1566 bytes, SHA-256 `97d8a444e3ccf14b08fd86c4c147f72cd94464e14c4e9bf33331489b53d467b5`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-init.command.json` — 1134 bytes, SHA-256 `d887c5b76bf53c4e5bc461ab28aa6dfd3351b0c562b0570a7fd7bfcc4fb088da`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-switch-edges.command.json` — 1569 bytes, SHA-256 `f5dc95a327cb1e943793086cf33a687cd0e5c5c314e376b8b76c94a7d5fd0936`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/l2-switch-levels.command.json` — 1572 bytes, SHA-256 `013469e5a83469d03dbaa411b6f203c6a00c0aef0ef425f3d15d491ea8a52137`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1-coil.command.json` — 1551 bytes, SHA-256 `682bb48eb3292edcf446271a1d6b0d1a62dbc38087a426e1e14b4b6b7debfa8e`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1-gameplay-v2.command.json` — 1572 bytes, SHA-256 `eebd072eac2d888c258af38882c794318bc184475eea287e218f945d97c0c2eb`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1-init.command.json` — 1137 bytes, SHA-256 `183dc3634da6f3eb2f4a3ea6f94708ea4eed134f58291a30c75c033b5335c55f`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1-switch-edges.command.json` — 1575 bytes, SHA-256 `e93c4df85133612872c062c2540a950e06d761cc7aade0386bdaa487f12e5b8a`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1b-coil.command.json` — 1557 bytes, SHA-256 `480d3351a8b6c2e570b9a4defb88a546580fdc5de0eb82405ba95543c2ea62c1`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1b-gameplay-v2.command.json` — 1578 bytes, SHA-256 `d86667596022f0024ab6316d0d6034bccba007c3e88c04623a13be66768356e5`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1b-init.command.json` — 1140 bytes, SHA-256 `18c737c71c37ca701b3d2a3f91fcd2cedb25ee5b5cd7b9051ad217a065e54ff3`
+- `review:williams.swords-of-fury.1988/runtime-research/logs/rr1b-switch-edges.command.json` — 1581 bytes, SHA-256 `beb5fcb329e4e5e62358859191f3304f0eb6a577de4e07630d79e84a005cb478`
+- `review:williams.swords-of-fury.1988/runtime-research/preflight.json` — 3454 bytes, SHA-256 `c5fb19c828c2015ae6e2c1bfe4556e84856b390879366bec2ca3e743316815db`
+- `review:williams.swords-of-fury.1988/runtime-research/rom-verification.json` — 17357 bytes, SHA-256 `e7556b5ec1e6f04aad8f9a1884db82c1672e3686053f624746819d419ce5fbd4`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l1-coil.json` — 1106567 bytes, SHA-256 `890637f8a654dd6c48df139b0acf11cc97440be6ca0b4fc6a9bead11f411f13e`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l1-gameplay-v2.json` — 2813013 bytes, SHA-256 `8e0214f38b79a783445ff8a93851a154e77ce395a8d4b373f6240ed7917776f2`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l1-init.json` — 44473 bytes, SHA-256 `7bd6e621ef32248d3cb04bced360c964ffb97e3f272d62c46949706c7baac734`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l1-switch-edges.json` — 2166988 bytes, SHA-256 `54aac968514a368836a649287ed6a683f9d84a8fc73ae8b575c2934d47a718bf`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l2-coil.json` — 1096562 bytes, SHA-256 `c83a2af906ef0f4aff950c3d1ad0a8298967c17933e83d22e9e575bda405afda`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l2-gameplay-v2.json` — 2809035 bytes, SHA-256 `1cdd3409f6b0dcda656b554e2e3910702b3ea20c54dfa3dd45fc3dfe8982d95a`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l2-init.json` — 44480 bytes, SHA-256 `968a2e96257506dbb834a8b3538aeb043dc6e21feeb171152788bd678e88ce1f`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l2-switch-edges.json` — 2166050 bytes, SHA-256 `a2addbbee906f321648eba7d3ffb861886c6343fb88f2d503cf53251c147d126`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/l2-switch-levels.json` — 2271055 bytes, SHA-256 `7f26bf143e74fea24ab2b89a60351722689de5c36ac07e7a0319e9fead612015`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1-coil.json` — 1184235 bytes, SHA-256 `9c37d2215e02c0a7df74258c18f0c0a003b6288aa18bd410635777767c52e93b`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1-gameplay-v2.json` — 3656615 bytes, SHA-256 `8f6110674e721c9c8c67921e3de61c7f60e1799736686c17c1d2c6c1801a30c4`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1-init.json` — 44486 bytes, SHA-256 `123c116f48df2eb11e782ca66b20d8797b7358d71d51de9d68c993a1d10d7658`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1-switch-edges.json` — 2253687 bytes, SHA-256 `90e952f671cf1aa1601a9d7278d403739245cf50ce95acc63d585c5b11da8ad5`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1b-coil.json` — 1188099 bytes, SHA-256 `321c4f3399d3dfbda976eb9696a0e77d4093fa9610d1acc8fbffb4d3b05c001e`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1b-gameplay-v2.json` — 3619774 bytes, SHA-256 `6f83ce69b9d41d714b81c9370f2ec930ca0d3f72b9cdfff731168e3c8ee7cbad`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1b-init.json` — 44482 bytes, SHA-256 `00f99fa01a951f6e3e880b162d764221124ec51c4cc5b5ac5efdb6a7856f45ce`
+- `review:williams.swords-of-fury.1988/runtime-research/runs/rr1b-switch-edges.json` — 2254897 bytes, SHA-256 `44bad77d4c0d5c1a3449b3d44e24658a9f21c7be991dbb414ea6d2ae81204e43`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/coil.json` — 25168 bytes, SHA-256 `ad50b61d263562ed8aea5917efc6af33f11f75c6468c47e76c04d4fcbcd16bbe`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v1.json` — 9074 bytes, SHA-256 `0fb06e1da2d41c61ce44ecf7e15fae445abcc03402cfc264d2687a2f52547fd1`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v2.json` — 9153 bytes, SHA-256 `4e9626be76e95ec7422ebdef678d06463f4bcdf597ddaf5ae5a61db08c724d83`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/init.json` — 381 bytes, SHA-256 `26251a5a9dda3eb6ed4d78fe39b35ba3a313c0391c40d290ab7b46a744ce41b0`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/switch-edges.json` — 28887 bytes, SHA-256 `531be6a558fcc10b76904da3a351f50604e964d8ac9974fe0390e5da24c5a13d`
+- `review:williams.swords-of-fury.1988/runtime-research/scenarios/switch-levels.json` — 28889 bytes, SHA-256 `fea44eb42a12c995c90c14f4e35200c8af9c57dd2bc315bca4cefa6a6b978738`
+- `review:williams.swords-of-fury.1988/runtime-research/script-runtime-excerpts.txt` — 5614 bytes, SHA-256 `782a4f9bd3d774e787ddeba89c5626034c940094bb9baad84c2f4ccd9d4c3b83`
+- `review:williams.swords-of-fury.1988/runtime-research/source-excerpts.txt` — 30158 bytes, SHA-256 `423fdf9643171a281b54ac4f31ffcc49b92949bab68564ce383a7ef922785bfb`
+- `review:williams.swords-of-fury.1988/runtime-research/static-name-tables.json` — 161723 bytes, SHA-256 `54d8da80734927e3f9074ed2624893ad8694f9cd79a1f93c7b5eb31213dfb58a`
+- `vpx:williams/swords-of-fury-1988/primary/Swords of Fury (Williams 1988).vpx` — 155090944 bytes, SHA-256 `68943b235efdbca5b51182bd6cf8c5cb326d90cdf511953cc7bf25b14dad4b0f`
+- `vpx:williams/swords-of-fury-1988/primary/extracted/script.vbs` — 172334 bytes, SHA-256 `719ed65888f146764f9490baea54f55d2acd210fbe807943823f2df89bacc717`
+- Extraction `vpx:williams/swords-of-fury-1988/primary/extracted/manifest.json` for `swrds_l2` — SHA-256 `3e32ff2f144b35b0795cfa0d5b84b84f817c5a8b0d58428af4fc128f9baba29a`, 1894 files, 196452946 bytes.
+
+## Source hashes and repository excerpts
+
+- `pinmame.catalog.8371478a7640` (pinmame_catalog): `None`
+  - https://github.com/vpinball/pinmame — PinmameGetGames
+- `manual.swords-of-fury.operations` (manual): `4a33475af365ffe21b0227c457004e067f1c15ca98b9825b3a9cfc8454360423`
+  - https://www.ipdb.org/files/2486/Williams_1988_Swords_of_Fury_Operations_Manual.pdf — IPDB2486 verified at https://www.ipdb.org/machine.cgi?id=2486; retained manuals/by-machine/williams.swords-of-fury.1988/Williams_1988_Swords_of_Fury_Operations_Manual.pdf; native scan rendered with tools/render_excerpt_image.py, Windows.Media.Ocr search only; exact pages in excerpts
+  - `switch-parts` — `evidence/excerpts/williams.swords-of-fury.1988/switch-parts.md` SHA-256 `0fc1feaae7a53ccc977c1c13e975e6e3d618cfe0efc42eba308a61170d7a61d2`
+  - `coil-parts` — `evidence/excerpts/williams.swords-of-fury.1988/coil-parts.md` SHA-256 `27fdfc96f4db2d7c124d5b5688d8f0075024c4e7d64ad159499c574541dd59b3`
+  - `switch-matrix` — `evidence/excerpts/williams.swords-of-fury.1988/switch-matrix.md` SHA-256 `4f5ed24176c44c873c5fa713a101bec74b4f079f031aa97dc2cc777d14428df8`
+  - `lamp-matrix` — `evidence/excerpts/williams.swords-of-fury.1988/lamp-matrix.md` SHA-256 `02ef746638b60907d976970eddf1ac6d2d1bc8fa89bcd85ff3c347b7ad84dec1`
+  - `solenoid-table` — `evidence/excerpts/williams.swords-of-fury.1988/solenoid-table.md` SHA-256 `9d410e1a1145920f8aa764e8ebc76fcb737c1d21d7346c40d81e642afa74fdd5`
+- `manual.swords-of-fury.parts` (manual): `9911781ac0d4b07ca512ed22a8d8dde125f826289140b945bb258a5c57d4ac4a`
+  - https://www.ipdb.org/files/2486/Williams_1988_Swords_of_Fury_Parts_Information_Manual_no_schematics.pdf — IPDB2486 verified at https://www.ipdb.org/machine.cgi?id=2486; retained manuals/by-machine/williams.swords-of-fury.1988/Williams_1988_Swords_of_Fury_Parts_Information_Manual_no_schematics.pdf; native scan rendered with tools/render_excerpt_image.py, Windows.Media.Ocr search only; exact pages in excerpts
+  - `parts-opto-diverters` — `evidence/excerpts/williams.swords-of-fury.1988/parts-opto-diverters.md` SHA-256 `c3f128a1a68f4acc52a7749a3f1e3f0cdd2b0b3d46039032d45b73c9de0cc049`
+- `pinmame.swords-of-fury.core` (pinmame_core): `f7c45dafbb63cee75e485cf64ea9fff8452cb3531f68df89fad9e8ff71848b5f`
+  - https://github.com/vpinball/pinmame/tree/97aa922bf8e4b6970126192ec1ac1fb0305a4f62 — src/wpc/s11games.c:INITGAME and swrds driver block590-640; s11.c:s11_dispS11a, pia4a_r, setSSSol, vblank, SWITCH_UPDATE and swrds_ PWM block; core.c:core_updateSw/core_getSol/core_swSeq2m; s11.h; gen.h; excerpts preserve exact contract
+  - `pinmame-contract` — `evidence/excerpts/williams.swords-of-fury.1988/pinmame-contract.md` SHA-256 `b87a96edbadd7a2c06ef690fafe7d02a3201fe2302aad21a3168d388f7134678`
+- `vpx-table.swords-of-fury.bord-vr` (vpx_table): `68943b235efdbca5b51182bd6cf8c5cb326d90cdf511953cc7bf25b14dad4b0f`
+  - external:pinmame-vpx-sources/williams/swords-of-fury-1988/primary/Swords of Fury (Williams 1988).vpx — User-supplied bord table, metadata1.0 May2022, embedded VR updates through005; vpxtool git:v0.33.3; bounds left0 top0 right952.9412 bottom1976.471. Table was not launched in VPX during curation; ROM service/gameplay checks corroborate controller semantics, not geometry.
+  - `geometry-anchors` — `evidence/excerpts/williams.swords-of-fury.1988/geometry-anchors.md` SHA-256 `79638c9733f2d5ae35c3e632d9afa08ae62461fabc43dce9e9069c5e0bb10aa2`
+- `vpx-script.swords-of-fury.bord-vr` (vpx_script): `719ed65888f146764f9490baea54f55d2acd210fbe807943823f2df89bacc717`
+  - external:pinmame-vpx-sources/williams/swords-of-fury-1988/primary/extracted/script.vbs — User-supplied bord table, metadata1.0 May2022, embedded VR updates through005; vpxtool git:v0.33.3; bounds left0 top0 right952.9412 bottom1976.471. Table was not launched in VPX during curation; ROM service/gameplay checks corroborate controller semantics, not geometry.
+  - `script-contract` — `evidence/excerpts/williams.swords-of-fury.1988/script-contract.md` SHA-256 `441cd3d39330222d569059545bc3658a6ded30d7248178691be0dc15b5703b5b`
+- `vpx-extraction.swords-of-fury.bord-vr` (human_review): `3e32ff2f144b35b0795cfa0d5b84b84f817c5a8b0d58428af4fc128f9baba29a`
+  - external:pinmame-vpx-sources/williams/swords-of-fury-1988/primary/extracted/manifest.json — tools/build_external_evidence_manifest.py --game swrds_l2: every POSIX relative path sorted case-sensitively with size and SHA256, canonical compact sorted-key UTF8 JSON plus LF; manifest and manifest.sha256 excluded. 1894files196452946bytes. Source-copy hash equality and separate embedded-script equality checked.
+- `vpm-script-library.s11-vbs` (vpx_script): `5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f91`
+  - external:pinmame-review-artifacts/vpm-script-libs/s11.vbs — Retained machine-neutral s11.vbs: public flipper constants82/84; core.vbs key handling and cvpmFlips2; table LoadVPM S11.VBS.
+  - `script-library` — `evidence/excerpts/williams.swords-of-fury.1988/script-library.md` SHA-256 `79ac14453ea8757f49d857f54f77aae7f761f181dfa069e1c289cb72c4beb75e`
+- `runtime.swords-of-fury.service-and-gameplay` (runtime_scenario): `0ef5170e7b0a1174052a169dcafe5ff54e2563c40cc147c371bd3b42f8d7bffe`
+  - evidence/runtime/system-11/swords-of-fury-service-and-gameplay.json — 17 complete raw runs: initialization, coil walk, Switch Edges and focused gameplay for L-1/L-2/RR1/RR1B, plus L-2 Switch Levels. Complete raw artifacts retained under external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research; compact evidence pins raw/scenario/library hashes. Verify with tools/verify_swords_of_fury_runtime.py. German archive unavailable; shared source proves routing, no German run claimed.
+- `photo.ipdb-70430` (human_review): `2f1f79f6e2d5a3fcffc3b2d5f3ecc8ec1299e3d4692b44ecb41cc5accfa93c73`
+  - https://www.ipdb.org/showpic.pl?id=2486&picno=70430 — IPDB machine 2486; verified machine page https://www.ipdb.org/machine.cgi?id=2486; direct resource https://www.ipdb.org/images/2486/image-24.jpg; retained external:pinmame-review-artifacts/williams.swords-of-fury.1988/photos/ipdb-70430-partially-stripped-playfield.jpg; visually inspected layout lead, no calibrated hidden socket measurement.
+- `photo.ipdb-31484` (human_review): `4f8f501a6a59300255698995e8ec79feb3385a9f69b5872ecec022d36df1a65c`
+  - https://www.ipdb.org/showpic.pl?id=2486&picno=31484 — IPDB machine 2486; verified machine page https://www.ipdb.org/machine.cgi?id=2486; direct resource https://www.ipdb.org/images/2486/image-3.jpg; retained external:pinmame-review-artifacts/williams.swords-of-fury.1988/photos/ipdb-31484-upper-playfield.jpg; visually inspected layout lead, no calibrated hidden socket measurement.
+- `runtime.swords-of-fury.contract` (runtime_scenario): `0f0390c7553200783653791c50778f80e31fc89933abd5e34b5397fab85fbca4`
+  - tools/seeds/williams/swords-of-fury-runtime.json — Portable derived contract: all 17 raw/scenario hashes, four ROM diagnostic walks, all target/reset probes and L2 raw segment responses. Recompute using tools/verify_swords_of_fury_runtime.py; complementary schema-conformant evidence is runtime.swords-of-fury.service-and-gameplay.
+
+## Exact seeded placements
+
+- `inputs:switch.drain` (pinmame.input.switch 10): `observed`
+  - `switch-10.drain` — sensor at (0.475465, 0.977126); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.slot1` (pinmame.input.switch 11): `observed`
+  - `switch-11.slot1` — sensor at (0.838225, 0.870575); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.slot2` (pinmame.input.switch 12): `observed`
+  - `switch-12.slot2` — sensor at (0.768382, 0.891109); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.slot3` (pinmame.input.switch 13): `observed`
+  - `switch-13.slot3` — sensor at (0.69655, 0.912425); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw14` (pinmame.input.switch 14): `observed`
+  - `switch-14.sw14` — sensor at (0.938309, 0.87763); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw15` (pinmame.input.switch 15): `observed`
+  - `switch-15.sw15` — sensor at (0.86858, 0.135003); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw16` (pinmame.input.switch 16): `observed`
+  - `switch-16.sw16` — sensor at (0.865942, 0.246748); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.matrix-17` (pinmame.input.switch 17): `observed`
+  - `switch-17.sw17` — sensor at (0.091368, 0.052456); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.matrix-18` (pinmame.input.switch 18): `observed`
+  - `switch-18.sw18` — sensor at (0.149968, 0.059116); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.matrix-19` (pinmame.input.switch 19): `observed`
+  - `switch-19.sw19` — sensor at (0.20729, 0.065983); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.matrix-20` (pinmame.input.switch 20): `observed`
+  - `switch-20.sw20` — sensor at (0.265427, 0.072423); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.matrix-21` (pinmame.input.switch 21): `observed`
+  - `switch-21.sw21` — sensor at (0.32323, 0.07903); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw23` (pinmame.input.switch 23): `observed`
+  - `switch-23.sw23` — sensor at (0.216684, 0.490579); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw24` (pinmame.input.switch 24): `observed`
+  - `switch-24.sw24` — sensor at (0.316181, 0.469969); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw25` (pinmame.input.switch 25): `observed`
+  - `switch-25.sw25` — sensor at (0.128409, 0.714109); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw26` (pinmame.input.switch 26): `observed`
+  - `switch-26.tsw26` — sensor at (0.298715, 0.288654); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw27` (pinmame.input.switch 27): `observed`
+  - `switch-27.tsw27` — sensor at (0.317893, 0.251469); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw28` (pinmame.input.switch 28): `observed`
+  - `switch-28.tsw28` — sensor at (0.671005, 0.232754); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw29` (pinmame.input.switch 29): `observed`
+  - `switch-29.tsw29` — sensor at (0.695081, 0.268604); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw30` (pinmame.input.switch 30): `observed`
+  - `switch-30.tsw30` — sensor at (0.719648, 0.303902); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw31` (pinmame.input.switch 31): `observed`
+  - `switch-31.tsw31` — sensor at (0.853185, 0.480259); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw32` (pinmame.input.switch 32): `observed`
+  - `switch-32.tsw32` — sensor at (0.869271, 0.513109); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw37` (pinmame.input.switch 37): `observed`
+  - `switch-37.sw37` — sensor at (0.0, 0.0); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw38` (pinmame.input.switch 38): `observed`
+  - `switch-38.sw38` — sensor at (0.776942, 0.42509); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw39` (pinmame.input.switch 39): `observed`
+  - `switch-39.sw39` — sensor at (0.114239, 0.527536); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw40` (pinmame.input.switch 40): `observed`
+  - `switch-40.sw40` — sensor at (0.0, 0.0); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw46` (pinmame.input.switch 46): `observed`
+  - `switch-46.sw46` — sensor at (0.496077, 0.065468); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw47` (pinmame.input.switch 47): `observed`
+  - `switch-47.sw47` — sensor at (0.821212, 0.008455); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw48` (pinmame.input.switch 48): `observed`
+  - `switch-48.sw48` — sensor at (0.776728, 0.713819); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sol-lock` (pinmame.input.switch 54): `observed`
+  - `switch-54.sw54` — sensor at (0.062129, 0.165818); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sol-kick` (pinmame.input.switch 55): `observed`
+  - `switch-55.sw55` — sensor at (0.136826, 0.404371); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw56` (pinmame.input.switch 56): `observed`
+  - `switch-56.sw56` — sensor at (0.137057, 0.383649); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw57` (pinmame.input.switch 57): `observed`
+  - `switch-57.sw57` — sensor at (0.056278, 0.786747); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.sw59` (pinmame.input.switch 59): `observed`
+  - `switch-59.sw59` — sensor at (0.846704, 0.749111); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.left-sling-shot` (pinmame.input.switch 63): `observed`
+  - `switch-63.leftslingshot` — sensor at (0.222914, 0.703892); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `inputs:switch.right-sling-shot` (pinmame.input.switch 64): `observed`
+  - `switch-64.rightslingshot` — sensor at (0.683598, 0.701201); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.sol-outhole` (pinmame.output.solenoid 1): `observed`
+  - `solenoid-1.drain` — effect at (0.475465, 0.977126); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.release-ball` (pinmame.output.solenoid 2): `observed`
+  - `solenoid-2.slot1` — effect at (0.838225, 0.870575); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.sol-lock` (pinmame.output.solenoid 4): `observed`
+  - `solenoid-4.sw54` — effect at (0.062129, 0.165818); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.dt2up` (pinmame.output.solenoid 5): `observed`
+  - `solenoid-5.sw18` — effect at (0.149968, 0.059116); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.sol-kick` (pinmame.output.solenoid 6): `observed`
+  - `solenoid-6.sw55` — effect at (0.136826, 0.404371); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.dt3up` (pinmame.output.solenoid 8): `observed`
+  - `solenoid-8.sw19` — effect at (0.20729, 0.065983); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.sol-kickback` (pinmame.output.solenoid 14): `observed`
+  - `solenoid-14.sw57` — effect at (0.056278, 0.786747); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.dt1up` (pinmame.output.solenoid 15): `observed`
+  - `solenoid-15.sw17` — effect at (0.091368, 0.052456); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.bottom-diverter` (pinmame.output.solenoid 17): `observed`
+  - `solenoid-17.bottomgate` — effect at (0.965186, 0.264646); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.solenoid-18` (pinmame.output.solenoid 18): `observed`
+  - `solenoid-18.leftslingshot` — effect at (0.222914, 0.703892); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.top-diverter` (pinmame.output.solenoid 19): `observed`
+  - `solenoid-19.topgate` — effect at (0.969845, 0.153462); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.solenoid-20` (pinmame.output.solenoid 20): `observed`
+  - `solenoid-20.rightslingshot` — effect at (0.683598, 0.701201); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.dt4up` (pinmame.output.solenoid 21): `observed`
+  - `solenoid-21.sw20` — effect at (0.265427, 0.072423); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:coil.dt5up` (pinmame.output.solenoid 22): `observed`
+  - `solenoid-22.sw21` — effect at (0.32323, 0.07903); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-1` (pinmame.output.lamp 1): `candidate`
+  - `lamp-1.l1` — emitter at (0.346988, 0.71185); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-2` (pinmame.output.lamp 2): `candidate`
+  - `lamp-2.l2` — emitter at (0.400129, 0.707557); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-3` (pinmame.output.lamp 3): `candidate`
+  - `lamp-3.l3` — emitter at (0.454419, 0.707419); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-4` (pinmame.output.lamp 4): `candidate`
+  - `lamp-4.l4` — emitter at (0.505836, 0.70825); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-5` (pinmame.output.lamp 5): `candidate`
+  - `lamp-5.l5` — emitter at (0.558115, 0.712958); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-6` (pinmame.output.lamp 6): `candidate`
+  - `lamp-6.l6` — emitter at (0.505919, 0.333218); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-7` (pinmame.output.lamp 7): `candidate`
+  - `lamp-7.l7` — emitter at (0.505643, 0.372303); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-9` (pinmame.output.lamp 9): `candidate`
+  - `lamp-9.l9` — emitter at (0.066966, 0.64539); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-10` (pinmame.output.lamp 10): `candidate`
+  - `lamp-10.l10` — emitter at (0.101872, 0.614086); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-11` (pinmame.output.lamp 11): `candidate`
+  - `lamp-11.l11` — emitter at (0.847886, 0.707629); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-12` (pinmame.output.lamp 12): `candidate`
+  - `lamp-12.l12` — emitter at (0.847526, 0.678028); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-13` (pinmame.output.lamp 13): `candidate`
+  - `lamp-13.l13` — emitter at (0.375713, 0.663931); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-14` (pinmame.output.lamp 14): `candidate`
+  - `lamp-14.l14` — emitter at (0.452695, 0.66407); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-15` (pinmame.output.lamp 15): `candidate`
+  - `lamp-15.l15` — emitter at (0.526231, 0.663931); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-16` (pinmame.output.lamp 16): `candidate`
+  - `lamp-16.l16` — emitter at (0.453844, 0.624738); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-22` (pinmame.output.lamp 22): `candidate`
+  - `lamp-22.l22` — emitter at (0.45245, 0.820466); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-23` (pinmame.output.lamp 23): `candidate`
+  - `lamp-23.l23` — emitter at (0.234277, 0.513257); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-24` (pinmame.output.lamp 24): `candidate`
+  - `lamp-24.l24` — emitter at (0.335101, 0.491028); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-26` (pinmame.output.lamp 26): `candidate`
+  - `lamp-26.l26` — emitter at (0.360912, 0.295333); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-27` (pinmame.output.lamp 27): `candidate`
+  - `lamp-27.l27` — emitter at (0.380198, 0.258482); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-28` (pinmame.output.lamp 28): `candidate`
+  - `lamp-28.l28` — emitter at (0.606638, 0.244017); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-29` (pinmame.output.lamp 29): `candidate`
+  - `lamp-29.l29` — emitter at (0.632353, 0.278802); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-30` (pinmame.output.lamp 30): `candidate`
+  - `lamp-30.l30` — emitter at (0.657354, 0.313587); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-31` (pinmame.output.lamp 31): `candidate`
+  - `lamp-31.l31` — emitter at (0.785486, 0.495166); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-32` (pinmame.output.lamp 32): `candidate`
+  - `lamp-32.l32` — emitter at (0.78466, 0.526018); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-33` (pinmame.output.lamp 33): `candidate`
+  - `lamp-33.l33` — emitter at (0.343453, 0.756297); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-34` (pinmame.output.lamp 34): `candidate`
+  - `lamp-34.l34` — emitter at (0.411914, 0.737029); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-35` (pinmame.output.lamp 35): `candidate`
+  - `lamp-35.l35` — emitter at (0.492494, 0.737345); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-36` (pinmame.output.lamp 36): `candidate`
+  - `lamp-36.l36` — emitter at (0.560955, 0.756455); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-38` (pinmame.output.lamp 38): `candidate`
+  - `lamp-38.l38` — emitter at (0.756828, 0.612455); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-39` (pinmame.output.lamp 39): `candidate`
+  - `lamp-39.l39` — emitter at (0.758594, 0.575684); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-40` (pinmame.output.lamp 40): `candidate`
+  - `lamp-40.l40` — emitter at (0.507347, 0.225075); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-41` (pinmame.output.lamp 41): `candidate`
+  - `lamp-41.l41` — emitter at (0.449487, 0.267781); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-42` (pinmame.output.lamp 42): `candidate`
+  - `lamp-42.l42` — emitter at (0.561397, 0.267896); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-43` (pinmame.output.lamp 43): `candidate`
+  - `lamp-43.l43` — emitter at (0.121268, 0.534826); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-44` (pinmame.output.lamp 44): `candidate`
+  - `lamp-44.l44` — emitter at (0.148809, 0.557808); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-45` (pinmame.output.lamp 45): `candidate`
+  - `lamp-45.l45` — emitter at (0.178469, 0.579769); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-49` (pinmame.output.lamp 49): `candidate`
+  - `lamp-49.l49` — emitter at (0.055519, 0.730424); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-50` (pinmame.output.lamp 50): `candidate`
+  - `lamp-50.l50` — emitter at (0.062063, 0.388625); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-51` (pinmame.output.lamp 51): `candidate`
+  - `lamp-51.l51` — emitter at (0.477108, 0.299581); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-52` (pinmame.output.lamp 52): `candidate`
+  - `lamp-52.l52` — emitter at (0.536158, 0.299811); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-53` (pinmame.output.lamp 53): `candidate`
+  - `lamp-53.l53` — emitter at (0.414898, 0.187886); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-54` (pinmame.output.lamp 54): `candidate`
+  - `lamp-54.l54` — emitter at (0.592232, 0.194202); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-55` (pinmame.output.lamp 55): `candidate`
+  - `lamp-55.l55` — emitter at (0.37258, 0.183514); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+- `outputs:lamp.matrix-56` (pinmame.output.lamp 56): `candidate`
+  - `lamp-56.l56` — emitter at (0.632535, 0.196631); sources `vpx-table.swords-of-fury.bord-vr, vpx-script.swords-of-fury.bord-vr, manual.swords-of-fury.operations`
+
+## Projection disclosures
+
+- `inputs:switch.drain` (pinmame.input.switch 10): Retained script binds Drain; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.slot1` (pinmame.input.switch 11): Retained script binds Slot1; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.slot2` (pinmame.input.switch 12): Retained script binds Slot2; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.slot3` (pinmame.input.switch 13): Retained script binds Slot3; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.matrix-17` (pinmame.input.switch 17): Retained script binds sw17; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware. Parts Information PDF 17 identifies the five-opto board as C-11844; Operations PDF 42 prints p/o C-11184, retained literally as a part-number disagreement. System 11 reads its unmasked matrix directly; the ROM-active level is public 1, so the matrix contact rests open. Keep asserted while target is down, release only after its individual reset completes; do not pulse a latched drop.
+- `inputs:switch.matrix-18` (pinmame.input.switch 18): Retained script binds sw18; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware. Parts Information PDF 17 identifies the five-opto board as C-11844; Operations PDF 42 prints p/o C-11184, retained literally as a part-number disagreement. System 11 reads its unmasked matrix directly; the ROM-active level is public 1, so the matrix contact rests open. Keep asserted while target is down, release only after its individual reset completes; do not pulse a latched drop.
+- `inputs:switch.matrix-19` (pinmame.input.switch 19): Retained script binds sw19; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware. Parts Information PDF 17 identifies the five-opto board as C-11844; Operations PDF 42 prints p/o C-11184, retained literally as a part-number disagreement. System 11 reads its unmasked matrix directly; the ROM-active level is public 1, so the matrix contact rests open. Keep asserted while target is down, release only after its individual reset completes; do not pulse a latched drop.
+- `inputs:switch.matrix-20` (pinmame.input.switch 20): Retained script binds sw20; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware. Parts Information PDF 17 identifies the five-opto board as C-11844; Operations PDF 42 prints p/o C-11184, retained literally as a part-number disagreement. System 11 reads its unmasked matrix directly; the ROM-active level is public 1, so the matrix contact rests open. Keep asserted while target is down, release only after its individual reset completes; do not pulse a latched drop.
+- `inputs:switch.matrix-21` (pinmame.input.switch 21): Retained script binds sw21; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware. Parts Information PDF 17 identifies the five-opto board as C-11844; Operations PDF 42 prints p/o C-11184, retained literally as a part-number disagreement. System 11 reads its unmasked matrix directly; the ROM-active level is public 1, so the matrix contact rests open. Keep asserted while target is down, release only after its individual reset completes; do not pulse a latched drop.
+- `inputs:switch.sol-lock` (pinmame.input.switch 54): Retained script binds sw54; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.sol-kick` (pinmame.input.switch 55): Retained script binds sw55; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.left-sling-shot` (pinmame.input.switch 63): Retained script binds LeftSlingshot; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `inputs:switch.right-sling-shot` (pinmame.input.switch 64): Retained script binds RightSlingshot; exact table object coordinate is observed layout evidence, not a calibrated factory measurement. Projection: hidden switch/contact is anchored to its own ball fixture, drop-target wall centroid or slingshot wall centroid; this does not locate the internal contact hardware.
+- `outputs:coil.sol-outhole` (pinmame.output.solenoid 1): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own Drain fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split. Operations wiring table PDF 32 prints AE-23-800; parts list PDF 41 prints AF-23-800. Structured part follows the game wiring table; both literal readings are retained.
+- `outputs:coil.release-ball` (pinmame.output.solenoid 2): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own Slot1 fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split. Operations wiring table PDF 32 prints AE-23-800; parts list PDF 41 prints AF-23-800. Structured part follows the game wiring table; both literal readings are retained.
+- `outputs:coil.sol-lock` (pinmame.output.solenoid 4): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw54 fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split. Operations wiring table PDF 32 prints AE-23-800; parts list PDF 41 prints AF-23-800. Structured part follows the game wiring table; both literal readings are retained.
+- `outputs:coil.dt2up` (pinmame.output.solenoid 5): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw18 fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.sol-kick` (pinmame.output.solenoid 6): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw55 fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.dt3up` (pinmame.output.solenoid 8): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw19 fixture/target/diverter, not a measured winding centre. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.sol-kickback` (pinmame.output.solenoid 14): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw57 fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.dt1up` (pinmame.output.solenoid 15): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw17 fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.bottom-diverter` (pinmame.output.solenoid 17): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own bottomgate fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.solenoid-18` (pinmame.output.solenoid 18): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own LeftSlingshot fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.top-diverter` (pinmame.output.solenoid 19): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own topgate fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.solenoid-20` (pinmame.output.solenoid 20): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own RightSlingshot fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.dt4up` (pinmame.output.solenoid 21): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw20 fixture/target/diverter, not a measured winding centre.
+- `outputs:coil.dt5up` (pinmame.output.solenoid 22): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Projection: actuator is anchored to its own sw21 fixture/target/diverter, not a measured winding centre.
+- `outputs:lamp.matrix-1` (pinmame.output.lamp 1): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-2` (pinmame.output.lamp 2): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-3` (pinmame.output.lamp 3): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-4` (pinmame.output.lamp 4): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-5` (pinmame.output.lamp 5): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-6` (pinmame.output.lamp 6): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-7` (pinmame.output.lamp 7): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-9` (pinmame.output.lamp 9): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-10` (pinmame.output.lamp 10): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-11` (pinmame.output.lamp 11): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-12` (pinmame.output.lamp 12): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-13` (pinmame.output.lamp 13): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-14` (pinmame.output.lamp 14): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-15` (pinmame.output.lamp 15): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-16` (pinmame.output.lamp 16): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-22` (pinmame.output.lamp 22): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-23` (pinmame.output.lamp 23): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-24` (pinmame.output.lamp 24): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-26` (pinmame.output.lamp 26): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-27` (pinmame.output.lamp 27): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-28` (pinmame.output.lamp 28): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-29` (pinmame.output.lamp 29): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-30` (pinmame.output.lamp 30): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-31` (pinmame.output.lamp 31): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-32` (pinmame.output.lamp 32): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-33` (pinmame.output.lamp 33): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-34` (pinmame.output.lamp 34): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-35` (pinmame.output.lamp 35): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-36` (pinmame.output.lamp 36): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-38` (pinmame.output.lamp 38): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-39` (pinmame.output.lamp 39): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-40` (pinmame.output.lamp 40): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-41` (pinmame.output.lamp 41): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-42` (pinmame.output.lamp 42): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-43` (pinmame.output.lamp 43): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-44` (pinmame.output.lamp 44): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-45` (pinmame.output.lamp 45): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-49` (pinmame.output.lamp 49): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-50` (pinmame.output.lamp 50): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-51` (pinmame.output.lamp 51): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-52` (pinmame.output.lamp 52): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. The explicit boxed2 and backglass header mean one playfield lamp plus one backglass lamp on this binding; only the playfield insert gets a candidate normalized anchor. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-53` (pinmame.output.lamp 53): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-54` (pinmame.output.lamp 54): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-55` (pinmame.output.lamp 55): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+- `outputs:lamp.matrix-56` (pinmame.output.lamp 56): Factory lamp matrix and location drawing identify the load. Projection: script-bound under-insert Light centre retained as an candidate insert anchor; no factory socket calibration claimed. The B-suffixed bloom helper is excluded. This render-light anchor is not accepted as an observed physical socket; a factory/photo-to-table reconciliation is still required.
+
+## Missing spatial records
+
+- `inputs:switch.matrix-9` (pinmame.input.switch 9): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Playfield tilt is not a scoring ball-contact; exact under-playfield mount is not supplied by script geometry.
+- `inputs:switch.sw61` (pinmame.input.switch 61): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Script sw61/sw62 centres lie on opposite lateral sides to the nominal Left/Right names; no coordinate is promoted without tracing the factory callout/ball path. Existing script routing is documented, not silently swapped.
+- `inputs:switch.sw62` (pinmame.input.switch 62): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Script sw61/sw62 centres lie on opposite lateral sides to the nominal Left/Right names; no coordinate is promoted without tracing the factory callout/ball path. Existing script routing is documented, not silently swapped.
+- `outputs:coil.flash9` (pinmame.output.solenoid 9): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Wiring table PDF 32 explicitly says (i,p), 1p,1i and 2P11/12-6, proving one playfield and one insert-board flasher. The abbreviated PDF 41 list says only (i); its omission does not negate the positive playfield branch. No socket centre is established.
+- `outputs:coil.pfgi` (pinmame.output.solenoid 10): One public drive controls two C-11998-1 GI relay boards: one on the playfield and one on the backbox insert board (PDF 32: 1p,1i). Public 1 energizes the relays and turns GI off; the retained PFGI callback inverts it. Relay quantity is not bulb quantity. The GI collection contains 15 script-controlled lights, with GI016..018 outside that collection; these effect objects establish neither factory socket inventory nor physical bulb centres. Relay mounting centres and every GI socket remain unplaced.
+- `outputs:coil.flash16` (pinmame.output.solenoid 16): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location.
+- `outputs:coil.flash25` (pinmame.output.solenoid 25): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash26` (pinmame.output.solenoid 26): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash27` (pinmame.output.solenoid 27): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash28` (pinmame.output.solenoid 28): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash29` (pinmame.output.solenoid 29): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash30` (pinmame.output.solenoid 30): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash31` (pinmame.output.solenoid 31): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash32` (pinmame.output.solenoid 32): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:lamp.matrix-17` (pinmame.output.lamp 17): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-18` (pinmame.output.lamp 18): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-19` (pinmame.output.lamp 19): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-20` (pinmame.output.lamp 20): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-21` (pinmame.output.lamp 21): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-37` (pinmame.output.lamp 37): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-46` (pinmame.output.lamp 46): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-47` (pinmame.output.lamp 47): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-48` (pinmame.output.lamp 48): Factory lamp matrix and location drawing identify the load.
+
+## Unplaced physical devices
+
+- `inputs:switch.matrix-9` (pinmame.input.switch 9): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Playfield tilt is not a scoring ball-contact; exact under-playfield mount is not supplied by script geometry.
+- `inputs:switch.sw61` (pinmame.input.switch 61): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Script sw61/sw62 centres lie on opposite lateral sides to the nominal Left/Right names; no coordinate is promoted without tracing the factory callout/ball path. Existing script routing is documented, not silently swapped.
+- `inputs:switch.sw62` (pinmame.input.switch 62): No defensible physical sensor centre from the retained extraction; geometry remains an explicit spatial blocker. Script sw61/sw62 centres lie on opposite lateral sides to the nominal Left/Right names; no coordinate is promoted without tracing the factory callout/ball path. Existing script routing is documented, not silently swapped.
+- `outputs:coil.flash9` (pinmame.output.solenoid 9): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. Wiring table PDF 32 explicitly says (i,p), 1p,1i and 2P11/12-6, proving one playfield and one insert-board flasher. The abbreviated PDF 41 list says only (i); its omission does not negate the positive playfield branch. No socket centre is established.
+- `outputs:coil.pfgi` (pinmame.output.solenoid 10): One public drive controls two C-11998-1 GI relay boards: one on the playfield and one on the backbox insert board (PDF 32: 1p,1i). Public 1 energizes the relays and turns GI off; the retained PFGI callback inverts it. Relay quantity is not bulb quantity. The GI collection contains 15 script-controlled lights, with GI016..018 outside that collection; these effect objects establish neither factory socket inventory nor physical bulb centres. Relay mounting centres and every GI socket remain unplaced.
+- `outputs:coil.flash16` (pinmame.output.solenoid 16): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location.
+- `outputs:coil.flash25` (pinmame.output.solenoid 25): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash26` (pinmame.output.solenoid 26): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash27` (pinmame.output.solenoid 27): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash28` (pinmame.output.solenoid 28): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash29` (pinmame.output.solenoid 29): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash30` (pinmame.output.solenoid 30): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash31` (pinmame.output.solenoid 31): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:coil.flash32` (pinmame.output.solenoid 32): Factory coil/relay/flasher listing and wiring schematic govern physical fitment; public address from the selected System 11 mux/special-line contract. No exact physical socket centre proved: FL_* lights/f*_render glow sprites are not accepted as observed sockets. Factory drawing and photos establish fitment, but do not provide a calibrated table-space socket location. VR backglass effects attached to this callback are decorative proxies and are not additional physical flashers. CPU connection and transistor repeat the printed shared A/C pair cell. Exact branch connectors and intermediate gray wire are preserved in the full wiring-table excerpt; merged 03A/03C branch layout is not silently split.
+- `outputs:lamp.matrix-17` (pinmame.output.lamp 17): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-18` (pinmame.output.lamp 18): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-19` (pinmame.output.lamp 19): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-20` (pinmame.output.lamp 20): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-21` (pinmame.output.lamp 21): Drop-bank lamp from factory list; retained script only changes droplamp material on a primitive. Its primitive origin is not a socket position; exact emitter coordinate remains missing.
+- `outputs:lamp.matrix-37` (pinmame.output.lamp 37): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-46` (pinmame.output.lamp 46): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-47` (pinmame.output.lamp 47): Factory lamp matrix and location drawing identify the load.
+- `outputs:lamp.matrix-48` (pinmame.output.lamp 48): Factory lamp matrix and location drawing identify the load.
+
+## Unknown records
+
+- `outputs:lamp.matrix-1` (pinmame.output.lamp 1): ['spatial:candidate']
+- `outputs:lamp.matrix-2` (pinmame.output.lamp 2): ['spatial:candidate']
+- `outputs:lamp.matrix-3` (pinmame.output.lamp 3): ['spatial:candidate']
+- `outputs:lamp.matrix-4` (pinmame.output.lamp 4): ['spatial:candidate']
+- `outputs:lamp.matrix-5` (pinmame.output.lamp 5): ['spatial:candidate']
+- `outputs:lamp.matrix-6` (pinmame.output.lamp 6): ['spatial:candidate']
+- `outputs:lamp.matrix-7` (pinmame.output.lamp 7): ['spatial:candidate']
+- `outputs:lamp.matrix-9` (pinmame.output.lamp 9): ['spatial:candidate']
+- `outputs:lamp.matrix-10` (pinmame.output.lamp 10): ['spatial:candidate']
+- `outputs:lamp.matrix-11` (pinmame.output.lamp 11): ['spatial:candidate']
+- `outputs:lamp.matrix-12` (pinmame.output.lamp 12): ['spatial:candidate']
+- `outputs:lamp.matrix-13` (pinmame.output.lamp 13): ['spatial:candidate']
+- `outputs:lamp.matrix-14` (pinmame.output.lamp 14): ['spatial:candidate']
+- `outputs:lamp.matrix-15` (pinmame.output.lamp 15): ['spatial:candidate']
+- `outputs:lamp.matrix-16` (pinmame.output.lamp 16): ['spatial:candidate']
+- `outputs:lamp.matrix-22` (pinmame.output.lamp 22): ['spatial:candidate']
+- `outputs:lamp.matrix-23` (pinmame.output.lamp 23): ['spatial:candidate']
+- `outputs:lamp.matrix-24` (pinmame.output.lamp 24): ['spatial:candidate']
+- `outputs:lamp.matrix-26` (pinmame.output.lamp 26): ['spatial:candidate']
+- `outputs:lamp.matrix-27` (pinmame.output.lamp 27): ['spatial:candidate']
+- `outputs:lamp.matrix-28` (pinmame.output.lamp 28): ['spatial:candidate']
+- `outputs:lamp.matrix-29` (pinmame.output.lamp 29): ['spatial:candidate']
+- `outputs:lamp.matrix-30` (pinmame.output.lamp 30): ['spatial:candidate']
+- `outputs:lamp.matrix-31` (pinmame.output.lamp 31): ['spatial:candidate']
+- `outputs:lamp.matrix-32` (pinmame.output.lamp 32): ['spatial:candidate']
+- `outputs:lamp.matrix-33` (pinmame.output.lamp 33): ['spatial:candidate']
+- `outputs:lamp.matrix-34` (pinmame.output.lamp 34): ['spatial:candidate']
+- `outputs:lamp.matrix-35` (pinmame.output.lamp 35): ['spatial:candidate']
+- `outputs:lamp.matrix-36` (pinmame.output.lamp 36): ['spatial:candidate']
+- `outputs:lamp.matrix-38` (pinmame.output.lamp 38): ['spatial:candidate']
+- `outputs:lamp.matrix-39` (pinmame.output.lamp 39): ['spatial:candidate']
+- `outputs:lamp.matrix-40` (pinmame.output.lamp 40): ['spatial:candidate']
+- `outputs:lamp.matrix-41` (pinmame.output.lamp 41): ['spatial:candidate']
+- `outputs:lamp.matrix-42` (pinmame.output.lamp 42): ['spatial:candidate']
+- `outputs:lamp.matrix-43` (pinmame.output.lamp 43): ['spatial:candidate']
+- `outputs:lamp.matrix-44` (pinmame.output.lamp 44): ['spatial:candidate']
+- `outputs:lamp.matrix-45` (pinmame.output.lamp 45): ['spatial:candidate']
+- `outputs:lamp.matrix-49` (pinmame.output.lamp 49): ['spatial:candidate']
+- `outputs:lamp.matrix-50` (pinmame.output.lamp 50): ['spatial:candidate']
+- `outputs:lamp.matrix-51` (pinmame.output.lamp 51): ['spatial:candidate']
+- `outputs:lamp.matrix-52` (pinmame.output.lamp 52): ['spatial:candidate']
+- `outputs:lamp.matrix-53` (pinmame.output.lamp 53): ['spatial:candidate']
+- `outputs:lamp.matrix-54` (pinmame.output.lamp 54): ['spatial:candidate']
+- `outputs:lamp.matrix-55` (pinmame.output.lamp 55): ['spatial:candidate']
+- `outputs:lamp.matrix-56` (pinmame.output.lamp 56): ['spatial:candidate']
+
+## Controlled not-applicable spatial records
+
+- `inputs:switch.matrix-1` (pinmame.input.switch 1): cabinet_or_service
+- `inputs:switch.matrix-2` (pinmame.input.switch 2): cabinet_or_service
+- `inputs:switch.matrix-3` (pinmame.input.switch 3): cabinet_or_service
+- `inputs:switch.matrix-4` (pinmame.input.switch 4): cabinet_or_service
+- `inputs:switch.matrix-5` (pinmame.input.switch 5): cabinet_or_service
+- `inputs:switch.matrix-6` (pinmame.input.switch 6): cabinet_or_service
+- `inputs:switch.matrix-7` (pinmame.input.switch 7): cabinet_or_service
+- `inputs:switch.matrix-8` (pinmame.input.switch 8): cabinet_or_service
+- `inputs:switch.matrix-22` (pinmame.input.switch 22): unused
+- `inputs:switch.matrix-33` (pinmame.input.switch 33): unused
+- `inputs:switch.matrix-34` (pinmame.input.switch 34): unused
+- `inputs:switch.matrix-35` (pinmame.input.switch 35): unused
+- `inputs:switch.matrix-36` (pinmame.input.switch 36): unused
+- `inputs:switch.matrix-41` (pinmame.input.switch 41): unused
+- `inputs:switch.matrix-42` (pinmame.input.switch 42): unused
+- `inputs:switch.matrix-43` (pinmame.input.switch 43): unused
+- `inputs:switch.matrix-44` (pinmame.input.switch 44): unused
+- `inputs:switch.matrix-45` (pinmame.input.switch 45): unused
+- `inputs:switch.matrix-49` (pinmame.input.switch 49): unused
+- `inputs:switch.matrix-50` (pinmame.input.switch 50): unused
+- `inputs:switch.matrix-51` (pinmame.input.switch 51): unused
+- `inputs:switch.matrix-52` (pinmame.input.switch 52): unused
+- `inputs:switch.matrix-53` (pinmame.input.switch 53): unused
+- `inputs:switch.matrix-58` (pinmame.input.switch 58): cabinet_or_service
+- `inputs:switch.matrix-60` (pinmame.input.switch 60): cabinet_or_service
+- `inputs:switch.service-7` (pinmame.input.switch -7): cabinet_or_service
+- `inputs:switch.service-6` (pinmame.input.switch -6): cabinet_or_service
+- `inputs:switch.service-5` (pinmame.input.switch -5): cabinet_or_service
+- `inputs:switch.service-4` (pinmame.input.switch -4): cabinet_or_service
+- `inputs:switch.flipper-column-81` (pinmame.input.switch 81): unused
+- `inputs:switch.flipper-column-82` (pinmame.input.switch 82): cabinet_or_service
+- `inputs:switch.flipper-column-83` (pinmame.input.switch 83): unused
+- `inputs:switch.flipper-column-84` (pinmame.input.switch 84): cabinet_or_service
+- `inputs:switch.flipper-column-85` (pinmame.input.switch 85): unused
+- `inputs:switch.flipper-column-86` (pinmame.input.switch 86): unused
+- `inputs:switch.flipper-column-87` (pinmame.input.switch 87): unused
+- `inputs:switch.flipper-column-88` (pinmame.input.switch 88): unused
+- `inputs:dip.country-jumper` (pinmame.input.dip 0): dip_switch
+- `outputs:virtual.solenoid-3` (pinmame.output.solenoid 3): unused
+- `outputs:coil.sol-knocker` (pinmame.output.solenoid 7): cabinet_or_service
+- `outputs:flasher.solenoid-11` (pinmame.output.solenoid 11): cabinet_or_service
+- `outputs:relay.solenoid-12` (pinmame.output.solenoid 12): cabinet_or_service
+- `outputs:virtual.solenoid-13` (pinmame.output.solenoid 13): unused
+- `outputs:virtual.solenoid-23` (pinmame.output.solenoid 23): virtual
+- `outputs:virtual.solenoid-24` (pinmame.output.solenoid 24): unused
+- `outputs:virtual.solenoid-33` (pinmame.output.solenoid 33): unused
+- `outputs:virtual.solenoid-34` (pinmame.output.solenoid 34): unused
+- `outputs:virtual.solenoid-35` (pinmame.output.solenoid 35): unused
+- `outputs:virtual.solenoid-36` (pinmame.output.solenoid 36): unused
+- `outputs:virtual.solenoid-37` (pinmame.output.solenoid 37): unused
+- `outputs:virtual.solenoid-38` (pinmame.output.solenoid 38): unused
+- `outputs:virtual.solenoid-39` (pinmame.output.solenoid 39): unused
+- `outputs:virtual.solenoid-40` (pinmame.output.solenoid 40): unused
+- `outputs:virtual.solenoid-41` (pinmame.output.solenoid 41): unused
+- `outputs:virtual.solenoid-42` (pinmame.output.solenoid 42): unused
+- `outputs:virtual.solenoid-43` (pinmame.output.solenoid 43): unused
+- `outputs:virtual.solenoid-44` (pinmame.output.solenoid 44): unused
+- `outputs:virtual.flipper-right-power` (pinmame.output.solenoid 45): virtual
+- `outputs:virtual.flipper-right-hold` (pinmame.output.solenoid 46): virtual
+- `outputs:virtual.flipper-left-power` (pinmame.output.solenoid 47): virtual
+- `outputs:virtual.flipper-left-hold` (pinmame.output.solenoid 48): virtual
+- `outputs:virtual.solenoid-49` (pinmame.output.solenoid 49): unused
+- `outputs:virtual.solenoid-50` (pinmame.output.solenoid 50): unused
+- `outputs:virtual.solenoid-51` (pinmame.output.solenoid 51): unused
+- `outputs:virtual.solenoid-52` (pinmame.output.solenoid 52): unused
+- `outputs:virtual.solenoid-53` (pinmame.output.solenoid 53): unused
+- `outputs:virtual.solenoid-54` (pinmame.output.solenoid 54): unused
+- `outputs:virtual.solenoid-55` (pinmame.output.solenoid 55): unused
+- `outputs:virtual.solenoid-56` (pinmame.output.solenoid 56): unused
+- `outputs:virtual.solenoid-57` (pinmame.output.solenoid 57): unused
+- `outputs:virtual.solenoid-58` (pinmame.output.solenoid 58): unused
+- `outputs:virtual.solenoid-59` (pinmame.output.solenoid 59): unused
+- `outputs:virtual.solenoid-60` (pinmame.output.solenoid 60): unused
+- `outputs:virtual.solenoid-61` (pinmame.output.solenoid 61): unused
+- `outputs:virtual.solenoid-62` (pinmame.output.solenoid 62): unused
+- `outputs:virtual.solenoid-63` (pinmame.output.solenoid 63): unused
+- `outputs:virtual.solenoid-64` (pinmame.output.solenoid 64): unused
+- `outputs:lamp.matrix-8` (pinmame.output.lamp 8): unused
+- `outputs:lamp.matrix-25` (pinmame.output.lamp 25): unused
+- `outputs:lamp.matrix-57` (pinmame.output.lamp 57): cabinet_or_service
+- `outputs:lamp.matrix-58` (pinmame.output.lamp 58): cabinet_or_service
+- `outputs:lamp.matrix-59` (pinmame.output.lamp 59): cabinet_or_service
+- `outputs:lamp.matrix-60` (pinmame.output.lamp 60): cabinet_or_service
+- `outputs:lamp.matrix-61` (pinmame.output.lamp 61): cabinet_or_service
+- `outputs:lamp.matrix-62` (pinmame.output.lamp 62): cabinet_or_service
+- `outputs:lamp.matrix-63` (pinmame.output.lamp 63): cabinet_or_service
+- `outputs:lamp.matrix-64` (pinmame.output.lamp 64): cabinet_or_service
+- `displays:display.player-1` (unbound): cabinet_or_service
+- `displays:display.player-2` (unbound): cabinet_or_service
+- `displays:display.player-3` (unbound): cabinet_or_service
+- `displays:display.player-4` (unbound): cabinet_or_service
+
+## Emitter policy
+
+Render-light candidate anchors are not observed physical sockets. Observed fixture anchors are disclosed projections onto their own geometry; actual socket/contact/winding positions remain blocked.

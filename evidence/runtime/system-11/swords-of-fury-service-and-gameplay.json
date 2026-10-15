@@ -1,0 +1,1260 @@
+{
+  "driver_ids": [
+    "swrds_l1",
+    "swrds_l2",
+    "swrds_rr1",
+    "swrds_rr1b"
+  ],
+  "extractor": {
+    "id": "swords-of-fury-service-and-gameplay",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.swords-of-fury.1988"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 1,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "See knowledge/williams/swords-of-fury-1988.md for physical authority and tools/seeds/williams/swords-of-fury-runtime.json for the complete portable derived controller contracts and raw segment responses. German LG2 unavailable. Runtime observations do not prove physical fitment or placement."
+    }
+  ],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-library> --game <driver-from-run-name> --rom-path <legal-user-rom-root> --work-dir <new-empty-state-directory> --scenario <scenario> --boot-wait 0 --output <new-run>; initialize each variant with init.json, then copy only its initialized nvram file into each new run directory. Exact original argv, times and seed hashes are retained in logs/<run>.command.json.",
+    "emulator": {
+      "binary": "external:pinmame-builds/pinmame-97aa922/Release/pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "swrds_l2",
+    "observations": {
+      "runs": {
+        "l1-coil": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "limitation": "This run uses swrds_l1 archive SHA-256 ea88e06b5c255459857e4c1c3b75e554ffb9ca3ec088c17b9d8dab60b22d8832. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "l1-gameplay-v2": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_l1 archive SHA-256 ea88e06b5c255459857e4c1c3b75e554ffb9ca3ec088c17b9d8dab60b22d8832. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "game drop bank switch17 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                15,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "game drop bank switch18 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "game drop bank switch19 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "game drop bank switch20 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                21,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "game drop bank switch21 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                11,
+                22,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "l1-init": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_l1 archive SHA-256 ea88e06b5c255459857e4c1c3b75e554ffb9ca3ec088c17b9d8dab60b22d8832. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "l1-switch-edges": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH EDGES"
+            }
+          ],
+          "limitation": "This run uses swrds_l1 archive SHA-256 ea88e06b5c255459857e4c1c3b75e554ffb9ca3ec088c17b9d8dab60b22d8832. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            4,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            20,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "l2-coil": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "limitation": "This run uses swrds_l2 archive SHA-256 9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "l2-gameplay-v2": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_l2 archive SHA-256 9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "game drop bank switch17 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                15,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "game drop bank switch18 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "game drop bank switch19 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "game drop bank switch20 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                21,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "game drop bank switch21 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                11,
+                22,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "l2-init": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_l2 archive SHA-256 9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "l2-switch-edges": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH EDGES"
+            }
+          ],
+          "limitation": "This run uses swrds_l2 archive SHA-256 9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            4,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            20,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "l2-switch-levels": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 6,
+              "matched_text": "SWITCH LEVELS"
+            }
+          ],
+          "limitation": "This run uses swrds_l2 archive SHA-256 9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            4,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            20,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "rr1-coil": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "limitation": "This run uses swrds_rr1 archive SHA-256 e3535980f18a56620659a53360ae34775ff8209f08f34a88afc9267156a0b788. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "rr1-gameplay-v2": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_rr1 archive SHA-256 e3535980f18a56620659a53360ae34775ff8209f08f34a88afc9267156a0b788. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "game drop bank switch17 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                15,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "game drop bank switch18 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "game drop bank switch19 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "game drop bank switch20 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                21,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "game drop bank switch21 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                11,
+                22,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "rr1-init": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_rr1 archive SHA-256 e3535980f18a56620659a53360ae34775ff8209f08f34a88afc9267156a0b788. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "rr1-switch-edges": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH EDGES"
+            }
+          ],
+          "limitation": "This run uses swrds_rr1 archive SHA-256 e3535980f18a56620659a53360ae34775ff8209f08f34a88afc9267156a0b788. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            4,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            20,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "rr1b-coil": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "limitation": "This run uses swrds_rr1b archive SHA-256 13a188879d496cfa795b3b8aa66a6fd4b432f50b4cbea96c30bb1e8cef5effef. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "rr1b-gameplay-v2": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_rr1b archive SHA-256 13a188879d496cfa795b3b8aa66a6fd4b432f50b4cbea96c30bb1e8cef5effef. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "named_action_observations": [
+            {
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "game drop bank switch17 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                15,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "game drop bank switch18 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "game drop bank switch19 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                12,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "game drop bank switch20 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                21,
+                25
+              ]
+            },
+            {
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "game drop bank switch21 down",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9,
+                11,
+                22,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "rr1b-init": {
+          "diagnostic_checkpoints": [],
+          "limitation": "This run uses swrds_rr1b archive SHA-256 13a188879d496cfa795b3b8aa66a6fd4b432f50b4cbea96c30bb1e8cef5effef. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "rr1b-switch-edges": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 7,
+              "matched_text": "SWITCH EDGES"
+            }
+          ],
+          "limitation": "This run uses swrds_rr1b archive SHA-256 13a188879d496cfa795b3b8aa66a6fd4b432f50b4cbea96c30bb1e8cef5effef. Host writes are stimulus/readback; only ROM-driven outputs and display segments are responses. No physical fitment or quantity follows from pulses.",
+          "solenoid_addresses_seen": [
+            1,
+            4,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            20,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l2-init",
+        "nvram_initialization": "Fresh empty directory.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l2-init.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/init.json",
+        "scenario_sha256": "26251a5a9dda3eb6ed4d78fe39b35ba3a313c0391c40d290ab7b46a744ce41b0",
+        "self_test_pulses": 0,
+        "sha256": "968a2e96257506dbb834a8b3538aeb043dc6e21feeb171152788bd678e88ce1f",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 245,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l2-coil",
+        "nvram_initialization": "Fresh directory seeded only from l2-init; initialization NV hash 9d2ea7a452142452bd5e1d8aeaf5bbf89f84424d3eabdf8f0de9d4aea2bdf330.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l2-coil.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/coil.json",
+        "scenario_sha256": "ad50b61d263562ed8aea5917efc6af33f11f75c6468c47e76c04d4fcbcd16bbe",
+        "self_test_pulses": 5,
+        "sha256": "c83a2af906ef0f4aff950c3d1ad0a8298967c17933e83d22e9e575bda405afda",
+        "snapshot_count": 246
+      },
+      {
+        "action_count": 194,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l2-switch-edges",
+        "nvram_initialization": "Fresh directory seeded only from l2-init; initialization NV hash 9d2ea7a452142452bd5e1d8aeaf5bbf89f84424d3eabdf8f0de9d4aea2bdf330.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l2-switch-edges.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/switch-edges.json",
+        "scenario_sha256": "531be6a558fcc10b76904da3a351f50604e964d8ac9974fe0390e5da24c5a13d",
+        "self_test_pulses": 7,
+        "sha256": "a2addbbee906f321648eba7d3ffb861886c6343fb88f2d503cf53251c147d126",
+        "snapshot_count": 195
+      },
+      {
+        "action_count": 55,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "l2-gameplay-v2",
+        "nvram_initialization": "Fresh directory seeded only from l2-init; initialization NV hash 9d2ea7a452142452bd5e1d8aeaf5bbf89f84424d3eabdf8f0de9d4aea2bdf330.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l2-gameplay-v2.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v2.json",
+        "scenario_sha256": "4e9626be76e95ec7422ebdef678d06463f4bcdf597ddaf5ae5a61db08c724d83",
+        "self_test_pulses": 0,
+        "sha256": "1cdd3409f6b0dcda656b554e2e3910702b3ea20c54dfa3dd45fc3dfe8982d95a",
+        "snapshot_count": 56
+      },
+      {
+        "action_count": 1,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l1-init",
+        "nvram_initialization": "Fresh empty directory.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l1-init.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/init.json",
+        "scenario_sha256": "26251a5a9dda3eb6ed4d78fe39b35ba3a313c0391c40d290ab7b46a744ce41b0",
+        "self_test_pulses": 0,
+        "sha256": "7bd6e621ef32248d3cb04bced360c964ffb97e3f272d62c46949706c7baac734",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 245,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l1-coil",
+        "nvram_initialization": "Fresh directory seeded only from l1-init; initialization NV hash 2717e33ef9ab1102d7b6535c2df52c7fe4fe31b0be71b10124cc7a5c05857df1.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l1-coil.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/coil.json",
+        "scenario_sha256": "ad50b61d263562ed8aea5917efc6af33f11f75c6468c47e76c04d4fcbcd16bbe",
+        "self_test_pulses": 5,
+        "sha256": "890637f8a654dd6c48df139b0acf11cc97440be6ca0b4fc6a9bead11f411f13e",
+        "snapshot_count": 246
+      },
+      {
+        "action_count": 194,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l1-switch-edges",
+        "nvram_initialization": "Fresh directory seeded only from l1-init; initialization NV hash 2717e33ef9ab1102d7b6535c2df52c7fe4fe31b0be71b10124cc7a5c05857df1.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l1-switch-edges.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/switch-edges.json",
+        "scenario_sha256": "531be6a558fcc10b76904da3a351f50604e964d8ac9974fe0390e5da24c5a13d",
+        "self_test_pulses": 7,
+        "sha256": "54aac968514a368836a649287ed6a683f9d84a8fc73ae8b575c2934d47a718bf",
+        "snapshot_count": 195
+      },
+      {
+        "action_count": 55,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "l1-gameplay-v2",
+        "nvram_initialization": "Fresh directory seeded only from l1-init; initialization NV hash 2717e33ef9ab1102d7b6535c2df52c7fe4fe31b0be71b10124cc7a5c05857df1.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l1-gameplay-v2.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v2.json",
+        "scenario_sha256": "4e9626be76e95ec7422ebdef678d06463f4bcdf597ddaf5ae5a61db08c724d83",
+        "self_test_pulses": 0,
+        "sha256": "8e0214f38b79a783445ff8a93851a154e77ce395a8d4b373f6240ed7917776f2",
+        "snapshot_count": 56
+      },
+      {
+        "action_count": 1,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1-init",
+        "nvram_initialization": "Fresh empty directory.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1-init.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/init.json",
+        "scenario_sha256": "26251a5a9dda3eb6ed4d78fe39b35ba3a313c0391c40d290ab7b46a744ce41b0",
+        "self_test_pulses": 0,
+        "sha256": "123c116f48df2eb11e782ca66b20d8797b7358d71d51de9d68c993a1d10d7658",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 245,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1-coil",
+        "nvram_initialization": "Fresh directory seeded only from rr1-init; initialization NV hash 4b68f8c84360eeb4aeccf95b6bd35fbf0628130faaff440f5ada0fe8c77d0e5f.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1-coil.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/coil.json",
+        "scenario_sha256": "ad50b61d263562ed8aea5917efc6af33f11f75c6468c47e76c04d4fcbcd16bbe",
+        "self_test_pulses": 5,
+        "sha256": "9c37d2215e02c0a7df74258c18f0c0a003b6288aa18bd410635777767c52e93b",
+        "snapshot_count": 246
+      },
+      {
+        "action_count": 194,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1-switch-edges",
+        "nvram_initialization": "Fresh directory seeded only from rr1-init; initialization NV hash 4b68f8c84360eeb4aeccf95b6bd35fbf0628130faaff440f5ada0fe8c77d0e5f.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1-switch-edges.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/switch-edges.json",
+        "scenario_sha256": "531be6a558fcc10b76904da3a351f50604e964d8ac9974fe0390e5da24c5a13d",
+        "self_test_pulses": 7,
+        "sha256": "90e952f671cf1aa1601a9d7278d403739245cf50ce95acc63d585c5b11da8ad5",
+        "snapshot_count": 195
+      },
+      {
+        "action_count": 55,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "rr1-gameplay-v2",
+        "nvram_initialization": "Fresh directory seeded only from rr1-init; initialization NV hash 4b68f8c84360eeb4aeccf95b6bd35fbf0628130faaff440f5ada0fe8c77d0e5f.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1-gameplay-v2.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v2.json",
+        "scenario_sha256": "4e9626be76e95ec7422ebdef678d06463f4bcdf597ddaf5ae5a61db08c724d83",
+        "self_test_pulses": 0,
+        "sha256": "8f6110674e721c9c8c67921e3de61c7f60e1799736686c17c1d2c6c1801a30c4",
+        "snapshot_count": 56
+      },
+      {
+        "action_count": 1,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1b-init",
+        "nvram_initialization": "Fresh empty directory.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1b-init.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/init.json",
+        "scenario_sha256": "26251a5a9dda3eb6ed4d78fe39b35ba3a313c0391c40d290ab7b46a744ce41b0",
+        "self_test_pulses": 0,
+        "sha256": "00f99fa01a951f6e3e880b162d764221124ec51c4cc5b5ac5efdb6a7856f45ce",
+        "snapshot_count": 2
+      },
+      {
+        "action_count": 245,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1b-coil",
+        "nvram_initialization": "Fresh directory seeded only from rr1b-init; initialization NV hash 2e8df0f8b52c11a35c6151a1ebfee16addf0ff352af5fc10e2b698092062a3c7.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1b-coil.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/coil.json",
+        "scenario_sha256": "ad50b61d263562ed8aea5917efc6af33f11f75c6468c47e76c04d4fcbcd16bbe",
+        "self_test_pulses": 5,
+        "sha256": "321c4f3399d3dfbda976eb9696a0e77d4093fa9610d1acc8fbffb4d3b05c001e",
+        "snapshot_count": 246
+      },
+      {
+        "action_count": 194,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "rr1b-switch-edges",
+        "nvram_initialization": "Fresh directory seeded only from rr1b-init; initialization NV hash 2e8df0f8b52c11a35c6151a1ebfee16addf0ff352af5fc10e2b698092062a3c7.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1b-switch-edges.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/switch-edges.json",
+        "scenario_sha256": "531be6a558fcc10b76904da3a351f50604e964d8ac9974fe0390e5da24c5a13d",
+        "self_test_pulses": 7,
+        "sha256": "44bad77d4c0d5c1a3449b3d44e24658a9f21c7be991dbb414ea6d2ae81204e43",
+        "snapshot_count": 195
+      },
+      {
+        "action_count": 55,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "rr1b-gameplay-v2",
+        "nvram_initialization": "Fresh directory seeded only from rr1b-init; initialization NV hash 2e8df0f8b52c11a35c6151a1ebfee16addf0ff352af5fc10e2b698092062a3c7.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/rr1b-gameplay-v2.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/gameplay-v2.json",
+        "scenario_sha256": "4e9626be76e95ec7422ebdef678d06463f4bcdf597ddaf5ae5a61db08c724d83",
+        "self_test_pulses": 0,
+        "sha256": "6f83ce69b9d41d714b81c9370f2ec930ca0d3f72b9cdfff731168e3c8ee7cbad",
+        "snapshot_count": 56
+      },
+      {
+        "action_count": 194,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "l2-switch-levels",
+        "nvram_initialization": "Fresh directory seeded only from l2-init; initialization NV hash 9d2ea7a452142452bd5e1d8aeaf5bbf89f84424d3eabdf8f0de9d4aea2bdf330.",
+        "retained_from": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/runs/l2-switch-levels.json",
+        "scenario_path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/scenarios/switch-levels.json",
+        "scenario_sha256": "fea44eb42a12c995c90c14f4e35200c8af9c57dd2bc315bca4cefa6a6b978738",
+        "self_test_pulses": 6,
+        "sha256": "7f26bf143e74fea24ab2b89a60351722689de5c36ac07e7a0319e9fead612015",
+        "snapshot_count": 195
+      }
+    ],
+    "rom_archive_sha256": "9dcda26523e26e9d4a03fd78de2c702cf6c2fe563004978969972eb4289eabcb"
+  },
+  "source": {
+    "attribution": "GPT-6.1-Sol at xhigh; LibPinMAME harness; user-owned ROMs",
+    "kind": "runtime_scenario",
+    "license": "Derived factual observations; no ROM or NVRAM bytes.",
+    "path": "external:pinmame-review-artifacts/williams.swords-of-fury.1988/runtime-research/verified-runtime-findings.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "dc1ee2973ee5308f1b0e454fb53b6c9e9f3e47552616903726a32d0a9d3b0035"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
