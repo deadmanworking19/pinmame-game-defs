@@ -124,6 +124,7 @@ SEGMENT_16_CHARACTERS = {
 	0x0008: ".",
 	0x4400: "/",
 	0x443F: "0",
+	0x0006: "1",  # Plain seven-segment "1"; Data East alpha ROMs use it beside 0x2200.
 	0x2200: "1",
 	0x085B: "2",
 	0x084F: "3",
