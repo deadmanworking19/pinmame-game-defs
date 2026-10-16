@@ -1,0 +1,128 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-security/cv-engine-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled, so the engine optos never close.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 0 / LEFT --- [ ] [ ] --- RIGHT / SELF TEST",
+          "label": "Enter (start T.16, SELF TEST)",
+          "nonzero_pixels": 1222,
+          "pixel_sha256": "8dc801d3dbaa946515113759f4d56c2687de66e42f8e71f197cf5e77d79a53b0"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            53
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION OFF / LEFT --- [ ] [ ] --- RIGHT / FAILED",
+          "label": "SELF TEST 6",
+          "nonzero_pixels": 1256,
+          "pixel_sha256": "bf5ecf1073e832d2ee5c470bf7adfc6a546f97d77b146df249da53107d6b7714"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "With nothing answering FULL LEFT (71) or FULL RIGHT (72), the T.16 SELF TEST drives the engine outputs for about 13 s, then drops public 51, shows POSITION OFF and FAILED",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            51,
+            52,
+            53
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 64,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-engine-test-no-mech",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-engine-test-no-mech/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-engine-test.json",
+        "scenario_sha256": "98b13d1af6a9ea715140a189bcb3d2adba6f497b7d41e063210ab182ac8012bf",
+        "self_test_pulses": 0,
+        "sha256": "e86f6be5ee3de750492145bdd185c98a4029b34c54a86e1ad63df0bf93614889",
+        "snapshot_count": 65,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-engine-test-no-mech/manifest.json SHA-256 8899c68dba0ae1492e02f7c7e90fc2d845c6da60f1654c55af9f9bd3fcfe83df.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-engine-test-no-mech",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "e86f6be5ee3de750492145bdd185c98a4029b34c54a86e1ad63df0bf93614889"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

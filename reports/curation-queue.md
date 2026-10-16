@@ -135,7 +135,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 129 | 1995 | Johnny Mnemonic | Williams | partial | 94% |
 | 130 | 1995 | No Fear: Dangerous Sports | Williams | partial | 19% |
 | 131 | 1994 | U.S.A. Football (Redemption, P08) | Alvin G | partial | 6% |
-| 132 | 1994 | Corvette | Bally | partial | 19% |
+| 132 | 1994 | Corvette | Bally | partial | 81% |
 | 133 | 1994 | Popeye Saves the Earth | Bally | partial | 19% |
 | 134 | 1994 | The Addams Family Gold | Bally | partial | 19% |
 | 135 | 1994 | The Shadow | Bally | partial | 94% |

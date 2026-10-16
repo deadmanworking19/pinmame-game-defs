@@ -29,8 +29,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	# Demolition Man (curated 2026-10-09) now declares its platform from the curated definition.
 	"pinmame.wpc-dcs": 2,
 	"pinmame.wpc-fliptronic": 6,
-	# The Shadow (curated 2026-09-26) now declares its platform from the curated definition.
-	"pinmame.wpc-security": 3,
+	# The Shadow (curated 2026-09-26) and Corvette (curated 2026-10-16) now declare their platform from the curated definition.
+	"pinmame.wpc-security": 2,
 }
 # Modules whose generation the reviewed profiles do not cover (or which belong
 # to a different generation than the profile name suggests) must never claim.

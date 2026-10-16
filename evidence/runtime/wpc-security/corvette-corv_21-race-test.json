@@ -1,0 +1,191 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 7 --scenario tools/harness-scenarios/wpc-security/cv-race-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. PinMAME's built-in race-car models (mechanism bits 0 and 1) hold each car's start switch (51, 52) at home and pulse its encoder (55, 56) while its enable (18, 19) is on, moving forward while 17 is on; the ROM's self test accepts that pairing. The models' writes are emulator outputs, not host stimuli.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [ ] POS [x] 115 / RIGHT: START [x] POS [ ] 1 / SELF TEST",
+          "label": "SELF TEST 5",
+          "nonzero_pixels": 1168,
+          "pixel_sha256": "91a84c5f9f771fd6ecc7083c05d9be0f07b811b1e9a00ad317d22e2f0a69aebf"
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [ ] POS [ ] 670 / RIGHT: START [ ] POS [x] 33 / SELF TEST",
+          "label": "SELF TEST 9",
+          "nonzero_pixels": 1175,
+          "pixel_sha256": "05447e7ac9df0b2519eaea36eac35662d525021b4189eb18b03d1ef492efb194"
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [ ] POS [ ] 670 / RIGHT: START [ ] POS [x] 638 / SELF TEST",
+          "label": "SELF TEST 13",
+          "nonzero_pixels": 1185,
+          "pixel_sha256": "0ae5cdc52840136c54a38fd89b79f04371d448dfd1494c0fc28ce9b3b214994b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [x] POS [ ] 0 / RIGHT: START [x] POS [ ] 0 / SELF TEST (finished)",
+          "label": "SELF TEST 18",
+          "nonzero_pixels": 634,
+          "pixel_sha256": "544b2f792880a6a9acf0211496952fa7521991b55bd97ab5abb73c8c47b944d7"
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [ ] POS [x] 259 / RIGHT: START [x] POS [ ] 1 / LEFT FORWARD",
+          "label": "Enter held (LEFT FORWARD)",
+          "nonzero_pixels": 1134,
+          "pixel_sha256": "bc7a40873a2a6085979916e7ab59288d843dd4c8b0b35269790b3d8ed21515e5"
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TEST / LEFT: START [ ] POS [ ] 389 / RIGHT: START [x] POS [ ] 1 / LEFT FORWARD",
+          "label": "LEFT FORWARD 2",
+          "nonzero_pixels": 1126,
+          "pixel_sha256": "8bd01d704f59a3842658d2118d26b7b02ec30af6f8351987a8ac4b3b09cdaac3"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.17 RACE TEST SELF TEST drives the left car forward with the race direction (17) and left race enable (18) on, counting its encoder (55) to 670 while its start opto (51) opens, then the right car with 17 and 19 to 638, then returns both to their start optos at count 0",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Holding Enter on LEFT FORWARD raises 17 and 18 together and the left car's count climbs (259, then 389 where it stops on release); the right car stays at its start",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            18
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 70,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-race-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-race-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-race-test.json",
+        "scenario_sha256": "8b59516457e41554df9641e84c951bbadd0ddb2bb0c9bf09fa16091970cbf6b0",
+        "self_test_pulses": 0,
+        "sha256": "ff862dab881bb55d611db74971d3567c42a4b5e16946cbcdcb45f44ed4a4053a",
+        "snapshot_count": 74,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-race-test/manifest.json SHA-256 3bcf4f41cf6d80234a85c4cbdad596596f1c0fde5130cd6a8f2fd4a42eb1cb2e.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-race-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "ff862dab881bb55d611db74971d3567c42a4b5e16946cbcdcb45f44ed4a4053a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,117 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 7 --scenario tools/harness-scenarios/wpc-security/cv-zr1-adjust.json --dmd-dir <external-dmd-dir> --output <external-run.json>. The test only enables the engine and waits.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31,
+            51
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR 1 ADJUST / TURN ADJUSTMENT / TO CENTER ENGINE / (SEE ADJ. PROCEDURE)",
+          "label": "Enter (start T.18)",
+          "nonzero_pixels": 846,
+          "pixel_sha256": "b64203c084f3433cd15b1dfb011db69f38b2211a4d1f12a7df9f5a5f3a6add9d"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.18 ZR-1 ADJUST raises public 51 alone and holds the engine at its centre for the potentiometer adjustment",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            51
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 32,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-zr1-adjust",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-zr1-adjust/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-zr1-adjust.json",
+        "scenario_sha256": "833c36677d6c8379e97e742141d5d8c006025583dd105df4332edb646971296f",
+        "self_test_pulses": 0,
+        "sha256": "ade96553fde7540f4bd12476e4fd0a585b320423feeb50e96c7aca03d027d18e",
+        "snapshot_count": 33,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-zr1-adjust/manifest.json SHA-256 01d677d46c24e50f6c1980a83e32bde654b8c131e873c3abb39de2d4814f9fa1.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-zr1-adjust",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "ade96553fde7540f4bd12476e4fd0a585b320423feeb50e96c7aca03d027d18e"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

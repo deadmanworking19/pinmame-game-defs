@@ -1,0 +1,229 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 7 --scenario tools/harness-scenarios/wpc-security/cv-gi-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.6 stop mode first steps all illumination through eight brightness levels, then each string in turn; every string dims.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=2 STOP",
+          "label": "T.6 Up 1 (held)",
+          "nonzero_pixels": 409,
+          "pixel_sha256": "02b446114a05088de47ef11820e7889ec98e9d3a34ba3eb123b3ea41a66aa684"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER LEFT / T.6 BRIGHT=2 STOP / WHT-BRN BRN",
+          "label": "T.6 Up 9 (held)",
+          "nonzero_pixels": 503,
+          "pixel_sha256": "7bb70171f19d5bd8daa7fa6d20b9d00f13a6acfa4daea74e1e304f46082094ab"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "UPPER RIGHT / T.6 BRIGHT=1 STOP / WHT-ORN ORN",
+          "label": "T.6 Up 16 (held)",
+          "nonzero_pixels": 504,
+          "pixel_sha256": "495493ed8ca7251d5c5f6a71a3e8215a46bcf5e6b1ad183a3c5a03ee7f9f2d0f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER LEFT / T.6 BRIGHT=2 STOP / WHT-YEL YEL",
+          "label": "T.6 Up 25 (held)",
+          "nonzero_pixels": 466,
+          "pixel_sha256": "4191ec559c0bd607ce4708f8c0dbacf8952944ca6e130e29b2ec9878aa58b7a8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LOWER RIGHT / T.6 BRIGHT=1 STOP / WHT-GRN GRN",
+          "label": "T.6 Up 32 (held)",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "fc594f22367fd9d6a4989a4a4bbc29f617bee1323eb1abc3a287b7e7cc1d5087"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BACK BOX TITLE / T.6 BRIGHT=2 STOP / WHT-VIO VIO",
+          "label": "T.6 Up 41 (held)",
+          "nonzero_pixels": 512,
+          "pixel_sha256": "947e98f7e032f6ce1c5569e61fc4d86384489382a94b814622456b903db6db84"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 UPPER LEFT (WHT-BRN BRN): Up steps the brightness of public GI 0 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 UPPER RIGHT (WHT-ORN ORN): Up steps the brightness of public GI 1 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 LOWER LEFT (WHT-YEL YEL): Up steps the brightness of public GI 2 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 LOWER RIGHT (WHT-GRN GRN): Up steps the brightness of public GI 3 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 BACK BOX TITLE (WHT-VIO VIO): Up steps the brightness of public GI 4 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 64,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-gi-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-gi-test.json",
+        "scenario_sha256": "c0bfec7aa373a5c003dc246a89f577f652bf4ab67216e6ca6574336ef35e6e68",
+        "self_test_pulses": 0,
+        "sha256": "8877482a25bc143919471b4b273ddd2c52481c0f6768e33d4d41f62496480dde",
+        "snapshot_count": 115,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-gi-test/manifest.json SHA-256 5bdf37f6d88359f01b6787fa0acb51a39f7b43ef29653164d5cc2c5390864c24.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-gi-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "8877482a25bc143919471b4b273ddd2c52481c0f6768e33d4d41f62496480dde"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

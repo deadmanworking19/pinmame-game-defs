@@ -1,0 +1,807 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 7 --scenario tools/harness-scenarios/wpc-security/cv-single-lamps.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press, held 0.4 s, selects the next lamp; the frame taken while it is held is read (lamp 11 from the wrap-around press).",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. ROLLOVER / T.8 01 LAMP 11 / RED-BRN YEL-BRN",
+          "label": "T.8 Up 64 (held)",
+          "nonzero_pixels": 482,
+          "pixel_sha256": "0f2266b0a0c7559e3bc5d15d064473474fd84468c5d9fdb8f4655e8e51abdbb8"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "M. ROLLOVER / T.8 02 LAMP 12 / RED-BLK YEL-BRN",
+          "label": "T.8 Up 1 (held)",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "f07de6efb411d2f63c67070840d05606c06c6606ac0854c4d9a18d35577fe2d9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. ROLLOVER / T.8 03 LAMP 13 / RED-ORN YEL-BRN",
+          "label": "T.8 Up 2 (held)",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "9ea8a7bc0d0a8428b475a4928b8fdd438b9207fbcbdee7a4af64f7cf1bc9a946"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SKID PAD ARROW / T.8 04 LAMP 14 / RED-YEL YEL-BRN",
+          "label": "T.8 Up 3 (held)",
+          "nonzero_pixels": 539,
+          "pixel_sha256": "c23435c0343860230c38611c1b6d79fb0bc3f1495d4af03e001b3ddebb58ca9b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "STICKY TIRES / T.8 05 LAMP 15 / RED-GRN YEL-BRN",
+          "label": "T.8 Up 4 (held)",
+          "nonzero_pixels": 507,
+          "pixel_sha256": "a0b22eea274177e83329423a1dedb43985d6d49a0a2672aafa0cbd230bf6f992"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SKID PAD JACKPOT / T.8 06 LAMP 16 / RED-BLU YEL-BRN",
+          "label": "T.8 Up 5 (held)",
+          "nonzero_pixels": 557,
+          "pixel_sha256": "22d7cc5dd9e32e521fc06425ce923defe0c98894e66c43f01967178731b9852a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ROUTE 66 ARROW / T.8 07 LAMP 17 / RED-VIO YEL-BRN",
+          "label": "T.8 Up 6 (held)",
+          "nonzero_pixels": 532,
+          "pixel_sha256": "34a9fc177e33de94120f26e3ec38eac05403b768ab614b704b6532aa5540f5a1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RACE TODAY / T.8 08 LAMP 18 / RED-GRY YEL-BRN",
+          "label": "T.8 Up 7 (held)",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "ae2a40aa9b9d9657b2cadd809d9059eedc89138d4b95dfaa088168ad49c3b134"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "INNER LOOP ARROW / T.8 09 LAMP 21 / RED-BRN YEL-RED",
+          "label": "T.8 Up 8 (held)",
+          "nonzero_pixels": 586,
+          "pixel_sha256": "419d9c2647447ce9aef5a37e6285efb8865dfebd4bba1b1cb51f2a73f337b0ba"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "FUELIE / T.8 10 LAMP 22 / RED-BLK YEL-RED",
+          "label": "T.8 Up 9 (held)",
+          "nonzero_pixels": 436,
+          "pixel_sha256": "5ffa74f920c37acce2ee25040c243b103c8d3b07c4e0846eea6495a3cd84497a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "NITROUS / T.8 11 LAMP 23 / RED-ORN YEL-RED",
+          "label": "T.8 Up 10 (held)",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "215e44214d28d0efdb23e31307142a5867050a7dd5a629bd8fb758307f73cf9a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IN. LOOP JACKPOT / T.8 12 LAMP 24 / RED-YEL YEL-RED",
+          "label": "T.8 Up 11 (held)",
+          "nonzero_pixels": 525,
+          "pixel_sha256": "7b8422710a0904e99000933b694cc339c54c61fcb081b72e4fdb9bce3dfb8219"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. O. LOOP ARROW / T.8 13 LAMP 25 / RED-GRN YEL-RED",
+          "label": "T.8 Up 12 (held)",
+          "nonzero_pixels": 537,
+          "pixel_sha256": "649a3fac4a808447ccf258bcb5c0cca5a6907edace1c94782cc266744ce43713"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "Z07 SUSPENSION / T.8 14 LAMP 26 / RED-BLU YEL-RED",
+          "label": "T.8 Up 13 (held)",
+          "nonzero_pixels": 544,
+          "pixel_sha256": "b8bc44072fa581ee8aeb4a5aad1ea4950358b87e89a2f6e11031d8bde85b7752"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BIG BRAKES / T.8 15 LAMP 27 / RED-VIO YEL-RED",
+          "label": "T.8 Up 14 (held)",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "ed82324edda38abb92a33f504008b7c2aaed0e2923afa4bb79513c53de4b6c2e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SUPER CHARGER / T.8 16 LAMP 28 / RED-GRY YEL-RED",
+          "label": "T.8 Up 15 (held)",
+          "nonzero_pixels": 548,
+          "pixel_sha256": "20c6e195d285ff7b219f5be36413c3932a6c4fa90918465168a39933594f89bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. O. LOOP ARROW / T.8 17 LAMP 31 / RED-BRN YEL-ORN",
+          "label": "T.8 Up 16 (held)",
+          "nonzero_pixels": 520,
+          "pixel_sha256": "adca9a7208478b673940f58d228ac2449a13e009af3c307c4b474de4c4c2347c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE LOCK / T.8 18 LAMP 32 / RED-BLK YEL-ORN",
+          "label": "T.8 Up 17 (held)",
+          "nonzero_pixels": 451,
+          "pixel_sha256": "6054fd2c5341c63a97426612d735a90182f2177375676f42a6d63fef4a13819d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "QUALIFY / T.8 19 LAMP 33 / RED-ORN YEL-ORN",
+          "label": "T.8 Up 18 (held)",
+          "nonzero_pixels": 445,
+          "pixel_sha256": "eb7ec8577c38b5ca6ebde965b9f0605d62b9e80fc52d82d8a5f9016cfde8e17c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BIG BLOCK / T.8 20 LAMP 34 / RED-YEL YEL-ORN",
+          "label": "T.8 Up 19 (held)",
+          "nonzero_pixels": 464,
+          "pixel_sha256": "2ee5298cc5ba5182bb7416355834ed7ac65f0144c1b5ff11971143099f8df510"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1 RAMP LOCK / T.8 21 LAMP 35 / RED-GRN YEL-ORN",
+          "label": "T.8 Up 20 (held)",
+          "nonzero_pixels": 518,
+          "pixel_sha256": "052f7350d43f1fddc5d0e18f7e619e4f57ce6a1a2b171dffe4fa07fcee09c542"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "6 SPEED TRANS / T.8 22 LAMP 36 / RED-BLU YEL-ORN",
+          "label": "T.8 Up 21 (held)",
+          "nonzero_pixels": 528,
+          "pixel_sha256": "06a660fd875b1c8373acbf5ab7adf9380d6adaa7a21a33389d70ae3858f53bde"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "HI LIFT CAMS / T.8 23 LAMP 37 / RED-VIO YEL-ORN",
+          "label": "T.8 Up 22 (held)",
+          "nonzero_pixels": 477,
+          "pixel_sha256": "8cf5e8797e0e9abebd637a6933cb2dc8d52872e7c735e621fe50cb6d719145b6"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1 RAMP ARROW / T.8 24 LAMP 38 / RED-GRY YEL-ORN",
+          "label": "T.8 Up 23 (held)",
+          "nonzero_pixels": 549,
+          "pixel_sha256": "64292450d69fca5e02c0dcab5a687dd88a3f19136bdadde4383dd05805841182"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 6 / T.8 25 LAMP 41 / RED-BRN YEL-BLK",
+          "label": "T.8 Up 24 (held)",
+          "nonzero_pixels": 482,
+          "pixel_sha256": "3294079d8333c6b97091cb94cad7a6ec4464fa6790bac547b4621e0b1a69ba61"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 3 / T.8 26 LAMP 42 / RED-BLK YEL-BLK",
+          "label": "T.8 Up 25 (held)",
+          "nonzero_pixels": 474,
+          "pixel_sha256": "fb723ae772ebb6191329b82824fa772df85d0d4698263c22d9e540ef6d0a9f31"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 1 / T.8 27 LAMP 43 / RED-ORN YEL-BLK",
+          "label": "T.8 Up 26 (held)",
+          "nonzero_pixels": 471,
+          "pixel_sha256": "99dfb5bf5b8abfd48c7adc0ae9a0ee84532416b9bcfa67cd5e8ee30474eb2861"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 2 / T.8 28 LAMP 44 / RED-YEL YEL-BLK",
+          "label": "T.8 Up 27 (held)",
+          "nonzero_pixels": 470,
+          "pixel_sha256": "153e94126b486e3b6e32a0f469b1cc267904fc0b9811b69beacd7415b20ea8ae"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 4 / T.8 29 LAMP 45 / RED-GRN YEL-BLK",
+          "label": "T.8 Up 28 (held)",
+          "nonzero_pixels": 482,
+          "pixel_sha256": "81202702f455357ddd9307c4b703576b858610f035e8ceb42b76fd918cb8b524"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. STANDUP 3 / T.8 30 LAMP 46 / RED-BLU YEL-BLK",
+          "label": "T.8 Up 29 (held)",
+          "nonzero_pixels": 479,
+          "pixel_sha256": "ca76f12696e5c2b4e22269832e43adc0d9c46ae26efc0170fc5f11abeb362c75"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. STANDUP 2 / T.8 31 LAMP 47 / RED-VIO YEL-BLK",
+          "label": "T.8 Up 30 (held)",
+          "nonzero_pixels": 463,
+          "pixel_sha256": "f4197b66d6a180df97577bdc6982f74074a9f01ccabda133ef4fb9cf8872f5bb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. STANDUP 1 / T.8 32 LAMP 48 / RED-GRY YEL-BLK",
+          "label": "T.8 Up 31 (held)",
+          "nonzero_pixels": 474,
+          "pixel_sha256": "3c56ddf08ca7cb845c9bcc26fa6e7a3d1102a2fdb35383825cab3880a9b8ded5"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 9 / T.8 33 LAMP 51 / RED-BRN YEL-GRN",
+          "label": "T.8 Up 32 (held)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "1bfb5b37a67f6828c504e4f7465fb6e974944c09a0a25331371ce8ea50ba4c70"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 8 / T.8 34 LAMP 52 / RED-BLK YEL-GRN",
+          "label": "T.8 Up 33 (held)",
+          "nonzero_pixels": 484,
+          "pixel_sha256": "ae3b2a09970b2322d135a84704aefb62405755560220273df0c9b49b97efa3a3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PIT STOP / T.8 35 LAMP 53 / RED-ORN YEL-GRN",
+          "label": "T.8 Up 34 (held)",
+          "nonzero_pixels": 452,
+          "pixel_sha256": "eb787f48fcdc3d1e547cc15f6f14b9e0e8917c7c8b9f478a3eafe15596cc2ebc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 7 / T.8 36 LAMP 54 / RED-YEL YEL-GRN",
+          "label": "T.8 Up 35 (held)",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "cbee3805e72ec3fb9b9816d13fd41d34f7034f7b98a4df98fd4605c43f646922"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE 5 / T.8 37 LAMP 55 / RED-GRN YEL-GRN",
+          "label": "T.8 Up 36 (held)",
+          "nonzero_pixels": 489,
+          "pixel_sha256": "68905e516a1573dbc9cdb65e64bbd140697fa4204029926fcfc3c1730ee40534"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "PIT STOP ARROW / T.8 38 LAMP 56 / RED-BLU YEL-GRN",
+          "label": "T.8 Up 37 (held)",
+          "nonzero_pixels": 536,
+          "pixel_sha256": "f626b025154a99748e6c6efd28914e35f2abdcd0863826eb0683627696a3be0d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SPINNER ARROW / T.8 39 LAMP 57 / RED-VIO YEL-GRN",
+          "label": "T.8 Up 38 (held)",
+          "nonzero_pixels": 540,
+          "pixel_sha256": "b645195187dae7665a28d819d046cdf5377f240afdfb67faa8ffc27992de098e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "DRIVE AGAIN / T.8 40 LAMP 58 / RED-GRY YEL-GRN",
+          "label": "T.8 Up 39 (held)",
+          "nonzero_pixels": 510,
+          "pixel_sha256": "c42d942135f79b4144771cc81f1d7838c2f3cba0435ee330dd74e33898e7062a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. OUTER TAIL / T.8 41 LAMP 61 / RED-BRN YEL-BLU",
+          "label": "T.8 Up 40 (held)",
+          "nonzero_pixels": 485,
+          "pixel_sha256": "f5d8c686aa4afc93ccfd28c5ba65c8d9896fd6de55de17dc9c4988fc7d1002f7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. INNER TAIL / T.8 42 LAMP 62 / RED-BLK YEL-BLU",
+          "label": "T.8 Up 41 (held)",
+          "nonzero_pixels": 488,
+          "pixel_sha256": "1a8ef31a500240b115d91884e80b96a7c1a99edf41be6013ff9133bb6669b55f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CATCH ME / T.8 43 LAMP 63 / RED-ORN YEL-BLU",
+          "label": "T.8 Up 42 (held)",
+          "nonzero_pixels": 456,
+          "pixel_sha256": "fb5b70430b36a5f058a755c069de516bddc1129c20b63522918ac39b6ac7499c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. INNER TAIL / T.8 44 LAMP 64 / RED-YEL YEL-BLU",
+          "label": "T.8 Up 43 (held)",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "87e4f34ad3b20f1937af75e35ec8fecb6b1da4425767655010db60e152edbf43"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. OUTER TAIL / T.8 45 LAMP 65 / RED-GRN YEL-BLU",
+          "label": "T.8 Up 44 (held)",
+          "nonzero_pixels": 502,
+          "pixel_sha256": "edd45aa9a4800584b4a2bc609b7ad58945d2bd9ec0529dd272edc0274b1ea4f1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. STANDUP ARROW / T.8 46 LAMP 66 / RED-BLU YEL-BLU",
+          "label": "T.8 Up 45 (held)",
+          "nonzero_pixels": 561,
+          "pixel_sha256": "1f8a127204dfc47efacfc471db1ff28951ce329ee63b4ab4f7fa21faa7e3a198"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LITE KICKBACK / T.8 47 LAMP 67 / RED-VIO YEL-BLU",
+          "label": "T.8 Up 46 (held)",
+          "nonzero_pixels": 498,
+          "pixel_sha256": "9ad647dfc484caebc8541d3a6f632dd66b0833a73bf2e826395b3e40326507cb"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "START CHALLENGE / T.8 48 LAMP 68 / RED-GRY YEL-BLU",
+          "label": "T.8 Up 47 (held)",
+          "nonzero_pixels": 559,
+          "pixel_sha256": "46f395488202fa03efac3c10d207a665a16583ff8d5cf5501466843b53fd0811"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "KICKBACK ARROW / T.8 49 LAMP 71 / RED-BRN YEL-VIO",
+          "label": "T.8 Up 48 (held)",
+          "nonzero_pixels": 543,
+          "pixel_sha256": "24e3e998b68406ea2cad7ce8ab1ca2291dd977091ad9fce12dd83e74a8302a0e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. RETURN LANE / T.8 50 LAMP 72 / RED-BLK YEL-VIO",
+          "label": "T.8 Up 49 (held)",
+          "nonzero_pixels": 510,
+          "pixel_sha256": "6c91274bfc497b137bc3ab0c83e34718e0d2dcbaea56cb195cc38298f228343b"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. RETURN LANE / T.8 51 LAMP 73 / RED-ORN YEL-VIO",
+          "label": "T.8 Up 50 (held)",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "065d51c5ef4ec659c04897f3466601c555d4c88083780847208af404b38aebe3"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. OUT LANE / T.8 52 LAMP 74 / RED-YEL YEL-VIO",
+          "label": "T.8 Up 51 (held)",
+          "nonzero_pixels": 454,
+          "pixel_sha256": "6ebd3be8f07f5d155d9597bb1a6027edb18c8e49b0f394a0aee30b77d17f506c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "MILLION STANDUP / T.8 53 LAMP 75 / RED-GRN YEL-VIO",
+          "label": "T.8 Up 52 (held)",
+          "nonzero_pixels": 547,
+          "pixel_sha256": "66009925274ab6c9b3a45b4c0901d005dfe52c9437e8c64481936b71afc53b38"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SIDE PIPE 1 / T.8 54 LAMP 76 / RED-BLU YEL-VIO",
+          "label": "T.8 Up 53 (held)",
+          "nonzero_pixels": 467,
+          "pixel_sha256": "bafeda36dc460a92f185fd900f373504776ce93a243f996d6c790b0eb07a2c4e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SIDE PIPE 2 / T.8 55 LAMP 77 / RED-VIO YEL-VIO",
+          "label": "T.8 Up 54 (held)",
+          "nonzero_pixels": 464,
+          "pixel_sha256": "5cf52ac9d2c31ea628006556ca4d6391d4c1d22fef50918bb1fe6a90da192d0f"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SIDE PIPE 3 / T.8 56 LAMP 78 / RED-GRY YEL-VIO",
+          "label": "T.8 Up 55 (held)",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "e74f80e2b13bdcd2c47b84fff5fabea6bb6b326fa2000ee18e7658d8aa81942c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. TREE RED / T.8 57 LAMP 81 / RED-BRN YEL-GRY",
+          "label": "T.8 Up 56 (held)",
+          "nonzero_pixels": 486,
+          "pixel_sha256": "e35161f19ee030066fd7d47ffa5ac093cff8eab650097d0ced58ff8949ab4960"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. TREE RED / T.8 58 LAMP 82 / RED-BLK YEL-GRY",
+          "label": "T.8 Up 57 (held)",
+          "nonzero_pixels": 480,
+          "pixel_sha256": "f6e49cfcda9a7de15ead618be0c843709bdd2d2308604263dfe3b7dbe3ca9ca1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TREE BOT. YELLOW / T.8 59 LAMP 83 / RED-ORN YEL-GRY",
+          "label": "T.8 Up 58 (held)",
+          "nonzero_pixels": 549,
+          "pixel_sha256": "91225ca3f34a270c90040dce77110093292c5bf3c739525633ca90e7c3039db9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TREE TOP YELLOW / T.8 60 LAMP 84 / RED-YEL YEL-GRY",
+          "label": "T.8 Up 59 (held)",
+          "nonzero_pixels": 530,
+          "pixel_sha256": "500c70a623105712a78e570db6627d9c02bc1ca7e5a112ccfead88bffde5caed"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. TREE GREEN / T.8 61 LAMP 85 / RED-GRN YEL-GRY",
+          "label": "T.8 Up 60 (held)",
+          "nonzero_pixels": 519,
+          "pixel_sha256": "21cc373757c99b7698bf13526bce52d08a69c99bddae53edbadca62cc2bc6997"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. TREE GREEN / T.8 62 LAMP 86 / RED-BLU YEL-GRY",
+          "label": "T.8 Up 61 (held)",
+          "nonzero_pixels": 510,
+          "pixel_sha256": "c2118df7173e6eafba1df9f31bf9d82761ececfab2824ec252896d7823cc6e66"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BUY IN / T.8 63 LAMP 87 / RED-VIO YEL-GRY",
+          "label": "T.8 Up 62 (held)",
+          "nonzero_pixels": 407,
+          "pixel_sha256": "13ef75f9e735fd65496045c1c22e6f29f44d8288fa968c2fc947cf7ace4c3f95"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "START BUTTON / T.8 64 LAMP 88 / RED-GRY YEL-GRY",
+          "label": "T.8 Up 63 (held)",
+          "nonzero_pixels": 508,
+          "pixel_sha256": "428d8537ca31bc108c50ef05e2b56afdde72e127d2d1a843d892723319eafd7d"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.8 SINGLE LAMPS TEST lights public lamps 11-88 one at a time in matrix order while printing each name, its number and its row and column wires, and wraps to lamp 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 82,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-single-lamps",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-single-lamps/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-single-lamps.json",
+        "scenario_sha256": "e8823c0bcfdc8ccbd93b7be91a2bd91864a16dc691ee5beb48efb9b8f59840a0",
+        "self_test_pulses": 0,
+        "sha256": "d570982bd2fd294aa5c894641b821b97598280f80909981f1a86d2ad073c1d7f",
+        "snapshot_count": 150,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-single-lamps/manifest.json SHA-256 69adbf83ef6068a8787e469a086c9239c10b79798b83bb4eb9835d1fe0174710.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-single-lamps",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "d570982bd2fd294aa5c894641b821b97598280f80909981f1a86d2ad073c1d7f"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

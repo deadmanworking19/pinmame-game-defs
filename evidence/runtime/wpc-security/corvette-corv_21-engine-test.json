@@ -1,0 +1,193 @@
+{
+  "driver_ids": [
+    "corv_21"
+  ],
+  "extractor": {
+    "id": "tools/corvette_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.corvette.1994"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game corv_21 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 7 --scenario tools/harness-scenarios/wpc-security/cv-engine-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. PinMAME's built-in engine model (mechanism bit 2) closes 71 below register value 64 and 72 above 191. Up while AUTO RUN is running does not select the next sub-test, so ENGINE LEFT runs at the scenario's last selection (the steps labelled ENGINE CENTER); Escape would leave the test.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "corv_21",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CORVETTE / 50036 REV. 2.1",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 270,
+          "pixel_sha256": "f71e836deae59166f7a923932697455d47f0f985353f0cb16081cc6570fd1a59"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 230 / LEFT --- [ ] [x] --- RIGHT / SELF TEST",
+          "label": "Enter (start T.16, SELF TEST)",
+          "nonzero_pixels": 1253,
+          "pixel_sha256": "af181b3f154a08458fc84593b01cfa7b7ad79d7c71570121788062714cde80bc"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51,
+            53
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 80 / LEFT --- [ ] [ ] --- RIGHT / SELF TEST",
+          "label": "SELF TEST 4",
+          "nonzero_pixels": 1246,
+          "pixel_sha256": "aef2cf8afee69527ffc07cace91482410a7bb128589e8a17c96bb56ed6c745b7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51,
+            52
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 72 / LEFT 63 [ ] [ ] --- RIGHT / SELF TEST",
+          "label": "SELF TEST 5",
+          "nonzero_pixels": 1256,
+          "pixel_sha256": "73d889f4823d13081684930db4f9434bc7d5cda82dcbb27d9e46cdc160bfed09"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51,
+            52
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 141 / LEFT 63 [ ] [ ] 192 RIGHT / SELF TEST",
+          "label": "SELF TEST 10",
+          "nonzero_pixels": 1278,
+          "pixel_sha256": "bd355add3d1cdbca638c41aa2657618427923a0df61338d42bea77aab0c2967e"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51,
+            52
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 127 / LEFT 63 [ ] [ ] 192 RIGHT / SELF TEST (finished)",
+          "label": "SELF TEST 11",
+          "nonzero_pixels": 656,
+          "pixel_sha256": "ec6d63bc52f38beb7df83388b03ea8c0db38eba636678cd100d9a8c7f6f638db"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            51,
+            52
+          ],
+          "display_index": 0,
+          "interpreted_text": "ZR1-LT5 TEST / POSITION 63 / LEFT 63 [x] [ ] 192 RIGHT / ENGINE LEFT",
+          "label": "ENGINE CENTER 3",
+          "nonzero_pixels": 690,
+          "pixel_sha256": "7a59483e1770d6f9e8e33b926b096fbc1066de0180f32ccf01f4d0e7ac90aaa3"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Entering T.16 ZR1-LT5 TEST raises public 51 and keeps it on; the SELF TEST then sweeps the engine-position register, first downwards until the FULL LEFT opto (71) closes and the display records the left edge 63, then upwards until FULL RIGHT (72) closes at 192, and parks it at 127, toggling public 52 and 53 while the engine moves",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            51,
+            52,
+            53
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "ENGINE LEFT drives the position down to 63, where the display marks FULL LEFT closed, toggling 52 and 53 on the way",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            52,
+            53
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        17,
+        18,
+        19,
+        29,
+        31,
+        51,
+        52,
+        53
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 64,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "corv_21-engine-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/corvette-1994/harness/cv-engine-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-security/cv-engine-test.json",
+        "scenario_sha256": "98b13d1af6a9ea715140a189bcb3d2adba6f497b7d41e063210ab182ac8012bf",
+        "self_test_pulses": 0,
+        "sha256": "747e17257efc12bffd2972c7505b7dc881f3de9bd46aaef3c40f87cae7a3efaf",
+        "snapshot_count": 65,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cv-engine-test/manifest.json SHA-256 69e9c00955cb9861bf907d139bc9f62ee4ede903db4ce53ceb8f0cc1f1ca4461.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/corvette-1994/harness/cv-engine-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "747e17257efc12bffd2972c7505b7dc881f3de9bd46aaef3c40f87cae7a3efaf"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
