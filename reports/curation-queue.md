@@ -417,7 +417,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 411 | 1985 | Ator | Video Dens | partial | 6% |
 | 412 | 1985 | Alley Cats (Shuffle) (L-7) | Williams | partial | 13% |
 | 413 | 1985 | Comet | Williams | partial | 19% |
-| 414 | 1985 | Sorcerer | Williams | partial | 19% |
+| 414 | 1985 | Sorcerer | Williams | partial | 94% |
 | 415 | 1985 | Clown | Zaccaria | partial | 13% |
 | 416 | 1985 | Pool Champion | Zaccaria | partial | 13% |
 | 417 | 1985 | Robot | Zaccaria | partial | 13% |

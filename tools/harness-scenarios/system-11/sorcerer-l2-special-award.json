@@ -1,0 +1,883 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "sorcr_l2",
+  "notes": "Sorcerer L-2 special award with direct public switch writes only. Two balls rest on ball ramp switches 29 and 30; a coin and the credit button start a game and the served ball is plunged. Four rounds each spell S-O-R-C-E-R-E-R on switches 9-16, roll over the top lanes, return lanes, lower and upper left/right lanes and both spinners, and complete and reset the 3-bank. The third spelling awards a credit (credit display 00 to 01), which shows what the ROM drives for a credit award. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball on ramp 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball on ramp 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.5,
+      "label": "start"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "serve"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "served"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "roll"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "roll"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "shooter"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 0 SORCERER 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "round 0 effects"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 0 collect 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "dt"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "up"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 1 SORCERER 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "round 1 effects"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 1 collect 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "dt"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "up"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 2 SORCERER 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "round 2 effects"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 2 collect 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "dt"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "up"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 0.4,
+      "label": "round 3 SORCERER 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "round 3 effects"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 80,
+      "settle_s": 1.0,
+      "label": "round 3 collect 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "dt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "dt"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "up"
+    },
+    {
+      "type": "wait",
+      "seconds": 5.0,
+      "label": "end"
+    }
+  ]
+}

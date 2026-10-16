@@ -90,7 +90,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 141 | Goldeneye | `sega.goldeneye.1996` | 81% |
 | 142 | Johnny Mnemonic | `williams.johnny-mnemonic.1995` | 94% |
 | 145 | Earthshaker | `williams.earthshaker.1989` | 88% |
-| 146 | Sorcerer | `williams.sorcerer.1985` | 19% |
+| 146 | Sorcerer | `williams.sorcerer.1985` | 94% |
 | 147 | Time Machine | `data-east.time-machine.1988` | 69% |
 | 148 | Joker Poker | `gottlieb.joker-poker.1978` | 13% |
 | 149 | The Who's Tommy Pinball Wizard | `data-east.the-who-s-tommy-pinball-wizard.1994` | 75% |

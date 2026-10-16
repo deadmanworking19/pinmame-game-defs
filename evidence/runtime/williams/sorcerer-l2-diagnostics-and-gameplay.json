@@ -1,0 +1,4990 @@
+{
+  "driver_ids": [
+    "sorcr_l2"
+  ],
+  "extractor": {
+    "id": "tools/summarize_sorcerer_runtime.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.sorcerer.1985"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <working-root>/builds/pinmame-97aa922/Release/pinmame64.dll --game sorcr_l2 --rom-path <authorized-read-only-ROM-root> --work-dir <new-state-directory> --scenario <init scenario> --output init.json, then the same command with the evidentiary scenario and --output run.json. Direct switch writes only: no keyboard handling, mechanics mask 0.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "sorcr_l2",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "named_output_addresses": {
+        "bonus-hold-over-lamp": 23,
+        "demon-lamp": 22
+      },
+      "physical_service_solenoid_to_public": {
+        "1": 1,
+        "10": 10,
+        "11": 11,
+        "12": 12,
+        "13": 13,
+        "14": 14,
+        "15": 15,
+        "16": 16,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "8": 8,
+        "9": 9
+      },
+      "runs": {
+        "gameplay-l2": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "ball resting on ball ramp position 1 (Ramp 1)",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "ball resting on ball ramp position 2 (Ramp 2)",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "coin on the left coin switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "credit button: start a one-player game",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2,
+                4,
+                11,
+                23
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "served ball leaves ramp position 2",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "second ball rolls down: position 1 empties",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "second ball now rests on position 2",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "served ball on the shooter lane switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "ball plunged",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "left jet bumper switch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "lower jet bumper switch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "right jet bumper switch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "left kicker (slingshot) switch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "right kicker (slingshot) switch",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23,
+                45,
+                46
+              ],
+              "held_synthetic_solenoid_addresses": [
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button (flipper column 82)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23,
+                47,
+                48
+              ],
+              "held_synthetic_solenoid_addresses": [
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button (flipper column 84)",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "left spinner S",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "SORCERER target 10",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "SORCERER target 11",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "SORCERER target 12",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "SORCERER target 13",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "SORCERER target 14",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "SORCERER target 15",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "right spinner R",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7,
+                8,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "A-B-C-D rollover 17",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "A-B-C-D rollover 18",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "A-B-C-D rollover 19",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "A-B-C-D rollover 20",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "left drain (outlane) rollover",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                25
+              ],
+              "input_address": 25,
+              "input_kind": "switch",
+              "label": "right drain (outlane) rollover",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                26
+              ],
+              "input_address": 26,
+              "input_kind": "switch",
+              "label": "left flipper return lane",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "right flipper return lane",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "lower right switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "lower left switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "upper left switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "lane switch (lamp shift)",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "3-bank: left drop target down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "3-bank: center drop target down",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "3-bank: right drop target down, bank complete",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                4,
+                8,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "3-bank reset: left target up",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "3-bank reset: center target up",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "3-bank reset: right target up",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "first ramp shot rolls over the ramp switch 38",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "ball comes to rest in the multiball lock (37)",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "second ball leaves ramp position 2; the ball ramp is empty",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "second ball on the shooter lane switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "second ball plunged",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "second ramp shot: ball comes to rest on the ramp switch behind the locked ball",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "locked ball ejected",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3,
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "ramp ball follows out",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "first multiball ball drains into the outhole",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "outhole empties",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "kicked ball rolls down to ramp position 2",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "second ball drains into the outhole",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "outhole empties",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "kicked ball rests on ramp position 1",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "served ball leaves ramp position 2",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2,
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "remaining ball rolls down: position 1 empties",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "remaining ball rests on position 2",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "ball 2 on the shooter lane switch",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                16,
+                23
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "ball 2 plunged",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "playfield tilt closure 1",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11,
+                23
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "playfield tilt closure 2",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                11,
+                16
+              ],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "playfield tilt closure 3",
+              "observed_switch_addresses": [],
+              "result": "no_matching_transition",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Direct-write game. No solenoid moves in 40 s of attract mode. Start serves with 2, resets the 3-bank with 4 and sets 23. Specials follow their switches. Holding 82 sets 44 and 45/46; holding 84 sets 47/48 and leaves 44 at 0. Completing SORCERER flashes 7 and 8 and blinks GI 11; completing the 3-bank resets it (4) and rings the bell (15). A ball resting in the lock (37) makes the ROM serve the next ball (2) with flashers 5 and 8; a second ball resting on the ramp switch (38) fires the multi-ball eject (3). Each outhole closure kicks 1, and after both balls drain the ROM serves ball 2. One playfield-tilt closure drops 23. Lamp 22 is dark until S-O-R-C-E-R-E-R is complete, then lit until the 3-bank is completed, which clears it and lights lamp 23, still lit while ball 2 is in play: by the manual's rules 22 behaves as DEMON and 23 as BONUS HELD OVER (named_output_addresses). Solenoid 8 flashes with game effects and is never held through play. No output the manual prints Not Used moves.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            11,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        "solenoid-test-l2": {
+          "limitation": "The manual's procedure says the match display sequences 01 through 25 and that sub-test 25 de-energizes the flipper relay; this ROM steps 01-16 only, so the test does not exercise the game-on enable 23.",
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Manual-Down: hold the current solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Manual-Down: hold the current solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -6
+              ],
+              "input_address": -6,
+              "input_kind": "switch",
+              "label": "Manual-Down: hold the current solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                8,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                11
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                12
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                13
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                14
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                15
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                16
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                1,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                2
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                3
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                4
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                5
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                7
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                9
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                10,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "Advance: next solenoid step"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                -7
+              ],
+              "input_address": -7,
+              "input_kind": "switch",
+              "label": "Advance: next solenoid step",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                10,
+                11
+              ]
+            }
+          ],
+          "note": "Test 02 shows 02 in the credit display (indices 4-5); each Advance steps the match display (indices 6-7) through 01-16 and wraps to 01, and the shown step pulses the same public solenoid, so the manual's printed solenoid numbers are the public addresses. The specials 17-22 are not stepped.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "special-award-l2": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                8,
+                15,
+                16,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 4,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "round 2 SORCERER 15"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "display_index": 5,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "round 2 SORCERER 15"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "round 2 SORCERER 15",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                8,
+                11,
+                14,
+                15
+              ]
+            }
+          ],
+          "note": "The third S-O-R-C-E-R-E-R spelling awards a credit: the credit display goes from 00 to 01 while the ROM rings the bell (15) and pulses solenoid 14 once for about 0.1 s, the knocker routine. No other output the manual prints Not Used (9, 10, 12, 13, 22) moves.",
+          "solenoid_addresses_seen": [
+            2,
+            4,
+            6,
+            7,
+            8,
+            11,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "switch-test-l2": {
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 1,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 1 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 1,
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 1 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "input_address": 1,
+              "input_kind": "switch",
+              "label": "close public switch 1 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 2,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 2 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 2,
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 2 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                2
+              ],
+              "input_address": 2,
+              "input_kind": "switch",
+              "label": "close public switch 2 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 3,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 3 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 3,
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 3 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                3
+              ],
+              "input_address": 3,
+              "input_kind": "switch",
+              "label": "close public switch 3 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 4,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 4 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 4,
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 4 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                4
+              ],
+              "input_address": 4,
+              "input_kind": "switch",
+              "label": "close public switch 4 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 5,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 5 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 5,
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 5 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                5
+              ],
+              "input_address": 5,
+              "input_kind": "switch",
+              "label": "close public switch 5 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 6,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 6 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 6,
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 6 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                6
+              ],
+              "input_address": 6,
+              "input_kind": "switch",
+              "label": "close public switch 6 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 7,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 7 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 7,
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 7 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "input_address": 7,
+              "input_kind": "switch",
+              "label": "close public switch 7 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 8,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 8 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 8,
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 8 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                8
+              ],
+              "input_address": 8,
+              "input_kind": "switch",
+              "label": "close public switch 8 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 9,
+                  "display_index": 6,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 9 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 9,
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 9 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                9
+              ],
+              "input_address": 9,
+              "input_kind": "switch",
+              "label": "close public switch 9 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 10,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 10 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 10,
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 10 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                10
+              ],
+              "input_address": 10,
+              "input_kind": "switch",
+              "label": "close public switch 10 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 11,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 11 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 11,
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 11 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                11
+              ],
+              "input_address": 11,
+              "input_kind": "switch",
+              "label": "close public switch 11 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 12,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 12 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 12,
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 12 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                12
+              ],
+              "input_address": 12,
+              "input_kind": "switch",
+              "label": "close public switch 12 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 13,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 13 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 13,
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 13 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                13
+              ],
+              "input_address": 13,
+              "input_kind": "switch",
+              "label": "close public switch 13 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 14,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 14 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 14,
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 14 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                14
+              ],
+              "input_address": 14,
+              "input_kind": "switch",
+              "label": "close public switch 14 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 15,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 15 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 15,
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 15 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                15
+              ],
+              "input_address": 15,
+              "input_kind": "switch",
+              "label": "close public switch 15 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 16,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 16 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 16,
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 16 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                16
+              ],
+              "input_address": 16,
+              "input_kind": "switch",
+              "label": "close public switch 16 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 17,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 17 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 17,
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 17 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                17
+              ],
+              "input_address": 17,
+              "input_kind": "switch",
+              "label": "close public switch 17 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 18,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 18 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 18,
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 18 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                18
+              ],
+              "input_address": 18,
+              "input_kind": "switch",
+              "label": "close public switch 18 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 19,
+                  "display_index": 6,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 19 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 19,
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 19 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                19
+              ],
+              "input_address": 19,
+              "input_kind": "switch",
+              "label": "close public switch 19 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 20,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 20 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 20,
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 20 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                20
+              ],
+              "input_address": 20,
+              "input_kind": "switch",
+              "label": "close public switch 20 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                19,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 21,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 21 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 21,
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 21 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                21
+              ],
+              "input_address": 21,
+              "input_kind": "switch",
+              "label": "close public switch 21 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                20,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 22,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 22 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 22,
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 22 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                22
+              ],
+              "input_address": 22,
+              "input_kind": "switch",
+              "label": "close public switch 22 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                20
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                21,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 23,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 23 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 23,
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 23 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                23
+              ],
+              "input_address": 23,
+              "input_kind": "switch",
+              "label": "close public switch 23 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                21
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 24,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 24 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 24,
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 24 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                24
+              ],
+              "input_address": 24,
+              "input_kind": "switch",
+              "label": "close public switch 24 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 25,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 25 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 25,
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 25 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                25
+              ],
+              "input_address": 25,
+              "input_kind": "switch",
+              "label": "close public switch 25 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 26,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 26 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 26,
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 26 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                26
+              ],
+              "input_address": 26,
+              "input_kind": "switch",
+              "label": "close public switch 26 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 27,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 27 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 27,
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 27 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                27
+              ],
+              "input_address": 27,
+              "input_kind": "switch",
+              "label": "close public switch 27 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 28,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 28 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 28,
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 28 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                28
+              ],
+              "input_address": 28,
+              "input_kind": "switch",
+              "label": "close public switch 28 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 29,
+                  "display_index": 6,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 29 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 29,
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 29 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                29
+              ],
+              "input_address": 29,
+              "input_kind": "switch",
+              "label": "close public switch 29 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 30,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 30 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 30,
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 30 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                30
+              ],
+              "input_address": 30,
+              "input_kind": "switch",
+              "label": "close public switch 30 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 31,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 31 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 31,
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 31 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                31
+              ],
+              "input_address": 31,
+              "input_kind": "switch",
+              "label": "close public switch 31 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                17,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 32,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 32 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 32,
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 32 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                32
+              ],
+              "input_address": 32,
+              "input_kind": "switch",
+              "label": "close public switch 32 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                17
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                18,
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 33,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 33 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 33,
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 33 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                33
+              ],
+              "input_address": 33,
+              "input_kind": "switch",
+              "label": "close public switch 33 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                18
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 34,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 34 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 34,
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 34 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                34
+              ],
+              "input_address": 34,
+              "input_kind": "switch",
+              "label": "close public switch 34 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 35,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 35 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 35,
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 35 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                35
+              ],
+              "input_address": 35,
+              "input_kind": "switch",
+              "label": "close public switch 35 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 36,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 36 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 36,
+                  "display_index": 7,
+                  "interpreted_text": "6",
+                  "segments": [
+                    125
+                  ],
+                  "snapshot_label": "close public switch 36 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                36
+              ],
+              "input_address": 36,
+              "input_kind": "switch",
+              "label": "close public switch 36 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 37,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 37 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 37,
+                  "display_index": 7,
+                  "interpreted_text": "7",
+                  "segments": [
+                    7
+                  ],
+                  "snapshot_label": "close public switch 37 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                37
+              ],
+              "input_address": 37,
+              "input_kind": "switch",
+              "label": "close public switch 37 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 38,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 38 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 38,
+                  "display_index": 7,
+                  "interpreted_text": "8",
+                  "segments": [
+                    127
+                  ],
+                  "snapshot_label": "close public switch 38 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                38
+              ],
+              "input_address": 38,
+              "input_kind": "switch",
+              "label": "close public switch 38 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 39,
+                  "display_index": 6,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 39 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 39,
+                  "display_index": 7,
+                  "interpreted_text": "9",
+                  "segments": [
+                    111
+                  ],
+                  "snapshot_label": "close public switch 39 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                39
+              ],
+              "input_address": 39,
+              "input_kind": "switch",
+              "label": "close public switch 39 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 40,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 40 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 40,
+                  "display_index": 7,
+                  "interpreted_text": "0",
+                  "segments": [
+                    63
+                  ],
+                  "snapshot_label": "close public switch 40 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                40
+              ],
+              "input_address": 40,
+              "input_kind": "switch",
+              "label": "close public switch 40 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 41,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 41 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 41,
+                  "display_index": 7,
+                  "interpreted_text": "1",
+                  "segments": [
+                    6
+                  ],
+                  "snapshot_label": "close public switch 41 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                41
+              ],
+              "input_address": 41,
+              "input_kind": "switch",
+              "label": "close public switch 41 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 42,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 42 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 42,
+                  "display_index": 7,
+                  "interpreted_text": "2",
+                  "segments": [
+                    91
+                  ],
+                  "snapshot_label": "close public switch 42 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                42
+              ],
+              "input_address": 42,
+              "input_kind": "switch",
+              "label": "close public switch 42 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 43,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 43 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 43,
+                  "display_index": 7,
+                  "interpreted_text": "3",
+                  "segments": [
+                    79
+                  ],
+                  "snapshot_label": "close public switch 43 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                43
+              ],
+              "input_address": 43,
+              "input_kind": "switch",
+              "label": "close public switch 43 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 44,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 44 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 44,
+                  "display_index": 7,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 44 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                44
+              ],
+              "input_address": 44,
+              "input_kind": "switch",
+              "label": "close public switch 44 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 45,
+                  "display_index": 6,
+                  "interpreted_text": "4",
+                  "segments": [
+                    102
+                  ],
+                  "snapshot_label": "close public switch 45 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 45,
+                  "display_index": 7,
+                  "interpreted_text": "5",
+                  "segments": [
+                    109
+                  ],
+                  "snapshot_label": "close public switch 45 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                45
+              ],
+              "input_address": 45,
+              "input_kind": "switch",
+              "label": "close public switch 45 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 46,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 46 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 46,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 46 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                46
+              ],
+              "input_address": 46,
+              "input_kind": "switch",
+              "label": "close public switch 46 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 47,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 47 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 47,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 47 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                47
+              ],
+              "input_address": 47,
+              "input_kind": "switch",
+              "label": "close public switch 47 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 48,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 48 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 48,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 48 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                48
+              ],
+              "input_address": 48,
+              "input_kind": "switch",
+              "label": "close public switch 48 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 49,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 49 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 49,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 49 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "input_address": 49,
+              "input_kind": "switch",
+              "label": "close public switch 49 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 50,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 50 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 50,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 50 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "close public switch 50 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 51,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 51 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 51,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 51 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                51
+              ],
+              "input_address": 51,
+              "input_kind": "switch",
+              "label": "close public switch 51 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 52,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 52 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 52,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 52 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                52
+              ],
+              "input_address": 52,
+              "input_kind": "switch",
+              "label": "close public switch 52 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 53,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 53 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 53,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 53 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "close public switch 53 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 54,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 54 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 54,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 54 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "close public switch 54 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 55,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 55 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 55,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 55 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                55
+              ],
+              "input_address": 55,
+              "input_kind": "switch",
+              "label": "close public switch 55 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 56,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 56 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 56,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 56 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                56
+              ],
+              "input_address": 56,
+              "input_kind": "switch",
+              "label": "close public switch 56 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 57,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 57 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 57,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 57 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                57
+              ],
+              "input_address": 57,
+              "input_kind": "switch",
+              "label": "close public switch 57 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 58,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 58 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 58,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 58 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                58
+              ],
+              "input_address": 58,
+              "input_kind": "switch",
+              "label": "close public switch 58 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 59,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 59 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 59,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 59 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                59
+              ],
+              "input_address": 59,
+              "input_kind": "switch",
+              "label": "close public switch 59 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 60,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 60 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 60,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 60 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                60
+              ],
+              "input_address": 60,
+              "input_kind": "switch",
+              "label": "close public switch 60 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 61,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 61 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 61,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 61 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                61
+              ],
+              "input_address": 61,
+              "input_kind": "switch",
+              "label": "close public switch 61 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 62,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 62 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 62,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 62 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "close public switch 62 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 63,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 63 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 63,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 63 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                63
+              ],
+              "input_address": 63,
+              "input_kind": "switch",
+              "label": "close public switch 63 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            },
+            {
+              "active_solenoid_addresses": [
+                23
+              ],
+              "display_responses": [
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 64,
+                  "display_index": 6,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 64 alone and read the ball-in-play display (held)"
+                },
+                {
+                  "decoded_segment_positions": [
+                    0
+                  ],
+                  "diagnostic_address": 64,
+                  "display_index": 7,
+                  "interpreted_text": " ",
+                  "segments": [
+                    0
+                  ],
+                  "snapshot_label": "close public switch 64 alone and read the ball-in-play display (held)"
+                }
+              ],
+              "host_stimulus_switch_addresses": [
+                64
+              ],
+              "input_address": 64,
+              "input_kind": "switch",
+              "label": "close public switch 64 alone and read the ball-in-play display",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": []
+            }
+          ],
+          "note": "Test 03: each isolated closure of public 1-45 shows its own number in the ball-in-play display (indices 6-7), including the unfitted 41; 46-64 show nothing, so the ROM does not scan them. Closures of 21, 22, 23, 32 and 33 also publish specials 19, 20, 21, 17 and 18 (PinMAME sxx.ssSw while the enable 23 is set)."
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 34,
+        "initial_switches": [],
+        "name": "solenoid-test-l2",
+        "nvram_initialization": "A newly created state directory initialized by one 20 s empty-CMOS power-up (solenoid-test-l2/init.json, SHA-256 f8edb58feaf1c07e16d84ee0428783e184e215fcd375d0d7e517c85b490f402f, scenario tools/harness-scenarios/system-11/sorcerer-l2-nvram-init-boot.json SHA-256 bd17e46c7f14ff885b2a0627bd094b7f418db5b61d07ae904a42ca23b0d712f0); no state from any other run.",
+        "retained_from": "solenoid-test-l2/run.json",
+        "scenario_path": "tools/harness-scenarios/system-11/sorcerer-l2-solenoid-test.json",
+        "scenario_sha256": "7de8570fd05e480eec87cda166d4dcb30a5be1781efc775d905cfaed70f6e909",
+        "self_test_pulses": 30,
+        "sha256": "9d4b6cc76e44de3293180d6e558555e70414f23b5de877a29c77916da6b480b5",
+        "snapshot_count": 35,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 72,
+        "initial_switches": [],
+        "name": "switch-test-l2",
+        "nvram_initialization": "A newly created state directory initialized by one 20 s empty-CMOS power-up (switch-test-l2/init.json, SHA-256 a2ddb4e34da8441fab82b44a62d83de4c5ea6e787315bd262b94558e44a58b6b, scenario tools/harness-scenarios/system-11/sorcerer-l2-nvram-init-boot.json SHA-256 bd17e46c7f14ff885b2a0627bd094b7f418db5b61d07ae904a42ca23b0d712f0); no state from any other run.",
+        "retained_from": "switch-test-l2/run.json",
+        "scenario_path": "tools/harness-scenarios/system-11/sorcerer-l2-switch-test.json",
+        "scenario_sha256": "3a9e7814fcc60dbadda69d120eebccd8143397cad7994faf1d0dbda0f1ec753d",
+        "self_test_pulses": 5,
+        "sha256": "a88094f0c9be9583c4f8f21202e7c79516ebd05a4bbca5f0fb77653779bd10ba",
+        "snapshot_count": 137,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 74,
+        "initial_switches": [],
+        "name": "gameplay-l2",
+        "nvram_initialization": "A newly created state directory initialized by one 20 s empty-CMOS power-up (gameplay-l2/init.json, SHA-256 b4b46d8be2fa7b1a27476644c9b4cda4f3fd5f06fede4dcf805da18c86dd6d5c, scenario tools/harness-scenarios/system-11/sorcerer-l2-nvram-init-boot.json SHA-256 bd17e46c7f14ff885b2a0627bd094b7f418db5b61d07ae904a42ca23b0d712f0); no state from any other run.",
+        "retained_from": "gameplay-l2/run.json",
+        "scenario_path": "tools/harness-scenarios/system-11/sorcerer-l2-gameplay.json",
+        "scenario_sha256": "1a91e6b2297ccf80432ac195d68076bdabb22f6868f0029c7990baef29ab3246",
+        "self_test_pulses": 0,
+        "sha256": "04a49c1e49c3c1506b385308857ba32b26137d04f9e6e3b2a142da36b90973f4",
+        "snapshot_count": 77,
+        "watch_switches": [
+          -7,
+          -6,
+          44
+        ]
+      },
+      {
+        "action_count": 124,
+        "initial_switches": [],
+        "name": "special-award-l2",
+        "nvram_initialization": "A newly created state directory initialized by one 20 s empty-CMOS power-up (special-award-l2/init.json, SHA-256 07d9c1ce8798274f8f0afabc397640226aec3bba76f92ae9ecc6cbd3ae81523a, scenario tools/harness-scenarios/system-11/sorcerer-l2-nvram-init-boot.json SHA-256 bd17e46c7f14ff885b2a0627bd094b7f418db5b61d07ae904a42ca23b0d712f0); no state from any other run.",
+        "retained_from": "special-award-l2/run.json",
+        "scenario_path": "tools/harness-scenarios/system-11/sorcerer-l2-special-award.json",
+        "scenario_sha256": "907b822b1abf35f4669d68b5bc7cf8cb7d7b6ecb80e5b71d06417ba98f473fe3",
+        "self_test_pulses": 0,
+        "sha256": "8473aeed6ae999df02996fc2ad94fa7f3323e0767feb08a3ba4634a066ce4a5b",
+        "snapshot_count": 125,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a9c2a21dc660c5b81f373a233e22a3ff1adb1c88b357525d471328e348f5492f"
+  },
+  "source": {
+    "attribution": "Locally generated from the user-authorized ROMs and pinned PinMAME; ROM bytes and mutable state remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py: case-sensitive sorted relative POSIX paths, every file except root manifest.json and manifest.sha256; SHA-256 of the canonical manifest bytes.",
+    "path": "external:pinmame-review-artifacts/williams.sorcerer.1985/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "0a04a8d2d92399bf28a73b4205e47bf7675ce5d26ea3b5f5d3fe86c5e239bbfc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

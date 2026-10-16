@@ -118,6 +118,10 @@ class FlipperColumnHelperTests(unittest.TestCase):
 		self.assertEqual(["switch.matrix-57"], [item["destination"] for item in relationships])
 
 
+# Curated System 9/11 records whose driver declares FLIP_SWNO(0, r): only button 82 has a matrix copy.
+RIGHT_ONLY_FLIP_SWNO = {"williams.sorcerer.1985": "INITGAMEFULL(sorcr, GEN_S9, s11_dispS9, 0, FLIP_SWNO(0,44)"}
+
+
 class FlipperColumnDefinitionTests(unittest.TestCase):
 	def test_every_enumerating_system_11_or_data_east_definition_follows_the_contract(self) -> None:
 		checked = []
@@ -138,7 +142,11 @@ class FlipperColumnDefinitionTests(unittest.TestCase):
 				self.assertEqual(set(range(81, 89)), set(column))
 				self.assertEqual({82, 84}, {address for address, item in column.items() if item["availability"] == "used"})
 				copies = {(item["source"], item["destination"]) for item in definition.get("relationships", []) if item["source"] in ("switch.flipper-column-82", "switch.flipper-column-84")}
-				self.assertEqual(2, len(copies))
+				# A FLIP_SWNO side of 0 names no matrix switch, so core_updateSw copies that button nowhere.
+				expected = {"switch.flipper-column-82"} if definition["machine"]["id"] in RIGHT_ONLY_FLIP_SWNO else {"switch.flipper-column-82", "switch.flipper-column-84"}
+				self.assertEqual(expected, {source for source, _destination in copies})
+				self.assertEqual(len(expected), len(copies))
+		self.assertIn("williams.sorcerer.1985", checked)
 		self.assertIn("williams.whirlwind.1990", checked)
 		self.assertIn("williams.high-speed.1986", checked)
 		self.assertIn("bally.elvira-and-the-party-monsters.1989", checked)
@@ -249,6 +257,8 @@ class FlipperColumnPinnedSourceTests(unittest.TestCase):
 		s11games = (wpc / "s11games.c").read_text(encoding="utf-8", errors="replace")
 		self.assertIn("INITGAME(whirl,GEN_S11B,s11_dispS11b2,12, FLIP_SWNO(58,57)", s11games)
 		self.assertIn("INITGAMEFULL(hs, GEN_S11X, s11_dispS11, 0, FLIP_SWNO(37,38)", s11games)
+		for declaration in RIGHT_ONLY_FLIP_SWNO.values():
+			self.assertIn(declaration, s11games)
 
 	def test_each_curated_data_east_driver_declares_the_recorded_flip_swno_pair(self) -> None:
 		degames = (self.checkout / "src" / "wpc" / "degames.c").read_text(encoding="utf-8", errors="replace")

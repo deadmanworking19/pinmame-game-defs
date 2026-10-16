@@ -22,9 +22,10 @@ CORPUS_REPOSITORIES = (
 # Swords of Fury's 59 candidate devices from two scripts were replaced by its curated seed.
 # Seawitch's curator replaces one corpus attachment containing 66 candidate devices.
 # Paragon's curator replaces one corpus attachment containing 23 candidate devices.
-EXPECTED_ATTACHED_MACHINES = 271
-EXPECTED_ATTACHED_DEVICES = 12650
-EXPECTED_ATTACHED_SCRIPTS = 340
+# Sorcerer's curator replaces its corpus attachments (93 candidate devices from three scripts).
+EXPECTED_ATTACHED_MACHINES = 270
+EXPECTED_ATTACHED_DEVICES = 12557
+EXPECTED_ATTACHED_SCRIPTS = 337
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

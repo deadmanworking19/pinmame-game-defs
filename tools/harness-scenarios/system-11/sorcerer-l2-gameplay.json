@@ -1,0 +1,548 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "sorcr_l2",
+  "notes": "Sorcerer L-2 gameplay with direct public switch writes only (keyboard handling and the driver's simulator stay off). Two balls rest on ball ramp switches 29 and 30 and attract mode is observed for 40 s; a coin and the credit button start a game and the ROM serves a ball with the ramp eject (2) into the shooter lane (31). Jet and kicker switches show PinMAME's switch-driven special solenoids, 82 and 84 show the flipper column copy into 44 and the synthetic 45-48, the 3-bank is completed and reset (4), a first ramp shot locks a ball on 37 and the ROM serves the second ball (2), a second ball resting on the ramp switch (38) makes the ROM eject the lock (3), both balls drain through the outhole (28, kicked by 1) and the ROM serves ball 2, and three playfield-tilt closures (45) end that ball. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    -7,
+    -6,
+    44
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on ball ramp position 1 (Ramp 1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on ball ramp position 2 (Ramp 2)"
+    },
+    {
+      "type": "wait",
+      "seconds": 40.0,
+      "label": "observe attract mode with both balls home"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.5,
+      "label": "credit button: start a one-player game"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM serves a ball with the ramp eject (2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "served ball leaves ramp position 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "second ball rolls down: position 1 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "second ball now rests on position 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball on the shooter lane switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left jet bumper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "lower jet bumper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right jet bumper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left kicker (slingshot) switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right kicker (slingshot) switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 600,
+      "settle_s": 1.5,
+      "label": "right flipper button (flipper column 82)",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 600,
+      "settle_s": 1.5,
+      "label": "left flipper button (flipper column 84)",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 60,
+      "settle_s": 0.5,
+      "label": "left spinner S"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "SORCERER target 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 60,
+      "settle_s": 3.0,
+      "label": "right spinner R"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "A-B-C-D rollover 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "A-B-C-D rollover 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "A-B-C-D rollover 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "A-B-C-D rollover 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left drain (outlane) rollover"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right drain (outlane) rollover"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left flipper return lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "right flipper return lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "lower right switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "lower left switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "upper left switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "lane switch (lamp shift)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "3-bank: left drop target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "3-bank: center drop target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "3-bank: right drop target down, bank complete"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM resets the 3-bank (4)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "3-bank reset: left target up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "3-bank reset: center target up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "3-bank reset: right target up"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 150,
+      "settle_s": 0.5,
+      "label": "first ramp shot rolls over the ramp switch 38"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball comes to rest in the multiball lock (37)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM serves the second ball with the ramp eject (2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "second ball leaves ramp position 2; the ball ramp is empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "second ball on the shooter lane switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "second ball plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "second ramp shot: ball comes to rest on the ramp switch behind the locked ball"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "timeout_s": 12.0,
+      "active_only": true,
+      "label": "ROM ejects the lock with the multi-ball eject (3)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "locked ball ejected"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 6.0,
+      "label": "ramp ball follows out"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "first multiball ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM kicks the outhole (1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "outhole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "kicked ball rolls down to ramp position 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.1,
+      "label": "second ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM kicks the outhole (1) again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "outhole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "kicked ball rests on ramp position 1"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 15.0,
+      "active_only": true,
+      "label": "ROM serves ball 2 with the ramp eject (2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "served ball leaves ramp position 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "remaining ball rolls down: position 1 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "remaining ball rests on position 2"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 2 on the shooter lane switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 2 plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "playfield tilt closure 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "playfield tilt closure 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "playfield tilt closure 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 15.0,
+      "label": "observe after tilt"
+    }
+  ]
+}
