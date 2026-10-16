@@ -624,7 +624,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 618 | 1979 | Hotdoggin' | Bally | partial | 19% |
 | 619 | 1979 | Kiss | Bally | author_ready | 100% |
 | 620 | 1979 | KISS | Bally | partial | 6% |
-| 621 | 1979 | Paragon | Bally | partial | 19% |
+| 621 | 1979 | Paragon | Bally | partial | 94% |
 | 622 | 1979 | Rolling Stones | Bally | partial | 19% |
 | 623 | 1979 | Star Trek | Bally | partial | 19% |
 | 624 | 1979 | Supersonic | Bally | partial | 19% |

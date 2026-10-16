@@ -1,0 +1,1326 @@
+{
+  "driver_ids": [
+    "paragon",
+    "paragonb",
+    "paragonc",
+    "paragond"
+  ],
+  "extractor": {
+    "id": "tools/paragon_runtime_summary.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.paragon.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <vpinmame-roms> --work-dir <new-isolated-state> {--boot-wait 20 --pulse=-7:250:1.2 --pulse=-7:250:1.2 --pulse=-7:250:1.2 --observe 40 | --scenario tools/harness-scenarios/by35/<scenario>.json} --output <external-run.json>; handle-mechanics 0 and keyboard handling off for every run. Runs of paragonb, paragonc and paragond used ROM archives with SHA-256 5773350a2c86ab86a02732de7c05e6d1602bca5b3849587d381d16b807495128, 3203e58d28c9684016e1d4b8ee02df766943e4a096df1a0d39350c8fa63f1962, 84d8b90b5d2540b201de661c693d1bdcdd22e5abb92845e1439bf9008134bb83. Each set_switch or pulse is a host stimulus, never a ROM observation; the display values are the harness's seven-segment words read as digits.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "paragon",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "gameplay: coin chute I (public 10)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "gameplay: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2,
+            7,
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "gameplay: public 36 left slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "gameplay: public 35 right slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "gameplay: public 40 left thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "gameplay: public 39 right thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "gameplay: public 37 bottom thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "gameplay: public 38 center thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "gameplay: public 31 treasure chamber saucer: ball enters",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "gameplay: public 31 treasure chamber saucer: ball leaves",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "gameplay: public 32 golden cliffs saucer: ball enters",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9,
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "gameplay: public 32 golden cliffs saucer: ball leaves",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: public 24 Paragon saucer: ball enters",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: public 24 Paragon saucer: ball leaves",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target A (bottom): public 4 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target B: public 3 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target C: public 2 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target D (top): public 1 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target public 4 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target public 3 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target public 2 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "gameplay: in-line drop target public 1 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target C (bottom): public 17 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target B: public 18 down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target A (top): public 19 down",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target public 17 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            18
+          ],
+          "input_address": 18,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target public 18 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            19
+          ],
+          "input_address": 19,
+          "input_kind": "switch",
+          "label": "gameplay: waterfall drop target public 19 reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "gameplay: public 22 right outlane",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "gameplay: public 23 right flip feeder lane",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "gameplay: public 26 top center rollover button",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "gameplay: public 27 500 point rebound",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "gameplay: public 28 waterfall rollover button",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "gameplay: public 29 center target",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "gameplay: public 30 top center target",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "gameplay: public 33 spinner",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "gameplay: public 34 top right, golden cliffs rollover and drop target rebound",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19,
+            48
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "gameplay: left flipper button (public 84) held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "gameplay: left flipper button (public 84) released",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "gameplay: right flipper button (public 82) held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "gameplay: right flipper button (public 82) released",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            83
+          ],
+          "input_address": 83,
+          "input_kind": "switch",
+          "label": "gameplay: upper left generic position (public 83) held",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            83
+          ],
+          "input_address": 83,
+          "input_kind": "switch",
+          "label": "gameplay: upper left generic position (public 83) released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "gameplay: upper right generic position (public 81) held",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "gameplay: upper right generic position (public 81) released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: outhole drain: public 8 closed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: outhole hold closed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2,
+            7,
+            17,
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "tilt: coin chute I (public 10)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "tilt: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2,
+            7,
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "tilt: ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: right flipper button (public 82) held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "tilt: tilt (public 7)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: right flipper button (public 82) released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: right flipper button (public 82) held after tilt",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: right flipper button (public 82) released after tilt",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 7,
+        "10": 1,
+        "11": 13,
+        "12": 2,
+        "13": 17,
+        "14": 18,
+        "15": 19,
+        "2": 6,
+        "3": 8,
+        "4": 10,
+        "5": 9,
+        "6": 14,
+        "7": 15,
+        "8": 11,
+        "9": 12
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "runs": {
+        "gameplay-paragon": {
+          "note": "Coin on public 10, credit on public 6 with the ball held on the outhole (8): the start fired 2, 7 and 17 and raised 19. One closure at a time: slingshots 36 and 35 fired 14 and 15; thumper bumpers 40, 39, 37 and 38 fired 11, 12, 1 and 13; saucers 31, 32 and 24 fired 8, 9 and 10. The in-line targets 4, 3, 2 and 1 fired nothing when the bank completed; target 2 lit lamp 6 (2X) and target 1 lamp 22 (3X). Completing the waterfall bank 17-19 fired 17. The spinner (33) lit lamp 14. Holding 84 raised 48 and holding 82 raised 46; holding 81 or 83 changed no output. PinMAME also raised 47 and 45 with 48 and 46; those are omitted here."
+        },
+        "solenoid-test-paragon": {
+          "note": "Self-test pressed three times; the solenoid test then fires one output per second while showing its number on every player display. Paired with the number on player 1's display 0.25 s after each pulse, in test order 1 to 15: 1->7, 2->6, 3->8, 4->10, 5->9, 6->14, 7->15, 8->11, 9->12, 10->1, 11->13, 12->2, 13->17, 14->18, 15->19. Every later pulse of the run follows the same order (2 full cycles). Before the test, the power-on reset pulsed outputs 17, 18, 19, 20 together.",
+          "ordered_solenoid_on_sequence": [
+            7,
+            6,
+            8,
+            10,
+            9,
+            14,
+            15,
+            11,
+            12,
+            1,
+            13,
+            2,
+            17,
+            18,
+            19
+          ]
+        },
+        "solenoid-test-paragonb": {
+          "note": "Same pairing, cycle and published lamp and solenoid addresses as paragon; the player displays show seven digits."
+        },
+        "solenoid-test-paragonc": {
+          "note": "Same pairing, cycle and published lamp and solenoid addresses as paragon."
+        },
+        "solenoid-test-paragond": {
+          "note": "Same pairing, cycle and published lamp and solenoid addresses as paragon."
+        },
+        "switch-test-paragon": {
+          "note": "Self-test pressed five times (the fourth press ends the cycling solenoid test, the fifth starts the switch test, which flashes 0 on the match/ball display with everything open). Closing each of public 1 to 40 in turn made the ROM show that same number on the player displays (every display event between closure and release was read, because the number flashes)."
+        },
+        "tilt-paragon": {
+          "note": "With a game running and the right flipper button held, pulsing the tilt (7) dropped 19 and 46 and lit lamp 61 (TILT); holding 82 again afterwards raised nothing."
+        }
+      },
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20
+      ],
+      "switch_to_lamp": {
+        "1": 22,
+        "2": 6,
+        "33": 14
+      }
+    },
+    "raw_runs": [
+      {
+        "name": "solenoid-test-paragon",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/solenoid-test/paragon/run.json",
+        "self_test_pulses": 3,
+        "sha256": "2cf6c85cd5226b87b8c30e4368307dc4ab03f0e5044ff28a6258bf2ea19f5ba0",
+        "snapshot_count": 5
+      },
+      {
+        "name": "solenoid-test-paragonb",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/solenoid-test/paragonb/run.json",
+        "self_test_pulses": 3,
+        "sha256": "49712672b71b84b0842c430b89e9ea75c8f44c7b82ad321fb91e7275851abf0f",
+        "snapshot_count": 5
+      },
+      {
+        "name": "solenoid-test-paragonc",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/solenoid-test/paragonc/run.json",
+        "self_test_pulses": 3,
+        "sha256": "cad2bfbe91319a44949e6bbf9d57da87c97364c23b8085648daa02132361cee8",
+        "snapshot_count": 5
+      },
+      {
+        "name": "solenoid-test-paragond",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 1.2,
+            "switch": -7
+          }
+        ],
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/solenoid-test/paragond/run.json",
+        "self_test_pulses": 3,
+        "sha256": "2679208b9d7344ab2e3639c8406e057e090b5e29ee08720a428587e6dffed0c9",
+        "snapshot_count": 5
+      },
+      {
+        "action_count": 87,
+        "name": "switch-test-paragon",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/switch-test/paragon/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/paragon-switch-test.json",
+        "scenario_sha256": "33715897e910cda44b5bea39f5c66b6c25f91d704a5e5bca2e5dd9a3d59ac23f",
+        "self_test_pulses": 5,
+        "sha256": "fb8454f7a78a80896d8f324d40e2e89c97d4ce119cc090c00e69ecd2b79b6022",
+        "snapshot_count": 88,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "action_count": 53,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "gameplay-paragon",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/gameplay/paragon/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/paragon-gameplay.json",
+        "scenario_sha256": "5f2865cc19f99cb001cdbca894d299276bba0f8b7616ea4b43ebb22ebe8963ec",
+        "self_test_pulses": 0,
+        "sha256": "32266fc78b1f5fb208866750173fa586bea7c471d95099c9b9b8a2fceda159d0",
+        "snapshot_count": 54,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          17,
+          18,
+          19,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          81,
+          82,
+          83,
+          84
+        ]
+      },
+      {
+        "action_count": 9,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "tilt-paragon",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/paragon-1979/harness/tilt/paragon/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/paragon-tilt.json",
+        "scenario_sha256": "7784b051781ebbffb2f6471cef7b7ede0389d359f0a69f766102cb4fea3063a9",
+        "self_test_pulses": 0,
+        "sha256": "06df5761a93ab3f29846e45529ae4578532f9e1631f4912305d1ca670f6d2913",
+        "snapshot_count": 10,
+        "watch_switches": [
+          6,
+          7,
+          8,
+          10,
+          82
+        ]
+      }
+    ],
+    "rom_archive_sha256": "10658131055e35b5c2ec2baa60636e034c007e0d78a49b178c80806b424b5027"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. PinMAME also publishes its generic flipper power states 45 and 47 beside 46 and 48; they are outside the BY35 controller profile's address rules and are left out of the observations.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: the SHA-256 recorded in manifest.sha256 beside manifest.json, built by tools/build_external_evidence_manifest.py, which lists every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sorted by path, serialised as compact canonical JSON (separators=(',',':'), sort_keys=True, ensure_ascii=False) plus a newline, encoded UTF-8. At capture time the tree held 38 files totalling 4124136 bytes. Individual run hashes are in runtime.raw_runs[].sha256.",
+    "path": "external:pinmame-review-artifacts/paragon-1979/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "aaa4b262fda58de594d419acaa1297a0b970e3a6524d3ce1ab42b1e12cdfd196"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

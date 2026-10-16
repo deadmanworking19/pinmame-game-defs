@@ -81,7 +81,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 132 | Dirty Harry | `williams.dirty-harry.1995` | 19% |
 | 134 | Avatar | `stern.avatar-limited-edition.2010` | 94% |
 | 134 | Avatar | `stern.avatar-pro.2010` | 88% |
-| 136 | Paragon | `bally.paragon.1979` | 19% |
+| 136 | Paragon | `bally.paragon.1979` | 94% |
 | 137 | Demolition Man | `williams.demolition-man.1994` | 88% |
 | 137 | Transformers | `stern.transformers-limited-edition.2011` | 94% |
 | 137 | Transformers | `stern.transformers-pro.2011` | 94% |

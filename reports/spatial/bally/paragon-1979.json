@@ -1,0 +1,97 @@
+{
+  "callout_check": {
+    "checked": 35,
+    "excluded": {
+      "device.in-line-drop-target-reset.effect": "a documented projection of a hidden coil onto the centre of its bank; projections are exempt from the callout limit, and Figure V prints 12 below the front target",
+      "device.left-flippers.lower": "Figure V prints 15 beside, not on, each flipper; the flipper pivot is one of this page's controls, and its own leave-one-out offset decides it (see the curator)",
+      "device.left-flippers.upper": "Figure V prints 15 beside, not on, each flipper; the flipper pivot is one of this page's controls, and its own leave-one-out offset decides it (see the curator)",
+      "device.right-flippers.lower": "Figure V prints 15 beside, not on, each flipper; the flipper pivot is one of this page's controls, and its own leave-one-out offset decides it (see the curator)",
+      "device.right-flippers.upper": "Figure V prints 15 beside, not on, each flipper; the flipper pivot is one of this page's controls, and its own leave-one-out offset decides it (see the curator)",
+      "device.treasure-chamber-saucer-kicker.effect": "Figure V prints 03 in the open area up-left of the saucer; the placement is the same SW31 object, which switch callout 31 checks",
+      "device.waterfall-drop-target-reset.effect": "a documented projection of a hidden coil onto the bank's middle target; projections are exempt from the callout limit, and Figure V prints 13 below the front target",
+      "switch.bottom-thumper-bumper.sensor": "Figure V prints 37 below the lower-left bumper ring; the placement is the same Bumper1 object, which solenoid callout 10 printed inside the ring checks",
+      "switch.center-thumper-bumper.sensor": "Figure V prints 38 left of the centre bumper ring; the placement is the same Bumper2 object, which solenoid callout 11 printed inside the ring checks",
+      "switch.outhole.sensor": "Figure V prints 08 beside the outhole, right of the 01 that marks the outhole kicker; the placement is the same Drain object, which callout 01 checks"
+    },
+    "limit": 0.07,
+    "pages": {
+      "figure-v-solenoids": {
+        "image_sha256": "949852dd9f0ef1dcd75882a3c5ac9476af402a4705a949509f9742eaeaaed9aa",
+        "locator": "Bally_1979_Paragon_Manual.pdf PDF 22, printed 18: Figure V, solenoid numbers (squares)"
+      },
+      "figure-v-switches": {
+        "image_sha256": "949852dd9f0ef1dcd75882a3c5ac9476af402a4705a949509f9742eaeaaed9aa",
+        "locator": "Bally_1979_Paragon_Manual.pdf PDF 22, printed 18: Figure V, switch assembly numbers (circles)"
+      }
+    },
+    "validated": 33
+  },
+  "coordinate_convention": {
+    "space": "playfield",
+    "x": "0=left, 1=right in player view",
+    "y": "0=rear/backglass end, 1=apron end in player view"
+  },
+  "coverage": {
+    "missing": [
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "definition_sha256": "86ea93ba31b7bc74a8047b28e8df8305a8ff4cd376b1e187503712124c2068b1",
+  "format": "pinmame-spatial-blockers",
+  "lamp_validation": "Every playfield lamp placement is the table light L<address> the script binds by name; each light sits on an insert whose printed art names the lamp's function (value, letter or caption), or, for the four uncaptioned spinner inserts, on the column the factory sheet orders bottom (1) to top (4); the two uncaptioned Treasure Chamber inserts are named by the captions on the plastic beside them.",
+  "machine_id": "bally.paragon.1979",
+  "not_applicable_counts": {
+    "cabinet_or_service": 20,
+    "dip_switch": 32,
+    "unused": 22
+  },
+  "placement_status_counts": {
+    "observed": 2,
+    "validated": 97
+  },
+  "projection_disclosures": [
+    {
+      "class": "hidden assembly projected onto the mean of the four in-line target walls sw1-sw4",
+      "devices": [
+        "device.in-line-drop-target-reset"
+      ]
+    },
+    {
+      "class": "hidden assembly projected onto the waterfall bank's middle target sw18",
+      "devices": [
+        "device.waterfall-drop-target-reset"
+      ]
+    },
+    {
+      "class": "parallel contacts on one address, one placement per contact; the rebound rubbers are pieces of the baked collidable primitives sw27a and sw34b",
+      "devices": [
+        "switch.500-point-rebound",
+        "switch.top-right-golden-cliffs-rollover-button-and-drop-target-rebound"
+      ]
+    },
+    {
+      "class": "two flipper coils per output, one placement per flipper pivot",
+      "devices": [
+        "device.left-flippers",
+        "device.right-flippers"
+      ]
+    }
+  ],
+  "promotion_decision": "Not promotable: the placements listed as unvalidated did not pass the factory drawing's callout check.",
+  "source_hashes": {
+    "callout_seed_sha256": "964736a4952edc669212a65d63626e62521a9f6e71bca5f18249abc054beb191",
+    "extraction_manifest_sha256": "0356d2d0bfe7c78c786196e4af7f6ec82e086108ec413420700c5679a72cdef6",
+    "manual_sha256": "3da1eceb7cb3b27f268f11ad438c8e00ced0ad150051a137d55bf662515725f6",
+    "schematic_sha256": "a440fdc38cbc9243154fe64a3aeec3ee61c8973893ecaf434d3a28346ae01c9a",
+    "spatial_seed_sha256": "29dc8ba71cce41edc19a0cec07cf7b080d37ba2cab0d0158f29c7fcb8101a885",
+    "vpx_table_sha256": "3c83b8787112f82880ae7c3ff2f6fbddb846029562359300db13691ea8dcb094"
+  },
+  "transformation": "x = raw_x / 1257.0, y = raw_y / 1974.0, rounded to six places. Wall objects use the mean of their drag points; Light, Trigger, Bumper, Flipper, Spinner and Kicker objects their stored centre; HitTarget objects their stored position; the collidable primitives sw27a and sw34b, whose geometry is baked into the mesh at position (0,0,0) with no rotation, the centre of each connected mesh piece's bounding box after scaling the extracted OBJ vertices by the primitive's size (185.274). Objects are frozen in tools/seeds/bally/paragon-1979-spatial.json.",
+  "unplaced_physical_devices": [],
+  "unvalidated_placements": [
+    "switch.500-point-rebound.upper-rebound",
+    "switch.spinner.sensor"
+  ],
+  "version": 1
+}

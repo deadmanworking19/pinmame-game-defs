@@ -25,6 +25,8 @@ IMAGE_LIMIT = 100_000
 # every table crop, which is where tightening the crop is the right answer.
 DRAWING_LIMIT = 1_500_000
 PAGE_SCALE_DRAWINGS = {
+	"excerpt.paragon.manual-figure-v",
+	"excerpt.paragon.schematic-lamp-driver",
 	"excerpt.seawitch.lamp-circuit",
 	"excerpt.seawitch.coil-circuit",
 	"excerpt.seawitch.playfield-circuit",

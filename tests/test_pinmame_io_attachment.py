@@ -13,7 +13,7 @@ PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 CORE_SOURCE_ID = f"pinmame.core.{PINMAME_REVISION[:12]}"
 
 EXPECTED_PLATFORM_COUNTS = {
-	"pinmame.by35": 42,
+	"pinmame.by35": 41,
 	# Kingpin (curated 2026-09-25) now declares its platform from the curated definition.
 	"pinmame.capcom": 3,
 	"pinmame.dataeast": 13,

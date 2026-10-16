@@ -1,0 +1,78 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute I (public 10)",
+      "settle_s": 1.5,
+      "switch": 10,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "right flipper button (public 82) held",
+      "settle_s": 1.0,
+      "state": 1,
+      "switch": 82,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "tilt (public 7)",
+      "settle_s": 3.0,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "label": "right flipper button (public 82) released",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 82,
+      "type": "set_switch"
+    },
+    {
+      "label": "right flipper button (public 82) held after tilt",
+      "settle_s": 1.0,
+      "state": 1,
+      "switch": 82,
+      "type": "set_switch"
+    },
+    {
+      "label": "right flipper button (public 82) released after tilt",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 82,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "paragon",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 8
+    }
+  ],
+  "notes": "Tilt probe: start a game, hold the right flipper button, pulse the tilt switch and check that the flipper-enable relay output and the right flipper output drop.",
+  "version": 1,
+  "watch_switches": [
+    8
+  ]
+}
