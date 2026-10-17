@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import curate_corvette as curator  # noqa: E402
 import corvette_runtime_evidence as evidence_tool  # noqa: E402
+import drawing_callouts  # noqa: E402
 
 DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "corvette-1994.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "corvette-1994.json"
@@ -30,6 +31,10 @@ MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range
 CORV_INVERTED_SWITCH_MASK = (0x00, 0x00, 0x00, 0x7F, 0x07, 0x33, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00)
 LIBRARY_SHA256 = "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
 ROM_ARCHIVE_SHA256 = "20e161d4e397650d436fc85ef01ce78bc144905444bd7e5fb4331f58edd5e211"
+SCRIPT_SHA256 = "d30534b6664ed214a3c8b33597ab1021bcc66e979363611e218d4fccb35e5bb5"
+# Seed entries whose coordinate is a script constant, not the named object's own point: the race encoders sit at each
+# lane's finish end (BlueCarXFinish/BlueCarYFinish and RedCarXFinish/RedCarYFinish).
+SCRIPT_CONSTANT_POINTS = {("switch", "55"): (878.0, 117.0), ("switch", "56"): (936.0, 117.0)}
 
 
 def load(path: Path) -> dict:
@@ -61,8 +66,12 @@ class CorvetteTests(unittest.TestCase):
 		self.assertEqual({"corv_px3", "corv_px4", "corv_px5"}, {k for k, v in drivers.items() if v["physical_compatibility"] == "unknown"})
 		self.assertEqual("identical", drivers["corv_f61"]["physical_compatibility"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["variant_differences", "mechanism_behavior", "spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual(["variant_differences", "spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual(["conflict.gi-string-halves"], [conflict["id"] for conflict in self.definition["conflicts"]])
+		conflict = self.definition["conflicts"][0]
+		self.assertNotIn("status", conflict)
+		self.assertIn("Resolution path:", conflict["description"])
+		self.assertEqual([curator.MANUAL_SOURCE, curator.GI_TEST_SOURCE, curator.VPX_SCRIPT_SOURCE], conflict["source_refs"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertFalse(AUTHOR_READY_PATH.exists())
 
@@ -153,7 +162,10 @@ class CorvetteTests(unittest.TestCase):
 		race = mechanisms["mechanism.race-track"]
 		self.assertEqual([self.coils[a]["id"] for a in (17, 18, 19)], race["actuators"])
 		self.assertEqual([f"switch.matrix-{a}" for a in (51, 55, 52, 56)], race["sensors"])
-		self.assertIn("No retained source says", mechanisms["mechanism.zr1-lock"]["behavior"])
+		lock = mechanisms["mechanism.zr1-lock"]["behavior"]
+		for phrase in ("LGate", "Wall12", "GateU", "Kicker1", "Kicker3", "the ROM decides when to fire them"):
+			self.assertIn(phrase, lock, phrase)
+		self.assertIn("table approximation", engine["behavior"])
 		self.assertEqual([], self.definition["relationships"])
 
 	def test_every_excerpt_is_pinned_and_every_source_is_cited(self) -> None:
@@ -162,9 +174,13 @@ class CorvetteTests(unittest.TestCase):
 			cited.update(item["provenance"]["source_refs"])
 			spatial = item.get("spatial") or {}
 			cited.update(spatial.get("provenance", {}).get("source_refs", []))
+			for placement in spatial.get("placements", []):
+				cited.update(placement["provenance"]["source_refs"])
+		for conflict in self.definition["conflicts"]:
+			cited.update(conflict["source_refs"])
 		sources = {source["id"]: source for source in self.definition["sources"]}
 		self.assertLessEqual(cited, set(sources))
-		self.assertEqual(set(sources), cited | {curator.CATALOG_SOURCE})
+		self.assertEqual(set(sources), cited | {curator.CATALOG_SOURCE, curator.VPX_EXTRACTION_SOURCE})
 		excerpts = set()
 		for source in sources.values():
 			self.assertIn("license", source)
@@ -172,9 +188,150 @@ class CorvetteTests(unittest.TestCase):
 				excerpts.add(Path(excerpt["path"]).stem)
 				self.assertEqual(hashlib.sha256((ROOT / excerpt["path"]).read_bytes()).hexdigest(), excerpt["sha256"], excerpt["id"])
 				self.assertNotIn(b"\r", (ROOT / excerpt["path"]).read_bytes(), excerpt["id"])
+				if "image" in excerpt:
+					self.assertEqual(hashlib.sha256((ROOT / excerpt["image"]).read_bytes()).hexdigest(), excerpt["image_sha256"], excerpt["id"])
+					self.assertIn("rendered at its native resolution", excerpt["image_derivation"])
 		self.assertEqual({path.stem for path in EXCERPT_DIRECTORY.glob("*.md")}, excerpts)
+		self.assertEqual({path.stem for path in EXCERPT_DIRECTORY.glob("*.webp")}, {"switch-locations", "lamp-locations", "solenoid-flasher-locations"})
+		self.assertTrue(sources[curator.VPX_SCRIPT_SOURCE]["known_working"])
+		self.assertEqual(SCRIPT_SHA256, sources[curator.VPX_SCRIPT_SOURCE]["sha256"])
+		contract = (EXCERPT_DIRECTORY / "vpx-script-contract.md").read_text(encoding="utf-8")
+		self.assertIn(SCRIPT_SHA256, contract)
+		for snippet in ('SolCallback(2) = "SolLGate"', "bsLock.InitKick Kicker3,235,1", "For each xx in GI1:xx.State = 1: Next", "NFadeLm 128,  L128"):
+			self.assertIn(snippet, contract, snippet)
 		for path in EXCERPT_DIRECTORY.glob("*.md"):
 			self.assertIsNone(re.search(r"[A-Z]:[\\/]", path.read_text(encoding="utf-8")), path.name)
+
+	def test_placements_are_in_range_unique_and_quantities_align(self) -> None:
+		ids = []
+		for item in self.definition["inputs"] + self.definition["outputs"] + self.definition["displays"]:
+			spatial = item.get("spatial")
+			if not spatial or spatial["status"] == "not_applicable":
+				continue
+			for placement in spatial["placements"]:
+				ids.append(placement["id"])
+				self.assertTrue(0 <= placement["x"] <= 1 and 0 <= placement["y"] <= 1, placement["id"])
+				for value in (placement["x"], placement["y"]):
+					self.assertLessEqual(len(f"{value:.10f}".rstrip("0").split(".")[1]), 6, placement["id"])
+			quantity = item.get("physical", {}).get("quantity")
+			if quantity is not None and item["kind"] in {"lamp", "flasher"}:
+				self.assertGreaterEqual(quantity, len(spatial["placements"]), item["id"])
+		self.assertEqual(len(ids), len(set(ids)))
+		# The jet bumpers pair as the script's events fire them: left 63 on Bumper2, bottom 64 on Bumper1, right 65 on Bumper3.
+		seed = load(curator.SPATIAL_SEED_PATH)
+		self.assertEqual({"63": "Bumper2", "64": "Bumper1", "65": "Bumper3"}, {a: seed["switch"][a][0]["object"] for a in ("63", "64", "65")})
+		self.assertEqual({}, seed["gi"])
+		# Every fitted playfield device is placed except the four playfield G.I. strings the conflict holds back and the devices
+		# the table draws only on Flasher sprites (a glow, not a socket) or a light parked off the playfield.
+		report = load(SPATIAL_REPORT_PATH)
+		sprite_only = [f"lamp.matrix-{a}" for a in (76, 77, 78, 81, 82, 83, 84, 85, 86)]
+		self.assertEqual(sorted(["device.zr-1-underside-flasher", "gi.string-1", "gi.string-2", "gi.string-3", "gi.string-4", *sprite_only]), report["without_placements"])
+		self.assertEqual((2, 2), (self.lamps[83]["physical"]["quantity"], self.lamps[84]["physical"]["quantity"]))
+		for address in (76, 77, 78, 81, 82, 83, 84, 85, 86):
+			self.assertIn("a Flasher sprite is a glow, not evidence of a socket", self.lamps[address]["physical"]["notes"], address)
+		# 53 and 68 sit on the table's stacked bulb meshes, not on their glow sprites.
+		self.assertEqual({"53": "L81P1", "68": "L81P4"}, {a: seed["lamp"][a][0]["object"] for a in ("53", "68")})
+		for category in ("lamp", "solenoid"):
+			self.assertEqual([], [entry["object"] for entries in seed[category].values() for entry in entries if entry["object"].casefold().startswith(("f5", "f6", "f7", "f8", "flasher"))], category)
+		# Placement provenance names the coordinate source, the script binding and, for a projection, the manual.
+		for item in self.definition["inputs"] + self.definition["outputs"]:
+			for placement in (item.get("spatial") or {}).get("placements", []):
+				refs = placement["provenance"]["source_refs"]
+				self.assertLessEqual({curator.VPX_TABLE_SOURCE, curator.VPX_SCRIPT_SOURCE}, set(refs), placement["id"])
+				address = item["binding"]["device"]
+				category = "switch" if item["binding"]["group"] == curator.SWITCH_GROUP else "solenoid" if item["binding"]["group"] == curator.SOLENOID_GROUP else "lamp"
+				self.assertEqual((category, address) in curator.PROJECTED_PLACEMENTS, curator.MANUAL_SOURCE in refs, placement["id"])
+		for address in range(4):
+			self.assertNotIn("spatial", self.gi[address], address)
+			self.assertIn("G.I. string conflict", self.gi[address]["physical"]["notes"], address)
+
+	def test_drawing_callout_check_decides_every_placement_status(self) -> None:
+		seed = load(curator.CALLOUT_SEED_PATH)
+		decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(self.definition), seed.get("limit", drawing_callouts.LIMIT))
+		agreeing = {pid for pid, decision in decisions["placements"].items() if decision["agrees"]}
+		validated = {
+			placement["id"]
+			for item in self.definition["inputs"] + self.definition["outputs"] + self.definition["displays"]
+			for placement in (item.get("spatial") or {}).get("placements", [])
+			if placement["provenance"]["status"] == "validated"
+		}
+		self.assertEqual(agreeing, validated)
+		self.assertGreaterEqual(len(validated), 90)
+		self.assertEqual({"2-45", "2-47", "2-49"}, set(seed["pages"]))
+		for key, page in seed["pages"].items():
+			self.assertEqual(5, len(page["controls"]), key)
+			self.assertLessEqual(decisions["pages"][key]["control_loo_max"], 0.025, key)
+			for read in page["reads"]:
+				if read["region"] != "playfield":
+					self.assertIn(read["region"], {"race-track", "race-tree-inset", "cabinet"}, (key, read["label"]))
+		self.assertEqual({}, seed["measurements"])
+		projected = {f"switch.matrix-{a}.sensor" for a in (31, 32, 33, 34, 37, 51, 52, 55, 56, 71, 72, 76, 77, 78)}
+		self.assertLessEqual(projected, set(seed["excluded_checks"]))
+		self.assertEqual(set(), projected & validated)
+		self.assertEqual(set(), {f"lamp.matrix-{a}.emitter" for a in range(81, 87)} & validated)
+		for pid, reason in seed["excluded_checks"].items():
+			self.assertNotIn(pid, seed["checks"])
+			self.assertTrue(reason)
+		corrected = {(key, read["label"]) for key, page in seed["pages"].items() for read in page["reads"] if "verifier_note" in read}
+		self.assertEqual({("2-47", "18"), ("2-47", "64"), ("2-47", "65"), ("2-47", "68"), ("2-47", "86"), ("2-49", "11"), ("2-49", "12")}, corrected)
+
+	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
+	def test_the_retained_callout_artifacts_match_the_seed(self) -> None:
+		seed = load(curator.CALLOUT_SEED_PATH)
+		checked = drawing_callouts.verify_retained(seed, ROOT, None, Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]))
+		self.assertGreater(checked, 3)
+
+	@unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root is not configured")
+	def test_the_retained_vpx_extraction_matches_its_pinned_identity(self) -> None:
+		root = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"])
+		manifest = curator.verify_extraction_manifest(root)
+		self.assertEqual(curator.EXTRACTION_FILE_COUNT, len(manifest["files"]))
+		table = root / "bally" / "corvette-1994" / "source" / curator.TABLE_NAME
+		self.assertEqual(curator.TABLE_SHA256, hashlib.sha256(table.read_bytes()).hexdigest())
+		script = root / curator.EXTRACTION_RELATIVE_PATH / "script.vbs"
+		self.assertEqual(SCRIPT_SHA256, hashlib.sha256(script.read_bytes()).hexdigest())
+		text = script.read_text(encoding="utf-8", errors="replace")
+		for snippet in (
+			'Const cGameName="corv_21"', ".HandleMechanics = 7", 'SolCallback(15) ="bsLock.SolOut"', "bsLock.InitSw 0,76,77,78,0,0,0,0",
+			"bsLock.InitKick Kicker3,235,1", "Sub SolLGate(Enabled) 'Lock Gate 1", "'SolCallback(33) =", "engnew=Controller.getmech(2)",
+			"For each xx in GI1:xx.State = 1: Next",
+		):
+			self.assertIn(snippet, text, snippet)
+
+	@unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root is not configured")
+	def test_every_table_coordinate_recomputes_from_the_retained_gameitems(self) -> None:
+		"""Each table-derived seed coordinate is its object's own point: a light, kicker, bumper, gate, flipper, spinner or
+		plunger centre, a trigger's, wall's or rubber's drag-point centroid, or a hit target's or primitive's position; never a
+		Flasher sprite, which is a glow rather than a socket. The race encoders take the script's finish constants instead (SCRIPT_CONSTANT_POINTS)."""
+		gameitems = Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		by_name = {path.stem.split(".", 1)[1].lower(): path for path in gameitems.glob("*.json")}
+
+		def point(name: str) -> tuple[float, float]:
+			path = by_name[name.lower()]
+			kind = path.stem.split(".")[0]
+			data = json.loads(path.read_text(encoding="utf-8"))[kind]
+			if kind in {"Trigger", "Wall", "Rubber"}:
+				vertices = [item.get("vertex", item) for item in data["drag_points"]]
+				return sum(v["x"] for v in vertices) / len(vertices), sum(v["y"] for v in vertices) / len(vertices)
+			if kind in {"Primitive", "HitTarget"}:
+				return data["position"]["x"], data["position"]["y"]
+			self.assertNotEqual("Flasher", kind, name)
+			return data["center"]["x"], data["center"]["y"]
+
+		script = (Path(os.environ["PINMAME_VPX_SOURCES_ROOT"]) / curator.EXTRACTION_RELATIVE_PATH / "script.vbs").read_text(encoding="utf-8", errors="replace")
+		for car, (x, y) in (("BlueCar", SCRIPT_CONSTANT_POINTS[("switch", "55")]), ("RedCar", SCRIPT_CONSTANT_POINTS[("switch", "56")])):
+			self.assertRegex(script, rf"Const {car}XFinish\s*=\s*{int(x)}\b")
+			self.assertRegex(script, rf"Const {car}YFinish\s*=\s*{int(y)}\b")
+		seed = load(curator.SPATIAL_SEED_PATH)
+		checked = 0
+		for category in ("switch", "solenoid", "lamp"):
+			for address, entries in seed[category].items():
+				for entry in entries:
+					x, y = SCRIPT_CONSTANT_POINTS.get((category, address)) or point(entry["object"])
+					self.assertAlmostEqual(x / curator.PLAYFIELD_WIDTH, entry["x"], delta=2e-6, msg=(category, address, entry["object"]))
+					self.assertAlmostEqual(y / curator.PLAYFIELD_HEIGHT, entry["y"], delta=2e-6, msg=(category, address, entry["object"]))
+					checked += 1
+		self.assertGreater(checked, 120)
 
 	def test_no_artifact_names_another_machines_driver_or_record(self) -> None:
 		catalog = load(ROOT / "catalog" / "pinmame.json")
@@ -201,7 +358,7 @@ class CorvetteTests(unittest.TestCase):
 		self.assertEqual(curator.KNOWLEDGE_SEED_PATH.read_bytes(), KNOWLEDGE_PATH.read_bytes())
 		self.assertNotIn(b"\r", KNOWLEDGE_PATH.read_bytes())
 		note = KNOWLEDGE_PATH.read_text(encoding="utf-8")
-		for phrase in ("engine", "race track", "GetMech(2)", "shifter", "spatial_placement", "mechanism_behavior", "112 and 116"):
+		for phrase in ("engine", "race track", "GetMech(2)", "shifter", "spatial_placement", "unresolved_conflicts", "112 and 116", "LGate"):
 			self.assertIn(phrase.casefold(), note.casefold(), phrase)
 		with self.assertRaises(RuntimeError):
 			original = KNOWLEDGE_PATH.read_bytes()

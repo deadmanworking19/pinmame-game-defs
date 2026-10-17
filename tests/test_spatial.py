@@ -539,7 +539,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Spectrum's gameplay run settles both of its legacy switch conflicts, removing one more.
 		# Jurassic Park's curation adds one: the bank 1R bulb-count disagreement between its schematic, drawing and ROM.
 		# Black Hole's curation adds one: its manual's tilt mode and illumination sheet disagree on the pop bumper lamps.
-		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Corvette's table pass adds one: its retained table lights the opposite G.I. halves from the manual's string names.
+		self.assertEqual(40, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])
 		self.assertEqual(808, catalog["summary"]["machine_count"])

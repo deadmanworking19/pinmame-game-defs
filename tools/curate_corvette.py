@@ -10,11 +10,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import re
 from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+import drawing_callouts
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +28,8 @@ KNOWLEDGE_PATH = ROOT / "knowledge/bally/corvette-1994.md"
 KNOWLEDGE_SEED_PATH = ROOT / "tools/seeds/bally/corvette-1994.md"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/corvette-1994.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/bally/corvette-1994.md"
+SPATIAL_SEED_PATH = ROOT / "tools/seeds/bally/corvette-1994-spatial.json"
+CALLOUT_SEED_PATH = ROOT / "tools/seeds/bally/corvette-1994-callouts.json"
 
 PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 CATALOG_SOURCE = "pinmame.catalog.97aa922bf8e4"
@@ -46,6 +50,22 @@ ENGINE_FAILED_SOURCE = "runtime.corvette.engine-test-no-mech"
 ZR1_ADJUST_SOURCE = "runtime.corvette.zr1-adjust"
 RACE_TEST_SOURCE = "runtime.corvette.race-test"
 EVIDENCE_DIRECTORY = "evidence/runtime/wpc-security"
+VPX_TABLE_SOURCE = "vpx-table.corvette-1-4-2"
+VPX_SCRIPT_SOURCE = "vpx-script.corvette-1-4-2"
+VPX_EXTRACTION_SOURCE = "vpx-extraction.corvette-1-4-2"
+CALLOUT_SOURCE = "drawing-callouts.corvette.2026-10-17"
+
+TABLE_NAME = "Corvette (Bally 1994).vpx"
+TABLE_SHA256 = "4b500c6b33b280b0076e49b2e817fad2d1131095efeb57fd58bd160b7d8a010c"
+SCRIPT_SHA256 = "d30534b6664ed214a3c8b33597ab1021bcc66e979363611e218d4fccb35e5bb5"
+PLAYFIELD_WIDTH = 979.0
+PLAYFIELD_HEIGHT = 2162.0
+TABLE_BOUNDS = "left=0 top=0 right=979 bottom=2162"
+EXTRACTION_FILE_COUNT = 1390
+EXTRACTION_TOTAL_BYTES = 235785204
+EXTRACTION_MANIFEST_SHA256 = "4ea1e9978b46256fc5ed1f8776dabb543cc5a78ecbd578c7546f29125ee74b89"
+EXTRACTION_RELATIVE_PATH = Path("bally/corvette-1994/extracted-vpxtool")
+EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/corvette-1994/extracted-vpxtool.manifest.json")
 
 MANUAL_NAME = "Bally_1994_Corvette_Manual.pdf"
 MANUAL_SHA256 = "60a87faf6ef22fec895f5c5adde5a92bff731e34d54fb838af1b29d3bd428e34"
@@ -236,6 +256,41 @@ def _excerpt_digests() -> dict[str, str]:
 EXCERPT_FILE_HASHES = _excerpt_digests()
 
 
+def build_extraction_manifest(extraction_root: Path) -> dict[str, Any]:
+	if not extraction_root.is_dir():
+		raise RuntimeError(f"Corvette retained extraction is missing: {extraction_root}")
+	paths = sorted((path for path in extraction_root.rglob("*") if path.is_file()), key=lambda path: path.relative_to(extraction_root).as_posix())
+	return {
+		"format": "pinmame-vpx-extraction-manifest",
+		"version": 1,
+		"files": [{"path": path.relative_to(extraction_root).as_posix(), "size": path.stat().st_size, "sha256": _file_sha256(path)} for path in paths],
+	}
+
+
+def configured_vpx_sources_root(*, required: bool) -> Path | None:
+	value = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+	if not value:
+		if required:
+			raise RuntimeError("PINMAME_VPX_SOURCES_ROOT is required to verify the retained Corvette extraction")
+		return None
+	return Path(value).expanduser().resolve()
+
+
+def verify_extraction_manifest(source_root: Path) -> dict[str, Any]:
+	extraction_root = source_root / EXTRACTION_RELATIVE_PATH
+	manifest_path = source_root / EXTRACTION_MANIFEST_RELATIVE_PATH
+	if not manifest_path.is_file():
+		raise RuntimeError(f"Corvette retained extraction manifest is missing: {manifest_path}")
+	actual = load_json(manifest_path)
+	if canonical_bytes(actual) != canonical_bytes(build_extraction_manifest(extraction_root)):
+		raise RuntimeError(f"Corvette retained extraction manifest does not match all files under {extraction_root}")
+	files = actual["files"]
+	identity = (len(files), sum(int(item["size"]) for item in files), hashlib.sha256(canonical_bytes(actual)).hexdigest())
+	if identity != (EXTRACTION_FILE_COUNT, EXTRACTION_TOTAL_BYTES, EXTRACTION_MANIFEST_SHA256):
+		raise RuntimeError(f"Corvette retained extraction identity mismatch: files={identity[0]}, bytes={identity[1]}, manifest_sha256={identity[2]}")
+	return actual
+
+
 def provenance(status: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": status, "source_refs": list(source_refs)}
 
@@ -259,6 +314,44 @@ def _device(identifier: str, label: str, kind: str, group: str, address: int, av
 
 def output_id(label: str) -> str:
 	return "device." + (re.sub(r"[^a-z0-9]+", "-", label.casefold()).strip("-") or "unnamed")
+
+
+def _spatial_seed() -> dict[str, Any]:
+	return load_json(SPATIAL_SEED_PATH)
+
+
+# Placements projected onto a table object that models the device's mechanism rather than the device itself: the manual
+# locates the device in that mechanism (trough, lock, engine, race track), so it is cited beside the table and script.
+PROJECTED_PLACEMENTS = frozenset(
+	{("switch", a) for a in (31, 32, 33, 34, 37, 51, 52, 55, 56, 71, 72, 76, 77, 78)} | {("solenoid", 18), ("solenoid", 19)}
+)
+
+
+def located(category: str, address: int, identifier: str, role: str) -> dict[str, Any] | None:
+	"""Located spatial record for one device from the committed placement seed, or None.
+
+	Table-derived placements start as ``observed``, citing the table for the coordinate and the script for the binding that
+	picks the object (and, for 55/56, the finish constants that give the point); a projection also cites the manual.
+	``drawing_callouts.apply_to_definition`` promotes the ones the factory location drawings confirm.
+	"""
+	entries = _spatial_seed()[category].get(str(address))
+	if not entries:
+		return None
+	refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE) + ((MANUAL_SOURCE,) if (category, address) in PROJECTED_PLACEMENTS else ())
+	placements = []
+	for index, entry in enumerate(entries, start=1):
+		suffix = f".{index}" if len(entries) > 1 else ""
+		placements.append({
+			"id": f"{identifier}.{role}{suffix}", "role": role, "space": "playfield", "x": entry["x"], "y": entry["y"],
+			"provenance": provenance("observed", *refs),
+		})
+	return {"status": "observed", "placements": placements}
+
+
+def _spatial_note(category: str, address: int) -> str:
+	entries = _spatial_seed()[category].get(str(address)) or []
+	notes = [entry["note"] for entry in entries if entry.get("note")]
+	return (" " + " ".join(dict.fromkeys(notes))) if notes else ""
 
 
 # --- Inputs --------------------------------------------------------------------------------------------
@@ -309,6 +402,36 @@ SWITCH_NOTES = {
 	87: "The left outer loop switch.",
 	88: "The right outer loop switch.",
 }
+
+
+# What the retained known-working version 1.4.2 script does for each matrix switch.
+SWITCH_SCRIPT = {
+	13: "the start key sets it while held", 14: "vpmNudge.TiltSwitch = 14", 18: "sw18_Spin pulses it",
+	22: "Table1_Init sets Controller.Switch(22) = 1 (door closed)", 23: "the front (buy-in) key sets it while held",
+	24: "Table1_Init sets Controller.Switch(24) = 1",
+	31: "the trough ball stack bsTrough (InitSw 0,31,32,33,34) holds it with four balls", 32: "the trough ball stack bsTrough holds it",
+	33: "the trough ball stack bsTrough holds it", 34: "the trough ball stack bsTrough holds it",
+	36: "the pit stop ball stack bsL (InitSw 0,36) holds it; the entry kicker sw36a adds balls to it",
+	37: "solTrough pulses it each time solenoid 1 ejects a ball",
+	41: "sw41_Hit sets it (and arms the engine magnets) and sw41_unHit clears it",
+	44: "sw44_Hit pulses it", 45: "sw45_Hit pulses it", 46: "sw46_Hit pulses it", 47: "sw47_Hit pulses it", 48: "sw48_Hit pulses it",
+	51: "no script binding: PinMAME's car model writes it (HandleMechanics 7) and Mech_Timer moves the cars from GetMech(0) and GetMech(1)",
+	52: "no script binding: PinMAME's car model writes it (HandleMechanics 7)", 55: "no script binding: PinMAME's car model writes it (HandleMechanics 7)",
+	56: "no script binding: PinMAME's car model writes it (HandleMechanics 7)",
+	57: "the Route 66 ball stack bsR (InitSw 0,57) holds it; the kickers sw57a and Kicker3 add balls to it",
+	61: "LeftSlingShot_Slingshot pulses it", 62: "RightSlingShot_Slingshot pulses it",
+	63: "Bumper2_Hit pulses it", 64: "Bumper1_Hit pulses it", 65: "Bumper3_Hit pulses it",
+	71: "the rubber SW71 beside the engine sets it on a hit, which PinMAME's engine model (HandleMechanics 7) overwrites from the engine position every update",
+	72: "the rubber SW72 beside the engine sets it on a hit, which PinMAME's engine model overwrites from the engine position every update",
+	75: "sw75_Hit pulses it",
+	76: "the lock ball stack bsLock (InitSw 0,76,77,78) holds it; the kicker Kicker1 adds balls to it", 77: "the lock ball stack bsLock holds it",
+	78: "the lock ball stack bsLock holds it",
+	81: "sw81_Hit pulses it", 82: "sw82_Hit pulses it", 83: "sw83_Hit pulses it", 84: "sw84_Hit pulses it", 86: "sw86_Hit pulses it",
+}
+for _address in (11, 12, 15, 16, 17, 38, 66, 67, 68, 87, 88):
+	SWITCH_SCRIPT[_address] = f"sw{_address}_Hit sets it and sw{_address}_UnHit clears it"
+for _address in (35, 42, 43, 58):
+	SWITCH_SCRIPT[_address] = f"sw{_address}_Hit sets it and sw{_address}_unHit clears it"
 
 
 def _matrix_switch(address: int) -> dict[str, Any]:
@@ -402,6 +525,14 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 	elif address in SHIFTER_SWITCHES:
 		extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, IDENTITY_SOURCE)
 		physical["location"] = "cabinet side (prototype shifter)"
+	else:
+		spatial = located("switch", address, identifier, "sensor")
+		if spatial:
+			extra["spatial"] = spatial
+			notes += _spatial_note("switch", address)
+	if address in SWITCH_SCRIPT:
+		notes += f" Retained script: {SWITCH_SCRIPT[address]}."
+		refs += (VPX_SCRIPT_SOURCE,)
 	kind = "constant" if address == 24 else "switch"
 	if address == 24:
 		extra["constant_active"] = True
@@ -630,8 +761,41 @@ SOLENOID_NOTES = {
 	52: "Custom output 2: bit 1 of extension register 3, which the Master Board's U2 latch sends through the ULN2803 as the LEDA1 and LEDA2 lines to the Slave Board. The ROM toggles it with 53 while the engine moves in T.16. What the Slave Board does with the LED lines is not traced beyond the Master Board.",
 	53: "Custom output 3: bit 2 of extension register 3, sent as the LEDB1 and LEDB2 lines to the Slave Board; the ROM toggles it with 52 while the engine moves in T.16.",
 }
+# What the retained known-working version 1.4.2 script does for each solenoid (SolCallback table and the subs it names).
+SOLENOID_SCRIPT = {
+	1: "SolCallback(1) = \"solTrough\": the trough ball stack bsTrough ejects a ball from the kicker BallRelease and pulses switch 37",
+	2: "SolCallback(2) = \"SolLGate\" ('Lock Gate 1'): while the coil is on, the engine-ramp gate LGate is closed and the wall Wall12 is raised; off, LGate opens and Wall12 drops",
+	3: "SolCallback(3) = \"SolKickback\": fires the plunger KickBack on, pulls it back off",
+	4: "SolCallback(4) = \"bsL.SolOut\": the pit stop ball stack (switch 36) kicks its ball out of the kicker sw36",
+	5: "SolCallback(5) = \"SolGateU\" ('Lock Gate 2'): the upper engine-ramp gate GateU is open while the coil is on and closed off",
+	8: "SolCallback(8) = \"bsR.SolOut\": the Route 66 ball stack (switch 57) kicks its ball out of the kicker sw57",
+	15: "SolCallback(15) = \"bsLock.SolOut\": the lock ball stack (switches 76-78) ejects one ball at the kicker Kicker3, below the lock entry",
+	16: "SolCallback(16) = \"SolTGate\": the loop gate TGate is open while the coil is on and closed off",
+	17: "SolCallback(17) = \"SetLamp 117,\", commented 'motor controller and Flasher'; nothing draws lamp 117 ('Not Shown in the Service Manual No clue where it goes'), so the table consumes the direction only through PinMAME's car models",
+	18: "SolCallback(18) = \"SetLamp 118,\" ('motor controller'): lights the proxy flashers Flasher118/Flasher118a; the car itself moves from GetMech(0)",
+	19: "SolCallback(19) = \"SetLamp 119,\" ('motor controller'): lights the proxy flashers Flasher119/Flasher119a; the car itself moves from GetMech(1)",
+	20: "SolCallback(20) = \"SetLamp 120,\", commented 'Backglass Only' (light L120)",
+	26: "SolCallback(26) = \"SolEngine\", commented 'motor controller and flasher': it lights Flasher126 and L126, enables the four engine magnet triggers Magnet1-4 (the cvpmMagnet mag1 also names solenoid 26), and rocks the engine primitive 5 degrees each way as the output toggles, on top of the engine angle drawn from GetMech(2)",
+	33: "SolCallback(33) is commented out: the table moves the diverter from the hold winding alone",
+	34: "SolCallback(34) = \"SolDiv\": while the hold winding is on, DiverterON is raised, DiverterOFF dropped and the hidden flipper DivFlipper rotated to its end",
+	35: "no SolCallback: the table's SolLFlipper (the lower left flipper's callback) rotates the upper left flipper LeftFlipper1 with the lower left one",
+	36: "no SolCallback: the table's SolLFlipper rotates LeftFlipper1 with the lower left flipper",
+	45: "SolCallback(sLRFlipper) = \"SolRFlipper\" rotates RightFlipper", 46: "SolCallback(sLRFlipper) = \"SolRFlipper\" rotates RightFlipper",
+	47: "SolCallback(sLLFlipper) = \"SolLFlipper\" rotates LeftFlipper (and LeftFlipper1)", 48: "SolCallback(sLLFlipper) = \"SolLFlipper\" rotates LeftFlipper (and LeftFlipper1)",
+	51: "no SolCallback: the engine moves from GetMech(2), which PinMAME's engine model serves (HandleMechanics 7)",
+	52: "no SolCallback", 53: "no SolCallback",
+	6: "the SolCallback table comments '6 Not Used'", 14: "the SolCallback table comments '14 Not Used'",
+	7: "no SolCallback: the knocker sound routine KnockerSolenoid is never called",
+}
+for _address in (21, 22, 23, 24, 25, 27):
+	SOLENOID_SCRIPT[_address] = f"SolCallback({_address}) = \"SetLamp 1{_address},\", drawn by NFadeL 1{_address} on the light L1{_address}"
+SOLENOID_SCRIPT[28] = "SolCallback(28) = \"SetLamp 128,\", drawn on two lights (NFadeLm 128, L128 and NFadeL 128, L128b)"
+for _address in (9, 10, 11, 12, 13):
+	SOLENOID_SCRIPT[_address] = "no SolCallback (the vpmSolSound line is commented out): the table fires the " + (
+		"slingshot" if _address < 11 else "jet bumper"
+	) + " from its own physics event"
 FLIPPER_COILS = {
-	45: ("power", "29", "Lwr. Rt. Power", "J907-1 (Red-Grn)", "Q4", "J902-13", "Yel-Grn", "FL-11629", "BLUE", "A-19223-R"),
+	45:("power", "29", "Lwr. Rt. Power", "J907-1 (Red-Grn)", "Q4", "J902-13", "Yel-Grn", "FL-11629", "BLUE", "A-19223-R"),
 	46: ("hold", "30", "Lwr. Rt. Hold", "J907-1 (Red-Grn)", "Q11", "J902-11", "Org-Grn", "FL-11629", "BLUE", "A-19223-R"),
 	47: ("power", "31", "Lwr. Lt. Power", "J907-4 (Red-Blu)", "Q3", "J902-9", "Yel-Blu", "FL-11629", "BLUE", "A-15849-L-2"),
 	48: ("hold", "32", "Lwr. Lt. Hold", "J907-4 (Red-Blu)", "Q9", "J902-7", "Org-Blu", "FL-11629", "BLUE", "A-15849-L-2"),
@@ -672,24 +836,29 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			notes += _rom_note(address)
 			number = {45: 1, 46: 2, 47: 3, 48: 4, 35: 7, 36: 8}[address]
 			notes += f" T.12 numbers it {number:02d}."
-			refs: tuple[str, ...] = (MANUAL_SOURCE, CORE_SOURCE, FLIPPER_TEST_SOURCE, EDGES_SOURCE)
+			notes += f" Retained script: {SOLENOID_SCRIPT[address]}."
+			refs: tuple[str, ...] = (MANUAL_SOURCE, CORE_SOURCE, FLIPPER_TEST_SOURCE, EDGES_SOURCE, VPX_SCRIPT_SOURCE)
+			spatial = located("solenoid", address, output_id(label), "effect")
+			notes += _spatial_note("solenoid", address)
 			items.append(_device(
 				output_id(label), label, "coil", SOLENOID_GROUP, address, "used", refs,
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 				roles=[{35: "flipper.upper.left", 36: "flipper.upper.left", 45: "flipper.lower.right", 46: "flipper.lower.right", 47: "flipper.lower.left", 48: "flipper.lower.left"}[address]],
 				physical={"part_number": coil, "assembly_part_number": assembly, "notes": notes},
 				wiring={"board": "Fliptronic II board A-15472-1", "driver_transistor": transistor, "control_connection": control, "control_wire": wire, "power_connection": voltage},
+				spatial=spatial,
 			))
 			continue
 		if address in {51, 52, 53}:
 			label = SOLENOID_LABELS[address]
-			refs = (MANUAL_SOURCE, CORE_SOURCE, ENGINE_TEST_SOURCE, ENGINE_FAILED_SOURCE)
+			refs = (MANUAL_SOURCE, CORE_SOURCE, ENGINE_TEST_SOURCE, ENGINE_FAILED_SOURCE, VPX_SCRIPT_SOURCE)
 			if address == 51:
 				refs += (ZR1_ADJUST_SOURCE,)
+			notes = SOLENOID_NOTES[address] + f" Retained script: {SOLENOID_SCRIPT[address]}."
 			items.append(_device(
 				output_id(label), label, "control_signal", SOLENOID_GROUP, address, "used", refs,
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
-				physical={"location": "Motor Driver Master Board in the backbox", "assembly_part_number": "A-18532", "notes": SOLENOID_NOTES[address]},
+				physical={"location": "Motor Driver Master Board in the backbox", "assembly_part_number": "A-18532", "notes": notes},
 				wiring={"board": "Motor Driver Master Board A-18532", "control_connection": "J3 ribbon to Slave Board A-18533 J3", "driver_transistor": "ULN2803 (U4)"},
 				spatial=not_applicable("internal_nonvisual", MANUAL_SOURCE, CORE_SOURCE),
 			))
@@ -719,6 +888,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				refs += (RACE_TEST_SOURCE,)
 			if address in {5, 33}:
 				refs += (AMENDMENT_SOURCE,)
+			notes += f" Retained script: {SOLENOID_SCRIPT[address]}."
+			refs += (VPX_SCRIPT_SOURCE,)
 			extra: dict[str, Any] = {
 				"aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}, {"namespace": "manual.address", "value": f"{address:02d}"}],
 				"wiring": _solenoid_wiring(address),
@@ -732,6 +903,20 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			elif address == 17:
 				extra["spatial"] = not_applicable("internal_nonvisual", MANUAL_SOURCE)
 				physical["location"] = "Dual H-Drive Motor Controller A-19159"
+			else:
+				role = "emitter" if kind == "flasher" else "effect"
+				spatial = located("solenoid", address, output_id(label), role)
+				if spatial:
+					extra["spatial"] = spatial
+					notes += _spatial_note("solenoid", address)
+					if address in {22, 23, 24, 25, 26, 27}:
+						notes += " The placement is the circuit's playfield bulb; its backbox bulb has no playfield position."
+				elif address == 26:
+					notes += (
+						" It has no placement: the script lights the Flasher sprite Flasher126, a glow under the engine, and the light L126, "
+						"which is parked off the playfield, so the table has no socket for the playfield bulb."
+					)
+			physical["notes"] = notes
 			extra["physical"] = physical
 			items.append(_device(output_id(label), label, kind, SOLENOID_GROUP, address, "unused" if unused else "used", refs, **extra))
 			continue
@@ -805,6 +990,10 @@ ROM_LAMP_NAMES = {
 	85: "R. TREE GREEN", 86: "L. TREE GREEN", 87: "BUY IN", 88: "START BUTTON",
 }
 LAMP_MATRIX_TEXT = {35: "ZR-1 Ramp", 73: "Right Return lane", 74: "Right Our Lane"}
+# Lamps the retained script draws on flasher sprites rather than lights (UpdateLamps).
+RACE_TREE_LAMPS = frozenset({81, 82, 83, 84, 85, 86})
+LAMP_FLASH_BINDINGS = {address: f"Flash {address}, f{address} draws it on the flasher sprite f{address}" for address in (53, 68, 76, 77, 78, 81, 82, 85, 86)}
+LAMP_FLASH_BINDINGS.update({address: f"Flashm {address}, f{address}a and Flash {address}, f{address} draw it on two flasher sprites" for address in (83, 84)})
 ROW_WIRE = ("BRN", "BLK", "ORN", "YEL", "GRN", "BLU", "VIO", "GRY")
 COLUMN_WIRE = ("BRN", "RED", "ORN", "BLK", "GRN", "BLU", "VIO", "GRY")
 
@@ -848,18 +1037,47 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"driver_transistor": f"{column_driver} column driver with {row_driver} row driver",
 				},
 			}
-			if address in {81, 82, 83, 84, 85, 86}:
+			if address in {83, 84}:
+				physical["quantity"] = 2
+				notes += (
+					" The lamp drawing's Race Tree Lamps inset draws eight bulbs and runs two leaders from this callout, to the "
+					+ ("second" if address == 83 else "top") + " pair, so this circuit lights two bulbs."
+				)
+			if address in RACE_TREE_LAMPS:
 				physical["location"] = "race tree over the race track"
-				notes += " One of the six lamps of the race 'Christmas tree' (Xmas Tree Lamp & Bracket assembly) standing over the race track at the back of the playfield."
+				notes += " One of the six lamp circuits (eight bulbs) of the race 'Christmas tree' (Xmas Tree Lamp & Bracket assembly) by the race track."
 			if address in {87, 88}:
 				extra["roles"] = ["cabinet.buy-in"] if address == 87 else ["cabinet.start-button-lamp"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 				physical["location"] = "cabinet button"
 				notes += " The list's '**' reads 'Located on Cabinet': the lamp inside the lit " + ("Buy In" if address == 87 else "Start") + " button."
+				notes += " Retained script: no binding (the table draws no cabinet button lamps)."
+			else:
+				identifier = f"lamp.matrix-{address}"
+				spatial = located("lamp", address, identifier, "emitter")
+				if spatial:
+					extra["spatial"] = spatial
+				if address in LAMP_FLASH_BINDINGS:
+					notes += f" Retained script: {LAMP_FLASH_BINDINGS[address]}."
+				if address in LAMP_FLASH_BINDINGS and not spatial:
+					notes += (
+						" It has no placement: a Flasher sprite is a glow, not evidence of a socket, and the table has no Light or socket "
+						"object for this lamp"
+					)
+					if address in RACE_TREE_LAMPS:
+						notes += (
+							"; the race tree sprites are hidden (is_visible false), and the lamp drawing shows the race tree only in its own "
+							"Race Tree Lamps inset, which has no playfield frame to measure in."
+						)
+					else:
+						notes += "."
+				elif address not in LAMP_FLASH_BINDINGS:
+					notes += f" Retained script: NFadeL {address}, l{address} draws it on the light l{address}."
+				notes += _spatial_note("lamp", address)
 			physical["notes"] = notes
 			extra["physical"] = physical
 			label = description.lstrip("*").replace("R Outer", "Right Outer").replace("L Outer", "Left Outer")
-			items.append(_device(f"lamp.matrix-{address}", label, "lamp", LAMP_GROUP, address, "used", (MANUAL_SOURCE, CORE_SOURCE, LAMP_TEST_SOURCE), **extra))
+			items.append(_device(f"lamp.matrix-{address}", label, "lamp", LAMP_GROUP, address, "used", (MANUAL_SOURCE, CORE_SOURCE, LAMP_TEST_SOURCE, VPX_SCRIPT_SOURCE), **extra))
 	return items
 
 
@@ -871,6 +1089,15 @@ GI_STRINGS = {
 	2: (3, "Lower Left", "Q14", "J121-3", "J120-3", "J121-9", "J120-9", "Wht-Yel", "#44", "#555", "LOWER LEFT", "WHT-YEL YEL"),
 	3: (4, "Lower Right", "Q16", "J121-5", "J120-5", "J121-10", "J120-10", "Wht-Grn", "#44", "#555", "LOWER RIGHT", "WHT-GRN GRN"),
 	4: (5, "Backbox Title", "Q12", None, "J120-6", None, "J120-11", "Wht-Vio", None, "#555", "BACK BOX TITLE", "WHT-VIO VIO"),
+}
+
+
+# Where the retained table's light collection for each public GI channel sits (its lights' own centres, raw 979 x 2162 units).
+GI_SCRIPT_BULBS = {
+	0: "seven lights sit on the lower left of the playfield (x 65-201, y 800-1776), not the upper left the string's name gives",
+	1: "seven lights sit on the lower right (x 666-846, y 1015-1777), not the upper right",
+	2: "six lights sit on the upper left (x 74-453, y 71-514), not the lower left",
+	3: "eleven lights sit on the upper right (x 467-923, y 58-872), not the lower right",
 }
 
 
@@ -898,12 +1125,18 @@ def gi_outputs() -> list[dict[str, Any]]:
 			"wiring": {"board": "WPC power driver board A-12697-3", "driver_transistor": triac, "control_connection": ", ".join(x for x in (pf_drive, bb_drive) if x), "control_wire": wire, "power_connection": ", ".join(x for x in (pf_voltage, bb_voltage) if x)},
 		}
 		if address == 4:
+			notes += " Retained script: UpdateGi has no case for 4 ('GI5 is Backglass Only')."
 			extra["roles"] = ["cabinet.backbox"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			extra["physical"] = {"location": "backbox", "notes": notes}
 		else:
+			notes += (
+				f" Retained script: GiCallBack2 UpdateGi switches the light collection GI{address + 1} from public GI {address}, and those "
+				f"{GI_SCRIPT_BULBS[address]}. The table's bulbs are not this string's playfield position: see the G.I. string conflict, so the "
+				"string has no placement."
+			)
 			extra["physical"] = {"notes": notes}
-		items.append(_device(f"gi.string-{string}", f"General Illumination {name}", "gi", GI_GROUP, address, "used", (MANUAL_SOURCE, CORE_SOURCE, GI_TEST_SOURCE), **extra))
+		items.append(_device(f"gi.string-{string}", f"General Illumination {name}", "gi", GI_GROUP, address, "used", (MANUAL_SOURCE, CORE_SOURCE, GI_TEST_SOURCE, VPX_SCRIPT_SOURCE), **extra))
 	return items
 
 
@@ -967,8 +1200,13 @@ def mechanisms() -> list[dict[str, Any]]:
 			"at 127, toggling 52 and 53 while the engine moved; ENGINE LEFT drove it to 63. Without an engine answering, the self test drops 51 after "
 			"about 13 s and shows POSITION OFF and FAILED. T.18 ZR-1 ADJUST raises 51 alone and holds the engine centred while a potentiometer on "
 			"the Hall Offset Adjust board (Amendment 16-9890) is set; the amendment says the coin door must be closed for engine power, and "
-			"Adjustment A.2 16 DISABLE ZR-1/LT-5 runs the game with the engine locked down.",
-			(MANUAL_SOURCE, AMENDMENT_SOURCE, DISASSEMBLY_SOURCE, CORE_SOURCE, ENGINE_TEST_SOURCE, ENGINE_FAILED_SOURCE, ZR1_ADJUST_SOURCE),
+			"Adjustment A.2 16 DISABLE ZR-1/LT-5 runs the game with the engine locked down. The retained known-working table turns on "
+			"PinMAME's engine model (HandleMechanics 7) and draws the engine primitive EngineP at (GetMech(2) - 127) / 7 degrees, ignoring "
+			"jumps of 30 or more; it binds nothing to 51-53. Its ball shake is a table approximation, not the machine's causality: four "
+			"magnet triggers in the engine (cvpmMagnet, solenoid 26, the ZR-1 UNDERSIDE flasher) grab a ball while that flasher output is "
+			"on, armed when the ball passes ZR-1 BOTTOM ENTRY (41) and disarmed after more than 100 hits on the rubbers beside the engine "
+			"(71/72) until a flipper button resets the count.",
+			(MANUAL_SOURCE, AMENDMENT_SOURCE, DISASSEMBLY_SOURCE, CORE_SOURCE, ENGINE_TEST_SOURCE, ENGINE_FAILED_SOURCE, ZR1_ADJUST_SOURCE, VPX_SCRIPT_SOURCE),
 			[
 				("full-left", "Full left", _matrix(71), "The engine at its left stop; 71 reads 1."),
 				("centre", "Centre", [], "Neither full-stroke opto closed; the self test parks the engine at register value 127."),
@@ -983,9 +1221,13 @@ def mechanisms() -> list[dict[str, Any]]:
 			"The ZR-1 LOW REV GATE (2, SM1-28-900-DC, in the engine ramp, which carries a flopgate, a front gate and a back gate), the ZR-1 UP "
 			"REV GATE (5, SM1-35-4000-DC, which the amendment's back-panel Ball Gate Actuator carries) and the ZR-1 LOCKUP coil (15, AE-30-2000, "
 			"Eject Assembly A-15368-1) act on the lock. The rules light LT-5 LOCK from the left outer loop; Adjustment A.2 13 ENDGAME LOCK REL. "
-			"decides whether locked balls are released at game end. No retained source says which gate opens or closes which path or in what "
-			"order the ROM fires 2, 5 and 15 to lock and release.",
-			(MANUAL_SOURCE, AMENDMENT_SOURCE, SOLENOID_TEST_SOURCE, EDGES_SOURCE),
+			"decides whether locked balls are released at game end. The retained known-working table gives each coil its runtime contract, "
+			"and the ROM decides when to fire them: while 2 (its 'Lock Gate 1') is on, the gate LGate on the engine ramp is closed and the "
+			"wall Wall12 beside it raised, and both open when it drops; while 5 ('Lock Gate 2') is on, the upper engine-ramp gate GateU is "
+			"open; a ball that reaches the lock kicker Kicker1 joins a ball stack that holds 76, 77 and 78 for one, two and three balls, and "
+			"each pulse of 15 ejects one ball at Kicker3, below the lock entry, back onto the playfield. The table puts ZR-1 EXIT (75) as a "
+			"gate switch on a ramp at the playfield's upper left corner. No retained source draws the physical gate linkage.",
+			(MANUAL_SOURCE, AMENDMENT_SOURCE, SOLENOID_TEST_SOURCE, EDGES_SOURCE, VPX_SCRIPT_SOURCE),
 			[
 				("lock-1", "Lock 1", _matrix(76), "One ball locked."),
 				("lock-2", "Lock 2", _matrix(77), "Two balls locked."),
@@ -995,7 +1237,7 @@ def mechanisms() -> list[dict[str, Any]]:
 		),
 		_mechanism(
 			"race-track", "Race track (Corvette Challenge)", "motorized", [_coil(17), _coil(18), _coil(19)], _matrix(51, 55, 52, 56),
-			"Two cars race in lanes on the Race Track A-19004 at the back of the playfield (left car A-19145, the player's blue car; right car "
+			"Two cars race in lanes on the Race Track A-19004 along the right side of the playfield, where the retained table runs the lanes up to the top right corner the rules page's shot map points RACE TRACK at (left car A-19145, the player's blue car; right car "
 			"A-19146, the machine's red car), pulled by cords from a Gear Box A-19134 with two 14-8015 motors. The Dual H-Drive Motor Controller "
 			"A-19159 takes RACE DIRECTION (17) for both cars and LEFT/RIGHT RACE ENABLE (18, 19) for each motor. Each lane has a start (limit) opto, "
 			"51 left and 52 right, and an encoder opto on its cord pulley, 55 and 56. The ROM's T.17 RACE TEST self test drove the left car with 17 "
@@ -1003,8 +1245,10 @@ def mechanisms() -> list[dict[str, Any]]:
 			"optos at count 0; LEFT FORWARD raised 17 and 18 and the left car's count climbed while Enter was held. With PinMAME's car models "
 			"(mechanism bits 0 and 1), which move a car forward while 17 is on, that is consistent with 17 on meaning forward. During the CORVETTE "
 			"CHALLENGE the machine's car moves at a steady pace and the player's car advances as shots are made; a six-lamp race tree (81-86) "
-			"stands over the track.",
-			(MANUAL_SOURCE, AMENDMENT_SOURCE, DISASSEMBLY_SOURCE, CORE_SOURCE, RACE_TEST_SOURCE, SOLENOID_TEST_SOURCE, EDGES_SOURCE),
+			"stands over the track. The retained known-working table runs PinMAME's car models (HandleMechanics 7), which write 51, 52, 55 "
+			"and 56, and moves the blue (left) and red (right) car primitives along their lanes from GetMech(0) and GetMech(1), mapping counts "
+			"0-675 from the start to the finish end at the top of the playfield.",
+			(MANUAL_SOURCE, AMENDMENT_SOURCE, DISASSEMBLY_SOURCE, CORE_SOURCE, RACE_TEST_SOURCE, SOLENOID_TEST_SOURCE, EDGES_SOURCE, VPX_SCRIPT_SOURCE),
 			[
 				("left-start", "Left car at the start", _matrix(51), "The left car on its start opto."),
 				("right-start", "Right car at the start", _matrix(52), "The right car on its start opto."),
@@ -1047,15 +1291,18 @@ def mechanisms() -> list[dict[str, Any]]:
 		),
 		_mechanism(
 			"loop-gate", "Loop gate", "gate", [_coil(16)], [],
-			"The LOOP GATE coil (16, A-14406 on assembly A-17796) moves a gate on the loops; no retained source says which loop path it closes.",
-			(MANUAL_SOURCE, SOLENOID_TEST_SOURCE), None, "A-17796",
+			"The LOOP GATE coil (16, A-14406 on assembly A-17796) moves a gate on the loops. The retained known-working table puts the gate "
+			"TGate at the top of the playfield, across the loop between the left (87) and right (88) outer-loop switches, and holds it open "
+			"while 16 is on and closed when it drops.",
+			(MANUAL_SOURCE, SOLENOID_TEST_SOURCE, VPX_SCRIPT_SOURCE), None, "A-17796",
 		),
 		_mechanism(
 			"ramp-diverter", "Ramp diverter", "diverter", [_coil(33), _coil(34)], [],
 			"The ramp DIVERTER (Flipper Coil Assembly A-15943-1; Ramp Diverter Assembly A-19630 in Amendment 16-9890, with a diverter plunger and "
-			"drive arm) runs on the Fliptronic II upper-right circuit: 33 is its power winding and 34 its hold winding. No retained source says "
-			"which ramp exits it selects.",
-			(MANUAL_SOURCE, AMENDMENT_SOURCE, SOLENOID_TEST_SOURCE), None, "A-17241",
+			"drive arm) runs on the Fliptronic II upper-right circuit: 33 is its power winding and 34 its hold winding. The retained "
+			"known-working table moves it from the hold winding alone: while 34 is on it raises the wall DiverterON, drops DiverterOFF and "
+			"turns the diverter flipper DivFlipper, at the right of the playfield behind the jet bumpers, and restores them when 34 drops.",
+			(MANUAL_SOURCE, AMENDMENT_SOURCE, SOLENOID_TEST_SOURCE, VPX_SCRIPT_SOURCE), None, "A-17241",
 		),
 		_mechanism(
 			"slingshots", "Slingshots", "kicker", [_coil(9), _coil(10)], _matrix(61, 62),
@@ -1094,7 +1341,23 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return []
+	return [
+		{
+			"id": "conflict.gi-string-halves",
+			"path": "outputs[binding.group=pinmame.output.gi,binding.device=0|1|2|3].spatial",
+			"description": (
+				"The manual's Solenoid/Flasher Table names G.I. strings 1-4 Upper Left, Upper Right, Lower Left and Lower Right, and the ROM's "
+				"T.6 GENERAL ILLUMINATION TEST names public GI 0-3 UPPER LEFT, UPPER RIGHT, LOWER LEFT and LOWER RIGHT with the same wires, "
+				"but the retained known-working table drives its lower-left bulbs from GI 0, its lower-right bulbs from GI 1, its upper-left "
+				"bulbs from GI 2 and its upper-right bulbs from GI 3: the top and bottom halves are swapped. Which bulbs a string feeds is a "
+				"physical fact; the manual's string names claim it, but no retained wiring drawing, bulb list or location drawing assigns "
+				"individual playfield bulbs to a string, so neither reading is proven and no G.I. string has a placement. "
+				"Resolution path: run T.6 on a physical Corvette and note which playfield bulbs dim for UPPER LEFT; an owner of the machine "
+				"could do it in a minute."
+			),
+			"source_refs": [MANUAL_SOURCE, GI_TEST_SOURCE, VPX_SCRIPT_SOURCE],
+		},
+	]
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1114,27 +1377,39 @@ TRANSCRIBED = "curator, read from the rendered page"
 DELEGATED = "delegated transcription from the rendered page; spot-checked by the curator, not checked cell by cell"
 
 
-def _excerpt(name: str, locator: str, *, method: str = "manual", reviewed: bool = True, credit: str = TRANSCRIBED) -> dict[str, Any]:
-	return {
+DRAWING_DERIVATIONS = {
+	"switch-locations": "Bally_1994_Corvette_Manual.pdf page 109, crop box 0.37,0.04,0.87,0.6, scanned page rendered at its native resolution (embedded image xref 435, 2128px across 7.21in), rendered at 295 dpi, grayscale, 1221x1792 WebP quality 80",
+	"lamp-locations": "Bally_1994_Corvette_Manual.pdf page 107, crop box 0.49,0.075,0.995,0.875, scanned page rendered at its native resolution (embedded image xref 427, 2448px across 8.18in), rendered at 299 dpi, grayscale, 1250x2594 WebP quality 80",
+	"solenoid-flasher-locations": "Bally_1994_Corvette_Manual.pdf page 111, crop box 0.28,0.04,0.81,0.565, scanned page rendered at its native resolution (embedded image xref 443, 2336px across 7.88in), rendered at 296 dpi, grayscale, 1299x1687 WebP quality 80",
+}
+
+
+def _excerpt(name: str, locator: str, *, image: bool = False, method: str = "manual", reviewed: bool = True, credit: str = TRANSCRIBED) -> dict[str, Any]:
+	record: dict[str, Any] = {
 		"id": f"excerpt.corvette.{name}",
 		"locator": locator,
 		"path": f"evidence/excerpts/{MACHINE_ID}/{name}.md",
 		"sha256": EXCERPT_FILE_HASHES[f"{name}.md"],
-		"method": method,
-		"transcribed_by": credit,
-		"reviewed": reviewed,
 	}
+	if image:
+		record["image"] = f"evidence/excerpts/{MACHINE_ID}/{name}.webp"
+		record["image_sha256"] = EXCERPT_FILE_HASHES[f"{name}.webp"]
+		record["image_derivation"] = DRAWING_DERIVATIONS[name]
+	record["method"] = method
+	record["transcribed_by"] = credit
+	record["reviewed"] = reviewed
+	return record
 
 
 def _manual_excerpts() -> list[dict[str, Any]]:
 	return [
 		_excerpt("dip-switch-chart", "PDF page 2, DIP SWITCH SETTINGS AND JUMPERS"),
 		_excerpt("switch-matrix", "PDF page 108, printed 2-46, Switch Matrix with the dedicated and flipper grounded-switch blocks and the opto shading; Section 3 reprint PDF 116 (3-2) compared; Dedicated Switches drawing PDF 117 (3-3)", credit="delegated transcription from the rendered page; checked against the page by the curator"),
-		_excerpt("switch-locations", "PDF pages 108-109, printed 2-46 and 2-47, Switch Locations list and the callout numbers of its drawing", credit="delegated transcription from the rendered page; checked against the page by the curator"),
+		_excerpt("switch-locations", "PDF pages 108-109, printed 2-46 and 2-47, Switch Locations list and the callout numbers of its drawing (image: the playfield drawing)", image=True, credit="delegated transcription from the rendered page; checked against the page by the curator"),
 		_excerpt("lamp-matrix", "PDF page 106, printed 2-44, Lamp Matrix; reprints PDF 118 (3-4) and PDF 155 compared", credit="delegated transcription from the rendered page; checked against the page by the curator"),
-		_excerpt("lamp-locations", "PDF pages 106-107, printed 2-44 and 2-45, Lamp Locations list and the callout numbers of its drawing", credit="delegated transcription from the rendered page; checked against the page by the curator"),
+		_excerpt("lamp-locations", "PDF pages 106-107, printed 2-44 and 2-45, Lamp Locations list and the callout numbers of its drawing (image: the playfield drawing)", image=True, credit="delegated transcription from the rendered page; checked against the page by the curator"),
 		_excerpt("solenoid-flasher-table", "PDF page 110, printed 2-48, Solenoid/Flasher Table with the general-illumination and flipper-circuit blocks; reprint PDF 119 (3-5) compared", credit="delegated transcription from the rendered page; checked cell by cell against the page by the curator"),
-		_excerpt("solenoid-flasher-locations", "PDF pages 110-111, printed 2-48 and 2-49, Solenoid/Flasher Locations, G.I. and flipper-coil lists and the callout numbers of the drawing", credit="delegated transcription from the rendered page; checked against the page by the curator"),
+		_excerpt("solenoid-flasher-locations", "PDF pages 110-111, printed 2-48 and 2-49, Solenoid/Flasher Locations, G.I. and flipper-coil lists and the callout numbers of the drawing (image: the playfield drawing)", image=True, credit="delegated transcription from the rendered page; checked against the page by the curator"),
 		_excerpt("solenoid-wiring-pages", "PDF pages 120-124, printed 3-6 to 3-10, solenoid, flasher, high-power, flashlamp and G.I. circuit drawings", reviewed=False, credit=DELEGATED),
 		_excerpt("power-driver-board", "PDF pages 143-145, printed 3-29 to 3-31, Power Driver Board A-12697-3 drawing and connector list", reviewed=False, credit=DELEGATED),
 		_excerpt("cpu-board", "PDF page 146, printed 3-32, Security CPU Board A-17651-50036 drawing and connector list", reviewed=False, credit=DELEGATED),
@@ -1239,6 +1514,44 @@ def source_records() -> list[dict[str, Any]]:
 			"cords and springs, gear train, motors) and the engine mechanism. Used for the mechanisms' construction; it changes no address.",
 			DISASSEMBLY_SHA256, [_excerpt("unit-disassembly-engine", "PDF page 6, REMOVE RAMP ONLY FROM ENGINE ASSEMBLY procedure and its repair table")],
 		),
+		{
+			"id": VPX_TABLE_SOURCE, "kind": "vpx_table",
+			"uri": f"external:pinmame-vpx-sources/bally/corvette-1994/source/{TABLE_NAME.replace(' ', '%20')}",
+			"original_filename": TABLE_NAME, "sha256": TABLE_SHA256,
+			"locator": (
+				f"Retained known-working recreation of the physical machine (Goldchicco, 32assassin, Mussinger; table_version 1.4.2, saved "
+				f"2026-03-24). Exact playfield bounds are {TABLE_BOUNDS}; normalized coordinates are x/{PLAYFIELD_WIDTH:g} and "
+				f"y/{PLAYFIELD_HEIGHT:g}. Geometry authority only for named table objects."
+			),
+			"license": "NOASSERTION", "attribution": "Goldchicco, 32assassin, Mussinger", "rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_SCRIPT_SOURCE, "kind": "vpx_script",
+			"uri": "external:pinmame-vpx-sources/bally/corvette-1994/extracted-vpxtool/script.vbs",
+			"original_filename": "script.vbs", "sha256": SCRIPT_SHA256, "known_working": True,
+			"locator": (
+				"Retained embedded version 1.4.2 script (3,605 lines). Runtime and mechanism-causality authority: cGameName = \"corv_21\", "
+				"HandleMechanics = 7 (PinMAME's engine and race-car models), Controller.Switch(22) and (24) set to 1 at start-up, the "
+				"SolCallback table and the subs it names, the cvpmBallStack trough, pit stop, Route 66 and lock stacks, the switch event "
+				"subs, Mech_Timer (GetMech(0) and GetMech(1)), UpdateLamps (GetMech(2) and the lamp bindings) and GiCallBack2 UpdateGi."
+			),
+			"license": "NOASSERTION", "attribution": "Goldchicco, 32assassin, Mussinger", "rights": "NOASSERTION",
+			"excerpts": [_excerpt(
+				"vpx-script-contract", "script.vbs lines 10-972: eleven verbatim blocks with their line numbers (controller, SolCallback table and "
+				"callbacks, G.I., init and ball stacks, engine magnets, kickers, switch events, car animation, lamp bindings, slingshots)",
+				credit="curator; quoted verbatim from the retained script by a line-range generator retained under review-artifacts",
+			)],
+		},
+		{
+			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/bally/corvette-1994/extracted-vpxtool.manifest.json",
+			"locator": (
+				"Canonical manifest covering every sorted relative POSIX path, byte size and SHA-256 under extracted-vpxtool; manifest "
+				f"SHA-256 {EXTRACTION_MANIFEST_SHA256}; {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes, produced with vpxtool "
+				f"0.33.3 from the retained version 1.4.2 table. Bounds are {TABLE_BOUNDS}."
+			),
+			"license": "NOASSERTION", "attribution": "vpxtool extraction",
+		},
 	] + [
 		{
 			"id": source_id, "kind": "runtime_scenario", "uri": f"internal:{EVIDENCE_DIRECTORY}/corvette-corv_21-{name}.json",
@@ -1246,11 +1559,24 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
 		}
 		for source_id, name, locator in RUNTIME_SOURCES
+	] + [
+		{
+			"id": CALLOUT_SOURCE, "kind": "human_review", "uri": "internal:tools/seeds/bally/corvette-1994-callouts.json",
+			"sha256": _file_sha256(CALLOUT_SEED_PATH),
+			"locator": (
+				"2026-10-17 factory location-drawing callout check of the manual's lamp drawing 2-45, switch drawing 2-47 and solenoid/flasher "
+				"drawing 2-49 (the committed excerpt crops): every callout transcribed by an independent reader working only from the page, per-page control "
+				"fits from the jet bumper caps and flipper pivots, and the callout fit; a table placement whose own callout lands within 0.07 "
+				"normalized under both fits is validated (tools/drawing_callouts.py). Reads, overlays and generators are retained under "
+				"review-artifacts with a pinned manifest."
+			),
+			"license": "NOASSERTION", "attribution": "PinMAME game definitions contributors",
+		},
 	]
 
 
 # --- Build ---------------------------------------------------------------------------------------------
-MISSING = ["variant_differences", "mechanism_behavior", "spatial_placement"]
+MISSING = ["variant_differences", "spatial_placement", "unresolved_conflicts"]
 
 
 def build() -> dict[str, Any]:
@@ -1266,6 +1592,7 @@ def build() -> dict[str, Any]:
 			"model_number": "50036",
 			"ipdb_id": 570,
 			"opdb_id": "GrjDz-MJKN6",
+			"playfield": {"width": PLAYFIELD_WIDTH, "height": PLAYFIELD_HEIGHT, "units": "vpx"},
 		},
 		"coverage": {
 			"status": "partial",
@@ -1278,7 +1605,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "observed",
 				"variant_coverage": "observed",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "unknown",
+				"spatial_placement": "observed",
 			},
 		},
 		"controller": {"platform": "pinmame.wpc-security", "hardware_generation": "0x20", "inversion_applied_by_emulator": True},
@@ -1301,12 +1628,15 @@ def build() -> dict[str, Any]:
 		unknown = [item for item in mechanism["actuators"] + mechanism["sensors"] if item not in known]
 		if unknown:
 			raise RuntimeError(f"Corvette mechanism {mechanism['id']} names unknown devices: {unknown}")
+	seed = load_json(CALLOUT_SEED_PATH)
+	drawing_callouts.apply_to_definition(definition, seed, CALLOUT_SOURCE)
 	return definition
 
 
 # --- Spatial report ------------------------------------------------------------------------------------
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	devices = definition["inputs"] + definition["outputs"] + definition["displays"]
+	statuses: dict[str, list[str]] = {"validated": [], "observed": [], "candidate": []}
 	without: list[str] = []
 	not_applicable_count = 0
 	for device in devices:
@@ -1317,36 +1647,126 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			continue
 		if spatial["status"] == "not_applicable":
 			not_applicable_count += 1
+			continue
+		statuses[spatial["status"]].append(device["id"])
+	seed = load_json(CALLOUT_SEED_PATH)
+	check = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(definition), seed.get("limit", drawing_callouts.LIMIT))
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": MACHINE_ID,
-		"source_hashes": {"manual_sha256": MANUAL_SHA256, "amendment_sha256": AMENDMENT_SHA256},
+		"coordinate_convention": {
+			"space": "playfield",
+			"source_bounds": {"left": 0.0, "top": 0.0, "right": PLAYFIELD_WIDTH, "bottom": PLAYFIELD_HEIGHT},
+			"x": f"x/{PLAYFIELD_WIDTH:g}; 0=left, 1=right",
+			"y": f"y/{PLAYFIELD_HEIGHT:g}; 0=rear/backglass, 1=apron/player",
+		},
+		"source_hashes": {
+			"table_sha256": TABLE_SHA256,
+			"embedded_script_sha256": SCRIPT_SHA256,
+			"manual_sha256": MANUAL_SHA256,
+			"amendment_sha256": AMENDMENT_SHA256,
+			"spatial_seed_sha256": _file_sha256(SPATIAL_SEED_PATH),
+			"callout_seed_sha256": _file_sha256(CALLOUT_SEED_PATH),
+		},
+		"extraction": {
+			"fail_closed": True,
+			"file_count": EXTRACTION_FILE_COUNT,
+			"total_bytes": EXTRACTION_TOTAL_BYTES,
+			"manifest_sha256": EXTRACTION_MANIFEST_SHA256,
+			"manifest_uri": "external:pinmame-vpx-sources/bally/corvette-1994/extracted-vpxtool.manifest.json",
+			"source_ref": VPX_EXTRACTION_SOURCE,
+		},
+		"drawing_callout_check": drawing_callouts.summary(seed, check, "tools/seeds/bally/corvette-1994-callouts.json", _file_sha256(CALLOUT_SEED_PATH)),
+		"placement_status": {name: sorted(items) for name, items in statuses.items()},
 		"not_applicable_device_count": not_applicable_count,
 		"without_placements": sorted(without),
+		"projection_classes": {
+			"switch": (
+				"The retained table's object for the switch (trigger, gate, target, kicker, bumper, slingshot wall or rubber wall), chosen by "
+				"what the script binds, observed and validated where the switch drawing's own callout agrees. Projections, where the table "
+				"has no object at the switch: the trough optos 31-34 and the trough eject opto 37 onto the trough kicker BallRelease (the "
+				"table's trough is a virtual ball stack); the lock switches 76-78 onto the lock kicker Kicker1; the engine full-stroke optos "
+				"71/72 onto the engine primitive EngineP; the race start optos 51/52 onto each car primitive's start point and the encoders "
+				"55/56 onto each lane's finish end (the script's finish constants)."
+			),
+			"lamp": (
+				"The script-bound Light's own centre, validated where the lamp drawing's callout agrees. 53 and 68, which the script "
+				"draws only on glow sprites, sit on the table's stacked pair of bulb meshes L81P1 and L81P4 (the colour-to-lamp pairing is "
+				"unsourced and moves neither by more than 0.0005). The lamps the script draws only on Flasher sprites with no bulb model "
+				"(76-78 and the hidden race tree sprites 81-86) have no placement, because a sprite is a glow and not a socket; the race "
+				"tree is drawn only in the lamp drawing's separate inset. The cabinet button lamps 87 and 88 are not applicable."
+			),
+			"solenoid": (
+				"The object the solenoid callback moves or lights (trough kicker, gates, kickback plunger, popper and kickout kickers, lock "
+				"eject kicker Kicker3, diverter wall, flippers, flasher Lights) or, for the slingshots and jet bumpers, the object that fires "
+				"the coil; the race motors 18/19 are projected onto each car's lane start. The flasher circuits 22-25 and 27 carry a backbox "
+				"bulb as well; only the playfield bulb is placed. 26 has no placement: the script lights only a glow sprite and a light "
+				"parked off the playfield. Validated where the solenoid drawing's callout agrees."
+			),
+			"gi": (
+				"None: the retained table's G.I. collections disagree with the manual's and the ROM's string names on which half of the "
+				"playfield each string lights (see the conflict), so strings 0-3 have no placement; string 4 lights the backbox title only and "
+				"is not applicable."
+			),
+		},
 		"unresolved_geometry": [
-			"No Corvette recreation table is retained, so no playfield switch, coil, flasher, lamp or G.I. string has a placement. The "
-			"manual's location drawings (switch 2-47, lamp 2-45, solenoid/flasher 2-49) number the devices but carry no coordinate frame "
-			"on their own; placements need a retained table whose objects are checked against them.",
+			"General illumination strings 0-3 (public GI 0-3): the table drives its lower bulbs from GI 0/1 and its upper bulbs from GI 2/3, "
+			"the reverse of the manual's and the ROM's names, and no retained source assigns individual bulbs to a string, so no string has "
+			"a placement until a physical machine's T.6 test settles it.",
+			"The trough, lock, engine full-stroke and race-track optos are projections onto the nearest table object that models their "
+			"mechanism, not observed sockets; their placements stay observed and are not checked against the drawings.",
+			"Lamps 76-78 and 81-86 and the playfield bulb of flasher circuit 26 have no placement: the table draws them only on "
+			"Flasher sprites (hidden ones for the race tree) or a light parked off the playfield, and the race tree appears only in the "
+			"lamp drawing's inset, which has no playfield frame. Measuring them on the location drawings would place them.",
+			"Placements the switch and solenoid drawings do not confirm keep their observed status; the drawing callout check lists them "
+			"with the distance or reason.",
 		],
-		"promotion_decision": "partial: every playfield device lacks a placement until a recreation table is retained and checked against the factory location drawings.",
+		"promotion_decision": (
+			"partial: the four playfield G.I. strings have no placement while the table and the manual disagree on which bulbs each "
+			"string lights, and nine sprite-only lamps and the playfield bulb of flasher circuit 26 have no socket in the table; every "
+			"other fitted playfield device has an observed or validated placement or a controlled not-applicable record."
+		),
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
+	check = report["drawing_callout_check"]
 	lines = [
 		"# Corvette (Bally, 1994) spatial blockers",
 		"",
-		f"Manual SHA-256 `{MANUAL_SHA256}`; Manual Amendment 16-9890 `{AMENDMENT_SHA256}`.",
+		f"Retained VPX SHA-256 `{TABLE_SHA256}`; script `{SCRIPT_SHA256}`; {EXTRACTION_FILE_COUNT}-file extraction manifest "
+		f"`{EXTRACTION_MANIFEST_SHA256}`; manual `{MANUAL_SHA256}`; Manual Amendment 16-9890 `{AMENDMENT_SHA256}`.",
+		"",
+		f"Bounds: `{TABLE_BOUNDS}`. Every canonical coordinate is x/{PLAYFIELD_WIDTH:g} and y/{PLAYFIELD_HEIGHT:g} rounded to at most six places.",
 		"",
 		"## Placement status",
 		"",
+	]
+	for name, items in report["placement_status"].items():
+		lines.append(f"- `{name}`: {len(items)} devices")
+	lines += [
 		f"- controlled `not_applicable` records: {report['not_applicable_device_count']}",
-		f"- used devices with no placement record: {len(report['without_placements'])}",
+		f"- used devices with no placement record: {len(report['without_placements'])} ({', '.join(f'`{item}`' for item in report['without_placements'])})",
 		"",
-		"## Unresolved physical geometry",
+		"## Projection classes",
 		"",
 	]
+	lines += [f"- **{name}:** {text}" for name, text in report["projection_classes"].items()]
+	lines += [
+		"",
+		"## Drawing callout check",
+		"",
+		f"{check['rule']} It validates {check['validated']} of the {check['checked']} table placements it checks "
+		f"([seed](../../../{check['seed']})); the rest keep their observed status:",
+		"",
+	]
+	for placement_id, item in check["not_validated"].items():
+		if "control_offset" in item:
+			lines.append(f"- `{placement_id}`: callout {item['label']} on {item['page']}, {max(item['control_offset'], item['callout_offset']):.3f} normalized away.")
+		else:
+			lines.append(f"- `{placement_id}`: callout {item['label']} on {item['page']}, {item['reason']}.")
+	lines += ["", "## Unresolved physical geometry", ""]
 	lines += [f"- {item}" for item in report["unresolved_geometry"]]
 	lines += ["", "## Promotion decision", "", report["promotion_decision"], ""]
 	return "\n".join(lines)

@@ -1,10 +1,10 @@
 # Corvette (Bally, 1994)
 
 Coverage: **partial - every I/O address, controller binding, polarity and wiring detail is
-source-reconciled from the manual and the ROM's own service tests; `variant_differences` is missing because
-no source says what hardware the PX prototype ROMs were built for, `mechanism_behavior` because no retained
-source says what the two ZR-1 rev gates and the lockup coil do during a lock and a release, and
-`spatial_placement` because no recreation table is retained, so no device has a placement yet**
+source-reconciled from the manual, the ROM's own service tests and a retained known-working table;
+`variant_differences` is missing because no source says what hardware the PX prototype ROMs were built for,
+and `spatial_placement` and `unresolved_conflicts` because the table and the manual disagree on which half
+of the playfield each G.I. string lights, so the four playfield strings have no placement**
 
 ## Identity and evidence precedence
 
@@ -23,8 +23,10 @@ and some carried those features. The prototype ROMs therefore stay `unknown` for
 and matrix switches 25-28 (`1st` to `4th Gear (optional)`) are the shifter's positions: the production
 manual lists them without a part, the 2.1 ROM still names them, and they are `optional`.
 
-Evidence precedence: no known-working recreation table is retained, so runtime semantics come from the ROM
-itself. The IPDB scan of the operations manual (and its Manual Amendment 16-9890 of September 1994)
+Evidence precedence: the retained known-working table `Corvette (Bally 1994).vpx` (version 1.4.2 by Goldchicco,
+32assassin and Mussinger, `cGameName = "corv_21"`, `HandleMechanics = 7`) controls runtime binding and the
+coils' causal contract, and its objects give the placements; the ROM's own service tests settle names and
+output identity. The IPDB scan of the operations manual (and its Manual Amendment 16-9890 of September 1994)
 controls physical construction, part numbers, wiring and device presence; pinned PinMAME `97aa922b`
 (`src/wpc/sims/wpc/prelim/corv.c`, a preliminary simulator) controls the controller generation and public
 addresses; the ROM's own service tests, run on a legal `corv_21` ROM, settled polarity, names and every
@@ -93,11 +95,12 @@ Master Board.
 
 ## The race track and the Corvette Challenge
 
-At the back of the playfield two Matchbox-style cars run in lanes on the Race Track A-19004 (left car
+Along the right side of the playfield two Matchbox-style cars run in lanes on the Race Track A-19004 (left car
 A-19145, the player; right car A-19146, the machine), pulled by cords from a Gear Box A-19134 with two
 14-8015 motors. The Dual H-Drive Motor Controller A-19159 takes three power driver outputs: 17 RACE
 DIRECTION and 18/19 LEFT/RIGHT RACE ENABLE. Each lane has a start (limit) opto (51 left, 52 right) and an
-encoder opto on the cord pulley (55, 56). A Christmas-tree of six lamps (81-86) stands over the track. The
+encoder opto on the cord pulley (55, 56). A Christmas tree of six lamp circuits (81-86, eight bulbs: the yellow 83 and 84
+light two each) stands by the track. The
 ROM's T.17 RACE TEST self test drove the left car forward with 17 and 18 on, counting 55 to 670 while 51
 opened, then the right car with 17 and 19 to 638, then returned both to their start optos; LEFT FORWARD
 raised 17 and 18 together and the left car's count climbed. With PinMAME's car models that is consistent
@@ -119,7 +122,13 @@ A-19141, encoders A-18821). The ROM's names and its accepted race test settle th
   LOCK BALL 1-3 (76-78), the ZR-1 LOW REV GATE (2, SM1-28-900-DC, part of the engine ramp), the ZR-1 UP REV
   GATE (5, SM1-35-4000-DC; the amendment's Ball Gate Actuator carries this coil) and the ZR-1 LOCKUP coil
   (15, AE-30-2000, Eject Assembly A-15368-1). The rules lock up to three balls in the engine mechanism for
-  the Mid-Ohio Endurance multiball; Adjustment A.2 13 releases or holds them at game end.
+  the Mid-Ohio Endurance multiball; Adjustment A.2 13 releases or holds them at game end. The retained
+  table gives each coil its contract and leaves the timing to the ROM: while 2 ("Lock Gate 1") is on, the
+  engine-ramp gate `LGate` is closed and the wall `Wall12` beside it raised; while 5 ("Lock Gate 2") is on,
+  the upper engine-ramp gate `GateU` is open; a ball reaching the lock kicker `Kicker1` joins a ball stack
+  that holds 76, 77 and 78 for one, two and three balls; each pulse of 15 ejects one ball at `Kicker3`, just
+  below the lock entry. 16 opens the gate `TGate` across the top loop while on, and 34 alone moves the
+  diverter (`SolCallback(33)` is commented out).
 - PIT STOP POPPER (36, coil 4, Popper Assembly A-19005); ROUTE 66 KICKOUT (57, coil 8, on the back panel
   next to the track); the left outlane KICKBACK (coil 3, Kicker Bracket B-11873); the LOOP GATE (16); the
   ramp DIVERTER (33 power, 34 hold, Flipper Coil Assembly A-15943-1 on the Fliptronic upper-right circuit,
@@ -136,11 +145,20 @@ car in the backglass. G.I. strings 0 (UPPER LEFT) and 1 (UPPER RIGHT) are
 playfield only, 2 (LOWER LEFT) and 3 (LOWER RIGHT) also feed the backbox, and 4 (BACK BOX TITLE) is the
 backbox only; the ROM's T.6 dims all five.
 
+The retained table drives its lower-left bulbs from GI 0, its lower-right bulbs from GI 1, its upper-left
+bulbs from GI 2 and its upper-right bulbs from GI 3: the halves are swapped against the manual's and the
+ROM's names. No retained wiring page or bulb list assigns individual bulbs to a string, so this is recorded
+as a conflict and the strings have no placement. Running T.6 on a physical Corvette and watching which bulbs
+dim for UPPER LEFT settles it. The table also binds lamps 1-3 to its bumper lights, numbers PinMAME never
+publishes, so those bumper lights never light; the real bumpers have no matrix lamps.
+
 ## Open mechanism behaviour
 
-- Which of the two rev gates opens or closes the lock path, and the order the ROM fires 2, 5 and 15 when
-  it locks and releases balls, is not stated by any retained source. A known-working table or a gameplay
-  run that lights LT-5 LOCK and shoots the ZR-1 ramp would settle it.
+- The table's engine shake is an approximation: four magnet triggers in the engine grab the ball while the
+  ZR-1 UNDERSIDE flasher (26) is on. The real shake comes from the engine coils the servo drives (51 and
+  the position byte); 26 is only a flasher.
+- The physical linkage of the two rev gates is not drawn in any retained source; the table's per-coil
+  contract above is what a recreation consumes.
 - What the Slave Board does with the LED A and B lines (52, 53) is not traced.
 - What the PX-3/PX-4/PX-5 prototype ROMs expect: the designer's drop targets and shifter suggest hardware the
   production machine lacks. A prototype's own test menu (the archive here lacks PX-4's sound ROM, so it stops
@@ -156,9 +174,20 @@ note the board list's readings on each device.
 
 ## Spatial status and why the record stays partial
 
-No Corvette recreation table is retained, so no playfield device has a placement; `spatial_placement`
-stays missing until a table is retained and its objects are checked against the manual's location
-drawings (switch drawing 2-47, lamp drawing 2-45, solenoid drawing 2-49).
+Fitted playfield switches, coils, flashers and lamps are placed from the retained table's objects (979 x
+2162 units) and checked against the manual's lamp (2-45), switch (2-47) and solenoid/flasher (2-49)
+location drawings by an independent callout reading with jet-bumper and flipper-pivot control fits; 103 of
+the 111 checked placements agree within 0.07 and are validated. Seven reads whose leader runs on past
+where the reader stopped were corrected after a pixel trace, each with its reason in the callout seed. Projections are disclosed on each device:
+the trough optos and trough eject onto the trough kicker, the lock switches onto the lock kicker, the
+engine full-stroke optos onto the engine, the race optos and motors onto the lane ends. Lamps 53 and 68,
+which the script draws only on glow sprites, sit on the table's stacked red and green bulb meshes `L81P1`
+and `L81P4`; no source says which colour is which lamp, and the pairing moves neither by more than 0.0005.
+Lamps 76-78 and the race tree 81-86 and the playfield bulb of flasher 26 have no placement: the table draws them
+only on Flasher sprites (hidden ones for the race tree) or a light parked off the playfield, and a sprite
+is a glow, not a socket; measuring them on the location drawings would place them. `spatial_placement`
+stays missing for those and for the four playfield G.I. strings (see above); `reports/spatial/bally/corvette-1994.md` lists every placement the
+drawings do not confirm.
 
 ## Author construction checklist
 
@@ -170,6 +199,8 @@ drawings (switch drawing 2-47, lamp drawing 2-45, solenoid drawing 2-49).
 4. Model the two race cars on 17/18/19 with start optos 51/52 and encoder pulses on 55/56 (or let
    PinMAME's models do it with mechanism bits 0 and 1).
 5. Light flasher circuits 22-28 in both places they reach, and drive the backbox G.I. from strings 2-4.
+6. Fire the lock as the table does: 2 closes `LGate`, 5 opens `GateU`, 15 ejects one locked ball; place
+   the playfield G.I. bulbs on strings 0-3 only after settling the half-swap conflict.
 
 ## Sources
 
@@ -179,6 +210,9 @@ drawings (switch drawing 2-47, lamp drawing 2-45, solenoid drawing 2-49).
   `src/wpc/vpintf.c`.
 - ROM service tests T.1, T.4, T.5, T.6, T.8, T.12, T.16, T.17 and T.18 on `corv_21`, summarized under
   `evidence/runtime/wpc-security/`.
+- The retained table `Corvette (Bally 1994).vpx` version 1.4.2 (SHA-256 `4b500c6b...`) and its embedded script,
+  with a 1,390-file extraction manifest; the placement seed `tools/seeds/bally/corvette-1994-spatial.json`
+  and the callout seed `tools/seeds/bally/corvette-1994-callouts.json`.
 
 ## Procedural note
 
