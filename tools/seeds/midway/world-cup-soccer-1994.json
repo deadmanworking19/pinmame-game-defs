@@ -1,16 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Which physical jet bumper carries each of the three addresses is unresolved, and two readings of this manual disagree. The retained known-working table's own switch bindings are rotated one step relative to the objects they fire from -- Bumper1_Hit pulses public 82, Bumper2_Hit pulses 81, Bumper3_Hit pulses 83 -- and the table is internally inconsistent about it, since its own sound handler calls the bottom-most object 'Top'. An earlier curation pass concluded the printed Left/Upper/Lower names are relative to the cluster rather than to absolute cabinet sides, took the coordinates from the script's per-object bindings, and recorded that conclusion as a named assertion in the test module so a later pass would not reverse it. A 2026-08-08 review read the Switch Locations (printed 2-47) and Solenoid/Flasher Locations (printed 2-49) diagrams the other way, as placing 81/9 leftmost, 82/10 upper-right and 83/11 lower, which would make all six placements rotated. An independent re-render of printed 2-49 at 400 dpi could not confirm that: leaders 9, 10 and 11 resolve to scattered features rather than a clean three-bumper triangle. The earlier pass's coordinates therefore stand unchanged rather than being overwritten on an unconfirmed reading, and this entry records that the geometry is disputed. Note the separate question of whether a runtime switch binding may be used to assign a physical position at all: this project's evidence-authority split gives the script runtime semantics and the manual physical construction, so if the review's reading is ever confirmed, the bindings stay and only the geometry moves. Resolution path: a legible high-dpi read of both location diagrams by a second party, or a LibPinMAME harness run against a legal wcs_l2 ROM closing each jet-bumper switch in turn while observing which public address reports. Unresolved.",
-      "id": "conflict.jet-bumper-script-binding-vs-physical-position",
-      "path": "inputs[binding.device=81,82,83]",
-      "source_refs": [
-        "manual.midway.world-cup-soccer.1994",
-        "vpx-table.wcs-vpw-1-5",
-        "vpx-script.wcs-vpw-1-5"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x20",
     "inversion_applied_by_emulator": true,
@@ -24,14 +13,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -863,7 +849,8 @@
             "id": "switch.matrix-15.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -919,7 +906,8 @@
             "id": "switch.matrix-16.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -975,7 +963,8 @@
             "id": "switch.matrix-17.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1031,7 +1020,8 @@
             "id": "switch.matrix-18.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1293,7 +1283,8 @@
             "id": "switch.matrix-25.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1349,7 +1340,8 @@
             "id": "switch.matrix-26.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1395,7 +1387,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-loop-gate-travel"
         ],
         "status": "validated"
       },
@@ -1405,7 +1398,8 @@
             "id": "switch.matrix-27.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1461,7 +1455,8 @@
             "id": "switch.matrix-28.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1517,7 +1512,8 @@
             "id": "switch.matrix-31.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1573,7 +1569,8 @@
             "id": "switch.matrix-32.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1629,7 +1626,8 @@
             "id": "switch.matrix-33.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1685,7 +1683,8 @@
             "id": "switch.matrix-34.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1741,7 +1740,8 @@
             "id": "switch.matrix-35.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1855,7 +1855,8 @@
             "id": "switch.matrix-37.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1911,7 +1912,8 @@
             "id": "switch.matrix-38.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1967,7 +1969,8 @@
             "id": "switch.matrix-41.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2023,7 +2026,8 @@
             "id": "switch.matrix-42.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2193,7 +2197,8 @@
             "id": "switch.matrix-45.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2283,7 +2288,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-loop-gate-travel"
         ],
         "status": "validated"
       },
@@ -2293,7 +2299,8 @@
             "id": "switch.matrix-47.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2331,7 +2338,7 @@
       "label": "Goalie Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 8. Projected onto the shooter-lane switch/plunger position (Trigger.swPlunger, identical coordinates to Trigger.sw38): the retained script's GWalls_Hit handler (triggered when a ball strikes the goalie's 35-segment target-wall ring) pulses public switch 48 without a dedicated playfield sensor object of its own; the coordinate used here is the nearest fixed reference in the same script region rather than an invented target-wall centroid. PinMAME's own #define aliases this address as both swGoalie and swRTopRoll -- the same physical switch is reused for two logical purposes in the driver source.",
+        "notes": "Printed switch-matrix drive column 4, return row 8. Projected onto the goalie figure (Primitive BM_goalkeeper, table object center), the target this switch senses: the Goalie Target (A-17779) is the goalie figure itself, the switch drawing (printed 2-47) ends callout 48's leader on the goalie unit, and the retained script's GWalls_Hit handler pulses public 48 whenever a ball strikes whichever segment of the goalie's 35-segment hit ring (HitTarget GT006-GT040) is currently collidable. That ring moves with the figure and has no fixed playfield sensor object of its own. An earlier pass projected this switch onto the shooter-lane plunger trigger, which is unrelated to the goalie. PinMAME's own #define aliases this address as both swGoalie and swRTopRoll -- the same physical switch is reused for two logical purposes in the driver source.",
         "part_number": "A-17779",
         "switch_type": "microswitch"
       },
@@ -2357,8 +2364,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.936637,
-            "y": 0.885851
+            "x": 0.392886,
+            "y": 0.130754
           }
         ],
         "status": "validated"
@@ -2407,7 +2414,8 @@
             "id": "switch.matrix-51.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2463,7 +2471,8 @@
             "id": "switch.matrix-52.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2519,7 +2528,8 @@
             "id": "switch.matrix-53.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2575,7 +2585,8 @@
             "id": "switch.matrix-54.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2631,7 +2642,8 @@
             "id": "switch.matrix-55.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2687,7 +2699,8 @@
             "id": "switch.matrix-56.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2831,7 +2844,8 @@
             "id": "switch.matrix-61.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2887,7 +2901,8 @@
             "id": "switch.matrix-62.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2943,7 +2958,8 @@
             "id": "switch.matrix-63.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2999,7 +3015,8 @@
             "id": "switch.matrix-64.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3037,7 +3054,7 @@
       "label": "Tackle Switch",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 6, return row 5.",
+        "notes": "Printed switch-matrix drive column 6, return row 5. A SW-1A-120 leaf switch (the type the slingshots use as score switches) behind the rubber at the right side of the left ramp entrance. The switch drawing (printed 2-47) prints no callout 65 although the switch list does not mark the item Not Shown, so the factory drawings cannot check this placement; it keeps the retained table's trigger sw65, which the script binds (sw65_Hit pulses 65), lies on the rubber the switch drawing draws there, and sits 0.034 from the Tackle lamp (38) the lamp drawing (printed 2-45) puts beside it.",
         "part_number": "SW-1A-120",
         "switch_type": "leaf"
       },
@@ -3111,7 +3128,8 @@
             "id": "switch.matrix-66.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3167,7 +3185,8 @@
             "id": "switch.matrix-67.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3267,7 +3286,8 @@
             "id": "switch.matrix-71.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3323,7 +3343,8 @@
             "id": "switch.matrix-72.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3405,7 +3426,7 @@
       "label": "Left Ramp Exit",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 7, return row 4.",
+        "notes": "Printed switch-matrix drive column 7, return row 4. The retained table's script-bound Trigger sw74 sits at (0.934, 0.195), where the drawing's wavy break line cuts the left ramp's wire form, 0.095 from the T-shaped switch bracket across the right lane that callout 74 marks on the switch drawing (printed 2-47); the drawing supplies the coordinate and the trigger corroborates the switch's lane.",
         "part_number": "5647-12693-21",
         "switch_type": "microswitch"
       },
@@ -3423,14 +3444,16 @@
             "id": "switch.matrix-74.sensor",
             "provenance": {
               "source_refs": [
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
                 "vpx-table.wcs-vpw-1-5"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.934231,
-            "y": 0.195316
+            "x": 0.918,
+            "y": 0.289
           }
         ],
         "status": "validated"
@@ -3461,7 +3484,7 @@
       "label": "Right Ramp Entrance",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 7, return row 5.",
+        "notes": "Printed switch-matrix drive column 7, return row 5. The retained table's script-bound Trigger sw75 sits at (0.808, 0.425), in the middle of the right ramp entrance, 0.108 from the switch body that callout 75 marks at the entrance's right side on the switch drawing (printed 2-47); the drawing supplies the coordinate of the switch, whose actuator wire reaches into the lane, and the trigger corroborates the ramp entrance.",
         "part_number": "5647-12693-11",
         "switch_type": "microswitch"
       },
@@ -3479,14 +3502,16 @@
             "id": "switch.matrix-75.sensor",
             "provenance": {
               "source_refs": [
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
                 "vpx-table.wcs-vpw-1-5"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.80764,
-            "y": 0.425492
+            "x": 0.916,
+            "y": 0.421
           }
         ],
         "status": "validated"
@@ -3535,7 +3560,8 @@
             "id": "switch.matrix-76.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3591,7 +3617,8 @@
             "id": "switch.matrix-77.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3647,7 +3674,8 @@
             "id": "switch.matrix-78.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3685,7 +3713,7 @@
       "label": "Left Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 1.",
+        "notes": "Printed switch-matrix drive column 8, return row 1. The left jet bumper (retained-table object Bumper3): both location drawings put callout 81 on it (switch drawing printed 2-47; its coil 9 on the solenoid drawing printed 2-49), and the jet-bumper harness run shows the ROM firing solenoid 9 within 63 ms of this switch closing, alone and in two different orders. The retained table's script pulses this address from Bumper2_Hit, the upper bumper object: its three bumper bindings are rotated one step against the manual (Bumper1_Hit -> 82, Bumper2_Hit -> 81, Bumper3_Hit -> 83), a defect of that table that a recreation should not copy.",
         "part_number": "SW-11A-37",
         "switch_type": "leaf"
       },
@@ -3693,7 +3721,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -3703,14 +3732,16 @@
             "id": "switch.matrix-81.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.835502,
-            "y": 0.119845
+            "x": 0.63906,
+            "y": 0.159845
           }
         ],
         "status": "validated"
@@ -3741,7 +3772,7 @@
       "label": "Upper Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 2.",
+        "notes": "Printed switch-matrix drive column 8, return row 2. The upper jet bumper (retained-table object Bumper2): both location drawings put callout 82 on it (switch drawing printed 2-47; its coil 10 on the solenoid drawing printed 2-49), and the jet-bumper harness run shows the ROM firing solenoid 10 within 63 ms of this switch closing, alone and in two different orders. The retained table's script pulses this address from Bumper1_Hit, the lower bumper object: its three bumper bindings are rotated one step against the manual (Bumper1_Hit -> 82, Bumper2_Hit -> 81, Bumper3_Hit -> 83), a defect of that table that a recreation should not copy.",
         "part_number": "SW-11A-37",
         "switch_type": "leaf"
       },
@@ -3749,7 +3780,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -3759,14 +3791,16 @@
             "id": "switch.matrix-82.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.819085,
-            "y": 0.214142
+            "x": 0.835502,
+            "y": 0.119845
           }
         ],
         "status": "validated"
@@ -3797,7 +3831,7 @@
       "label": "Lower Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 3.",
+        "notes": "Printed switch-matrix drive column 8, return row 3. The lower jet bumper (retained-table object Bumper1): both location drawings put callout 83 on it (switch drawing printed 2-47; its coil 11 on the solenoid drawing printed 2-49), and the jet-bumper harness run shows the ROM firing solenoid 11 within 63 ms of this switch closing, alone and in two different orders. The retained table's script pulses this address from Bumper3_Hit, the left bumper object: its three bumper bindings are rotated one step against the manual (Bumper1_Hit -> 82, Bumper2_Hit -> 81, Bumper3_Hit -> 83), a defect of that table that a recreation should not copy.",
         "part_number": "SW-11A-37",
         "switch_type": "leaf"
       },
@@ -3805,7 +3839,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -3815,14 +3850,16 @@
             "id": "switch.matrix-83.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.63906,
-            "y": 0.159845
+            "x": 0.819085,
+            "y": 0.214142
           }
         ],
         "status": "validated"
@@ -3872,7 +3909,8 @@
             "id": "switch.matrix-84.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3929,7 +3967,8 @@
             "id": "switch.matrix-85.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3985,7 +4024,8 @@
             "id": "switch.matrix-86.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -4031,7 +4071,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-loop-gate-travel"
         ],
         "status": "validated"
       },
@@ -4041,7 +4082,8 @@
             "id": "switch.matrix-87.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -4087,7 +4129,8 @@
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.wcs-vpw-1-5"
+          "vpx-script.wcs-vpw-1-5",
+          "runtime-scenario.wcs-loop-gate-travel"
         ],
         "status": "validated"
       },
@@ -4097,7 +4140,8 @@
             "id": "switch.matrix-88.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -4931,10 +4975,11 @@
     },
     {
       "actuators": [],
-      "behavior": "World Cup Soccer has an automatic plunger (wcsSimData declares automatic plunger = TRUE, and no cabinet Launch Ball switch exists in the matrix). A ball ejected from the trough rests on shooter-lane switch 38 (Ball Shooter); the retained script's cvpmImpulseP helper (InitImpulseP swPlunger) auto-fires an impulse coil with no distinct public WPC-Security solenoid address of its own.",
+      "assembly_part_number": "A-17730",
+      "behavior": "World Cup Soccer has a manual plunger: the cabinet parts list carries the A-17730 Ball Shooter Assembly (ball shooter rod, housing, sleeve and tip), no solenoid drives a launch, and the matrix has no Launch Ball switch. A ball ejected from the trough rests on shooter-lane switch 38 (Ball Shooter) until the player plunges it. The retained table fires its Plunger object from the plunger key; its script also defines a cvpmImpulseP helper (SolAutofire) that no SolCallback ever registers, so it is dead code. wcsSimData's 'automatic plunger' flag only tells PinMAME's own ball simulator to launch by itself and describes no hardware.",
       "id": "mechanism.shooter-lane",
       "kind": "kicker",
-      "label": "Shooter lane and automatic impulse plunger",
+      "label": "Shooter lane and manual ball shooter",
       "positions": [
         {
           "description": "Shooter-lane switch.",
@@ -5152,7 +5197,7 @@
         "device.diverter-hold"
       ],
       "assembly_part_number": "A-18138",
-      "behavior": "Solenoid 8 (Ramp Diverter) swings a diverter flap (A-18138 Diverter Assembly) to route the ball, and solenoid 16 (Diverter Hold) holds it in the diverted position; the retained script toggles two collision walls (diverterwall_open/diverterwall_closed) together. Left Ramp Diverted (71) is the printed switch for this mechanism, and pinned PinMAME's own wcs_getSol dispatches a synthetic combined-state address (public solenoid 51, CORE_CUSTSOLNO(1)) that ORs solenoids 8 and 16 together with no separate physical control line of its own.",
+      "behavior": "Solenoid 8 (Ramp Diverter) swings a diverter flap (A-18138 Diverter Assembly) to route the ball, and solenoid 16 (Diverter Hold) holds it in the diverted position; the retained script swings the flap (BM_diverterside01/02 from DiverterFlipper001) and toggles two collision walls (diverterwall_open/diverterwall_closed) together. Left Ramp Diverted (71) is the printed switch for this mechanism, and pinned PinMAME's own wcs_getSol dispatches a synthetic combined-state address (public solenoid 51, CORE_CUSTSOLNO(1)) that ORs solenoids 8 and 16 together with no separate physical control line of its own.",
       "id": "mechanism.ramp-diverter",
       "kind": "gate",
       "label": "Left ramp diverter",
@@ -5183,14 +5228,30 @@
         "device.loop-gate"
       ],
       "assembly_part_number": "A-17796",
-      "behavior": "Solenoid 34 operates a ball gate actuator (A-17796 Ball Gate Actuator Assy., per the Lower Playfield Parts list) that the manual's own two tables name inconsistently -- 'Loop Gate' on the primary Solenoid/Flasher Table (matching wcs.c's own #define sLoopGate 34) and 'Lock Gate' on the Solenoid/Flasher Locations parts list for the identical coil part and assembly number. Unlike the ramp diverter and lock post above, no VPX object of any kind (Gate, Flipper, Wall, Trigger, or Light) and no script reference exists anywhere in the retained table for this address, and no printed switch is associated with it either. Its playfield location is not asserted.",
+      "behavior": "Solenoid 34 (low power, coil A-14406) drives the A-17796 Ball Gate Actuator Coil Assy., which works the A-17797-1 Ball Gate Special Assy., Left: a one-way gate where the loop round the top of the playfield meets the right orbit (Upper Playfield Parts items 47 and 48, printed 2-40/2-41; callout 34 on the solenoid drawing, printed 2-49). The manual's solenoid table calls it 'Loop Gate' (matching wcs.c's #define sLoopGate 34) and its locations list 'Lock Gate' for the same coil and assembly. The loop-gate harness run shows the ROM's rule: with the Travel lamp (63) lit, which making both top rollovers (87 and 88) does, the spinner (27) or the travel lane rollover (47) energizes 34 within 32 ms and holds it for 3.5 s, long enough for a ball shot up the left spiral to travel round the top; with Travel unlit those switches leave 34 off. The gate has no switch of its own. The BMI rulesheet (a secondary lead) describes the same shot: with a city lit the left spiral sends the ball all the way round and out the other side, otherwise a one-way gate drops it into the top rollovers and jet bumpers. The retained table models the gate (Gate Gate003, one-way) but never drives it, so it plays the unlit case only.",
       "id": "mechanism.loop-gate",
       "kind": "gate",
-      "label": "Loop Gate / Lock Gate ball gate",
+      "label": "Loop gate at the top of the right orbit",
+      "positions": [
+        {
+          "description": "A ball coming round the top is stopped and drops into the top rollovers and jet bumpers.",
+          "id": "closed",
+          "label": "Gate at rest (Travel unlit)",
+          "sensors": []
+        },
+        {
+          "description": "Energized for 3.5 s after the left-spiral switches; the ball continues round into the right orbit.",
+          "id": "open",
+          "label": "Gate held by solenoid 34 (Travel lit)",
+          "sensors": []
+        }
+      ],
       "provenance": {
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.wcs-loop-gate-travel",
+          "vpx-table.wcs-vpw-1-5"
         ],
         "status": "validated"
       },
@@ -5293,13 +5354,13 @@
         "device.lower-jet-bumper"
       ],
       "assembly_part_number": "A-9415-2",
-      "behavior": "Three A-9415-2 jet bumpers. The retained script's Bumper1_Hit/Bumper2_Hit/Bumper3_Hit handlers pulse switches 82, 81, and 83 respectively and fire coils 10, 9, and 11 -- table object Bumper2 is the printed 'Left' jet bumper and Bumper1 is the printed 'Upper' jet bumper, a naming/object-index crossing confirmed directly from the script rather than assumed from either label alone.",
+      "behavior": "Three A-9415-2 jet bumpers in a triangle at the upper right, named by absolute position: Left (switch 81, coil 9), Upper (82, coil 10) and Lower (83, coil 11). Both location drawings (printed 2-47 and 2-49) put each switch and its coil on the same bumper, and the jet-bumper harness run shows the ROM firing each coil within 63 ms of its own switch closing. Jet Bumpers flasher 20 flashes with each kick. The retained table's script pulses the switches from rotated objects (Bumper1_Hit -> 82, Bumper2_Hit -> 81, Bumper3_Hit -> 83) and registers no callback for the coils, so its bumpers kick by themselves; a recreation should bind each switch to the bumper named here.",
       "id": "mechanism.jet-bumpers",
       "kind": "other",
       "label": "Three-bumper jet nest",
       "positions": [
         {
-          "description": "Table object Bumper2.",
+          "description": "Table object Bumper3; the ROM fires solenoid 9 when switch 81 closes.",
           "id": "left",
           "label": "Left jet bumper",
           "sensors": [
@@ -5307,7 +5368,7 @@
           ]
         },
         {
-          "description": "Table object Bumper1.",
+          "description": "Table object Bumper2; the ROM fires solenoid 10 when switch 82 closes.",
           "id": "upper",
           "label": "Upper jet bumper",
           "sensors": [
@@ -5315,7 +5376,7 @@
           ]
         },
         {
-          "description": "Table object Bumper3.",
+          "description": "Table object Bumper1; the ROM fires solenoid 11 when switch 83 closes.",
           "id": "lower",
           "label": "Lower jet bumper",
           "sensors": [
@@ -5325,9 +5386,10 @@
       ],
       "provenance": {
         "source_refs": [
-          "vpx-script.wcs-vpw-1-5",
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "runtime-scenario.wcs-jet-bumper-coil-pairing",
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-table.wcs-vpw-1-5"
         ],
         "status": "validated"
       },
@@ -5343,7 +5405,7 @@
         "device.right-slingshot"
       ],
       "assembly_part_number": "B-9362-L-2 (left) with B-9362-R-3 (right)",
-      "behavior": "Each slingshot assembly carries a direct-fire kicker switch (SW-1A-114) and a separate debounced score switch (SW-1A-120) wired to one public matrix address. The retained script's LeftSlingShot_Slingshot/RightSlingShot_Slingshot handlers pulse matrix addresses 84 and 85 and fire coils 12/13 in the same event.",
+      "behavior": "Each slingshot assembly carries a direct-fire kicker switch (SW-1A-114) and a separate debounced score switch (SW-1A-120) wired to one public matrix address. The retained script's LeftSlingShot_Slingshot/RightSlingShot_Slingshot handlers pulse matrix addresses 84 and 85; the table's Slingshot objects kick by themselves, and the script registers no callback for coils 12/13.",
       "id": "mechanism.slingshots",
       "kind": "other",
       "label": "Left and right slingshots",
@@ -5523,7 +5585,8 @@
             "id": "device.goal-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5537,9 +5600,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-1",
+        "control_wire": "Vio-Brn",
         "driver_transistor": "Q82",
-        "power_connection": "J130-1"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5580,7 +5644,8 @@
             "id": "device.tv-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5594,9 +5659,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-2",
+        "control_wire": "Vio-Red",
         "driver_transistor": "Q80",
-        "power_connection": "J130-2"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5637,7 +5703,8 @@
             "id": "device.kickback.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5651,9 +5718,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-4",
+        "control_wire": "Vio-Org",
         "driver_transistor": "Q78",
-        "power_connection": "J130-4"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5694,7 +5762,8 @@
             "id": "device.lock-release.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5708,9 +5777,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-5",
+        "control_wire": "Vio-Yel",
         "driver_transistor": "Q76",
-        "power_connection": "J130-5"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5751,7 +5821,8 @@
             "id": "device.upper-eject-hole.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5765,9 +5836,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-6",
+        "control_wire": "Vio-Grn",
         "driver_transistor": "Q64",
-        "power_connection": "J130-6"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5808,7 +5880,8 @@
             "id": "device.trough.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5822,9 +5895,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-7",
+        "control_wire": "Vio-Blu",
         "driver_transistor": "Q66",
-        "power_connection": "J130-7"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5874,9 +5948,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2 (Backbox)",
+        "control_connection": "J130-8 (Backbox)",
+        "control_wire": "Vio-Blk",
         "driver_transistor": "Q68",
-        "power_connection": "J130-8 (Backbox)"
+        "power_connection": "J107-2 (Backbox)"
       }
     },
     {
@@ -5900,7 +5975,7 @@
       "label": "Ramp Diverter",
       "physical": {
         "assembly_part_number": "A-18138",
-        "notes": "Printed solenoid/flasher table entry 08 (High Power). Retained script callback: SolRampDiverter.",
+        "notes": "Printed solenoid/flasher table entry 08 (High Power). Retained script callback: SolRampDiverter. Placed on the diverter flap the retained script swings for solenoids 8 and 16 (Primitive BM_diverterside01, rotated from DiverterFlipper001's angle), where the shared leader of callouts 8 and 16 ends on the solenoid drawing (printed 2-49).",
         "part_number": "FL-11753-1"
       },
       "provenance": {
@@ -5917,23 +5992,25 @@
             "id": "device.ramp-diverter.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.063638,
-            "y": 0.132172
+            "x": 0.20819,
+            "y": 0.064358
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J130-9",
+        "control_wire": "Vio-Gry",
         "driver_transistor": "Q70",
-        "power_connection": "J130-9"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -5957,13 +6034,14 @@
       "label": "Left Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher table entry 09 (Low Power).",
+        "notes": "Printed solenoid/flasher table entry 09 (Low Power). The left jet bumper's coil (retained-table object Bumper3, where callout 9 ends on the solenoid drawing, printed 2-49). The jet-bumper harness run shows the ROM firing it when switch 81 closes. The retained script registers no callback for it: the table's Bumper objects kick by themselves.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -5973,23 +6051,26 @@
             "id": "device.left-jet-bumper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.835502,
-            "y": 0.119845
+            "x": 0.63906,
+            "y": 0.159845
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-1",
+        "control_wire": "Brn-Blk",
         "driver_transistor": "Q58",
-        "power_connection": "J127-1"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6013,13 +6094,14 @@
       "label": "Upper Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher table entry 10 (Low Power).",
+        "notes": "Printed solenoid/flasher table entry 10 (Low Power). The upper jet bumper's coil (retained-table object Bumper2, where callout 10 ends on the solenoid drawing, printed 2-49). The jet-bumper harness run shows the ROM firing it when switch 82 closes. The retained script registers no callback for it: the table's Bumper objects kick by themselves.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -6029,23 +6111,26 @@
             "id": "device.upper-jet-bumper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.819085,
-            "y": 0.214142
+            "x": 0.835502,
+            "y": 0.119845
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-3",
+        "control_wire": "Brn-Red",
         "driver_transistor": "Q56",
-        "power_connection": "J127-3"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6069,13 +6154,14 @@
       "label": "Lower Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher table entry 11 (Low Power).",
+        "notes": "Printed solenoid/flasher table entry 11 (Low Power). The lower jet bumper's coil (retained-table object Bumper1, where callout 11 ends on the solenoid drawing, printed 2-49). The jet-bumper harness run shows the ROM firing it when switch 83 closes. The retained script registers no callback for it: the table's Bumper objects kick by themselves.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.wcs-jet-bumper-coil-pairing"
         ],
         "status": "validated"
       },
@@ -6085,23 +6171,26 @@
             "id": "device.lower-jet-bumper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.63906,
-            "y": 0.159845
+            "x": 0.819085,
+            "y": 0.214142
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-4",
+        "control_wire": "Brn-Org",
         "driver_transistor": "Q54",
-        "power_connection": "J127-4"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6141,7 +6230,8 @@
             "id": "device.left-slingshot.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6155,9 +6245,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-5",
+        "control_wire": "Brn-Yel",
         "driver_transistor": "Q52",
-        "power_connection": "J127-5"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6197,7 +6288,8 @@
             "id": "device.right-slingshot.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6211,9 +6303,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-6",
+        "control_wire": "Brn-Grn",
         "driver_transistor": "Q50",
-        "power_connection": "J127-6"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6253,7 +6346,8 @@
             "id": "device.right-eject-hole.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6267,9 +6361,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-7",
+        "control_wire": "Brn-Blu",
         "driver_transistor": "Q48",
-        "power_connection": "J127-7"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6309,7 +6404,8 @@
             "id": "device.left-eject-hole.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6323,9 +6419,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-3",
+        "control_connection": "J127-8",
+        "control_wire": "Brn-Vio",
         "driver_transistor": "Q46",
-        "power_connection": "J127-8"
+        "power_connection": "J107-3"
       }
     },
     {
@@ -6349,7 +6446,7 @@
       "label": "Diverter Hold",
       "physical": {
         "assembly_part_number": "A-18138",
-        "notes": "Printed solenoid/flasher table entry 16 (Low Power). Retained script callback: SolRampDiverterHold.",
+        "notes": "Printed solenoid/flasher table entry 16 (Low Power). Retained script callback: SolRampDiverterHold. Placed on the diverter flap the retained script swings for solenoids 8 and 16 (Primitive BM_diverterside01, rotated from DiverterFlipper001's angle), where the shared leader of callouts 8 and 16 ends on the solenoid drawing (printed 2-49).",
         "part_number": "FL-11753-1"
       },
       "provenance": {
@@ -6366,23 +6463,25 @@
             "id": "device.diverter-hold.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.063638,
-            "y": 0.132172
+            "x": 0.20819,
+            "y": 0.064358
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-2",
+        "control_connection": "J127-9",
+        "control_wire": "Brn-Gry",
         "driver_transistor": "Q44",
-        "power_connection": "J127-9"
+        "power_connection": "J107-2"
       }
     },
     {
@@ -6406,7 +6505,8 @@
       "label": "Goal Cage Top",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 17 (Flasher). Retained script callback: SolFlash17."
+        "notes": "Printed solenoid/flasher table entry 17 (Flasher). Retained script callback: SolFlash17. Printed flashlamp complement: #906 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The Solenoid/Flasher Locations list's \"Goal Cage Top (2)\" (24-8802, A-12336-1) counts that playfield bulb and the backbox one: the solenoid drawing (printed 2-49) runs a single leader to the goal cage top, where the retained table drives its single Light f17.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6422,7 +6522,8 @@
             "id": "device.goal-cage-top.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6436,9 +6537,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J126-1 / J125-1",
+        "control_wire": "Blk-Brn",
         "driver_transistor": "Q42",
-        "power_connection": "J126-1 / J125-1"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6462,7 +6564,8 @@
       "label": "Goal",
       "physical": {
         "assembly_part_number": "A-18384 with A-17803",
-        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Retained script callback: SolFlash18."
+        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Retained script callback: SolFlash18. Printed flashlamp complement: #89, #906 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The solenoid drawing (printed 2-49) draws two callouts 18: one on the rear insert behind the goal, where the retained table's SolFlash18 drives Light f18 (placement 1), and one ending on the kidney-shaped GOAL insert (placement 2). The Solenoid/Flasher Locations list's \"Goal (2)\" prints the two playfield parts, 24-8802 / 24-8704 with assemblies A-18384 / A-17803; read in printed order, the #906 bulb sits on A-18384, the assembly the lamp list also gives the goal-area lamps 51-54. Placement device.goal.emitter.2: The retained table models only the rear Goal bulb (Light f18); the second bulb is the #906 on the A-18384 board under the kidney-shaped GOAL insert, where the left-hand callout 18 ends on the solenoid drawing (printed 2-49), 0.031 from the table's insert light l53, so the drawing supplies the coordinate.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6475,10 +6578,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.goal.emitter",
+            "id": "device.goal.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6486,15 +6590,31 @@
             "space": "playfield",
             "x": 0.355793,
             "y": 0.048587
+          },
+          {
+            "id": "device.goal.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "vpx-table.wcs-vpw-1-5"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.385,
+            "y": 0.176
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J126-2 / J125-2",
+        "control_wire": "Blk-Red",
         "driver_transistor": "Q40",
-        "power_connection": "J126-2 / J125-2"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6518,7 +6638,8 @@
       "label": "Skill Shot",
       "physical": {
         "assembly_part_number": "A-12336-1 with A-17803",
-        "notes": "Printed solenoid/flasher table entry 19 (Flasher). Retained script callback: SolFlash19."
+        "notes": "Printed solenoid/flasher table entry 19 (Flasher). Retained script callback: SolFlash19. Printed flashlamp complement: #906 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The table's playfield column prints a single #906, but the Solenoid/Flasher Locations list's \"Skill Shot (2)\" prints two playfield parts, 24-8802 / 24-8704 with assemblies A-12336-1 / A-17803, and the solenoid drawing (printed 2-49) draws two playfield callouts 19: one by the shooter lane at the apron, where the retained table's SolFlash19 drives Light f19 (placement 1), and one on a flasher dome on the right side wall (placement 2), which the IPDB photograph shows. The definition counts two playfield bulbs and the backbox one. Placement device.skill-shot.emitter.2: The retained table models only the lower Skill Shot bulb (Light f19, by the apron); the second is the flasher dome on the right side wall that the upper callout 19 marks on the solenoid drawing (printed 2-49), with no table object within 0.06, so the drawing supplies the coordinate.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6531,10 +6652,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.skill-shot.emitter",
+            "id": "device.skill-shot.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6542,15 +6664,31 @@
             "space": "playfield",
             "x": 0.837432,
             "y": 0.945536
+          },
+          {
+            "id": "device.skill-shot.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.942,
+            "y": 0.491
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J126-3 / J125-3",
+        "control_wire": "Blk-Org",
         "driver_transistor": "Q38",
-        "power_connection": "J126-3 / J125-3"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6574,7 +6712,8 @@
       "label": "Jet Bumpers",
       "physical": {
         "assembly_part_number": "A-17803",
-        "notes": "Printed solenoid/flasher table entry 20 (Flasher). Retained script callback: SolFlash20."
+        "notes": "Printed solenoid/flasher table entry 20 (Flasher). Retained script callback: SolFlash20. Printed flashlamp complement: #89 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6590,7 +6729,8 @@
             "id": "device.jet-bumpers.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6604,9 +6744,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J126-4 / J125-5",
+        "control_wire": "Blk-Yel",
         "driver_transistor": "Q36",
-        "power_connection": "J126-4 / J125-5"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6647,7 +6788,8 @@
             "id": "device.goalie-drive.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6661,9 +6803,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J116-2",
+        "control_connection": "J126-5",
+        "control_wire": "Blu-Grn",
         "driver_transistor": "Q28",
-        "power_connection": "J126-5"
+        "power_connection": "J116-2"
       }
     },
     {
@@ -6687,7 +6830,8 @@
       "label": "Spinning Ball",
       "physical": {
         "assembly_part_number": "A-17983",
-        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Retained script callback: SolFlash22."
+        "notes": "Printed solenoid/flasher table entry 22 (Flasher). Retained script callback: SolFlash22. Printed flashlamp complement: #89 (2) on the playfield. The Solenoid/Flasher Locations list prints \"Spinning Ball (2)\" (24-8704, A-17983), and callout 22 on the solenoid drawing (printed 2-49) runs two leaders, one to each bulb beside the spinning ball; the retained script's SolFlash22 drives Lights f22 and f22a at those two places.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6700,10 +6844,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.spinning-ball.emitter",
+            "id": "device.spinning-ball.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6711,15 +6856,30 @@
             "space": "playfield",
             "x": 0.837775,
             "y": 0.358024
+          },
+          {
+            "id": "device.spinning-ball.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.760476,
+            "y": 0.387893
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6",
+        "control_connection": "J126-6",
+        "control_wire": "Blu-Blk",
         "driver_transistor": "Q30",
-        "power_connection": "J126-6"
+        "power_connection": "J107-6"
       }
     },
     {
@@ -6760,7 +6920,8 @@
             "id": "device.ball-clockwise.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6774,9 +6935,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J116-2",
+        "control_connection": "J126-7",
+        "control_wire": "Blu-Vio",
         "driver_transistor": "Q34",
-        "power_connection": "J126-7"
+        "power_connection": "J116-2"
       }
     },
     {
@@ -6817,7 +6979,8 @@
             "id": "device.ball-counter-clockwise.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6831,9 +6994,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J116-2",
+        "control_connection": "J126-8",
+        "control_wire": "Blu-Gry",
         "driver_transistor": "Q32",
-        "power_connection": "J126-8"
+        "power_connection": "J116-2"
       }
     },
     {
@@ -6857,7 +7021,8 @@
       "label": "Left Ramp Entrance",
       "physical": {
         "assembly_part_number": "A-17983",
-        "notes": "Printed solenoid/flasher table entry 25 (Gen. Purpose). Retained script callback: SolFlash25."
+        "notes": "Printed solenoid/flasher table entry 25 (Gen. Purpose). Retained script callback: SolFlash25. Printed flashlamp complement: #89 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6873,7 +7038,8 @@
             "id": "device.left-ramp-entrance.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6887,9 +7053,10 @@
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J122-1 / J124-1",
+        "control_wire": "Blu-Brn",
         "driver_transistor": "Q26",
-        "power_connection": "J122-1 / J124-1"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6913,7 +7080,8 @@
       "label": "Lock Area",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Retained script callback: SolFlash26."
+        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Retained script callback: SolFlash26. Printed flashlamp complement: #906 on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The retained table's Light f26 that SolFlash26 drives sits at (0.043, 0.274), 0.079 behind the flasher dome that callout 26 marks on the left side wall on the solenoid drawing (printed 2-49); f26 is a light source for the table's baked light maps, not a dome object, so the drawing supplies the coordinate.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6929,23 +7097,26 @@
             "id": "device.lock-area.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.042769,
-            "y": 0.273634
+            "x": 0.038,
+            "y": 0.352
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J122-2 / J124-2",
+        "control_wire": "Blu-Red",
         "driver_transistor": "Q24",
-        "power_connection": "J122-2 / J124-2"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -6969,7 +7140,8 @@
       "label": "Flipper Lanes",
       "physical": {
         "assembly_part_number": "A-17983",
-        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Retained script callback: SolFlash27."
+        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Retained script callback: SolFlash27. Printed flashlamp complement: #89 (2) on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The solenoid drawing (printed 2-49) draws two callouts 27, one beside each inlane; the retained script's SolFlash27 drives Lights f27 (left) and f27a (right) there.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6982,10 +7154,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.flipper-lanes.emitter",
+            "id": "device.flipper-lanes.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6993,15 +7166,30 @@
             "space": "playfield",
             "x": 0.130976,
             "y": 0.791652
+          },
+          {
+            "id": "device.flipper-lanes.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.808869,
+            "y": 0.790123
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J122-3 / J124-3",
+        "control_wire": "Blu-Org",
         "driver_transistor": "Q22",
-        "power_connection": "J122-3 / J124-3"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -7025,7 +7213,8 @@
       "label": "Ramp Rear",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Retained script callback: SolFlash28."
+        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Retained script callback: SolFlash28. Printed flashlamp complement: #906 (2) on the playfield and #906 on the backbox. Only the playfield bulbs have a playfield placement; the backbox bulb lights the translite. The solenoid drawing (printed 2-49) draws two callouts 28 on the two top-corner flasher domes. The retained script's SolFlash28 drives Lights f28 (left), where placement 1 sits, and f28a (right). Placement device.ramp-rear.emitter.2: The retained table's Light f28a that SolFlash28 drives sits at (0.934, 0.037), against the right wall, 0.048 under the page's control fit and 0.083 under its callout fit from the spoked flasher dome that the right-hand callout 28 marks in the top-right corner of the solenoid drawing (printed 2-49); f28a is a light source for the table's baked light maps, not a dome object, so the drawing supplies the coordinate.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -7038,10 +7227,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.ramp-rear.emitter",
+            "id": "device.ramp-rear.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -7049,15 +7239,31 @@
             "space": "playfield",
             "x": 0.168768,
             "y": 0.029932
+          },
+          {
+            "id": "device.ramp-rear.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.891,
+            "y": 0.059
           }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC-Security power driver board",
-        "control_connection": "J107-6 / J106-5",
+        "control_connection": "J122-4 / J124-5",
+        "control_wire": "Blu-Yel",
         "driver_transistor": "Q20",
-        "power_connection": "J122-4 / J124-5"
+        "power_connection": "J107-6 / J106-5"
       }
     },
     {
@@ -7252,7 +7458,8 @@
             "id": "device.magna-goalie.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -7265,11 +7472,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-6,7",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-6",
         "control_wire": "Yel-Vio",
         "driver_transistor": "Q2",
-        "power_connection": "J902-6"
+        "power_connection": "J907-6,7"
       }
     },
     {
@@ -7293,22 +7500,43 @@
       "label": "Loop Gate",
       "physical": {
         "assembly_part_number": "A-17796",
-        "notes": "Printed solenoid/flasher table entry 34 (Low Power). Fliptronic upper-flipper driver-transistor circuit repurposed for a non-flipper device: World Cup Soccer has no upper flippers (FLIP_SOL(FLIP_L) only), and this solenoid's driver transistor and drive connection are identical to the generic Flipper Circuits table's Upper Right Hold position -- see solenoid-flasher-wiring.md for the full cross-reference. No VPX object of any kind and no script reference exists for this address in the retained table (grepped exhaustively); its spatial placement is not asserted rather than invented -- see coverage.missing.",
+        "notes": "Printed solenoid/flasher table entry 34 (Low Power). Fliptronic upper-flipper driver-transistor circuit repurposed for a non-flipper device: World Cup Soccer has no upper flippers (FLIP_SOL(FLIP_L) only), and this solenoid's driver transistor and drive connection are identical to the generic Flipper Circuits table's Upper Right Hold position -- see solenoid-flasher-wiring.md for the full cross-reference. The Solenoid/Flasher Locations list prints this item \"Lock Gate\" for the same coil (A-14406) and assembly (A-17796); the solenoid table's \"Loop Gate\" agrees with wcs.c's #define sLoopGate 34. The Upper Playfield Parts list (printed 2-40) names A-17796 the Ball Gate Actuator Coil Assy. (item 47) beside the A-17797-1 Ball Gate Special Assy., Left (item 48), and its drawing (printed 2-41) puts both at the top of the right orbit, where callout 34 ends on the solenoid drawing (printed 2-49) and the retained table has its one-way Gate Gate003. The retained script never drives this address, so that gate stays passive in the table. The loop-gate harness run shows the ROM energizing 34 for 3.5 s, within 32 ms of the spinner (27) or the travel lane rollover (47) closing while the Travel lamp (63) is lit, and not at all for those switches while it is unlit.",
         "part_number": "A-14406"
       },
       "provenance": {
         "source_refs": [
           "manual.midway.world-cup-soccer.1994",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime-scenario.wcs-loop-gate-travel"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.loop-gate.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.wcs-vpw-1-5",
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.818856,
+            "y": 0.035613
+          }
         ],
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-6,7",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-4",
         "control_wire": "Org-Vio",
         "driver_transistor": "Q7",
-        "power_connection": "J902-4"
+        "power_connection": "J907-6,7"
       }
     },
     {
@@ -7348,7 +7576,8 @@
             "id": "device.lock-magnet.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -7361,11 +7590,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-8,9",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-3",
         "control_wire": "Yel-Gry",
         "driver_transistor": "Q1",
-        "power_connection": "J902-3"
+        "power_connection": "J907-8,9"
       }
     },
     {
@@ -7388,7 +7617,7 @@
       "kind": "coil",
       "label": "Not Used Upper Left Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 36. Fourth upper-flipper driver-transistor position (Up Lt. Hold); no coil is printed anywhere on the solenoid/flasher table."
+        "notes": "Printed solenoid/flasher table entry 36. Fourth upper-flipper driver-transistor position (Up Lt. Hold): the Flipper Circuits table prints its row (Q5, drive J902-1, wire Org-Gry) with Not Used across the coil columns, and the solenoid/flasher table prints no row for it."
       },
       "provenance": {
         "source_refs": [
@@ -7408,7 +7637,11 @@
         "status": "not_applicable"
       },
       "wiring": {
-        "board": "WPC-Security power driver board"
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-1",
+        "control_wire": "Org-Gry",
+        "driver_transistor": "Q5",
+        "power_connection": "J907-8 (Red-Gry)"
       }
     },
     {
@@ -7774,11 +8007,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-1",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-13",
         "control_wire": "Yel-Grn",
         "driver_transistor": "Q4",
-        "power_connection": "J902-11"
+        "power_connection": "J907-1 (Red-Grn)"
       }
     },
     {
@@ -7831,11 +8064,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-1",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-11",
         "control_wire": "Org-Grn",
         "driver_transistor": "Q11",
-        "power_connection": "J902-11"
+        "power_connection": "J907-1 (Red-Grn)"
       }
     },
     {
@@ -7889,11 +8122,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-4",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-9",
         "control_wire": "Yel-Blu",
         "driver_transistor": "Q3",
-        "power_connection": "J902-7"
+        "power_connection": "J907-4 (Red-Blu)"
       }
     },
     {
@@ -7946,11 +8179,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC-Security power driver board",
-        "control_connection": "J907-4",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-7",
         "control_wire": "Org-Blu",
         "driver_transistor": "Q9",
-        "power_connection": "J902-7"
+        "power_connection": "J907-4 (Red-Blu)"
       }
     },
     {
@@ -7969,7 +8202,7 @@
       "kind": "virtual",
       "label": "PinMAME Simulator Ball-Shooter Channel",
       "physical": {
-        "notes": "PinMAME's simulator-only ball-shooter channel; World Cup Soccer has an automatic impulse plunger (cvpmImpulseP on switch 38) with no WPC-Security hardware output of its own."
+        "notes": "PinMAME's simulator-only ball-shooter channel; World Cup Soccer has a manual plunger (the A-17730 Ball Shooter Assembly) and no launch coil, so no WPC-Security hardware output drives a launch."
       },
       "provenance": {
         "source_refs": [
@@ -8108,7 +8341,8 @@
             "id": "lamp.matrix-11.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8167,7 +8401,8 @@
             "id": "lamp.matrix-12.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8226,7 +8461,8 @@
             "id": "lamp.matrix-13.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8285,7 +8521,8 @@
             "id": "lamp.matrix-14.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8344,7 +8581,8 @@
             "id": "lamp.matrix-15.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8403,7 +8641,8 @@
             "id": "lamp.matrix-16.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8462,7 +8701,8 @@
             "id": "lamp.matrix-17.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8521,7 +8761,8 @@
             "id": "lamp.matrix-18.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8580,7 +8821,8 @@
             "id": "lamp.matrix-21.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8639,7 +8881,8 @@
             "id": "lamp.matrix-22.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8698,7 +8941,8 @@
             "id": "lamp.matrix-23.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8757,7 +9001,8 @@
             "id": "lamp.matrix-24.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8816,7 +9061,8 @@
             "id": "lamp.matrix-25.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8875,7 +9121,8 @@
             "id": "lamp.matrix-26.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8934,7 +9181,8 @@
             "id": "lamp.matrix-27.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8993,7 +9241,8 @@
             "id": "lamp.matrix-28.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9052,7 +9301,8 @@
             "id": "lamp.matrix-31.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9111,7 +9361,8 @@
             "id": "lamp.matrix-32.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9170,7 +9421,8 @@
             "id": "lamp.matrix-33.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9229,7 +9481,8 @@
             "id": "lamp.matrix-34.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9288,7 +9541,8 @@
             "id": "lamp.matrix-35.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9347,7 +9601,8 @@
             "id": "lamp.matrix-36.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9406,7 +9661,8 @@
             "id": "lamp.matrix-37.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9465,7 +9721,8 @@
             "id": "lamp.matrix-38.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9524,7 +9781,8 @@
             "id": "lamp.matrix-41.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9583,7 +9841,8 @@
             "id": "lamp.matrix-42.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9642,7 +9901,8 @@
             "id": "lamp.matrix-43.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9701,7 +9961,8 @@
             "id": "lamp.matrix-44.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9760,7 +10021,8 @@
             "id": "lamp.matrix-45.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9819,7 +10081,8 @@
             "id": "lamp.matrix-46.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9832,7 +10095,8 @@
             "id": "lamp.matrix-46.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9891,7 +10155,8 @@
             "id": "lamp.matrix-47.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9904,7 +10169,8 @@
             "id": "lamp.matrix-47.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9963,7 +10229,8 @@
             "id": "lamp.matrix-48.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10022,7 +10289,8 @@
             "id": "lamp.matrix-51.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10081,7 +10349,8 @@
             "id": "lamp.matrix-52.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10123,8 +10392,8 @@
       "label": "Goal (2)",
       "physical": {
         "assembly_part_number": "A-18384",
-        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #555.",
-        "quantity": 1
+        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #555. The lamp list prints \"Goal (2)\" with one bulb number (24-8768, #555) and one assembly (A-18384). The lamp drawing (printed 2-45) draws a single callout on the kidney-shaped GOAL insert, whose outline the arrowhead touches at its left end, and the retained table drives a single Light (l53) at the insert's middle, so both bulbs share that placement. Flasher 18's second bulb lights the same insert.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -10140,7 +10409,8 @@
             "id": "lamp.matrix-53.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10199,7 +10469,8 @@
             "id": "lamp.matrix-54.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10258,7 +10529,8 @@
             "id": "lamp.matrix-55.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10317,7 +10589,8 @@
             "id": "lamp.matrix-56.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10376,7 +10649,8 @@
             "id": "lamp.matrix-57.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10435,7 +10709,8 @@
             "id": "lamp.matrix-58.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10494,7 +10769,8 @@
             "id": "lamp.matrix-61.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10553,7 +10829,8 @@
             "id": "lamp.matrix-62.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10612,7 +10889,8 @@
             "id": "lamp.matrix-63.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10671,7 +10949,8 @@
             "id": "lamp.matrix-64.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10730,7 +11009,8 @@
             "id": "lamp.matrix-65.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10789,7 +11069,8 @@
             "id": "lamp.matrix-66.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10848,7 +11129,8 @@
             "id": "lamp.matrix-67.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10907,7 +11189,8 @@
             "id": "lamp.matrix-68.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10949,7 +11232,7 @@
       "label": "Light Jackpot (2)",
       "physical": {
         "assembly_part_number": "C-12709",
-        "notes": "Printed lamp-matrix drive column 7, return row 1. Printed bulb type #555. The printed lamp-locations map marks this insert with a bulb quantity of 2 and prints a distinct assembly number for each bulb. Unlike some other WPC-era games curated in this project, the retained table's second Light object for this address is not a co-located brightness double: it sits at a genuinely different playfield position, so both are recorded as real, independent placements.",
+        "notes": "Printed lamp-matrix drive column 7, return row 1. Printed bulb type #555. The lamp list prints this lamp with a quantity of (2), and the lamp drawing (printed 2-45) puts one bulb on each ramp sign: placement 1 on the right ramp sign, placement 2 on the left one. The IPDB and Pinside photographs show both signs carrying the same three lamp windows (LIGHT JACKPOT at the top with a red bulb, ULTRA RAMPS, BUY TICKET), matching the drawing's top-to-bottom order 71, 78, then 76 on the left sign and 77 on the right one. Placement lamp.matrix-71.emitter.1: The retained table's Light l71 sits at (0.833, 0.399), at playfield height below the right ramp sign and 0.053 from the bulb the right-hand callout 71 marks on the sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb. Placement lamp.matrix-71.emitter.2: The retained table's Light l71a sits at (0.260, 0.334), at playfield height on the left ramp entrance switch and 0.078 from the bulb the left-hand callout 71 marks on the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb.",
         "quantity": 2
       },
       "provenance": {
@@ -10966,27 +11249,31 @@
             "id": "lamp.matrix-71.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.832993,
-            "y": 0.399357
+            "x": 0.879,
+            "y": 0.374
           },
           {
             "id": "lamp.matrix-71.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.260137,
-            "y": 0.33364
+            "x": 0.226,
+            "y": 0.264
           }
         ],
         "status": "validated"
@@ -11038,7 +11325,8 @@
             "id": "lamp.matrix-72.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11097,7 +11385,8 @@
             "id": "lamp.matrix-73.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11156,7 +11445,8 @@
             "id": "lamp.matrix-74.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11215,7 +11505,8 @@
             "id": "lamp.matrix-75.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11257,7 +11548,7 @@
       "label": "Left Ramp Buy Ticket",
       "physical": {
         "assembly_part_number": "C-12709",
-        "notes": "Printed lamp-matrix drive column 7, return row 6. Printed bulb type #555.",
+        "notes": "Printed lamp-matrix drive column 7, return row 6. Printed bulb type #555. The BUY TICKET bulb at the foot of the left ramp sign, below its 71 (LIGHT JACKPOT) and 78 (ULTRA RAMPS) bulbs on the lamp drawing (printed 2-45) and in the IPDB and Pinside photographs. The retained table's Light l76 sits at (0.268, 0.352), at playfield height on the left ramp entrance switch and 0.056 from the bulb callout 76 marks at the foot of the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb, consistently with the sign's other two bulbs.",
         "quantity": 1
       },
       "provenance": {
@@ -11274,14 +11565,16 @@
             "id": "lamp.matrix-76.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.268471,
-            "y": 0.352086
+            "x": 0.249,
+            "y": 0.3
           }
         ],
         "status": "validated"
@@ -11316,7 +11609,7 @@
       "label": "Right Ramp Buy Ticket",
       "physical": {
         "assembly_part_number": "C-12709",
-        "notes": "Printed lamp-matrix drive column 7, return row 7. Printed bulb type #555.",
+        "notes": "Printed lamp-matrix drive column 7, return row 7. Printed bulb type #555. The BUY TICKET bulb at the foot of the right ramp sign, below its 71 (LIGHT JACKPOT) and 78 (ULTRA RAMPS) bulbs on the lamp drawing (printed 2-45) and in the IPDB and Pinside photographs. The retained table's Light l77 sits at (0.806, 0.425), at playfield height below the right ramp sign and 0.038 from the bulb callout 77 marks at the foot of the right ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb, consistently with the sign's other two bulbs.",
         "quantity": 1
       },
       "provenance": {
@@ -11333,14 +11626,16 @@
             "id": "lamp.matrix-77.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.806322,
-            "y": 0.425181
+            "x": 0.84,
+            "y": 0.407
           }
         ],
         "status": "validated"
@@ -11375,7 +11670,7 @@
       "label": "Ultra Ramps (2)",
       "physical": {
         "assembly_part_number": "C-12709",
-        "notes": "Printed lamp-matrix drive column 7, return row 8. Printed bulb type #555. The printed lamp-locations map marks this insert with a bulb quantity of 2 and prints a distinct assembly number for each bulb. Unlike some other WPC-era games curated in this project, the retained table's second Light object for this address is not a co-located brightness double: it sits at a genuinely different playfield position, so both are recorded as real, independent placements.",
+        "notes": "Printed lamp-matrix drive column 7, return row 8. Printed bulb type #555. The lamp list prints this lamp with a quantity of (2), and the lamp drawing (printed 2-45) puts one bulb on each ramp sign: placement 1 on the right ramp sign, placement 2 on the left one. The IPDB and Pinside photographs show both signs carrying the same three lamp windows (LIGHT JACKPOT at the top with a red bulb, ULTRA RAMPS, BUY TICKET), matching the drawing's top-to-bottom order 71, 78, then 76 on the left sign and 77 on the right one. Placement lamp.matrix-78.emitter.1: The retained table's Light l78 sits at (0.817, 0.413), at playfield height below the right ramp sign and 0.048 from the bulb the right-hand callout 78 marks on the sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb. Placement lamp.matrix-78.emitter.2: The retained table's Light l78a sits at (0.264, 0.343), at playfield height on the left ramp entrance switch and 0.067 from the bulb the left-hand callout 78 marks on the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb.",
         "quantity": 2
       },
       "provenance": {
@@ -11392,27 +11687,31 @@
             "id": "lamp.matrix-78.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.817157,
-            "y": 0.413376
+            "x": 0.859,
+            "y": 0.39
           },
           {
             "id": "lamp.matrix-78.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "manual.midway.world-cup-soccer.1994",
+                "drawing-callouts.world-cup-soccer.2026-10-23",
+                "human-review.wcs-physical-corroboration-2026-10-23"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.264304,
-            "y": 0.343232
+            "x": 0.237,
+            "y": 0.282
           }
         ],
         "status": "validated"
@@ -11464,7 +11763,8 @@
             "id": "lamp.matrix-81.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11523,7 +11823,8 @@
             "id": "lamp.matrix-82.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11582,7 +11883,8 @@
             "id": "lamp.matrix-83.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11641,7 +11943,8 @@
             "id": "lamp.matrix-84.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11700,7 +12003,8 @@
             "id": "lamp.matrix-85.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11759,7 +12063,8 @@
             "id": "lamp.matrix-86.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.wcs-vpw-1-5"
+                "vpx-table.wcs-vpw-1-5",
+                "drawing-callouts.world-cup-soccer.2026-10-23"
               ],
               "status": "validated"
             },
@@ -12792,7 +13097,7 @@
           "method": "manual",
           "path": "evidence/excerpts/midway.world-cup-soccer.1994/solenoid-flasher-wiring.md",
           "reviewed": true,
-          "sha256": "b2f0f78cb29275bf6632b319cab584e23e602341e7eb5cc698d88cd6d4ce1ded",
+          "sha256": "d10a9f0abd2c87ee1236dd4fadc1d9b6b13c462f174957b5d3b23b5a4c3679c6",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -12830,12 +13135,48 @@
           "reviewed": true,
           "sha256": "3577ac6493066b82c552f7dfc5a0961cfe233cad44c29f66274fcd1061a456b1",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.world-cup-soccer.solenoid-flasher-drawing",
+          "image": "evidence/excerpts/midway.world-cup-soccer.1994/solenoid-flasher-drawing.webp",
+          "image_derivation": "World_Cup_Soccer_OPS.pdf page 115, crop box 0.02,0.02,0.98,0.97, scanned page rendered at its native resolution (embedded image xref 477, 2562px across 8.54in) with pdftoppm -r 300 -gray, 2460x3145 WebP quality 80",
+          "image_sha256": "3c0589246150d3ba7ec09f359b6efa3f877d543a716b14573c03e10f60ab7f41",
+          "locator": "PDF page 115, printed page 2-49, Solenoid/Flasher Locations playfield drawing and its callouts",
+          "method": "manual",
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/solenoid-flasher-drawing.md",
+          "reviewed": true,
+          "sha256": "1ef51ca31eb46dc485d4f36173be959b9e9f572a08e2539dd9f8af3baa058598",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.world-cup-soccer.upper-playfield-gate",
+          "image": "evidence/excerpts/midway.world-cup-soccer.1994/upper-playfield-gate.webp",
+          "image_derivation": "World_Cup_Soccer_OPS.pdf page 107, crop box 0.62,0.10,0.98,0.27, scanned page rendered at its native resolution (embedded image xref 441, 2562px across 8.54in) with pdftoppm -r 300 -gray, 923x563 WebP quality 80",
+          "image_sha256": "cb14e87e805c52ec10e9e8e62343311fa5da1d9ff19cef473b3f0f05c82d4f48",
+          "locator": "PDF pages 106-107, printed pages 2-40/2-41, Upper Playfield Parts items 43-52, 62 and 64 and the callouts of its drawing's top-right corner",
+          "method": "manual",
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/upper-playfield-gate.md",
+          "reviewed": true,
+          "sha256": "51e4014acc592075ec0d178bb8f447490a631e373d1fb77d8cab70f239630919",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.world-cup-soccer.ball-shooter",
+          "image": "evidence/excerpts/midway.world-cup-soccer.1994/ball-shooter.webp",
+          "image_derivation": "World_Cup_Soccer_OPS.pdf page 101, crop box 0.03,0.01,0.97,0.86, rendered at 300 dpi with pdftoppm -gray, reduced to 1200px wide with Lanczos, 1200x1404 WebP quality 80",
+          "image_sha256": "cb64f9dea3f6b1014eba5a6ba222fe02f39efface52f27ec176bba2d9957696b",
+          "locator": "PDF page 101, printed page 2-35, A-17730 Ball Shooter Assembly",
+          "method": "manual",
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/ball-shooter.md",
+          "reviewed": true,
+          "sha256": "671af8eac833922b31ffa0f276a1b5ca3308c0be80a9ede66d74191edd52209b",
+          "transcribed_by": "curator, read from the rendered page"
         }
       ],
       "id": "manual.midway.world-cup-soccer.1994",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "152-page Midway Manufacturing Company Operations Manual, document 16-50031-101, May 1994 (Internet Archive item arcademanual_World_Cup_Soccer_OPS). Printed pages 2-44 through 2-49 carry the lamp/switch/solenoid location parts lists and their matrix and solenoid/flasher wiring tables and the general-illumination summary; printed pages 2-12, 2-14, and 2-15 carry the opto-board and DC-motor-control assembly parts that fix device construction; printed page 2-42 carries the Lower Playfield Parts list identifying the goalie, motor, and gate mechanisms. Page 3 confirms the WPC Security CPU Board directly in the manual's own text.",
+      "locator": "152-page Midway Manufacturing Company Operations Manual, document 16-50031-101, May 1994 (Internet Archive item arcademanual_World_Cup_Soccer_OPS). Printed pages 2-44 through 2-49 carry the lamp/switch/solenoid location parts lists and their matrix and solenoid/flasher wiring tables and the general-illumination summary; printed pages 2-12, 2-14, and 2-15 carry the opto-board and DC-motor-control assembly parts that fix device construction; printed page 2-42 carries the Lower Playfield Parts list identifying the goalie, motor, and gate mechanisms; printed pages 2-40/2-41 carry the Upper Playfield Parts list and drawing that place the ball gate actuator; printed page 2-35 carries the A-17730 Ball Shooter Assembly. Page 3 confirms the WPC Security CPU Board directly in the manual's own text.",
       "original_filename": "World_Cup_Soccer_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "29fd3c44c9ddcf5f965270011c71d34a701c13095cbeb286e26e62201931e48e",
@@ -12860,6 +13201,57 @@
       "revision": "2026-09-26",
       "sha256": "efc84312331fcb4b976e7ca2c87791d12680d3746cd1d0259a5adc85ee696bb5",
       "uri": "external:pinmame-review-artifacts/world-cup-soccer/harness-runs/wcs-flipper-button-polarity-20260926T110515/run.json"
+    },
+    {
+      "attribution": "pinmame-game-defs curation harness run",
+      "id": "runtime-scenario.wcs-jet-bumper-coil-pairing",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Hash-pinned LibPinMAME gameplay-harness run (tools/run_pinmame_harness.py) of the wcs_l2 ROM archive (SHA-256 e92a4d03bc4fac6a0d07617b2406a8dcc3be7906412998b4ebe0bd68b1f7a0ab) from a fresh state directory, driven by the committed scenario tools/harness-scenarios/wpc/wcs-jet-bumper-coil-pairing.json (SHA-256 c2f0cbafc6d86c30b49d4ddf8257ae6f843c9ad626928be7c72992cddd681e61) with direct switch writes only. The library (pinmame64.dll, SHA-256 dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead) was built from the pinned PinMAME revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62. The run folder's canonical manifest (manifest.json SHA-256 30b193a7fb12d88386616d34daf4a262fb425843d947985fc10450c80e6f217a) pins run.json, the scenario copy and the state/ NVRAM and cfg files. Boot, clear the fresh-NVRAM notice, add credits, start a game (trough eject solenoid 6), report the ball leaving the trough and the shooter lane, then pulse each jet-bumper switch alone for 40 ms with 1.5 s between, in the order 81, 82, 83, 83, 81, 82. Observed: every pulse of 81 fires solenoid 9, every pulse of 82 fires 10, and every pulse of 83 fires 11, each within 63 ms of the closure and each with Jet Bumpers flasher 20; no other jet coil fires. This proves the ROM's switch-to-coil pairing, not which physical bumper either address belongs to.",
+      "revision": "2026-10-23",
+      "sha256": "44f51681c3564109ed1133376c2cda6416996de9d18ae1d7f29d68aacdb06a7d",
+      "uri": "external:pinmame-review-artifacts/world-cup-soccer/harness-runs/wcs-jet-bumper-coil-pairing-20261023T004948/run.json"
+    },
+    {
+      "attribution": "pinmame-game-defs curation harness run",
+      "id": "runtime-scenario.wcs-loop-gate-travel",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Hash-pinned LibPinMAME gameplay-harness run (tools/run_pinmame_harness.py) of the wcs_l2 ROM archive (SHA-256 e92a4d03bc4fac6a0d07617b2406a8dcc3be7906412998b4ebe0bd68b1f7a0ab) from a fresh state directory, driven by the committed scenario tools/harness-scenarios/wpc/wcs-loop-gate-travel.json (SHA-256 7c4c5752f8017ecabbde99bad46a589b8a83c2ecf59a871fbc898f46878cb6ef) with direct switch writes only, using the same library as the jet-bumper run (SHA-256 dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead, revision 97aa922bf8e4b6970126192ec1ac1fb0305a4f62). The run folder's canonical manifest (manifest.json SHA-256 46e2396e5e24829e1dc03462d3ae0cf4f7b9c4d12e3a29f59e1b86f46727516a) pins run.json, the scenario copy and the state/ NVRAM and cfg files. After the same game start, the travel lane rollover (47) and then the spinner (27) are made with the Travel lamp (63) unlit: neither fires solenoid 34. The two top rollovers (87, then 88) light lamp 63; the spinner then energizes 34 16 ms after closing and holds it for 3.5 s. The top rollovers again light lamp 63; the travel lane rollover then energizes 34 32 ms after closing, again for 3.5 s. This proves which public inputs the ROM answers with solenoid 34 and for how long, not the gate's position or which way it moves.",
+      "revision": "2026-10-23",
+      "sha256": "050e5baffdb669781db08c0ae9bdf6444a5f416e0677ec42082c7ca4c8177c4e",
+      "uri": "external:pinmame-review-artifacts/world-cup-soccer/harness-runs/wcs-loop-gate-travel-20261023T011255/run.json"
+    },
+    {
+      "attribution": "Midway Manufacturing Company drawings; pinmame-game-defs curation",
+      "id": "drawing-callouts.world-cup-soccer.2026-10-23",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "2026-10-23 factory location-drawing callout check of the manual's lamp drawing 2-45, switch drawing 2-47 and solenoid/flasher drawing 2-49 (the committed excerpt crops): every callout transcribed by an independent reader working only from the page, per-page control fits from the jet bumper caps and flipper pivots (the lamp drawing, which draws no jet bumpers, from the flipper pivots and the four rollover buttons) plus the drawn playfield frame's top-left, top-right and bottom-left corners, which match the table bounds, and the ball shooter switch 38 slot at the foot of the shooter lane, and the callout fit; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). Its measurements section pins the drawing pixels, and the coordinates the page's control fit gives them, for the sockets the table does not model where the drawing puts them; every measured socket lies inside the convex hull of its page's controls. Reads, controls, corrections, overlays and generators are retained under the working root's review-artifacts/world-cup-soccer/callout-check with a pinned manifest.",
+      "sha256": "d96ddad8db742f0019d09016ebec67e3363ddb16757e89f8a2d478ecf861eff6",
+      "uri": "internal:tools/seeds/midway/world-cup-soccer-1994-callouts.json"
+    },
+    {
+      "attribution": "IPDB and Pinside contributors (photographs); WMS Industries (machine artwork); pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.world-cup-soccer.physical-photo-corroboration",
+          "locator": "What each retained photograph shows of the ramp signs, side-wall and corner flasher domes and jet bumpers",
+          "method": "manual",
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/physical-photo-corroboration.md",
+          "reviewed": true,
+          "sha256": "2e6b889e53002445e77ca0c8696535690df8572afe68859c1ad5a30d7c13dc91",
+          "transcribed_by": "curator, from the retained photographs"
+        }
+      ],
+      "id": "human-review.wcs-physical-corroboration-2026-10-23",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained physical photographs of production World Cup Soccer machines from the IPDB machine-2811 gallery and the Pinside game-archive gallery, pinned by the folder's canonical manifest. They corroborate the identity, count and order of the ramp-sign bulbs and the side-wall flasher domes whose coordinates this definition measures on the factory drawings; they supply no coordinate.",
+      "revision": "2026-10-23",
+      "rights": "NOASSERTION",
+      "sha256": "5e9ba4932ae54593f7eb69c8689660d94ddd99a2b5a7ca7505a463ba7ef3e7a1",
+      "uri": "external:pinmame-review-artifacts/world-cup-soccer/physical-photos/manifest.json"
     },
     {
       "attribution": "VPW",

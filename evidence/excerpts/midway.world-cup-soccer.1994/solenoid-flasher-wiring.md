@@ -59,18 +59,31 @@ the continuation and circuit summary)
 
 ## Flipper Circuits
 
-| Circuit | Voltage Conn. | Drive Xistor (Power) | Drive Xistor (Hold) | Drive Conn. (Power) | Drive Conn. (Hold) | Wire (Power) | Wire (Hold) | Coil Part No. | Coil Color |
+Each flipper prints two rows, power then hold. The Coil Part Number and Coil Color cells are merged
+across each flipper's two rows; they are repeated on both rows below. Each row prints its transistor
+in the Power or the Hold column only; the other is blank (`—`).
+
+| Flipper | Winding | Voltage Connections (Playfield) | Drive Transistor (Power) | Drive Transistor (Hold) | Drive Connections (Playfield) | Drive Wire (Power) | Drive Wire (Hold) | Coil Part Number | Coil Color |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Lower Left Flipper | J907-4 (Red-Blu) | Q3 | Q9 | — | J902-7 | Yel-Blu | Org-Blu | FL-11629 | BLUE |
-| Lower Right Flipper | J907-1 (Red-Grn) | Q4 | Q11 | — | J902-11 | Yel-Grn | Org-Grn | FL-11629 | BLUE |
-| Upper Left Flipper | J907-8 (Red-Gry) | Q1 | Q5 | — | J902-3 | Yel-Gry | Org-Gry | **Not Used** | — |
-| Upper Right Flipper | J907-6 (Red-Vio) | Q2 | Q7 | — | J902-4 | Yel-Vio | Org-Vio | **Not Used** | — |
+| Lower Left Flipper | Lwr. Lt. Power | J907-4 (Red-Blu) | Q3 | — | J902-9 | Yel-Blu | — | FL-11629 | BLUE |
+| Lower Left Flipper | Lwr. Lt. Hold | J907-4 (Red-Blu) | — | Q9 | J902-7 | — | Org-Blu | FL-11629 | BLUE |
+| Lower Right Flipper | Lwr. Rt. Power | J907-1 (Red-Grn) | Q4 | — | J902-13 | Yel-Grn | — | FL-11629 | BLUE |
+| Lower Right Flipper | Lwr. Rt. Hold | J907-1 (Red-Grn) | — | Q11 | J902-11 | — | Org-Grn | FL-11629 | BLUE |
+| Upper Left Flipper | Up Lt. Power | J907-8 (Red-Gry) | Q1 | — | J902-3 | Yel-Gry | — | Not Used | |
+| Upper Left Flipper | Up Lt. Hold | J907-8 (Red-Gry) | — | Q5 | J902-1 | — | Org-Gry | Not Used | |
+| Upper Right Flipper | Up Rt. Power | J907-6 (Red-Vio) | Q2 | — | J902-6 | Yel-Vio | — | Not Used | |
+| Upper Right Flipper | Up Rt. Hold | J907-6 (Red-Vio) | — | Q7 | J902-4 | — | Org-Vio | Not Used | |
+
+`Not Used` is printed once across the Coil Part Number and Coil Color columns of each upper flipper's
+two rows. An earlier transcription collapsed each flipper to one row, left the power windings' drive
+connections blank (J902-9, J902-13 and J902-6 here) and gave the Up Lt. Power connection J902-3 as the
+Up Lt. Hold one (J902-1 here); this table was re-read from the rendered page.
 
 **Cross-reference (curator note, not part of the transcription):** solenoid 33 "Magna Goalie" shares
 driver transistor Q2 and drive connection J902-6/wire Yel-Vio-family with "Up Rt. Power"; solenoid 34
 "Loop Gate" shares Q7/J902-4/Org-Vio with "Up Rt. Hold"; solenoid 35 "Lock Magnet" shares Q1/J902-3/
-Yel-Gry with "Up Lt. Power". The fourth upper-flipper circuit position, Up Lt. Hold (Q5), has no
-solenoid-table row at all (matches solenoid 36 having no printed row). World Cup Soccer has no upper
+Yel-Gry with "Up Lt. Power". The fourth upper-flipper circuit position, Up Lt. Hold (Q5, J902-1,
+Org-Gry), has no solenoid-table row at all (matches solenoid 36 having no printed row). World Cup Soccer has no upper
 flippers (`FLIP_SOL(FLIP_L)` only in `wcsGameData`), so these three genuinely-fitted solenoids
 (33/34/35) are wired through what the generic Fliptronic template calls the upper-flipper
 power/hold driver-transistor positions, and the fourth position (36) is unfitted.

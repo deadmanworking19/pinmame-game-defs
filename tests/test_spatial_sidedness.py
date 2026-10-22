@@ -72,16 +72,6 @@ KNOWN_INVERSIONS: dict[str, dict[tuple[str, str], str]] = {
 			"itself about which of the two right-rail targets is upper, and the lamps show the "
 			"same inversion against their switches.",
 	},
-	"midway.world-cup-soccer.1994": {
-		("device.upper-jet-bumper", "device.lower-jet-bumper"):
-			"conflict.jet-bumper-script-binding-vs-physical-position - DISPUTED, not settled. An "
-			"earlier pass read the printed Left/Upper/Lower names as cluster-relative and took the "
-			"coordinates from the retained script's per-object switch bindings. A 2026-08-08 review "
-			"read the two location diagrams as putting 81/9 leftmost, which would rotate all six "
-			"placements; an independent 400 dpi re-render of printed 2-49 could not confirm that "
-			"reading, so the earlier values stand rather than being overwritten. Needs a legible "
-			"second read of both diagrams or a harness run.",
-	},
 	# --- Verified CORRECT on 2026-08-08. Real geometry, not defects. Do not "fix" these. ---
 	"stern.the-walking-dead-pro.2014": {
 		("switch.left-ramp-exit", "switch.right-ramp-exit"):

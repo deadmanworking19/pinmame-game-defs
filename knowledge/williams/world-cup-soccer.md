@@ -1,13 +1,13 @@
 # World Cup Soccer (Bally/Midway, 1994)
 
-Coverage: **partial — complete physical I/O inventory, WPC-Security bindings, mechanism causality,
-driver-variant boundary, wiring, polarity, and recreation behavior validated; one solenoid (34) has
-no spatial evidence of any kind, and the jet-bumper script-binding conflict remains unresolved**
+Coverage: **author-ready — complete physical I/O inventory, WPC-Security bindings, mechanism
+causality, driver-variant boundary, wiring, polarity, recreation behavior and every playfield
+placement validated**
 
 ## Identity and evidence precedence
 
-This is the Bally/Midway WPC-Security physical product released May 1994 (document 16-50031-101),
-IPDB 2361. It covers the fourteen-driver `wcs_*` clone tree: `wcs_l2` (parent, production LX-2),
+This is the Bally/Midway WPC-Security physical product, IPDB machine 2811 (model 50031, manufactured
+from February 1994); its operations manual is document 16-50031-101 of May 1994. It covers the fourteen-driver `wcs_*` clone tree: `wcs_l2` (parent, production LX-2),
 `wcs_l3c` (2016 community "Competition MOD" firmware), `wcs_la2`/`wcs_l1`/`wcs_la1` (earlier
 language/region firmware), `wcs_d2` ("LED Ghost Fix"), `wcs_p2`/`wcs_p3` (prototypes),
 `wcs_p5`/`wcs_p6` ("LED Ghost Fix" prototype-lineage firmware), and `wcs_f10`/`wcs_f50`/`wcs_f62`/
@@ -17,9 +17,10 @@ struct across all fourteen.
 
 Evidence precedence for this definition: the retained known-working VPW v1.5 script is runtime and
 mechanism-causality ground truth; the Midway operations manual controls physical construction, part
-numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller
-generation, public address topology, mechanism-table position ranges, and display metadata; the
-retained VPX geometry supplies normalized coordinates. The retained manual PDF carries a genuine but
+numbers, wiring, polarity, quantities, device presence and location; pinned PinMAME controls
+controller generation, public address topology, mechanism-table position ranges, and display metadata;
+the retained VPX geometry supplies normalized coordinates where the manual's location drawings confirm
+it (see Spatial evidence below). The retained manual PDF carries a genuine but
 unreliable OCR text layer on its multi-column parts lists, so every printed table used here was read
 from rendered pages and transcribed into
 `external:pinmame-review-artifacts/world-cup-soccer/manual-transcription.md` and its per-table
@@ -66,10 +67,12 @@ control line of its own. A recreation should bind one physical diverter mechanis
 
 ## Ball path, trough, and shooter
 
-World Cup Soccer has an **automatic** plunger (`wcsSimData` declares `TRUE /* automatic plunger */`
-and there is no cabinet Launch Ball switch in the matrix, unlike several other games curated in this
-project). Five balls rest on trough optos 31-35 (31 nearest the eject coil, 35 nearest the drain
-entrance), all printed opto and normalized by PinMAME's inverted-switch mask. Solenoid 6 ejects the
+World Cup Soccer has a **manual** plunger: the manual's A-17730 Ball Shooter Assembly (printed 2-35)
+is a knob on a rod with a power spring, no solenoid drives a launch, and there is no Launch Ball switch
+in the matrix. `wcsSimData`'s `TRUE /* automatic plunger */` only tells PinMAME's own ball simulator to
+launch by itself; an earlier pass misread it as hardware. Five balls rest on trough optos 31-35 (31
+nearest the eject coil, 35 nearest the drain entrance), all printed opto and normalized by PinMAME's
+inverted-switch mask. Solenoid 6 ejects the
 ball on 31 toward the shooter lane; the retained script's `SolTrough` handler fires that kick and
 pulses Trough Stack (36) in the same event. Pinned PinMAME's own internal ball-routing simulator
 (`wcs_stateDef`, cited here only for switch/solenoid name cross-reference, never as physical
@@ -77,8 +80,9 @@ mechanism authority) places the `"Trough stack"` state immediately after the tro
 before the shooter-lane skill states, confirming switch 36 senses the ball's staging position toward
 the shooter lane rather than a sixth ball resting in the trough — it has no dedicated VPX object of
 any kind and is a documented projection onto the trough-eject `Kicker.sw31` position. The ejected
-ball rests on shooter-lane switch 38 (Ball Shooter); the retained script's `cvpmImpulseP` helper
-auto-fires an impulse coil with no distinct public WPC-Security solenoid address of its own. Three
+ball rests on shooter-lane switch 38 (Ball Shooter) until the player plunges it. The retained table
+fires its `Plunger` object from the plunger key; its script also defines a `cvpmImpulseP` helper
+(`SolAutofire`) that no `SolCallback` registers, so that helper is dead code. Three
 printed optos then trip in sequence down the skill-shot lane — Front (51), Center (52), Rear (53) —
 built from the identical LED/phototransistor construction (`A-16908`/`A-16909`) as the Goal/Goalie
 hole optos on the "10-Switch Opto Assembly" board.
@@ -109,10 +113,10 @@ The goalie's own 35-segment target-wall ring (`GoalieWalls`, retained-table obje
 GT006` through `GT040`) surrounds the figure; `GWalls_Hit` fires the shared handler and pulses
 Goalie Target (48, part `A-17779`) whenever a ball strikes whichever single segment is currently
 collidable, the same "rotating figure with a segmented hit ring" pattern already documented
-elsewhere in this project for a different WPC machine's rotating antagonist figure. Switch 48 is
-likewise a documented projection, here onto the nearest fixed reference in the same script region
-(`Trigger.swPlunger`, which shares switch 38's exact coordinates) rather than an invented
-target-wall centroid.
+elsewhere in this project for a different WPC machine's rotating antagonist figure. The Goalie Target
+is the goalie figure itself, so switch 48 is a documented projection onto `BM_goalkeeper` too, where
+the switch drawing's callout 48 also ends. An earlier pass had projected it onto the shooter-lane
+plunger trigger, which has nothing to do with the goalie.
 
 ## The spinning soccer ball and the two magnets
 
@@ -142,19 +146,36 @@ the generic Flipper Circuits table's "Up Rt. Power" row; solenoid 34 (Loop Gate)
 "Up Lt. Power". The fourth upper-flipper position, Up Lt. Hold (`Q5`), has no solenoid-table row at
 all and is genuinely unfitted (public solenoid 36).
 
-Solenoid 34 is the one address in this definition with **no** spatial evidence of any kind. The
-manual's own two tables even disagree on its name — "Loop Gate" on the primary Solenoid/Flasher
-Table (matching `wcs.c`'s `#define sLoopGate 34`) versus "Lock Gate" on the Solenoid/Flasher
-Locations parts list, for the identical coil part (`A-14406`) and assembly (`A-17796`, "Ball Gate
-Actuator Assy." on the Lower Playfield Parts list). Unlike the ramp diverter and ramp lock post
-below, an exhaustive search of the retained table's `gameitems/` directory and `script.vbs` found no
-Gate, Flipper, Wall, Trigger, or Light object and no script reference of any kind for this address.
-Its playfield location is not asserted.
+## The loop gate (solenoid 34)
+
+The manual's two tables name solenoid 34 differently — "Loop Gate" on the Solenoid/Flasher Table
+(matching `wcs.c`'s `#define sLoopGate 34`) and "Lock Gate" on the Solenoid/Flasher Locations list —
+for the same coil (`A-14406`, low power) and assembly (`A-17796`). The Upper Playfield Parts list
+(printed 2-40) calls `A-17796` the Ball Gate Actuator Coil Assy. (item 47) and lists beside it the
+`A-17797-1` Ball Gate Special Assy., Left (item 48); its drawing (printed 2-41) puts both on the
+bracket at the top of the right orbit, where the loop round the top of the playfield meets it, and
+callout 34 on the solenoid drawing (printed 2-49) ends on the same bracket. The retained table models
+a one-way gate there (`Gate003`), so the placement uses that object; its script never drives
+solenoid 34, so the table's gate stays passive.
+
+What the ROM does with it is settled by a hash-pinned harness run
+(`runtime-scenario.wcs-loop-gate-travel`, scenario
+`tools/harness-scenarios/wpc/wcs-loop-gate-travel.json`, `wcs_l2`, direct switch writes only). With
+the Travel lamp (63) unlit, making the travel lane rollover (47) or the spinner (27) leaves 34 off.
+Making both top rollovers (87, then 88) lights Travel; the next spinner or travel-lane closure then
+energizes 34 within 16-32 ms and holds it for 3.5 s, and Travel goes out. The BMI rulesheet, a
+secondary lead, describes the same shot from the player's side: with a city lit, the left spiral
+sends the ball all the way round and out the other side; otherwise a one-way gate stops it and it
+falls into the top rollovers and the jet bumpers. So a recreation should keep the gate closed (a ball
+coming round the top drops into the top lanes) and open it for as long as the ROM holds solenoid 34.
 
 ## Ramp diverter and ramp lock post
 
 Solenoid 8 (Ramp Diverter) swings a diverter flap (`A-18138`) and solenoid 16 (Diverter Hold) holds
-it in the diverted position; the retained script toggles two collision walls together. Left Ramp
+it in the diverted position; the retained script swings the flap (`BM_diverterside01/02`, driven from
+`DiverterFlipper001`'s angle) and toggles two collision walls. Both solenoids are placed on that flap,
+where the shared callout of 8 and 16 ends on the solenoid drawing; an earlier pass had put them on
+switch 71 at the left rail. Left Ramp
 Diverted (71) is the printed switch for this mechanism. Solenoid 4 (Lock Release, fully fitted —
 verified at 600 dpi after an initial mis-transcription, see the manual-transcription review
 artifact) retracts a post (`A-18155`) that otherwise holds a ball on the left ramp, sensed by Lock
@@ -168,12 +189,23 @@ A ball resting on opto 42 (Goal Popper Opto) is kicked by solenoid 1 to award a 
 Three ordinary VUK-style kickers cover the Upper/Left/Right Eject Holes (solenoids 5/15/14, switches
 55/56/54) — `wcs.c`'s own `#define` names (`swLHole`/`swRHole`) additionally tie 56/54 to the
 printed "Left/Right Free Kick Hole" feature, and the internal simulator calls 55 the "Assist Hole".
-Three `A-9415-2` jet bumpers (solenoids 9/10/11) are sensed by switches 81/82/83; the retained
-script's `Bumper1_Hit`/`Bumper2_Hit`/`Bumper3_Hit` handlers reveal that table object `Bumper2` is the
-printed "Left" jet bumper and `Bumper1` is the printed "Upper" one — an object-index crossing
-confirmed directly from the script rather than assumed from either label. Two slingshots (solenoids
+Three `A-9415-2` jet bumpers stand in a triangle at the upper right, named by absolute position:
+Left (switch 81, coil 9, table object `Bumper3`), Upper (82, coil 10, `Bumper2`) and Lower (83, coil
+11, `Bumper1`). Both location drawings put each switch and its coil on that bumper (the switch
+drawing's 81/82/83 leaders and the solenoid drawing's 9/10/11 leaders), and a hash-pinned harness run
+(`runtime-scenario.wcs-jet-bumper-coil-pairing`) shows the ROM firing 9, 10 and 11 within 63 ms of 81,
+82 and 83 closing, alone and in two orders, each kick with Jet Bumpers flasher 20. The retained
+table's script pulses the switches from rotated objects (`Bumper1_Hit` → 82, `Bumper2_Hit` → 81,
+`Bumper3_Hit` → 83), and its own sound handler calls the lowest bumper "Top"; its bumpers kick by
+themselves (no callback for 9-11), so the rotation is invisible in play, but a recreation should bind
+each switch to the bumper named here. An earlier pass had copied the table's rotation into the
+placements and recorded the question as an unresolved conflict; both drawings are legible at the
+committed 300 dpi crops, and the conflict is withdrawn. Two slingshots (solenoids
 12/13, score switches 84/85) each carry a direct-fire kick switch (`SW-1A-114`) and a separate
-debounced score switch (`SW-1A-120`) wired to one public address. A ball in the left outlane trips
+debounced score switch (`SW-1A-120`) wired to one public address; the table's Slingshot objects kick by
+themselves. Tackle (65) is another `SW-1A-120` leaf switch, behind the rubber at the right side of the
+left ramp entrance beside the Tackle lamp (38); the switch drawing draws that rubber but prints no
+callout 65, so its placement keeps the table's script-bound trigger. A ball in the left outlane trips
 Kickback (86); when lit, solenoid 3 fires the kickback plunger, and Kickback Upper (26) senses the
 return path while also doubling, per PinMAME's own internal naming, as the Header Lane sensor for
 the same physical lane.
@@ -222,12 +254,16 @@ switches.
 ## Lamps and general illumination
 
 All 64 lamp-matrix addresses are populated; unlike the switch matrix, no lamp position is printed
-Not Used. Four addresses drive two bulbs each — 46 "Ultra Spinner", 47 "Ultra Jets", 71 "Light
-Jackpot", 78 "Ultra Ramps" — and unlike the brightness-doubled lamp pairs documented for some other
-WPC-era games in this project, the manual prints a **distinct assembly number for each bulb** of
-every pair, and the retained table's second `Light` object for each address sits at a materially
-different playfield coordinate (not a co-located stack). Both bulbs of each pair are therefore
-recorded as genuinely separate placements. Lamps 87 and 88 are the bulbs inside the illuminated
+Not Used. Five addresses carry two bulbs. Lamps 46 "Ultra Spinner" and 47 "Ultra Jets" have two
+separate inserts each, with a distinct assembly for each bulb, and the retained table's two `Light`
+objects sit at both. Lamps 71 "Light Jackpot" and 78 "Ultra Ramps" have one bulb on each of the two
+ramp signs: the plastic signs standing at the left and right ramp entrances, each with three lamp
+windows, top to bottom LIGHT JACKPOT (71, red), ULTRA RAMPS (78) and BUY TICKET (76 on the left sign,
+77 on the right). The lamp drawing draws all six bulbs, and the IPDB and Pinside photographs show both
+signs. The table's `Light` objects for these six bulbs sit at playfield height 0.04-0.08 away, as
+light sources for its baked light maps, so the six placements are drawing measurements. Lamp 53
+"Goal (2)" lights the kidney-shaped GOAL insert below the goal; the drawing marks the insert once, so
+its two bulbs share one placement, and flasher 18's second bulb lights the same insert. Lamps 87 and 88 are the bulbs inside the illuminated
 buy-in and start buttons; the retained table places both `Light` objects at normalized y > 1,
 outside the playfield surface, independently confirming cabinet mounting.
 
@@ -243,18 +279,53 @@ rail; their y is clamped to the schema-valid boundary 0.000000 with the raw offs
 spatial report, the same handling this project has already established for a small negative-offset
 lamp row on a different WPC machine.
 
+## Flashers
+
+Each flasher's quantity counts the bulbs the Solenoid/Flasher Table prints in its playfield and
+backbox columns, and only the playfield bulbs are placed; eight of them (17-20, 25-28) also light a
+#906 in the backbox. Five have two playfield bulbs: Goal (18: a rear insert behind the goal and the
+kidney GOAL insert), Skill Shot (19: by the shooter lane at the apron, and a dome on the right side
+wall; the table's playfield column prints one #906, but the locations list and the drawing give two),
+Spinning Ball (22: one bulb each side of the spinning ball), Flipper Lanes (27: one beside each inlane)
+and Ramp Rear (28: the two top-corner domes). The locations list's "Goal Cage Top (2)" counts 17's one
+playfield bulb and its backbox bulb. The Lock Area flasher (26) is a dome on the left
+side wall beside the raised lock. Where the table models no lamp object at the drawn socket, or only a
+baked-light-map source away from it (18's and 19's second bulbs, 26, 28's right dome), the coordinate is
+a drawing measurement. Solenoids 21, 23 and 24 are motor drive lines printed under the Flasher column.
+
+## Spatial evidence
+
+Every placement is validated. The table placements were checked against all three factory location
+drawings — lamps (printed 2-45), switches (2-47) and solenoids/flashers (2-49) — whose callouts an
+independent reader transcribed from the page alone (`tools/seeds/midway/world-cup-soccer-1994-callouts.json`,
+`tools/drawing_callouts.py`): each table placement's own callout lands within 0.07 normalized of it under
+both the page's control fit (jet bumpers and flipper pivots; on the lamp drawing, which draws no jet
+bumpers, flipper pivots and rollover buttons; on every page also the drawn playfield frame's top-left,
+top-right and bottom-left corners, which match the table bounds, and, since the bottom-right corner is not
+drawn, the ball shooter switch 38 slot at the foot of the shooter lane) and its callout fit. The curator refuses to build while any
+checked placement disagrees. Projections (switches 36, 43, 44 and 48), the flipper coils (Not Shown) and
+switch 65 (never numbered on the drawing) are outside the check, each with its reason in the seed. Twelve
+sockets the table does not model where the drawing puts them are drawing measurements pinned in the same
+seed: the six ramp-sign bulbs, flasher 26, the second bulbs of 18, 19 and 28, and ramp switches 74 and 75,
+whose table triggers sit 0.09-0.11 from the switches the drawing marks. Every measured socket lies
+inside the convex hull of its page's controls, so none is extrapolated. The physical photographs, or the
+nearby table object, corroborate each measured device's identity, count and side; they supply no
+coordinate (`evidence/excerpts/midway.world-cup-soccer.1994/physical-photo-corroboration.md`).
+
 ## Author construction checklist
 
-- Build the five-ball trough with the drain at Trough Ball 5, the automatic-impulse shooter lane,
+- Build the five-ball trough with the drain at Trough Ball 5, the manual-plunger shooter lane,
   the three-opto skill shot, both slingshots, three jet bumpers, the motorized goalie with its
   35-segment target ring, the spinning-ball turntable, the two independent magnets (Magna Goalie
-  deflect-only, Lock Magnet capture), the mechanical ramp lock post, the ramp diverter, the Goal and
-  TV poppers, the three eject holes, and the kickback.
+  deflect-only, Lock Magnet capture), the mechanical ramp lock post, the ramp diverter, the loop gate
+  at the top of the right orbit, the Goal and TV poppers, the three eject holes, and the kickback.
+- Bind the jet-bumper switches by absolute position (81 left, 82 upper, 83 lower), not by the
+  retained table's rotated `Bumper1/2/3_Hit` bindings.
+- Keep the loop gate closed and open it while solenoid 34 is on; the ROM holds it for 3.5 s after the
+  left-spiral switches (27, 47) while Travel is lit.
 - Preserve opto polarity for 31-36, 41-45, and 51-53; do not invert what PinMAME already normalizes.
   The cabinet flipper-button optos 112/114 are normalized too, through the `WPC_FLIPPERS` column
   complement rather than the inverted-switch mask: drive them 1 while the button is pressed.
-- Do not place solenoid 34 (Loop Gate/Lock Gate) anywhere on the playfield; no evidence supports a
-  coordinate.
 - Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used
   positions, Fliptronic 111-118 with 115-118 not installed, the eight CPU DIP bits, solenoids 1-51
   (36 unfitted; 37-44 unpublished on this generation; 51 a diagnostic mirror only), lamps 11-88, GI
@@ -284,3 +355,20 @@ lamp row on a different WPC machine.
   `d6b2ef18479e7f464098a77b44b326c4a8841ae23087207d2182b41a13e59176`.
 - `vpm-script-library.wpc-vbs`: the retained VPinMAME `wpc.vbs` library the table loads, SHA-256
   `1a290886eb2c2fd2c13f82e5f8a1961fdc95238122096642d32fddf1cfbb1a8d`.
+- `runtime-scenario.wcs-jet-bumper-coil-pairing`: hash-pinned LibPinMAME harness run of `wcs_l2` with
+  the library built from pinned PinMAME `97aa922b` (SHA-256
+  `dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead`); `run.json` SHA-256
+  `44f51681c3564109ed1133376c2cda6416996de9d18ae1d7f29d68aacdb06a7d`, run-folder manifest SHA-256
+  `30b193a7fb12d88386616d34daf4a262fb425843d947985fc10450c80e6f217a`, scenario SHA-256
+  `c2f0cbafc6d86c30b49d4ddf8257ae6f843c9ad626928be7c72992cddd681e61`.
+- `runtime-scenario.wcs-loop-gate-travel`: the same library; `run.json` SHA-256
+  `050e5baffdb669781db08c0ae9bdf6444a5f416e0677ec42082c7ca4c8177c4e`, run-folder manifest SHA-256
+  `46e2396e5e24829e1dc03462d3ae0cf4f7b9c4d12e3a29f59e1b86f46727516a`, scenario SHA-256
+  `7c4c5752f8017ecabbde99bad46a589b8a83c2ecf59a871fbc898f46878cb6ef`.
+- `drawing-callouts.world-cup-soccer.2026-10-23`: the factory-drawing callout check and drawing
+  measurements, `tools/seeds/midway/world-cup-soccer-1994-callouts.json`.
+- `human-review.wcs-physical-corroboration-2026-10-23`: retained IPDB and Pinside photographs, folder
+  manifest SHA-256 `5e9ba4932ae54593f7eb69c8689660d94ddd99a2b5a7ca7505a463ba7ef3e7a1`.
+- Lead only: the BMI World Cup Soccer rulesheet,
+  `https://www.bmigaming.com/Games/Rulesheets/world_cup_soccer.txt`, which also states the manual
+  plunger.

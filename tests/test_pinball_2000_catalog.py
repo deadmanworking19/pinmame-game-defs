@@ -67,15 +67,16 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# curation folds its blkholea residual record into the main one, the 2026-10-22 Centaur
 		# promotion moves one partial to author_ready, the 2026-10-22 Lord of the Rings promotion
 		# does the same and splits the 2009 Limited Edition's lotr_le into a record of its own, and
-		# the Terminator 2 promotion moves one more partial to author_ready.
+		# the Terminator 2 and 2026-10-23 World Cup Soccer promotions each move one more partial to
+		# author_ready.
 		self.assertEqual(
 			{
-				"author_ready_count": 38,
+				"author_ready_count": 39,
 				"driver_count": 2955,
 				"game_count": 795,
 				"machine_count": 809,
 				"non_game_count": 14,
-				"partial_count": 756,
+				"partial_count": 755,
 				"root_driver_count": 797,
 				"stub_count": 15,
 			},

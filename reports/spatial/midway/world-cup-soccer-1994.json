@@ -1,7 +1,4 @@
 {
-  "blockers": [
-    "Solenoid 34 (Loop Gate / Lock Gate) has no VPX object of any kind and no script reference anywhere in the retained table, and the manual gives no playfield-diagram position for it. Its spatial key is omitted from the definition entirely rather than a coordinate being invented or a status the schema does not define being used."
-  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2152.941,
@@ -13,9 +10,278 @@
     "x": "x/952.941; 0=left, 1=right",
     "y": "y/2152.941; 0=rear/backglass, 1=apron/player"
   },
+  "drawing_callout_check": {
+    "checked": 135,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "2-45": {
+        "callout_fit_pairs": 60,
+        "callout_loo_max": 0.035,
+        "callout_pairs": 60,
+        "control_loo_max": 0.01,
+        "control_rms": 0.0031,
+        "controls": 10,
+        "image": {
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/lamp-locations.webp",
+          "pixels": [
+            2448,
+            3135
+          ],
+          "root": "repository",
+          "sha256": "76198242e0f547502b9b4727a78938dc1944d7046f1440282810e337604d8ace"
+        },
+        "locator": "World_Cup_Soccer_OPS.pdf PDF 111, printed 2-45: Lamp Locations drawing (committed excerpt crop lamp-locations.webp)"
+      },
+      "2-47": {
+        "callout_fit_pairs": 44,
+        "callout_loo_max": 0.0565,
+        "callout_pairs": 44,
+        "control_loo_max": 0.006,
+        "control_rms": 0.0022,
+        "controls": 9,
+        "image": {
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/switch-locations.webp",
+          "pixels": [
+            2448,
+            3135
+          ],
+          "root": "repository",
+          "sha256": "8fe875d52b26471a0655efd0573bfa6967552c6a8c56546b4a298919fc7fb056"
+        },
+        "locator": "World_Cup_Soccer_OPS.pdf PDF 113, printed 2-47: Switch Locations drawing (committed excerpt crop switch-locations.webp)"
+      },
+      "2-49": {
+        "callout_fit_pairs": 31,
+        "callout_loo_max": 0.0481,
+        "callout_pairs": 31,
+        "control_loo_max": 0.0084,
+        "control_rms": 0.0026,
+        "controls": 9,
+        "image": {
+          "path": "evidence/excerpts/midway.world-cup-soccer.1994/solenoid-flasher-drawing.webp",
+          "pixels": [
+            2460,
+            3145
+          ],
+          "root": "repository",
+          "sha256": "3c0589246150d3ba7ec09f359b6efa3f877d543a716b14573c03e10f60ab7f41"
+        },
+        "locator": "World_Cup_Soccer_OPS.pdf PDF 115, printed 2-49: Solenoid/Flasher Locations drawing (committed excerpt crop solenoid-flasher-drawing.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-23",
+      "transcription": "independent readers working only from the page renders, without table data",
+      "verification": "the curator fitted every control on the committed renders (verify/circlefit.py: the three jet bumper caps on the switch and solenoid drawings, the two lower flipper pivots on all three, and on the lamp drawing, which draws no jet bumpers, the four rollover buttons) and checked each on zoomed crops; added on every page the drawn playfield frame's top-left, top-right and bottom-left corners (verify/frame_corners.py: the outer frame lines' intersection), which match the table bounds within 0.013 leave-one-out, and, because the bottom-right corner is not drawn (the outline steps in at the shooter lane), the ball shooter switch 38 slot at the foot of the shooter lane (verify/slot_centre.py: centred between the walls' inner edges and midway between the rounded top's inner apex and the lane's bottom edge line; within 0.005 of the table trigger on every page), so every measured socket lies inside the convex hull of its page's controls; replaced the solenoid reader's jet-bumper controls, which had taken the top-lane guides for the bumpers; overlaid all three pages with the final placements (overlay-*.png); relabelled the solenoid drawing's paired balloons 8/16 and 23/24, each pair drawn touching with one shared leader; replaced the lamp-53 read, an arrowhead touching the kidney-shaped GOAL insert's outline, with the insert's flood-filled centroid (verify/kidney_centroid.py); measured on the drawings, from fitted circle centres or leader ends, the twelve sockets the table does not model where the drawing puts them (measurements.json); and excluded switch 65, which the switch drawing never numbers, as well as the projections and the Not Shown flipper coils"
+    },
+    "retained_artifacts": {
+      "directory": "world-cup-soccer/callout-check",
+      "manifest_sha256": "30235bf689623e70ca36775fd31ae691c2e4eaf4bfb49e1c9177aff47125357b"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/midway/world-cup-soccer-1994-callouts.json",
+    "seed_sha256": "d96ddad8db742f0019d09016ebec67e3363ddb16757e89f8a2d478ecf861eff6",
+    "validated": 135
+  },
+  "drawing_measurements": [
+    {
+      "corroboration": "table",
+      "label": "18",
+      "normalized": [
+        0.385,
+        0.176
+      ],
+      "page": "2-49",
+      "pixel": [
+        1594.0,
+        755.0
+      ],
+      "placement": "device.goal.emitter.2",
+      "point": "line_end",
+      "table_object": "The retained table models only the rear Goal bulb (Light f18); the second bulb is the #906 on the A-18384 board under the kidney-shaped GOAL insert, where the left-hand callout 18 ends on the solenoid drawing (printed 2-49), 0.031 from the table's insert light l53, so the drawing supplies the coordinate."
+    },
+    {
+      "corroboration": "photos",
+      "label": "26",
+      "normalized": [
+        0.038,
+        0.352
+      ],
+      "page": "2-49",
+      "pixel": [
+        1250.0,
+        1149.0
+      ],
+      "placement": "device.lock-area.emitter",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light f26 that SolFlash26 drives sits at (0.043, 0.274), 0.079 behind the flasher dome that callout 26 marks on the left side wall on the solenoid drawing (printed 2-49); f26 is a light source for the table's baked light maps, not a dome object, so the drawing supplies the coordinate."
+    },
+    {
+      "corroboration": "photos",
+      "label": "28",
+      "normalized": [
+        0.891,
+        0.059
+      ],
+      "page": "2-49",
+      "pixel": [
+        2095.0,
+        494.0
+      ],
+      "placement": "device.ramp-rear.emitter.2",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light f28a that SolFlash28 drives sits at (0.934, 0.037), against the right wall, 0.048 under the page's control fit and 0.083 under its callout fit from the spoked flasher dome that the right-hand callout 28 marks in the top-right corner of the solenoid drawing (printed 2-49); f28a is a light source for the table's baked light maps, not a dome object, so the drawing supplies the coordinate."
+    },
+    {
+      "corroboration": "photos",
+      "label": "19",
+      "normalized": [
+        0.942,
+        0.491
+      ],
+      "page": "2-49",
+      "pixel": [
+        2146.0,
+        1464.0
+      ],
+      "placement": "device.skill-shot.emitter.2",
+      "point": "symbol_centre",
+      "table_object": "The retained table models only the lower Skill Shot bulb (Light f19, by the apron); the second is the flasher dome on the right side wall that the upper callout 19 marks on the solenoid drawing (printed 2-49), with no table object within 0.06, so the drawing supplies the coordinate."
+    },
+    {
+      "corroboration": "photos",
+      "label": "71",
+      "normalized": [
+        0.879,
+        0.374
+      ],
+      "page": "2-45",
+      "pixel": [
+        2086.0,
+        1152.0
+      ],
+      "placement": "lamp.matrix-71.emitter.1",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l71 sits at (0.833, 0.399), at playfield height below the right ramp sign and 0.053 from the bulb the right-hand callout 71 marks on the sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb."
+    },
+    {
+      "corroboration": "photos",
+      "label": "71",
+      "normalized": [
+        0.226,
+        0.264
+      ],
+      "page": "2-45",
+      "pixel": [
+        1438.0,
+        906.0
+      ],
+      "placement": "lamp.matrix-71.emitter.2",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l71a sits at (0.260, 0.334), at playfield height on the left ramp entrance switch and 0.078 from the bulb the left-hand callout 71 marks on the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb."
+    },
+    {
+      "corroboration": "photos",
+      "label": "76",
+      "normalized": [
+        0.249,
+        0.3
+      ],
+      "page": "2-45",
+      "pixel": [
+        1461.0,
+        988.0
+      ],
+      "placement": "lamp.matrix-76.emitter",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l76 sits at (0.268, 0.352), at playfield height on the left ramp entrance switch and 0.056 from the bulb callout 76 marks at the foot of the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb, consistently with the sign's other two bulbs."
+    },
+    {
+      "corroboration": "photos",
+      "label": "77",
+      "normalized": [
+        0.84,
+        0.407
+      ],
+      "page": "2-45",
+      "pixel": [
+        2047.0,
+        1227.0
+      ],
+      "placement": "lamp.matrix-77.emitter",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l77 sits at (0.806, 0.425), at playfield height below the right ramp sign and 0.038 from the bulb callout 77 marks at the foot of the right ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb, consistently with the sign's other two bulbs."
+    },
+    {
+      "corroboration": "photos",
+      "label": "78",
+      "normalized": [
+        0.859,
+        0.39
+      ],
+      "page": "2-45",
+      "pixel": [
+        2066.0,
+        1189.0
+      ],
+      "placement": "lamp.matrix-78.emitter.1",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l78 sits at (0.817, 0.413), at playfield height below the right ramp sign and 0.048 from the bulb the right-hand callout 78 marks on the sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb."
+    },
+    {
+      "corroboration": "photos",
+      "label": "78",
+      "normalized": [
+        0.237,
+        0.282
+      ],
+      "page": "2-45",
+      "pixel": [
+        1449.0,
+        947.0
+      ],
+      "placement": "lamp.matrix-78.emitter.2",
+      "point": "symbol_centre",
+      "table_object": "The retained table's Light l78a sits at (0.264, 0.343), at playfield height on the left ramp entrance switch and 0.067 from the bulb the left-hand callout 78 marks on the left ramp sign in the lamp drawing (printed 2-45); it is a light source for the table's baked light maps, so the drawing supplies the coordinate of the sign bulb."
+    },
+    {
+      "corroboration": "table",
+      "label": "74",
+      "normalized": [
+        0.918,
+        0.289
+      ],
+      "page": "2-47",
+      "pixel": [
+        2133.0,
+        948.0
+      ],
+      "placement": "switch.matrix-74.sensor",
+      "point": "arrow_tip",
+      "table_object": "The retained table's script-bound Trigger sw74 sits at (0.934, 0.195), where the drawing's wavy break line cuts the left ramp's wire form, 0.095 from the T-shaped switch bracket across the right lane that callout 74 marks on the switch drawing (printed 2-47); the drawing supplies the coordinate and the trigger corroborates the switch's lane."
+    },
+    {
+      "corroboration": "table",
+      "label": "75",
+      "normalized": [
+        0.916,
+        0.421
+      ],
+      "page": "2-47",
+      "pixel": [
+        2131.0,
+        1244.0
+      ],
+      "placement": "switch.matrix-75.sensor",
+      "point": "arrow_tip",
+      "table_object": "The retained table's script-bound Trigger sw75 sits at (0.808, 0.425), in the middle of the right ramp entrance, 0.108 from the switch body that callout 75 marks at the entrance's right side on the switch drawing (printed 2-47); the drawing supplies the coordinate of the switch, whose actuator wire reaches into the lane, and the trigger corroborates the ramp entrance."
+    }
+  ],
   "excluded_object_classes": [
     "GITop members GI034/GI035/GI036 (raw normalized y=-0.021148, outside the 0..1 playfield bounds near the top rail) -- y clamped to the schema-valid boundary 0.000000 with the raw offset disclosed here rather than fabricating a coordinate or excluding three real bulbs",
-    "Flipper.DiverterFlipper001 (raw normalized x=-0.139891, far outside playfield bounds, likely a parented-local-origin artifact) and Primitive.diverterwall_open/diverterwall_closed (raw position exactly 0,0,0) -- not used for solenoid 8/16 placement; that mechanism is projected onto switch 71's own validated position instead"
+    "Flipper.DiverterFlipper001 (raw normalized x=-0.139891, outside the playfield; the script reads only its angle) and Primitive.diverterwall_open/diverterwall_closed (raw position exactly 0,0,0) -- not used for solenoid 8/16; the placement is the diverter flap the script swings, Primitive BM_diverterside01",
+    "Lights l71, l71a, l76, l77, l78, l78a, f26 and f28a -- light sources for the table's baked light maps at playfield height, 0.038-0.079 from the ramp-sign bulbs and flasher domes the factory drawings mark; those sockets are drawing measurements instead"
   ],
   "extraction": {
     "fail_closed": true,
@@ -27,14 +293,9 @@
     "total_bytes": 773038506,
     "vpxtool_version": "vpxtool"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "midway.world-cup-soccer.1994",
-  "no_spatial_key_outputs": [
-    {
-      "address": 34,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
+  "no_spatial_key_outputs": [],
   "not_applicable_inputs": {
     "cabinet_or_service": [
       1,
@@ -176,7 +437,7 @@
       }
     ]
   },
-  "placement_count": 194,
+  "placement_count": 200,
   "projections": [
     {
       "address": 36,
@@ -196,7 +457,7 @@
     {
       "address": 48,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the shooter-lane switch/plunger position (Trigger.swPlunger, identical coordinates to Trigger.sw38): the retained script's GWalls_Hit handler (triggered when a ball strikes the goalie's 35-segment target-wall ring) pulses public switch 48 without a dedicated playfield sensor object of its own; the coordinate used here is the nearest fixed reference in the same script region rather than an invented target-wall centroid."
+      "reason": "Projected onto the goalie figure (Primitive BM_goalkeeper, table object center), the target this switch senses: the Goalie Target (A-17779) is the goalie figure itself, the switch drawing (printed 2-47) ends callout 48's leader on the goalie unit, and the retained script's GWalls_Hit handler pulses public 48 whenever a ball strikes whichever segment of the goalie's 35-segment hit ring (HitTarget GT006-GT040) is currently collidable. That ring moves with the figure and has no fixed playfield sensor object of its own. An earlier pass projected this switch onto the shooter-lane plunger trigger, which is unrelated to the goalie."
     }
   ],
   "resolved_input_addresses": [
@@ -626,6 +887,10 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 35,
       "group": "pinmame.output.solenoid"
     },
@@ -647,18 +912,14 @@
     }
   ],
   "source_hashes": {
+    "callout_seed_sha256": "d96ddad8db742f0019d09016ebec67e3363ddb16757e89f8a2d478ecf861eff6",
     "embedded_script_sha256": "c18cfbaa4e8c3b67259ac5d6c7b6842dfdaaf308b0fd71a64071118b57ac73c5",
     "manual_sha256": "29fd3c44c9ddcf5f965270011c71d34a701c13095cbeb286e26e62201931e48e",
+    "physical_photo_manifest_sha256": "5e9ba4932ae54593f7eb69c8689660d94ddd99a2b5a7ca7505a463ba7ef3e7a1",
     "table_sha256": "ab7e07fce7b589f9732f458a7a09ad08b87237852d97d7b5bf9a74f6b0f6d23d"
   },
   "status": "validated",
-  "unresolved": [
-    {
-      "address": 34,
-      "group": "pinmame.output.solenoid",
-      "reason": "no_evidence"
-    }
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/midway.world-cup-soccer.1994/",

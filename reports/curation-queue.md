@@ -140,7 +140,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 134 | 1994 | Popeye Saves the Earth | Bally | partial | 19% |
 | 135 | 1994 | The Addams Family Gold | Bally | partial | 19% |
 | 136 | 1994 | The Shadow | Bally | partial | 94% |
-| 137 | 1994 | World Cup Soccer | Bally | partial | 88% |
+| 137 | 1994 | World Cup Soccer | Bally | author_ready | 100% |
 | 138 | 1994 | Guns N' Roses | Data East | partial | 81% |
 | 139 | 1994 | Maverick | Data East | partial | 19% |
 | 140 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial | 75% |

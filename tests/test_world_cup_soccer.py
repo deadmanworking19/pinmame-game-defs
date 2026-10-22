@@ -10,14 +10,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "midway" / "world-cup-soccer-1994.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "midway" / "world-cup-soccer-1994.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "midway" / "world-cup-soccer-1994.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "midway" / "world-cup-soccer-1994.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "midway" / "world-cup-soccer-1994.json"
+CALLOUT_SEED_PATH = ROOT / "tools" / "seeds" / "midway" / "world-cup-soccer-1994-callouts.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "midway" / "world-cup-soccer-1994.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-security.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "midway" / "world-cup-soccer-1994.json"
 KNOWLEDGE_NOTE_PATH = ROOT / "knowledge" / "williams" / "world-cup-soccer.md"
 SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc" / "wcs-flipper-button-polarity.json"
+JETS_SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc" / "wcs-jet-bumper-coil-pairing.json"
+LOOP_GATE_SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc" / "wcs-loop-gate-travel.json"
+# Retained-table objects: the jet bumpers and the one-way gate at the top of the right orbit.
+BUMPER1, BUMPER2, BUMPER3 = (0.819085, 0.214142), (0.835502, 0.119845), (0.63906, 0.159845)
+GATE003 = (0.818856, 0.035613)
+DIVERTER_FLAP = (0.20819, 0.064358)
 
 DRIVER_IDS = {
 	"wcs_l2", "wcs_l3c", "wcs_la2", "wcs_l1", "wcs_la1", "wcs_d2",
@@ -86,16 +93,12 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "spatial_placement":
-				continue
-			self.assertIn(state, {"validated", "not_applicable"}, dimension)
+			self.assertEqual("validated", state, dimension)
 		self.assertEqual("midway.world-cup-soccer.1994", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(2811, self.definition["machine"]["ipdb_id"])
@@ -106,8 +109,8 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -175,14 +178,13 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertEqual("cabinet_or_service", self.switches[112]["spatial"]["reason"])
 		self.assertEqual("internal_nonvisual", self.switches[111]["spatial"]["reason"])
 
-	def test_only_the_jet_bumper_conflict_remains(self) -> None:
+	def test_no_conflict_remains(self) -> None:
 		# conflict.flipper-cabinet-opto-not-normalized was withdrawn: its premise (invSw[11] = 0x00
 		# means 112/114 are not normalized) ignored the WPC_FLIPPERS column complement, and the
 		# harness run shows public 1 is a pressed button. It must not be reintroduced.
-		self.assertEqual(
-			{"conflict.jet-bumper-script-binding-vs-physical-position"},
-			{conflict["id"] for conflict in self.definition["conflicts"]},
-		)
+		# conflict.jet-bumper-script-binding-vs-physical-position is settled by both location drawings
+		# and the jet-bumper harness run (test_jet_bumpers_follow_the_manuals_absolute_names).
+		self.assertEqual([], self.definition["conflicts"])
 		self.assertNotIn(b"flipper-cabinet-opto-not-normalized", DEFINITION_PATH.read_bytes())
 		self.assertNotIn("flipper-cabinet-opto-not-normalized", KNOWLEDGE_NOTE_PATH.read_text(encoding="utf-8"))
 
@@ -305,15 +307,74 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertEqual("used", self.solenoids[4]["availability"])
 		self.assertEqual("validated", self.solenoids[4]["spatial"]["status"])
 
-	def test_solenoid_34_has_no_spatial_key_and_is_named_in_the_spatial_report(self) -> None:
-		self.assertEqual("used", self.solenoids[34]["availability"])
-		self.assertNotIn("spatial", self.solenoids[34])
+	def test_the_loop_gate_sits_on_the_gate_at_the_top_of_the_right_orbit(self) -> None:
+		gate = self.solenoids[34]
+		self.assertEqual("used", gate["availability"])
+		self.assertEqual("A-17796", gate["physical"]["assembly_part_number"])
+		[placement] = gate["spatial"]["placements"]
+		self.assertEqual(GATE003, (placement["x"], placement["y"]))
+		self.assertIn("drawing-callouts.world-cup-soccer.2026-10-23", placement["provenance"]["source_refs"])
+		self.assertIn("runtime-scenario.wcs-loop-gate-travel", gate["provenance"]["source_refs"])
+		for phrase in ("Gate003", "A-17797-1", "3.5 s", "Travel lamp (63)"):
+			self.assertIn(phrase, gate["physical"]["notes"])
+		mechanism = next(m for m in self.definition["mechanisms"] if m["id"] == "mechanism.loop-gate")
+		self.assertEqual([], mechanism["sensors"])
+		self.assertEqual({"closed", "open"}, {position["id"] for position in mechanism["positions"]})
+		self.assertIn("runtime-scenario.wcs-loop-gate-travel", mechanism["provenance"]["source_refs"])
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual(
-			[{"group": "pinmame.output.solenoid", "address": 34, "reason": "no_evidence"}],
-			report["unresolved"],
-		)
-		self.assertEqual([{"group": "pinmame.output.solenoid", "address": 34}], report["no_spatial_key_outputs"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
+		self.assertEqual([], report["unresolved"])
+		self.assertEqual([], report["no_spatial_key_outputs"])
+
+	def test_jet_bumpers_follow_the_manuals_absolute_names(self) -> None:
+		# Both location drawings put 81/9 on the left bumper, 82/10 on the upper one and 83/11 on the lower
+		# one, and the harness run pairs each switch with its own coil. The retained table's script binds
+		# the switches to rotated objects; that defect must not come back into the placements.
+		for switch, coil, bumper in ((81, 9, BUMPER3), (82, 10, BUMPER2), (83, 11, BUMPER1)):
+			for device in (self.switches[switch], self.solenoids[coil]):
+				[placement] = device["spatial"]["placements"]
+				self.assertEqual(bumper, (placement["x"], placement["y"]), device["id"])
+				self.assertIn("runtime-scenario.wcs-jet-bumper-coil-pairing", device["provenance"]["source_refs"])
+			self.assertIn("a defect of that table", self.switches[switch]["physical"]["notes"])
+		mechanism = next(m for m in self.definition["mechanisms"] if m["id"] == "mechanism.jet-bumpers")
+		descriptions = {position["id"]: position["description"] for position in mechanism["positions"]}
+		self.assertIn("Bumper3; the ROM fires solenoid 9 when switch 81 closes", descriptions["left"])
+		self.assertIn("Bumper2; the ROM fires solenoid 10 when switch 82 closes", descriptions["upper"])
+		self.assertIn("Bumper1; the ROM fires solenoid 11 when switch 83 closes", descriptions["lower"])
+		self.assertNotIn("fire coils 10, 9, and 11", mechanism["behavior"])
+
+	def test_the_ramp_diverter_coils_sit_on_the_diverter_flap(self) -> None:
+		for address in (8, 16):
+			[placement] = self.solenoids[address]["spatial"]["placements"]
+			self.assertEqual(DIVERTER_FLAP, (placement["x"], placement["y"]), address)
+			self.assertIn("BM_diverterside01", self.solenoids[address]["physical"]["notes"])
+
+	def test_the_goalie_target_projects_onto_the_goalie(self) -> None:
+		goalie = _switch_positions(self.switches)[43]
+		self.assertEqual(goalie, _switch_positions(self.switches)[48])
+		self.assertIn("BM_goalkeeper", self.switches[48]["physical"]["notes"])
+
+	def test_the_shooter_lane_has_a_manual_plunger(self) -> None:
+		mechanism = next(m for m in self.definition["mechanisms"] if m["id"] == "mechanism.shooter-lane")
+		self.assertEqual("A-17730", mechanism["assembly_part_number"])
+		self.assertIn("manual plunger", mechanism["behavior"])
+		self.assertIn("dead code", mechanism["behavior"])
+		self.assertIn("manual plunger", self.solenoids[49]["physical"]["notes"])
+		self.assertNotIn("automatic impulse plunger", DEFINITION_PATH.read_text(encoding="utf-8"))
+		self.assertNotIn("**automatic** plunger", KNOWLEDGE_NOTE_PATH.read_text(encoding="utf-8"))
+
+	def test_flasher_quantities_count_backbox_bulbs_and_place_only_playfield_ones(self) -> None:
+		# Printed 2-48: playfield bulbs, then a backbox #906 on every flasher but 22.
+		expected = {17: (2, 1), 18: (3, 2), 19: (3, 2), 20: (2, 1), 22: (2, 2), 25: (2, 1), 26: (2, 1), 27: (3, 2), 28: (3, 2)}
+		actual = {
+			address: (self.solenoids[address]["physical"]["quantity"], len(self.solenoids[address]["spatial"]["placements"]))
+			for address in expected
+		}
+		self.assertEqual(expected, actual)
+		for address in expected:
+			notes = self.solenoids[address]["physical"]["notes"]
+			self.assertIn("Printed flashlamp complement:", notes)
+			self.assertEqual(address != 22, "on the backbox" in notes, address)
 
 	def test_solenoid_51_is_a_virtual_mirror_not_a_fourth_diverter_device(self) -> None:
 		self.assertEqual("virtual", self.solenoids[51]["kind"])
@@ -346,7 +407,10 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		for address in (46, 47, 71, 78):
 			self.assertEqual(2, self.lamps[address]["physical"]["quantity"], address)
 			self.assertEqual(2, len(self.lamps[address]["spatial"]["placements"]), address)
-		for address in sorted(MATRIX_ADDRESSES - {46, 47, 71, 78, 87, 88}):
+		# Lamp 53 "Goal (2)": both bulbs under the one kidney-shaped GOAL insert the drawing marks once.
+		self.assertEqual(2, self.lamps[53]["physical"]["quantity"])
+		self.assertEqual(1, len(self.lamps[53]["spatial"]["placements"]))
+		for address in sorted(MATRIX_ADDRESSES - {46, 47, 53, 71, 78, 87, 88}):
 			self.assertEqual(1, self.lamps[address]["physical"]["quantity"], address)
 			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]), address)
 		for address in (87, 88):
@@ -390,18 +454,12 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		lamp_x = {addr: pos[0] for addr, pos in _emitter_positions(self.lamps).items()}
 		lamp_y = {addr: pos[1] for addr, pos in _emitter_positions(self.lamps).items()}
 
-		# Jet bumpers: Bumper2 (switch 81, printed "Left") sits to the right of Bumper3 (switch 83,
-		# printed "Lower"), on the reading that the manual's naming is relative to the cluster, not
-		# absolute cabinet left/right -- asserted here so it is never "corrected" silently.
-		#
-		# That reading is DISPUTED as of 2026-08-08 and the disagreement is recorded as
-		# conflict.jet-bumper-script-binding-vs-physical-position. A review read the two location
-		# diagrams as putting 81 leftmost, which would rotate all six placements; an independent
-		# 400 dpi re-render of printed 2-49 could not confirm it. These assertions therefore pin the
-		# CURRENT values, not a settled fact. If the conflict is resolved in favour of the review,
-		# both the assertions below and the curator's coordinates change together.
-		self.assertGreater(switch_x[81], switch_x[83])
-		self.assertGreater(switch_x[82], switch_x[83])
+		# Jet bumpers by absolute position, as both location drawings name them: Left (81) leftmost,
+		# Upper (82) furthest back, Lower (83) furthest forward.
+		self.assertLess(switch_x[81], switch_x[82])
+		self.assertLess(switch_x[81], switch_x[83])
+		self.assertLess(switch_y[82], switch_y[81])
+		self.assertLess(switch_y[81], switch_y[83])
 
 		# Trough kickers descend in x from Trough 1 (nearest eject) to Trough 5 (nearest drain),
 		# and ascend in y (moving further from the top of the table) in the same order.
@@ -466,7 +524,6 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		self.assertEqual(set(), physical - set(owners))
 		self.assertIn("35-segment", mechanisms["mechanism.goalie"]["behavior"])
 		self.assertIn("MECH_LINEAR|MECH_REVERSE|MECH_ONESOL", mechanisms["mechanism.goalie"]["behavior"])
-		self.assertNotIn("positions", mechanisms["mechanism.loop-gate"])
 
 	def test_relationships_use_proven_causality_only(self) -> None:
 		relationships = {item["id"]: item for item in self.definition["relationships"]}
@@ -496,7 +553,14 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 			sources["vpx-table.wcs-vpw-1-5"]["sha256"],
 		)
 		runtime_sources = [source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"]
-		self.assertEqual(["runtime-scenario.wcs-flipper-button-polarity"], runtime_sources)
+		self.assertEqual(
+			[
+				"runtime-scenario.wcs-flipper-button-polarity",
+				"runtime-scenario.wcs-jet-bumper-coil-pairing",
+				"runtime-scenario.wcs-loop-gate-travel",
+			],
+			runtime_sources,
+		)
 		for source in self.definition["sources"]:
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
@@ -521,6 +585,9 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 				"excerpt.world-cup-soccer.solenoid-flasher-locations",
 				"excerpt.world-cup-soccer.general-illumination",
 				"excerpt.world-cup-soccer.boards-and-assemblies",
+				"excerpt.world-cup-soccer.solenoid-flasher-drawing",
+				"excerpt.world-cup-soccer.upper-playfield-gate",
+				"excerpt.world-cup-soccer.ball-shooter",
 			},
 			excerpt_ids,
 		)
@@ -549,6 +616,120 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 
 		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
 			self.assertTrue(allowed(device["binding"]["group"], device["binding"]["device"]), device["id"])
+
+
+class WorldCupSoccerDrawingCalloutTests(unittest.TestCase):
+	@classmethod
+	def setUpClass(cls) -> None:
+		import drawing_callouts
+
+		cls.dc = drawing_callouts
+		cls.definition = load_json(DEFINITION_PATH)
+		cls.seed = load_json(CALLOUT_SEED_PATH)
+		cls.placements = drawing_callouts.placements_of(cls.definition)
+
+	def test_every_checked_placement_agrees_with_its_drawing(self) -> None:
+		decisions = self.dc.evaluate(self.seed, self.placements, self.seed["limit"])
+		disagreeing = sorted(pid for pid, decision in decisions["placements"].items() if not decision["agrees"])
+		self.assertEqual([], disagreeing)
+		self.assertEqual(135, len(decisions["placements"]))
+		for page in decisions["pages"].values():
+			self.assertLessEqual(page["control_loo_max"], 0.015)
+			self.assertEqual(page["callout_pairs"], page["callout_fit_pairs"])
+
+	def test_every_placement_is_checked_excluded_measured_or_gi(self) -> None:
+		accounted = set(self.seed["checks"]) | set(self.seed["excluded_checks"]) | set(self.seed["measurements"])
+		self.assertEqual(set(), set(self.seed["checks"]) & set(self.seed["measurements"]))
+		self.assertEqual(set(), set(self.seed["excluded_checks"]) & set(self.seed["measurements"]))
+		for placement_id in self.placements:
+			if placement_id.startswith("gi."):
+				self.assertNotIn(placement_id, accounted)
+			else:
+				self.assertIn(placement_id, accounted)
+
+	def test_drawing_measurements_reproduce_and_cite_their_corroboration(self) -> None:
+		import curate_world_cup_soccer as curator
+
+		self.assertEqual(12, len(self.seed["measurements"]))
+		devices = {
+			placement["id"]: placement
+			for collection in ("inputs", "outputs")
+			for device in self.definition[collection]
+			for placement in (device.get("spatial") or {}).get("placements") or []
+		}
+		for placement_id in self.seed["measurements"]:
+			placement = devices[placement_id]
+			self.assertEqual(self.dc.measured(self.seed, placement_id), (placement["x"], placement["y"]))
+			refs = placement["provenance"]["source_refs"]
+			self.assertEqual("validated", placement["provenance"]["status"])
+			self.assertIn("manual.midway.world-cup-soccer.1994", refs)
+			self.assertIn("drawing-callouts.world-cup-soccer.2026-10-23", refs)
+			corroboration = curator.MEASUREMENT_CORROBORATION[placement_id]
+			expected = "human-review.wcs-physical-corroboration-2026-10-23" if corroboration == "photos" else "vpx-table.wcs-vpw-1-5"
+			self.assertIn(expected, refs)
+			self.assertIn(placement_id, curator.TABLE_OFFSETS)
+
+	def test_drawing_measurements_lie_inside_their_pages_control_hull(self) -> None:
+		# On the page itself: every measured pixel lies strictly inside the convex hull of the control pixels.
+		def cross(o: tuple, a: tuple, b: tuple) -> float:
+			return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+		def hull(points: list) -> list:
+			points = sorted(set(points))
+			lower: list = []
+			upper: list = []
+			for p in points:
+				while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+					lower.pop()
+				lower.append(p)
+			for p in reversed(points):
+				while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+					upper.pop()
+				upper.append(p)
+			return lower[:-1] + upper[:-1]
+
+		for placement_id, item in self.seed["measurements"].items():
+			outline = hull([tuple(control["pixel"]) for control in self.seed["pages"][item["page"]]["controls"]])
+			for a, b in zip(outline, outline[1:] + outline[:1]):
+				self.assertGreater(cross(a, b, tuple(item["pixel"])), 0, placement_id)
+		for key, page in self.seed["pages"].items():
+			frame = [control["xy"] for control in page["controls"] if control["object"] == "playfield-frame"]
+			self.assertEqual([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]], frame, key)
+			# The drawn frame has no bottom-right corner; the ball shooter switch slot closes the hull there.
+			slot = [control["xy"] for control in page["controls"] if control["object"] == "sw38"]
+			self.assertEqual([[0.936637, 0.885851]], slot, key)
+			pairs = [(tuple(control["pixel"]), tuple(control["xy"])) for control in page["controls"]]
+			self.assertLessEqual(max(self.dc.leave_one_out(pairs)), 0.015, key)
+
+	def test_the_curator_refuses_a_measurement_outside_the_hull_but_inside_the_bounding_box(self) -> None:
+		import copy
+
+		import curate_world_cup_soccer as curator
+
+		placement_id = "device.skill-shot.emitter.2"
+		x, y = self.dc.measured(self.seed, placement_id)
+		self.assertTrue(curator._within_control_hull(self.seed, placement_id, x, y))
+		without_slot = copy.deepcopy(self.seed)
+		page = without_slot["pages"][without_slot["measurements"][placement_id]["page"]]
+		page["controls"] = [control for control in page["controls"] if control["object"] != "sw38"]
+		xs = [control["xy"][0] for control in page["controls"]]
+		ys = [control["xy"][1] for control in page["controls"]]
+		self.assertTrue(min(xs) <= x <= max(xs) and min(ys) <= y <= max(ys))
+		self.assertFalse(curator._within_control_hull(without_slot, placement_id, x, y))
+
+	def test_the_paired_balloons_and_the_kidney_insert_read_are_recorded_corrections(self) -> None:
+		corrected = {
+			(key, read["label"]): read
+			for key, page in self.seed["pages"].items()
+			for read in page["reads"]
+			if "verifier_note" in read
+		}
+		self.assertEqual({("2-49", "8/16"), ("2-49", "23/24"), ("2-45", "53")}, set(corrected))
+		self.assertEqual("symbol_centre", corrected[("2-45", "53")]["point"])
+		self.assertEqual([1552.0, 709.0], corrected[("2-45", "53")]["reader_pixel"])
+
+	def test_the_drawing_crops_match_the_seed(self) -> None:
+		self.assertEqual(3, self.dc.verify_retained(self.seed, ROOT, None, None))
 
 
 class WorldCupSoccerCuratorTests(unittest.TestCase):
@@ -673,6 +854,77 @@ class WorldCupSoccerRetainedEvidenceTests(unittest.TestCase):
 		self.assertEqual({45, 46}, pressed_outputs[112])
 		self.assertEqual({47, 48}, pressed_outputs[114])
 		self.assertEqual({112: 1, 114: 1}, hold_drops)
+
+	def _run(self, directory_constant: str, run_sha_constant: str, manifest_constant: str, scenario_constant: str, scenario_path: Path) -> dict:
+		import curate_world_cup_soccer as curator
+		from build_external_evidence_manifest import check_manifest
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		directory = Path(root) / getattr(curator, directory_constant)
+		run_path = directory / "run.json"
+		self.assertEqual(getattr(curator, run_sha_constant), curator._file_sha256(run_path))
+		self.assertEqual(getattr(curator, scenario_constant), curator._file_sha256(scenario_path))
+		self.assertEqual(getattr(curator, manifest_constant), check_manifest(directory, "wcs_l2"))
+		run = load_json(run_path)
+		self.assertIsNone(run["failure"])
+		self.assertEqual("wcs_l2", run["game"])
+		self.assertEqual(curator.PINNED_LIBRARY_SHA256, run["library_sha256"])
+		self.assertEqual(getattr(curator, scenario_constant), run["scenario"]["sha256"])
+		return run
+
+	def test_jet_bumper_harness_run_pairs_each_switch_with_its_own_coil(self) -> None:
+		run = self._run("RUNTIME_JETS_RUN_DIRECTORY", "RUNTIME_JETS_RUN_SHA256", "RUNTIME_JETS_RUN_MANIFEST_SHA256", "RUNTIME_JETS_SCENARIO_SHA256", JETS_SCENARIO_PATH)
+		pairs = {81: 9, 82: 10, 83: 11}
+		last_switch = None
+		fired: list[tuple[int, int]] = []
+		for event in run["events"]:
+			if event["event"] == "switch" and event["number"] in pairs and event["state"] and not event.get("initial"):
+				last_switch = (event["number"], event["time_s"])
+			elif event["event"] == "solenoid" and event["number"] in pairs.values() and event["state"]:
+				self.assertIsNotNone(last_switch, event)
+				switch, closed_at = last_switch
+				self.assertEqual(pairs[switch], event["number"], event)
+				self.assertLessEqual(event["time_s"] - closed_at, 0.07, event)
+				fired.append((switch, event["number"]))
+		self.assertEqual([(81, 9), (82, 10), (83, 11), (83, 11), (81, 9), (82, 10)], fired)
+
+	def test_loop_gate_harness_run_shows_the_travel_rule(self) -> None:
+		run = self._run("RUNTIME_LOOP_GATE_RUN_DIRECTORY", "RUNTIME_LOOP_GATE_RUN_SHA256", "RUNTIME_LOOP_GATE_RUN_MANIFEST_SHA256", "RUNTIME_LOOP_GATE_SCENARIO_SHA256", LOOP_GATE_SCENARIO_PATH)
+		travel_lit = False
+		closures: list[tuple[int, float, bool]] = []
+		energized: list[tuple[float, float]] = []
+		for event in run["events"]:
+			if event["event"] == "lamp" and event["number"] == 63:
+				travel_lit = bool(event["state"])
+			elif event["event"] == "switch" and event["number"] in (27, 47) and event["state"] and not event.get("initial"):
+				closures.append((event["number"], event["time_s"], travel_lit))
+			elif event["event"] == "solenoid" and event["number"] == 34:
+				if event["state"]:
+					energized.append((event["time_s"], -1.0))
+				else:
+					energized[-1] = (energized[-1][0], event["time_s"])
+		self.assertEqual([(47, False), (27, False), (27, True), (47, True)], [(n, lit) for n, _, lit in closures])
+		self.assertEqual(2, len(energized))
+		for (switch, closed_at, _), (on, off) in zip(closures[2:], energized):
+			self.assertLessEqual(on - closed_at, 0.05, switch)
+			self.assertAlmostEqual(3.5, off - on, delta=0.1)
+		for _, closed_at, _ in closures[:2]:
+			self.assertFalse(any(closed_at <= on <= closed_at + 4.0 for on, _ in energized))
+
+	def test_callout_check_artifacts_and_physical_photos_are_retained(self) -> None:
+		import curate_world_cup_soccer as curator
+		import drawing_callouts
+		from build_external_evidence_manifest import check_manifest
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		seed = load_json(CALLOUT_SEED_PATH)
+		self.assertGreater(drawing_callouts.verify_retained(seed, ROOT, None, Path(root)), 3)
+		photos = Path(root) / curator.PHYSICAL_EVIDENCE_DIRECTORY
+		self.assertEqual(curator.PHYSICAL_EVIDENCE_MANIFEST_SHA256, check_manifest(photos, "wcs_l2"))
 
 	def test_retained_wpc_vbs_library_matches_its_pinned_hash(self) -> None:
 		import curate_world_cup_soccer as curator

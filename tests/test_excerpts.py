@@ -200,6 +200,7 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.white-water.switch-locations",
 	"excerpt.world-cup-soccer.lamp-locations",
 	"excerpt.world-cup-soccer.solenoid-flasher-locations",
+	"excerpt.world-cup-soccer.solenoid-flasher-drawing",
 	"excerpt.world-cup-soccer.solenoid-flasher-wiring",
 	"excerpt.world-cup-soccer.switch-locations",
 }
