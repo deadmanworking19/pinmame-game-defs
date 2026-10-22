@@ -281,7 +281,7 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		report = load_json(SPATIAL_REPORT_PATH)
 		seed = load_json(CALLOUT_SEED_PATH)
 		projected = {item["device"] for item in report["projections"]}
-		self.assertEqual(15, len(projected))
+		self.assertEqual(17, len(projected))
 		confirmed = set(report["validation_basis"]["projection_confirmed_by_drawing"])
 		devices = {d["id"]: d for c in ("inputs", "outputs") for d in self.definition[c]}
 		for device_id in projected:
@@ -356,7 +356,9 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual(len(curator.DRAWING_RESOLVED_SWITCHES), len(resolved))
 		derived |= resolved
 		mechanism_objects = {(x, y) for _object, _how, x, y in curator.MECHANISM_OBJECTS.values()}
-		measurements = load_json(CALLOUT_SEED_PATH)["measurements"]
+		mechanism_objects |= set(curator.FLIPPER_PIVOTS.values())
+		seed = load_json(CALLOUT_SEED_PATH)
+		measurements = {**seed["measurements"], **seed["elevation_measurements"]}
 		for place_id, place in located(self.definition).items():
 			coordinate = (round(float(place["x"]), 6), round(float(place["y"]), 6))
 			if place_id in measurements:
@@ -371,9 +373,14 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		seed = load_json(CALLOUT_SEED_PATH)
 		decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(self.definition))
 		self.assertEqual(set(seed["checks"]), set(decisions["placements"]))
-		self.assertEqual(161, len(decisions["placements"]))
+		self.assertEqual(166, len(decisions["placements"]))
 		self.assertTrue(all(decision["agrees"] for decision in decisions["placements"].values()))
-		self.assertEqual(57, len(seed["measurements"]))
+		self.assertEqual(59, len(seed["measurements"]))
+		elevations = {pid: drawing_callouts.elevation_measured(seed, pid) for pid in seed["elevation_measurements"]}
+		self.assertEqual(8, len(elevations))
+		back_panel = drawing_callouts.evaluate_elevations(seed, elevations)
+		self.assertTrue(all(decision["agrees"] for decision in back_panel["placements"].values()))
+		self.assertEqual(set(elevations), set(back_panel["placements"]))
 		for place_id, item in seed["measurements"].items():
 			self.assertEqual(item["normalized"], list(drawing_callouts.measured(seed, place_id)), place_id)
 			check = seed["checks"].get(place_id)
@@ -385,6 +392,59 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 			self.assertTrue(reason.strip())
 		sources = {source["id"]: source for source in self.definition["sources"]}
 		self.assertEqual(hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(), sources[CALLOUT_SOURCE]["sha256"])
+
+	def test_no_measurement_is_extrapolated_without_a_second_drawing(self) -> None:
+		"""A part measured through a page's controls alone must lie within their extent (docs/SPATIAL.md);
+		one in front of or beside them is validated only by another drawing's own callout."""
+		seed = load_json(CALLOUT_SEED_PATH)
+		for place_id, item in seed["measurements"].items():
+			controls = seed["pages"][item["page"]]["controls"]
+			xs, ys = [c["xy"][0] for c in controls], [c["xy"][1] for c in controls]
+			x, y = item["normalized"]
+			inside = min(xs) <= x <= max(xs) and min(ys) <= y <= max(ys)
+			check = seed["checks"].get(place_id)
+			self.assertTrue(inside or (check and check["page"] != item["page"]), place_id)
+		for place_id, item in seed["elevation_measurements"].items():
+			self.assertNotEqual(item["page"], seed["elevation_checks"][place_id]["page"], place_id)
+
+	def test_slingshot_switches_place_both_leaf_contacts(self) -> None:
+		seed = load_json(CALLOUT_SEED_PATH)
+		for address in (59, 62):
+			switch = self.switches[address]
+			self.assertEqual(2, switch["physical"]["quantity"])
+			ids = [place["id"] for place in switch["spatial"]["placements"]]
+			self.assertEqual([f"switch.matrix-{address}.upper.sensor", f"switch.matrix-{address}.lower.sensor"], ids)
+			for place_id in ids:
+				self.assertEqual(("pdf-6", str(address)), (seed["measurements"][place_id]["page"], seed["measurements"][place_id]["label"]))
+				self.assertEqual({"page": "pdf-123", "label": f"S{address}"}, seed["checks"][place_id])
+			upper, lower = switch["spatial"]["placements"]
+			self.assertLess(upper["y"], lower["y"])
+
+	def test_centre_post_is_checked_on_the_bottom_view_drain_hole(self) -> None:
+		seed = load_json(CALLOUT_SEED_PATH)
+		self.assertEqual({"page": "pdf-123", "label": "AUX2"}, seed["checks"]["device.uk-center-up-down-post.effect"])
+		[hole] = [r for r in seed["pages"]["pdf-123"]["reads"] if r["label"] == "AUX2"]
+		self.assertIsNone(hole["printed"])
+		self.assertIn("Center Post (@ Drain)", hole["verifier_note"])
+		self.assertIn("checked on the 2022 bottom view", self.solenoids[34]["physical"]["notes"])
+
+	def test_back_panel_gi_sockets_are_placed_on_the_panel(self) -> None:
+		gi = bindings(self.definition, "outputs", "pinmame.output.gi")[0]
+		back = [p for p in gi["spatial"]["placements"] if ".b0" in p["id"]]
+		self.assertEqual(8, len(back))
+		mode_lamp_y = {self.lamps[a]["spatial"]["placements"][0]["y"] for a in BACK_PANEL_MODE_LAMPS}
+		self.assertEqual({round(y, 3) for y in mode_lamp_y}, {p["y"] for p in back})
+		xs = [p["x"] for p in back]
+		self.assertEqual(sorted(xs), xs)
+		gaps = [b - a for a, b in zip(xs, xs[1:])]
+		self.assertLess(max(gaps) - min(gaps), 0.01, "the drawn sockets are evenly spaced")
+		self.assertEqual(32, len(gi["spatial"]["placements"]))
+		self.assertEqual(34, gi["physical"]["quantity"])
+
+	def test_every_excerpt_names_its_transcriber(self) -> None:
+		for source in self.definition["sources"] + load_json(LE_PATH)["sources"]:
+			for excerpt in source.get("excerpts", []):
+				self.assertTrue(excerpt.get("transcribed_by", "").strip(), excerpt["id"])
 
 	def test_audit_counts_agree_with_the_definition(self) -> None:
 		"""The report's prose is computed from the artifact, not written beside it."""
@@ -520,14 +580,19 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual("Service Credit (Green Button)", self.switches[-1]["label"])
 		self.assertEqual("Begin Test (Black Button)", self.switches[0]["label"])
 		self.assertEqual("Memory Protect", self.switches[-3]["label"])
+		import curate_lord_of_the_rings as curator
+
 		seed = load_json(CALLOUT_SEED_PATH)
-		for address, label in ((81, "DS4"), (83, "DS2")):
+		for address, side, label in ((81, "right", "DS-4"), (83, "left", "DS-2")):
 			self.assertTrue(any(role.startswith("internal.") for role in self.switches[address]["roles"]))
-			# The printed dedicated-switch table puts DS-2 and DS-4 below the playfield, on the
-			# flipper mechanisms; the bottom view draws them, so they are measured there rather than
-			# declared `internal_nonvisual`, which is how an earlier false claim survived six rounds.
+			# The printed dedicated-switch table puts DS-2 and DS-4 below the playfield, on the flipper
+			# mechanisms, so they are placed rather than declared `internal_nonvisual`, which is how an
+			# earlier false claim survived six rounds. The bottom view draws them in front of its
+			# controls, so each is projected onto its own flipper's pivot and checked on DR.4.
 			[place] = self.switches[address]["spatial"]["placements"]
-			self.assertEqual(("pdf-123", label), (seed["measurements"][place["id"]]["page"], seed["measurements"][place["id"]]["label"]))
+			self.assertEqual(curator.FLIPPER_PIVOTS[side], (place["x"], place["y"]))
+			self.assertNotIn(place["id"], seed["measurements"])
+			self.assertEqual({"page": "pdf-6", "label": label}, seed["checks"][place["id"]])
 
 	def test_uk_only_cabinet_buttons_are_optional(self) -> None:
 		for address in UK_ONLY_SWITCHES:
@@ -745,7 +810,7 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual("stern.lord-of-the-rings.2003", report["machine_id"])
 		self.assertEqual("author_ready", report["status"])
 		self.assertEqual(len(located(self.definition)), report["placement_count"])
-		self.assertEqual(206, report["placement_count"])
+		self.assertEqual(216, report["placement_count"])
 
 	def test_spatial_report_records_the_rejected_outliers(self) -> None:
 		"""One retained table lays the Fellowship inserts out as a closed ring rather than the printed
@@ -1060,7 +1125,8 @@ class LordOfTheRingsRetainedEvidenceTests(unittest.TestCase):
             self.skipTest("retained manuals or review artifacts are not available")
         seed = load_json(CALLOUT_SEED_PATH)
         checked = drawing_callouts.verify_retained(seed, ROOT, manuals.parent.parent, artifacts)
-        self.assertEqual(len(seed["pages"]) + 12, checked)
+        manifest = load_json(artifacts / seed["retained_artifacts"]["directory"] / "manifest.json")
+        self.assertEqual(len(seed["pages"]) + len(seed["elevations"]) + len(manifest["files"]), checked)
         reissue = self.sources["manual.stern.lord-of-the-rings.2003.reissue-2022"]
         self.assertEqual(reissue["sha256"], file_sha256(_resolve_external(reissue["uri"])))
 
@@ -1090,6 +1156,17 @@ class LordOfTheRingsRetainedEvidenceTests(unittest.TestCase):
                 (round((point[0] - bounds["left"]) / width, 6), round((point[1] - bounds["top"]) / height, 6)),
                 f"solenoid {address}: {name}",
             )
+        # The end-of-stroke switches take VPW's flipper pivots, where all three retained tables agree within 0.003.
+        for side, pivot in curator.FLIPPER_PIVOTS.items():
+            for folder in ("vpxtool-extract", "alt-jpsalas-600/vpxtool-extract", "alt-hanibal-4k/vpxtool-extract"):
+                table = root / folder
+                table_bounds = load_json(table / "gamedata.json")
+                [flipper] = load_json(table / "gameitems" / f"Flipper.{side.capitalize()}Flipper.json").values()
+                tx = (flipper["center"]["x"] - table_bounds["left"]) / (table_bounds["right"] - table_bounds["left"])
+                ty = (flipper["center"]["y"] - table_bounds["top"]) / (table_bounds["bottom"] - table_bounds["top"])
+                if folder == "vpxtool-extract":
+                    self.assertEqual(pivot, (round(tx, 6), round(ty, 6)), side)
+                self.assertLessEqual(max(abs(tx - pivot[0]), abs(ty - pivot[1])), 0.003, (side, folder))
 
 
 class LordOfTheRingsCuratorTests(unittest.TestCase):

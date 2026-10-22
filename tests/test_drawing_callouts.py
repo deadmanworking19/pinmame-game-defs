@@ -110,6 +110,44 @@ class DrawingCalloutTests(unittest.TestCase):
 		self.assertEqual(5, result["pages"]["measured"]["controls"])
 		self.assertTrue(all(d["agrees"] for d in result["placements"].values()))
 
+	def elevation_seed(self):
+		# A panel drawn obliquely: along the panel is (-50, 75) px, across it (1, -0.05); x = 0.9 - 0.1 * s.
+		axis, cross = (-50.0, 75.0), (1.0, -0.05)
+		def px(s, t):
+			return [round(600 + s * axis[0] + t * cross[0], 3), round(500 + s * axis[1] + t * cross[1], 3)]
+		page = {"axis": list(axis), "cross_axis": list(cross), "plane_y": 0.041,
+		        "controls": [{"placement": f"lamp{i}", "pixel": px(s, t), "x": round(0.9 - 0.1 * s, 6)}
+		                     for i, (s, t) in enumerate(((2.0, 60), (2.6, 40), (3.1, 30), (3.7, 40), (4.2, 60)))],
+		        "reads": [{"label": "GI", "pixel": px(s, 0), "point": "symbol_centre"} for s in range(8)]}
+		placements = {f"gi{s}": (round(0.9 - 0.1 * s, 6), 0.041) for s in range(8)}
+		seed = {"elevations": {"elev": page}, "elevation_checks": {pid: {"page": "elev", "label": "GI"} for pid in placements}}
+		return seed, placements, px
+
+	def test_elevation_coordinate_ignores_the_cross_axis(self):
+		seed, _placements, px = self.elevation_seed()
+		page = seed["elevations"]["elev"]
+		base = dc.elevation_coordinate(page, px(3.0, 0))
+		self.assertAlmostEqual(base, dc.elevation_coordinate(page, px(3.0, 80)), places=6)
+		self.assertAlmostEqual(1.0, dc.elevation_coordinate(page, px(4.0, 0)) - base, places=6)
+
+	def test_elevation_checks_agree_along_the_panel_and_extrapolate(self):
+		seed, placements, _px = self.elevation_seed()
+		result = dc.evaluate_elevations(seed, placements)
+		self.assertEqual(8, len(result["placements"]))
+		self.assertTrue(all(d["agrees"] for d in result["placements"].values()))
+		placements["gi7"] = (placements["gi7"][0] + 0.09, 0.041)
+		self.assertFalse(dc.evaluate_elevations(seed, placements)["placements"]["gi7"]["agrees"])
+
+	def test_elevation_measurement_reproduces_and_is_never_checked_on_its_own_page(self):
+		seed, placements, px = self.elevation_seed()
+		seed["elevation_measurements"] = {"gi3": {"page": "elev", "pixel": px(3.0, 0), "normalized": [0.6, 0.041]}}
+		self.assertEqual((0.6, 0.041), dc.elevation_measured(seed, "gi3"))
+		seed["elevation_measurements"]["gi3"]["normalized"] = [0.61, 0.041]
+		with self.assertRaisesRegex(ValueError, "does not reproduce"):
+			dc.elevation_measured(seed, "gi3")
+		with self.assertRaisesRegex(ValueError, "measured on"):
+			dc.evaluate_elevations(seed, placements)
+
 	def test_inset_reads_are_not_used(self):
 		s, placements = seed()
 		s["pages"]["page"]["reads"][2]["region"] = "inset"

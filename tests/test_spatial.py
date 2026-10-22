@@ -369,7 +369,7 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(36, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(37, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -379,9 +379,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# roots are the four Spooky pinHeck games, Recreativos Franco's Super Star, the Recel System III BIOS
 		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record. The 97aa922b baseline
 		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record. The 2026-10-09 Black Hole curation folds its blkholea
-		# residual record into the main one.
-		self.assertEqual(794, report["machine_count"])
-		self.assertEqual(36, report["author_ready_count"])
+		# residual record into the main one, and the 2026-10-22 Lord of the Rings promotion splits off the 2009
+		# Limited Edition as a record of its own.
+		self.assertEqual(795, report["machine_count"])
+		self.assertEqual(37, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
@@ -391,7 +392,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(743, report["partial_count"])
 		self.assertEqual(15, report["stub_count"])
 		self.assertEqual(14, report["non_game_record_count"])
-		self.assertEqual(808, report["catalog_record_count"])
+		self.assertEqual(809, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -549,10 +550,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Star Wars records contradictory factory flash-bank counts.
 		# Centaur's promotion settles its lamp-113 conflict, removing one.
 		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
-		self.assertEqual(808, len(catalog["machines"]))
-		self.assertEqual(794, catalog["summary"]["game_count"])
-		self.assertEqual(808, catalog["summary"]["machine_count"])
-		self.assertEqual(36, catalog["summary"]["author_ready_count"])
+		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
+		self.assertEqual(809, len(catalog["machines"]))
+		self.assertEqual(795, catalog["summary"]["game_count"])
+		self.assertEqual(809, catalog["summary"]["machine_count"])
+		self.assertEqual(37, catalog["summary"]["author_ready_count"])
 		self.assertEqual(15, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review

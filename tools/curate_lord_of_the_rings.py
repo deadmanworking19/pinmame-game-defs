@@ -539,13 +539,28 @@ UK_POST_NOTES = {
          "placement is the centre of DR.7's grey box AUX 1, which the drawing prints at the top of the left outlane."),
     34: ("The 2022 manual's cabinet wiring page (PDF 126) calls it the Center Up/Down Post of the UK Post Save feature, "
          "raised when both UK-only cabinet buttons (switches 1 and 8) are pressed together. No retained table models it; "
-         "the placement is the centre of DR.7's grey box AUX 2, which the drawing prints between the flippers."),
+         "the placement is the centre of DR.7's grey box AUX 2, which the drawing prints between the flippers. That box "
+         "lies in front of DR.7's controls, so it is checked on the 2022 bottom view (PDF 123): the playfield parts list "
+         "(PDF 82) says a plug-cap fills the hole 'if a Center Post (@ Drain) is used, then removed', and the bottom view "
+         "draws one circle of its size at the drain, unlabelled, within 0.01 of the box."),
     35: ("The 2022 manual's cabinet wiring page (PDF 126) calls it the Right Outlane Ball Deflector of the UK Post Save "
          "feature, worked by the right of the two UK-only cabinet buttons (switch 8). No retained table models it; the "
          "placement is the centre of DR.7's grey box AUX 3, which the drawing prints at the top of the right outlane."),
 }
 # VPW's LeftFlipper and RightFlipper pivots, normalized against its 952 x 2203 bounds.
 FLIPPER_PIVOTS = {"left": (0.289107, 0.850172), "right": (0.621009, 0.850172)}
+# Each slingshot switch is two leaf contacts in parallel (printed part 180-5054-00 x2). DR.4 prints a
+# box beside each and the bottom view labels both, so each contact is measured on DR.4 and checked there.
+SLING_CONTACTS = {
+    address: (
+        "The printed part is two leaf contacts wired in parallel on this address, one at each end of the slingshot "
+        "rubber. DR.4 prints a box " + str(address) + " beside each and the 2022 bottom view (PDF 123) labels both "
+        "S" + str(address) + ", so each contact has its own placement, measured at its DR.4 box and checked against "
+        "the bottom view's label. The retained tables model one slingshot switch object, at ({table}, {table_y}), "
+        "between the two."
+    )
+    for address in (59, 62)
+}
 RESERVED_SOLENOIDS = {
     16: "PinMAME's unused companion slot to the synthetic fast-flip state at public 15.",
     36: "Whitestar auxiliary board 520-5068-01 exposes three outputs at 33-35 and leaves 36 unused.",
@@ -618,6 +633,7 @@ SOURCES = [
                 "method": "manual",
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/switch-matrix-dedicated-switches.md",
                 "reviewed": True,
+                "transcribed_by": "curator, read from the scanned page at 300 dpi",
                 "sha256": _excerpt_sha(EXCERPT_DIR / "switch-matrix-dedicated-switches.md"),
                 "image": "evidence/excerpts/stern.lord-of-the-rings.2003/switch-matrix-dedicated-switches.webp",
                  "image_sha256": "eca06e367d03e2fcec46b7ff2d8ad916999a6ce5bde17536e57a44c8c482f6df",
@@ -629,6 +645,7 @@ SOURCES = [
                 "method": "manual",
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/lamp-matrix.md",
                 "reviewed": True,
+                "transcribed_by": "curator, read from the scanned page at 300 dpi",
                 "sha256": _excerpt_sha(EXCERPT_DIR / "lamp-matrix.md"),
                 "image": "evidence/excerpts/stern.lord-of-the-rings.2003/lamp-matrix.webp",
                  "image_sha256": "7b587a3c050350775ba527fa04b6e6efac56a18a62c804626cb72c7124a1a582",
@@ -640,6 +657,7 @@ SOURCES = [
                 "method": "manual",
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/coils-detailed-chart.md",
                 "reviewed": True,
+                "transcribed_by": "curator, read from the scanned page at 300 dpi",
                 "sha256": _excerpt_sha(EXCERPT_DIR / "coils-detailed-chart.md"),
                 "image": "evidence/excerpts/stern.lord-of-the-rings.2003/coils-detailed-chart.webp",
                  "image_sha256": "a04b2a9287504f41c11647c3edc243b17ad6d7d2e16f24d7ca8dfbb04f0fee5e",
@@ -654,6 +672,7 @@ SOURCES = [
                 "method": "manual",
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/coil-flash-lamp-locations.md",
                 "reviewed": True,
+                "transcribed_by": "curator, read from the scanned page at 300 dpi",
                 "sha256": _excerpt_sha(EXCERPT_DIR / "coil-flash-lamp-locations.md"),
             },
         ],
@@ -714,6 +733,7 @@ def _static_excerpt(name: str, locator: str, crop: str | None) -> dict:
         "path": markdown.relative_to(ROOT).as_posix(),
         "reviewed": True,
         "sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+        "transcribed_by": "curator, read from the PDF's text and vector drawings and checked against the 300 dpi render",
     }
     if crop is not None:
         excerpt.update({
@@ -1080,6 +1100,13 @@ for address in range(1, 65):
     elif address in DRAWING_MEASURED_SWITCHES:
         entry["spatial"] = {"placements": [measured(device_id, "sensor")], "status": "validated"}
         physical["notes"] += " " + DRAWING_MEASURED_SWITCHES[address]
+    elif address in SLING_CONTACTS:
+        # Two leaf contacts wired in parallel on one address: one placement each.
+        entry["spatial"] = {"placements": [measured(device_id, "sensor", f"{device_id}.{end}.sensor") for end in ("upper", "lower")],
+                            "status": "validated"}
+        physical["quantity"] = 2
+        physical["notes"] += " " + SLING_CONTACTS[address].format(table=sp["x"] if sp else None, table_y=sp["y"] if sp else None)
+        entry["provenance"]["source_refs"].append(MANUAL_2022)
     elif address == 15:
         # The stacking beam and the eject beam are the two channels of one dual opto board pair at the
         # trough's eject end, one above the other, so in plan they share switch 14's position.
@@ -1134,14 +1161,27 @@ for address, device_id, label, roles, location, note in DEDICATED:
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL, PROFILE])
     elif printed_class == "playfield":
         # DS-2 and DS-4, the flipper end-of-stroke switches, printed below the playfield on the flipper
-        # mechanisms. No retained table models them; the 2022 manual's bottom view draws both.
-        entry["spatial"] = {"placements": [measured(device_id, "sensor")], "status": "validated"}
+        # mechanisms. No retained table models them, and the bottom view (PDF 123) draws them in front of
+        # every control that page can be fitted on, so they are projected onto their own mechanism.
         side = "left" if address == 83 else "right"
+        pivot = FLIPPER_PIVOTS[side]
+        PROJECTIONS.append({
+            "device": device_id, "anchor": f"vpw-1-6:Flipper.{side.capitalize()}Flipper",
+            "reason": (f"The end-of-stroke switch is part of the {side} flipper mechanism, so it takes the flipper's pivot, "
+                       "where all three retained tables agree within 0.003; DR.4 prints its box "
+                       f"{manual_ref} there."),
+            "x": pivot[0], "y": pivot[1],
+        })
+        entry["spatial"] = {"placements": [{
+            "id": f"{device_id}.sensor",
+            "provenance": {"source_refs": [MANUAL, MANUAL_2022, T_VPW, T_JPS, T_HAN], "status": "observed"},
+            "role": "sensor", "space": "playfield", "x": pivot[0], "y": pivot[1],
+        }], "status": "observed"}
         entry["physical"]["notes"] += (
-            f" Measured on the 2022 manual's vector bottom view (PDF 123), which draws the {side} flipper's "
-            f"end-of-stroke blade switch at the outer end of the flipper mechanism, labelled {manual_ref.replace('-', '')}; "
-            "the placement is the centre of the drawn switch. The topside switch drawing DR.4 prints its grey box "
-            "nearer the flipper pivot, in open space, because it does not draw under-playfield assemblies."
+            f" Placed at the {side} flipper's pivot, the mechanism this switch belongs to, where DR.4 prints its "
+            f"grey box {manual_ref}. The 2022 manual's vector bottom view (PDF 123) draws the end-of-stroke blade "
+            f"switch itself, labelled {manual_ref.replace('-', '')}, on the flipper mechanism about 0.1 outboard of the pivot, "
+            "but in front of every control that page can be fitted on, so that drawn position would be an extrapolation."
         )
         entry["provenance"]["source_refs"].append(MANUAL_2022)
     else:
@@ -1530,6 +1570,14 @@ _gi_placements = [measured("gi.playfield-relay", "emitter", pid) for pid in _gi_
 _gi_counts = {letter: sum(pid.startswith(f"gi.playfield-relay.{letter}") for pid in _gi_ids) for letter in ("g", "v", "y")}
 if _gi_counts != {"g": 5, "v": 10, "y": 7} or len(_gi_ids) != 24:
     raise SystemExit(f"G.I. measurements do not match the drawn sockets: {_gi_counts}, {len(_gi_ids)}")
+# The back panel's eight sockets are measured along the panel on PDF 121's rear-view inset and each is
+# validated only if PDF 112's exploded front view puts its own socket within the limit.
+_back_panel = {pid: drawing_callouts.elevation_measured(CALLOUT_DATA, pid) for pid in sorted(CALLOUT_DATA["elevation_measurements"])}
+ELEVATION_DECISIONS = drawing_callouts.evaluate_elevations(CALLOUT_DATA, _back_panel, CALLOUT_DATA.get("limit", drawing_callouts.LIMIT))
+if len(_back_panel) != 8 or sorted(ELEVATION_DECISIONS["placements"]) != sorted(_back_panel)         or not all(d["agrees"] for d in ELEVATION_DECISIONS["placements"].values()):
+    raise SystemExit(f"the back panel's G.I. sockets are not confirmed by the second drawing: {ELEVATION_DECISIONS['placements']}")
+_gi_placements += [{"id": pid, "provenance": {"source_refs": [MANUAL_2022, CALLOUT_SOURCE], "status": "validated"},
+                    "role": "emitter", "space": "playfield", "x": x, "y": y} for pid, (x, y) in _back_panel.items()]
 outputs.append({
     "aliases": [{"namespace": "pinmame.gi", "value": "0"}],
     "availability": "used",
@@ -1551,9 +1599,11 @@ outputs.append({
         "sockets along the left side, so the drawing's five are placed; the page's footnote says bulb quantities may "
         "change during production. The two #555 spotlights above the playfield sit in light reflectors on the "
         "return-lane plastics, placed at the reflector leaders of the playfield parts drawing (PDF 83). The eight "
-        "back-panel bulbs and the two coin-door bulbs (three on European doors) are on this channel too but are not "
-        "placed: the back panel's sockets are drawn only in a rear-view inset with no playfield frame, and the coin door "
-        "is cabinet hardware. Quantity counts every bulb on a US machine."
+        "back-panel bulbs stand in a row along the top of the upright back panel: PDF 121's rear-view inset of the panel "
+        "draws them, mapped along the panel through its six mode-lamp sockets and the One Ring, and placed on the "
+        "panel's plane like the mode lamps 73-78; the back panel's exploded front view (PDF 112) draws the same row and "
+        "agrees within 0.004 for every socket. The two coin-door bulbs (three on European doors) are on this channel too "
+        "but are cabinet hardware and not placed. Quantity counts every bulb on a US machine."
     ), "quantity": 34},
     "provenance": {"source_refs": [MANUAL, MANUAL_2022, PROFILE, CORE], "status": "validated"},
     "spatial": {"placements": _gi_placements, "status": "validated"},
@@ -2005,7 +2055,7 @@ if _unvalidated:
 # status below is computed, so a statement cannot survive here after the data behind it changes.
 _located = [(d, p) for d in inputs + outputs for p in (d.get("spatial") or {}).get("placements", [])]
 placement_total = len(_located)
-_measured_ids = set(CALLOUT_DATA["measurements"])
+_measured_ids = set(CALLOUT_DATA["measurements"]) | set(CALLOUT_DATA["elevation_measurements"])
 _agreed_ids = {pid for pid, decision in CALLOUT_DECISIONS["placements"].items() if decision["agrees"]}
 _projection_devices = {row["device"] for row in PROJECTIONS}
 
@@ -2036,6 +2086,12 @@ measurement_rows = [
      "checked_on": CALLOUT_DATA["checks"].get(pid, {}).get("page"),
      "check_excluded": CALLOUT_DATA.get("excluded_checks", {}).get(pid)}
     for pid, item in sorted(CALLOUT_DATA["measurements"].items())
+] + [
+    {"placement": pid, "device": item["device"], "page": item["page"], "label": item["label"], "point": item["point"],
+     "x": item["normalized"][0], "y": item["normalized"][1], "note": item["note"],
+     "checked_on": CALLOUT_DATA["elevation_checks"][pid]["page"], "check_excluded": None,
+     "check": {k: ELEVATION_DECISIONS["placements"][pid][k] for k in ("control_offset", "callout_offset", "agrees")}}
+    for pid, item in sorted(CALLOUT_DATA["elevation_measurements"].items())
 ]
 _CONSENSUS_GROUPS = {"switch": "pinmame.input.switch", "lamp": "pinmame.output.lamp", "flasher": "pinmame.output.solenoid"}
 _by_binding = {(d["binding"]["group"], d["binding"]["device"]): d for d in inputs + outputs if "binding" in d}
@@ -2063,6 +2119,10 @@ _vpw_only_lamp_rejections = sorted(
     row["address"] for row in rejected_rows
     if row["kind"] == "lamp" and row["address"] <= 80 and {entry["table"] for entry in row["rejected"]} == {"vpw-1-6"}
 )
+
+
+def _format_x(values: list[float]) -> str:
+    return ", ".join(f"{v:.3f}" for v in sorted(values))
 
 
 def _format_addresses(addresses: list[int]) -> str:
@@ -2133,6 +2193,21 @@ spatial_report = {
         "led_layout_fit": CALLOUT_DATA["led_layout_fit"],
     },
     "drawing_callouts": _callout_summary,
+    "back_panel_elevations": {
+        "rule": (
+            "An elevation drawing of the upright back panel fixes where along the panel a part sits. Each page's position "
+            "along the panel (its axis component in the basis of the panel's drawn length and height directions) is mapped "
+            "to playfield x by a least-squares line over the mode lamps 73-78 (and on PDF 121 the One Ring); a socket is "
+            "measured on one page, placed on the panel's plane, and validated only when the other page's own socket lands "
+            "within 0.07 under that page's control line and under the leave-one-out line over its other socket pairs."
+        ),
+        "pages": {key: {"locator": CALLOUT_DATA["elevations"][key]["locator"], "image": CALLOUT_DATA["elevations"][key]["image"],
+                        "axis": CALLOUT_DATA["elevations"][key]["axis"], "cross_axis": CALLOUT_DATA["elevations"][key]["cross_axis"],
+                        **{k: v for k, v in page.items() if k != "control_line"}}
+                  for key, page in ELEVATION_DECISIONS["pages"].items()},
+        "checked": len(ELEVATION_DECISIONS["placements"]),
+        "validated": sum(d["agrees"] for d in ELEVATION_DECISIONS["placements"].values()),
+    },
     "counts": {
         "placements": placement_total,
         **{f"validated_by_{name}": len(ids) for name, ids in validation_basis.items()},
@@ -2176,11 +2251,18 @@ _page_fits = "; ".join(
 _led_table = "\n".join(f"| L{row['designator'][1:]} | {row['public_lamp']} | {row['x']} | {row['y']} |" for row in _led_rows)
 _PAGE_NAMES = {"pdf-6": "DR.4", "pdf-7": "DR.5", "pdf-9": "DR.7", "pdf-123": "the bottom view (PDF 123)"}
 _device_labels = {device["id"]: device["label"] for device in inputs + outputs}
+_measured_groups: dict[tuple[str, str, str | None], int] = {}
+for _row in measurement_rows:
+    if not _row["device"].startswith(("gi.", "lamp.led-board")):
+        _label = _device_labels[_row["device"]]
+        if _row["device"].startswith("switch.") and "switch" not in _label.lower():
+            _label += " switch"
+        _key = (_label, _row["page"], _row["checked_on"])
+        _measured_groups[_key] = _measured_groups.get(_key, 0) + 1
 _measured_list = "; ".join(
-    f"{_device_labels[row['device']]} on {_PAGE_NAMES[row['page']]}"
-    + (f", checked on {_PAGE_NAMES[row['checked_on']]}" if row["checked_on"] else "")
-    for row in measurement_rows
-    if not row["device"].startswith(("gi.", "lamp.led-board"))
+    f"{label}{' (both contacts)' if count == 2 else ''} on {_PAGE_NAMES[page]}"
+    + (f", checked on {_PAGE_NAMES[checked]}" if checked else "")
+    for (label, page, checked), count in _measured_groups.items()
 )
 _basis_counts = ", ".join(f"{len(ids)} by {name.replace('_', ' ')}" for name, ids in validation_basis.items())
 _gi_sockets = sum(1 for item in CALLOUT_DATA["measurements"].values() if item["page"] == "pdf-121")
@@ -2245,8 +2327,8 @@ Every one of the {placement_total} placements is validated, each in one recorded
 
 - **Three-table agreement.** Three factory-layout recreations are treated as three measurements; a lamp, switch or flasher placement is validated on their word alone only when **all three agree** within {consensus['agreement_threshold']} normalized units, because independence between them is unestablished and the two available signals disagree. Measured, the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both model while either differs from VPW by up to 0.187; documented, VPW credits an "EBIsLit - Baseline playfield scan" and JPSalas records its playfield as "based on Ebislit's playfield", while Hanibal names no baseline.
 - **A table object confirmed by its own factory callout.** Everything else a table models is checked with `tools/drawing_callouts.py` against the reissue's drawings: the switch drawing DR.4, the lamp drawing DR.5 and the coil and flash lamp drawing DR.7, and for the below-playfield coils the terminal-strip bottom view (PDF 123), which draws every coil assembly in place. Controls are read on each drawing's own line art (bumper caps, flasher domes, round inserts, rollover slots and actuators) and paired with validated placements: {_page_fits}. A placement agrees when its own callout lands within 0.07 under both the control fit and the leave-one-out callout fit; all {len(CALLOUT_DECISIONS['placements'])} checks agree. Two switches follow the drawing rather than the tables' own consensus: 28 Balrog Hit takes Hanibal's object, which the drawing prints its box on, and 41 Top VUK takes VPW's.
-- **A projection onto a mechanism, confirmed by a drawing.** A coil sits at the mechanism it drives: the VUK and saucer kickers, the bumpers, the trough's eject end, the One Ring under its flasher, and for the right tower, orbit pin, sword lock, Balrog motor and auto launch the object the known-working VPW script moves for that coil. The stacking opto 15 shares switch 14's plan position: both beams belong to one dual opto board pair at the trough's eject end, one above the other. Each is validated only because a factory drawing prints its own callout within 0.07 of it: {_projection_pages}.
-- **A measurement on the factory drawing that draws the device.** Where no retained table models a device where the factory puts it, the device is measured on the drawing that draws it and, where one exists, checked on a second drawing: {_measured_list}; the nineteen LED windows on DR.5; the {_gi_sockets} G.I. sockets on the G.I. wiring page (PDF 121), {_gi_checked} of them checked against the G.I. labels of PDF 123, which prints none at the other {_gi_sockets - _gi_checked}; and the two return-lane spotlights at the light-reflector leaders of the playfield parts drawing (PDF 83). Switch 24 is the notable one: the ramp parts drawing mounts the Right Ramp Made switch on the sword ramp, where DR.4 prints it, while all three tables register the shot at the right ramp's exit.
+- **A projection onto a mechanism, confirmed by a drawing.** A coil sits at the mechanism it drives: the VUK and saucer kickers, the bumpers, the trough's eject end, the One Ring under its flasher, and for the right tower, orbit pin, sword lock, Balrog motor and auto launch the object the known-working VPW script moves for that coil. Each flipper's end-of-stroke switch takes its flipper's pivot, where all three tables agree within 0.003: the bottom view draws the switch about 0.1 outboard, but in front of every control that page has. The stacking opto 15 shares switch 14's plan position: both beams belong to one dual opto board pair at the trough's eject end, one above the other. Each is validated only because a factory drawing prints its own callout within 0.07 of it: {_projection_pages}.
+- **A measurement on the factory drawing that draws the device.** Where no retained table models a device where the factory puts it, the device is measured on the drawing that draws it and, where one exists, checked on a second drawing: {_measured_list}; the nineteen LED windows on DR.5; the {_gi_sockets} G.I. sockets on the G.I. wiring page (PDF 121), {_gi_checked} of them checked against the G.I. labels of PDF 123, which prints none at the other {_gi_sockets - _gi_checked}; the eight back-panel G.I. sockets along the back panel's rear-view inset on the same page, each checked on the panel's exploded front view (PDF 112); and the two return-lane spotlights at the light-reflector leaders of the playfield parts drawing (PDF 83). Switch 24 is the notable one: the ramp parts drawing mounts the Right Ramp Made switch on the sword ramp, where DR.4 prints it, while all three tables register the shot at the right ramp's exit.
 
 The VPW table identifies itself as **"Lord Of The Rings - Valinor Edition"** with original artwork, so where its insert layout departs from the printed diagrams that is an artwork difference rather than an error. Its Fellowship inserts form a closed ring of runes rather than the printed arc of named characters, which accounts for the lamps where VPW alone is the outlier ({_format_addresses(_vpw_only_lamp_rejections)}); DR.5's callouts confirm the JPSalas and Hanibal positions for all of them.
 
@@ -2254,7 +2336,7 @@ Public flasher 25 drives three bulbs, one in each pop-bumper cap; all three reta
 
 ## General illumination
 
-One relay channel, four fused circuits. The reissue's G.I. wiring diagram (PDF 121) draws its sockets as circles in each circuit's colour on a bottom view of the playfield, measured through the lane switches' rollover actuators: 7 yellow on the lower playfield, 5 green on the upper middle playfield and 10 violet on the upper playfield, plus 8 brown in a rear-view inset of the back panel. The circuit table prints the green circuit as "Upper Middle Playfield X2" where the drawing has five green sockets; every retained recreation has a light at the three along the left edge, and the page's own footnote says bulb quantities may change during production, so all five are placed. Two #555 spotlights above the playfield, "G.I. in Light Reflector on Lt./Rt. Return Lane Plastic", are placed at the two light-reflector callouts of the playfield parts drawing: the left one at the lower end of the left return lane, the right one at the top of the right outlane. The eight back-panel bulbs and the coin-door bulbs (two on US doors, three on European ones) are on the same channel but not placed, so the device's quantity, {_gi_device['physical']['quantity']} on a US machine, exceeds its {len(_gi_device['spatial']['placements'])} placements. The wiring diagram, the transformer's parts listing and the cabinet wiring print the supply as 5.7v AC; the quick-reference fuse chart alone prints 6.3v.
+One relay channel, four fused circuits. The reissue's G.I. wiring diagram (PDF 121) draws its sockets as circles in each circuit's colour on a bottom view of the playfield, measured through the lane switches' rollover actuators: 7 yellow on the lower playfield, 5 green on the upper middle playfield and 10 violet on the upper playfield, plus 8 brown in a rear-view inset of the back panel. The circuit table prints the green circuit as "Upper Middle Playfield X2" where the drawing has five green sockets; every retained recreation has a light at the three along the left edge, and the page's own footnote says bulb quantities may change during production, so all five are placed. Two #555 spotlights above the playfield, "G.I. in Light Reflector on Lt./Rt. Return Lane Plastic", are placed at the two light-reflector callouts of the playfield parts drawing: the left one at the lower end of the left return lane, the right one at the top of the right outlane. The eight back-panel bulbs stand in a row along the top of the upright back panel. PDF 121's rear-view inset draws them; mapped along the panel through the inset's six mode-lamp sockets and the One Ring, they sit at x {_format_x([row['x'] for row in measurement_rows if row['page'] == 'pdf-121-back-panel'])}, placed on the panel's plane like lamps 73-78, and the back panel's exploded front view (PDF 112) puts every one of its own sockets within {max(d['control_offset'] for d in ELEVATION_DECISIONS['placements'].values()):.3f} of that. The coin-door bulbs (two on US doors, three on European ones) are on the same channel but are cabinet hardware, so the device's quantity, {_gi_device['physical']['quantity']} on a US machine, exceeds its {len(_gi_device['spatial']['placements'])} placements. The wiring diagram, the transformer's parts listing and the cabinet wiring print the supply as 5.7v AC; the quick-reference fuse chart alone prints 6.3v.
 
 ## Notable printed details
 

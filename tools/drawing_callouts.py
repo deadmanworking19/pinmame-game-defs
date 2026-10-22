@@ -292,6 +292,133 @@ def summary(seed: dict[str, Any], decisions: dict[str, Any], seed_path: str, see
 	}
 
 
+# --- elevation drawings ----------------------------------------------------------------------------
+# A drawing can show an upright panel, such as a playfield back panel, face on or in a parallel-
+# projected exploded view instead of in plan. It fixes where along the panel a part sits, not how high:
+# in plan, everything on the panel lies on the panel's plane. An elevation page records the drawn
+# direction of the panel's length (``axis``) and of its other in-plane axis (``cross_axis``); a pixel's
+# position along the panel is its ``axis`` component in that basis, which a least-squares line over
+# controls lying on the panel maps to playfield x. Checks and measurements follow the plan rules on
+# that one axis: a check agrees within the limit under the control line and under the leave-one-out
+# line over the page's other callout pairs, and a measurement is never checked on its own page.
+
+
+def elevation_coordinate(page: dict[str, Any], pixel: Iterable[float]) -> float:
+	"""The pixel's component along the page's ``axis`` in the basis (``axis``, ``cross_axis``)."""
+	(ax, ay), (cx, cy) = page["axis"], page["cross_axis"]
+	u, v = pixel
+	det = ax * cy - ay * cx
+	if abs(det) < 1e-9:
+		raise ValueError("an elevation page's axis and cross axis must not be parallel")
+	return (u * cy - v * cx) / det
+
+
+def line_fit(pairs: Iterable[tuple[float, float]]) -> tuple[float, float]:
+	"""Least-squares x = c0 + c1 * s over (s, x) pairs."""
+	pairs = list(pairs)
+	if len(pairs) < 2:
+		raise ValueError("an elevation fit needs at least two pairs")
+	n = len(pairs)
+	ms, mx = sum(s for s, _ in pairs) / n, sum(x for _, x in pairs) / n
+	var = sum((s - ms) ** 2 for s, _ in pairs)
+	if var < 1e-12:
+		raise ValueError("degenerate elevation fit: controls share one position")
+	c1 = sum((s - ms) * (x - mx) for s, x in pairs) / var
+	return mx - c1 * ms, c1
+
+
+def line_leave_one_out(pairs: list[tuple[float, float]]) -> list[float]:
+	"""Each pair's offset from the line fitted to all the other pairs (needs three or more)."""
+	result = []
+	for i, (s, x) in enumerate(pairs):
+		c0, c1 = line_fit(pairs[:i] + pairs[i + 1:])
+		result.append(abs(c0 + c1 * s - x))
+	return result
+
+
+def elevation_measured(seed: dict[str, Any], placement_id: str) -> tuple[float, float]:
+	"""A placement measured on an elevation page: x from the page's control line, y the panel's plane."""
+	item = seed["elevation_measurements"][placement_id]
+	page = seed["elevations"][item["page"]]
+	c0, c1 = line_fit((elevation_coordinate(page, c["pixel"]), c["x"]) for c in page["controls"])
+	value = (round(c0 + c1 * elevation_coordinate(page, item["pixel"]), 3), round(page["plane_y"], 3))
+	if list(value) != item["normalized"]:
+		raise ValueError(f"elevation measurement {placement_id} does not reproduce: {value} != {item['normalized']}")
+	return value
+
+
+def evaluate_elevations(seed: dict[str, Any], placements: dict[str, tuple[float, float]], limit: float = LIMIT) -> dict[str, Any]:
+	"""Decide every placement ``elevation_checks`` names, along each elevation page's one axis."""
+	checks = seed.get("elevation_checks") or {}
+	missing = sorted(set(checks) - set(placements))
+	if missing:
+		raise ValueError(f"elevation checks name placements the definition lacks: {missing}")
+	for pid, check in checks.items():
+		if seed.get("elevation_measurements", {}).get(pid, {}).get("page") == check["page"]:
+			raise ValueError(f"{pid} would be checked on the elevation page it was measured on")
+	result: dict[str, Any] = {"limit": limit, "pages": {}, "placements": {}}
+	for key, page in sorted((seed.get("elevations") or {}).items()):
+		controls = [(elevation_coordinate(page, c["pixel"]), c["x"]) for c in page["controls"]]
+		if len(controls) < MIN_CONTROLS:
+			raise ValueError(f"{key}: an elevation control line needs at least {MIN_CONTROLS} controls")
+		c0, c1 = line_fit(controls)
+		control_loo = line_leave_one_out(controls)
+		summary_entry: dict[str, Any] = {
+			"controls": len(controls),
+			"control_rms": round(math.sqrt(sum((c0 + c1 * s - x) ** 2 for s, x in controls) / len(controls)), 4),
+			"control_loo_max": round(max(control_loo), 4),
+			"control_line": [round(c0, 9), round(c1, 12)],
+		}
+		pids = sorted(pid for pid, check in checks.items() if check["page"] == key)
+		if not pids:
+			result["pages"][key] = {**summary_entry, "callout_pairs": 0}
+			continue
+		reads = [r for r in page["reads"] if r.get("region", "panel") == "panel"]
+		chosen: dict[str, int | None] = {}
+		groups: dict[str, list[str]] = {}
+		for pid in pids:
+			groups.setdefault(checks[pid]["label"], []).append(pid)
+		for label, members in sorted(groups.items()):
+			indices = [i for i, r in enumerate(reads) if r["label"] == label]
+			options = sorted((abs(c0 + c1 * elevation_coordinate(page, reads[i]["pixel"]) - placements[pid][0]), pid, i)
+			                 for pid in members for i in indices)
+			used: set[int] = set()
+			for _, pid, i in options:
+				if pid not in chosen and i not in used:
+					chosen[pid] = i
+					used.add(i)
+			for pid in members:
+				chosen.setdefault(pid, None)
+		kept = sorted(pid for pid, index in chosen.items() if index is not None)
+		while len(kept) >= 4:
+			pairs = [(elevation_coordinate(page, reads[chosen[pid]]["pixel"]), placements[pid][0]) for pid in kept]
+			offsets = line_leave_one_out(pairs)
+			worst = max(range(len(kept)), key=lambda i: (offsets[i], kept[i]))
+			if offsets[worst] <= limit:
+				break
+			kept.pop(worst)
+		if len(kept) < 4:
+			raise ValueError(f"{key}: fewer than four elevation callouts agree with their placements")
+		kept_pairs = [(elevation_coordinate(page, reads[chosen[pid]]["pixel"]), placements[pid][0]) for pid in kept]
+		k0, k1 = line_fit(kept_pairs)
+		kept_offsets = dict(zip(kept, line_leave_one_out(kept_pairs)))
+		result["pages"][key] = {**summary_entry, "callout_pairs": sum(i is not None for i in chosen.values()),
+		                        "callout_fit_pairs": len(kept), "callout_loo_max": round(max(kept_offsets.values()), 4)}
+		for pid, index in sorted(chosen.items()):
+			entry: dict[str, Any] = {"page": key, "label": checks[pid]["label"]}
+			if index is None:
+				entry.update(read=None, agrees=False, reason="no unused callout of this label on the elevation")
+			else:
+				s = elevation_coordinate(page, reads[index]["pixel"])
+				by_controls = abs(c0 + c1 * s - placements[pid][0])
+				by_callouts = kept_offsets.get(pid, abs(k0 + k1 * s - placements[pid][0]))
+				entry.update(read=index, point=reads[index].get("point"), pixel=list(reads[index]["pixel"]),
+				             control_offset=round(by_controls, 4), callout_offset=round(by_callouts, 4),
+				             agrees=by_controls <= limit and by_callouts <= limit)
+			result["placements"][pid] = entry
+	return result
+
+
 def verify_retained(seed: dict[str, Any], repository: Path, manuals: Path | None, review_artifacts: Path | None) -> int:
 	"""Re-hash every page render and the retained reading artifacts that are reachable.
 
@@ -301,7 +428,7 @@ def verify_retained(seed: dict[str, Any], repository: Path, manuals: Path | None
 	"""
 	roots = {"repository": repository, "manuals": manuals, "review_artifacts": review_artifacts}
 	checked = 0
-	for key, page in sorted(seed["pages"].items()):
+	for key, page in sorted({**seed["pages"], **(seed.get("elevations") or {})}.items()):
 		image = page["image"]
 		root = roots[image["root"]]
 		if root is None:
