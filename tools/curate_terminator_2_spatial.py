@@ -107,32 +107,33 @@ FLASHER_POSITIONS: dict[int, list[tuple[str, tuple[float, float]]]] = {
 	17: [("F117", point(392.1405, 1747.9479)), ("F1172", point(469.02628, 1748.8044))], 18: [("F118", point(729.04016, 1755.8896))], 19: [("F119", point(142.0577, 1754.0991))], 21: [("F121", point(865.69476, 936.60376)), ("F121b", point(870.1298, 1124.9872))], 22: [("F122", point(765.19946, 634.2644))], 23: [("F123", point(121.169914, 280.81564))], 26: [("F126", point(216.68967, 326.0185)), ("F126a", point(169.21431, 199.84035))], 27: [("F127", point(370.31763, 306.4764)), ("F127a", point(381.96442, 250.69917))],
 }
 
-# Playfield G.I. sockets: each is a light the retained VPW UpdateGI handler drives (raw VPW coordinates) that lies within 0.01
-# normalized of a socket the nFozzy 1.12a table models for the same public string (raw nFozzy coordinates, normalized by its
-# own bounds): a piece of its per-string bulb mesh, a jet-cap bulb primitive or one of its per-string G.I. lights.
+# Playfield G.I. sockets of public 2 and 4: each is a light the retained VPW UpdateGI handler drives (raw VPW coordinates) that
+# lies within 0.01 normalized of a bulb the nFozzy 1.12a table models for the same public string (raw nFozzy coordinates,
+# normalized by its own bounds): a connected piece of its per-string bulb mesh or a jet-cap bulb primitive. Its lights and
+# sprites are render effects, not bulbs, and never make a socket. Public 3 is the four lights of the VPW UpdateGI Case 3.
 GI_SOCKETS: dict[int, tuple[tuple[str, float, float, tuple[str, ...]], ...]] = {
 	2: (
-		("GI_17", 417.48743, 192.5585, ("GI_bulbR piece", "GIRT_18")), ("GI_18", 527.64984, 213.36194, ("GI_bulbR piece",)),
-		("GI_19", 626.28754, 237.39903, ("GI_bulbR piece", "GIRT_16")), ("GI_001", 724.08636, 261.08545, ("GI_bulbR piece", "GIRT_15")),
+		("GI_17", 417.48743, 192.5585, ("GI_bulbR piece",)), ("GI_18", 527.64984, 213.36194, ("GI_bulbR piece",)),
+		("GI_19", 626.28754, 237.39903, ("GI_bulbR piece",)), ("GI_001", 724.08636, 261.08545, ("GI_bulbR piece",)),
 		("GI_21", 380.64868, 348.83136, ("GI_bulbR piece",)), ("B1", 462.8119, 395.5301, ("GIjet_BulbP1",)),
 		("GI_22", 380.77527, 434.00882, ("GI_bulbR piece",)), ("B5", 690.51373, 449.71698, ("GIjet_BulbP2",)),
-		("B3", 539.27167, 588.8766, ("GIjet_BulbP3",)), ("GI_15", 467.59897, 634.80756, ("GI_bulbR piece", "GIRT_12")),
+		("B3", 539.27167, 588.8766, ("GIjet_BulbP3",)), ("GI_15", 467.59897, 634.80756, ("GI_bulbR piece",)),
 		("GI_34", 721.5083, 654.1311, ("GI_bulbR piece",)), ("GI_33", 761.3623, 675.28876, ("GI_bulbR piece",)),
-		("GI_16", 532.62964, 681.36774, ("GI_bulbR piece", "GIRT_11")), ("GI_30", 912.45087, 802.47614, ("GI_bulbR piece",)),
+		("GI_16", 532.62964, 681.36774, ("GI_bulbR piece",)), ("GI_30", 912.45087, 802.47614, ("GI_bulbR piece",)),
 		("GI_31", 909.7719, 893.68713, ("GI_bulbR piece",)), ("GI_32", 909.37305, 1171.214, ("GI_bulbR piece",)),
-		("GI_11", 823.1041, 1318.5785, ("GIRT_5",)), ("GI_10", 826.9222, 1388.5323, ("GI_bulbR piece", "GIRT_4")),
-		("GI_6", 703.8457, 1538.6958, ("GI_bulbR piece", "GIRT_3")), ("GI_5", 665.32666, 1670.2496, ("GI_bulbR piece", "GIRT_2")),
-		("GI_2", 658.5137, 1799.7385, ("GI_bulbR piece", "GIRT_1")),
+		("GI_10", 826.9222, 1388.5323, ("GI_bulbR piece",)),
+		("GI_6", 703.8457, 1538.6958, ("GI_bulbR piece",)), ("GI_5", 665.32666, 1670.2496, ("GI_bulbR piece",)),
+		("GI_2", 658.5137, 1799.7385, ("GI_bulbR piece",)),
 	),
 	3: (
-		("Light3", 467.96497, 901.41626, ("Lgi1",)), ("Light2", 466.31747, 949.0672, ("Lgi2",)),
-		("Light4", 466.2919, 993.3501, ("Lgi3",)), ("Light5", 462.55188, 1041.23, ("Lgi4",)),
+		("Light3", 467.96497, 901.41626, ("VPW UpdateGI Case 3",)), ("Light2", 466.31747, 949.0672, ("VPW UpdateGI Case 3",)),
+		("Light4", 466.2919, 993.3501, ("VPW UpdateGI Case 3",)), ("Light5", 462.55188, 1041.23, ("VPW UpdateGI Case 3",)),
 	),
 	4: (
 		("GI_24", 161.63599, 332.33954, ("GI_bulbL piece",)), ("GI_25", 122.198, 344.06424, ("GI_bulbL piece",)),
 		("GI_23", 255.7749, 464.9249, ("GI_bulbL piece",)), ("GI_7", 44.246094, 1361.1478, ("GI_bulbL piece",)),
-		("GI_4", 161.66125, 1536.2029, ("GI_bulbL piece", "GILT_8")), ("GI_3", 199.2124, 1672.1221, ("GI_bulbL piece", "GILT_7")),
-		("GI_1", 201.67297, 1801.213, ("GI_bulbL piece", "GILT_9")),
+		("GI_4", 161.66125, 1536.2029, ("GI_bulbL piece",)), ("GI_3", 199.2124, 1672.1221, ("GI_bulbL piece",)),
+		("GI_1", 201.67297, 1801.213, ("GI_bulbL piece",)),
 	),
 }
 GI_DRIVEN_CASE_2 = ("B1", "B2", "B3", "B4", "B5", "B6", *(f"GI_{index}" for index in range(1, 21)), "GI_001", "GI_002", *(f"GI_{index}" for index in range(21, 36)))
@@ -144,15 +145,11 @@ GI_NOT_PLACED = {
 	"GI_13": "left lane, no nFozzy socket; within 0.03 of the lower socket the 2-39 drawing gives flasher 25",
 	"GI_14": "left lane, no nFozzy socket; within 0.03 of the upper socket the 2-39 drawing gives flasher 25",
 	"GI_26": "top-right corner, no nFozzy socket", "GI_27": "top-right corner, no nFozzy socket", "GI_28": "top-right corner, no nFozzy socket",
+	"GI_11": "right side, just above GI_10; nFozzy has only a GIRT_5 render light here and no bulb within 0.01 (the nearest, GI_10's bulb-mesh piece, is 0.033 away)",
 	"GI_29": "right side, no nFozzy socket", "GI_35": "upper left on the skull-eye height surface, no nFozzy socket",
-}
-NFOZZY_STRING_LIGHTS = {
-	2: ("GIRT_1", "GIRT_2", "GIRT_3", "GIRT_4", "GIRT_5", "GIRT_11", "GIRT_12", "GIRT_15", "GIRT_16", "GIRT_17", "GIRT_18"),
-	4: ("GILT_7", "GILT_8", "GILT_9", "GILT_1"),
 }
 NFOZZY_BULB_MESHES = {2: "GI_bulbR", 4: "GI_bulbL"}
 NFOZZY_JET_BULBS = ("GIjet_BulbP1", "GIjet_BulbP2", "GIjet_BulbP3")
-NFOZZY_CPU_SPRITES = ("Lgi1", "Lgi2", "Lgi3", "Lgi4")
 GI_MATCH_LIMIT = 0.01
 
 
@@ -196,7 +193,7 @@ def _mesh_pieces(path: Path, scale: float) -> list[tuple[float, float]]:
 
 
 def derive_gi_sockets(source_root: Path) -> dict[int, list[tuple[str, float, float, tuple[str, ...]]]]:
-	"""Recompute GI_SOCKETS from the two retained extractions."""
+	"""Recompute GI_SOCKETS from the two retained extractions; only nFozzy bulbs (mesh pieces and jet-cap primitives) count."""
 	vpw = source_root / semantic.EXTRACTION_RELATIVE_PATH
 	nf = source_root / semantic.NFOZZY_EXTRACTION_RELATIVE_PATH
 	lights = {name: (_item(vpw, "Light", name)["center"]["x"], _item(vpw, "Light", name)["center"]["y"]) for name in (*GI_DRIVEN_CASE_2, *GI_DRIVEN_CASE_3)}
@@ -210,19 +207,11 @@ def derive_gi_sockets(source_root: Path) -> dict[int, list[tuple[str, float, flo
 	for name in NFOZZY_JET_BULBS:
 		position = _item(nf, "Primitive", name)["position"]
 		sockets.append((2, name, position["x"], position["y"]))
-	for address, names in NFOZZY_STRING_LIGHTS.items():
-		for name in names:
-			centre = _item(nf, "Light", name)["center"]
-			sockets.append((address, name, centre["x"], centre["y"]))
-	for name in NFOZZY_CPU_SPRITES:
-		sprite = _item(nf, "Flasher", name)
-		sockets.append((3, name, sprite["pos_x"], sprite["pos_y"]))
-	result: dict[int, dict[str, tuple[float, float, list[str]]]] = {2: {}, 3: {}, 4: {}}
+	result: dict[int, dict[str, tuple[float, float, list[str]]]] = {2: {}, 3: {name: (*lights[name], ["VPW UpdateGI Case 3"]) for name in GI_DRIVEN_CASE_3}, 4: {}}
 	owner: dict[str, int] = {}
 	for address, label, x, y in sockets:
-		candidates = GI_DRIVEN_CASE_3 if address == 3 else GI_DRIVEN_CASE_2
 		target = (x / NFOZZY_X_MAX, y / NFOZZY_Y_MAX)
-		best = min(candidates, key=lambda name: math.dist(target, (lights[name][0] / X_MAX, lights[name][1] / Y_MAX)))
+		best = min(GI_DRIVEN_CASE_2, key=lambda name: math.dist(target, (lights[name][0] / X_MAX, lights[name][1] / Y_MAX)))
 		if math.dist(target, (lights[best][0] / X_MAX, lights[best][1] / Y_MAX)) > GI_MATCH_LIMIT:
 			continue
 		if owner.setdefault(best, address) != address:
@@ -392,9 +381,10 @@ def apply_spatial(definition: dict[str, Any], seed: dict[str, Any]) -> None:
 			sources = (semantic.VPX_TABLE_SOURCE, semantic.VPX_SCRIPT_SOURCE, semantic.NFOZZY_TABLE_SOURCE, semantic.NFOZZY_EXTRACTION_SOURCE)
 			located(device, [(name, point(x, y)) for name, x, y, _ in GI_SOCKETS[address]], "emitter", "validated", sources)
 			if address == 3:
-				add_note(device, "Placements: the four lights Light2-Light5 that the retained VPW script's UpdateGI Case 3 switches, under the CPU inserts, each within 0.004 normalized of one of the four Lgi sprites the nFozzy table drives from public 3, on the four sockets of the A-14518 G. I. lamp board.")
+				add_note(device, "Placements: the four lights Light2-Light5 that the retained VPW script's UpdateGI Case 3 switches, under the four CPU inserts the 2-35 drawing shows on the playfield centre line, which is where the 2-4 map puts the four-socket A-14518 G. I. lamp board.")
 			else:
-				add_note(device, f"Placements: the {len(GI_SOCKETS[address])} sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a socket the nFozzy table models for public {address} (a piece of its {NFOZZY_BULB_MESHES[address]} bulb mesh{', a jet-cap bulb primitive' if address == 2 else ''} or one of its string lights); the manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a socket, listed in the spatial audit, are not placed.")
+				side = "RIGHT PLAYFIELD" if address == 2 else "LEFT PLAYFIELD"
+				add_note(device, f"Placements: the {len(GI_SOCKETS[address])} sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a bulb the nFozzy table models for public {address} (a connected piece of its {NFOZZY_BULB_MESHES[address]} bulb mesh{' or a jet-cap bulb primitive' if address == 2 else ''}); nFozzy's render lights and sprites make no socket. The membership is the nFozzy table's split, which agrees with the ROM's own name for this string ({side}) and the 3-9 routing of the yellow string to the playfield and the violet one to the playfield and the coin door; the VPW table drives the whole playfield from public 2 and leaves its Left Playfield handler (Case 4) empty, a simplification rather than a different split. The manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a bulb, listed in the spatial audit, are not placed.")
 		else:
 			raise RuntimeError(f"used output {group} {address} has no spatial disposition")
 
@@ -440,7 +430,7 @@ PROJECTION_CLASSES = {
 	"switch": "The retained table's collision object for the switch (trigger, gate, target, saucer kicker, bumper or slingshot wall), chosen by what the script binds. The trough contacts 15-17 are an ordered projection between Drain and BallRelease, the cannon mark and home contacts 32/33 share the T2_Gun pivot, and the slingshot switches 44/45 take their wall's drag-point centroid; the drawing check validates those. The jet switches 42 and 43 follow the drawings, not the script's swapped binding. Switch 62 is measured on the 2-37 drawing. The cabinet, coin-door and flipper-button switches (1-8, 11-14, 21-23, 34, 112, 114) are not placed.",
 	"lamp": "The script-driven Light's own centre (L11-L88; L22 and L51 have two bulbs each), validated by the 2-35 drawing. Lamp 52 drives the skull mesh Primitive.L52 and takes that mesh's world-bounds centre. The start-button lamp 84 is a cabinet lamp.",
 	"solenoid": "The object the solenoid callback moves (kicker, plunger, drop target, bumper, slingshot wall, the T2_Gun pivot for the gun motor) or the Light the script fades for a flasher, validated by the 2-39 drawing where it marks the part. Flashers 20 and 25 are measured on the 2-39 drawing. The knocker 7 and the backglass flasher 24 are cabinet devices.",
-	"gi": "Public G.I. 0 and 1 light the backbox insert panel and are not placed. Public 2 and 4 take the VPW lights that coincide with a socket the nFozzy table models for the same public string, and public 3 the four CPU-insert lights of UpdateGI Case 3.",
+	"gi": "Public G.I. 0 and 1 light the backbox insert panel and are not placed. Public 2 and 4 take the VPW lights that coincide with a bulb the nFozzy table models for the same public string (a bulb-mesh piece or a jet-cap bulb; its render lights and sprites make no socket), and public 3 the four CPU-insert lights of UpdateGI Case 3 on the A-14518 board.",
 }
 
 
@@ -461,8 +451,8 @@ def audit_report(definition: dict[str, Any], seed: dict[str, Any], decisions: di
 		"excluded_checks": seed.get("excluded_checks", {}),
 		"drawing_measurements": {key: {"page": item["page"], "label": item["label"], "pixel": item["pixel"], "normalized": item["normalized"], "note": item["note"]} for key, item in sorted(seed.get("measurements", {}).items())},
 		"general_illumination": {
-			"method": "A playfield G.I. socket is a light the retained VPW script's UpdateGI handler drives that lies within 0.01 normalized of a socket the nFozzy 1.12a table models for the same public string; the two tables' coordinates are each normalized by their own bounds. The ROM's T.6 test names the strings, so the tables' groupings only choose sockets within a string.",
-			"placed": {str(address): [{"light": name, "raw": [x, y], "nfozzy_sockets": list(evidence)} for name, x, y, evidence in sockets] for address, sockets in GI_SOCKETS.items()},
+			"method": "A right- or left-playfield G.I. socket is a light the retained VPW script's UpdateGI handler drives that lies within 0.01 normalized of a bulb the nFozzy 1.12a table models for the same public string (a connected piece of its per-string bulb mesh or a jet-cap bulb primitive); the two tables' coordinates are each normalized by their own bounds. The CPU string's sockets are the four lights of the VPW UpdateGI Case 3 on the A-14518 board. The ROM's T.6 test names the strings; the nFozzy split, which agrees with those names and the 3-9 routing and which no retained table contradicts, assigns each socket to one (docs/SPATIAL.md, G.I. string membership).",
+			"placed": {str(address): [{"light": name, "raw": [x, y], "evidence": list(evidence)} for name, x, y, evidence in sockets] for address, sockets in GI_SOCKETS.items()},
 			"not_placed": GI_NOT_PLACED,
 		},
 		"skull_mesh": {"object": SKULL_MESH["object"], "transform": "position (0,0,0), RotX 90, size (19.8,19.5,19.5): world x = 19.8 * obj x, world y = 19.5 * obj z", "world_bounds_centre": list(SKULL_MESH["centre"])},
@@ -498,7 +488,7 @@ The manual's solenoid table wire/connector/transistor/part-number data is on eve
 
 ## Solenoid 12: the drop-target knock-down coil
 
-Solenoid 12 is fitted. The A-14615 1-Bank Drop Target Assembly (printed 2-23) includes item 23, the A-14908 Target Knock Down Assembly (actuator 01-8647-L, frame and eyelet A-14913, coil SM1-26-600), bolted beside the AE-26-1200 reset coil of solenoid 28. The 1-28 solenoid table and the 2-39 Solenoid Locations list print 12 as Knock Down with that coil, the 2-39 drawing prints balloon 12 on the drop-target assembly, and the 3-8 interboard table wires it Brown/Yellow to J127-5 and Q52. The 2-38 copy of the table prints the row Not Used with a blank part number but keeps the same wire, connector and transistor. The ROM's T.4 SOLENOID TEST names 12 KNOCK DOWN and pulses it. Neither retained script fires it (the nFozzy script keeps a commented-out handler), and owners describe the small coil on their drop-target assemblies without having seen it fire in play, consistent with the game rules leaving it idle, which is how Not Used on 2-38 reads. A recreation fits it so that a pulse drops the target and closes switch 77, the same switch solenoid 28's reset opens.
+Solenoid 12 is fitted. The A-14615 1-Bank Drop Target Assembly (printed 2-23) includes item 23, the A-14908 Target Knock Down Assembly (actuator 01-8647-L, frame and eyelet A-14913, coil SM1-26-600), bolted beside the AE-26-1200 reset coil of solenoid 28. The 1-28 solenoid table and the 2-39 Solenoid Locations list print 12 as Knock Down with that coil, the 2-39 drawing prints balloon 12 on the drop-target assembly, and the 3-8 interboard table wires it Brown/Yellow to J127-5 and Q52. The 2-38 copy of the table prints the row Not Used with a blank part number but keeps the same wire, connector and transistor. The ROM's T.4 SOLENOID TEST names 12 KNOCK DOWN and pulses it. Neither retained script fires it (the nFozzy script keeps a commented-out handler): the coil is fitted and wired and the ROM's test drives it, but the tables leave it idle in play, which is how Not Used on 2-38 reads. A recreation fits it so that a pulse drops the target and closes switch 77, the same switch solenoid 28's reset opens.
 
 ## General illumination
 
@@ -508,13 +498,13 @@ The ROM's own T.6 GEN'L. ILLUM. test settles the strings (`evidence/runtime/wpc-
 | --- | --- | --- | --- | --- |
 | 0 | Top Insert String | TOP INSERT, WHT-BRN BRN | Wht-Brn, J120-7, Q18 | upper backbox insert panel |
 | 1 | Bottom Insert String | BOTTOM INSERT, WHT-ORN ORN | Wht-Orn, J120-8, Q10 | lower backbox insert panel |
-| 2 | Right Playfield String | RIGHT PLAYFIELD, WHT-YEL YEL | Wht-Yel, J121-9, Q14 | right side, top lanes, jets, upper centre |
+| 2 | Right Playfield String | RIGHT PLAYFIELD, WHT-YEL YEL | Wht-Yel, J121-9, Q14 | playfield: right side, top lanes, jets, upper centre (nFozzy's split) |
 | 3 | CPU String | CPU STRING, WHT-GRN GRN | Wht-Grn, J121-10, Q16 | the four CPU inserts (A-14518 G. I. lamp board) |
-| 4 | Left Playfield String | LEFT PLAYFIELD, WHT-VIO VIO | Wht-Vio, J121-11 + J119-1, Q12 | left side, top and bottom, and the coin-door lamps |
+| 4 | Left Playfield String | LEFT PLAYFIELD, WHT-VIO VIO | Wht-Vio, J121-11 + J119-1, Q12 | playfield: left side, top and bottom (nFozzy's split); cabinet: the coin-door lamps (3-9 J119) |
 
-The 2-39 Solenoid Locations list prints the same five names in the same order. The 1-28 and 2-38 solenoid tables print the board's triacs in that order but misassign the names and wires of three rows (02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn, 05 Bottom Insert Wht-Grn), and the 3-9 interboard table numbers its feeds differently again while routing the brown string to the insert only, yellow to the playfield only, violet to the playfield and the coin door, and green to playfield pins J121-5/J121-10; its Orange row shows no connector and its Green row also carries the insert pins J120-2/J120-8 that the orange string uses. Owner repair reports (Pinside) agree with the ROM: a violet-string fault darkens the whole left side of the playfield and the coin-door lamps, and the green string lights the CPU inserts in the centre. After the fresh-NVRAM restart the ROM flickers the CPU string by itself.
+The 2-39 Solenoid Locations list prints the same five names in the same order. The 1-28 and 2-38 solenoid tables print their triac column in that order but misassign the names, wires and pins of three rows (02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8, 05 Bottom Insert Wht-Grn J120-10), and the 3-9 interboard table numbers its feeds differently again, repeating those rows' wire-to-triac pairs, while routing the brown string to the insert only, yellow to the playfield only, violet to the playfield and the coin door, and green to playfield pins J121-5/J121-10; its Orange row shows no connector and its Green row also carries the insert pins J120-2/J120-8 that the orange string uses. The triacs follow the power driver board: each is fixed to its connector pins, and the Doctor Who chart and The Addams Family handbook, printed for the same board, drive J120-7 brown from Q18, J120-8 orange from Q10, J121-9 yellow from Q14, J121-10 green from Q16 and J121-11/J119-1 violet from Q12. T2's tables print exactly those pins for those wires, so their triac column follows the string numbers and it is the names, wires and pins of rows 02, 04 and 05 that are misplaced. After the fresh-NVRAM restart the ROM flickers the CPU string by itself.
 
-Neither retained table is the wiring. The VPW script drives every playfield G.I. light from public 2 (Case 2), switches four lights under the CPU inserts from public 3 (Case 3: Light2-Light5) and does nothing for 0, 1 and 4. The nFozzy table reads `ChangedGIStrings` and splits the playfield between public 2 and 4 with per-string bulb meshes and lightmaps. The placed sockets are the VPW lights that coincide, within 0.01 normalized, with a socket the nFozzy table models for the same string: 21 for public 2 (seventeen bulb-mesh pieces, the three jet caps, and GI_11 under nFozzy's GIRT_5), 7 for public 4, and the four CPU lights for public 3. The manual gives no per-string bulb count, so the playfield quantities are not asserted; the spatial audit lists the fifteen VPW G.I. lights without such a socket: five render doubles under the jet caps and top-lane guides, five lights in the left lane, three in the top-right corner, one on the right side and one at the upper left. Two of the left-lane lights, GI_13 and GI_14, sit within 0.03 normalized of the two sockets the 2-39 drawing gives flasher 25.
+No table is the wiring, and the manual draws no G.I. socket. The VPW script drives every playfield G.I. light from public 2 (Case 2), switches four lights under the CPU inserts from public 3 (Case 3: Light2-Light5) and does nothing for 0, 1 and 4; its Case 4 is an empty handler commented Left Playfield, so its single-string playfield is a simplification. The nFozzy table reads `ChangedGIStrings` and splits the playfield between public 2 and 4 with per-string bulb meshes (`GI_bulbR`, `GI_bulbL`), jet-cap bulbs, and lightmaps and render lights. Its split is the only socket-level membership there is; it agrees with the ROM's names for the two strings and with the 3-9 routing, and no retained table contradicts it, so the placements are validated under the G.I. membership rule in `docs/SPATIAL.md`. The placed sockets are the VPW lights that coincide, within 0.01 normalized, with a bulb the nFozzy table models for the same string: 20 for public 2 (seventeen bulb-mesh pieces and the three jet caps) and 7 for public 4. nFozzy's render lights and sprites make no socket, so GI_11, which sits under its GIRT_5 light but 0.033 from the nearest bulb, is not placed. The CPU string's four placements are the VPW Case 3 lights on the A-14518 board. The manual gives no per-string bulb count, so the playfield quantities are not asserted; the spatial audit lists the sixteen VPW G.I. lights without an nFozzy bulb: five render doubles under the jet caps and top-lane guides, five lights in the left lane, three in the top-right corner, two on the right side and one at the upper left. Two of the left-lane lights, GI_13 and GI_14, sit within 0.03 normalized of the two sockets the 2-39 drawing gives flasher 25.
 
 ## Mechanisms and physical assemblies
 

@@ -135,13 +135,18 @@ class Terminator2DefinitionTests(unittest.TestCase):
 			self.assertEqual((wire, connection, triac), (device["wiring"]["control_wire"], device["wiring"]["control_connection"], device["wiring"]["driver_transistor"]))
 			self.assertIn(rom, device["physical"]["notes"])
 			self.assertIn("runtime.terminator-2.t2-l8.gi-test", device["provenance"]["source_refs"])
+			# The triac is fixed to its pins on the power driver board, which two other games' tables print.
+			for board in ("manual-chart.bally.doctor-who.1992", "manual.bally.the-addams-family.1992.handbook"):
+				self.assertIn(board, device["provenance"]["source_refs"])
 		for address in (0, 1):
 			self.assertEqual(["cabinet.insert-panel"], gi[address]["roles"])
 			self.assertEqual("cabinet_or_service", gi[address]["spatial"]["reason"])
 		self.assertEqual(4, gi[3]["physical"]["quantity"])
 		self.assertEqual("A-14518", gi[3]["physical"]["assembly_part_number"])
 		self.assertEqual(["light2", "light3", "light4", "light5"], sorted(item["id"].rsplit(".", 1)[1] for item in gi[3]["spatial"]["placements"]))
-		self.assertEqual(21, len(gi[2]["spatial"]["placements"]))
+		self.assertEqual(20, len(gi[2]["spatial"]["placements"]))
+		# A render light over no modelled bulb is not a socket.
+		self.assertIn("GI_11", self.audit["general_illumination"]["not_placed"])
 		self.assertEqual(7, len(gi[4]["spatial"]["placements"]))
 		self.assertTrue(all(x > 0.39 for x, _ in xy(gi[2])))
 		self.assertTrue(all(x < 0.27 for x, _ in xy(gi[4])))
@@ -174,6 +179,14 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertIn("J109-5", solenoids[48]["physical"]["notes"])
 		self.assertEqual({"unused"}, {solenoids[address]["availability"] for address in (33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 49, 50)})
 		self.assertEqual(set(row * 10 + column for row in range(1, 9) for column in range(1, 9)), set(lamps))
+		# The 2-35 lamp lists, transcribed whole, give every lamp's bulb.
+		self.assertEqual({16, 17, 51, 52, 84, 85}, {address for address, lamp in lamps.items() if lamp["physical"].get("part_number") == "#44"})
+		self.assertEqual(set(lamps) - {16, 17, 18, 51, 52, 84, 85}, {address for address, lamp in lamps.items() if lamp["physical"].get("part_number") == "#555"})
+		self.assertNotIn("part_number", lamps[18]["physical"])
+		lamp_list = (ROOT / "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list.md").read_text(encoding="utf-8")
+		for address, lamp in lamps.items():
+			if address != 18:
+				self.assertRegex(lamp_list, rf"\n\| {address} \| {lamp['physical']['part_number']} \|")
 		# The manual and the ROM's flasher test agree on 24; the script's missing callback is a table gap.
 		self.assertIn("F.L. C. BACKGLASS", solenoids[24]["physical"]["notes"])
 		self.assertIn("gap in the table", solenoids[24]["physical"]["notes"])
@@ -278,11 +291,11 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9", self.audit["extraction"]["manifest_sha256"])
 		self.assertEqual("ce5765a02329975e00b0e52d9bba1be86eea49f01def99c62221b8621a902213", self.audit["comparison_extraction"]["manifest_sha256"])
 		self.assertEqual(hashlib.sha256(SEED_PATH.read_bytes()).hexdigest(), self.audit["source_hashes"]["callout_seed_sha256"])
-		self.assertEqual(15, len(self.audit["general_illumination"]["not_placed"]))
+		self.assertEqual(16, len(self.audit["general_illumination"]["not_placed"]))
 		sources = {item["id"]: item for item in self.definition["sources"]}
 		manual = sources["manual.williams.terminator-2-judgment-day.1991"]
 		self.assertEqual("8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b", manual["sha256"])
-		self.assertEqual(21, len(manual["excerpts"]))
+		self.assertEqual(24, len(manual["excerpts"]))
 		self.assertTrue(all("scanned page rendered at its native resolution" in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
 		self.assertEqual("3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c", sources["vpx-table.t2-vpw-0022"]["sha256"])
 		self.assertEqual("2bae1ce5cf8c17233b5d4679032d6aa8c81e31ed32b2219a9363ad8cba244ded", sources["vpx-table.t2-nfozzy-1-12a"]["sha256"])
@@ -306,7 +319,10 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		spatial.verify_gi_sockets(source_root)
 		spatial.verify_skull_mesh(source_root)
 		derived = spatial.derive_gi_sockets(source_root)
-		self.assertEqual({2: 21, 3: 4, 4: 7}, {address: len(sockets) for address, sockets in derived.items()})
+		self.assertEqual({2: 20, 3: 4, 4: 7}, {address: len(sockets) for address, sockets in derived.items()})
+		# Only modelled bulbs make a socket: no evidence label names an nFozzy render light or sprite.
+		labels = {label for sockets in derived.values() for *_, evidence in sockets for label in evidence}
+		self.assertEqual({"GI_bulbR piece", "GI_bulbL piece", "GIjet_BulbP1", "GIjet_BulbP2", "GIjet_BulbP3", "VPW UpdateGI Case 3"}, labels)
 
 	def test_retained_callout_artifacts_match_the_seed(self) -> None:
 		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
@@ -400,7 +416,11 @@ class Terminator2GiTestEvidence(unittest.TestCase):
 		labels = [item["label"] for item in runtime["observations"]["named_action_observations"]]
 		for address, name in ((0, "TOP INSERT (WHT-BRN BRN)"), (1, "BOTTOM INSERT (WHT-ORN ORN)"), (2, "RIGHT PLAYFIELD (WHT-YEL YEL)"), (3, "CPU STRING (WHT-GRN GRN)"), (4, "LEFT PLAYFIELD (WHT-VIO VIO)")):
 			self.assertIn(f"T.6 {name}: Up steps the brightness of public GI {address} alone", labels)
-		self.assertTrue(labels[0].startswith("After the fresh-NVRAM restart the ROM turns public GI 0, 1, 2 and 4 on once and switches public GI 3 off and on by itself"))
+		self.assertEqual("After the fresh-NVRAM restart the ROM brings public GI 0-4 up from the common reset blanking, keeps 0, 1, 2 and 4 on, and switches public GI 3 from on to off by itself (40 times in this run)", labels[0])
+		stimuli = {item["label"]: item["host_stimulus_switch_addresses"] for item in runtime["observations"]["named_action_observations"]}
+		self.assertEqual([7], stimuli["T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together"])
+		scenario = load(self.SCENARIO)
+		self.assertEqual({7}, {action["switch"] for action in scenario["actions"] if action["label"].startswith("T.6 Up")})
 		seed = load(ROOT / "tools/seeds/williams/terminator-2-judgment-day-1991-frames.json")[self.PATH.name]
 		self.assertEqual(seed, {item["label"]: {"pixel_sha256": item["pixel_sha256"], "reading": item["interpreted_text"]} for item in runtime["observations"]["diagnostic_snapshots"]})
 
@@ -421,6 +441,12 @@ class Terminator2GiTestEvidence(unittest.TestCase):
 		step["transitions"]["gis"].append({"number": 2, "states": [0, 8]})
 		with self.assertRaises(ValueError):
 			builder.build_observations(mixed)
+		# Another string switching off after the restart is refused; its reset blanking alone is not.
+		flicker = copy.deepcopy(run)
+		restart = next(item for item in flicker["steps"] if item["label"] == builder.RESTART_LABEL)
+		next(item for item in restart["transitions"]["gis"] if item["number"] == 2)["states"].extend([0, 8])
+		with self.assertRaises(ValueError):
+			builder.build_observations(flicker)
 		# A reading pinned to another frame is refused.
 		swapped = copy.deepcopy(run)
 		snapshot = next(item for item in swapped["snapshots"] if item["label"] == "T.6 Up 33 (held)")

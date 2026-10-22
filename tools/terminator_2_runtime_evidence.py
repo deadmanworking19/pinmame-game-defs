@@ -62,7 +62,7 @@ GI_STRINGS = (
 	(4, "T.6 Up 41 (held)", "LEFT PLAYFIELD / T.6 BRIGHT=2 STOP / WHT-VIO VIO", range(41, 47)),
 )
 RESTART_LABEL = "Escape out of the fresh-NVRAM loop"
-# After the fresh-NVRAM restart the ROM turns every string on, and switches the CPU string off and on by itself.
+# After the fresh-NVRAM restart the ROM turns every string on, and switches the CPU string from on to off by itself.
 RESTART_MIN_CPU_OFFS = 5
 
 
@@ -133,6 +133,11 @@ def _states(step: dict[str, Any], channel: str, number: int) -> list[int]:
 	return []
 
 
+def _switch_offs(states: list[int]) -> int:
+	"""Count on-to-off transitions; the zero every string starts from is the common reset blanking, not a switch-off."""
+	return sum(1 for before, after in zip(states, states[1:]) if before > 0 and after == 0)
+
+
 def _diagnostics(run: dict[str, Any], readings: dict[str, str]) -> list[dict[str, Any]]:
 	"""Pin each reading to its frame; one interpreted text must always come from one frame."""
 	result = []
@@ -171,17 +176,17 @@ def build_observations(run: dict[str, Any]) -> dict[str, Any]:
 	readings = {IDENTIFICATION_LABEL: IDENTIFICATION, ALL_LABEL: ALL_TEXT}
 	named = []
 	restart = _step(run, RESTART_LABEL)
-	offs = {number: _states(restart, "gis", number).count(0) for number in range(5)}
-	if offs[3] < RESTART_MIN_CPU_OFFS or any(offs[number] > 1 for number in (0, 1, 2, 4)):
-		raise ValueError(f"after the restart the ROM must flicker public GI 3 alone, saw off counts {offs}")
+	offs = {number: _switch_offs(_states(restart, "gis", number)) for number in range(5)}
+	if offs[3] < RESTART_MIN_CPU_OFFS or any(offs[number] for number in (0, 1, 2, 4)):
+		raise ValueError(f"after the restart the ROM must flicker public GI 3 alone, saw on-to-off counts {offs}")
 	named.append(_observation(
-		f"After the fresh-NVRAM restart the ROM turns public GI 0, 1, 2 and 4 on once and switches public GI 3 off and on by itself ({offs[3]} times in this run)",
+		f"After the fresh-NVRAM restart the ROM brings public GI 0-4 up from the common reset blanking, keeps 0, 1, 2 and 4 on, and switches public GI 3 from on to off by itself ({offs[3]} times in this run)",
 		[5],
 	))
 	for press in range(1, 7):
 		if _changed(_step(run, f"T.6 Up {press}"), "gis") != {0, 1, 2, 3, 4}:
 			raise ValueError("T.6 ALL ILLUMINATION must step public GI 0-4 together")
-	named.append(_observation("T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together", [8]))
+	named.append(_observation("T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together", [7]))
 	for channel, label, text, presses in GI_STRINGS:
 		readings[label] = text
 		changed = [_changed(_step(run, f"T.6 Up {press}"), "gis") for press in presses]

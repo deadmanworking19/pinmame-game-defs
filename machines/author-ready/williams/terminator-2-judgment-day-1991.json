@@ -4685,7 +4685,7 @@
         "device.drop-target",
         "device.knock-down"
       ],
-      "behavior": "One A-14615 drop target under the skull, sensed by switch 77. Solenoid 28 (AE-26-1200 reset coil) raises it; the retained script models this as dtDrop1.SolDropUp. Solenoid 12 (the A-14908 knock-down sub-assembly's SM1-26-600 coil, 2-23 parts list) drops it from below without a ball strike; the retained VPW script has no callback for 12 and the production game is not seen to use it in play, but the ROM's solenoid test pulses it, so a recreation that fits it must drop the target and close switch 77 on a pulse.",
+      "behavior": "One A-14615 drop target under the skull, sensed by switch 77. Solenoid 28 (AE-26-1200 reset coil) raises it; the retained script models this as dtDrop1.SolDropUp. Solenoid 12 (the A-14908 knock-down sub-assembly's SM1-26-600 coil, 2-23 parts list) drops it from below without a ball strike; neither retained table fires it in play (the VPW script has no callback for 12), but the ROM's solenoid test pulses it, so a recreation that fits it must drop the target and close switch 77 on a pulse.",
       "id": "mechanism.drop-target",
       "kind": "drop_target_bank",
       "label": "Single skull drop target with knock-down",
@@ -5382,7 +5382,7 @@
       "label": "Knock Down",
       "physical": {
         "assembly_part_number": "A-14908",
-        "notes": "Manual physical device: Knock Down; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The drop-target knock-down coil. The 2-23 A-14615 1-Bank Drop Target Assembly parts list includes item 23, A-14908 Target Knock Down Assembly (01-8647-L actuator, A-14913 frame and eyelet, SM1-26-600 coil), bolted beside the AE-26-1200 reset coil of solenoid 28; the 1-28 solenoid table and the 2-39 Solenoid Locations list print solenoid 12 as Knock Down with that SM1-26-600 coil, and the 2-39 drawing prints balloon 12 on the drop-target assembly. The 2-38 copy of the solenoid table prints the row as Not Used and blanks its part-number cell, but keeps its Low Power type, Brn-Yel wire, J127-5 connection and Q52 transistor, and the 3-8 interboard table wires Solenoid 12 Brown/Yellow to J127-5 and Q52. The L-8 ROM's T.4 SOLENOID TEST names solenoid 12 KNOCK DOWN with the printed BRN-YEL wire and pulses public 12. The retained VPW script has no SolCallback(12), and the nFozzy comparison script keeps a SolDTdown handler for it commented out as a cut feature; owner repair reports describe the small knock-down coil fitted on the drop-target assembly but not seen to fire in normal play, consistent with Not Used on 2-38 meaning that the game rules leave it idle. A recreation fits the coil so that a pulse drops the target and closes switch 77. The knock-down sub-assembly is bolted to the A-14615 drop-target assembly; the placement is the drop target the coil acts on, and the 2-39 drawing prints balloon 12 on that assembly.",
+        "notes": "Manual physical device: Knock Down; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The drop-target knock-down coil. The 2-23 A-14615 1-Bank Drop Target Assembly parts list includes item 23, A-14908 Target Knock Down Assembly (01-8647-L actuator, A-14913 frame and eyelet, SM1-26-600 coil), bolted beside the AE-26-1200 reset coil of solenoid 28; the 1-28 solenoid table and the 2-39 Solenoid Locations list print solenoid 12 as Knock Down with that SM1-26-600 coil, and the 2-39 drawing prints balloon 12 on the drop-target assembly. The 2-38 copy of the solenoid table prints the row as Not Used and blanks its part-number cell, but keeps its Low Power type, Brn-Yel wire, J127-5 connection and Q52 transistor, and the 3-8 interboard table wires Solenoid 12 Brown/Yellow to J127-5 and Q52. The L-8 ROM's T.4 SOLENOID TEST names solenoid 12 KNOCK DOWN with the printed BRN-YEL wire and pulses public 12. The retained VPW script has no SolCallback(12), and the nFozzy comparison script keeps a SolDTdown handler for it commented out as a cut feature. The coil is fitted and wired, and the ROM's test drives it; neither retained table fires it in play, which is how Not Used on 2-38 reads. A recreation fits the coil so that a pulse drops the target and closes switch 77. The knock-down sub-assembly is bolted to the A-14615 drop-target assembly; the placement is the drop target the coil acts on, and the 2-39 drawing prints balloon 12 on that assembly.",
         "part_number": "SM1-26-600"
       },
       "provenance": {
@@ -7211,7 +7211,8 @@
       "kind": "lamp",
       "label": "Multiplier 2x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-1; manual lamp address 11. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-1 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-1; manual lamp address 11. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-1 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7260,7 +7261,8 @@
       "kind": "lamp",
       "label": "Multiplier 4x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-2; manual lamp address 12. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-1 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-2; manual lamp address 12. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-1 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7309,7 +7311,8 @@
       "kind": "lamp",
       "label": "Hold Bonus",
       "physical": {
-        "notes": "Printed lamp matrix address 1-3; manual lamp address 13. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-1 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-3; manual lamp address 13. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-1 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7358,7 +7361,8 @@
       "kind": "lamp",
       "label": "Multiplier 6x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-4; manual lamp address 14. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-1 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-4; manual lamp address 14. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-1 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7407,7 +7411,8 @@
       "kind": "lamp",
       "label": "Multiplier 8x",
       "physical": {
-        "notes": "Printed lamp matrix address 1-5; manual lamp address 15. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-1 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-5; manual lamp address 15. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-1 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7456,7 +7461,8 @@
       "kind": "lamp",
       "label": "Shoot Again",
       "physical": {
-        "notes": "Printed lamp matrix address 1-6; manual lamp address 16. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-1 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-6; manual lamp address 16. The 2-35 lamp list prints bulb #44 (24-6549). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-1 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#44"
       },
       "provenance": {
         "source_refs": [
@@ -7505,7 +7511,8 @@
       "kind": "lamp",
       "label": "Mouth",
       "physical": {
-        "notes": "Printed lamp matrix address 1-7; manual lamp address 17. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-1 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-7; manual lamp address 17. The 2-35 lamp list prints bulb #44 (24-6549). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-1 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#44"
       },
       "provenance": {
         "source_refs": [
@@ -7554,7 +7561,7 @@
       "kind": "lamp",
       "label": "Not Used",
       "physical": {
-        "notes": "Printed lamp matrix address 1-8; manual lamp address 18. Printed lamp matrix says Not Used; no L18 object exists in the retained VPX table. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-1 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 1-8; manual lamp address 18. Printed lamp matrix says Not Used; no L18 object exists in the retained VPX table. The 2-35 lamp list still prints a #555 bulb for it, and the 2-35 drawing does not show it. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 1 on J138-1 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-1 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
       },
       "provenance": {
         "source_refs": [
@@ -7594,7 +7601,8 @@
       "kind": "lamp",
       "label": "Kickback",
       "physical": {
-        "notes": "Printed lamp matrix address 2-1; manual lamp address 21. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-2 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-1; manual lamp address 21. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-2 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7643,7 +7651,8 @@
       "kind": "lamp",
       "label": "Special",
       "physical": {
-        "notes": "Printed lamp matrix address 2-2; manual lamp address 22. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-2 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-2; manual lamp address 22. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-2 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7705,7 +7714,8 @@
       "kind": "lamp",
       "label": "Left Return Lane",
       "physical": {
-        "notes": "Printed lamp matrix address 2-3; manual lamp address 23. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-2 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-3; manual lamp address 23. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-2 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7754,7 +7764,8 @@
       "kind": "lamp",
       "label": "Right Return Lane",
       "physical": {
-        "notes": "Printed lamp matrix address 2-4; manual lamp address 24. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-2 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-4; manual lamp address 24. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-2 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7803,7 +7814,8 @@
       "kind": "lamp",
       "label": "Data Base 3",
       "physical": {
-        "notes": "Printed lamp matrix address 2-5; manual lamp address 25. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-2 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-5; manual lamp address 25. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-2 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7852,7 +7864,8 @@
       "kind": "lamp",
       "label": "Load Gun",
       "physical": {
-        "notes": "Printed lamp matrix address 2-6; manual lamp address 26. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-2 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-6; manual lamp address 26. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-2 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7901,7 +7914,8 @@
       "kind": "lamp",
       "label": "Extra Ball",
       "physical": {
-        "notes": "Printed lamp matrix address 2-7; manual lamp address 27. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-2 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-7; manual lamp address 27. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-2 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7950,7 +7964,8 @@
       "kind": "lamp",
       "label": "Load for Jackpot",
       "physical": {
-        "notes": "Printed lamp matrix address 2-8; manual lamp address 28. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-2 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 2-8; manual lamp address 28. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 2 on J138-2 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-2 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -7999,7 +8014,8 @@
       "kind": "lamp",
       "label": "Target 1 High",
       "physical": {
-        "notes": "Printed lamp matrix address 3-1; manual lamp address 31. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-3 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-1; manual lamp address 31. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-3 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8048,7 +8064,8 @@
       "kind": "lamp",
       "label": "Target 2",
       "physical": {
-        "notes": "Printed lamp matrix address 3-2; manual lamp address 32. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-3 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-2; manual lamp address 32. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-3 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8097,7 +8114,8 @@
       "kind": "lamp",
       "label": "Target 3",
       "physical": {
-        "notes": "Printed lamp matrix address 3-3; manual lamp address 33. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-3 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-3; manual lamp address 33. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-3 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8146,7 +8164,8 @@
       "kind": "lamp",
       "label": "Target 4",
       "physical": {
-        "notes": "Printed lamp matrix address 3-4; manual lamp address 34. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-3 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-4; manual lamp address 34. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-3 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8195,7 +8214,8 @@
       "kind": "lamp",
       "label": "Target 5 Low",
       "physical": {
-        "notes": "Printed lamp matrix address 3-5; manual lamp address 35. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-3 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-5; manual lamp address 35. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-3 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8244,7 +8264,8 @@
       "kind": "lamp",
       "label": "Middle Target Bank Left",
       "physical": {
-        "notes": "Printed lamp matrix address 3-6; manual lamp address 36. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-3 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-6; manual lamp address 36. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-3 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8293,7 +8314,8 @@
       "kind": "lamp",
       "label": "Middle Target Bank Center",
       "physical": {
-        "notes": "Printed lamp matrix address 3-7; manual lamp address 37. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-3 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-7; manual lamp address 37. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-3 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8342,7 +8364,8 @@
       "kind": "lamp",
       "label": "Middle Target Bank Right",
       "physical": {
-        "notes": "Printed lamp matrix address 3-8; manual lamp address 38. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-3 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 3-8; manual lamp address 38. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 3 on J138-3 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-3 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8391,7 +8414,8 @@
       "kind": "lamp",
       "label": "Lock Two",
       "physical": {
-        "notes": "Printed lamp matrix address 4-1; manual lamp address 41. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-4 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-1; manual lamp address 41. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-4 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8440,7 +8464,8 @@
       "kind": "lamp",
       "label": "Data Base 2",
       "physical": {
-        "notes": "Printed lamp matrix address 4-2; manual lamp address 42. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-4 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-2; manual lamp address 42. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-4 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8489,7 +8514,8 @@
       "kind": "lamp",
       "label": "10 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 4-3; manual lamp address 43. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-4 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-3; manual lamp address 43. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-4 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8538,7 +8564,8 @@
       "kind": "lamp",
       "label": "Extra Ball",
       "physical": {
-        "notes": "Printed lamp matrix address 4-4; manual lamp address 44. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-4 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-4; manual lamp address 44. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-4 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8587,7 +8614,8 @@
       "kind": "lamp",
       "label": "Multi-ball",
       "physical": {
-        "notes": "Printed lamp matrix address 4-5; manual lamp address 45. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-4 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-5; manual lamp address 45. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-4 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8636,7 +8664,8 @@
       "kind": "lamp",
       "label": "Light Hurry Up",
       "physical": {
-        "notes": "Printed lamp matrix address 4-6; manual lamp address 46. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-4 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-6; manual lamp address 46. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-4 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8685,7 +8714,8 @@
       "kind": "lamp",
       "label": "Hold Bonus",
       "physical": {
-        "notes": "Printed lamp matrix address 4-7; manual lamp address 47. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-4 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-7; manual lamp address 47. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-4 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8734,7 +8764,8 @@
       "kind": "lamp",
       "label": "Security Pass",
       "physical": {
-        "notes": "Printed lamp matrix address 4-8; manual lamp address 48. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-4 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 4-8; manual lamp address 48. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 4 on J138-4 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-4 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8783,7 +8814,7 @@
       "kind": "lamp",
       "label": "Eyes Lower",
       "physical": {
-        "notes": "Printed lamp matrix address 5-1; manual lamp address 51. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-5 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "notes": "Printed lamp matrix address 5-1; manual lamp address 51. The 2-35 lamp list prints bulb #44 (24-6549). The 2-35 drawing points lamp 51 at two eye inserts in the middle of the playfield and draws two leaders from 52 (in head) into the skull: two bulbs each. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-5 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
         "part_number": "#44",
         "quantity": 2
       },
@@ -8847,7 +8878,7 @@
       "kind": "lamp",
       "label": "Eyes Upper",
       "physical": {
-        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-5 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored). The working script fades the skull images of Primitive.L52, the T-800 skull mesh above the drop target, for this lamp; the 2-35 lamp drawing prints 52 (in head) with two leaders into the skull for its two #44 bulbs. The primitive is stored at the origin with its geometry baked into the mesh, so the placement is the world-bounds centre of the mesh (world x = 19.8 obj x, world y = 19.5 obj z), a projection of both eye bulbs onto the head.",
+        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. The 2-35 lamp list prints bulb #44 (24-6549). The 2-35 drawing points lamp 51 at two eye inserts in the middle of the playfield and draws two leaders from 52 (in head) into the skull: two bulbs each. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-5 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored). The working script fades the skull images of Primitive.L52, the T-800 skull mesh above the drop target, for this lamp; the 2-35 lamp drawing prints 52 (in head) with two leaders into the skull for its two #44 bulbs. The primitive is stored at the origin with its geometry baked into the mesh, so the placement is the world-bounds centre of the mesh (world x = 19.8 obj x, world y = 19.5 obj z), a projection of both eye bulbs onto the head.",
         "part_number": "#44",
         "quantity": 2
       },
@@ -8901,7 +8932,8 @@
       "kind": "lamp",
       "label": "5 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-3; manual lamp address 53. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-5 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-3; manual lamp address 53. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-5 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8950,7 +8982,8 @@
       "kind": "lamp",
       "label": "3 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-4; manual lamp address 54. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-5 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-4; manual lamp address 54. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-5 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -8999,7 +9032,8 @@
       "kind": "lamp",
       "label": "1 Million",
       "physical": {
-        "notes": "Printed lamp matrix address 5-5; manual lamp address 55. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-5 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-5; manual lamp address 55. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-5 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9048,7 +9082,8 @@
       "kind": "lamp",
       "label": "750 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-6; manual lamp address 56. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-5 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-6; manual lamp address 56. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-5 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9097,7 +9132,8 @@
       "kind": "lamp",
       "label": "500 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-7; manual lamp address 57. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-5 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-7; manual lamp address 57. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-5 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9146,7 +9182,8 @@
       "kind": "lamp",
       "label": "250 Thousand",
       "physical": {
-        "notes": "Printed lamp matrix address 5-8; manual lamp address 58. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-5 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-8; manual lamp address 58. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-5 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9195,7 +9232,8 @@
       "kind": "lamp",
       "label": "Left CPU Lit",
       "physical": {
-        "notes": "Printed lamp matrix address 6-1; manual lamp address 61. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-6 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-1; manual lamp address 61. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-6 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9244,7 +9282,8 @@
       "kind": "lamp",
       "label": "Left Vault Key",
       "physical": {
-        "notes": "Printed lamp matrix address 6-2; manual lamp address 62. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-6 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-2; manual lamp address 62. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-6 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9293,7 +9332,8 @@
       "kind": "lamp",
       "label": "Left Silent Alarm",
       "physical": {
-        "notes": "Printed lamp matrix address 6-3; manual lamp address 63. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-6 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-3; manual lamp address 63. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-6 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9342,7 +9382,8 @@
       "kind": "lamp",
       "label": "Left Passcode",
       "physical": {
-        "notes": "Printed lamp matrix address 6-4; manual lamp address 64. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-6 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-4; manual lamp address 64. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-6 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9391,7 +9432,8 @@
       "kind": "lamp",
       "label": "Left Checkpoint",
       "physical": {
-        "notes": "Printed lamp matrix address 6-5; manual lamp address 65. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-6 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-5; manual lamp address 65. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-6 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9440,7 +9482,8 @@
       "kind": "lamp",
       "label": "Lock 1",
       "physical": {
-        "notes": "Printed lamp matrix address 6-6; manual lamp address 66. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-6 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-6; manual lamp address 66. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-6 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9489,7 +9532,8 @@
       "kind": "lamp",
       "label": "Data Base 1",
       "physical": {
-        "notes": "Printed lamp matrix address 6-7; manual lamp address 67. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-6 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-7; manual lamp address 67. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-6 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9538,7 +9582,8 @@
       "kind": "lamp",
       "label": "Left Ramp",
       "physical": {
-        "notes": "Printed lamp matrix address 6-8; manual lamp address 68. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-6 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 6-8; manual lamp address 68. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 6 on J138-6 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-6 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9587,7 +9632,8 @@
       "kind": "lamp",
       "label": "Right CPU Lit",
       "physical": {
-        "notes": "Printed lamp matrix address 7-1; manual lamp address 71. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-7 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-1; manual lamp address 71. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-7 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9636,7 +9682,8 @@
       "kind": "lamp",
       "label": "Right Vault Key",
       "physical": {
-        "notes": "Printed lamp matrix address 7-2; manual lamp address 72. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-7 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-2; manual lamp address 72. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-7 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9685,7 +9732,8 @@
       "kind": "lamp",
       "label": "Right Silent Alarm",
       "physical": {
-        "notes": "Printed lamp matrix address 7-3; manual lamp address 73. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-7 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-3; manual lamp address 73. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-7 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9734,7 +9782,8 @@
       "kind": "lamp",
       "label": "Right Passcode",
       "physical": {
-        "notes": "Printed lamp matrix address 7-4; manual lamp address 74. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-7 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-4; manual lamp address 74. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-7 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9783,7 +9832,8 @@
       "kind": "lamp",
       "label": "Right Checkpoint",
       "physical": {
-        "notes": "Printed lamp matrix address 7-5; manual lamp address 75. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-7 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-5; manual lamp address 75. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-7 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9832,7 +9882,8 @@
       "kind": "lamp",
       "label": "Right Bank Top",
       "physical": {
-        "notes": "Printed lamp matrix address 7-6; manual lamp address 76. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-7 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-6; manual lamp address 76. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-7 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9881,7 +9932,8 @@
       "kind": "lamp",
       "label": "Right Bank Middle",
       "physical": {
-        "notes": "Printed lamp matrix address 7-7; manual lamp address 77. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-7 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-7; manual lamp address 77. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-7 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9930,7 +9982,8 @@
       "kind": "lamp",
       "label": "Right Bank Bottom",
       "physical": {
-        "notes": "Printed lamp matrix address 7-8; manual lamp address 78. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-7 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 7-8; manual lamp address 78. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 7 on J138-7 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-7 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -9979,7 +10032,8 @@
       "kind": "lamp",
       "label": "Chase Values",
       "physical": {
-        "notes": "Printed lamp matrix address 8-1; manual lamp address 81. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-8 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-1; manual lamp address 81. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-8 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10028,7 +10082,8 @@
       "kind": "lamp",
       "label": "Right Ramp",
       "physical": {
-        "notes": "Printed lamp matrix address 8-2; manual lamp address 82. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-8 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-2; manual lamp address 82. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-8 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10077,7 +10132,8 @@
       "kind": "lamp",
       "label": "Hurry Up",
       "physical": {
-        "notes": "Printed lamp matrix address 8-3; manual lamp address 83. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-8 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-3; manual lamp address 83. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 3 on J133-4; the 2-34 lamp schematic draws them on J137-8 and J133-3. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10126,7 +10182,8 @@
       "kind": "lamp",
       "label": "Start Button",
       "physical": {
-        "notes": "Printed lamp matrix address 8-4; manual lamp address 84. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-8 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-4; manual lamp address 84. The 2-35 lamp list prints bulb #44 (24-6549). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 4 on J133-5; the 2-34 lamp schematic draws them on J137-8 and J133-4. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#44"
       },
       "provenance": {
         "source_refs": [
@@ -10170,7 +10227,8 @@
       "kind": "lamp",
       "label": "Drop Target",
       "physical": {
-        "notes": "Printed lamp matrix address 8-5; manual lamp address 85. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-8 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-5; manual lamp address 85. The 2-35 lamp list prints bulb #44 (24-6549). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 5 on J133-6; the 2-34 lamp schematic draws them on J137-8 and J133-5. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#44"
       },
       "provenance": {
         "source_refs": [
@@ -10219,7 +10277,8 @@
       "kind": "lamp",
       "label": "Top Lane Left",
       "physical": {
-        "notes": "Printed lamp matrix address 8-6; manual lamp address 86. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-8 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-6; manual lamp address 86. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 6 on J133-7; the 2-34 lamp schematic draws them on J137-8 and J133-6. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10268,7 +10327,8 @@
       "kind": "lamp",
       "label": "Top Lane Center",
       "physical": {
-        "notes": "Printed lamp matrix address 8-7; manual lamp address 87. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-8 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-7; manual lamp address 87. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 7 on J133-8; the 2-34 lamp schematic draws them on J137-8 and J133-7. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10317,7 +10377,8 @@
       "kind": "lamp",
       "label": "Top Lane Right",
       "physical": {
-        "notes": "Printed lamp matrix address 8-8; manual lamp address 88. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-8 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 8-8; manual lamp address 88. The 2-35 lamp list prints bulb #555 (24-8768). Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 8 on J138-9 and row 8 on J133-9; the 2-34 lamp schematic draws them on J137-8 and J133-8. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
@@ -10363,14 +10424,16 @@
       "label": "Top Insert String",
       "physical": {
         "location": "backbox insert panel, top",
-        "notes": "General-illumination string 1, Top Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 0 alone while it prints TOP INSERT and WHT-BRN BRN, and the 2-39 Solenoid Locations list prints 01 #555 Top Insert String. The 1-28 and 2-38 solenoid tables print this row as 01 Top Insert G.I., Wht-Brn, J120-7, Q18, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the brown string to the insert only (feed J120-1, return J120-7): it lights the upper half of the backbox insert panel behind the translite. The retained VPW script's UpdateGI Case 0 does nothing, and the nFozzy table drives only its backglass sprite from public 0.",
+        "notes": "General-illumination string 1, Top Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 0 alone while it prints TOP INSERT and WHT-BRN BRN, and the 2-39 Solenoid Locations list prints 01 #555 Top Insert String. The 1-28 and 2-38 solenoid tables print this row as 01 Top Insert G.I., Wht-Brn, J120-7, Q18, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables print their triac column in that string order (Q18, Q10, Q14, Q16, Q12) but their names, return wires and pins as 02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8 and 05 Bottom Insert Wht-Grn J120-10, and the 3-9 interboard table numbers its feeds in yet another order while repeating those rows' wire-to-triac pairs (Violet Q10, Orange Q16, Green Q12). Each triac is fixed to its pins on the WPC power driver board: the Doctor Who chart prints J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN and J121-11/J119-1 Q12 WHT-VIO, and The Addams Family handbook pairs brown, orange, yellow, green and violet with Q18, Q10, Q14, Q16 and Q12. T2's own tables put Wht-Orn on J120-8, Wht-Grn on J120-10 and Wht-Vio on J119-1, pins the board drives from Q10, Q16 and Q12, so the ROM's string numbers and wires, T2's pins and the board's pin-to-triac wiring agree with the tables' row-order triac column and not with the triac each misplaced wire is printed beside. This is a wiring-detail disagreement: the string, its public address and its fitment are not in doubt. Each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the brown string to the insert only (feed J120-1, return J120-7): it lights the upper half of the backbox insert panel behind the translite. The retained VPW script's UpdateGI Case 0 does nothing, and the nFozzy table drives only its backglass sprite from public 0.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
           "runtime.terminator-2.t2-l8.gi-test",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "manual-chart.bally.doctor-who.1992",
+          "manual.bally.the-addams-family.1992.handbook"
         ],
         "status": "validated"
       },
@@ -10412,14 +10475,16 @@
       "label": "Bottom Insert String",
       "physical": {
         "location": "backbox insert panel, bottom",
-        "notes": "General-illumination string 2, Bottom Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 1 alone while it prints BOTTOM INSERT and WHT-ORN ORN, and the 2-39 Solenoid Locations list prints 02 #555 Bottom Insert String. The 1-28 and 2-38 solenoid tables print this row as 02 Left Playfield G.I., Wht-Vio, J119-1, Q10, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table prints the insert pins J120-2 (feed) and J120-8 (return) on its Green row and no connector at all on its Orange row, while the 1-28 and 2-38 tables put J120-8 on Wht-Orn; on the WPC power driver board J120-2/J120-8 are the orange string's insert pins, and the ROM names the orange string BOTTOM INSERT, so this string lights the lower half of the backbox insert panel. The retained VPW script has no Case 1 at all.",
+        "notes": "General-illumination string 2, Bottom Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 1 alone while it prints BOTTOM INSERT and WHT-ORN ORN, and the 2-39 Solenoid Locations list prints 02 #555 Bottom Insert String. The 1-28 and 2-38 solenoid tables print this row as 02 Left Playfield G.I., Wht-Vio, J119-1, Q10, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables print their triac column in that string order (Q18, Q10, Q14, Q16, Q12) but their names, return wires and pins as 02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8 and 05 Bottom Insert Wht-Grn J120-10, and the 3-9 interboard table numbers its feeds in yet another order while repeating those rows' wire-to-triac pairs (Violet Q10, Orange Q16, Green Q12). Each triac is fixed to its pins on the WPC power driver board: the Doctor Who chart prints J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN and J121-11/J119-1 Q12 WHT-VIO, and The Addams Family handbook pairs brown, orange, yellow, green and violet with Q18, Q10, Q14, Q16 and Q12. T2's own tables put Wht-Orn on J120-8, Wht-Grn on J120-10 and Wht-Vio on J119-1, pins the board drives from Q10, Q16 and Q12, so the ROM's string numbers and wires, T2's pins and the board's pin-to-triac wiring agree with the tables' row-order triac column and not with the triac each misplaced wire is printed beside. This is a wiring-detail disagreement: the string, its public address and its fitment are not in doubt. Each table's own row is transcribed in its excerpt. The 3-9 interboard table prints the insert pins J120-2 (feed) and J120-8 (return) on its Green row and no connector at all on its Orange row, while the 1-28 and 2-38 tables put J120-8 on Wht-Orn; on the WPC power driver board J120-2/J120-8 are the orange string's insert pins, and the ROM names the orange string BOTTOM INSERT, so this string lights the lower half of the backbox insert panel. The retained VPW script has no Case 1 at all.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
           "runtime.terminator-2.t2-l8.gi-test",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "manual-chart.bally.doctor-who.1992",
+          "manual.bally.the-addams-family.1992.handbook"
         ],
         "status": "validated"
       },
@@ -10460,7 +10525,7 @@
       "kind": "gi",
       "label": "Right Playfield String",
       "physical": {
-        "notes": "General-illumination string 3, Right Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 2 alone while it prints RIGHT PLAYFIELD and WHT-YEL YEL, and the 2-39 Solenoid Locations list prints 03 #555 Right Playfield String. The 1-28 and 2-38 solenoid tables print this row as 03 Right Playfield G.I., Wht-Yel, J121-9, Q14, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the yellow string to the playfield only (feed J121-3, return J121-9). The retained VPW script drives every playfield G.I. light it has from public 2 (UpdateGI Case 2: arrays GI2 and GI3) and has no Case 4, so it lights the left side from this string as well; that is a simplification of the table, not a property of the machine. Placements: the 21 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a socket the nFozzy table models for public 2 (a piece of its GI_bulbR bulb mesh, a jet-cap bulb primitive or one of its string lights); the manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a socket, listed in the spatial audit, are not placed.",
+        "notes": "General-illumination string 3, Right Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 2 alone while it prints RIGHT PLAYFIELD and WHT-YEL YEL, and the 2-39 Solenoid Locations list prints 03 #555 Right Playfield String. The 1-28 and 2-38 solenoid tables print this row as 03 Right Playfield G.I., Wht-Yel, J121-9, Q14, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables print their triac column in that string order (Q18, Q10, Q14, Q16, Q12) but their names, return wires and pins as 02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8 and 05 Bottom Insert Wht-Grn J120-10, and the 3-9 interboard table numbers its feeds in yet another order while repeating those rows' wire-to-triac pairs (Violet Q10, Orange Q16, Green Q12). Each triac is fixed to its pins on the WPC power driver board: the Doctor Who chart prints J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN and J121-11/J119-1 Q12 WHT-VIO, and The Addams Family handbook pairs brown, orange, yellow, green and violet with Q18, Q10, Q14, Q16 and Q12. T2's own tables put Wht-Orn on J120-8, Wht-Grn on J120-10 and Wht-Vio on J119-1, pins the board drives from Q10, Q16 and Q12, so the ROM's string numbers and wires, T2's pins and the board's pin-to-triac wiring agree with the tables' row-order triac column and not with the triac each misplaced wire is printed beside. This is a wiring-detail disagreement: the string, its public address and its fitment are not in doubt. Each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the yellow string to the playfield only (feed J121-3, return J121-9). The retained VPW script drives every playfield G.I. light it has from public 2 (UpdateGI Case 2: arrays GI2 and GI3) and has no Case 4, so it lights the left side from this string as well; that is a simplification of the table, not a property of the machine. Placements: the 20 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a bulb the nFozzy table models for public 2 (a connected piece of its GI_bulbR bulb mesh or a jet-cap bulb primitive); nFozzy's render lights and sprites make no socket. The membership is the nFozzy table's split, which agrees with the ROM's own name for this string (RIGHT PLAYFIELD) and the 3-9 routing of the yellow string to the playfield and the violet one to the playfield and the coin door; the VPW table drives the whole playfield from public 2 and leaves its Left Playfield handler (Case 4) empty, a simplification rather than a different split. The manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a bulb, listed in the spatial audit, are not placed.",
         "part_number": "#555"
       },
       "provenance": {
@@ -10468,6 +10533,8 @@
           "manual.williams.terminator-2-judgment-day.1991",
           "runtime.terminator-2.t2-l8.gi-test",
           "pinmame.core.4ec52ff0ac13",
+          "manual-chart.bally.doctor-who.1992",
+          "manual.bally.the-addams-family.1992.handbook",
           "vpx-script.t2-vpw-0022",
           "vpx-table.t2-nfozzy-1-12a",
           "vpx-script.t2-modern-comparison"
@@ -10733,22 +10800,6 @@
             "y": 0.541727
           },
           {
-            "id": "gi.string-3.emitter.gi-11",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022",
-                "vpx-table.t2-nfozzy-1-12a",
-                "vpx-extraction.t2-nfozzy-1-12a"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.853842,
-            "y": 0.609888
-          },
-          {
             "id": "gi.string-3.emitter.gi-10",
             "provenance": {
               "source_refs": [
@@ -10839,7 +10890,7 @@
       "label": "CPU String",
       "physical": {
         "assembly_part_number": "A-14518",
-        "notes": "General-illumination string 4, CPU String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 3 alone while it prints CPU STRING and WHT-GRN GRN, and the 2-39 Solenoid Locations list prints 04 #555 CPU String. The 1-28 and 2-38 solenoid tables print this row as 04 Not Used, Wht-Orn, J120-8, Q16, blank bulb. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the green string's playfield pins J121-5 (feed) and J121-10 (return). The 2-4 major-mechanisms map marks one G. I. Lamp Assembly, A-14518 (lamp board C), a straight four-socket board on the playfield centre line under the CPU inserts; the retained VPW script's UpdateGI Case 3 switches its four Light2-Light5 lights there, and the nFozzy table drives its four Lgi CPU-insert sprites from public 3. After the fresh-NVRAM restart the ROM flickers this string by itself, so it carries effects of its own. Placements: the four lights Light2-Light5 that the retained VPW script's UpdateGI Case 3 switches, under the CPU inserts, each within 0.004 normalized of one of the four Lgi sprites the nFozzy table drives from public 3, on the four sockets of the A-14518 G. I. lamp board.",
+        "notes": "General-illumination string 4, CPU String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 3 alone while it prints CPU STRING and WHT-GRN GRN, and the 2-39 Solenoid Locations list prints 04 #555 CPU String. The 1-28 and 2-38 solenoid tables print this row as 04 Not Used, Wht-Orn, J120-8, Q16, blank bulb. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables print their triac column in that string order (Q18, Q10, Q14, Q16, Q12) but their names, return wires and pins as 02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8 and 05 Bottom Insert Wht-Grn J120-10, and the 3-9 interboard table numbers its feeds in yet another order while repeating those rows' wire-to-triac pairs (Violet Q10, Orange Q16, Green Q12). Each triac is fixed to its pins on the WPC power driver board: the Doctor Who chart prints J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN and J121-11/J119-1 Q12 WHT-VIO, and The Addams Family handbook pairs brown, orange, yellow, green and violet with Q18, Q10, Q14, Q16 and Q12. T2's own tables put Wht-Orn on J120-8, Wht-Grn on J120-10 and Wht-Vio on J119-1, pins the board drives from Q10, Q16 and Q12, so the ROM's string numbers and wires, T2's pins and the board's pin-to-triac wiring agree with the tables' row-order triac column and not with the triac each misplaced wire is printed beside. This is a wiring-detail disagreement: the string, its public address and its fitment are not in doubt. Each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the green string's playfield pins J121-5 (feed) and J121-10 (return). The 2-4 major-mechanisms map marks one G. I. Lamp Assembly, A-14518 (lamp board C), a straight four-socket board on the playfield centre line under the CPU inserts; the retained VPW script's UpdateGI Case 3 switches its four Light2-Light5 lights there, and the nFozzy table drives its four Lgi CPU-insert sprites from public 3. After the fresh-NVRAM restart the ROM flickers this string by itself, so it carries effects of its own. Placements: the four lights Light2-Light5 that the retained VPW script's UpdateGI Case 3 switches, under the four CPU inserts the 2-35 drawing shows on the playfield centre line, which is where the 2-4 map puts the four-socket A-14518 G. I. lamp board.",
         "part_number": "#555",
         "quantity": 4
       },
@@ -10848,6 +10899,8 @@
           "manual.williams.terminator-2-judgment-day.1991",
           "runtime.terminator-2.t2-l8.gi-test",
           "pinmame.core.4ec52ff0ac13",
+          "manual-chart.bally.doctor-who.1992",
+          "manual.bally.the-addams-family.1992.handbook",
           "vpx-script.t2-vpw-0022",
           "vpx-table.t2-nfozzy-1-12a",
           "vpx-script.t2-modern-comparison"
@@ -10946,7 +10999,7 @@
       "kind": "gi",
       "label": "Left Playfield String",
       "physical": {
-        "notes": "General-illumination string 5, Left Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 4 alone while it prints LEFT PLAYFIELD and WHT-VIO VIO, and the 2-39 Solenoid Locations list prints 05 #555 Left Playfield String. The 1-28 and 2-38 solenoid tables print this row as 05 Bottom Insert G.I., Wht-Grn, J120-10, Q12, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the violet string to the playfield (feed J121-6, return J121-11) and to the cabinet (feed J119-3, return J119-1): besides the left side of the playfield it lights the coin-door lamps, which are not placed. The retained VPW script's UpdateGI Case 4 is a bare Exit Sub under the comment Left Playfield, so the table lights this side from public 2 instead (see public 2). Placements: the 7 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a socket the nFozzy table models for public 4 (a piece of its GI_bulbL bulb mesh or one of its string lights); the manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a socket, listed in the spatial audit, are not placed.",
+        "notes": "General-illumination string 5, Left Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 4 alone while it prints LEFT PLAYFIELD and WHT-VIO VIO, and the 2-39 Solenoid Locations list prints 05 #555 Left Playfield String. The 1-28 and 2-38 solenoid tables print this row as 05 Bottom Insert G.I., Wht-Grn, J120-10, Q12, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables print their triac column in that string order (Q18, Q10, Q14, Q16, Q12) but their names, return wires and pins as 02 Left Playfield Wht-Vio J119-1, 04 Not Used Wht-Orn J120-8 and 05 Bottom Insert Wht-Grn J120-10, and the 3-9 interboard table numbers its feeds in yet another order while repeating those rows' wire-to-triac pairs (Violet Q10, Orange Q16, Green Q12). Each triac is fixed to its pins on the WPC power driver board: the Doctor Who chart prints J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN and J121-11/J119-1 Q12 WHT-VIO, and The Addams Family handbook pairs brown, orange, yellow, green and violet with Q18, Q10, Q14, Q16 and Q12. T2's own tables put Wht-Orn on J120-8, Wht-Grn on J120-10 and Wht-Vio on J119-1, pins the board drives from Q10, Q16 and Q12, so the ROM's string numbers and wires, T2's pins and the board's pin-to-triac wiring agree with the tables' row-order triac column and not with the triac each misplaced wire is printed beside. This is a wiring-detail disagreement: the string, its public address and its fitment are not in doubt. Each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the violet string to the playfield (feed J121-6, return J121-11) and to the cabinet (feed J119-3, return J119-1): besides the left side of the playfield it lights the coin-door lamps, which are not placed. The retained VPW script's UpdateGI Case 4 is a bare Exit Sub under the comment Left Playfield, so the table lights this side from public 2 instead (see public 2). Placements: the 7 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a bulb the nFozzy table models for public 4 (a connected piece of its GI_bulbL bulb mesh); nFozzy's render lights and sprites make no socket. The membership is the nFozzy table's split, which agrees with the ROM's own name for this string (LEFT PLAYFIELD) and the 3-9 routing of the yellow string to the playfield and the violet one to the playfield and the coin door; the VPW table drives the whole playfield from public 2 and leaves its Left Playfield handler (Case 4) empty, a simplification rather than a different split. The manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a bulb, listed in the spatial audit, are not placed.",
         "part_number": "#555"
       },
       "provenance": {
@@ -10954,6 +11007,8 @@
           "manual.williams.terminator-2-judgment-day.1991",
           "runtime.terminator-2.t2-l8.gi-test",
           "pinmame.core.4ec52ff0ac13",
+          "manual-chart.bally.doctor-who.1992",
+          "manual.bally.the-addams-family.1992.handbook",
           "vpx-script.t2-vpw-0022",
           "vpx-table.t2-nfozzy-1-12a",
           "vpx-script.t2-modern-comparison"
@@ -11258,7 +11313,7 @@
         {
           "id": "excerpt.t2.lamp-board-legend",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-board-legend.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 70, crop box 0.12,0.775,0.92,0.95, scanned page rendered at its native resolution (embedded image xref 621, 2551px across 8.26in), rendered at 309 dpi, grayscale, 2041x633 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 70, crop box 0.12,0.775,0.92,0.95, scanned page rendered at its native resolution (embedded image xref 621, 2551px across 8.26in), rendered at 309 dpi, grayscale, 2041x633 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "ffdcc6b69919854701f2570d9ad9bd5d9ffe80a19de6cffa84d442dd34037c3f",
           "locator": "PDF page 70, printed page 2-4, Lamp Boards legend A-K below the major-mechanisms map",
           "method": "manual",
@@ -11270,7 +11325,7 @@
         {
           "id": "excerpt.t2.drop-target-assembly",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/drop-target-assembly.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 89, crop box 0.02,0.04,0.98,0.94, scanned page rendered at its native resolution (embedded image xref 792, 2551px across 8.26in), rendered at 126 dpi, capped to 1000px wide, grayscale, 1001x1328 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 89, crop box 0.02,0.04,0.98,0.94, scanned page rendered at its native resolution (embedded image xref 792, 2551px across 8.26in), rendered at 126 dpi, capped to 1000px wide, grayscale, 1001x1328 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "f4f80ad8d9a0cf0bf4607c8e0a9f929e24734ee8fbab7bb5c22c4bfb66e03509",
           "locator": "PDF page 89, printed page 2-23, A-14615 1-Bank Drop Target Assembly drawing and parts list",
           "method": "manual",
@@ -11282,19 +11337,55 @@
         {
           "id": "excerpt.t2.lamp-locations",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-locations.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.5,0.08,0.9,0.72, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1021x2312 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.5,0.08,0.9,0.72, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1021x2312 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "f94c2a497ac2b3c5d0165ace2129036100ec03d745a4fb327170d627b63bcc73",
           "locator": "PDF page 101, printed page 2-35, Lamp Locations drawing",
           "method": "manual",
           "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-locations.md",
           "reviewed": true,
-          "sha256": "52c60aa696caa8faadbd673ad42b7bb9d5f3d3b69b2111681fbb821c3d4e3342",
+          "sha256": "9c6fbad517091f052f1271388d489831adeff074582528dde09385d53f97ee4b",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-list-1",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list-1.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.13,0.095,0.46,0.515, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 235 dpi, capped to 640px wide, grayscale, 641x1154 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "97775aaffe0da1c34e4c539115959934b9e82985dd4d5a41b78c9424aeafe6eb",
+          "locator": "PDF page 101, printed page 2-35, Lamp Locations list, header and lamps 11-45",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list.md",
+          "reviewed": true,
+          "sha256": "82263224ce5781306c22c9526eac667efd47e264de720e28afffbb4fe99d1d99",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-list-2",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list-2.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.13,0.5,0.46,0.925, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 235 dpi, capped to 640px wide, grayscale, 641x1167 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "552fe26ce9db896a30e98c07a1bfbaee64d15a2f35f6365352d96ecc1c6b1c7f",
+          "locator": "PDF page 101, printed page 2-35, Lamp Locations list, lamps 44-78",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list.md",
+          "reviewed": true,
+          "sha256": "82263224ce5781306c22c9526eac667efd47e264de720e28afffbb4fe99d1d99",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-list-3",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list-3.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.48,0.715,0.84,0.895, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 235 dpi, capped to 700px wide, grayscale, 701x496 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "6f6b3db195d8cb157bbcfe7b3467b1ade477929456e6a0e1908787e6f0726e3e",
+          "locator": "PDF page 101, printed page 2-35, Lamp Locations list, lamps 81-88 and the bulb part numbers",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-list.md",
+          "reviewed": true,
+          "sha256": "82263224ce5781306c22c9526eac667efd47e264de720e28afffbb4fe99d1d99",
           "transcribed_by": "curator, manually read and visually checked against the retained crop"
         },
         {
           "id": "excerpt.t2.switch-locations",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/switch-locations.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 103, crop box 0.4,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 918, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1455x2708 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 103, crop box 0.4,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 918, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1455x2708 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "7fad9e9ffef7cf9d6f56aa28499dde129e3281d77bada602cdcb75eccd5bf6e0",
           "locator": "PDF page 103, printed page 2-37, Switch Locations drawing",
           "method": "manual",
@@ -11306,7 +11397,7 @@
         {
           "id": "excerpt.t2.solenoid-table-2-38-01-16",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38-01-16.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.1,0.9,0.39, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x580 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.1,0.9,0.39, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x580 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "58e154ffd5621ad7d7b1528bffa4f573f4c6b8d57e74b413a803cac8fbd5c10f",
           "locator": "PDF page 104, printed page 2-38, Solenoid Table (second copy) rows 1-16",
           "method": "manual",
@@ -11318,7 +11409,7 @@
         {
           "id": "excerpt.t2.solenoid-table-2-38-17-flippers",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38-17-flippers.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.37,0.9,0.68, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x620 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.37,0.9,0.68, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x620 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "7a3dd442ea5781a85e2ea9c3577581f1009ebecfdf6b7715e1b14ffaee1cb11d",
           "locator": "PDF page 104, printed page 2-38, Solenoid Table (second copy) rows 16-28, G.I. and lower flippers",
           "method": "manual",
@@ -11330,7 +11421,7 @@
         {
           "id": "excerpt.t2.solenoid-locations-lists-1",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists-1.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.1,0.52,0.56, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x1133 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.1,0.52,0.56, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x1133 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "f55b0334de952c7a97e77abf47818c46a46dbff39389d366430eedf989ed3c0b",
           "locator": "PDF page 105, printed page 2-39, Solenoid Locations list 01-28",
           "method": "manual",
@@ -11342,7 +11433,7 @@
         {
           "id": "excerpt.t2.solenoid-locations-lists-2",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists-2.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.54,0.52,0.8, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x641 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.54,0.52,0.8, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x641 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "39e126e495f7328608c7919449028e22f9992ebaeed651cc93860c386a2c9ea0",
           "locator": "PDF page 105, printed page 2-39, Solenoid Locations General Illumination Circuits and Flippers lists",
           "method": "manual",
@@ -11354,7 +11445,7 @@
         {
           "id": "excerpt.t2.solenoid-locations",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.42,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1404x2708 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.42,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1404x2708 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "8987d184a12179498371d549271d84fb59461dc0a16efc840719953aab4b5242",
           "locator": "PDF page 105, printed page 2-39, Solenoid Locations drawing",
           "method": "manual",
@@ -11366,7 +11457,7 @@
         {
           "id": "excerpt.t2.interboard-solenoid-circuits-1",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-1.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.04,0.94,0.34, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.04,0.94,0.34, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "73ba9fda3883ab93cba215b75fb754a30c214b5e0f954de2fdc6828728472655",
           "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Solenoid Circuits 1-14",
           "method": "manual",
@@ -11378,7 +11469,7 @@
         {
           "id": "excerpt.t2.interboard-solenoid-circuits-2",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-2.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.32,0.94,0.62, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.32,0.94,0.62, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "286958e9a19ad1e4524211f23ac344ff1612232c88dc7ac7a377e3c09efd8cf5",
           "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Solenoid Circuits 14-28 and the tieback diode",
           "method": "manual",
@@ -11390,7 +11481,7 @@
         {
           "id": "excerpt.t2.interboard-solenoid-circuits-3",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-3.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.6,0.94,0.93, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x598 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.6,0.94,0.93, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x598 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "2c5ad98c84de24d66927e1aee0e074cd5eece5f09b137534de66123852cbdcff",
           "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Flipper Circuits",
           "method": "manual",
@@ -11402,7 +11493,7 @@
         {
           "id": "excerpt.t2.interboard-gi-circuits",
           "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-gi-circuits.webp",
-          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 115, crop box 0.08,0.05,0.92,0.33, scanned page rendered at its native resolution (embedded image xref 1026, 2551px across 8.26in), rendered at 187 dpi, capped to 1300px wide, grayscale, 1301x614 WebP quality 80",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 115, crop box 0.08,0.05,0.92,0.33, scanned page rendered at its native resolution (embedded image xref 1026, 2551px across 8.26in), rendered at 187 dpi, capped to 1300px wide, grayscale, 1301x614 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
           "image_sha256": "2d17e1215aa0b427e5a7bd490a34c3aa1461b56ae172a1d626baadc5038777db",
           "locator": "PDF page 115, printed page 3-9, Interboard Wiring: General Illumination Circuits",
           "method": "manual",
@@ -11415,7 +11506,7 @@
       "id": "manual.williams.terminator-2-judgment-day.1991",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "ARC ARC manifest ID other.arcarc.williams.terminator-2-judgment-day.1991.8540d654b39c; retained 118-page image-only Williams operations manual. The attached crops were rendered directly from the exact 8540d654... bytes: switch matrix p.46, solenoid/GI table p.48 (1-28), lamp matrix p.53, major-mechanism map and lamp-board legend p.70, drop-target assembly p.89, platform-gun assembly p.90, lamp schematic p.100, lamp, switch and solenoid location drawings p.101, p.103 and p.105, the second solenoid table p.104 (2-38), the 2-39 location lists p.105, and the 3-8/3-9 interboard wiring tables p.114-115.",
+      "locator": "ARC ARC manifest ID other.arcarc.williams.terminator-2-judgment-day.1991.8540d654b39c; retained 118-page image-only Williams operations manual. The attached crops were rendered directly from the exact 8540d654... bytes: switch matrix p.46, solenoid/GI table p.48 (1-28), lamp matrix p.53, major-mechanism map and lamp-board legend p.70, drop-target assembly p.89, platform-gun assembly p.90, lamp schematic p.100, lamp lists and lamp, switch and solenoid location drawings p.101, p.103 and p.105, the second solenoid table p.104 (2-38), the 2-39 location lists p.105, and the 3-8/3-9 interboard wiring tables p.114-115.",
       "original_filename": "Terminator 2 Judgement Day Operations Manual.pdf",
       "sha256": "8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b",
       "uri": "external:pinmame-manuals/by-machine/williams.terminator-2-judgment-day.1991/arcarc/Terminator%202%20Judgement%20Day%20Operations%20Manual.pdf"
@@ -11523,6 +11614,56 @@
       "locator": "One hash-pinned LibPinMAME harness run of t2_l8 from empty NVRAM (scenario tools/harness-scenarios/wpc-alpha/t2-gi-test.json) that steps T.6 GEN'L. ILLUM. through all illumination and then each string; every step changes one public G.I. output alone while the ROM prints its name and wires: public 0 TOP INSERT (WHT-BRN BRN), 1 BOTTOM INSERT (WHT-ORN ORN), 2 RIGHT PLAYFIELD (WHT-YEL YEL), 3 CPU STRING (WHT-GRN GRN), 4 LEFT PLAYFIELD (WHT-VIO VIO). After the fresh-NVRAM restart the ROM also flickers public 3 by itself.",
       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
       "uri": "internal:evidence/runtime/wpc-alpha/terminator-2-t2_l8-gi-test.json"
+    },
+    {
+      "attribution": "Bally/Midway; scan hosted by the Internet Pinball Machine Database",
+      "excerpts": [
+        {
+          "id": "excerpt.doctor-who.handy-technician-chart",
+          "image": "evidence/excerpts/bally.doctor-who.1992/handy-technician-chart.webp",
+          "image_derivation": "Bally_1992_Doctor_Who_Handy_Technician_s_Chart_includes_Fuse_List.pdf page 1, crop box 0.53,0.47,1,0.97, born-digital page rendered for legibility (smallest type in region 4.0pt, targeting 11px glyphs), rendered at 125 dpi, capped to 1000px wide, grayscale, 1001x689 WebP quality 80",
+          "image_sha256": "87d5ff47b4bebad8a8bbe1d0f50ea168b0f493e272463f696412d3235a24bd07",
+          "locator": "Single page, solenoid/flasher, lamp and switch tables",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.doctor-who.1992/handy-technician-chart.md",
+          "reviewed": true,
+          "sha256": "0eb9998bfc6f84f0442f4037eed83635a8661676af159d825d6c8267d42a8961",
+          "transcribed_by": "curator, read from the rendered page"
+        }
+      ],
+      "id": "manual-chart.bally.doctor-who.1992",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Cited for board-internal wiring only: the general-illumination rows of this WPC game's Handy Technician's Chart, printed for the same power driver board, pair each G.I. triac with its connector pins and wire (J120-7 Q18 WHT-BRN, J120-8 Q10 WHT-ORG, J121-9 Q14 WHT-YEL, J121-10 Q16 WHT-GRN, J121-11/J119-1 Q12 WHT-VIO). Direct resource: https://web.archive.org/web/20231021004812id_/https://www.ipdb.org/files/738/Bally_1992_Doctor_Who_Handy_Technician_s_Chart_includes_Fuse_List.pdf.",
+      "original_filename": "Bally_1992_Doctor_Who_Handy_Technician_s_Chart_includes_Fuse_List.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "92798a56f1ef8693abfbf7361b31bdce78efc50f9cccdd956880a6a733c8f3bd",
+      "uri": "external:pinmame-manuals/by-machine/bally.doctor-who.1992/ipdb-738/Bally_1992_Doctor_Who_Handy_Technician_s_Chart_includes_Fuse_List.pdf"
+    },
+    {
+      "attribution": "Midway Manufacturing Company, manufacturers of Bally amusement games",
+      "excerpts": [
+        {
+          "id": "excerpt.addams-family.general-illumination",
+          "image": "evidence/excerpts/bally.the-addams-family.1992/general-illumination.webp",
+          "image_derivation": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf page 6, crop box 0.03,0.648,0.96,0.775, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 508 dpi, capped to 2600px wide, 2601x550 WebP quality 80",
+          "image_sha256": "025571854838de527e52911f13e6e1ed209d3d2b471d72490bda9d519bdb34e1",
+          "locator": "Printed page 5, General Illumination Circuits",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.the-addams-family.1992/general-illumination.md",
+          "reviewed": true,
+          "sha256": "b9dc0b005514a8b67f487ea945434901f6a472f0872f006e89fb17fb43314798",
+          "transcribed_by": "curator, read from the rendered page"
+        }
+      ],
+      "id": "manual.bally.the-addams-family.1992.handbook",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Cited for board-internal wiring only: the General Illumination Circuits block (printed page 5) of this WPC game's operator's handbook, printed for the same power driver board, pairs the brown, orange, yellow, green and violet strings with triacs Q18, Q10, Q14, Q16 and Q12.",
+      "original_filename": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "76c468eb747a61a176874d3b02cb495451eea9b5f9268a69ba58603bc8a9cf8f",
+      "uri": "external:pinmame-manuals/by-machine/bally.the-addams-family.1992/ipdb/Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf"
     },
     {
       "attribution": "PinMAME game definitions contributors",
