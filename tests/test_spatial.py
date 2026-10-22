@@ -369,7 +369,7 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(35, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(36, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -381,14 +381,14 @@ class SpatialMigrationTests(unittest.TestCase):
 		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record. The 2026-10-09 Black Hole curation folds its blkholea
 		# residual record into the main one.
 		self.assertEqual(794, report["machine_count"])
-		self.assertEqual(35, report["author_ready_count"])
+		self.assertEqual(36, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(744, report["partial_count"])
+		self.assertEqual(743, report["partial_count"])
 		self.assertEqual(15, report["stub_count"])
 		self.assertEqual(14, report["non_game_record_count"])
 		self.assertEqual(808, report["catalog_record_count"])
@@ -396,13 +396,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
 		# The twelve retrofit-pending machines above (which already include X-Men Pro), plus
-		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
-		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
-		# function the factory schematic leaves blank and which nothing locates. Monster Bash is
+		# Terminator 2, plus Twilight Zone. Centaur was counted here until its 2026-10-22 promotion,
+		# which found its one unplaced device, auxiliary lamp 113, to be an unwired A9 circuit. Monster Bash is
 		# also not a retrofit: it was demoted for an unresolved switch-polarity conflict (74-78),
 		# not a missing spatial record, so it is not counted here either. Twilight Zone genuinely
 		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
-		# VPX object), so it is counted alongside Centaur/Terminator 2.
+		# VPX object), so it is counted alongside Terminator 2.
 		# Star Trek: The Next Generation is likewise not a retrofit: it was curated directly from a
 		# legacy candidate-only stub, and three lamps (53, 85, 86) have no world-space Light object
 		# in the retained extraction (only a local-origin Primitive with an unresolved parent
@@ -495,7 +494,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Star Trek: The Next Generation's 2026-10-21 author-ready promotion removes one spatial-placement gap.
 		# Star Wars' spatial retrofit uses observed table/manual positions and
 		# keeps the requirement listed, adding one.
-		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
+		# Centaur's 2026-10-22 author-ready promotion removes one.
+		self.assertEqual(710, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -547,11 +547,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Baywatch adds the documented #89/#906 flasher-population disagreement.
 		# Mystery Castle adds one: its coil table and GI wiring drawing disagree on relay 16/26 regions.
 		# Star Wars records contradictory factory flash-bank counts.
-		self.assertEqual(42, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Centaur's promotion settles its lamp-113 conflict, removing one.
+		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])
 		self.assertEqual(808, catalog["summary"]["machine_count"])
-		self.assertEqual(35, catalog["summary"]["author_ready_count"])
+		self.assertEqual(36, catalog["summary"]["author_ready_count"])
 		self.assertEqual(15, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
@@ -560,8 +561,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
-		# main record, removing one more.
-		self.assertEqual(758, catalog["summary"]["partial_count"])
+		# main record, removing one more. Centaur's 2026-10-22 promotion moves one record to author_ready.
+		self.assertEqual(757, catalog["summary"]["partial_count"])
 		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

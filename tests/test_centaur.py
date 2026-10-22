@@ -12,13 +12,21 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "centaur-1981.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
+AUX_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-aux-lamps-in-play.json"
+PINSIDE_PHOTOS = {
+	"65f35c74d10ac19414aedc4fa70f52e5a89dd4b3.jpg": "6ddd40f46dc512fc0415cc1455589b0d35efae5bc482ab6c628e5e8bb07ecb00",
+	"826977b13515798c9ccd366cda9be25b8c63d669.jpg": "629c564dd444053caf579c0d0e3813fea5f3084453069e9720d425596270ad5e",
+}
 
 MANUAL_SHA256 = "9893d29ee871fd8c0a2afea35e931f107fb97a8156739035e005b15fd879e7ea"
 TRANSCRIPTION_SHA256 = "b2c47f5ddb5f7f22ffa680e01f8fcf84512f6afabfdc1d408b1fe45a89189c05"
@@ -173,9 +181,6 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertEqual("control_signal", device["kind"])
 		self.assertEqual("validated", device["provenance"]["status"])
 		self.assertIn("strobe", device["label"].lower())
-		self.assertTrue(
-			all(conflict["id"].startswith("conflict.aux-lamp-") for conflict in self.definition["conflicts"])
-		)
 		self.assertNotIn("coil.driver-17", [conflict["path"] for conflict in self.definition["conflicts"]])
 
 	def test_every_mpu_option_switch_is_enumerated(self) -> None:
@@ -518,30 +523,38 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		self.assertEqual("control_signal", lamps[1]["kind"])
 
-	def test_coverage_is_partial_with_one_resolved_and_one_open_blocker(self) -> None:
-		"""The 65/97 conflict is resolved; 113 remains the single spatial/unresolved blocker."""
+	def test_coverage_is_author_ready_with_nothing_open(self) -> None:
 		coverage = self.definition["coverage"]
-		self.assertEqual("partial", coverage["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], coverage["missing"])
-		self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
-		self.assertTrue(
-			all(v == "validated" for k, v in coverage["dimensions"].items() if k != "spatial_placement")
-		)
-		self.assertEqual(
-			{"conflict.aux-lamp-113-unidentified"},
-			{c["id"] for c in self.definition["conflicts"]},
-		)
+		self.assertEqual("author_ready", coverage["status"])
+		self.assertEqual([], coverage["missing"])
+		self.assertTrue(all(value == "validated" for value in coverage["dimensions"].values()))
+		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
+		self.assertFalse((ROOT / "machines" / "partial" / "bally" / "centaur-1981.json").exists())
 
-	def test_lamp_113_is_the_unidentified_blocker(self) -> None:
+	def test_lamp_113_is_an_unwired_circuit(self) -> None:
+		"""The board drives A9J2-11, but the harness has no wire there and nothing names a function.
+
+		What PinMAME publishes at 113 is the carry bit of the four-bit top-lane register, which the
+		auxiliary-lamp gameplay run pins: it changes only with 65 at a lane-change wrap and in the
+		power-up and game-start flashes. A bulb bound to it would invent a lamp.
+		"""
 		lamps = {
 			item["binding"]["device"]: item
 			for item in self.definition["outputs"]
 			if item["binding"]["group"] == "pinmame.output.lamp"
 		}
 		device = lamps[113]
-		self.assertEqual("used", device["availability"])
-		self.assertIn("function not printed", device["label"])
-		self.assertNotIn("spatial", device)
+		self.assertEqual("unused", device["availability"])
+		self.assertEqual("not_applicable", device["spatial"]["status"])
+		self.assertEqual("unused", device["spatial"]["reason"])
+		self.assertIn("human-review.centaur.pinside-a9-photos", device["provenance"]["source_refs"])
+		self.assertIn("runtime.centaur.aux-lamps-in-play", device["provenance"]["source_refs"])
+		note = (ROOT / "evidence" / "excerpts" / "bally.centaur.1981" / "a9-harness-j2-list.md").read_text(encoding="utf-8")
+		self.assertIn("| 11 | no | | |", note)
+		evidence = load_json(AUX_EVIDENCE_PATH)
+		run_note = evidence["runtime"]["observations"]["runs"]["centaur-aux-lamps-in-play"]["note"]
+		self.assertIn("3 times with 65 at a lane rotation, and never otherwise", run_note)
 
 
 	def test_centre_coin_chute_selector_is_enumerated(self) -> None:
@@ -551,14 +564,13 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertEqual("used", device["availability"])
 			self.assertIn("centre", device["label"])
 
-	def test_every_device_carries_a_spatial_record_except_lamp_113(self) -> None:
-		unlocated = []
+	def test_every_device_carries_a_validated_spatial_record(self) -> None:
 		for item in self.definition["inputs"] + self.definition["outputs"]:
-			if "spatial" not in item:
-				unlocated.append(item["binding"]["device"])
+			spatial = item.get("spatial")
+			self.assertIsNotNone(spatial, item["id"])
+			self.assertIn(spatial["status"], {"validated", "not_applicable"}, item["id"])
 		for display in self.definition["displays"]:
 			self.assertIn("spatial", display, display["id"])
-		self.assertEqual([113], unlocated)
 
 
 	def test_bare_auxiliary_matrix_positions_have_no_lamp(self) -> None:
@@ -584,24 +596,62 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertIn("N/U", device["physical"]["notes"], address)
 
 
-	def test_outer_top_lane_lamps_follow_the_manual_not_the_table(self) -> None:
-		"""A9J2-7 is TOP LEFT LANE and A9J2-18 is TOP RIGHT LANE.
+	def test_outer_top_lane_lamps_follow_the_rom_pairing(self) -> None:
+		"""The ROM lights 97 for the left rollover (switch 5) and 65 for the right (switch 3).
 
-		The retained community table binds these the other way round. The manual is ground truth for
-		physical wiring and the same traced chain reproduces the table's other nine auxiliary
-		assignments exactly, so the table is wrong here. Left must also sit left of right on the
-		playfield, which is the check that would have caught the original swap.
+		The A9 sheet prints TOP LEFT LANE against A9J2-7 (public 65) and TOP RIGHT LANE against
+		A9J2-18 (public 97). An earlier pass followed that and called the retained table wrong, but a
+		lit top lane is a made lane and the ROM's own pairing, read from a gameplay run, puts 97 with
+		the left rollover. Each lane lamp must sit in its own rollover's column, and left must sit
+		left of right.
 		"""
 		lamps = {
 			item["binding"]["device"]: item
 			for item in self.definition["outputs"]
 			if item["binding"]["group"] == "pinmame.output.lamp"
 		}
-		self.assertEqual("Top Left Lane", lamps[65]["label"])
-		self.assertEqual("Top Middle Lane", lamps[81]["label"])
-		self.assertEqual("Top Right Lane", lamps[97]["label"])
-		xs = [lamps[address]["spatial"]["placements"][0]["x"] for address in (65, 81, 97)]
+		self.assertEqual(("lamp.rollover-1-left", "Top Left Lane"), (lamps[97]["id"], lamps[97]["label"]))
+		self.assertEqual(("lamp.rollover-2", "Top Middle Lane"), (lamps[81]["id"], lamps[81]["label"]))
+		self.assertEqual(("lamp.rollover-3-right", "Top Right Lane"), (lamps[65]["id"], lamps[65]["label"]))
+		evidence = load_json(AUX_EVIDENCE_PATH)
+		pairing = evidence["runtime"]["observations"]["switch_to_lamp"]
+		self.assertEqual({"5": 97, "4": 81, "3": 65}, {key: pairing[key] for key in ("5", "4", "3")})
+		for switch, lamp in ((5, 97), (4, 81), (3, 65)):
+			lamp_x = lamps[lamp]["spatial"]["placements"][0]["x"]
+			switch_x = self.inputs[switch]["spatial"]["placements"][0]["x"]
+			self.assertLess(abs(lamp_x - switch_x), 0.02, f"lamp {lamp} is not above rollover {switch}")
+		xs = [lamps[address]["spatial"]["placements"][0]["x"] for address in (97, 81, 65)]
 		self.assertEqual(sorted(xs), xs, "top lanes must run left to right across the playfield")
+
+	def test_struck_slingshots_and_bumpers_flick_the_lamps_the_sheet_prints(self) -> None:
+		"""The ROM-side check of the rest of the A9 decoding: each struck device flicks its own row."""
+		evidence = load_json(AUX_EVIDENCE_PATH)
+		pairing = evidence["runtime"]["observations"]["switch_to_lamp"]
+		self.assertEqual({"37": 66, "38": 82, "39": 98, "40": 114}, {key: pairing[key] for key in ("37", "38", "39", "40")})
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		for switch, lamp in ((37, 66), (38, 82), (39, 98), (40, 114)):
+			side = "Right" if switch in (37, 39) else "Left"
+			self.assertTrue(lamps[lamp]["label"].startswith(side), lamp)
+			self.assertTrue(self.inputs[switch]["label"].startswith(side), switch)
+
+	def test_ball_kick_records_the_solenoid_expander_relay(self) -> None:
+		device = self.solenoids[14]
+		self.assertIn("Solenoid Expander A15", device["physical"]["notes"])
+		self.assertIn("schematics.centaur-ii-reprint.bally.centaur.1981", device["provenance"]["source_refs"])
+
+	def test_rebound_switch_places_all_five_contacts(self) -> None:
+		device = self.inputs[34]
+		self.assertEqual(5, device["physical"]["quantity"])
+		placements = device["spatial"]["placements"]
+		self.assertEqual(5, len(placements))
+		left = sorted(p["y"] for p in placements if p["x"] < 0.2)
+		right = sorted(p["y"] for p in placements if p["x"] > 0.7 and p["y"] > 0.5)
+		upper = [p for p in placements if p["x"] > 0.7 and p["y"] < 0.3]
+		self.assertEqual((2, 2, 1), (len(left), len(right), len(upper)))
 
 	def test_auxiliary_board_is_sourced_from_the_centaur_manual(self) -> None:
 		"""The A9 sheet is printed in Centaur's own manual, not borrowed from another game.
@@ -622,31 +672,19 @@ class CentaurDefinitionTests(unittest.TestCase):
 				address,
 			)
 
-	def test_placement_count_matches_declared_quantity_or_is_explained(self) -> None:
+	def test_placement_count_matches_declared_quantity(self) -> None:
 		"""A render primitive is not a physical contact, and a lamp pair is not one bulb.
 
 		The retained table models a single physical target as a trigger plus a hit target plus
 		several render primitives stacked at one point. An earlier pass promoted each object as its
 		own sensor, which invented contacts: switch 12 carried ten placements for four physical
-		targets. Placements must now equal the declared quantity, and the only permitted shortfalls
-		are the ones the record explains in prose - switch 34, whose five contacts include two the
-		table does not model, and the auxiliary lamp pairs, where only one of two bulbs is located.
-		Those must not claim validated spatial status.
+		targets. Every located device must place exactly the quantity it declares.
 		"""
-		shortfall_allowed = {34, 65, 66, 67, 81, 82, 83, 97, 98, 99, 113, 114, 115}
 		for item in self.definition["inputs"] + self.definition["outputs"]:
-			spatial = item.get("spatial") or {}
-			placements = spatial.get("placements")
-			if not placements:
-				continue
+			placements = (item.get("spatial") or {}).get("placements")
 			quantity = (item.get("physical") or {}).get("quantity")
-			if quantity is None:
-				continue
-			address = item["binding"]["device"]
-			if len(placements) == quantity:
-				continue
-			self.assertIn(address, shortfall_allowed, f"{item['id']}: {len(placements)} != {quantity}")
-			self.assertLess(len(placements), quantity, item["id"])
+			if placements and quantity is not None:
+				self.assertEqual(quantity, len(placements), item["id"])
 
 	def test_stacked_render_objects_are_not_separate_contacts(self) -> None:
 		"""No two placements on one device may describe the same point."""
@@ -659,15 +697,183 @@ class CentaurDefinitionTests(unittest.TestCase):
 						f"{item['id']}: {one['id']} and {other['id']} are the same location",
 					)
 
-	def test_every_auxiliary_circuit_drives_a_pair_of_lamps(self) -> None:
-		"""The AS-2518-43 drives twenty-four lamps as twelve sets of two."""
+	def test_only_the_chamber_circuits_drive_a_pair_of_lamps(self) -> None:
+		"""The A9 sheet prints (2) against the four chamber circuits and against nothing else.
+
+		An earlier pass read the board as twelve sets of two, which no source says; it left eight
+		single-bulb circuits claiming a second bulb with no coordinate.
+		"""
 		lamps = {
 			item["binding"]["device"]: item
 			for item in self.definition["outputs"]
 			if item["binding"]["group"] == "pinmame.output.lamp"
 		}
-		for address in (65, 66, 67, 81, 82, 83, 97, 98, 99, 113, 114, 115):
+		for address in (67, 83, 99, 115):
 			self.assertEqual(2, lamps[address]["physical"]["quantity"], address)
+			placements = lamps[address]["spatial"]["placements"]
+			self.assertEqual(2, len(placements), address)
+			# one bulb either side of the Queen's Chamber lane
+			self.assertLess(placements[0]["x"], 0.06, address)
+			self.assertGreater(placements[1]["x"], 0.15, address)
+		for address in (65, 66, 81, 82, 97, 98, 114):
+			self.assertNotIn("quantity", lamps[address]["physical"], address)
+			self.assertEqual(1, len(lamps[address]["spatial"]["placements"]), address)
+
+	def test_aux_lamp_runtime_summary_reproduces_when_configured(self) -> None:
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("evidence roots are not configured")
+		run_dir = Path(root) / "centaur-1981" / "harness-aux-lamps" / "centaur"
+		evidence = load_json(AUX_EVIDENCE_PATH)
+		(raw,) = evidence["runtime"]["raw_runs"]
+		self.assertEqual(raw["sha256"], hashlib.sha256((run_dir / "run.json").read_bytes()).hexdigest())
+		self.assertEqual(raw["scenario_sha256"], hashlib.sha256((ROOT / raw["scenario_path"]).read_bytes()).hexdigest())
+		result = subprocess.run(
+			[sys.executable, "-B", str(ROOT / "tools" / "centaur_aux_lamp_runtime_summary.py"), "--run-dir", str(run_dir), "--check"],
+			capture_output=True, text=True, encoding="utf-8",
+		)
+		self.assertEqual(0, result.returncode, result.stderr)
+		sys.path.insert(0, str(ROOT / "tools"))
+		from build_external_evidence_manifest import check_manifest
+
+		self.assertEqual(evidence["source"]["sha256"], check_manifest(run_dir, "centaur"))
+
+	def test_pinside_photographs_are_retained_when_configured(self) -> None:
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("evidence roots are not configured")
+		for name, digest in PINSIDE_PHOTOS.items():
+			path = Path(root) / "centaur-1981" / "pinside-303903" / name
+			self.assertTrue(path.is_file(), str(path))
+			self.assertEqual(digest, hashlib.sha256(path.read_bytes()).hexdigest(), name)
+
+	def test_spatial_report_matches_the_definition(self) -> None:
+		result = subprocess.run(
+			[sys.executable, "-B", str(ROOT / "tools" / "centaur_spatial_report.py"), "--check"],
+			capture_output=True, text=True, encoding="utf-8",
+		)
+		self.assertEqual(0, result.returncode, result.stderr + result.stdout)
+		report = load_json(ROOT / "reports" / "spatial" / "bally" / "centaur-1981.json")
+		self.assertEqual("pinmame-spatial-audit", report["format"])
+		self.assertEqual([], report["unresolved"])
+		self.assertIn("pinmame.output.lamp:113", report["not_applicable_outputs"]["unused"])
+
+
+def _summary_tool():
+	sys.path.insert(0, str(ROOT / "tools"))
+	import centaur_aux_lamp_runtime_summary as summary
+
+	return summary
+
+
+def _switch(number: int, state: int, time: float) -> dict:
+	return {"event": "switch", "number": number, "state": state, "time_s": time}
+
+
+def _lamp(number: int, state: int, time: float) -> dict:
+	return {"event": "lamp", "number": number, "state": state, "time_s": time}
+
+
+def _lamp_113_trace() -> dict:
+	"""A minimal trace with one data-line flash before the serve and one lane wrap after it."""
+	events = [_switch(8, 0, 10.0), _switch(21, 1, 20.0)]
+	for time, state in ((1.0, 1), (1.12, 0)):
+		events += [_lamp(number, state, time) for number in (49, 50, 113, 114, 115)]
+	events += [_lamp(65, 1, 20.05), _lamp(113, 1, 20.05), _lamp(97, 0, 20.08)]
+	return {"events": events}
+
+
+def _strike_trace() -> dict:
+	events = []
+	for offset, (switch, (lamp, solenoid)) in enumerate(_summary_tool().STRIKES.items()):
+		start = 10.0 * (offset + 1)
+		events += [
+			_switch(switch, 1, start),
+			{"event": "solenoid", "number": solenoid, "state": 1, "time_s": start + 0.01},
+			_lamp(lamp, 0, start + 0.03),
+			_lamp(lamp, 1, start + 0.17),
+		]
+	return {"events": events}
+
+
+class CentaurRuntimeVerifierTests(unittest.TestCase):
+	"""The runtime-summary checks must refuse traces that do not show what the summary claims."""
+
+	def test_lamp_113_classifier_accepts_a_flash_and_a_lane_wrap(self) -> None:
+		summary = _summary_tool()
+		trace = _lamp_113_trace()
+		counts = summary.classify_113(trace, summary.lamp_events(trace))
+		self.assertEqual({"whole_row_flash": 2, "lane_rotation_with_65": 1}, counts)
+
+	def test_lamp_113_classifier_refuses_unexplained_activity(self) -> None:
+		summary = _summary_tool()
+		mutations = {
+			# an extra 113 pulse beside two lamps changing the other way
+			"opposite direction": [_lamp(113, 1, 5.0), _lamp(49, 0, 5.0), _lamp(50, 0, 5.0), _lamp(113, 0, 5.1), _lamp(49, 1, 5.1), _lamp(50, 1, 5.1)],
+			# a flash that mixes in a lamp from neither flash group
+			"foreign lamp": [_lamp(113, 1, 6.0), _lamp(114, 1, 6.0), _lamp(115, 1, 6.0), _lamp(66, 1, 6.0), _lamp(113, 0, 6.1), _lamp(114, 0, 6.1), _lamp(115, 0, 6.1), _lamp(66, 0, 6.1)],
+			# a flash that lights 113 and never puts it out
+			"no off phase": [_lamp(113, 1, 7.0), _lamp(114, 1, 7.0), _lamp(115, 1, 7.0), _lamp(49, 1, 7.0)],
+			# 113 changing on its own in play
+			"alone in play": [_lamp(113, 1, 30.0), _lamp(113, 0, 30.5)],
+		}
+		for name, extra in mutations.items():
+			trace = _lamp_113_trace()
+			trace["events"] = sorted(trace["events"] + extra, key=lambda event: event["time_s"])
+			with self.assertRaises(SystemExit, msg=name):
+				summary.classify_113(trace, summary.lamp_events(trace))
+		trace = _lamp_113_trace()
+		trace["events"] = [dict(event, state=0) if event["event"] == "lamp" and event["number"] == 65 else event for event in trace["events"]]
+		with self.assertRaises(SystemExit, msg="65 moving the other way at the wrap"):
+			summary.classify_113(trace, summary.lamp_events(trace))
+
+	def test_strike_verifier_requires_the_lamp_to_come_back_on(self) -> None:
+		summary = _summary_tool()
+		trace = _strike_trace()
+		self.assertEqual({"37": 66, "38": 82, "39": 98, "40": 114}, summary.verify_strikes(trace, summary.lamp_events(trace)))
+		trace["events"] = [event for event in trace["events"] if not (event["event"] == "lamp" and event["state"] == 1 and event["number"] == 98)]
+		with self.assertRaises(SystemExit):
+			summary.verify_strikes(trace, summary.lamp_events(trace))
+
+	def test_retained_run_mutations_are_refused_when_configured(self) -> None:
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("evidence roots are not configured")
+		summary = _summary_tool()
+		run = load_json(Path(root) / "centaur-1981" / "harness-aux-lamps" / "centaur" / "run.json")
+		summary.verify(run)
+		pulsed = dict(run, events=sorted(
+			run["events"] + [_lamp(113, 1, 20.0), _lamp(1, 0, 20.0), _lamp(17, 0, 20.0), _lamp(113, 0, 20.1), _lamp(1, 1, 20.1), _lamp(17, 1, 20.1)],
+			key=lambda event: event["time_s"],
+		))
+		with self.assertRaises(SystemExit):
+			summary.verify(pulsed)
+		strikes = [event["time_s"] for event in run["events"] if event["event"] == "switch" and event.get("number") in (37, 38, 39, 40) and event["state"] == 1]
+		dark = dict(run, events=[
+			event for event in run["events"]
+			if not (event["event"] == "lamp" and event["state"] == 1 and event["number"] in (66, 82, 98, 114) and min(strikes) < event["time_s"])
+		])
+		with self.assertRaises(SystemExit):
+			summary.verify(dark)
+
+	def test_spatial_geometry_check_refuses_displaced_placements_when_configured(self) -> None:
+		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not root:
+			self.skipTest("evidence roots are not configured")
+		sys.path.insert(0, str(ROOT / "tools"))
+		import copy
+
+		import centaur_spatial_report as report
+
+		gameitems = Path(root) / report.EXTRACTION / "gameitems"
+		definition = load_json(DEFINITION_PATH)
+		report.verify_geometry(definition, gameitems)
+		for collection, group, address in (("inputs", "pinmame.input.switch", 34), ("outputs", "pinmame.output.lamp", 66), ("outputs", "pinmame.output.lamp", 99)):
+			mutated = copy.deepcopy(definition)
+			item = next(i for i in mutated[collection] if i["binding"] == {"device": address, "group": group})
+			item["spatial"]["placements"][-1]["x"] = round(item["spatial"]["placements"][-1]["x"] + 0.05, 6)
+			with self.assertRaises(SystemExit, msg=f"{group}:{address}"):
+				report.verify_geometry(mutated, gameitems)
 
 
 class By35ProfileTests(unittest.TestCase):

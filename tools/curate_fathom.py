@@ -1390,11 +1390,11 @@ def source_records() -> list[dict[str, Any]]:
 		{
 			"id": BOARD_SOURCE,
 			"kind": "human_review",
-			"uri": "internal:machines/partial/bally/centaur-1981.json",
+			"uri": "internal:machines/author-ready/bally/centaur-1981.json",
 			"revision": "repository",
 			"locator": (
 				"The AS-2518-23 lamp driver's public-address to connector-pin mapping, which is a property of the "
-				"board rather than of a game. machines/partial/bally/centaur-1981.json and "
+				"board rather than of a game. machines/author-ready/bally/centaur-1981.json and "
 				"machines/author-ready/bally/kiss-1979.json record identical mappings for all sixty addresses, "
 				"including the eight outputs that branch to a second connector pin (11, 12, 27, 28, 43, 44, 59, 60). "
 				"Fathom's own A5 sheet reproduces it independently for U1's first twelve outputs by straight-line "

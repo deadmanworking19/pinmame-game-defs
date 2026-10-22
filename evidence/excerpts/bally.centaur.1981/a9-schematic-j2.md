@@ -44,17 +44,25 @@ public lamps 68, 84, 100 and 116 are bare matrix positions rather than unused la
 
 Other J2 pins: `4 KEY`, `8 GND`, `9 GND`, and `10`, `13`, `14`, `15`, `16` marked `N/U`.
 
-## Two things this sheet settles
+## What this side of the sheet does and does not settle
 
-**The outer top lanes.** `J2-7` reads TOP **LEFT** LANE and `J2-18` reads TOP **RIGHT** LANE. With
-`public = 64 + 16k + address + 1` that makes public 65 the left lane and public 97 the right. The
-retained community table binds them the other way round; the same traced chain reproduces the
-table's other nine auxiliary assignments exactly, so the two outer lanes are a binding mistake in
-the table rather than a fault in the derivation.
+**The decoder-to-pin chain.** With `public = 64 + 16k + address + 1`, the chain above puts public
+65 on `J2-7`, 81 on `J2-1`, 97 on `J2-18` and 113 on `J2-11`, and likewise for the Q1 and Q2 rows.
+The ROM confirms the data-line half of it in play: a struck right slingshot (switch 37) flicks 66,
+the left slingshot (38) flicks 82, the right thumper bumper (39) flicks 98 and the left (40) flicks
+114, each the lamp this sheet prints on that row.
 
-**Pin 11 is deliberately blank.** It carries a real SCR and series resistor exactly like its eleven
-siblings, but no function is printed against it — while the genuinely unused pins on the same sheet
-(`10`, `13`, `14`, `15`, `16`) are all marked `N/U` explicitly. Bally distinguished "unused" from
-"unlabelled" here. Nothing else in the retained evidence names it: the PinWiki lamp chart leaves the
-same row blank, and none of the four retained community tables models the address. This is the one
-device that keeps Centaur `partial`.
+**The outer top-lane labels do not survive the ROM.** The sheet prints TOP LEFT LANE against `J2-7`
+(public 65) and TOP RIGHT LANE against `J2-18` (public 97). The ROM lights 97 when the top left lane
+rollover (switch 5, at the left lane in the switch table and in Figure V) closes, and 65 for the top
+right lane (switch 3). A lit top lane is a made lane, so the lamp that lights for the left rollover
+is the left lane's lamp: the two outer labels are transposed on this sheet, and on the harness
+drawing W-1255-2 that copies them. The retained tables bind 97 to the left insert and 65 to the
+right; an earlier pass of this record called that a table mistake, which the ROM shows it is not.
+
+**Pin 11 is blank because nothing is plugged onto it.** It carries a real SCR and series resistor
+exactly like its eleven siblings, but no function is printed against it, while the pins this sheet
+calls unused (`10`, `13`, `14`, `15`, `16`) are marked `N/U`. The harness side of the same sheet,
+transcribed in `a9-harness-j2-list.md`, draws a cable branch on exactly the eleven pins that print a
+function and none on pin 11, and a photograph of a Centaur's own A9 board shows no wire in that
+position. Public 113 is a built but unwired circuit.

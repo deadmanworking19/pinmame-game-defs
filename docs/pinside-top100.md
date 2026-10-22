@@ -58,7 +58,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 101 | Ripley's Believe It or Not! | `stern.ripley-s-believe-it-or-not.2004` | 88% |
 | 102 | Indianapolis 500 | `bally.indianapolis-500.1995` | 94% |
 | 103 | Pirates of the Caribbean | `stern.pirates-of-the-caribbean.2006` | 75% |
-| 104 | Centaur | `bally.centaur.1981` | 88% |
+| 104 | Centaur | `bally.centaur.1981` | 100% |
 | 106 | Elvira and the Party Monsters | `bally.elvira-and-the-party-monsters.1989` | 69% |
 | 107 | Champion Pub | `bally.champion-pub.1998` | 88% |
 | 108 | Guns N' Roses | `data-east.guns-n-roses.1994` | 81% |

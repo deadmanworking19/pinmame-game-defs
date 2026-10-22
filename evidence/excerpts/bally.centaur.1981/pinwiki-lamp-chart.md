@@ -3,8 +3,8 @@
 Transcribed from the Centaur lamp chart as reproduced on PinWiki
 (<https://pinwiki.com/wiki/index.php/Centaur>).
 
-**Secondary source**, recorded because it independently corroborates the primary AS-2518-43
-schematic on this machine — and because it leaves the same pin blank.
+**Secondary source**, recorded because it reproduces the primary AS-2518-43 schematic on this
+machine, adds the colour of each wire code, and leaves the same pin blank.
 
 | SCR | connector | lamp | code | wire colour |
 | --- | --- | --- | --- | --- |
@@ -25,12 +25,15 @@ All twelve are marked as located on the Aux. Lamp Driver Module A9 and use MCR-1
 
 ## What it corroborates
 
-Its SCR-to-pin column reproduces the primary schematic exactly on all twelve circuits, and it
-independently confirms the correction that matters most on this machine: `A9J2-7` is the **left**
-top lane and `A9J2-18` the **right**, which is the opposite of how the retained community table
-binds public 65 and 97.
+Its SCR-to-pin column reproduces the primary schematic exactly on all twelve circuits, and its code
+and colour columns agree with the wire codes the schematic's harness list draws at each pin, so it
+decodes those codes into colours.
 
-## What it does not resolve
+## What it does not add
 
-`A9J2-11` is blank here too. Two independent sources name all eleven siblings and neither names the
-twelfth, which is what makes public lamp 113 a well-evidenced dead end rather than an unchased gap.
+Its function names are the schematic's, copied: it prints `A9J2-7` as the left top lane and
+`A9J2-18` as the right, the labels the ROM's lane logic shows to be transposed, so it is not an
+independent check of them.
+
+`A9J2-11` has no description, code or wire colour here, which agrees with the schematic's harness
+list: no wire is fitted at that pin.

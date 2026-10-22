@@ -1,15 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Public lamp 113 is a fitted auxiliary circuit - decoder U3B output Q0 through SCR Q7 and resistor R15 to A9J2-11 - but it is the only one of the twelve whose function the factory schematic leaves blank, while the genuinely unused pins beside it are marked N/U. No retained source states what it lights or where it sits, so the record is fail-closed: the circuit is enumerated and its wiring recorded, but it carries no spatial placement and no semantic function. Centaur has three top lanes, printed as switches 03, 04 and 05, so the tempting reading that it completes a fourth lane has nothing behind it, and none of the four retained community tables from 2020 to 2025 models the address. The harness routing sheet (drawing W-1255-2, page 46) adds one clue: it lists wire routing number 18 against A9J2-11, but the function cell is blank there too. The routing number is a wire label (the same field is called 'wire' in the Fathom transcription), not a main-matrix lamp address, so it does not identify the feature. A LibPinMAME gameplay-harness run confirmed the circuit is electrically fitted: the ROM cycles 113 in attract mode alongside the other three top-lane lamps (65, 81, 97), proving the circuit is live and addressable, but gameplay observation is blocked because By35 machines require a physical ball in the outhole for the kicker to fire, which the harness cannot simulate. Resolution path: a Centaur playfield insert map that reaches A9J2-11, a photograph of an unrestored machine with the A9 harness visible showing which playfield socket the A9J2-11 wire feeds, or a lamp test on real hardware observing what lights while public 113 is driven. A LibPinMAME trace cannot settle it, because PinMAME reports the matrix bit rather than the bulb it reaches. Unresolved.",
-      "id": "conflict.aux-lamp-113-unidentified",
-      "path": "outputs[binding.device=113]",
-      "source_refs": [
-        "manual-schematics.bally.centaur.1981",
-        "runtime.centaur.solenoid-self-test"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.by35"
@@ -23,14 +13,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -2352,7 +2339,7 @@
       "label": "10 Point Rebound",
       "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. The printed table gives this address five physical contacts. The retained table models only three rebound sensors, on the left edge, the right edge and the upper right, so three placements are recorded with an observed rather than validated status and the remaining two contacts have no coordinate. Quantity stays at the printed five.",
+        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. Figure V draws the five as two contacts on each side triangle, on its upper and lower rubber face, and one rebound at the upper right. The retained table models each triangle's two faces as one chevron-shaped sensor wall (Phys_Sensor_34 on the left, Phys_Sensor_34a on the right) and the upper-right rebound as a third wall (Phys_Sensor_34b), all pulsing switch 34. Each chevron is split at its apex, along the line from the inner apex point to the midpoint of the two outer apex points, and each face's contact is placed at the area centroid of its arm of the wall polygon; the upper-right contact is the area centroid of its own wall. Five placements, matching the printed quantity.",
         "quantity": 5,
         "switch_type": "leaf"
       },
@@ -2376,8 +2363,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.093624,
-            "y": 0.571711
+            "x": 0.103198,
+            "y": 0.550545
           },
           {
             "id": "switch.10-point-rebound.sensor-2",
@@ -2390,8 +2377,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.816831,
-            "y": 0.57119
+            "x": 0.093176,
+            "y": 0.593213
           },
           {
             "id": "switch.10-point-rebound.sensor-3",
@@ -2404,8 +2391,36 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.785059,
-            "y": 0.201363
+            "x": 0.808939,
+            "y": 0.549535
+          },
+          {
+            "id": "switch.10-point-rebound.sensor-4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.814133,
+            "y": 0.592604
+          },
+          {
+            "id": "switch.10-point-rebound.sensor-5",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.78505,
+            "y": 0.201527
           }
         ],
         "status": "validated"
@@ -4626,7 +4641,7 @@
   ],
   "knowledge": {
     "path": "knowledge/bally/centaur-1981.md",
-    "status": "partial"
+    "status": "complete"
   },
   "machine": {
     "id": "bally.centaur.1981",
@@ -4736,7 +4751,7 @@
         "device.ball-release",
         "device.ball-kick-to-playfield"
       ],
-      "behavior": "A drained ball closes the outhole switch. The outhole kicker lifts it into the trough, where the trough switches count the balls held. The ball release coil frees one ball and the ball kick to playfield coil puts it into play. Note the numbering trap the ROM's self test settles: printed solenoid 14 Ball Release is public 15, and printed 15 Ball Kick to Playfield is public 14, so the two are transposed against their public addresses. The printed switch table gives trough positions 1, 4 and 5 plus End of Trough, so model the trough as a queue rather than a single ball store.",
+      "behavior": "A drained ball closes the outhole switch. The outhole kicker lifts it into the trough, where the trough switches count the balls held. The ball release coil frees one ball and the ball kick to playfield coil puts it into play. Note the numbering trap the ROM's self test settles: printed solenoid 14 Ball Release is public 15, and printed 15 Ball Kick to Playfield is public 14, so the two are transposed against their public addresses. The printed switch table gives trough positions 1, 4 and 5 plus End of Trough, so model the trough as a queue rather than a single ball store. The ball kick coil is fired through a relay: public 14 drives the Solenoid Expander A15, whose relay K1 switches the coil, so the kick follows the solenoid output by a relay pull-in.",
       "id": "mech.ball-trough",
       "kind": "kicker",
       "label": "Ball trough and outhole",
@@ -4744,7 +4759,8 @@
         "source_refs": [
           "manual.bally.centaur.1981",
           "vpx-script.centaur-2-0-0",
-          "runtime.centaur.solenoid-self-test"
+          "runtime.centaur.solenoid-self-test",
+          "schematics.centaur-ii-reprint.bally.centaur.1981"
         ],
         "status": "validated"
       },
@@ -4804,7 +4820,7 @@
         "device.right-thumper-bumper"
       ],
       "assembly_part_number": "ASE-2836-2",
-      "behavior": "Two thumper bumpers in the upper middle of the playfield, the left one lower and further left than the right. Each is a self-contained skirt switch and coil pair: the skirt switch closes when a ball strikes it and the ROM pulses the matching coil. Each also carries its own lamp on the auxiliary lamp driver.",
+      "behavior": "Two thumper bumpers in the upper middle of the playfield, the left one lower and further left than the right. Each is a self-contained skirt switch and coil pair: the skirt switch closes when a ball strikes it and the ROM pulses the matching coil. Each also carries its own lamp on the auxiliary lamp driver. In play the ROM flicks each bumper's own lamp off and on when it is struck: 39 flicks 98 and 40 flicks 114.",
       "id": "mech.thumper-bumpers",
       "kind": "other",
       "label": "Thumper bumpers",
@@ -4813,7 +4829,8 @@
           "manual.bally.centaur.1981",
           "manual-schematics.bally.centaur.1981",
           "vpx-script.centaur-2-0-0",
-          "runtime.centaur.solenoid-self-test"
+          "runtime.centaur.solenoid-self-test",
+          "runtime.centaur.aux-lamps-in-play"
         ],
         "status": "validated"
       },
@@ -4828,7 +4845,7 @@
         "device.right-slingshot"
       ],
       "assembly_part_number": "ASE-2593-6",
-      "behavior": "Two slingshots above the flippers. Each has a switch that closes when a ball strikes the rubber and a coil the ROM pulses in response, and each carries its own lamp on the auxiliary lamp driver. Both retained scripts drive them as pulse switches rather than holding them closed.",
+      "behavior": "Two slingshots above the flippers. Each has a switch that closes when a ball strikes the rubber and a coil the ROM pulses in response, and each carries its own lamp on the auxiliary lamp driver. Both retained scripts drive them as pulse switches rather than holding them closed. In play the ROM flicks each slingshot's own lamp off and on when it is struck: 37 flicks 66 and 38 flicks 82.",
       "id": "mech.slingshots",
       "kind": "other",
       "label": "Slingshots",
@@ -4837,7 +4854,8 @@
           "manual.bally.centaur.1981",
           "manual-schematics.bally.centaur.1981",
           "vpx-script.centaur-2-0-0",
-          "runtime.centaur.solenoid-self-test"
+          "runtime.centaur.solenoid-self-test",
+          "runtime.centaur.aux-lamps-in-play"
         ],
         "status": "validated"
       },
@@ -8051,38 +8069,40 @@
         "device": 65,
         "group": "pinmame.output.lamp"
       },
-      "id": "lamp.rollover-1-left",
+      "id": "lamp.rollover-3-right",
       "kind": "lamp",
-      "label": "Top Left Lane",
+      "label": "Top Right Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q0 through SCR Q6 to A9J2-7. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-7 reads \"TOP LEFT LANE\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. This assignment reverses the one the retained community table carries. The table binds its top right lane insert to PinMAME lamp 65 and its top left lane insert to 97; the factory sheet wires J2-7 to TOP LEFT LANE and J2-18 to TOP RIGHT LANE, which makes 65 the left lane and 97 the right. The manual is ground truth for physical wiring, and the same traced chain reproduces the table's other nine auxiliary assignments exactly, so the two outer lanes are a binding mistake in the table rather than a fault in the derivation. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q0 through SCR Q6 to A9J2-7, harness wire 54 (white-green). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"TOP LEFT LANE\" printed against A9J2-7, and the harness drawing W-1255-2 copies that label, but the ROM shows the two outer top-lane labels are transposed on the print: in play it lights this lamp when the top right lane rollover, switch 3, closes, and lights 97 for the top left lane rollover, switch 5. The switch identification table and the Figure V location drawing both put switch 3 at the right lane. A lit top lane is a made lane, so the lamp that lights for a rollover is that lane's lamp. The shared flipper-button switch 21 rotates the lit lane through 65, 81 and 97. The schematic prints no quantity against this circuit, as it prints (2) against each chamber circuit, and the playfield has one insert behind each top lane, so one bulb sits behind it. The placement is the retained table's light object for this address, the insert above its own rollover. The retained tables bind this address to the right-lane insert, and a photograph of a Centaur's top-lane sockets from below shows the white-green circuit on the right-hand socket, consistent with the ROM. When the rotation wraps the lit lane from 97 to this lamp the ROM also sets 113, which lights nothing because no load is fitted at A9J2-11. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-table.centaur-2-0-0"
+          "runtime.centaur.aux-lamps-in-play",
+          "manual.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0",
+          "human-review.centaur.pinside-a9-photos"
         ],
         "status": "validated"
       },
       "spatial": {
         "placements": [
           {
-            "id": "lamp.rollover-1-left.emitter",
+            "id": "lamp.rollover-3-right.emitter",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.342084,
-            "y": 0.076673
+            "x": 0.551232,
+            "y": 0.04998
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8101,12 +8121,12 @@
       "kind": "lamp",
       "label": "Right Slingshot Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q1 through SCR Q5 to A9J2-6. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-6 reads \"RIGHT SLINGSHOT\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q1 through SCR Q5 to A9J2-6, harness wire 45 (green-white). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"RIGHT SLINGSHOT\" printed against A9J2-6, and in play the ROM flicks this lamp off and on when the slingshot's switch 37 is struck. No quantity is printed against the circuit, and the retained table drives one bulb under the slingshot plastic from this address (Bulb_Prim_029, lit by its l66 handler); the placement is that bulb's centre. The table's own light object l66 is an invisible placeholder in a row along the bottom edge and is not a position. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8120,15 +8140,15 @@
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.665023,
-            "y": 0.697067
+            "x": 0.678298,
+            "y": 0.724401
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8147,12 +8167,14 @@
       "kind": "lamp",
       "label": "#1 Chamber (from bottom)",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q2 through SCR Q4 to A9J2-5. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-5 reads \"#1 CHAMBER (2) (FROM BOTTOM)\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
+        "notes": "Auxiliary Lamp Driver A9, decoder U2A output Q2 through SCR Q4 to A9J2-5, harness wire 60 (brown). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"#1 CHAMBER (2) (FROM BOTTOM)\" printed against A9J2-5; the (2) is the sheet's lamp count, printed only against the four chamber circuits, and PinWiki's chart reads \"2 lamps\" for the same row. The chamber is the Queen's Chamber lane at the top left of the playfield, and each chamber circuit lights a pair of bulbs, one on either side of the lane. The retained table models both: its handler for this address drives two bulb meshes, and the placements are its two light objects at those bulbs, l67 and l67a. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "lamp-chart.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8160,21 +8182,35 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.unnamed-67.emitter",
+            "id": "lamp.unnamed-67.emitter-1",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
             "x": 0.049068,
             "y": 0.288253
+          },
+          {
+            "id": "lamp.unnamed-67.emitter-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual-schematics.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.169142,
+            "y": 0.254763
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8245,12 +8281,12 @@
       "kind": "lamp",
       "label": "Top Middle Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q0 through SCR Q1 to A9J2-1. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-1 reads \"TOP MIDDLE LANE\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q0 through SCR Q1 to A9J2-1, harness wire 43 (green-yellow). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"TOP MIDDLE LANE\" printed against A9J2-1, and in play the ROM lights this lamp when the top middle lane rollover, switch 4, closes. A lit top lane is a made lane, so the lamp that lights for a rollover is that lane's lamp. The shared flipper-button switch 21 rotates the lit lane through 65, 81 and 97. The schematic prints no quantity against this circuit, as it prints (2) against each chamber circuit, and the playfield has one insert behind each top lane, so one bulb sits behind it. The placement is the retained table's light object for this address, the insert above its own rollover. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8264,7 +8300,7 @@
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -8272,7 +8308,7 @@
             "y": 0.063688
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8291,12 +8327,12 @@
       "kind": "lamp",
       "label": "Left Slingshot Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q1 through SCR Q2 to A9J2-2. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-2 reads \"LEFT SLINGSHOT\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q1 through SCR Q2 to A9J2-2, harness wire 40 (green). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"LEFT SLINGSHOT\" printed against A9J2-2, and in play the ROM flicks this lamp off and on when the slingshot's switch 38 is struck. No quantity is printed against the circuit, and the retained table drives one bulb under the slingshot plastic from this address (Bulb_Prim_028, lit by its l82 handler); the placement is that bulb's centre. The table's own light object l82 is an invisible placeholder in a row along the bottom edge and is not a position. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8310,15 +8346,15 @@
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.240724,
-            "y": 0.697067
+            "x": 0.225121,
+            "y": 0.724248
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8337,12 +8373,14 @@
       "kind": "lamp",
       "label": "#2 Chamber",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q2 through SCR Q3 to A9J2-3. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-3 reads \"#2 CHAMBER (2)\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
+        "notes": "Auxiliary Lamp Driver A9, decoder U2B output Q2 through SCR Q3 to A9J2-3, harness wire 62 (brown-blue). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"#2 CHAMBER (2)\" printed against A9J2-3; the (2) is the sheet's lamp count, printed only against the four chamber circuits, and PinWiki's chart reads \"2 lamps\" for the same row. The chamber is the Queen's Chamber lane at the top left of the playfield, and each chamber circuit lights a pair of bulbs, one on either side of the lane. The retained table models both: its handler for this address drives two bulb meshes, and the placements are its two light objects at those bulbs, l83 and l83a. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "lamp-chart.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8350,21 +8388,35 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.unnamed-83.emitter",
+            "id": "lamp.unnamed-83.emitter-1",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
             "x": 0.039297,
             "y": 0.210621
+          },
+          {
+            "id": "lamp.unnamed-83.emitter-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual-schematics.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.169099,
+            "y": 0.212607
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8431,38 +8483,40 @@
         "device": 97,
         "group": "pinmame.output.lamp"
       },
-      "id": "lamp.rollover-3-right",
+      "id": "lamp.rollover-1-left",
       "kind": "lamp",
-      "label": "Top Right Lane",
+      "label": "Top Left Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q0 through SCR Q12 to A9J2-18. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-18 reads \"TOP RIGHT LANE\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. This assignment reverses the one the retained community table carries. The table binds its top right lane insert to PinMAME lamp 65 and its top left lane insert to 97; the factory sheet wires J2-7 to TOP LEFT LANE and J2-18 to TOP RIGHT LANE, which makes 65 the left lane and 97 the right. The manual is ground truth for physical wiring, and the same traced chain reproduces the table's other nine auxiliary assignments exactly, so the two outer lanes are a binding mistake in the table rather than a fault in the derivation. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q0 through SCR Q12 to A9J2-18, harness wire 25 (blue-white). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"TOP RIGHT LANE\" printed against A9J2-18, and the harness drawing W-1255-2 copies that label, but the ROM shows the two outer top-lane labels are transposed on the print: in play it lights this lamp when the top left lane rollover, switch 5, closes, and lights 65 for the top right lane rollover, switch 3. The switch identification table and the Figure V location drawing both put switch 5 at the left lane. A lit top lane is a made lane, so the lamp that lights for a rollover is that lane's lamp. The shared flipper-button switch 21 rotates the lit lane through 65, 81 and 97. The schematic prints no quantity against this circuit, as it prints (2) against each chamber circuit, and the playfield has one insert behind each top lane, so one bulb sits behind it. The placement is the retained table's light object for this address, the insert above its own rollover. The retained tables bind this address to the left-lane insert, and a photograph of a Centaur's top-lane sockets from below shows the blue-white circuit on the left-hand socket, consistent with the ROM. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-table.centaur-2-0-0"
+          "runtime.centaur.aux-lamps-in-play",
+          "manual.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0",
+          "human-review.centaur.pinside-a9-photos"
         ],
         "status": "validated"
       },
       "spatial": {
         "placements": [
           {
-            "id": "lamp.rollover-3-right.emitter",
+            "id": "lamp.rollover-1-left.emitter",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.551232,
-            "y": 0.04998
+            "x": 0.342084,
+            "y": 0.076673
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8489,12 +8543,12 @@
       "kind": "lamp",
       "label": "Right Thumper Bumper Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q1 through SCR Q11 to A9J2-19. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-19 reads \"RIGHT THUMPER BUMPER\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q1 through SCR Q11 to A9J2-19, harness wire 82 (black-blue). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"RIGHT THUMPER BUMPER\" printed against A9J2-19, and in play the ROM flicks this lamp off and on when the bumper's switch 39 is struck. No quantity is printed against the circuit. The lamp sits inside the bumper body, so the placement is the centre of the retained table's bumper object Bumper2, the bumper its l98 handler lights. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8508,7 +8562,7 @@
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -8516,7 +8570,7 @@
             "y": 0.204759
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8535,12 +8589,14 @@
       "kind": "lamp",
       "label": "#3 Chamber",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q2 through SCR Q10 to A9J2-20. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-20 reads \"#3 CHAMBER (2)\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
+        "notes": "Auxiliary Lamp Driver A9, decoder U3A output Q2 through SCR Q10 to A9J2-20, harness wire 95 (gray-white). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"#3 CHAMBER (2)\" printed against A9J2-20; the (2) is the sheet's lamp count, printed only against the four chamber circuits, and PinWiki's chart reads \"2 lamps\" for the same row. The chamber is the Queen's Chamber lane at the top left of the playfield, and each chamber circuit lights a pair of bulbs, one on either side of the lane. The retained table models both: its handler for this address drives two bulb meshes, and the placements are its two light objects at those bulbs, l99 and l99a. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "lamp-chart.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8548,21 +8604,35 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.unnamed-99.emitter",
+            "id": "lamp.unnamed-99.emitter-1",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
             "x": 0.051941,
             "y": 0.145581
+          },
+          {
+            "id": "lamp.unnamed-99.emitter-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual-schematics.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.169282,
+            "y": 0.138451
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8612,24 +8682,37 @@
           "value": "113"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 113,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-j2-11",
       "kind": "lamp",
-      "label": "Auxiliary lamp driver circuit A9J2-11 (function not printed)",
+      "label": "Unwired auxiliary lamp circuit A9J2-11",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q0 through SCR Q7 to A9J2-11. The Centaur manual's page-51 schematic (drawing W-1207-11) annotates every fitted J2 pin's function except this one: A9J2-11 carries an SCR and its series resistor exactly like the other eleven, but where every sibling has a printed function this pin has none. The genuinely unused pins next to it are marked N/U explicitly, so the circuit is fitted but its feature name was never factory-documented. The harness routing sheet (drawing W-1255-2, printed page 46) adds one clue: it lists wire routing number 18 against A9J2-11, but the function cell is blank there too -- the factory left both drawings' entries for this pin unnamed. The routing number is a wire label (the same field is called 'wire' in the Fathom transcription), not a main-matrix lamp address, so it does not identify the feature. Quantity: 2 (the AS-2518-43 drives twelve sets of two). The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half -- PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B -- and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q0 through R15 and SCR Q7 to A9J2-11. The board drives the pin like its eleven siblings, but nothing is plugged onto it. The harness side of the A9 sheet (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) draws a cable branch, each with its wire-colour code, on exactly the eleven J2 pins that print a lamp function, and none on pin 11; a photograph of a Centaur's own A9 board (Pinside thread 303903, post 4) shows wires at those eleven positions and none at position 11. No source names a function for it: the board side of the sheet leaves the pin blank while marking the genuinely unused pins N/U, PinWiki's chart lists no description, code or colour, and the German manual's A9 troubleshooting table omits Q7. The harness drawing W-1255-2 prints a wire code (18) against A9J2-11, but that drawing also lists wires on an A9J3 connector the AS-2518-43 does not have and on the J2 key and ground positions, so its unlabelled rows describe no load on this board. What PinMAME publishes here is explained by the ROM: the three top-lane lamps 65, 81 and 97 are three bits of one four-bit lamp-data value and 113 is its fourth. In play it changes only when the flipper-button lane change wraps the lit lane from 97 to 65, when it rises with 65 and falls with it on the next rotation, and otherwise only in the power-up and game-start lamp flashes that write whole lamp lines. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "runtime.centaur.solenoid-self-test"
+          "human-review.centaur.pinside-a9-photos",
+          "lamp-chart.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
+          "manual-german.bally.centaur.1981"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual-schematics.bally.centaur.1981",
+            "human-review.centaur.pinside-a9-photos"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -8652,12 +8735,12 @@
       "kind": "lamp",
       "label": "Left Thumper Bumper Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q1 through SCR Q8 to A9J2-12. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-12 reads \"LEFT THUMPER BUMPER\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
-        "quantity": 2
+        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q1 through SCR Q8 to A9J2-12, harness wire 27 (blue-orange). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"LEFT THUMPER BUMPER\" printed against A9J2-12, and in play the ROM flicks this lamp off and on when the bumper's switch 40 is struck. No quantity is printed against the circuit. The lamp sits inside the bumper body, so the placement is the centre of the retained table's bumper object Bumper1, the bumper its l114 handler lights. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8671,7 +8754,7 @@
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
@@ -8679,7 +8762,7 @@
             "y": 0.231556
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -8698,12 +8781,14 @@
       "kind": "lamp",
       "label": "#4 Chamber (top)",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q2 through SCR Q9 to A9J2-17. The Centaur manual prints this schematic itself, on page 51 of the Installation and General Game Operation Instructions, with each J2 pin's function annotated: A9J2-17 reads \"#4 CHAMBER (2) (TOP)\". The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb. Reading the schematic's decoder-output-to-SCR-to-J2 wiring against the printed J2 functions assigns all twelve fitted circuits, and nine of them agree with the retained community table. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one. The schematic prints (2) against this circuit and the AS-2518-43 drives twenty-four lamps as twelve sets of two, so two bulbs sit behind it. Only one insert position is located from the retained table, so a single emitter placement is recorded and the spatial status is observed rather than validated; the second bulb of the pair has no coordinate.",
+        "notes": "Auxiliary Lamp Driver A9, decoder U3B output Q2 through SCR Q9 to A9J2-17, harness wire 96 (gray-brown). The Centaur manual prints the A9 schematic itself (drawing W-1207-11, page 51 of the Installation and General Game Operation Instructions) with \"#4 CHAMBER (2) (TOP)\" printed against A9J2-17; the (2) is the sheet's lamp count, printed only against the four chamber circuits, and PinWiki's chart reads \"2 lamps\" for the same row. The chamber is the Queen's Chamber lane at the top left of the playfield, and each chamber circuit lights a pair of bulbs, one on either side of the lane. The retained table models both: its handler for this address drives two bulb meshes, and the placements are its two light objects at those bulbs, l115 and l115a. The address decomposes as public = 64 + 16*k + a + 1, where k is the lamp data line PD0-PD3 and a is the latched auxiliary lamp address; that follows algebraically from by35_lampStrobe in the pinned PinMAME source. On the AS-2518-43 each data line enables one MC14555B decoder half - PD0 to U2A, PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits pick Q0, Q1 or Q2 of that half. Q3 is marked N/U on every half, which is why a = 3 reaches no bulb.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
+          "lamp-chart.bally.centaur.1981",
+          "runtime.centaur.aux-lamps-in-play",
           "vpx-table.centaur-2-0-0"
         ],
         "status": "validated"
@@ -8711,21 +8796,35 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.unnamed-115.emitter",
+            "id": "lamp.unnamed-115.emitter-1",
             "provenance": {
               "source_refs": [
                 "vpx-table.centaur-2-0-0",
                 "manual-schematics.bally.centaur.1981"
               ],
-              "status": "observed"
+              "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
             "x": 0.042503,
             "y": 0.071374
+          },
+          {
+            "id": "lamp.unnamed-115.emitter-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual-schematics.bally.centaur.1981"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.153646,
+            "y": 0.072214
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -9578,14 +9677,17 @@
       "kind": "coil",
       "label": "Ball Kick to Playfield",
       "physical": {
-        "notes": "Solenoid identification table entry 15. The ROM's own solenoid self test pulses this coil while displaying 15, which printed page 13 states is the number assigned to the solenoid, so public address 14 and printed number 15 are the same device. Printed numbers 14 and 15 are transposed relative to public addresses 14 and 15: printed 14 Ball Release is public 15 and printed 15 Ball Kick to Playfield is public 14.",
+        "notes": "Solenoid identification table entry 15. The ROM's own solenoid self test pulses this coil while displaying 15, which printed page 13 states is the number assigned to the solenoid, so public address 14 and printed number 15 are the same device. Printed numbers 14 and 15 are transposed relative to public addresses 14 and 15: printed 14 Ball Release is public 15 and printed 15 Ball Kick to Playfield is public 14. The coil is not driven directly: its driver output A3J5-14 (transistor Q11) runs to the Solenoid Expander A15 (AS-2518-66), where it lights the LED of a MOC 3011 optocoupler from the switched illumination supply; the optocoupler's triac energises the 48 V relay K1, and K1's contact completes the kick coil's circuit from +43 V through A2J1-9. Centaur's own print of the board (drawing W-1251-1 b, game 1239, reprinted in the Centaur II schematic set) wires it that way, the German edition's solenoid table pairs self-test 15 with Q11 and J5-14, and PinWiki's solenoid chart gives the coil A15J1-5 / A3J5-14 and Q11. Public 14 therefore fires the kick one relay pull-in later than a directly driven coil.",
         "part_number": "AQ-25-950"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
           "runtime.centaur.solenoid-self-test",
-          "controller-profile.pinmame-by35"
+          "controller-profile.pinmame-by35",
+          "schematics.centaur-ii-reprint.bally.centaur.1981",
+          "lamp-chart.bally.centaur.1981",
+          "manual-german.bally.centaur.1981"
         ],
         "status": "validated"
       },
@@ -9982,6 +10084,27 @@
       "uri": "internal:controllers/pinmame/by35.json"
     },
     {
+      "acquired_at": "2026-10-22T00:00:00Z",
+      "attribution": "Pinsider SJ23 (photographs of their own Centaur) and thread participants djblouw and Rikoshay",
+      "excerpts": [
+        {
+          "id": "excerpt.centaur.pinside-a9-board-photos",
+          "locator": "Topic 303903, posts 1-53; photographs 65f35c74 (A9 board in the backbox) and 826977b1 (top-lane sockets from below) from post 4",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.centaur.1981/pinside-a9-board-photos.md",
+          "reviewed": true,
+          "sha256": "669dcd91db33f8bfef78b91493a6d178fb48bf273d8d78a96e0099d10d4df1c7",
+          "transcribed_by": "curator, from the thread and the retained photographs"
+        }
+      ],
+      "id": "human-review.centaur.pinside-a9-photos",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Owner photographs of a Bally Centaur's AS-2518-43 auxiliary lamp board in the backbox, showing which J2 positions carry harness wires, and of the three top-lane lamp sockets from below, in a 2021 repair thread. The photographs are retained outside the repository at external:pinmame-review-artifacts/centaur-1981/pinside-303903/ by their Pinside file names, SHA-256 6ddd40f46dc512fc0415cc1455589b0d35efae5bc482ab6c628e5e8bb07ecb00 (board) and 629c564dd444053caf579c0d0e3813fea5f3084453069e9720d425596270ad5e (sockets).",
+      "rights": "NOASSERTION",
+      "uri": "https://pinside.com/pinball/forum/topic/centaur-light-issue"
+    },
+    {
       "attribution": "PinWiki contributors, transcribing the Bally Centaur lamp chart",
       "excerpts": [
         {
@@ -9990,14 +10113,14 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.centaur.1981/pinwiki-lamp-chart.md",
           "reviewed": true,
-          "sha256": "3d416b365fd2227d4f056badded5e6d9f8c4ae7236d4f13816348e44e4876169",
+          "sha256": "21e99a74ca5466fb53357ddb82accddcff022af0256562a7181a183e7327fbbf",
           "transcribed_by": "curator, from the retained page"
         }
       ],
       "id": "lamp-chart.bally.centaur.1981",
       "kind": "human_review",
       "license": "NOASSERTION",
-      "locator": "The Centaur lamp chart as reproduced on PinWiki, giving each auxiliary SCR its A9J2 pin, lamp function and wire colour. A secondary source, recorded because it independently reproduces the primary AS-2518-43 schematic on all twelve circuits - including the top-lane assignment that the retained community table gets backwards - and because it leaves A9J2-11 blank exactly as the factory sheet does.",
+      "locator": "The Centaur lamp and solenoid charts as reproduced on PinWiki, giving each auxiliary SCR its A9J2 pin, lamp function and wire colour, and the ball kick coil its A15J1-5 / A3J5-14 path and Q11 driver. A secondary source: its auxiliary rows reproduce the primary AS-2518-43 schematic on all twelve circuits, including the two outer top-lane labels the ROM shows to be transposed, and it leaves A9J2-11 without a description, code or colour.",
       "uri": "https://pinwiki.com/wiki/index.php/Centaur"
     },
     {
@@ -10020,6 +10143,30 @@
     },
     {
       "acquired_at": "2026-08-06T00:00:00.000000Z",
+      "attribution": "Wulff-Automaten GmbH, Hannover, the German distributor's edition of the Bally manual; copy supplied by the repository maintainer",
+      "excerpts": [
+        {
+          "id": "excerpt.centaur.german-manual-a9-and-solenoid-tables",
+          "locator": "PDF page 42 (printed 42): FEHLERSUCHTABELLE AUXILIARY LAMP DRIVER MODUL A9 and SPULENIDENTIFIZIERUNGSTABELLE row 15; PDF page 39: module list",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.centaur.1981/german-manual-a9-and-solenoid-tables.md",
+          "reviewed": true,
+          "sha256": "d5506009c0e9875a739987d08cf2f01a755b48ea190f80c6d8d9e45a48d26932",
+          "transcribed_by": "curator, read from the native scan"
+        }
+      ],
+      "id": "manual-german.bally.centaur.1981",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "52-page German edition of the Centaur installation and operation manual, typed by the distributor. Its A9 troubleshooting table lists eleven SCRs and has no row for Q7 or J2-11; its solenoid table pairs self-test 15, the ball kick, with Q11 and J5-14. A retyped copy with its own errors, so it is cited only for those rows.",
+      "original_filename": "Bally_1981_Centaur_German_Manual.pdf",
+      "revision": "sha256:7b12c6d95636a5f97beb89624368222f2a1e44e48dbdc353bb5b533c2d22d5a1",
+      "rights": "NOASSERTION",
+      "sha256": "7b12c6d95636a5f97beb89624368222f2a1e44e48dbdc353bb5b533c2d22d5a1",
+      "uri": "external:pinmame-manuals/by-machine/bally.centaur.1981/projects-centaur/Bally_1981_Centaur_German_Manual.pdf"
+    },
+    {
+      "acquired_at": "2026-08-06T00:00:00.000000Z",
       "attribution": "Bally Manufacturing Corporation; copy supplied by the repository maintainer",
       "excerpts": [
         {
@@ -10027,30 +10174,42 @@
           "image": "evidence/excerpts/bally.centaur.1981/a9-schematic-j2.webp",
           "image_derivation": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf page 51, crop box 0.44,0.10,1.0,0.75 of the page, rendered at 300 dpi with pdftoppm, reduced to 1000px wide grayscale, quality 75 WebP",
           "image_sha256": "43f315d0c267ac0ddb6113451677dbbac44b02381135f85995455402001d9846",
-          "locator": "PDF page 51, drawing W-1207-11, AS-2518-43 Auxiliary Lamp Driver A9 connector J2",
+          "locator": "PDF page 51, drawing W-1207-11, AS-2518-43 Auxiliary Lamp Driver A9 connector J2, board side",
           "method": "manual",
           "path": "evidence/excerpts/bally.centaur.1981/a9-schematic-j2.md",
           "reviewed": true,
-          "sha256": "8c5fef3d42b99317549aca39de42b2e5a9f0f68ee32683c78913eef8b860e66c",
+          "sha256": "df046e4fdbc20afa183bb317918d36c1f09a23c0f97a0fbf28f13aff4101bbdd",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
-          "id": "excerpt.centaur.aux-harness-routing",
-          "image": "evidence/excerpts/bally.centaur.1981/aux-harness-routing.webp",
-          "image_derivation": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf page 46, crop box 0.04,0.06,0.52,0.58, scanned page rendered at 300 dpi with pdftoppm, cropped to the connector list, grayscale WebP quality 80",
-          "image_sha256": "9e13c5ca3a67a4388cfa83a4c15fc453ff192cfee978ade5b2de1e7a4b7e6aa0",
-          "locator": "PDF page 46, drawing W-1255-2, A9 (auxiliary lamp driver) harness routing: main-matrix lamp number -> A9J2/A9J3 connector pin -> function",
+          "id": "excerpt.centaur.a9-harness-j2-list",
+          "image": "evidence/excerpts/bally.centaur.1981/a9-harness-j2-list.webp",
+          "image_derivation": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf page 51, crop box 0.06,0.05,0.31,0.46, scanned page rendered at its native resolution (embedded image xref 219, 10042px across 17.02in), rendered at 329 dpi, capped to 1400px wide, grayscale, 1400x1486 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "5c9fbd8d626fb5b2655518df09e53d988ed4139eb9c96f82f1f2be9016c52c6a",
+          "locator": "PDF page 51, drawing W-1207-11, the J2 TO harness list in the upper left margin, with wire-colour codes",
           "method": "manual",
-          "path": "evidence/excerpts/bally.centaur.1981/aux-harness-routing.md",
+          "path": "evidence/excerpts/bally.centaur.1981/a9-harness-j2-list.md",
           "reviewed": true,
-          "sha256": "a77aed4438bb77a244f85e0ffeae8dac6dcb37ee2273dd0d56cfc1c3e0fdb18e",
-          "transcribed_by": "curator, read from the rendered page"
+          "sha256": "4dfc7d0d6cfd6e89a086bd429a337fae27827ba1e8e7ea500dd5fd3e4c6dc49c",
+          "transcribed_by": "curator, read from the native scan"
+        },
+        {
+          "id": "excerpt.centaur.a9-playfield-wiring-w1255-2",
+          "image": "evidence/excerpts/bally.centaur.1981/a9-playfield-wiring-w1255-2.webp",
+          "image_derivation": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf page 54, crop box 0.17,0.06,0.62,0.8, scanned page rendered at its native resolution (embedded image xref 234, 10030px across 17.00in), rendered at 183 dpi, capped to 1400px wide, grayscale, 1401x1491 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "5d6337b22279a44763c21e6e7cc5ad3af3ac279ff026a1d39ba6a38d3bc758d4",
+          "locator": "PDF page 54, drawing W-1255-2 WIRING DIAGRAM PLAYFIELD: wire-colour code, A9 connector pin and printed function for each lamp row",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.centaur.1981/a9-playfield-wiring-w1255-2.md",
+          "reviewed": true,
+          "sha256": "92db09c2b2098071bda6a45b2ab288b010c3972c721f74c750e264929e048536",
+          "transcribed_by": "curator, read from the native scan"
         }
       ],
       "id": "manual-schematics.bally.centaur.1981",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "61-page Bally #1239 Centaur manual including the complete schematic set. Page 52 is the AS-2518-23 lamp driver sheet: it gives the MC14514 output-to-SCR table for all four decoders U1-U4 and the SCR-to-connector wiring for J1, J2 and J3, with each pin's playfield or backbox function printed beside it. Page 54 is the A9 auxiliary lamp driver wire list.",
+      "locator": "61-page Bally #1239 Centaur manual including the complete schematic set. Page 52 is the AS-2518-23 lamp driver sheet: it gives the MC14514 output-to-SCR table for all four decoders U1-U4 and the SCR-to-connector wiring for J1, J2 and J3, with each pin's playfield or backbox function printed beside it. Page 51 is the AS-2518-43 auxiliary lamp driver sheet W-1207-11, with the board's J2 pins and, in its margin, the harness branches and wire codes plugged onto them. Page 54 is the A9 playfield wiring diagram W-1255-2. Page 46 is the G.I. flasher sheet W-1253 b; its OCR text layer carries page 54's wire list, so read the scans.",
       "original_filename": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf",
       "revision": "sha256:c5b151bfc2d2672fce7b405519bda07051bd54e115e9484f39fe05159d47bc23",
       "rights": "NOASSERTION",
@@ -10137,6 +10296,16 @@
       "uri": "https://github.com/vpinball/pinmame"
     },
     {
+      "acquired_at": "2026-10-22T20:45:59Z",
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.centaur.aux-lamps-in-play",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Pinned LibPinMAME harness run that boots centaur from empty NVRAM, coins up and starts a game with direct switch writes, then closes the three top-lane rollovers, presses the shared flipper-button switch six times and strikes both slingshots and both thumper bumpers, one input at a time. tools/centaur_aux_lamp_runtime_summary.py derives from the retained trace which auxiliary lamp each closure lights or flicks, how the lane change rotates the top-lane lamps, and every transition of lamp 113, and refuses a trace that does not show them.",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "uri": "internal:evidence/runtime/by35/centaur-aux-lamps-in-play.json"
+    },
+    {
       "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
       "id": "runtime.centaur.solenoid-self-test",
       "kind": "runtime_scenario",
@@ -10144,6 +10313,33 @@
       "locator": "Pinned LibPinMAME harness runs that boot centaur from empty NVRAM and step the self-test button into the ROM's solenoid test, which pulses each coil in turn while writing that coil's identification number to the player score displays. Pairing each pulsed public solenoid address with the displayed number yields the printed-to-public mapping for all eighteen coils, repeating identically across four complete cycles. The same runs enumerate 76 lamp addresses, nineteen solenoid addresses and seven display indices.",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "internal:evidence/runtime/by35/centaur-solenoid-self-test.json"
+    },
+    {
+      "acquired_at": "2026-08-06T00:00:00.000000Z",
+      "attribution": "Bally Manufacturing Corporation; scans from Arcade Archive and the repository maintainer",
+      "excerpts": [
+        {
+          "id": "excerpt.centaur.solenoid-expander-a15",
+          "image": "evidence/excerpts/bally.centaur.1981/solenoid-expander-a15.webp",
+          "image_derivation": "Centaur 2 Schematics.pdf page 15, crop box 0.3,0.2,0.86,0.6, scanned page rendered at its native resolution (embedded image xref 70, 9228px across 15.38in), rendered at 255 dpi, capped to 2200px wide, grayscale, 2201x1081 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "0d6fe41d51d341aa1399f70cf72cc5c08079f41314c76e3eb59163f4bd500858",
+          "locator": "PDF page 15, drawing W-1251-1 b SOLENOID EXPANDER (SCHEMATIC), assembly AS-2518-66, game 1239: board and J1 pin assignments",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.centaur.1981/solenoid-expander-a15.md",
+          "reviewed": true,
+          "sha256": "9265af7953b2b0b3098f99e2912a32b8ba3b36b7e9d1ae2c0d55fa68ca1aae25",
+          "transcribed_by": "curator, read from the rendered page"
+        }
+      ],
+      "id": "schematics.centaur-ii-reprint.bally.centaur.1981",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "16-page Bally Centaur II schematic set. Its sheets carry game number 1239, Centaur's, so it reprints the Centaur prints, including the game-specific Solenoid Expander sheet W-1251-1 b that the Centaur installation manual replaces with the generic W-1251 b for game 1220.",
+      "original_filename": "Centaur 2 Schematics.pdf",
+      "revision": "sha256:89332ef0d1d4550a75217ddf12bfac79d599281e6296ceae80f79388a73f0dc4",
+      "rights": "NOASSERTION",
+      "sha256": "89332ef0d1d4550a75217ddf12bfac79d599281e6296ceae80f79388a73f0dc4",
+      "uri": "external:pinmame-manuals/by-machine/bally.centaur.1981/cross-reference/Centaur 2 Schematics.pdf"
     },
     {
       "attribution": "Inkochnito and UnclePaulie, via the retained community tables",
@@ -10177,7 +10373,7 @@
       "id": "vpx-table.centaur-2-0-0",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "vpxtool extraction, 2780 files; playfield bounds left=0 top=0 right=952.941 bottom=1976.471. Normalized coordinates are x/952.941 and y/1976.471. Lamp positions are the centers of the Light objects named l<address>, each of which carries timer_interval equal to its PinMAME lamp address (verified for all 67). Switch positions are the centers of objects named sw<address>.",
+      "locator": "vpxtool extraction, 2780 files; playfield bounds left=0 top=0 right=952.941 bottom=1976.471. Normalized coordinates are x/952.941 and y/1976.471. Lamp positions are the centers of the Light objects named l<address>, each of which carries timer_interval equal to its PinMAME lamp address (verified for all 67), with three exceptions taken from what the script lights: each chamber address's second bulb is the Light object l<address>a, which the same handler drives; the slingshot lamps 66 and 82 are the bulb meshes Bulb_Prim_029 and Bulb_Prim_028 that the l66 and l82 handlers light, because the Light objects l66 and l82 are invisible placeholders along the bottom edge; and the thumper-bumper lamps 98 and 114 are the centres of the bumper objects Bumper2 and Bumper1. Switch positions are the centers of objects named sw<address>; switch 34's five contacts are taken from its three Phys_Sensor_34 walls.",
       "revision": "2.0.0",
       "sha256": "2689607de4e6c9b267c56aa0d090ff340bf3a9220277dc8730a51dca5172a5bc",
       "uri": "external:pinmame-vpx-sources/bally/centaur-1981/source/Centaur (Bally 1981) v2.0.0.vpx"

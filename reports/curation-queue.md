@@ -522,7 +522,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 516 | 1982 | Warlok | Williams | partial | 19% |
 | 517 | 1982 | Spellbinder (L-0 BETA) | Williams / Jess M. Askey | partial | 6% |
 | 518 | 1982 | Soccer Kings | Zaccaria | partial | 13% |
-| 519 | 1981 | Centaur | Bally | partial | 88% |
+| 519 | 1981 | Centaur | Bally | author_ready | 100% |
 | 520 | 1981 | Eight Ball Deluxe | Bally | partial | 75% |
 | 521 | 1981 | Eight Ball Deluxe | Bally | partial | 6% |
 | 522 | 1981 | Elektra | Bally | partial | 19% |

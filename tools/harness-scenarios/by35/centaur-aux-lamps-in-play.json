@@ -1,0 +1,167 @@
+{
+  "actions": [
+    {
+      "label": "boot and power-up lamp check",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute I (public 10)",
+      "settle_s": 1.5,
+      "switch": 10,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 4.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "control: no input",
+      "seconds": 3.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "top left lane (public 5)",
+      "settle_s": 3.0,
+      "switch": 5,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "top middle lane (public 4)",
+      "settle_s": 3.0,
+      "switch": 4,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "top right lane (public 3) completes the three lanes",
+      "settle_s": 4.0,
+      "switch": 3,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "top right lane (public 3) on cleared lanes",
+      "settle_s": 3.0,
+      "switch": 3,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 1",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 2",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 3",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 4",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 5",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 200,
+      "label": "flipper buttons (public 21) lane change 6",
+      "settle_s": 3.0,
+      "switch": 21,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 100,
+      "label": "right slingshot (public 37)",
+      "settle_s": 2.5,
+      "switch": 37,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 100,
+      "label": "left slingshot (public 38)",
+      "settle_s": 2.5,
+      "switch": 38,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 100,
+      "label": "right thumper bumper (public 39)",
+      "settle_s": 2.5,
+      "switch": 39,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 100,
+      "label": "left thumper bumper (public 40)",
+      "settle_s": 2.5,
+      "switch": 40,
+      "type": "pulse"
+    },
+    {
+      "label": "control: no input",
+      "seconds": 5.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "centaur",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 1
+    },
+    {
+      "state": 1,
+      "switch": 2
+    },
+    {
+      "state": 1,
+      "switch": 8
+    },
+    {
+      "state": 1,
+      "switch": 17
+    },
+    {
+      "state": 1,
+      "switch": 33
+    }
+  ],
+  "notes": "Auxiliary lamp board probe: coin, start, then one closure at a time on the three top-lane rollovers, six presses of the shared flipper-button switch to drive the top-lane change through two wraps, and the slingshot and thumper-bumper switches, watching which A9 lamp addresses each input changes and every transition of lamp 113.",
+  "version": 1,
+  "watch_switches": [
+    8
+  ]
+}

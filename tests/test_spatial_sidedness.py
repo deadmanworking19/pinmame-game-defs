@@ -6,8 +6,9 @@ transposed placement pair stays inside the valid 0..1 coordinate range, so neith
 `validate_machine` can see it, and four separate records have shipped one:
 
 * Bally Cactus Canyon - flipper coils and buttons swapped.
-* Bally Centaur - two auxiliary lamps assigned by eyeballing the playfield instead of tracing the
-  decoder-to-SCR-to-connector chain.
+* Bally Centaur - two auxiliary lamps first assigned by eyeballing the playfield instead of tracing
+  the decoder-to-SCR-to-connector chain, then swapped to follow a print whose two outer top-lane
+  labels turned out to be transposed; the ROM's own rollover-to-lamp pairing settled them.
 * Stern Ripley's Believe It or Not! - the right and bottom members of both pop-bumper clusters,
   eight placements, promoted as `validated`.
 * Stern Avengers Pro - the outlane and return-lane lamp labels, and the two lamps of the right
