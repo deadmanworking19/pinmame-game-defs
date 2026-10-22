@@ -101,6 +101,15 @@ class DrawingCalloutTests(unittest.TestCase):
 		with self.assertRaisesRegex(ValueError, "spanning"):
 			dc.evaluate(s, placements)
 
+	def test_a_page_that_checks_nothing_keeps_only_its_control_fit(self):
+		# A page read only for drawing measurements has no callouts to fit; it must not demand them.
+		s, placements = seed()
+		s["pages"]["measured"] = {"controls": copy.deepcopy(s["pages"]["page"]["controls"]), "reads": []}
+		result = dc.evaluate(s, placements)
+		self.assertEqual(0, result["pages"]["measured"]["callout_pairs"])
+		self.assertEqual(5, result["pages"]["measured"]["controls"])
+		self.assertTrue(all(d["agrees"] for d in result["placements"].values()))
+
 	def test_inset_reads_are_not_used(self):
 		s, placements = seed()
 		s["pages"]["page"]["reads"][2]["region"] = "inset"

@@ -665,7 +665,7 @@ Count: **2**
 
 ## CSV OPDB machine records split across definitions
 
-Count: **7**
+Count: **8**
 
 - opdb_id=G43W4-MKNW0; machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018
 - opdb_id=G4jXr-MQ6kz; machine_ids=bally.kiss.1979,bally.kiss.1979.kiss
@@ -674,15 +674,17 @@ Count: **7**
 - opdb_id=G5b38-MDqkx; machine_ids=stern.meteor.1979,stern.meteor.1979.meteora
 - opdb_id=GRbl7-ML8EY; machine_ids=bally.speakeasy.1982,ltd.speakeasy.1982
 - opdb_id=GrEzp-MDbW3; machine_ids=gottlieb.volcano.1981,gottlieb.volcano.1981.vlcno_ax
+- opdb_id=GrqZX-MD15w; machine_ids=stern.lord-of-the-rings-limited-edition.2009,stern.lord-of-the-rings.2003
 
 ## Selected OPDB records that intentionally differ from the CSV machine record
 
-Count: **4**
+Count: **5**
 
 - machine_id=stern.ac-dc-led-pro.2014; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNW0-AOENR; selected_ipdb_id=6441
 - machine_id=stern.ac-dc-premium-limited-edition-luci.2012; csv_opdb_ids=G43W4-MrRpw; selected_opdb_id=G43W4-MXrPx; selected_ipdb_id=5775
 - machine_id=stern.ac-dc-vault-edition.2018; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNX0; selected_ipdb_id=6439
 - machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
+- machine_id=stern.lord-of-the-rings-limited-edition.2009; csv_opdb_ids=GrqZX-MD15w; selected_opdb_id=GrqZX-MDEPd; selected_ipdb_id=5558
 
 ## Selected OPDB families that differ from the CSV family
 

@@ -64,14 +64,15 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# adds a non-game System III record and honest stubs for its new roots; the four Spooky
 		# pinHeck games among them were curated the same day. The 97aa922b baseline renames those four
 		# sets and adds America's Most Haunted V22 as a second root of that record. The 2026-10-09 Black Hole
-		# curation folds its blkholea residual record into the main one, and the 2026-10-22 Centaur
-		# promotion moves one partial to author_ready.
+		# curation folds its blkholea residual record into the main one, the 2026-10-22 Centaur
+		# promotion moves one partial to author_ready, and the 2026-10-22 Lord of the Rings promotion
+		# does the same and splits the 2009 Limited Edition's lotr_le into a record of its own.
 		self.assertEqual(
 			{
-				"author_ready_count": 36,
+				"author_ready_count": 37,
 				"driver_count": 2955,
-				"game_count": 794,
-				"machine_count": 808,
+				"game_count": 795,
+				"machine_count": 809,
 				"non_game_count": 14,
 				"partial_count": 757,
 				"root_driver_count": 797,

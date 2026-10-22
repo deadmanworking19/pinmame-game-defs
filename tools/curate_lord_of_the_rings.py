@@ -9,10 +9,14 @@ byte-for-byte without reading the external evidence roots. ``--check`` refuses d
 external evidence path so the source record can be reconstructed and hash-verified.
 
 The embedded spatial artifact treats three factory-layout recreations as measurements of one
-physical machine. Independence between them is unestablished, so a placement is validated only
-when all three agree. A fourth Neo LED recreation is a disclosed JPSalas derivative and contributes
-only supplemental measurements for addresses 81-99. Each table's actual script binding selects the
-positioned object; disagreements are recorded and printed diagrams break ties.
+physical machine. Independence between them is unestablished, so table agreement alone validates a
+placement only when all three agree. Every other placement is validated against the factory
+drawings of Stern's 2022 vector reissue of the manual through the committed drawing-callout seed
+(``tools/seeds/stern/lord-of-the-rings-2003-callouts.json``): a table placement agrees when its own
+callout lands within 0.07 normalized under ``drawing_callouts``, and a device no retained table
+models is measured on the drawing that draws it and checked on a second drawing where one exists.
+The nineteen LED positions are the LED windows the factory lamp drawing draws; the retained tables'
+script-bound LED lights, including the fourth (Neo LED) recreation's, corroborate them.
 
 The definition, the spatial report and the knowledge note are all generated here from the same
 objects, and ``--check`` byte-compares all four artifacts against what this module produces. That
@@ -29,10 +33,13 @@ import tempfile
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json
+import drawing_callouts
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/partial/stern/lord-of-the-rings-2003.json"
+DEFINITION_PATH = ROOT / "machines/author-ready/stern/lord-of-the-rings-2003.json"
+CALLOUT_SEED_PATH = ROOT / "tools/seeds/stern/lord-of-the-rings-2003-callouts.json"
+CALLOUT_DATA = load_json(CALLOUT_SEED_PATH)
 SEED_PATH = ROOT / "tools/seeds/stern/lord-of-the-rings-2003.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/stern/lord-of-the-rings-2003.json"
 KNOWLEDGE_PATH = ROOT / "knowledge/stern/lord-of-the-rings-2003.md"
@@ -90,6 +97,51 @@ SUPPORT = "manual-support.stern.lord-of-the-rings.2003"
 CONSENSUS_SOURCE = "spatial-consensus.stern.lord-of-the-rings.2003"
 RUNTIME_STACKING = "runtime.lord-of-the-rings.stacking-opto"
 RUNTIME_STACKING_PATH = "evidence/runtime/whitestar/lord-of-the-rings-stacking-opto.json"
+MANUAL_2022 = "manual.stern.lord-of-the-rings.2003.reissue-2022"
+LE_DRIVER = "lotr_le"
+LE_MACHINE = "stern.lord-of-the-rings-limited-edition.2009"
+CALLOUT_SOURCE = "drawing-callouts.stern.lord-of-the-rings.2003"
+RUNTIME_LED = "runtime.lord-of-the-rings.led-test"
+RUNTIME_LED_PATH = "evidence/runtime/whitestar/lord-of-the-rings-led-test.json"
+RUNTIME_FLASH = "runtime.lord-of-the-rings.flash-test"
+RUNTIME_FLASH_PATH = "evidence/runtime/whitestar/lord-of-the-rings-flash-test.json"
+RUNTIME_FLASH_LE_PATH = "evidence/runtime/whitestar/lord-of-the-rings-limited-edition-flash-test.json"
+UNUSED_COIL_RUNTIME_NOTES = {
+    28: (
+        " The firmware's own flash-lamp test pulses every flasher this machine has and never 28; the 2009 Limited "
+        "Edition's firmware, a separate record, adds 28, where that edition wires its right Helm's Deep flasher."
+    ),
+}
+
+# Two switch coordinates follow the factory drawing rather than the consensus's own pick. Both
+# tables' measurements are in the consensus already (as outliers), so nothing new is measured; the
+# 2022 vector switch drawing's own callout chooses between them.
+DRAWING_RESOLVED_SWITCHES = {
+    28: ("hanibal-4k", (
+        "The 2022 vector DR.4 prints box 28 on the middle of the Balrog arm, 0.022 normalized from "
+        "Hanibal's script-bound sw28 and 0.089 from JPSalas', which sits at the arm's pivot end; VPW binds "
+        "no sw28 object. The switch is inside the Balrog assembly behind the front hit plate.")),
+    41: ("vpw-1-6", (
+        "All three tables agree on y and spread x from 0.182 to 0.266; the 2022 vector DR.4 prints box 41 "
+        "0.004 normalized from VPW's script-bound sw41, so VPW's measurement is published instead of the "
+        "per-axis median.")),
+}
+
+# Coils whose mechanism the retained known-working VPW script drives through a named object rather
+# than through a switch or flasher the consensus measures: (object, how it is bound, x, y), normalized
+# against VPW's own bounds (952 x 2203).
+MECHANISM_OBJECTS = {
+    2: ("Trigger.swPlunger", "SolCallBack(2) = \"AutoPlunger\" fires plungerIM, which InitImpulseP builds on swPlunger", 0.942804, 0.884495),
+    7: ("Primitive.rtower", "SolCallback(7) = \"SolTower\" swings rtower through TowerAnim", 0.876611, 0.106747),
+    13: ("Wall.OrbitPin", "SolCallback(13) = \"SolOrbit\" raises and drops OrbitPin (drag-point mean of its 12 points)", 0.276495, 0.042254),
+    21: ("Wall.LockPin", "SolCallBack(21) = \"SolLockRelease\" drops LockPin (drag-point mean of its 12 points)", 0.819929, 0.602278),
+    22: ("Flipper.BalrogFlipper", "SolCallBack(22) = \"SolBalrog\" turns BalrogFlipper, the Balrog's pivot, through BalrogOpen/BalrogClose", 0.507918, 0.276204),
+}
+
+# The ROM's own LED TEST (evidence/runtime/whitestar/lord-of-the-rings-led-test.json) pairs each
+# factory designator with the public lamp it lights; the manual's LED Test text says LED #1 is L1.
+LED_PUBLIC = {1: 97, 2: 98, 3: 99, 4: 81, 5: 82, 6: 83, 7: 84, 8: 85, 9: 86, 10: 87, 11: 88,
+              12: 96, 13: 95, 14: 94, 15: 93, 16: 92, 17: 91, 18: 90, 19: 89}
 
 TABLE_SOURCE = {
     "vpw-1-6": T_VPW,
@@ -111,10 +163,43 @@ LA_ROWS = {r["row"]: r for r in transcription["lamp_matrix"]["rows"]}
 
 
 def spatial_of(kind: str, address: int):
+    if kind == "switch" and address in DRAWING_RESOLVED_SWITCHES:
+        table, why = DRAWING_RESOLVED_SWITCHES[address]
+        entry = consensus["devices"]["switch"][str(address)]
+        pick = next(m for m in entry["outliers"] if m["table"] == table)
+        # One table's measurement, chosen by the drawing; the callout check decides its status.
+        return {"agreeing_tables": [table], "coordinate_origin": "table", "resolution": why,
+                "resolved_by": "drawing", "status": "observed", "x": pick["x"], "y": pick["y"]}
     entry = consensus["devices"].get(kind, {}).get(str(address))
     if not entry or entry.get("status") not in {"validated", "observed"} or "x" not in entry:
         return None
     return entry
+
+
+def measured(device_id: str, role: str, placement_id: str | None = None, refs: tuple[str, ...] = ()):
+    """A placement measured on a factory drawing through the callout seed's control fit.
+
+    The seed records the drawing page, the measured pixel, what was measured and the normalized
+    coordinate; drawing_callouts.measured recomputes the coordinate from the page's controls and
+    refuses a seed whose stored value no longer reproduces.
+    """
+    placement_id = placement_id or f"{device_id}.{role}"
+    item = CALLOUT_DATA["measurements"][placement_id]
+    if item["device"] != device_id:
+        raise SystemExit(f"{placement_id}: the callout seed measures it for {item['device']}, not {device_id}")
+    x, y = drawing_callouts.measured(CALLOUT_DATA, placement_id)
+    MEASURED_PLACEMENTS.append(placement_id)
+    return {
+        "id": placement_id,
+        "provenance": {"source_refs": [MANUAL_2022, CALLOUT_SOURCE, *refs], "status": "validated"},
+        "role": role,
+        "space": "playfield",
+        "x": x,
+        "y": y,
+    }
+
+
+MEASURED_PLACEMENTS: list[str] = []
 
 
 def placement(device_id: str, role: str, entry: dict, extra_refs: tuple[str, ...] = ()):
@@ -129,6 +214,8 @@ def placement(device_id: str, role: str, entry: dict, extra_refs: tuple[str, ...
         refs += [r for r in extra_refs if r not in refs]
         if entry.get("resolved_by") == "manual" and MANUAL not in refs:
             refs.append(MANUAL)
+        if entry.get("resolved_by") == "drawing" and MANUAL_2022 not in refs:
+            refs.append(MANUAL_2022)
     # The consensus artifact is the derivation authority for every coordinate, so it is cited
     # alongside the tables that supplied the measurements.
     refs.append(CONSENSUS_SOURCE)
@@ -360,6 +447,31 @@ HARNESS_EVIDENCED_OPTOS = {15}
 
 UK_ONLY = {1, 8}
 TOURNAMENT = {55}
+BALROG_SWITCHES = {28, 31, 32}
+
+# Switches no retained table holds where the factory mounts them, measured on the factory drawing
+# that draws them (tools/seeds/stern/lord-of-the-rings-2003-callouts.json, `measurements`).
+DRAWING_MEASURED_SWITCHES = {
+    24: (
+        "The ramp parts drawing (2022 manual PDF 111) mounts the 180-5198-00 Right Ramp Made switch on the sword "
+        "ramp, and the vector switch drawing DR.4 prints box 24 on that ramp; the placement is that box's centre "
+        "through the page's control fit. The retained tables' sw24 triggers (VPW and JPSalas at about (0.947, 0.287), "
+        "Hanibal at (0.897, 0.255)) sit at the right ramp's exit, about 0.13 from the drawing: they are where the "
+        "recreations register the shot, not where the switch is."
+    ),
+    31: (
+        "Measured on the 2022 manual's vector bottom view (PDF 123), which draws this microswitch on the left side "
+        "of the Balrog motor bracket under the playfield; the placement is the centre of the drawn switch body. The "
+        "topside switch drawing DR.4 prints box 31 in open space beside the Balrog arm, about 0.1 from the part, "
+        "because it does not draw under-playfield assemblies."
+    ),
+    32: (
+        "Measured on the 2022 manual's vector bottom view (PDF 123), which draws this microswitch on the right side "
+        "of the Balrog motor bracket under the playfield; the placement is the centre of the drawn switch body. The "
+        "topside switch drawing DR.4 prints box 32 in open space beside the Balrog arm, about 0.08 from the part, "
+        "because it does not draw under-playfield assemblies."
+    ),
+}
 
 
 def switch_type_for(address: int, record: dict) -> str:
@@ -404,11 +516,12 @@ COIL_IDS = {
     32: ("device.balrog-flasher", "flasher"),
 }
 # Effect coils are placed at the mechanism they drive, taken from the co-located switch or
-# flasher coordinate that the manual's DR.7 location diagram confirms. Coils with no
-# defensible anchor get a controlled internal_nonvisual record instead of a guess.
+# flasher coordinate of that mechanism (the VUK or saucer kicker, the bumper, the slingshot, the
+# trough's eject end). A projection stays observed unless the factory bottom-view drawing (PDF 123)
+# draws the coil's own assembly within 0.07 of it, checked through the callout seed; the ring magnet,
+# on the back panel, is checked against DR.7's rear-edge box instead.
 COIL_ANCHORS = {
     1: ("switch", 14, "DR.7 places 1 at the trough eject end; anchored to the trough eject opto."),
-    2: ("switch", 16, "DR.7 places 2 at the shooter lane; anchored to the shooter-lane switch."),
     3: ("switch", 9, "DR.7 places 3 at the left VUK; anchored to its own switch."),
     4: ("switch", 41, "DR.7 places 4 at the top VUK; anchored to its own switch."),
     5: ("switch", 30, "DR.7 places 5 at the right VUK; anchored to its own switch."),
@@ -416,13 +529,23 @@ COIL_ANCHORS = {
     9: ("switch", 49, "Bumper coil co-located with its own bumper switch."),
     10: ("switch", 50, "Bumper coil co-located with its own bumper switch."),
     11: ("switch", 51, "Bumper coil co-located with its own bumper switch."),
-    17: ("switch", 59, "Slingshot coil co-located with its own slingshot switch."),
-    18: ("switch", 62, "Slingshot coil co-located with its own slingshot switch."),
     19: ("switch", 46, "DR.7 places 19 at the top saucer; anchored to its own switch."),
-    22: ("switch", 28, "DR.7 places motor 22 at the Balrog; anchored to the Balrog hit switch on the toy."),
 }
 COIL_ROLES = {24: ["cabinet.knocker"]}
 UK_AUX = {33: "AUX 1", 34: "AUX 2", 35: "AUX 3"}
+UK_POST_NOTES = {
+    33: ("The 2022 manual's cabinet wiring page (PDF 126) calls it the Left Outlane Ball Deflector of the UK Post Save "
+         "feature, worked by the left of the two UK-only cabinet buttons (switch 1). No retained table models it; the "
+         "placement is the centre of DR.7's grey box AUX 1, which the drawing prints at the top of the left outlane."),
+    34: ("The 2022 manual's cabinet wiring page (PDF 126) calls it the Center Up/Down Post of the UK Post Save feature, "
+         "raised when both UK-only cabinet buttons (switches 1 and 8) are pressed together. No retained table models it; "
+         "the placement is the centre of DR.7's grey box AUX 2, which the drawing prints between the flippers."),
+    35: ("The 2022 manual's cabinet wiring page (PDF 126) calls it the Right Outlane Ball Deflector of the UK Post Save "
+         "feature, worked by the right of the two UK-only cabinet buttons (switch 8). No retained table models it; the "
+         "placement is the centre of DR.7's grey box AUX 3, which the drawing prints at the top of the right outlane."),
+}
+# VPW's LeftFlipper and RightFlipper pivots, normalized against its 952 x 2203 bounds.
+FLIPPER_PIVOTS = {"left": (0.289107, 0.850172), "right": (0.621009, 0.850172)}
 RESERVED_SOLENOIDS = {
     16: "PinMAME's unused companion slot to the synthetic fast-flip state at public 15.",
     36: "Whitestar auxiliary board 520-5068-01 exposes three outputs at 33-35 and leaves 36 unused.",
@@ -556,7 +679,7 @@ SOURCES = [
             "Four-table spatial derivation produced by tools/lotr_spatial_resolve.py --write <path> from the retained extractions. "
             "Three factory-layout recreations form the lamp, switch and flasher consensus; the Neo LED mod supplies "
             "a supplemental, derivative measurement for script-bound addresses 81-99. The artifact is the authority for every "
-            "coordinate in this definition: for each device it records each "
+            "table-derived switch, lamp and flasher coordinate in this definition: for each device it records each "
             "table's measurement, the published coordinate, which tables support it within the 0.025 agreement "
             "threshold, which disagree, whether the coordinate is held by a table or computed, and any manual "
             "tie-break with its reason."
@@ -581,6 +704,110 @@ SOURCES.append({
     "uri": f"internal:{RUNTIME_STACKING_PATH}",
 })
 
+def _static_excerpt(name: str, locator: str, crop: str | None) -> dict:
+    """An excerpt transcribed by hand and committed as-is, with the crop that accompanies it, if any."""
+    markdown, image = EXCERPT_DIR / f"{name}.md", EXCERPT_DIR / f"{name}.webp"
+    excerpt = {
+        "id": f"excerpt.lotr2022.{name.removesuffix('-2022')}",
+        "locator": locator,
+        "method": "manual",
+        "path": markdown.relative_to(ROOT).as_posix(),
+        "reviewed": True,
+        "sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+    }
+    if crop is not None:
+        excerpt.update({
+            "image": image.relative_to(ROOT).as_posix(),
+            "image_derivation": (
+                f"Lord_of_the_Rings_Manual-2022.pdf {crop}, rendered at 300 dpi with PyMuPDF 1.26.3, converted to "
+                "grayscale and resized with Lanczos, lossy WebP"
+            ),
+            "image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+        })
+    return dict(sorted(excerpt.items()))
+
+
+SOURCES.append({
+    "acquired_at": "2026-10-21T21:43:10Z",
+    "attribution": "Stern Pinball, Inc.",
+    "excerpts": [
+        _static_excerpt("led-test-and-board-layout-2022", "PDF page 42 LED Test text and PDF page 162 (printed Section 5, Chapter 4, page 144) Playfield 19-LED PC Board component layout", "page 162, crop box 0.02,0.30,0.70,0.82, 900px wide, quality 40"),
+        _static_excerpt("balrog-test-2022", "PDF page 42, the LOTR TESTS Balrog (BROG) test text", None),
+        _static_excerpt("general-illumination-wiring-2022", "PDF page 121 (printed Section 5, Chapter 2, page 103) General Illumination Circuit Detailed Wiring Diagram, complete circuit table and bottom-view drawing", "page 121, crop box 0,0.08,1,0.92, 900px wide, quality 35"),
+        _static_excerpt("light-reflectors-2022", "PDF page 82 item 5 Light Reflector row and PDF page 83 (printed Section 4, Chapter 1, page 65) item-5 callouts", "page 83, crop box 0.08,0.50,0.53,0.78, 760px wide, quality 40"),
+        _static_excerpt("under-playfield-locations-2022", "PDF page 123 (printed Section 5, Chapter 2, page 105) Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations", "page 123, crop box 0,0.02,0.62,0.96, 760px wide, quality 35"),
+        _static_excerpt("sword-ramp-and-uk-posts-2022", "PDF page 111 (printed Section 4, Chapter 2, page 93) sword ramp switch and PDF page 126 UK Post Save note", "page 111, crop box 0.35,0,0.98,0.70, 760px wide, quality 35"),
+    ],
+    "id": MANUAL_2022,
+    "kind": "manual",
+    "license": "NOASSERTION",
+    "locator": (
+        "Stern's current manufacturer-hosted 211-page reissue of the English service manual 780-5080-00 (November "
+        "2003), https://wp.sternpinball.com/wp-content/uploads/2022/01/Lord_of_the_Rings_Manual.pdf. Unlike the "
+        "image-only 184-page scan, its drawings are vector: the Dr. Pinball location drawings (PDF 6, 7 and 9) carry "
+        "their callout boxes and labels as PDF objects over a 225 dpi line-art image, and the playfield wiring pages "
+        "(PDF 121 and 123) are wholly vector bottom views. The drawing-callout seed reads every callout, G.I. marker, "
+        "label and leader from these objects. Also cited: the LED and Balrog tests (PDF 42), the playfield parts "
+        "pages (PDF 82-83), the ramp parts (PDF 111), the cabinet wiring (PDF 126) and the 19-LED board layout "
+        "(PDF 162)."
+    ),
+    "original_filename": "Lord_of_the_Rings_Manual.pdf",
+    "rights": "NOASSERTION",
+    "sha256": "e7307faa922c9a4af12f4cb9da5b76b057b7fc771a4e1cbadc82b9b4af70caa4",
+    "uri": "external:pinmame-manuals/by-machine/stern.lord-of-the-rings.2003/official-stern/2022/Lord_of_the_Rings_Manual-2022.pdf",
+})
+
+SOURCES.append({
+    "attribution": "pinmame-game-defs curation",
+    "id": CALLOUT_SOURCE,
+    "kind": "human_review",
+    "license": "NOASSERTION",
+    "locator": (
+        f"Drawing-callout seed {CALLOUT_SEED_PATH.relative_to(ROOT).as_posix()}, checked by tools/drawing_callouts.py: "
+        "for each factory drawing of the 2022 manual (DR.4, DR.5 and DR.7 on PDF 6, 7 and 9; the G.I. wiring and "
+        "terminal-strip bottom views on PDF 121 and 123; the playfield parts drawing on PDF 83) the 300 dpi render "
+        "it was read on, its controls read on the drawing's own line art and paired with validated placements, "
+        "every callout read from the PDF's objects, the placements each page checks, and the placements measured "
+        "on a drawing with the pixel and normalized coordinate of each. The reads, controls and measurements are "
+        "rebuilt from the pinned PDF by the retained build_seed.py and assemble_seed.py."
+    ),
+    "revision": "2026-10-22",
+    "sha256": hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(),
+    "uri": f"internal:{CALLOUT_SEED_PATH.relative_to(ROOT).as_posix()}",
+})
+
+SOURCES.append({
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "id": RUNTIME_LED,
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "locator": (
+        "Hash-pinned LibPinMAME run of lotr from empty NVRAM through the ROM's own LOTR TESTS > LED TEST (scenario "
+        "tools/harness-scenarios/whitestar/lotr-led-test.json, compact evidence "
+        f"{RUNTIME_LED_PATH} built by tools/lotr_led_test_evidence.py). ALL ON raises exactly public lamps 81-99; "
+        "LED #1 to LED #19 each raise exactly one of them (97, 98, 99, 81-88, then 96 down to 89); ALL OFF raises "
+        "none. Each DMD frame is pinned by its pixel digest with the text it reads."
+    ),
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "uri": f"internal:{RUNTIME_LED_PATH}",
+})
+
+SOURCES.append({
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "id": RUNTIME_FLASH,
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "locator": (
+        "Hash-pinned LibPinMAME run of lotr (10.00) from empty NVRAM through the ROM's own DIAG > TEST FLASH LAMPS "
+        "(scenario tools/harness-scenarios/whitestar/lotr-flash-test.json, compact evidence "
+        f"{RUNTIME_FLASH_PATH} built by tools/lotr_flash_test_evidence.py). Each of its eight CYCLING FLASHERS steps "
+        "pulses exactly solenoids 14, 23, 25-27 and 29-32, never 28. The same walk on lotr_le (10.02, "
+        f"{RUNTIME_FLASH_LE_PATH}) pulses 28 as well. Each DMD frame is pinned by its pixel digest with the text it reads."
+    ),
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "uri": f"internal:{RUNTIME_FLASH_PATH}",
+})
+
 SOURCES.append({
     "attribution": "JPSalas; Neo LED Mod contributors",
     "id": T_NEO_LED,
@@ -588,8 +815,9 @@ SOURCES.append({
     "license": "NOASSERTION",
     "rights": "NOASSERTION",
     "locator": (
-        "Retained installed Lord Of The Rings Neo LED Mod 1.0.3 recreation, 81,432,576 bytes, used only as a "
-        "supplemental measurement for its script-bound Light.l81 through Light.l99 objects. Its info.json identifies "
+        "Retained installed Lord Of The Rings Neo LED Mod 1.0.3 recreation, 81,432,576 bytes, consulted only for its "
+        "script-bound Light.l81 through Light.l99 objects, which the spatial consensus records beside the other "
+        "tables' LED bindings; the LED placements themselves come from the factory drawings. Its info.json identifies "
         "JPSalas, table version 1.0.1, and its script header says 'VPX version by jpsalas', so it is disclosed as a "
         "derivative rather than treated as independent corroboration. Valinor is the VPW table's identity, not this one."
     ),
@@ -652,7 +880,8 @@ for table_id, script_id, author, subdir, name, sha, size, note in [
      "three retained recreations is unestablished and no lineage is asserted: measured agreement pairs this table "
      "with the JPSalas recreation (within 0.0155 on every shared lamp, against up to 0.187 for either versus VPW), "
      "while the only documented ancestry pairs VPW with JPSalas, both of which credit an EBIsLit playfield scan. "
-     "Because the two signals disagree, a placement is validated here only when all three tables agree on it. "
+     "Because the two signals disagree, table agreement validates a placement here only when all three tables "
+     "agree on it; any other table placement needs its own factory-drawing callout to be validated. "
      "Acquisition page: https://vpuniverse.com/files/file/4626-lord-of-the-rings-hanibals-4k-edition/."),
 ]:
     SOURCES.append({
@@ -829,6 +1058,16 @@ for address in range(1, 65):
                     "present; that table also leaves 15 at 0 throughout. A recreation therefore holds 15 at 0 at "
                     "rest, drives it to 1 only while a ball blocks the stacking opto, and never inverts it."
                 )
+        if address in BALROG_SWITCHES:
+            notes.append(
+                "The 2022 manual's Balrog test (PDF 42) says switches 31, 32 and 28 'are in a Normally Closed state'. "
+                "The same paragraph has 32 read closed while the Balrog is closed and 31 close once it comes to rest "
+                "open, and every retained known-working script holds 28, 31 and 32 at public 0 except while the "
+                "Balrog is hit or parked at that switch's end, so the phrase describes the switch at its end position: "
+                "on Whitestar's read path the matrix-facing contact still rests open. The paragraph's 'Balrog Motor "
+                "(Q32)' is a misprint for Q22."
+            )
+            entry["provenance"]["source_refs"].append(MANUAL_2022)
         physical["notes"] = " ".join(notes)
     entry["physical"] = physical
     entry["wiring"] = switch_wiring(address)
@@ -838,6 +1077,21 @@ for address in range(1, 65):
         entry["spatial"] = not_applicable("unused", [MANUAL])
     elif printed_class == "cabinet" or (roles and any(r.startswith(("cabinet.", "service.")) for r in roles)):
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL])
+    elif address in DRAWING_MEASURED_SWITCHES:
+        entry["spatial"] = {"placements": [measured(device_id, "sensor")], "status": "validated"}
+        physical["notes"] += " " + DRAWING_MEASURED_SWITCHES[address]
+    elif address == 15:
+        # The stacking beam and the eject beam are the two channels of one dual opto board pair at the
+        # trough's eject end, one above the other, so in plan they share switch 14's position.
+        anchor = spatial_of("switch", 14)
+        PROJECTIONS.append({
+            "device": device_id, "anchor": "switch.14",
+            "reason": ("The trough's dual opto transmitter and receiver boards (515-0173-00 / 515-0174-00) carry both "
+                       "the eject beam (14) and the stacking beam (15), and PDF 123 labels both boards S14 and S15; "
+                       "the stacking beam sits above the eject beam, so in plan it shares switch 14's position."),
+            "x": round(float(anchor["x"]), 6), "y": round(float(anchor["y"]), 6),
+        })
+        entry["spatial"] = located(device_id, "sensor", {**anchor, "status": "observed"}, (MANUAL, MANUAL_2022))
     elif sp:
         entry["spatial"] = located(device_id, "sensor", sp, (MANUAL,))
     elif printed_class == "playfield":
@@ -879,12 +1133,17 @@ for address, device_id, label, roles, location, note in DEDICATED:
     if printed_class == "cabinet" or any(r.startswith(("cabinet.", "service.")) or r.endswith(".button") for r in roles):
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL, PROFILE])
     elif printed_class == "playfield":
-        # DS-2 and DS-4, the flipper end-of-stroke switches. The printed dedicated-switch table
-        # puts both below the playfield, so their position is unresolved, not inapplicable.
-        entry["spatial"] = unresolved_spatial(
-            device_id, address, rec.get("name", label),
-            f"The printed dedicated-switch table places {manual_ref} at {rec['location']}, and no retained table measures it.",
+        # DS-2 and DS-4, the flipper end-of-stroke switches, printed below the playfield on the flipper
+        # mechanisms. No retained table models them; the 2022 manual's bottom view draws both.
+        entry["spatial"] = {"placements": [measured(device_id, "sensor")], "status": "validated"}
+        side = "left" if address == 83 else "right"
+        entry["physical"]["notes"] += (
+            f" Measured on the 2022 manual's vector bottom view (PDF 123), which draws the {side} flipper's "
+            f"end-of-stroke blade switch at the outer end of the flipper mechanism, labelled {manual_ref.replace('-', '')}; "
+            "the placement is the centre of the drawn switch. The topside switch drawing DR.4 prints its grey box "
+            "nearer the flipper pivot, in open space, because it does not draw under-playfield assemblies."
         )
+        entry["provenance"]["source_refs"].append(MANUAL_2022)
     else:
         entry["spatial"] = not_applicable("internal_nonvisual", [MANUAL, PROFILE])
     if entry.get("spatial") is None:
@@ -940,22 +1199,31 @@ for position in range(1, 9):
 outputs = []
 
 
-# Devices the printed DR.7 location drawing places with a boxed position on the playfield
-# outline, but which no retained table models. Their position is UNRESOLVED, not inapplicable:
-# saying not_applicable would assert on the manual's authority that a device the manual places
-# has no placeable position. A partial definition may omit spatial evidence, so it does, and
-# every one is listed in the spatial report.
-PRINTED_BUT_UNPLACED = {
-    7: "DR.7 prints a boxed position for coil 7 on the playfield outline.",
-    8: "DR.7 prints a boxed position for coil 8 on the playfield outline.",
-    13: "DR.7 prints a boxed position for coil 13 on the playfield outline.",
-    20: "DR.7 prints a boxed position for the Balrog motor relay on the playfield outline.",
-    21: "DR.7 prints a boxed position for coil 21 on the playfield outline; the report's own flasher-30 resolution cites it.",
-    33: "DR.7 prints Aux 1 at the left inlane area.",
-    34: "DR.7 prints Aux 2 between the flippers.",
-    35: "DR.7 prints Aux 3 at the right.",
-    46: "DR.7 shades printed coil 16, the right flipper, as a coil below the playfield and prints its position.",
-    48: "DR.7 shades printed coil 15, the left flipper, as a coil below the playfield and prints its position.",
+# Coils placed at their coil assembly as the factory drawings draw it, because no retained table
+# object of the mechanism they drive lies within 0.07 of the assembly the bottom-view drawing (PDF
+# 123) draws: DR.7's box on the coil's below-playfield silhouette is the measurement, and PDF 123's
+# label of the same assembly is the check. The flipper coils and the UK posts are built below.
+DRAWING_MEASURED_COILS = {
+    8: (
+        "Placed at the loop diverter coil assembly: DR.7 prints box 8 on its below-playfield silhouette and PDF 123 "
+        "labels the same assembly (printed Q09 beside the LOOP DIVERTER FUSE, a misprint for Q08). VPW's "
+        "DiverterFlipper, the gate the coil swings, pivots about 0.09 from the coil at (0.360, 0.132); the coil "
+        "drives the gate through its crank."
+    ),
+    20: (
+        "Placed at the Balrog motor relay board 520-5066-00 under the playfield: DR.7 prints box 20 with the word "
+        "Relay on it and PDF 123 labels the same board Q20. No retained table models the relay."
+    ),
+    17: (
+        "Placed at the coil assembly under the left slingshot plastic: DR.7 prints box 17 on its below-playfield "
+        "silhouette and PDF 123 labels the same assembly Q17. The slingshot's own switch and kicker rubber, where all "
+        "three retained tables put switch 59, lie about 0.07 away; the coil drives the kicker arm from beneath."
+    ),
+    18: (
+        "Placed at the coil assembly under the right slingshot plastic: DR.7 prints box 18 on its below-playfield "
+        "silhouette and PDF 123 labels the same assembly Q18. The slingshot's own switch and kicker rubber, where all "
+        "three retained tables put switch 62, lie about 0.07 away; the coil drives the kicker arm from beneath."
+    ),
 }
 
 
@@ -971,6 +1239,22 @@ def coil_spatial(address: int, device_id: str, kind: str):
         sp = spatial_of("flasher", address)
         if sp:
             return located(device_id, "emitter", sp, (MANUAL,))
+    if address in DRAWING_MEASURED_COILS:
+        return {"placements": [measured(device_id, "effect")], "status": "validated"}
+    if address in MECHANISM_OBJECTS:
+        # A projection onto the mechanism the coil drives, read from the object the known-working
+        # VPW script actually moves for this coil. The bottom-view drawing's check promotes it.
+        obj, how, x, y = MECHANISM_OBJECTS[address]
+        PROJECTIONS.append({
+            "device": device_id, "anchor": f"vpw-1-6:{obj}",
+            "reason": f"Placed on the mechanism the coil drives: in the retained known-working VPW script {how}.",
+            "x": x, "y": y,
+        })
+        return {"placements": [{
+            "id": f"{device_id}.effect",
+            "provenance": {"source_refs": [T_VPW, S_VPW, MANUAL], "status": "observed"},
+            "role": "effect", "space": "playfield", "x": x, "y": y,
+        }], "status": "observed"}
     anchor = COIL_ANCHORS.get(address)
     if anchor:
         anchor_kind, anchor_address, reason = anchor
@@ -990,9 +1274,6 @@ def coil_spatial(address: int, device_id: str, kind: str):
                 "y": round(float(sp["y"]), 6),
             })
             return located(device_id, "effect", projected, (MANUAL,))
-    if address in PRINTED_BUT_UNPLACED:
-        return unresolved_spatial(device_id, address, COILS.get(address, {}).get("name", device_id),
-                                  PRINTED_BUT_UNPLACED[address])
     return not_applicable("internal_nonvisual", [MANUAL, S_VPW])
 
 
@@ -1010,11 +1291,12 @@ for address in range(1, 33):
             "label": f"Unused Solenoid {address}",
             "physical": {"notes": (
                 f"Printed NOT USED in the coils detailed chart table of the manual for the 2003 production "
-                f"machine, which is not a claim about every driver in the tree. Drive transistor {rec.get('transistor')} and "
+                f"machine. Drive transistor {rec.get('transistor')} and "
                 f"control line {rec.get('control_wire')} at {rec.get('control_connector')} exist on the board but no "
-                "device is fitted."
+                "device is fitted." + (UNUSED_COIL_RUNTIME_NOTES.get(address, ""))
             )},
-            "provenance": {"source_refs": [MANUAL, CORE], "status": "validated"},
+            "provenance": {"source_refs": [MANUAL, CORE] + ([RUNTIME_FLASH] if address in UNUSED_COIL_RUNTIME_NOTES else []),
+                           "status": "validated"},
             "spatial": not_applicable("unused", [MANUAL]),
             "wiring": coil_wiring(rec),
         })
@@ -1049,6 +1331,15 @@ for address in range(1, 33):
     _spatial = coil_spatial(address, device_id, kind)
     if _spatial is not None:
         entry["spatial"] = _spatial
+    if address in DRAWING_MEASURED_COILS:
+        entry["physical"]["notes"] += " " + DRAWING_MEASURED_COILS[address]
+        entry["provenance"]["source_refs"].append(MANUAL_2022)
+    if address in MECHANISM_OBJECTS:
+        _obj, _how, _x, _y = MECHANISM_OBJECTS[address]
+        entry["physical"]["notes"] += (
+            f" Placed on the mechanism the coil drives, the object the retained known-working VPW script moves for "
+            f"it ({_obj}: {_how}); the 2022 manual's bottom view (PDF 123) draws this coil's assembly beside it."
+        )
     if COIL_ROLES.get(address):
         entry["roles"] = COIL_ROLES[address]
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL])
@@ -1096,9 +1387,10 @@ for address, manual_ref in UK_AUX.items():
         "physical": {"notes": (
             f"Printed auxiliary coil {manual_ref} on the UK 3X Transformer Driver Board, fitted on UK cabinets only. "
             f"Printed coil type {rec['coil_spec']}. Whitestar auxiliary board 520-5068-01, which lotrGameData declares, "
-            "exposes exactly three outputs at public 33-35."
+            "exposes exactly three outputs at public 33-35. " + UK_POST_NOTES[address]
         )},
-        "provenance": {"source_refs": [MANUAL, PROFILE, CORE], "status": "validated"},
+        "provenance": {"source_refs": [MANUAL, MANUAL_2022, PROFILE, CORE], "status": "validated"},
+        "spatial": {"placements": [measured(device_id, "effect")], "status": "validated"},
         # The auxiliary coils sit on their own board; the transcription records it at the group
         # level, so it has to be supplied here rather than read from the per-coil record.
         "wiring": {**coil_wiring(rec), "board": transcription["coil_table"]["auxiliary_uk_only"]["board"]},
@@ -1131,9 +1423,14 @@ for power, callback, side, manual_addr in ((45, 46, "right", "#16"), (47, 48, "l
         "physical": {"notes": (
             f"Printed coils chart entry {manual_addr} {rec['name']}. Whitestar removes the physical flipper coils from "
             f"public 15 and 16 and exposes this one at power-phase address {power} with canonical callback {callback}. "
-            f"Printed coil type {rec.get('coil_spec')}."
+            f"Printed coil type {rec.get('coil_spec')}. Placed at the coil assembly: DR.7 prints box "
+            f"{manual_addr.lstrip('#')} on the flipper mechanism's below-playfield silhouette and the 2022 manual's "
+            f"bottom view (PDF 123) labels the same assembly Q{manual_addr.lstrip('#')}. The flipper bat pivots about "
+            f"0.1 inboard, at ({FLIPPER_PIVOTS[side][0]}, {FLIPPER_PIVOTS[side][1]}) in VPW's {side.capitalize()}Flipper, "
+            "where all three retained tables agree within 0.003."
         )},
-        "provenance": {"source_refs": [MANUAL, PROFILE, CORE, S_VPW], "status": "validated"},
+        "provenance": {"source_refs": [MANUAL, MANUAL_2022, PROFILE, CORE, S_VPW], "status": "validated"},
+        "spatial": {"placements": [measured(f"device.{side}-flipper", "effect")], "status": "validated"},
         "wiring": coil_wiring(rec),
     })
 
@@ -1149,10 +1446,11 @@ for address in range(1, 81):
     )
     if address in {60, 61, 62, 63}:
         notes.append(
-            "Printed on the back panel. The printed backpanel inset draws 60 and 61 above 62 and 63, but none of the "
-            "three retained recreations separates the upper pair from the lower: each models 60/62 and 61/63 at the "
-            "same coordinate. The published position is therefore the column pair, not the individual bulb, and this "
-            "lamp is recorded as observed rather than validated."
+            "Printed on the back panel. The printed backpanel inset draws 60 and 61 above 62 and 63. The back panel "
+            "stands upright at the rear of the playfield, so a bulb above another projects onto the same plan "
+            "position: all three retained recreations model 60 with 62 and 61 with 63 at one coordinate, the "
+            "panel's plane, as they model the back-panel lamps 73-78 along it. The placement is that plan position; "
+            "the playfield coordinate space has no height, so the upper and lower bulbs of a column share it."
         )
     if rec.get("note"):
         notes.append(rec["note"] + ".")
@@ -1181,53 +1479,57 @@ for address in range(1, 81):
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL])
     else:
         sp = spatial_of("lamp", address)
-        if sp and address in {60, 61, 62, 63}:
-            # No retained table resolves the printed 2x2; the coordinate identifies the pair.
-            sp = {**sp, "status": "observed"}
         entry["spatial"] = located(device_id, "emitter", sp, (MANUAL,)) if sp else not_applicable("internal_nonvisual", [MANUAL])
     outputs.append(entry)
 
-CONFLICTED_LED_POSITIONS = []
+# The 19-LED board 520-5242-00. Each public address is named by the ROM's own LED TEST, and each LED
+# is placed at the window the factory lamp drawing (DR.5) draws for it, paired with its designator by
+# fitting the printed component layout (PDF 162) to the nineteen windows.
+_LED_BY_PUBLIC = {public: designator for designator, public in LED_PUBLIC.items()}
+if sorted(_LED_BY_PUBLIC) != list(range(81, 100)):
+    raise SystemExit("the LED TEST pairing must cover public lamps 81-99 exactly once")
 for address in range(81, 100):
-    spatial = spatial_of("lamp", address)
-    raw_spatial = consensus["devices"]["lamp"][str(address)]
-    if spatial is None and raw_spatial.get("status") != "conflicted":
-        raise SystemExit(f"script-bound retained tables produced no usable coordinate for public lamp {address}")
-    emitter = address - 80
-    device_id = f"lamp.led-board-{emitter:02d}"
-    entry = {
-        "aliases": [{"namespace": "pinmame.lamp", "value": str(address)}],
+    designator = _LED_BY_PUBLIC[address]
+    device_id = f"lamp.led-board-l{designator:02d}"
+    _jps = next(m for m in consensus["devices"]["lamp"][str(address)]["script_bound_measurements"] if m["table"] == "jpsalas-600")
+    _place = measured(device_id, "emitter", refs=(RUNTIME_LED,))
+    _jps_offset = round(((_jps["x"] - _place["x"]) ** 2 + (_jps["y"] - _place["y"]) ** 2) ** 0.5, 3)
+    outputs.append({
+        "aliases": [{"namespace": "pinmame.lamp", "value": str(address)},
+                    {"namespace": "manual.address", "value": f"L{designator}"}],
         "availability": "used",
         "binding": {"device": address, "group": "pinmame.output.lamp"},
         "id": device_id,
         "kind": "lamp",
-        "label": f"19-LED Board Emitter {emitter:02d}",
+        "label": f"19-LED Board L{designator}",
         "physical": {
             "notes": (
-                f"Emitter {emitter:02d} of playfield board 520-5242-00. PinMAME publishes it as lamp {address}. "
-                "PinMAME identifies the board and its nineteen public outputs; all four retained scripts explicitly "
-                "bind this address to a positioned light object, and the spatial resolver compares those bound "
-                "objects without assuming that object numbering equals the public address. No factory semantic name "
-                "or per-emitter connector pin is asserted, and the official manual is not claimed as LED-board evidence."
+                f"LED L{designator} of the playfield 19-LED board 520-5242-00, which sits under the round window between the "
+                f"flippers (2022 manual PDF 42) with its Top Edge toward the rear and its connector J1 on the right-hand "
+                f"side, as both bottom views (PDF 121 and 123) draw it. PinMAME publishes it as lamp {address}: the ROM's "
+                f"own LED TEST lights it as LED #{designator}, which the manual's LED Test text identifies with L{designator}, "
+                f"and the hash-pinned run shows LED #{designator} raising public lamp {address} alone. The placement is "
+                f"this LED's window in the factory lamp drawing DR.5, paired with L{designator} by fitting the printed "
+                f"component layout (PDF 162) to the nineteen windows. The retained JPSalas script binds public {address} "
+                f"to a light {_jps_offset} from it."
+                + (" JPSalas, and the VPW recreation that shares its pattern, assign the three centre LEDs one step "
+                   "round the triangle from the factory pairing." if designator in (1, 2, 3) else "")
             ),
             "quantity": 1,
         },
-        "provenance": {
-            "source_refs": [CORE, PROFILE, S_VPW, S_JPS, S_HAN, T_NEO_LED],
-            "status": "observed",
-        },
-    }
-    if spatial is not None:
-        entry["spatial"] = located(device_id, "emitter", spatial)
-    else:
-        CONFLICTED_LED_POSITIONS.append({
-            "device": device_id,
-            "address": address,
-            "label": entry["label"],
-            "measurements": raw_spatial["script_bound_measurements"],
-        })
-    outputs.append(entry)
+        "provenance": {"source_refs": [CORE, PROFILE, MANUAL_2022, RUNTIME_LED, S_JPS], "status": "validated"},
+        "spatial": {"placements": [_place], "status": "validated"},
+    })
 
+# General illumination: one aggregate relay channel driving every G.I. bulb. The playfield sockets
+# are the circles the G.I. wiring page (PDF 121) draws on its bottom view, measured through the
+# rollover actuators of the lane switches, and the two above-playfield spotlights are the light
+# reflectors the playfield parts drawing (PDF 83) calls out on the return-lane plastics.
+_gi_ids = sorted(pid for pid, item in CALLOUT_DATA["measurements"].items() if item["device"] == "gi.playfield-relay")
+_gi_placements = [measured("gi.playfield-relay", "emitter", pid) for pid in _gi_ids]
+_gi_counts = {letter: sum(pid.startswith(f"gi.playfield-relay.{letter}") for pid in _gi_ids) for letter in ("g", "v", "y")}
+if _gi_counts != {"g": 5, "v": 10, "y": 7} or len(_gi_ids) != 24:
+    raise SystemExit(f"G.I. measurements do not match the drawn sockets: {_gi_counts}, {len(_gi_ids)}")
 outputs.append({
     "aliases": [{"namespace": "pinmame.gi", "value": "0"}],
     "availability": "used",
@@ -1237,34 +1539,41 @@ outputs.append({
     "label": "General Illumination Relay",
     "physical": {"notes": (
         "PinMAME exposes Whitestar's general-illumination relay as a single aggregate channel. The cabinet itself has "
-        "four separately fused 6.3v AC illumination strings, printed as F24 brown-white, F25 yellow, F26 green and F27 "
-        "violet, all behind the one relay, so a recreation must not infer four controllable channels from the fuse chart."
-    )},
-    "provenance": {"source_refs": [MANUAL, PROFILE, CORE], "status": "validated"},
-    "roles": ["internal.general-illumination"],
-    "spatial": not_applicable("internal_nonvisual", [MANUAL, PROFILE]),
-    "wiring": {"board": "I/O Power Driver Board", "voltage_type": "ac", "nominal_voltage_v": 6.3},
+        "four separately fused 5.7v AC illumination circuits behind the one relay, printed F24 (circuit 1, BRN-WHT, back "
+        "panel), F25 (circuit 2, YEL, lower playfield and two spotlights), F26 (circuit 3, GRN, upper middle playfield and "
+        "coin door) and F27 (circuit 4, VIO, upper playfield), so a recreation must not infer four controllable channels "
+        "from the fuse chart. The G.I. wiring diagram (PDF 121), the transformer's parts listing (010-5012-01, "
+        "'Transformer 5.7v AC') and the cabinet wiring print the G.I. supply as 5.7v AC; only the quick-reference fuse "
+        "chart prints 6.3v AC for F24-F27, so the nominal voltage follows the three agreeing pages. "
+        "The 2022 manual's G.I. wiring diagram (PDF 121) draws 22 playfield sockets on its bottom "
+        "view: 7 yellow, 5 green and 10 violet. Its circuit table prints the green circuit as Upper Middle Playfield X2 "
+        "where the drawing has five green sockets, and every retained recreation carries a G.I. light at the three green "
+        "sockets along the left side, so the drawing's five are placed; the page's footnote says bulb quantities may "
+        "change during production. The two #555 spotlights above the playfield sit in light reflectors on the "
+        "return-lane plastics, placed at the reflector leaders of the playfield parts drawing (PDF 83). The eight "
+        "back-panel bulbs and the two coin-door bulbs (three on European doors) are on this channel too but are not "
+        "placed: the back panel's sockets are drawn only in a rear-view inset with no playfield frame, and the coin door "
+        "is cabinet hardware. Quantity counts every bulb on a US machine."
+    ), "quantity": 34},
+    "provenance": {"source_refs": [MANUAL, MANUAL_2022, PROFILE, CORE], "status": "validated"},
+    "spatial": {"placements": _gi_placements, "status": "validated"},
+    "wiring": {"board": "I/O Power Driver Board", "voltage_type": "ac", "nominal_voltage_v": 5.7},
 })
 
-# Centralised so no device can silently lose its spatial evidence: anything the printed DR.7
-# drawing places, that ended up without a spatial record, is recorded as unresolved exactly once.
-_recorded = {row["device"] for row in UNPLACED} | {row["device"] for row in CONFLICTED_LED_POSITIONS}
-for _device in outputs:
-    _address = _device["binding"]["device"]
-    if (_device["binding"]["group"] == "pinmame.output.solenoid"
-            and _address in PRINTED_BUT_UNPLACED
-            and "spatial" not in _device
-            and _device["id"] not in _recorded):
-        UNPLACED.append({"device": _device["id"], "address": _address, "label": _device["label"],
-                         "printed_evidence": PRINTED_BUT_UNPLACED[_address]})
-        _recorded.add(_device["id"])
-# Any device that still carries no spatial record and was not deliberately left unresolved is a
-# generator bug, not a curation decision. Both namespaces are checked here rather than only the
-# one that happened to be under review, because the round-six fix was applied to outputs alone
-# and the switch namespace kept shipping false `not_applicable` records for another whole round.
-_unaccounted = [d["id"] for d in inputs + outputs if "spatial" not in d and d["id"] not in _recorded]
+# Every device carries spatial evidence or a controlled not_applicable record. Both namespaces are
+# checked rather than only the one under review, because the round-six fix was applied to outputs
+# alone and the switch namespace kept shipping false `not_applicable` records for another round.
+if UNPLACED:
+    raise SystemExit(f"devices recorded as unplaced in an author-ready definition: {UNPLACED}")
+_unaccounted = [d["id"] for d in inputs + outputs if "spatial" not in d]
 if _unaccounted:
-    raise SystemExit(f"devices without spatial evidence and without an unresolved record: {_unaccounted}")
+    raise SystemExit(f"devices without spatial evidence: {_unaccounted}")
+# Each drawing measurement in the callout seed is used exactly once, and nothing else is measured.
+if sorted(MEASURED_PLACEMENTS) != sorted(CALLOUT_DATA["measurements"]):
+    raise SystemExit(
+        f"drawing measurements used {sorted(set(MEASURED_PLACEMENTS) ^ set(CALLOUT_DATA['measurements']))} "
+        "differently from the callout seed"
+    )
 
 # And the converse: nothing the manual places may claim, on the manual's own authority, that it
 # has no placeable position - whatever reason it gives, and in whichever namespace it lives.
@@ -1457,14 +1766,17 @@ mechanisms = [
         "actuators": ["device.uk-left-up-down-post", "device.uk-center-up-down-post", "device.uk-right-up-down-post"],
         "behavior": (
             "UK cabinets add three up and down posts driven from a UK 3X Transformer Driver Board and exposed on "
-            "Whitestar auxiliary outputs 33, 34 and 35. The printed coil and flash lamp location drawing places Aux 1 "
-            "at the left inlane area, Aux 2 between the flippers and Aux 3 at the right. These are absent from "
-            "non-UK cabinets, as are the two cabinet-side buttons at printed switches 1 and 8."
+            "Whitestar auxiliary outputs 33, 34 and 35. The cabinet wiring page names them the Post Save feature: the "
+            "left of the two UK-only cabinet buttons (printed switch 1) raises the Left Outlane Ball Deflector (Aux 1), "
+            "the right button (switch 8) the Right Outlane Ball Deflector (Aux 3), and both together the Center Up/Down "
+            "Post between the flippers (Aux 2). The printed coil and flash lamp location drawing prints Aux 1 and Aux 3 "
+            "at the tops of the outlanes and Aux 2 between the flippers. These are absent from non-UK cabinets, as are "
+            "the two cabinet-side buttons."
         ),
         "id": "mechanism.uk-up-down-posts",
         "kind": "other",
         "label": "UK-only up/down posts",
-        "provenance": {"source_refs": [MANUAL, PROFILE, CORE], "status": "validated"},
+        "provenance": {"source_refs": [MANUAL, MANUAL_2022, PROFILE, CORE], "status": "validated"},
         "sensors": [],
     },
 ]
@@ -1565,16 +1877,6 @@ def variant_notes(record: dict) -> str:
             "physical machine. lotrGameData is shared by every clone in the tree, so all of them present the same "
             "Whitestar hardware."
         )
-    if record["id"] == "lotr_le":
-        return (
-            "Stern game ROM revision 10.02 shipped with the 2008 Limited Edition run. PinMAME defines it as a clone of "
-            f"lotr sharing init_lotr, so nothing in the EMULATED hardware differs - a statement about driver "
-            f"routing, not about the cabinet. {rom_delta(record['id'])} Whether this limited run differs "
-            "physically from the 2003 production machine is not established by anything retained here, and a "
-            "limited run is exactly where a manufacturer adds hardware such as a shaker motor. "
-            "physical_compatibility is therefore `unknown` for this driver alone, rather than asserting an "
-            "identity the evidence does not carry."
-        )
     if language:
         if record["id"] in SPANISH_SOUND_DRIVERS:
             return (
@@ -1595,14 +1897,21 @@ def variant_notes(record: dict) -> str:
 
 drivers = []
 for record in partial["drivers"]:
+    # lotr_le, the 10.02 firmware of the 2009 Limited Edition, belongs to that edition's own record
+    # (stern.lord-of-the-rings-limited-edition.2009): the LE is a separate physical edition, built
+    # on the later 520-5249-00 I/O power driver board with the right Helm's Deep flasher moved to
+    # driver 28 and an optional shaker on 12, and the runbook keeps such editions apart.
+    if record["id"] == LE_DRIVER:
+        continue
     entry = dict(record)
     # `identical` is a claim about the PHYSICAL machine, and shared init_lotr proves only that the
-    # emulated hardware matches. For ordinary firmware revisions and language releases those are
-    # the same thing in practice. They are not for a limited run, which is exactly where a
-    # manufacturer adds hardware, and nothing retained here documents that cabinet.
-    entry["physical_compatibility"] = "unknown" if record["id"] == "lotr_le" else "identical"
+    # emulated hardware matches. For ordinary firmware revisions and language releases of the 2003
+    # production machine those are the same thing.
+    entry["physical_compatibility"] = "identical"
     entry["variant_notes"] = variant_notes(record)
     drivers.append(entry)
+if LE_DRIVER in {d["id"] for d in drivers} or len(drivers) != len(partial["drivers"]) - 1:
+    raise SystemExit("the Limited Edition driver must move to its own record and nothing else may leave")
 
 # Every driver in the tree must have a parsed ROM set, and the Spanish sound set must be exactly
 # the Spanish releases. Round six asserted a ROM-composition sentence for all 45 clones and round
@@ -1640,34 +1949,26 @@ definition = {
     "conflicts": [],
     "controller": {"inversion_applied_by_emulator": True, "platform": "pinmame.whitestar"},
     "coverage": {
-        # Held at partial. lotrGameData declares SE_BOARDID_520_5242_00, the printed
-        # "Lord of The Rings 19 LED Board", and se.c drives public lamps 81-99 through it
-        # (CORE_MODOUT_LAMP0 + 80/+88/+96, the last masked 0x07). Those Whitestar addresses
-        # enumerate the real emitters through the ordinary lamp binding group.
-        # Their address-to-position map is compared across every retained script's actual binding;
-        # disagreement remains explicit, and no factory per-emitter semantic names or connector
-        # pins are known.
-        # physical_wiring is `validated`: every connector, wire colour, driver transistor and return
-        # IC is manual-verified, and all four printed optos now have a settled public sense (14, 41
-        # and 47 from the known-working script, 15 from the RUNTIME_STACKING harness runs).
+        # Author-ready, and only because the guard below finds nothing unvalidated. The 19-LED board
+        # (SE_BOARDID_520_5242_00, public lamps 81-99) is named by the ROM's own LED TEST and placed
+        # at the LED windows of the factory lamp drawing; physical_wiring is manual-verified and all
+        # four printed optos have a settled public sense (14, 41 and 47 from the known-working script,
+        # 15 from the RUNTIME_STACKING harness runs); every placement is validated by three-table
+        # agreement, by its own factory callout, or by a factory-drawing measurement; and the 2009
+        # Limited Edition, a separate physical edition, has its own record.
         "dimensions": {
             "address_enumeration": "validated", "catalog_identity": "validated", "mechanisms": "validated",
-            "physical_wiring": "validated", "recreation_knowledge": "validated", "semantic_naming": "observed",
-            "spatial_placement": "observed", "variant_coverage": "observed",
+            "physical_wiring": "validated", "recreation_knowledge": "validated", "semantic_naming": "validated",
+            "spatial_placement": "validated", "variant_coverage": "validated",
         },
-        # Spatial placement remains incomplete because many positions are observed rather than
-        # corroborated and fifteen printed devices are still unplaced. `variant_coverage` keeps the
-        # 2008 Limited Edition honest until its physical compatibility is sourced.
-        "missing": [
-            "spatial_placement", "variant_differences",
-        ],
-        "status": "partial",
+        "missing": [],
+        "status": "author_ready",
     },
     "displays": displays,
     "drivers": drivers,
     "format": partial["format"],
     "inputs": inputs,
-    "knowledge": {"path": "knowledge/stern/lord-of-the-rings-2003.md", "status": "partial"},
+    "knowledge": {"path": "knowledge/stern/lord-of-the-rings-2003.md", "status": "complete"},
     "machine": {**partial["machine"], "kind": "physical_pinball", "ipdb_id": 4858, "opdb_id": "GrqZX-MD15w"},
     "mechanisms": mechanisms,
     "outputs": outputs,
@@ -1676,127 +1977,92 @@ definition = {
     "sources": SOURCES,
 }
 
+# The drawing-callout check: every table placement the seed checks must land within 0.07 of its own
+# callout on the factory drawing it is checked on, and is promoted to validated when it does.
+STATUS_BEFORE_CALLOUTS = {p["id"]: p["provenance"]["status"] for d in inputs + outputs
+                          for p in (d.get("spatial") or {}).get("placements", [])}
+CALLOUT_DECISIONS = drawing_callouts.apply_to_definition(definition, CALLOUT_DATA, CALLOUT_SOURCE)
+_callout_disagreements = sorted(pid for pid, d in CALLOUT_DECISIONS["placements"].items() if not d["agrees"])
+if _callout_disagreements:
+    raise SystemExit(f"placements the factory drawings do not confirm: {_callout_disagreements}")
+_checked_measurements = sorted(pid for pid in CALLOUT_DECISIONS["placements"] if pid in CALLOUT_DATA["measurements"]
+                               and CALLOUT_DATA["checks"][pid]["page"] == CALLOUT_DATA["measurements"][pid]["page"])
+if _checked_measurements:
+    raise SystemExit(f"drawing measurements checked against the drawing they were measured on: {_checked_measurements}")
+# Nothing may reach author_ready with an unvalidated assertion left in it.
+_unvalidated = (
+    [d["id"] for d in inputs + outputs + displays if d["provenance"]["status"] != "validated"]
+    + [p["id"] for d in inputs + outputs for p in (d.get("spatial") or {}).get("placements", [])
+       if p["provenance"]["status"] != "validated"]
+    + [d["id"] for d in inputs + outputs if d["spatial"]["status"] not in {"validated", "not_applicable"}]
+    + [d["id"] for d in drivers if d["physical_compatibility"] not in {"identical", "compatible"}]
+)
+if _unvalidated:
+    raise SystemExit(f"unvalidated assertions block author_ready: {_unvalidated}")
+
 # --- derived artifacts: report and knowledge note ----------------------------------------
 # Both are generated from the same objects that produced the definition. Every count, list and
 # status below is computed, so a statement cannot survive here after the data behind it changes.
-def _spatial_rows(status_wanted):
-    return [
-        {
-            "id": device["id"],
-            "address": device["binding"]["device"],
-            "label": device["label"],
-            "supporting_tables": sorted({
-                ref for place in device["spatial"].get("placements", [])
-                for ref in place["provenance"]["source_refs"] if ref.startswith("vpx-table.")
-            }),
-        }
-        for collection in ("inputs", "outputs")
-        for device in definition[collection]
-        if device.get("spatial", {}).get("status") == status_wanted
-    ]
+_located = [(d, p) for d in inputs + outputs for p in (d.get("spatial") or {}).get("placements", [])]
+placement_total = len(_located)
+_measured_ids = set(CALLOUT_DATA["measurements"])
+_agreed_ids = {pid for pid, decision in CALLOUT_DECISIONS["placements"].items() if decision["agrees"]}
+_projection_devices = {row["device"] for row in PROJECTIONS}
 
 
-observed_rows = _spatial_rows("observed")
-validated_rows = _spatial_rows("validated")
-placement_total = sum(len(d.get("spatial", {}).get("placements", [])) for d in definition["inputs"] + definition["outputs"])
-computed_rows = [
-    {"kind": kind, "address": int(address), "x": entry["x"], "y": entry["y"],
-     "derived_from": entry.get("derived_from", []), "resolution": entry.get("resolution")}
-    for kind, bucket in consensus["devices"].items()
-    for address, entry in bucket.items()
-    if entry.get("coordinate_origin") == "computed"
+def _basis(device: dict, place: dict) -> str:
+    """Why this placement is validated. Exactly one basis per placement, most direct first."""
+    if place["id"] in _measured_ids:
+        return "drawing_measurement"
+    if STATUS_BEFORE_CALLOUTS[place["id"]] == "validated":
+        return "three_table_agreement"
+    if place["id"] in _agreed_ids:
+        return "projection_confirmed_by_drawing" if device["id"] in _projection_devices else "table_object_confirmed_by_drawing"
+    raise SystemExit(f"{place['id']} is validated by nothing this curator records")
+
+
+validation_basis: dict[str, list[str]] = {}
+for _device, _place in _located:
+    validation_basis.setdefault(_basis(_device, _place), []).append(_place["id"])
+validation_basis = {name: sorted(ids) for name, ids in sorted(validation_basis.items())}
+assert sum(len(ids) for ids in validation_basis.values()) == placement_total
+_callout_summary = drawing_callouts.summary(
+    CALLOUT_DATA, CALLOUT_DECISIONS, CALLOUT_SEED_PATH.relative_to(ROOT).as_posix(),
+    hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(),
+)
+measurement_rows = [
+    {"placement": pid, "device": item["device"], "page": item["page"], "label": item["label"], "point": item["point"],
+     "x": item["normalized"][0], "y": item["normalized"][1], "note": item["note"],
+     "checked_on": CALLOUT_DATA["checks"].get(pid, {}).get("page"),
+     "check_excluded": CALLOUT_DATA.get("excluded_checks", {}).get(pid)}
+    for pid, item in sorted(CALLOUT_DATA["measurements"].items())
 ]
+_CONSENSUS_GROUPS = {"switch": "pinmame.input.switch", "lamp": "pinmame.output.lamp", "flasher": "pinmame.output.solenoid"}
+_by_binding = {(d["binding"]["group"], d["binding"]["device"]): d for d in inputs + outputs if "binding" in d}
+_basis_of = {pid: name for name, ids in validation_basis.items() for pid in ids}
+
+
+def _rejected_row(kind: str, address: str, entry: dict) -> dict:
+    """A table measurement the consensus left out, beside the placement the definition actually carries."""
+    device = _by_binding[(_CONSENSUS_GROUPS[kind], int(address))]
+    return {
+        "kind": kind, "address": int(address), "device": device["id"],
+        "rejected": entry["outliers"], "agreeing_tables": entry.get("agreeing_tables", []),
+        "placements": [{"id": p["id"], "x": p["x"], "y": p["y"], "basis": _basis_of[p["id"]]}
+                       for p in device["spatial"]["placements"]],
+    }
+
+
 rejected_rows = [
-    {"kind": kind, "address": int(address), "accepted": {"x": entry["x"], "y": entry["y"]},
-     "accepted_tables": entry.get("agreeing_tables", []), "rejected": entry["outliers"]}
+    _rejected_row(kind, address, entry)
     for kind, bucket in consensus["devices"].items()
-    for address, entry in bucket.items()
+    for address, entry in sorted(bucket.items(), key=lambda item: int(item[0]))
     if entry.get("outliers")
 ]
-projection_ids = {p["device"] for p in PROJECTIONS}
-CO_LOCATED_INSERT_LAMPS = {f"lamp.matrix-{address}" for address in (60, 61, 62, 63)}
-
-# Partition the observed set exactly, so the report can describe it without a hand-typed join.
-# Every observed placement falls into exactly one bucket and the buckets sum to the total.
-#
-# The bucket name has to state the number it means. Round six named these `*_two_tables` on the
-# strength of `len(supporting_tables) < 2`, which quietly filed every three-table row under "two"
-# - 13 of the 50, including five projections all three tables agree on. Count the support, then
-# say the count.
-_SUPPORT_WORDS = {1: "one_table", 2: "two_tables", 3: "three_tables", 4: "four_tables"}
-_partition: dict[str, list] = {f"{kind}_{word}": []
-                               for kind in ("projection", "measured")
-                               for word in _SUPPORT_WORDS.values()}
-for row in observed_rows:
-    kind = "projection" if row["id"] in projection_ids else "measured"
-    support = len(row["supporting_tables"])
-    if support not in _SUPPORT_WORDS:
-        raise SystemExit(f"{row['id']} has {support} supporting tables, which no bucket name describes")
-    _partition[f"{kind}_{_SUPPORT_WORDS[support]}"].append(row["id"])
-observed_partition = {name: sorted(ids) for name, ids in _partition.items() if ids}
-assert sum(len(v) for v in observed_partition.values()) == len(observed_rows)
-
-# Why each row is observed rather than validated. There are three distinct reasons and they are
-# not interchangeable: round six stated the "fewer than all three agree" one uniformly, which was
-# wrong for the nine rows all three tables do agree on.
-_reasons: dict[str, list] = {"projection_never_promoted": [], "co_located_insert_pair": [],
-                             "computed_from_disagreeing_tables": [], "computed_within_one_table": [],
-                             "incomplete_table_agreement": []}
-for row in observed_rows:
-    if row["id"] in projection_ids:
-        _reasons["projection_never_promoted"].append(row["id"])
-    elif row["id"] in CO_LOCATED_INSERT_LAMPS:
-        _reasons["co_located_insert_pair"].append(row["id"])
-    elif row["id"] in COMPUTED_ACROSS_TABLES:
-        # A per-axis median. Every contributing table fed it, none agreed within threshold.
-        _reasons["computed_from_disagreeing_tables"].append(row["id"])
-    elif row["id"] in COMPUTED_WITHIN_ONE_TABLE:
-        # A centroid of co-located bodies inside one table. No disagreement involved.
-        _reasons["computed_within_one_table"].append(row["id"])
-    else:
-        _reasons["incomplete_table_agreement"].append(row["id"])
-observed_reasons = {name: sorted(ids) for name, ids in _reasons.items() if ids}
-assert sum(len(v) for v in observed_reasons.values()) == len(observed_rows)
-FACTORY_TABLE_REFS = {T_VPW, T_JPS, T_HAN}
-_wrongly_blamed = [row["id"] for row in observed_rows
-                   if row["id"] in set(observed_reasons.get("incomplete_table_agreement", ()))
-                   and FACTORY_TABLE_REFS <= set(row["supporting_tables"])]
-if _wrongly_blamed:
-    raise SystemExit(f"rows blamed on incomplete agreement that all three factory tables support: {_wrongly_blamed}")
-# The disagreeing-tables sentence says all three tables appear in the row's source_refs. Prove it
-# of every row filed under it: round seven put a one-table centroid in that bucket.
-_not_really_disagreeing = [row["id"] for row in observed_rows
-                           if row["id"] in set(observed_reasons.get("computed_from_disagreeing_tables", ()))
-                           and len(row["supporting_tables"]) < 2]
-if _not_really_disagreeing:
-    raise SystemExit(f"rows blamed on disagreeing tables with fewer than two supporting tables: {_not_really_disagreeing}")
-single_table_rows = [row for row in observed_rows if len(row["supporting_tables"]) < 2]
-projection_rows = [row for row in observed_rows if row["id"] in projection_ids]
-_REASON_TEXT = {
-    "incomplete_table_agreement": "because fewer than all three factory-layout recreations agree on them",
-    "projection_never_promoted": "because they are projections onto a co-located anchor and a projection is never promoted however well the tables agree",
-    "computed_from_disagreeing_tables": "because the coordinate is a per-axis median of tables that disagreed, so every contributing table appears in its source_refs while none holds the published position",
-    "computed_within_one_table": "because the coordinate is a centroid of co-located bodies inside a single table",
-    "co_located_insert_pair": "because no retained table separates the printed back-panel insert pairs, so the published coordinate is the pair rather than the bulb",
-}
-_reason_summary = "; ".join(
-    f"{len(observed_reasons[name])} {_REASON_TEXT[name]}" for name in _REASON_TEXT if name in observed_reasons
-)
-
-# Which table each rejection actually rejects, and which of them the VPW artwork explains. Round
-# six attributed all 22 to VPW's rune ring; only the lamp rows where VPW is the sole outlier are
-# the artwork's doing.
-_rejections_by_table: dict[str, int] = {
-    "vpw-1-6": 0, "jpsalas-600": 0, "hanibal-4k": 0, "neo-led-1-0-3": 0,
-}
-for _row in rejected_rows:
-    for _entry in _row["rejected"]:
-        _rejections_by_table[_entry["table"]] += 1
 _vpw_only_lamp_rejections = sorted(
     row["address"] for row in rejected_rows
-    if row["kind"] == "lamp" and {entry["table"] for entry in row["rejected"]} == {"vpw-1-6"}
+    if row["kind"] == "lamp" and row["address"] <= 80 and {entry["table"] for entry in row["rejected"]} == {"vpw-1-6"}
 )
-conflicted_led_rows = sorted(CONFLICTED_LED_POSITIONS, key=lambda row: row["address"])
 
 
 def _format_addresses(addresses: list[int]) -> str:
@@ -1820,153 +2086,154 @@ _vpw_source["locator"] = _vpw_source["locator"].replace(
     f"The {len(_vpw_only_lamp_rejections)} lamp coordinates where this table alone is the outlier - "
     f"{_format_addresses(_vpw_only_lamp_rejections)} - were therefore not taken from it.",
 )
+_led_rows = [
+    {"designator": f"L{designator}", "public_lamp": public, "device": f"lamp.led-board-l{designator:02d}",
+     "x": CALLOUT_DATA["measurements"][f"lamp.led-board-l{designator:02d}.emitter"]["normalized"][0],
+     "y": CALLOUT_DATA["measurements"][f"lamp.led-board-l{designator:02d}.emitter"]["normalized"][1]}
+    for designator, public in sorted(LED_PUBLIC.items())
+]
+_gi_device = next(d for d in outputs if d["id"] == "gi.playfield-relay")
 
 spatial_report = {
-    "format": "pinmame-spatial-blockers",
+    "format": "pinmame-spatial-audit",
     "version": 1,
     "machine_id": "stern.lord-of-the-rings.2003",
     "status": definition["coverage"]["status"],
     "placement_count": placement_total,
     "coordinate_convention": {
         "space": "playfield", "x": "0 left, 1 right", "y": "0 rear, 1 front",
-        "normalization": "each table's own gamedata bounds",
-        "precision": "at most six fractional decimal places",
+        "normalization": "each retained table's own gamedata bounds; drawing measurements through each page's control fit",
+        "precision": "at most six fractional decimal places; three for drawing measurements",
     },
     "method": {
-        "retained_recreations": len(consensus["tables"]),
-        "agreement_threshold": consensus["agreement_threshold"],
         "rule": (
-            "A lamp, switch or flasher placement is validated only when all three factory-layout tables agree "
-            "within the threshold. Lamps 81-99 are resolved through each table script's explicit binding rather "
-            "than object names; the Neo LED table is a disclosed derivative supplemental measurement and cannot "
-            "promote a coordinate by itself."
+            "Every located placement is validated in exactly one of four ways, listed per placement under "
+            "validation_basis: all three factory-layout recreations agree within the threshold; a table object's own "
+            "factory callout confirms it (drawing_callouts, 0.07 normalized under both fits); a projection onto the "
+            "mechanism a coil drives is confirmed by the factory bottom view drawing that coil's assembly beside it; or "
+            "the device is measured on the factory drawing that draws it, through that page's control fit."
         ),
+        "agreement_threshold": consensus["agreement_threshold"],
         "why_all_three": (
             "Independence between the three recreations is unestablished and the two available signals disagree. "
             "Measured: the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both "
             "model, while either differs from VPW by up to 0.187. Documented: VPW credits an 'EBIsLit - Baseline "
             "playfield scan' and JPSalas records its playfield as 'based on Ebislit's playfield', while Hanibal "
-            "declares only \"4k Mod\" in its title and names no baseline. The measured clustering pairs JPSalas with "
-            "Hanibal; the documented ancestry pairs "
-            "VPW with JPSalas. Requiring all three removes the need to guess which signal describes the lineage."
+            "declares only \"4k Mod\" in its title and names no baseline. Requiring all three for table agreement "
+            "alone removes the need to guess which signal describes the lineage; anything less needs a factory drawing."
         ),
         "artwork_caveat": (
             "The VPW table identifies itself as 'Lord Of The Rings - Valinor Edition' with original artwork, so "
-            "where its insert layout departs from the printed diagrams that is an artwork difference, not an error."
+            "where its insert layout departs from the printed diagrams that is an artwork difference, not an error. Its "
+            "19-LED pattern matches the factory one but sits 0.100 further back."
         ),
         "tables": {label: dict(data) for label, data in consensus["tables"].items()},
+        "drawing_resolved_switches": {str(address): {"table": table, "reason": why}
+                                      for address, (table, why) in sorted(DRAWING_RESOLVED_SWITCHES.items())},
+        "led_layout_fit": CALLOUT_DATA["led_layout_fit"],
     },
+    "drawing_callouts": _callout_summary,
     "counts": {
-        "validated_devices": len(validated_rows),
-        "observed_devices": len(observed_rows),
-        "single_table_devices": len(single_table_rows),
-        "projected_devices": len(projection_rows),
-        "computed_coordinates": len(computed_rows),
-        "rejected_measurements": len(rejected_rows),
-        "conflicting_led_positions": len(conflicted_led_rows),
+        "placements": placement_total,
+        **{f"validated_by_{name}": len(ids) for name, ids in validation_basis.items()},
+        "drawing_measurements": len(measurement_rows),
+        "callout_checks": len(CALLOUT_DECISIONS["placements"]),
+        "projections": len(PROJECTIONS),
+        "gi_placements": len(_gi_device["spatial"]["placements"]),
+        "gi_quantity": _gi_device["physical"]["quantity"],
+        "rejected_table_measurements": len(rejected_rows),
     },
-    "blockers": [
-        {
-            "id": "placements-not-fully-corroborated",
-            "severity": "minor",
-            "summary": (
-                f"{len(observed_rows)} device spatial records are observed rather than validated: {_reason_summary}. "
-                "reason_partition names which device records each reason covers; support_partition counts "
-                "how many tables appear in each row's source_refs, which for the computed rows is a count of "
-                "contributors and not a count of agreement. Both are disjoint and sum to the total."
-            ),
-            "reason_partition": {name: len(ids) for name, ids in observed_reasons.items()},
-            "support_partition": {name: len(ids) for name, ids in observed_partition.items()},
-            "devices": observed_rows,
-        },
-        {
-            "id": "script-bound-led-positions-conflict",
-            "severity": "major",
-            "summary": (
-                f"{len(conflicted_led_rows)} of the nineteen LED-board addresses have no published coordinate because "
-                "the four retained scripts bind them to genuinely different positions with no two-table cluster "
-                "inside the 0.025 threshold. Each script-derived address-to-object mapping and normalized measurement "
-                "is retained below; no object-name guess or arbitrary table winner is substituted."
-            ),
-            "devices": conflicted_led_rows,
-        },
-        {
-            "id": "devices-printed-but-unplaced",
-            "severity": "major",
-            "summary": (
-                f"{len(UNPLACED)} devices are printed with a position on the DR.7 location drawing but modelled by no "
-                "retained recreation, so they carry no spatial evidence at all. They are not recorded as "
-                "not_applicable: the manual places them, and asserting otherwise on the manual's own authority would "
-                "be false."
-            ),
-            "devices": sorted(UNPLACED, key=lambda row: row["address"]),
-        },
-    ],
-    "observed_partition": observed_partition,
-    "observed_reasons": observed_reasons,
-    "conflicted_led_positions": conflicted_led_rows,
-    "unplaced_devices": sorted(UNPLACED, key=lambda row: row["address"]),
+    "validation_basis": validation_basis,
+    "drawing_measurements": measurement_rows,
     "projections": PROJECTIONS,
-    "computed_coordinates": computed_rows,
+    "led_board": _led_rows,
     "rejected_measurements": rejected_rows,
     "excluded_object_classes": [
         "JPSalas f<N>l helper Lights, which are non-positional and parked together at one coordinate",
         "primitive origins left at (0,0) because their transform is baked into mesh vertices",
+        "the retained tables' G.I. Light collections, whose members include reflection and wash helpers; the G.I. "
+        "sockets are the ones the factory G.I. wiring page draws",
+        "the retained tables' sw24 triggers at the right ramp's exit, which register the shot rather than mark the "
+        "switch the factory mounts on the sword ramp",
     ],
-    "unresolved": [],
     "promotion_decision": (
-        "Not promoted. Held at partial with "
-        + ", ".join(definition["coverage"]["missing"])
-        + " declared missing."
+        "Promoted to author_ready: every located placement is validated (see validation_basis), every factory "
+        "callout check agrees, every device assertion and every driver's physical compatibility is validated, and "
+        "the 2009 Limited Edition, a separate physical edition, has its own record."
     ),
 }
-
-# Derived from the blocker list rather than typed beside it, so the two can never disagree. They
-# did: round six listed two unresolved items against three blockers, and the one it left out was
-# the major printed-but-unplaced blocker.
-spatial_report["unresolved"] = [blocker["summary"] for blocker in spatial_report["blockers"]]
 
 _unused_switches = sorted(a for a, r in SW.items() if r.get("state") == "not_used")
 _unused_coils = sorted(a for a, r in COILS.items() if r.get("state") == "not_used")
 _optos = sorted(OPTOS)
 _mech_lines = "\n".join(f"- **{m['label']}.** {m['behavior']}" for m in definition["mechanisms"])
 _anomaly_lines = "\n".join(f"- {a['detail']}" for a in transcription["source_anomalies"])
+_page_fits = "; ".join(
+    f"{key} {page['controls']} controls, rms {page['control_rms']}"
+    + (f", {page['callout_pairs']} callouts checked" if page.get("callout_pairs") else ", measurements only")
+    for key, page in sorted(CALLOUT_DECISIONS["pages"].items(), key=lambda kv: int(kv[0].split("-")[1]))
+)
+_led_table = "\n".join(f"| L{row['designator'][1:]} | {row['public_lamp']} | {row['x']} | {row['y']} |" for row in _led_rows)
+_PAGE_NAMES = {"pdf-6": "DR.4", "pdf-7": "DR.5", "pdf-9": "DR.7", "pdf-123": "the bottom view (PDF 123)"}
+_device_labels = {device["id"]: device["label"] for device in inputs + outputs}
+_measured_list = "; ".join(
+    f"{_device_labels[row['device']]} on {_PAGE_NAMES[row['page']]}"
+    + (f", checked on {_PAGE_NAMES[row['checked_on']]}" if row["checked_on"] else "")
+    for row in measurement_rows
+    if not row["device"].startswith(("gi.", "lamp.led-board"))
+)
+_basis_counts = ", ".join(f"{len(ids)} by {name.replace('_', ' ')}" for name, ids in validation_basis.items())
+_gi_sockets = sum(1 for item in CALLOUT_DATA["measurements"].values() if item["page"] == "pdf-121")
+_gi_checked = sum(1 for pid, item in CALLOUT_DATA["measurements"].items() if item["page"] == "pdf-121" and pid in CALLOUT_DATA["checks"])
+_projection_checks: dict[str, list[str]] = {}
+for _pid in validation_basis["projection_confirmed_by_drawing"]:
+    _check = CALLOUT_DATA["checks"][_pid]
+    _projection_checks.setdefault(_check["page"], []).append(_check["label"])
+_projection_pages = "; ".join(
+    f"{_PAGE_NAMES[page]} for {', '.join(sorted(labels, key=lambda label: (len(label), label)))}"
+    for page, labels in sorted(_projection_checks.items(), key=lambda kv: int(kv[0].split("-")[1]))
+)
 
 knowledge_note = f"""# The Lord of the Rings (Stern, 2003)
 
-Coverage: **{definition['coverage']['status']} - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including board 520-5242-00 at lamps 81-99, and normalized placements; held below author-ready because spatial evidence is not fully corroborated, five LED-board addresses have conflicting positions, fifteen printed devices remain unplaced, and the 2008 Limited Edition's physical compatibility is not yet sourced**
+Coverage: **{definition['coverage']['status']} - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including the 19-LED board at lamps 81-99, and {placement_total} validated playfield placements.** The 2009 Limited Edition re-run is a separate physical edition with its own record, `{LE_MACHINE}`.
 
 ## Identity and evidence precedence
 
-Whitestar machine. PinMAME roots the family at `lotr` with {len(definition['drivers'])} drivers: English revisions, the 10.02 Limited Edition re-run, and Spanish, German, French and Italian releases. Every clone shares `init_lotr` and therefore the same emulator routing through `lotrGameData`. That does **not** prove identical physical hardware: `lotr_le` is a 2008 Limited Edition re-run whose physical compatibility remains unknown. ROM differences are read out of pinned `segames.c` per driver rather than summarized from names. There are four software shapes:
+Whitestar machine. PinMAME roots the family at `lotr` with {len(definition['drivers']) + 1} drivers; {len(definition['drivers'])} of them, the English revisions and the Spanish, German, French and Italian releases, belong to this 2003 production machine. Every clone shares `init_lotr` and therefore the same emulator routing through `lotrGameData`, but shared routing is not shared hardware: the remaining one, `{LE_DRIVER}` (10.02), is the firmware of the 2009 Limited Edition (IPDB 5558, OPDB GrqZX-MDEPd). An owner's first-hand report and corrected coils chart put that edition on Stern's later 520-5249-00 I/O power driver board, with the right Helm's Deep flasher on driver 28 instead of 14 and an optional shaker motor on 12, and IPDB lists the shaker option among its factory changes. The firmware agrees: hash-pinned runs of each ROM's own flash-lamp test (`{RUNTIME_FLASH_PATH}` and `{RUNTIME_FLASH_LE_PATH}`) show 10.00 pulsing 14, 23, 25-27 and 29-32 and never 28, while 10.02 pulses 28 as well, still alongside 14. Different wiring and different firmware make it a separate physical edition, with its own record. ROM differences are read out of pinned `segames.c` per driver rather than summarized from names. There are three software shapes in this record:
 
 - **A German, French or Italian release runs its English sibling's CPU game ROM byte for byte** and differs only in the display ROM. `lotr`, `lotr_fr`, `lotr_gr` and `lotr_it` all take `lotrcpua.a00`; only `lotrdsp{{a,f,g,i}}.a00` differ. The same holds at every revision.
 - **An English revision differs in CPU and display both** - `lotr9` is `lotrcpu.900` with `lotrdspa.900` against the root's `lotrcpua.a00` and `lotrdspa.a00`.
-- **A Spanish release differs in all three.** It has its own CPU family `lotrcpul.*`, its own display `lotrdspl.*`, and the only other sound set in the tree: `LOTR_SND_SP`, five ROMs, against `LOTR_SND` for the other {len(definition['drivers']) - len(SPANISH_SOUND_DRIVERS)} drivers.
-- **The Limited Edition differs in CPU alone** - `lotrcpua.a02`, sharing the root's display and sound.
+- **A Spanish release differs in all three.** It has its own CPU family `lotrcpul.*`, its own display `lotrdspl.*`, and the only other sound set in the tree: `LOTR_SND_SP`, five ROMs, against `LOTR_SND` for the others.
 
-Physical inventory authority is the **Stern English service manual**, IPDB machine 4858, an image-only 184-page scan with no text layer, so every printed table was read from pages rendered at 300 dpi. Runtime authority is the retained known-working script set; four recreations were retained and all run `cGameName = "lotr"`.
+Physical inventory authority is the **Stern English service manual** 780-5080-00. Two copies are retained: the image-only 184-page scan IPDB machine 4858 links, from which every printed table was read at 300 dpi, and Stern's current 211-page reissue, whose drawings are vector. The reissue's Dr. Pinball location drawings carry their callout boxes and labels as PDF objects, and its playfield wiring pages are wholly vector bottom views, so every callout, label, G.I. marker and leader used here is read from the PDF itself rather than from a scan. Runtime authority is the retained known-working script set; four recreations were retained and all run `cGameName = "lotr"`.
 
 ## The 520-5242-00 LED board: nineteen separately addressable emitters
 
-`lotrGameData` declares two board identifiers. The second, `SE_BOARDID_520_5242_00`, is named in `src/wpc/se.h` in plain words: **"Lord of The Rings 19 LED Board"**. `se.c` drives it through `core_set_pwm_output_led_vfd(CORE_MODOUT_LAMP0 + 80, 3 * 8, CORE_MODOUT_LED, 4.f / 2.f)` and writes at `CORE_MODOUT_LAMP0 + 80`, `+ 88` and `+ 96` masked `0x07` - public lamp addresses **81 to 99**, nineteen LEDs. So `lampCol = 5` is not slack: it is 64 base lamps, the two auxiliary matrix columns at 65-80, and room for that board.
+`lotrGameData` declares two board identifiers. The second, `SE_BOARDID_520_5242_00`, is named in `src/wpc/se.h` in plain words: **"Lord of The Rings 19 LED Board"**. `se.c` drives it through `core_set_pwm_output_led_vfd(CORE_MODOUT_LAMP0 + 80, 3 * 8, CORE_MODOUT_LED, 4.f / 2.f)` and writes at `CORE_MODOUT_LAMP0 + 80`, `+ 88` and `+ 96` masked `0x07` - public lamp addresses **81 to 99**, nineteen LEDs. So `lampCol = 5` is not slack: it is 64 base lamps, the two auxiliary matrix columns at 65-80, and room for that board. Allocation slots 100-104 are not physical devices.
 
-All four retained known-working scripts drive them. The controller profile exposes them after the 1-80 matrix through the same PinMAME lamp transport. All nineteen are enumerated as emitters 01-19 at public addresses 81-99; allocation slots 100-104 are not physical devices. Their normalized positions are compared through each script's explicit address-to-object binding rather than by assuming an `l<N>` object's suffix is its public address: that distinction matters because Hanibal reverses and permutes the object numbers. The Neo table's own info and script disclose its JPSalas lineage, so it is a supplemental measurement rather than independent corroboration. Fourteen addresses have an observed coordinate supported by a retained-table cluster; addresses {', '.join(str(row['address']) for row in conflicted_led_rows)} have none because no two script-bound measurements agree inside the threshold. No factory per-emitter semantic name or connector pin is invented, and the manual is not cited for evidence it does not contain.
+The manual names every LED. Its LED Test (PDF 42) cycles ALL ON and LED #1 to #19 and says LED #1 is the board's L1, the rest following suit; its component layout (PDF 162) draws L1 to L19, with the Top Edge marked. A hash-pinned run of the ROM's own LED TEST (`{RUNTIME_LED_PATH}`) shows ALL ON raising exactly 81-99 and each LED #n raising exactly one of them, every DMD frame pinned by its digest with its reading. The board sits under the round window between the flippers, and the lamp location drawing DR.5 draws its nineteen windows: three in a centre triangle, seven in a middle ring and nine in an outer ring, with a single window at the rear and a pair at the front, exactly the printed layout with its Top Edge to the rear. A similarity fit of the layout to the windows (no reflection; the layout is drawn from the LED side, and both bottom views draw the board's connector J1 on the right) pairs each window with its designator at {CALLOUT_DATA['led_layout_fit']['rms_pixels']} px rms at 300 dpi.
+
+| LED | Public lamp | x | y |
+| --- | --- | --- | --- |
+{_led_table}
+
+The retained JPSalas script binds sixteen of these addresses to lights within 0.002 of the factory windows and the three centre LEDs one step round the triangle; VPW shares JPSalas' pattern 0.100 further back, and Hanibal and the Neo LED mod permute the numbering. None of the tables decides a coordinate here.
 
 ## Addresses that are synthetic, mirrored or reserved
 
 - Public 45 and 47 are the power-phase view of the same physical coils exposed at 46 and 48. Binding both halves creates two flippers where the machine has one.
 - Public 15 is PinMAME's synthetic fast-flip and game-on state; 16 is its unused companion.
 - Whitestar auxiliary board 520-5068-01 exposes three outputs, so 33, 34 and 35 carry the UK-only up/down posts and 36 is unused.
-- General illumination is a **single aggregate channel 0**, although the cabinet has four separately fused 6.3v strings. A recreation must not infer four controllable channels from the fuse chart.
+- General illumination is a **single aggregate channel 0**, although the cabinet has four separately fused circuits. A recreation must not infer four controllable channels from the fuse chart.
 
 ## Opto polarity: PinMAME normalizes nothing here
 
-The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them.** `se.c`'s `switch_r` returns `~core_getSwCol`, so public 1 is what the CPU reads as a closed matrix contact; with the evidence below, that makes the opto boards' matrix-facing contact rest open and close while a ball blocks the beam, and nothing in the firmware compensates for a closed rest state. An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
+The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them.** `se.c`'s `switch_r` returns `~core_getSwCol`, so public 1 is what the CPU reads as a closed matrix contact; with the evidence below, that makes the opto boards' matrix-facing contact rest open and close while a ball blocks the beam, and nothing in the firmware compensates for a closed rest state.
 
-All four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches {_format_addresses(sorted(SCRIPT_EVIDENCED_OPTOS))} when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is bound by no retained recreation (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of `lotr` (`{RUNTIME_STACKING_PATH}`) with four balls held on 11-14 show the ROM acting on public 1 and quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1) and, because the harness never lets a ball move, fires it six times in all before firing the auto launch (public 2) once; 0 at boot and a fall back to 0 draw no coil at all. That 1 means a ball blocking the stacking opto is an inference, corroborated by switch 14 on the same 515-0173-00 / 515-0174-00 board pair, which the known-working table asserts at 1 while a ball is present; that table also leaves 15 at 0 throughout. Hold 15 at 0 at rest, drive it to 1 only while a ball blocks the stacking opto, and never invert it.
+All four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches {_format_addresses(sorted(SCRIPT_EVIDENCED_OPTOS))} when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is bound by no retained recreation, so its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of `lotr` (`evidence/runtime/whitestar/lord-of-the-rings-stacking-opto.json`) with four balls held on 11-14 show the ROM acting on public 1 and quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1) and, because the harness never lets a ball move, fires it six times in all before firing the auto launch (public 2) once; 0 at boot and a fall back to 0 draw no coil at all. That 1 means a ball blocking the stacking opto is an inference, corroborated by switch 14 on the same 515-0173-00 / 515-0174-00 board pair, which the known-working table asserts at 1 while a ball is present. Hold 15 at 0 at rest, drive it to 1 only while a ball blocks the stacking opto, and never invert it.
 
-`normally_closed` is false on all four: the matrix-facing opto contact rests open, exactly like the mechanical switches.
+`normally_closed` is false on all four: the matrix-facing opto contact rests open, exactly like the mechanical switches. The reissue's Balrog test (PDF 42) says switches 31, 32 and 28 "are in a Normally Closed state", but the same paragraph has each end switch read closed at its own end position, and every retained script holds 28, 31 and 32 at 0 except while the Balrog is hit or parked at that end; the matrix-facing contacts rest open like every other switch here.
 
 ## Custom mechanisms
 
@@ -1974,15 +2241,20 @@ All four are settled by observation rather than by argument. The retained known-
 
 ## How coordinates were resolved
 
-Four recreations were retained. Three factory-layout tables are treated as three measurements: a lamp, switch or flasher placement is `validated` only when **all three agree** within {consensus['agreement_threshold']} normalized units. The fourth Neo LED recreation is a disclosed JPSalas derivative and contributes only a supplemental measurement for addresses 81-99. Every one of those addresses is resolved through each table script's own binding; fourteen positions remain `observed` and five remain unpublished conflicts. Overall, {len(observed_rows)} device spatial records are observed against {len(validated_rows)} validated, with {placement_total} physical placements in total because one output can drive multiple emitters.
+Every one of the {placement_total} placements is validated, each in one recorded way ({_basis_counts}):
 
-That threshold is deliberately conservative because **independence between the three is unestablished and the two available signals disagree**. Measured, the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both model while either differs from VPW by up to 0.187. Documented, VPW credits an "EBIsLit - Baseline playfield scan" and JPSalas records its playfield as "based on Ebislit's playfield", while Hanibal declares only "4k Mod" in its title and names no baseline. The measured clustering pairs JPSalas with Hanibal; the documented ancestry pairs VPW with JPSalas. No lineage model is asserted.
+- **Three-table agreement.** Three factory-layout recreations are treated as three measurements; a lamp, switch or flasher placement is validated on their word alone only when **all three agree** within {consensus['agreement_threshold']} normalized units, because independence between them is unestablished and the two available signals disagree. Measured, the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both model while either differs from VPW by up to 0.187; documented, VPW credits an "EBIsLit - Baseline playfield scan" and JPSalas records its playfield as "based on Ebislit's playfield", while Hanibal names no baseline.
+- **A table object confirmed by its own factory callout.** Everything else a table models is checked with `tools/drawing_callouts.py` against the reissue's drawings: the switch drawing DR.4, the lamp drawing DR.5 and the coil and flash lamp drawing DR.7, and for the below-playfield coils the terminal-strip bottom view (PDF 123), which draws every coil assembly in place. Controls are read on each drawing's own line art (bumper caps, flasher domes, round inserts, rollover slots and actuators) and paired with validated placements: {_page_fits}. A placement agrees when its own callout lands within 0.07 under both the control fit and the leave-one-out callout fit; all {len(CALLOUT_DECISIONS['placements'])} checks agree. Two switches follow the drawing rather than the tables' own consensus: 28 Balrog Hit takes Hanibal's object, which the drawing prints its box on, and 41 Top VUK takes VPW's.
+- **A projection onto a mechanism, confirmed by a drawing.** A coil sits at the mechanism it drives: the VUK and saucer kickers, the bumpers, the trough's eject end, the One Ring under its flasher, and for the right tower, orbit pin, sword lock, Balrog motor and auto launch the object the known-working VPW script moves for that coil. The stacking opto 15 shares switch 14's plan position: both beams belong to one dual opto board pair at the trough's eject end, one above the other. Each is validated only because a factory drawing prints its own callout within 0.07 of it: {_projection_pages}.
+- **A measurement on the factory drawing that draws the device.** Where no retained table models a device where the factory puts it, the device is measured on the drawing that draws it and, where one exists, checked on a second drawing: {_measured_list}; the nineteen LED windows on DR.5; the {_gi_sockets} G.I. sockets on the G.I. wiring page (PDF 121), {_gi_checked} of them checked against the G.I. labels of PDF 123, which prints none at the other {_gi_sockets - _gi_checked}; and the two return-lane spotlights at the light-reflector leaders of the playfield parts drawing (PDF 83). Switch 24 is the notable one: the ramp parts drawing mounts the Right Ramp Made switch on the sword ramp, where DR.4 prints it, while all three tables register the shot at the right ramp's exit.
 
-The VPW table identifies itself as **"Lord Of The Rings - Valinor Edition"** with original artwork, so where its insert layout departs from the printed diagrams that is an artwork difference rather than an error. Its Fellowship inserts form a closed ring of runes rather than the printed arc of named characters, which accounts for {len(_vpw_only_lamp_rejections)} of the {len(rejected_rows)} rejected measurements - lamps {_format_addresses(_vpw_only_lamp_rejections)}, where VPW alone is the outlier. Across all {len(rejected_rows)} rows the rejected measurement is VPW's {_rejections_by_table['vpw-1-6']} times, Hanibal's {_rejections_by_table['hanibal-4k']} times, JPSalas's {_rejections_by_table['jpsalas-600']} times and Neo's {_rejections_by_table['neo-led-1-0-3']} times. Neo participates only for addresses 81-99 and its disclosed JPSalas lineage means its agreement is supplemental, not an independent vote.
+The VPW table identifies itself as **"Lord Of The Rings - Valinor Edition"** with original artwork, so where its insert layout departs from the printed diagrams that is an artwork difference rather than an error. Its Fellowship inserts form a closed ring of runes rather than the printed arc of named characters, which accounts for the lamps where VPW alone is the outlier ({_format_addresses(_vpw_only_lamp_rejections)}); DR.5's callouts confirm the JPSalas and Hanibal positions for all of them.
 
-Public flasher 25 is not a single-point device. All three retained factory-layout scripts bind all three physical bulbs, and the resolver groups their co-located rendering objects into left, right and bottom emitter measurements before consensus. Every emitter is independently `validated` by all three tables; none is a projection or a rejected alternate measurement.
+Public flasher 25 drives three bulbs, one in each pop-bumper cap; all three retained scripts bind all three, and every emitter is validated by all three tables. The back-panel inserts 60-63 stand two above two on the upright back panel, so each column's upper and lower bulbs share one plan position, the panel's plane, as the back-panel mode lamps 73-78 do.
 
-**{len(PROJECTIONS)} placements across {len(projection_rows)} device records are projections**, not measurements: each takes the coordinate of a co-located device the printed DR.7 diagram places beside it. Be precise about why. The resolver searches the three tables for `l<N>`, `sw<N>` and configured flasher objects only, so no coil search was ever run and this is not a finding that the tables model no coils - it is that the resolver has no coil group and the projection therefore stands on the printed diagram alone. Every one is `observed` and listed with its anchor in the spatial report. **{len(computed_rows)} coordinates are computed** rather than held by any table - per-axis medians of tables that disagreed - and each is marked `coordinate_origin: computed` with the tables it was derived from.
+## General illumination
+
+One relay channel, four fused circuits. The reissue's G.I. wiring diagram (PDF 121) draws its sockets as circles in each circuit's colour on a bottom view of the playfield, measured through the lane switches' rollover actuators: 7 yellow on the lower playfield, 5 green on the upper middle playfield and 10 violet on the upper playfield, plus 8 brown in a rear-view inset of the back panel. The circuit table prints the green circuit as "Upper Middle Playfield X2" where the drawing has five green sockets; every retained recreation has a light at the three along the left edge, and the page's own footnote says bulb quantities may change during production, so all five are placed. Two #555 spotlights above the playfield, "G.I. in Light Reflector on Lt./Rt. Return Lane Plastic", are placed at the two light-reflector callouts of the playfield parts drawing: the left one at the lower end of the left return lane, the right one at the top of the right outlane. The eight back-panel bulbs and the coin-door bulbs (two on US doors, three on European ones) are on the same channel but not placed, so the device's quantity, {_gi_device['physical']['quantity']} on a US machine, exceeds its {len(_gi_device['spatial']['placements'])} placements. The wiring diagram, the transformer's parts listing and the cabinet wiring print the supply as 5.7v AC; the quick-reference fuse chart alone prints 6.3v.
 
 ## Notable printed details
 
@@ -1990,14 +2262,18 @@ Public flasher 25 is not a single-point device. All three retained factory-layou
 - Printed NOT USED: matrix switches {", ".join(str(a) for a in _unused_switches)}; dedicated switch DS-5; solenoids {", ".join(str(a) for a in _unused_coils)}.
 - The ring magnet on coil 6 is the only output with its own fuse, printed F20 and marked THIS GAME ONLY.
 - The lamp matrix axes are transposed between the manual and PinMAME: PinMAME's lamp column strobe corresponds to the printed **row** and its lamp row to the printed **column**. Do not map them by name.
+- The UK-only switches 1 and 8 are the two cabinet buttons of the Post Save feature: the left raises the left outlane ball deflector (Aux 1), the right the right one (Aux 3), and both together the centre post between the flippers (Aux 2).
 
 ## Preserved source anomalies
 
 {_anomaly_lines}
+- The reissue's terminal-strip bottom view (PDF 123) prints a second `Q09` beside the LOOP DIVERTER FUSE; the bumper coil carries its own `Q09`, so this one names the loop diverter Q08.
+- The reissue's Balrog test (PDF 42) calls the motor `Q32`; the coil chart and DR.7 print it `Q22`.
+- The G.I. table's circuit-4 bulb count is blank on the rendered page (its text layer holds a hidden `20`); its location, its last circle `#10*` and the drawing all give ten.
 
 ## Recreation guidance
 
-Bind the flippers once, at 46 and 48. Enumerate the dedicated switches at their negative and 81-84 addresses rather than folding them into the matrix. Treat GI as one channel. Model the trough with the printed numbering, remembering that printed Trough #1 is furthest from the shooter lane. Drive Balrog Hit from a collision, not from the toy's position. The 8x10 matrix occupies 1-80 and the nineteen-emitter board occupies 81-99 on the same lamp transport; do not invent anything at 100-104, which is allocation space rather than physical hardware.
+Bind the flippers once, at 46 and 48. Enumerate the dedicated switches at their negative and 81-84 addresses rather than folding them into the matrix. Treat G.I. as one channel lighting every G.I. bulb at once. Model the trough with the printed numbering, remembering that printed Trough #1 is furthest from the shooter lane, and assert the stacking opto 15 only while a ball blocks it. Drive Balrog Hit from a collision with the Balrog's front hit plate, not from the toy's position. The 8x10 matrix occupies 1-80 and the nineteen LEDs 81-99 on the same lamp transport; bind each LED by the table above, not by an object's number, and do not invent anything at 100-104, which is allocation space rather than physical hardware.
 """
 
 

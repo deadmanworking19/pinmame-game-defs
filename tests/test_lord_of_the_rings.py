@@ -14,13 +14,22 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "lord-of-the-rings-2003.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "stern" / "lord-of-the-rings-2003.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "stern" / "lord-of-the-rings-2003.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "stern" / "lord-of-the-rings-2003.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "stern" / "lord-of-the-rings-2003.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "lord-of-the-rings-limited-edition-2009.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "lord-of-the-rings-2003.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "whitestar.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "stern" / "lord-of-the-rings-2003.json"
 CATALOG_PATH = ROOT / "catalog" / "pinmame.json"
+CALLOUT_SEED_PATH = ROOT / "tools" / "seeds" / "stern" / "lord-of-the-rings-2003-callouts.json"
+LED_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "whitestar" / "lord-of-the-rings-led-test.json"
+FLASH_EVIDENCE_PATHS = {
+	"lotr": ROOT / "evidence" / "runtime" / "whitestar" / "lord-of-the-rings-flash-test.json",
+	"lotr_le": ROOT / "evidence" / "runtime" / "whitestar" / "lord-of-the-rings-limited-edition-flash-test.json",
+}
+CALLOUT_SOURCE = "drawing-callouts.stern.lord-of-the-rings.2003"
+THREE_TABLES = {"vpx-table.lotr-vpw-1-6", "vpx-table.lotr-jpsalas-600", "vpx-table.lotr-hanibal-4k"}
 
 MATRIX_ADDRESSES = set(range(1, 65))
 UNUSED_MATRIX_ADDRESSES = {26, 27, 63, 64}
@@ -47,6 +56,16 @@ def bindings(definition: dict, collection: str, group: str) -> dict[int, dict]:
 	}
 
 
+def located(definition: dict) -> dict[str, dict]:
+	"""Every playfield placement by its ID."""
+	return {
+		place["id"]: place
+		for collection in ("inputs", "outputs")
+		for device in definition[collection]
+		for place in device.get("spatial", {}).get("placements", [])
+	}
+
+
 class LordOfTheRingsDefinitionTests(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls) -> None:
@@ -61,22 +80,24 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual("Stern", machine["manufacturer"])
 		self.assertEqual(2003, machine["year"])
 
-	def test_promotion_state_is_held_at_partial(self) -> None:
-		"""Held at partial by spatial and edition-compatibility gaps.
+	def test_promotion_state_is_author_ready(self) -> None:
+		"""Every requirement is met by validated evidence; nothing is waved through by a status edit.
 
-		The 520-5242-00 LED board is enumerated, but its positions are observed rather than
-		corroborated, and the LE hardware remains unestablished. Switch 15's public opto polarity
-		was settled by ROM harness runs on 2026-09-25, which cleared the polarity conflict.
+		The last two gaps were the placements (closed by the 2022 manual's vector drawings) and the
+		Limited Edition's hardware (closed by splitting that edition into its own record).
 		"""
 		coverage = self.definition["coverage"]
-		self.assertEqual("partial", coverage["status"])
-		self.assertEqual(["spatial_placement", "variant_differences"], coverage["missing"])
+		self.assertEqual("author_ready", coverage["status"])
+		self.assertEqual([], coverage["missing"])
 		self.assertEqual([], self.definition["conflicts"])
-		self.assertEqual("validated", coverage["dimensions"]["address_enumeration"])
-		self.assertEqual("observed", coverage["dimensions"]["spatial_placement"])
-		self.assertEqual("validated", coverage["dimensions"]["physical_wiring"])
-		self.assertEqual("observed", coverage["dimensions"]["variant_coverage"])
+		self.assertEqual({"validated"}, set(coverage["dimensions"].values()))
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual(2, self.definition["schema_version"])
+		for collection in ("inputs", "outputs"):
+			for device in self.definition[collection]:
+				self.assertEqual("validated", device["provenance"]["status"], device["id"])
+		for place_id, place in located(self.definition).items():
+			self.assertEqual("validated", place["provenance"]["status"], place_id)
 
 	def test_optos_do_not_claim_an_inversion_pinmame_never_applies(self) -> None:
 		"""Whitestar normalizes nothing; three optos are settled by the script and 15 by the ROM.
@@ -156,29 +177,37 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 			self.assertEqual(expected, windows[: len(expected)], raw["name"])
 			self.assertEqual(len(expected), len(windows), raw["name"])
 
-	def test_led_board_is_enumerated_without_inventing_allocation_slots(self) -> None:
-		report = load_json(SPATIAL_REPORT_PATH)
-		conflicted = {86, 87, 88, 89, 94}
-		self.assertEqual("pinmame-spatial-blockers", report["format"])
+	def test_led_board_is_named_by_the_rom_and_placed_on_its_factory_windows(self) -> None:
+		"""Each public lamp 81-99 is the LED the ROM's own LED TEST lights for that designator.
+
+		The pairing comes from the hash-pinned run, never from a table object's number: Hanibal's
+		script binds public 81 to l98, and the retained JPSalas script binds the centre three LEDs
+		one step round the triangle. The coordinate is the window DR.5 draws for that designator.
+		"""
+		import curate_lord_of_the_rings as curator
+
+		evidence = load_json(LED_EVIDENCE_PATH)
+		named = evidence["runtime"]["observations"]["named_output_addresses"]
+		self.assertEqual(19, len(named))
+		self.assertEqual(set(range(81, 100)), set(named.values()))
 		self.assertEqual(set(range(81, 100)), set(self.lamps) & set(range(81, 105)))
 		self.assertFalse(set(range(100, 105)) & set(self.lamps))
-		self.assertNotIn("led-board-520-5242-00-not-enumerated", {item["id"] for item in report["blockers"]})
-		for address in range(81, 100):
+		seed = load_json(CALLOUT_SEED_PATH)
+		rows = {row["designator"]: row for row in load_json(SPATIAL_REPORT_PATH)["led_board"]}
+		for key, address in named.items():
+			designator = int(key.rsplit("l", 1)[1])
+			self.assertEqual(curator.LED_PUBLIC[designator], address)
 			device = self.lamps[address]
-			self.assertEqual("observed", device["provenance"]["status"], address)
-			self.assertIn("No factory semantic name", device["physical"]["notes"], address)
-			self.assertNotIn("official manual and pinmame identify", device["physical"]["notes"].lower(), address)
-			self.assertNotIn("manual.stern.lord-of-the-rings.2003", device["provenance"]["source_refs"], address)
-			if address in conflicted:
-				self.assertNotIn("spatial", device, address)
-			else:
-				self.assertEqual("observed", device["spatial"]["status"], address)
-				refs = device["spatial"]["placements"][0]["provenance"]["source_refs"]
-				self.assertNotIn("manual.stern.lord-of-the-rings.2003", refs, address)
-		self.assertEqual(conflicted, {row["address"] for row in report["conflicted_led_positions"]})
-		blocker = next(item for item in report["blockers"] if item["id"] == "script-bound-led-positions-conflict")
-		self.assertEqual(5, len(blocker["devices"]))
-		self.assertTrue(report["unresolved"])
+			self.assertEqual(f"lamp.led-board-l{designator:02d}", device["id"])
+			self.assertEqual(f"19-LED Board L{designator}", device["label"])
+			self.assertEqual("validated", device["provenance"]["status"])
+			self.assertIn("runtime.lord-of-the-rings.led-test", device["provenance"]["source_refs"])
+			self.assertIn("manual.stern.lord-of-the-rings.2003.reissue-2022", device["provenance"]["source_refs"])
+			[place] = device["spatial"]["placements"]
+			measurement = seed["measurements"][place["id"]]
+			self.assertEqual(("pdf-7", f"L{designator}"), (measurement["page"], measurement["label"]))
+			self.assertEqual(measurement["normalized"], [place["x"], place["y"]])
+			self.assertEqual(address, rows[f"L{designator}"]["public_lamp"])
 
 	def test_led_positions_follow_each_script_binding_not_object_suffixes(self) -> None:
 		"""Hanibal maps public 81 to l98 and 98 to l81; guessing l<N> is a silent address swap.
@@ -218,8 +247,8 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertIn("derivative", neo)
 		self.assertIn("Valinor is the VPW table", neo)
 
-	def test_no_stale_author_ready_artifact(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_no_stale_partial_artifact(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 
 	def test_dip_bank_is_enumerated(self) -> None:
 		dips = bindings(self.definition, "inputs", "pinmame.input.dip")
@@ -231,72 +260,82 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		for dip in dips.values():
 			self.assertEqual("dip_switch", dip["spatial"]["reason"])
 
-	def test_validated_placements_cite_all_three_retained_tables(self) -> None:
-		"""Independence between the three recreations is unestablished, so corroboration
-		requires all three. Reverting the resolver to counting files, or to a lineage
-		grouping, must fail here rather than pass silently."""
-		all_tables = {"vpx-table.lotr-vpw-1-6", "vpx-table.lotr-jpsalas-600", "vpx-table.lotr-hanibal-4k"}
-		validated = 0
+	def test_table_agreement_alone_validates_only_where_all_three_tables_agree(self) -> None:
+		"""Independence between the three recreations is unestablished, so table agreement alone
+		requires all three; everything else needs a factory drawing. Reverting the resolver to
+		counting files, or to a lineage grouping, must fail here rather than pass silently."""
+		basis = load_json(SPATIAL_REPORT_PATH)["validation_basis"]
+		places = located(self.definition)
+		self.assertTrue(basis["three_table_agreement"])
+		for place_id in basis["three_table_agreement"]:
+			cited = {ref for ref in places[place_id]["provenance"]["source_refs"] if ref.startswith("vpx-table.")}
+			self.assertEqual(THREE_TABLES, cited, f"{place_id} is validated on {sorted(cited)}")
+		for name in ("drawing_measurement", "projection_confirmed_by_drawing", "table_object_confirmed_by_drawing"):
+			self.assertTrue(basis[name], name)
+			for place_id in basis[name]:
+				self.assertIn(CALLOUT_SOURCE, places[place_id]["provenance"]["source_refs"], place_id)
+
+	def test_projections_are_validated_only_by_their_own_drawing_callout(self) -> None:
+		"""A coil placed at the mechanism it drives is a projection, not a measurement of the coil.
+		Only a factory drawing printing that device's own callout beside it may validate it."""
+		report = load_json(SPATIAL_REPORT_PATH)
+		seed = load_json(CALLOUT_SEED_PATH)
+		projected = {item["device"] for item in report["projections"]}
+		self.assertEqual(15, len(projected))
+		confirmed = set(report["validation_basis"]["projection_confirmed_by_drawing"])
+		devices = {d["id"]: d for c in ("inputs", "outputs") for d in self.definition[c]}
+		for device_id in projected:
+			for place in devices[device_id]["spatial"]["placements"]:
+				self.assertIn(place["id"], confirmed, device_id)
+				self.assertIn(place["id"], seed["checks"], device_id)
+				self.assertNotIn(place["id"], seed["measurements"], device_id)
+
+	def test_computed_coordinates_are_never_validated_by_table_agreement(self) -> None:
+		"""A coordinate no table holds cannot be a corroborated measurement of one, so a factory
+		drawing has to confirm it."""
+		import curate_lord_of_the_rings as curator
+
+		agreement = set(load_json(SPATIAL_REPORT_PATH)["validation_basis"]["three_table_agreement"])
+		groups = {"switch": ("inputs", "pinmame.input.switch"), "lamp": ("outputs", "pinmame.output.lamp"),
+		          "flasher": ("outputs", "pinmame.output.solenoid")}
+		computed = 0
+		for kind, bucket in curator.consensus["devices"].items():
+			devices = bindings(self.definition, *groups[kind])
+			for address, entry in bucket.items():
+				if entry.get("coordinate_origin") != "computed":
+					continue
+				computed += 1
+				for place in devices[int(address)]["spatial"]["placements"]:
+					self.assertNotIn(place["id"], agreement, place["id"])
+		self.assertTrue(computed)
+
+	def test_every_located_device_is_placed(self) -> None:
+		"""A device is either placed with validated placements or carries a controlled
+		not_applicable reason; nothing on the playfield is left without a record."""
 		for collection in ("inputs", "outputs"):
 			for device in self.definition[collection]:
-				spatial = device.get("spatial", {})
-				if spatial.get("status") != "validated" or "placements" not in spatial:
+				spatial = device.get("spatial")
+				self.assertIsNotNone(spatial, device["id"])
+				if spatial["status"] == "not_applicable":
+					self.assertNotIn("placements", spatial, device["id"])
 					continue
-				for place in spatial["placements"]:
-					cited = {ref for ref in place["provenance"]["source_refs"] if ref.startswith("vpx-table.")}
-					self.assertEqual(all_tables, cited, f"{device['id']} is validated on {sorted(cited)}")
-					validated += 1
-		self.assertGreater(validated, 0)
+				self.assertEqual("validated", spatial["status"], device["id"])
+				self.assertTrue(spatial["placements"], device["id"])
 
-	def test_projected_coil_placements_never_inherit_validated(self) -> None:
-		"""A coil placed at a co-located device's coordinate is a projection, not a measurement."""
+	def test_validation_basis_partitions_every_placement(self) -> None:
+		"""Each placement is validated in exactly one recorded way, and the counts are computed."""
 		report = load_json(SPATIAL_REPORT_PATH)
-		projected = {item["device"] for item in report["projections"]}
-		self.assertTrue(projected)
-		devices = {device["id"]: device for device in self.definition["outputs"]}
-		for device_id in projected:
-			self.assertEqual("observed", devices[device_id]["spatial"]["status"], device_id)
-
-	def test_computed_coordinates_are_declared_and_never_validated(self) -> None:
-		"""A coordinate no table holds cannot be a corroborated measurement of one."""
-		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertTrue(report["computed_coordinates"])
-		computed = {(entry["kind"], entry["address"]) for entry in report["computed_coordinates"]}
-		for entry in report["computed_coordinates"]:
-			self.assertTrue(entry["derived_from"], entry)
-		for collection, group, kind in (("inputs", "pinmame.input.switch", "switch"),
-										("outputs", "pinmame.output.lamp", "lamp")):
-			for address, device in bindings(self.definition, collection, group).items():
-				if (kind, address) in computed:
-					self.assertNotEqual("validated", device["spatial"].get("status"), device["id"])
-
-	def test_printed_but_unplaced_devices_are_not_called_not_applicable(self) -> None:
-		"""not_applicable is for cabinet and service devices. A device the printed location
-		drawing places, that no retained table models, has an unresolved position: it carries no
-		spatial record and appears as a blocker."""
-		report = load_json(SPATIAL_REPORT_PATH)
-		unplaced = {row["device"] for row in report["unplaced_devices"]}
-		self.assertTrue(unplaced)
-		devices = {d["id"]: d for c in ("inputs", "outputs") for d in self.definition[c]}
-		for device_id in unplaced:
-			self.assertNotIn("spatial", devices[device_id], device_id)
-		blocker = next(b for b in report["blockers"] if b["id"] == "devices-printed-but-unplaced")
-		self.assertEqual(len(unplaced), len(blocker["devices"]))
-
-	def test_observed_partition_is_disjoint_and_complete(self) -> None:
-		"""The report describes the observed set by partition, not by a hand-typed sentence."""
-		report = load_json(SPATIAL_REPORT_PATH)
-		partition = report["observed_partition"]
-		buckets = [set(ids) for ids in partition.values()]
+		buckets = [set(ids) for ids in report["validation_basis"].values()]
 		for index, first in enumerate(buckets):
 			for second in buckets[index + 1:]:
 				self.assertEqual(set(), first & second)
-		observed = {d["id"] for c in ("inputs", "outputs") for d in self.definition[c]
-					if d.get("spatial", {}).get("status") == "observed"}
-		self.assertEqual(observed, set().union(*buckets))
+		self.assertEqual(set(located(self.definition)), set().union(*buckets))
+		self.assertEqual(report["placement_count"], sum(len(bucket) for bucket in buckets))
+		for name, ids in report["validation_basis"].items():
+			self.assertEqual(len(ids), report["counts"][f"validated_by_{name}"], name)
 
-	def test_every_published_coordinate_is_in_the_spatial_derivation(self) -> None:
-		"""No coordinate may bypass the deterministic resolver as an unverified curator literal."""
+	def test_every_published_coordinate_has_a_recorded_derivation(self) -> None:
+		"""No coordinate may bypass the resolver, the drawing seed or the named mechanism objects."""
 		import curate_lord_of_the_rings as curator
 
 		derived = {
@@ -306,24 +345,57 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 			for position in ([entry] if "x" in entry else entry.get("emitters", {}).values())
 			if "x" in position and "y" in position
 		}
-		for collection in ("inputs", "outputs"):
-			for device in self.definition[collection]:
-				for placement in device.get("spatial", {}).get("placements", []):
-					coordinate = (round(float(placement["x"]), 6), round(float(placement["y"]), 6))
-					self.assertIn(coordinate, derived, device["id"])
+		# Where a drawing settles a switch against the tables' own consensus, the curator takes the
+		# one table measurement the drawing prints its box on, which the resolver recorded as an outlier.
+		resolved = {
+			(entry["x"], entry["y"])
+			for address, (table, _reason) in curator.DRAWING_RESOLVED_SWITCHES.items()
+			for entry in curator.consensus["devices"]["switch"][str(address)]["outliers"]
+			if entry["table"] == table
+		}
+		self.assertEqual(len(curator.DRAWING_RESOLVED_SWITCHES), len(resolved))
+		derived |= resolved
+		mechanism_objects = {(x, y) for _object, _how, x, y in curator.MECHANISM_OBJECTS.values()}
+		measurements = load_json(CALLOUT_SEED_PATH)["measurements"]
+		for place_id, place in located(self.definition).items():
+			coordinate = (round(float(place["x"]), 6), round(float(place["y"]), 6))
+			if place_id in measurements:
+				self.assertEqual(measurements[place_id]["normalized"], [place["x"], place["y"]], place_id)
+			else:
+				self.assertIn(coordinate, derived | mechanism_objects, place_id)
 
-	def test_blocker_counts_agree_with_the_definition(self) -> None:
+	def test_callout_check_is_recomputed_from_its_seed(self) -> None:
+		"""Every check agrees when recomputed, and every measurement reproduces from its page fit."""
+		import drawing_callouts
+
+		seed = load_json(CALLOUT_SEED_PATH)
+		decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(self.definition))
+		self.assertEqual(set(seed["checks"]), set(decisions["placements"]))
+		self.assertEqual(161, len(decisions["placements"]))
+		self.assertTrue(all(decision["agrees"] for decision in decisions["placements"].values()))
+		self.assertEqual(57, len(seed["measurements"]))
+		for place_id, item in seed["measurements"].items():
+			self.assertEqual(item["normalized"], list(drawing_callouts.measured(seed, place_id)), place_id)
+			check = seed["checks"].get(place_id)
+			# A measurement checked on its own page would only check the fit against itself.
+			self.assertNotEqual(item["page"], check["page"] if check else None, place_id)
+		for place_id, reason in seed["excluded_checks"].items():
+			self.assertIn(place_id, seed["measurements"])
+			self.assertNotIn(place_id, seed["checks"])
+			self.assertTrue(reason.strip())
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		self.assertEqual(hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(), sources[CALLOUT_SOURCE]["sha256"])
+
+	def test_audit_counts_agree_with_the_definition(self) -> None:
 		"""The report's prose is computed from the artifact, not written beside it."""
 		report = load_json(SPATIAL_REPORT_PATH)
-		blocker = next(item for item in report["blockers"] if item["id"] == "placements-not-fully-corroborated")
-		observed = [
-			device["id"]
-			for collection in ("inputs", "outputs")
-			for device in self.definition[collection]
-			if device.get("spatial", {}).get("status") == "observed"
-		]
-		self.assertEqual(len(observed), len(blocker["devices"]))
-		self.assertIn(str(len(observed)), blocker["summary"])
+		gi = bindings(self.definition, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual(len(gi["spatial"]["placements"]), report["counts"]["gi_placements"])
+		self.assertEqual(gi["physical"]["quantity"], report["counts"]["gi_quantity"])
+		self.assertEqual(len(report["projections"]), report["counts"]["projections"])
+		self.assertEqual(len(report["drawing_measurements"]), report["counts"]["drawing_measurements"])
+		self.assertIn(f"Every one of the {report['placement_count']} placements is validated",
+		              KNOWLEDGE_PATH.read_text(encoding="utf-8"))
 
 	def test_printed_insert_names_keep_their_capitalisation(self) -> None:
 		"""(K) EEP marks which letter the insert lights; re-casing it throws the name away."""
@@ -349,21 +421,49 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 	def test_every_driver_carries_a_compatibility_verdict_and_notes(self) -> None:
 		"""`physical_compatibility` is a claim about the machine, not about the driver routing.
 
-		An earlier revision asserted `identical` for all 46 drivers on the strength of a shared
-		`init_lotr`. That proves the emulated hardware matches; it says nothing about the cabinet.
-		The 2008 Limited Edition is the one driver where that gap matters - a limited run is
-		exactly where a manufacturer adds hardware such as a shaker motor - and nothing retained
-		here documents that machine, so it is `unknown` rather than asserted either way.
+		A shared `init_lotr` proves the emulated hardware matches; it says nothing about the
+		cabinet. The 2009 Limited Edition's own firmware, `lotr_le`, is the one driver where that
+		gap matters, and it now lives in that edition's record rather than as an `unknown` here.
 		"""
 		drivers = self.definition["drivers"]
-		self.assertEqual(46, len(drivers))
+		self.assertEqual(45, len(drivers))
+		self.assertNotIn("lotr_le", {driver["id"] for driver in drivers})
 		for driver in drivers:
-			expected = "unknown" if driver["id"] == "lotr_le" else "identical"
-			self.assertEqual(expected, driver["physical_compatibility"], driver["id"])
+			self.assertEqual("identical", driver["physical_compatibility"], driver["id"])
 			self.assertTrue(driver["variant_notes"].strip())
-		limited = next(driver for driver in drivers if driver["id"] == "lotr_le")
-		self.assertIn("Limited Edition", limited["variant_notes"])
-		self.assertIn("not established by anything retained here", limited["variant_notes"])
+
+	def test_the_limited_edition_is_its_own_record_and_never_rejoins(self) -> None:
+		"""The LE is a separate physical edition: different I/O board wiring and firmware that
+		drives solenoid 28, which this machine's firmware never does."""
+		limited = load_json(LE_PATH)
+		self.assertEqual("stern.lord-of-the-rings-limited-edition.2009", limited["machine"]["id"])
+		self.assertEqual((5558, "GrqZX-MDEPd", 2009), (limited["machine"]["ipdb_id"], limited["machine"]["opdb_id"], limited["machine"]["year"]))
+		self.assertEqual((4858, "GrqZX-MD15w"), (self.definition["machine"]["ipdb_id"], self.definition["machine"]["opdb_id"]))
+		self.assertEqual(["lotr_le"], [driver["id"] for driver in limited["drivers"]])
+		self.assertEqual("identical", limited["drivers"][0]["physical_compatibility"])
+		self.assertEqual("partial", limited["coverage"]["status"])
+		self.assertNotIn("identity", limited["coverage"]["missing"])
+		self.assertIn("variant_differences", limited["coverage"]["missing"])
+		self.assertEqual("pinmame.whitestar", limited["controller"]["platform"])
+		family = load_json(ROOT / "families" / "opdb" / "grqzx.json")
+		self.assertEqual({"stern.lord-of-the-rings.2003", "stern.lord-of-the-rings-limited-edition.2009"},
+		                 {member["machine_id"] for member in family["members"]})
+
+	def test_flash_lamp_tests_separate_the_two_firmwares(self) -> None:
+		"""10.00 pulses the 2003 flasher set and never 28; 10.02 adds 28, the LE's right Helm's Deep."""
+		expected = {"lotr": [14, 23, 25, 26, 27, 29, 30, 31, 32], "lotr_le": [14, 23, 25, 26, 27, 28, 29, 30, 31, 32]}
+		for driver, path in FLASH_EVIDENCE_PATHS.items():
+			evidence = load_json(path)
+			self.assertEqual([driver], evidence["driver_ids"])
+			self.assertEqual(expected[driver], evidence["runtime"]["observations"]["runs"]["flash-test"]["solenoid_addresses_seen"], driver)
+			cycling = [snap for snap in evidence["runtime"]["observations"]["diagnostic_snapshots"]
+			           if snap["interpreted_text"].startswith("CYCLING FLASHERS")]
+			self.assertEqual(8, len(cycling), driver)
+			for raw in evidence["runtime"]["raw_runs"]:
+				self.assertEqual(raw["scenario_sha256"], hashlib.sha256((ROOT / raw["scenario_path"]).read_bytes()).hexdigest())
+		self.assertEqual(FLASHER_ADDRESSES, set(expected["lotr"]))
+		self.assertIn("runtime.lord-of-the-rings.flash-test", self.solenoids[28]["provenance"]["source_refs"])
+		self.assertEqual("unused", self.solenoids[28]["availability"])
 
 	def test_no_relationship_claims_the_balrog_limits_are_complementary(self) -> None:
 		"""`inverted` would assert each limit switch is the logical complement of the other.
@@ -385,8 +485,11 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		mapped = {record["id"] for record in catalog["drivers"] if record.get("definition") == relative}
 		self.assertEqual({driver["id"] for driver in self.definition["drivers"]}, mapped)
 		machine = next(record for record in catalog["machines"] if record["id"] == "stern.lord-of-the-rings.2003")
-		self.assertEqual("partial", machine["coverage_status"])
+		self.assertEqual("author_ready", machine["coverage_status"])
+		self.assertEqual(100, machine["completion_score"])
 		self.assertEqual(relative, machine["definition"])
+		limited = {record["id"]: record["definition"] for record in catalog["drivers"]}["lotr_le"]
+		self.assertEqual(LE_PATH.relative_to(ROOT).as_posix(), limited)
 
 	def test_full_switch_enumeration(self) -> None:
 		expected = MATRIX_ADDRESSES | DEDICATED_ADDRESSES | FLIPPER_COLUMN_HOLES
@@ -417,12 +520,14 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual("Service Credit (Green Button)", self.switches[-1]["label"])
 		self.assertEqual("Begin Test (Black Button)", self.switches[0]["label"])
 		self.assertEqual("Memory Protect", self.switches[-3]["label"])
-		for address in (81, 83):
+		seed = load_json(CALLOUT_SEED_PATH)
+		for address, label in ((81, "DS4"), (83, "DS2")):
 			self.assertTrue(any(role.startswith("internal.") for role in self.switches[address]["roles"]))
-			# The printed dedicated-switch table puts DS-2 and DS-4 below the playfield, so their
-			# position is unresolved and they carry no spatial record. This test used to assert
-			# `internal_nonvisual` here, which is how the false claim survived six rounds.
-			self.assertNotIn("spatial", self.switches[address])
+			# The printed dedicated-switch table puts DS-2 and DS-4 below the playfield, on the
+			# flipper mechanisms; the bottom view draws them, so they are measured there rather than
+			# declared `internal_nonvisual`, which is how an earlier false claim survived six rounds.
+			[place] = self.switches[address]["spatial"]["placements"]
+			self.assertEqual(("pdf-123", label), (seed["measurements"][place["id"]]["page"], seed["measurements"][place["id"]]["label"]))
 
 	def test_uk_only_cabinet_buttons_are_optional(self) -> None:
 		for address in UK_ONLY_SWITCHES:
@@ -602,16 +707,10 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertIn("numbers the positions from the left", trough["behavior"])
 		self.assertEqual(5, len(trough["positions"]))
 
-	def test_every_device_has_availability_and_an_accounted_spatial_state(self) -> None:
-		"""Every device either carries spatial evidence or is declared unresolved in the report."""
-		report = load_json(SPATIAL_REPORT_PATH)
-		unplaced = ({row["device"] for row in report["unplaced_devices"]}
-		            | {row["device"] for row in report["conflicted_led_positions"]})
+	def test_every_device_has_availability(self) -> None:
 		for collection in ("inputs", "outputs"):
 			for device in self.definition[collection]:
 				self.assertIn("availability", device, device["id"])
-				if "spatial" not in device:
-					self.assertIn(device["id"], unplaced, device["id"])
 
 	def test_every_source_ref_resolves(self) -> None:
 		known = {source["id"] for source in self.definition["sources"]}
@@ -642,23 +741,11 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 
 	def test_spatial_report_matches_the_definition(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
 		self.assertEqual("stern.lord-of-the-rings.2003", report["machine_id"])
-		placements = sum(
-			len(device.get("spatial", {}).get("placements", []))
-			for collection in ("inputs", "outputs")
-			for device in self.definition[collection]
-		)
-		self.assertEqual(placements, report["placement_count"])
-		located_devices = sum(
-			bool(device.get("spatial", {}).get("placements"))
-			for collection in ("inputs", "outputs")
-			for device in self.definition[collection]
-		)
-		self.assertEqual(
-			located_devices,
-			report["counts"]["validated_devices"] + report["counts"]["observed_devices"],
-		)
+		self.assertEqual("author_ready", report["status"])
+		self.assertEqual(len(located(self.definition)), report["placement_count"])
+		self.assertEqual(206, report["placement_count"])
 
 	def test_spatial_report_records_the_rejected_outliers(self) -> None:
 		"""One retained table lays the Fellowship inserts out as a closed ring rather than the printed
@@ -695,7 +782,7 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 
 	def test_knowledge_note_is_promoted_and_has_no_stale_partial_banner(self) -> None:
 		text = KNOWLEDGE_PATH.read_text(encoding="utf-8")
-		self.assertIn("partial", text.splitlines()[2])
+		self.assertIn("author_ready", text.splitlines()[2])
 		self.assertNotIn("requiring validation", text)
 		self.assertNotIn("has not yet been normalized", text)
 
@@ -793,7 +880,7 @@ class LordOfTheRingsRetainedEvidenceTests(unittest.TestCase):
                 self.skipTest(f"the evidence root named by {uri} is not available")
             self.assertTrue(path.is_file(), f"{source['id']} locator resolves to nothing: {uri} -> {path}")
             checked += 1
-        self.assertEqual(14, checked, "every retained artifact must carry an external locator")
+        self.assertEqual(15, checked, "every retained artifact must carry an external locator")
 
     def test_retained_tables_and_scripts_match_their_recorded_hashes(self) -> None:
         expected = {
@@ -922,6 +1009,8 @@ class LordOfTheRingsRetainedEvidenceTests(unittest.TestCase):
                 rom_sets = json.loads(node.value.args[0].value)
         self.assertIsNotNone(rom_sets, "the curator must embed the parsed ROM inventory")
         notes = {driver["id"]: driver["variant_notes"] for driver in self.definition["drivers"]}
+        # lotr_le is the Limited Edition's firmware and is described in that edition's record.
+        notes["lotr_le"] = load_json(LE_PATH)["drivers"][0]["variant_notes"]
         self.assertEqual(set(notes), set(rom_sets), "every driver must have a parsed ROM set")
         root_cpu, root_display, root_sound = rom_sets["lotr"]
         for driver_id, (cpu, display, sound) in sorted(rom_sets.items()):
@@ -947,7 +1036,60 @@ class LordOfTheRingsRetainedEvidenceTests(unittest.TestCase):
             self.assertTrue(path.is_file(), f"{source['id']} locator resolves to nothing: {path}")
             self.assertEqual(source["sha256"], file_sha256(path), source["id"])
             checked += 1
-        self.assertEqual(14, checked)
+        self.assertEqual(15, checked)
+
+    def test_runtime_evidence_rebuilds_from_its_retained_runs(self) -> None:
+        """The LED Test and both flash-lamp test files are what their builders derive from the runs."""
+        import lotr_flash_test_evidence
+        import lotr_led_test_evidence
+
+        led_run = _resolve_external(f"external:pinmame-review-artifacts/{lotr_led_test_evidence.RUN_RELATIVE}")
+        if led_run is None:
+            self.skipTest("retained harness runs are not available")
+        self.assertEqual(load_json(LED_EVIDENCE_PATH), lotr_led_test_evidence.build(led_run))
+        for driver, spec in lotr_flash_test_evidence.RUNS.items():
+            run = _resolve_external(f"external:pinmame-review-artifacts/{spec['run']}")
+            self.assertEqual(load_json(ROOT / spec["evidence"]), lotr_flash_test_evidence.build(driver, run), driver)
+
+    def test_callout_renders_and_reading_artifacts_match_the_seed(self) -> None:
+        import drawing_callouts
+
+        manuals = _manuals_root()
+        artifacts = _resolve_external("external:pinmame-review-artifacts/")
+        if manuals is None or artifacts is None:
+            self.skipTest("retained manuals or review artifacts are not available")
+        seed = load_json(CALLOUT_SEED_PATH)
+        checked = drawing_callouts.verify_retained(seed, ROOT, manuals.parent.parent, artifacts)
+        self.assertEqual(len(seed["pages"]) + 12, checked)
+        reissue = self.sources["manual.stern.lord-of-the-rings.2003.reissue-2022"]
+        self.assertEqual(reissue["sha256"], file_sha256(_resolve_external(reissue["uri"])))
+
+    def test_mechanism_object_coordinates_recompute_from_the_retained_vpw_extraction(self) -> None:
+        """The five coils projected onto the object the known-working script moves for them take
+        that object's own coordinate: its centre, position or drag-point mean, in table units."""
+        import curate_lord_of_the_rings as curator
+
+        root = _vpx_root()
+        if root is None or not (root / "vpxtool-extract" / "gamedata.json").is_file():
+            self.skipTest("the retained VPW extraction is not available")
+        extract = root / "vpxtool-extract"
+        bounds = load_json(extract / "gamedata.json")
+        width, height = bounds["right"] - bounds["left"], bounds["bottom"] - bounds["top"]
+        for address, (name, _how, x, y) in curator.MECHANISM_OBJECTS.items():
+            # vpxtool wraps each item in its type: {"Wall": {...}}.
+            [item] = load_json(extract / "gameitems" / f"{name}.json").values()
+            if "center" in item:
+                point = (item["center"]["x"], item["center"]["y"])
+            elif "position" in item:
+                point = (item["position"]["x"], item["position"]["y"])
+            else:
+                points = item["drag_points"]
+                point = (sum(p["x"] for p in points) / len(points), sum(p["y"] for p in points) / len(points))
+            self.assertEqual(
+                (x, y),
+                (round((point[0] - bounds["left"]) / width, 6), round((point[1] - bounds["top"]) / height, 6)),
+                f"solenoid {address}: {name}",
+            )
 
 
 class LordOfTheRingsCuratorTests(unittest.TestCase):

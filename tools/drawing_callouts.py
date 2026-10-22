@@ -123,6 +123,17 @@ def evaluate(seed: dict[str, Any], placements: dict[str, tuple[float, float]], l
 			raise ValueError(f"{key}: the control fit needs at least {MIN_CONTROLS} controls spanning {MIN_CONTROL_SPAN} of the playfield height")
 		control_fit = fit(controls)
 		control_loo = leave_one_out(controls) if len(controls) >= 4 else []
+		if not any(check["page"] == key for check in seed["checks"].values()):
+			# A page that only carries drawing measurements checks nothing, so it has no callout fit;
+			# its control fit is what `measured` uses and is still summarized.
+			result["pages"][key] = {
+				"controls": len(controls),
+				"control_rms": round(math.sqrt(sum(distance(apply(control_fit, p), xy) ** 2 for p, xy in controls) / len(controls)), 4),
+				"control_loo_max": round(max(control_loo), 4) if control_loo else None,
+				"callout_pairs": 0,
+				"control_fit": [[round(v, 9) for v in row] for row in control_fit],
+			}
+			continue
 		reads = [r for r in page["reads"] if r.get("region", "playfield") == "playfield"]
 		by_label: dict[str, list[int]] = {}
 		for index, read in enumerate(reads):

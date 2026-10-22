@@ -54,7 +54,7 @@ class CompletionScoreTests(unittest.TestCase):
 		self.assertEqual(100, by_id["williams.medieval-madness.1997"]["completion_score"])
 		self.assertEqual(94, by_id["williams.white-water.1993"]["completion_score"])
 		self.assertEqual(100, by_id["williams.monster-bash.1998"]["completion_score"])
-		self.assertEqual(88, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
+		self.assertEqual(100, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
 		# Guns N' Roses now resolves thirteen requirements; exact socket placement,
 		# fitted G.I. inventory and the conflicting upper-flipper coil part remain open.
 		self.assertEqual(81, by_id["data-east.guns-n-roses.1994"]["completion_score"])

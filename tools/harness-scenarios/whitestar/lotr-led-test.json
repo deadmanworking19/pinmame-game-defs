@@ -1,0 +1,383 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lotr",
+  "notes": "Lord of the Rings LED Test: boot from a fresh empty state with keyboard handling off, open DIAG with Begin Test (public 0), step right with Service Credit (public -1) to LOTR TESTS, select LED TEST and advance through ALL OFF, ALL ON and LED #1 to LED #19, then back to ALL OFF. Each advance is followed by a blink-phase wait so the selected LED is captured on and off. Evidence for the factory L1-L19 to public-lamp pairing; the factory manual's LED Test text says LED #1 is L1 and #2-#19 follow.",
+  "initial_switches": [
+    {
+      "switch": -3,
+      "state": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20,
+      "label": "boot"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 4,
+      "label": "enter service main menu"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1,
+      "label": "select diagnostics"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 2"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 4"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 5"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 6"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 7"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 8"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 9"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 10"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.6,
+      "label": "diagnostics right 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1,
+      "label": "enter LOTR tests"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 100,
+      "settle_s": 0.8,
+      "label": "select LED test"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1,
+      "label": "enter LED test"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 5"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 6"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 7"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 8"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 9"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 12"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 13"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 17"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 18"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 19"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 20"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 100,
+      "settle_s": 1.1,
+      "label": "LED test advance 21"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "LED blink phase 21"
+    }
+  ]
+}
