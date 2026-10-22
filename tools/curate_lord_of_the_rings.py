@@ -756,6 +756,7 @@ SOURCES.append({
         _static_excerpt("general-illumination-wiring-2022", "PDF page 121 (printed Section 5, Chapter 2, page 103) General Illumination Circuit Detailed Wiring Diagram, complete circuit table and bottom-view drawing", "page 121, crop box 0,0.08,1,0.92, 900px wide, quality 35"),
         _static_excerpt("light-reflectors-2022", "PDF page 82 (printed Section 4, Chapter 1, page 64) complete parts table, including the Light Reflector and the centre-post Plug-Cap note, and PDF page 83 (printed Section 4, Chapter 1, page 65) item-5 callouts", "page 83, crop box 0.08,0.50,0.53,0.78, 760px wide, quality 40"),
         _static_excerpt("under-playfield-locations-2022", "PDF page 123 (printed Section 5, Chapter 2, page 105) Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations", "page 123, crop box 0,0.02,0.62,0.96, 760px wide, quality 35"),
+        _static_excerpt("below-playfield-parts-2022", "PDF page 84 (printed Section 4, Chapter 1, page 66) complete below-playfield parts table, whose letters A, B and G key the drawing's callout boxes", None),
         _static_excerpt("sword-ramp-and-uk-posts-2022", "PDF page 111 (printed Section 4, Chapter 2, page 93) complete items 1-17 parts table and the sword ramp switch, and PDF page 126 UK Post Save note", "page 111, crop box 0.35,0,0.98,0.70, 760px wide, quality 35"),
     ],
     "id": MANUAL_2022,
@@ -1169,7 +1170,7 @@ for address, device_id, label, roles, location, note in DEDICATED:
             f" Measured on the 2022 manual's vector bottom view (PDF 123), which draws the {side} flipper's "
             f"end-of-stroke blade switch at the outer end of the flipper mechanism, labelled {manual_ref.replace('-', '')}; "
             "the placement is the centre of the drawn switch. The below-playfield parts drawing (PDF 84) prints its "
-            "letter B, EOS Switch (Flipper) 180-5149-00, beside the same switch, which checks the measurement. The "
+            "letter B, 'EOS Switch Flipper (on Flippers)' 180-5149-00, beside the same switch, which checks the measurement. The "
             "topside switch drawing DR.4 prints its grey box nearer the flipper pivot, in open space, because it does "
             "not draw under-playfield assemblies."
         )
