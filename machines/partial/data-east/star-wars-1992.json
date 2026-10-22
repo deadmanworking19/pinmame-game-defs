@@ -1,5 +1,17 @@
 {
-  "conflicts": [],
+  "conflicts": [
+    {
+      "description": "The schematic's 4R and 6R location annotations imply four bulbs but print '(3) NO. 89'. Its 8R annotation specifies three playfield bulbs and one insert-panel bulb, while the operator's location drawing and VPW have four playfield candidates. No complete bank quantity is asserted; 8R remains unplaced. Resolution path: a machine owner photographs and counts the populated sockets and wiring on banks 4R, 6R and 8R, or a curator obtains a later factory schematic revision that reconciles the counts.",
+      "id": "conflict.star-wars-flash-bank-counts",
+      "path": "outputs[id=device.flasher-4r-upper-playfield]; outputs[id=device.flasher-6r]; outputs[id=device.flasher-8r-back-left-wall]",
+      "source_refs": [
+        "manual.star-wars-1992.operators",
+        "manual.star-wars-1992.schematics",
+        "vpx-table.star-wars-1992.vpw-1-2-2"
+      ],
+      "status": "unresolved"
+    }
+  ],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.dataeast"
@@ -29,7 +41,8 @@
       "variant_differences",
       "recreation_notes",
       "provenance",
-      "spatial_placement"
+      "spatial_placement",
+      "unresolved_conflicts"
     ],
     "status": "partial"
   },
@@ -160,9 +173,8 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "vpx-script.star-wars-1992.vpw-1-2-2",
-            "manual.star-wars-1992",
-            "vpx-script.star-wars-1992.bigus-3-0"
+            "manual.star-wars-1992.operators",
+            "manual.star-wars-1992.schematics"
           ],
           "status": "observed"
         },
@@ -191,29 +203,30 @@
       },
       "id": "switch.trough-ball-4-jam",
       "kind": "switch",
-      "label": "Trough Ball 4 (Jam)",
+      "label": "Outhole",
       "provenance": {
         "source_refs": [
-          "legacy.game.stwr"
+          "manual.star-wars-1992.schematics",
+          "vpx-script.star-wars-1992.vpw-1-2-2"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "placements": [
           {
-            "id": "switch.trough-ball-4-jam.sensor-ballrelease",
+            "id": "switch.trough-ball-4-jam.sensor-drain",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.schematics"
               ],
               "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.85268,
-            "y": 0.881129
+            "x": 0.521943,
+            "y": 0.958306
           }
         ],
         "status": "observed"
@@ -254,8 +267,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -303,8 +315,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -352,8 +363,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -401,12 +411,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -414,7 +421,7 @@
             "y": 0.885291
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -452,12 +459,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -465,7 +469,7 @@
             "y": 0.131245
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -503,8 +507,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -552,12 +555,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -565,7 +565,7 @@
             "y": 0.310974
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -603,12 +603,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -616,7 +613,7 @@
             "y": 0.763727
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -654,12 +651,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -667,7 +661,7 @@
             "y": 0.733287
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -705,12 +699,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -718,7 +709,7 @@
             "y": 0.734642
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -756,12 +747,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -769,7 +757,7 @@
             "y": 0.798662
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -807,12 +795,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -820,7 +805,7 @@
             "y": 0.603465
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -858,12 +843,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -871,7 +853,7 @@
             "y": 0.472768
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -909,12 +891,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -922,7 +901,7 @@
             "y": 0.458559
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -960,12 +939,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -973,7 +949,7 @@
             "y": 0.585328
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1011,12 +987,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1024,7 +997,7 @@
             "y": 0.609891
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1062,12 +1035,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1075,7 +1045,7 @@
             "y": 0.345862
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1113,12 +1083,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1126,7 +1093,7 @@
             "y": 0.368276
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1164,12 +1131,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1177,7 +1141,7 @@
             "y": 0.390611
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1215,12 +1179,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1228,7 +1189,7 @@
             "y": 0.500884
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1266,8 +1227,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1315,8 +1275,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1364,12 +1323,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1377,7 +1333,7 @@
             "y": 0.226407
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1415,12 +1371,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1428,7 +1381,7 @@
             "y": 0.550963
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1466,8 +1419,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1515,12 +1467,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1528,7 +1477,7 @@
             "y": 0.018434
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1566,8 +1515,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1615,8 +1563,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1664,8 +1611,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -1713,12 +1659,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1726,7 +1669,7 @@
             "y": 0.730458
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1764,12 +1707,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1777,7 +1717,7 @@
             "y": 0.732234
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1815,12 +1755,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1828,7 +1765,7 @@
             "y": 0.315146
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1866,12 +1803,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1879,7 +1813,7 @@
             "y": 0.396252
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1917,12 +1851,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1930,7 +1861,7 @@
             "y": 0.409242
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -1968,12 +1899,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -1981,7 +1909,7 @@
             "y": 0.49068
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2005,19 +1933,19 @@
       },
       "id": "switch.launch-button",
       "kind": "switch",
-      "label": "Launch Button",
+      "label": "Shift Button",
       "provenance": {
         "source_refs": [
-          "legacy.game.stwr"
+          "manual.star-wars-1992.schematics",
+          "vpx-script.star-wars-1992.vpw-1-2-2"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "vpx-script.star-wars-1992.vpw-1-2-2",
-            "manual.star-wars-1992",
-            "vpx-script.star-wars-1992.bigus-3-0"
+            "manual.star-wars-1992.operators",
+            "manual.star-wars-1992.schematics"
           ],
           "status": "observed"
         },
@@ -2046,19 +1974,19 @@
       },
       "id": "switch.right-magna-save-coin-door",
       "kind": "switch",
-      "label": "Right Magna Save / Coin Door",
+      "label": "Shift Down",
       "provenance": {
         "source_refs": [
-          "legacy.game.stwr"
+          "manual.star-wars-1992.schematics",
+          "vpx-script.star-wars-1992.vpw-1-2-2"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "vpx-script.star-wars-1992.vpw-1-2-2",
-            "manual.star-wars-1992",
-            "vpx-script.star-wars-1992.bigus-3-0"
+            "manual.star-wars-1992.operators",
+            "manual.star-wars-1992.schematics"
           ],
           "status": "observed"
         },
@@ -2120,12 +2048,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2133,7 +2058,7 @@
             "y": 0.747498
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2175,12 +2100,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2188,7 +2110,7 @@
             "y": 0.747799
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2230,12 +2152,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2243,7 +2162,7 @@
             "y": 0.747522
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2285,12 +2204,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2298,7 +2214,7 @@
             "y": 0.747677
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2340,12 +2256,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2353,7 +2266,7 @@
             "y": 0.789218
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2395,12 +2308,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2408,7 +2318,7 @@
             "y": 0.788974
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2450,12 +2360,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2463,7 +2370,7 @@
             "y": 0.789096
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2505,12 +2412,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2518,7 +2422,7 @@
             "y": 0.789339
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2560,12 +2464,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2573,7 +2474,7 @@
             "y": 0.460583
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2611,12 +2512,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2624,7 +2522,7 @@
             "y": 0.475697
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2662,12 +2560,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2675,7 +2570,7 @@
             "y": 0.486053
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2713,12 +2608,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2726,7 +2618,7 @@
             "y": 0.489494
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2764,12 +2656,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2777,7 +2666,7 @@
             "y": 0.485673
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2815,12 +2704,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2828,7 +2714,7 @@
             "y": 0.476658
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2866,12 +2752,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2879,7 +2762,7 @@
             "y": 0.460491
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2917,12 +2800,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -2930,7 +2810,7 @@
             "y": 0.441039
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -2964,24 +2844,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-18.emitter-l18",
+            "id": "lamp.outputs-18.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.856486,
-            "y": 0.236733
+            "x": 0.84,
+            "y": 0.24
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3019,12 +2897,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3032,7 +2907,7 @@
             "y": 0.285268
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3070,12 +2945,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3083,7 +2955,7 @@
             "y": 0.342211
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3117,24 +2989,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-21.emitter-l21",
+            "id": "lamp.outputs-21.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.769369,
-            "y": 0.392473
+            "x": 0.762,
+            "y": 0.392
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3168,24 +3038,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-22.emitter-l22",
+            "id": "lamp.outputs-22.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.67892,
-            "y": 0.291207
+            "x": 0.672,
+            "y": 0.29
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3219,24 +3087,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-23.emitter-l23",
+            "id": "lamp.outputs-23.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.662186,
-            "y": 0.336316
+            "x": 0.658,
+            "y": 0.337
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3270,24 +3136,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-24.emitter-l24f",
+            "id": "lamp.outputs-24.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.606138,
-            "y": 0.432953
+            "x": 0.601,
+            "y": 0.432
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3321,24 +3185,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.c3po-left-eye.emitter-l26",
+            "id": "lamp.c3po-left-eye.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.415934,
-            "y": 0.839452
+            "x": 0.416,
+            "y": 0.838
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3376,12 +3238,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3389,7 +3248,7 @@
             "y": 0.873049
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3423,24 +3282,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.c3po-right-eye.emitter-l28",
+            "id": "lamp.c3po-right-eye.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.493871,
-            "y": 0.839773
+            "x": 0.485,
+            "y": 0.838
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3478,8 +3335,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -3527,12 +3383,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3540,7 +3393,7 @@
             "y": 0.695608
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3574,24 +3427,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-33.emitter-l33",
+            "id": "lamp.outputs-33.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.150768,
-            "y": 0.635902
+            "x": 0.163,
+            "y": 0.636
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3625,24 +3476,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-34.emitter-l34",
+            "id": "lamp.outputs-34.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.383224,
-            "y": 0.511722
+            "x": 0.384,
+            "y": 0.513
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3676,24 +3525,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-35.emitter-l35",
+            "id": "lamp.outputs-35.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.436424,
-            "y": 0.493606
+            "x": 0.444,
+            "y": 0.496
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3727,24 +3574,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-36.emitter-l36",
+            "id": "lamp.outputs-36.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.723661,
-            "y": 0.602277
+            "x": 0.704,
+            "y": 0.603
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3778,24 +3623,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-37.emitter-l37",
+            "id": "lamp.outputs-37.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.73222,
-            "y": 0.640686
+            "x": 0.701,
+            "y": 0.647
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -3833,8 +3676,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -3882,8 +3724,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -3931,8 +3772,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -3980,12 +3820,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -3993,7 +3830,7 @@
             "y": 0.636998
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4031,12 +3868,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4044,7 +3878,7 @@
             "y": 0.601186
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4082,12 +3916,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4095,7 +3926,7 @@
             "y": 0.561992
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4133,12 +3964,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4146,7 +3974,7 @@
             "y": 0.520316
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4184,8 +4012,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4229,24 +4056,22 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.outputs-46.emitter-l46",
+            "id": "lamp.outputs-46.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.268712,
-            "y": 0.498941
+            "x": 0.272,
+            "y": 0.501
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4284,8 +4109,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4327,15 +4151,24 @@
         "status": "candidate"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "vpx-script.star-wars-1992.vpw-1-2-2",
-            "manual.star-wars-1992"
-          ],
-          "status": "observed"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.scoop-right-jabba.emitter-manual-1",
+            "provenance": {
+              "source_refs": [
+                "manual.star-wars-1992.operators",
+                "vpx-table.star-wars-1992.vpw-1-2-2",
+                "vpx-script.star-wars-1992.vpw-1-2-2"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.838,
+            "y": 0.505
+          }
+        ],
+        "status": "observed"
       }
     },
     {
@@ -4373,8 +4206,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4382,21 +4214,6 @@
             "space": "playfield",
             "x": 0.469258,
             "y": 0.320692
-          },
-          {
-            "id": "lamp.ramp-entrance-bank-1.emitter-l49a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.47045,
-            "y": 0.317896
           }
         ],
         "status": "observed"
@@ -4437,8 +4254,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4446,21 +4262,6 @@
             "space": "playfield",
             "x": 0.518519,
             "y": 0.320503
-          },
-          {
-            "id": "lamp.ramp-entrance-bank-2.emitter-l50a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.518371,
-            "y": 0.318307
           }
         ],
         "status": "observed"
@@ -4501,8 +4302,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4510,21 +4310,6 @@
             "space": "playfield",
             "x": 0.564405,
             "y": 0.3208
-          },
-          {
-            "id": "lamp.ramp-entrance-bank-3.emitter-l51a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.564413,
-            "y": 0.318307
           }
         ],
         "status": "observed"
@@ -4565,12 +4350,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4578,7 +4360,7 @@
             "y": 0.57987
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4616,12 +4398,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4629,7 +4408,7 @@
             "y": 0.715058
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4667,12 +4446,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4680,7 +4456,7 @@
             "y": 0.676752
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4718,12 +4494,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4731,7 +4504,7 @@
             "y": 0.671065
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4769,12 +4542,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4782,7 +4552,7 @@
             "y": 0.735372
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4820,8 +4590,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4869,8 +4638,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -4918,12 +4686,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4931,7 +4696,7 @@
             "y": 0.276167
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -4969,12 +4734,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -4982,7 +4744,7 @@
             "y": 0.23436
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5020,12 +4782,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -5033,7 +4792,7 @@
             "y": 0.315027
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5071,12 +4830,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -5084,7 +4840,7 @@
             "y": 0.395646
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5122,12 +4878,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -5135,7 +4888,7 @@
             "y": 0.408275
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5173,12 +4926,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -5186,7 +4936,7 @@
             "y": 0.490121
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5207,9 +4957,6 @@
       "id": "lamp.gi-general-illumination",
       "kind": "lamp",
       "label": "GI (General Illumination)",
-      "physical": {
-        "notes": "The GI channel drives the factory's playfield GI strings; the retained table models 17 playfield bulbs (its GI collection) and omits the backbox strings the manual lists. The Bigus table's GI collection has 16; GI stays observed without quantity per the GI rule."
-      },
       "provenance": {
         "source_refs": [
           "legacy.game.stwr"
@@ -5223,8 +4970,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5238,8 +4984,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5253,8 +4998,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5268,8 +5012,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5283,8 +5026,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5298,8 +5040,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5313,8 +5054,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5328,8 +5068,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5343,8 +5082,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5358,8 +5096,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5373,8 +5110,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5388,8 +5124,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5403,8 +5138,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5418,8 +5152,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5433,8 +5166,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5448,8 +5180,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5463,8 +5194,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5502,29 +5232,30 @@
       },
       "id": "device.trough-eject-in",
       "kind": "coil",
-      "label": "Trough Eject (In)",
+      "label": "Outhole",
       "provenance": {
         "source_refs": [
-          "legacy.game.stwr"
+          "manual.star-wars-1992.schematics",
+          "vpx-script.star-wars-1992.vpw-1-2-2"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "placements": [
           {
-            "id": "device.trough-eject-in.effect-ballrelease",
+            "id": "device.trough-eject-in.effect-drain",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.schematics"
               ],
               "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.85268,
-            "y": 0.881129
+            "x": 0.521943,
+            "y": 0.958306
           }
         ],
         "status": "observed"
@@ -5569,8 +5300,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5622,12 +5352,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -5635,7 +5362,7 @@
             "y": 0.941319
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5677,12 +5404,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -5690,7 +5414,7 @@
             "y": 0.550963
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5732,12 +5456,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -5745,7 +5466,7 @@
             "y": 0.226407
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5787,12 +5508,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -5800,7 +5518,7 @@
             "y": 0.368276
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5842,12 +5560,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -5855,7 +5570,7 @@
             "y": 0.500884
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5897,8 +5612,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -5942,9 +5656,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "vpx-script.star-wars-1992.vpw-1-2-2",
-            "manual.star-wars-1992",
-            "vpx-script.star-wars-1992.bigus-3-0"
+            "manual.star-wars-1992.schematics"
           ],
           "status": "observed"
         },
@@ -5987,8 +5699,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -6036,8 +5747,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -6085,8 +5795,7 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
@@ -6134,12 +5843,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6147,7 +5853,7 @@
             "y": 0.315146
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6185,12 +5891,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6198,7 +5901,7 @@
             "y": 0.396252
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6236,12 +5939,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6249,7 +5949,7 @@
             "y": 0.409242
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6287,12 +5987,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6300,7 +5997,7 @@
             "y": 0.49068
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6338,12 +6035,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6351,7 +6045,7 @@
             "y": 0.730458
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6389,12 +6083,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -6402,7 +6093,7 @@
             "y": 0.732234
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -6441,7 +6132,7 @@
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6451,27 +6142,12 @@
             "y": 0.600163
           },
           {
-            "id": "device.flasher-1r-scoops-walls.emitter-f125a_l",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.875232,
-            "y": 0.600252
-          },
-          {
             "id": "device.flasher-1r-scoops-walls.emitter-f125b_u",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6481,68 +6157,19 @@
             "y": 0.604907
           },
           {
-            "id": "device.flasher-1r-scoops-walls.emitter-f125b_l",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.036724,
-            "y": 0.605947
-          },
-          {
             "id": "device.flasher-1r-scoops-walls.emitter-f125c_u",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.339215,
-            "y": 0.447809
-          },
-          {
-            "id": "device.flasher-1r-scoops-walls.emitter-f125c_l",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.34409,
-            "y": 0.444984
-          },
-          {
-            "id": "device.flasher-1r-scoops-walls.emitter-f125e",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.998741,
-            "y": 0.498794
+            "x": 0.339215,
+            "y": 0.447809
           }
         ],
         "status": "observed"
@@ -6579,42 +6206,12 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.flasher-2r.emitter-f126a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.501057,
-            "y": 0.001164
-          },
-          {
-            "id": "device.flasher-2r.emitter-f126b",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.407725,
-            "y": 0.048591
-          },
-          {
             "id": "device.flasher-2r.emitter-f2r",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6663,7 +6260,7 @@
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6678,7 +6275,7 @@
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6722,78 +6319,14 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.flasher-4r-upper-playfield.emitter-f128a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.501057,
-            "y": 0.001191
-          },
-          {
-            "id": "device.flasher-4r-upper-playfield.emitter-f128b",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.998748,
-            "y": 0.498797
-          },
-          {
-            "id": "device.flasher-4r-upper-playfield.emitter-f128c",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.998726,
-            "y": 0.498826
-          },
-          {
-            "id": "device.flasher-4r-upper-playfield.emitter-f128d_u",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.938708,
-            "y": 0.041296
-          },
-          {
             "id": "device.flasher-4r-upper-playfield.emitter-f128d_l",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "manual.star-wars-1992.operators"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
@@ -6806,7 +6339,7 @@
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6816,27 +6349,12 @@
             "y": 0.24405
           },
           {
-            "id": "device.flasher-4r-upper-playfield.emitter-f4r_af",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.953083,
-            "y": 0.23057
-          },
-          {
             "id": "device.flasher-4r-upper-playfield.emitter-f4r_b",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6846,27 +6364,12 @@
             "y": 0.335982
           },
           {
-            "id": "device.flasher-4r-upper-playfield.emitter-f4r_bf",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.929473,
-            "y": 0.326756
-          },
-          {
             "id": "device.flasher-4r-upper-playfield.emitter-f4r_c",
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
                 "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "manual.star-wars-1992.operators"
               ],
               "status": "observed"
             },
@@ -6874,21 +6377,6 @@
             "space": "playfield",
             "x": 0.88046,
             "y": 0.395751
-          },
-          {
-            "id": "device.flasher-4r-upper-playfield.emitter-f4r_cf",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.899119,
-            "y": 0.399908
           }
         ],
         "status": "observed"
@@ -6916,34 +6404,11 @@
       "id": "device.flasher-5r-death-star",
       "kind": "flasher",
       "label": "Flasher 5R (Death Star)",
-      "physical": {
-        "notes": "Flash bank 5R (Death Star): placed on the single flash bulb the Bigus 3.0 table binds to channel 129 (`FadeL 70, l29`, its script.vbs 531); the retained VPW table comments its bulb assignment out (script.vbs line 1148) and the manual names this bank."
-      },
       "provenance": {
         "source_refs": [
           "legacy.game.stwr"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.flasher-5r-death-star.emitter-l29",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.869995,
-            "y": 0.659491
-          }
-        ],
-        "status": "observed"
       }
     },
     {
@@ -6977,36 +6442,34 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.flasher-6r.emitter-f6r_a",
+            "id": "device.flasher-6r.emitter-manual-1",
             "provenance": {
               "source_refs": [
+                "manual.star-wars-1992.operators",
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.494288,
-            "y": 0.351995
-          },
-          {
-            "id": "device.flasher-6r.emitter-f6r_b",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
               "status": "observed"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.463314,
-            "y": 0.392956
+            "x": 0.508,
+            "y": 0.364
+          },
+          {
+            "id": "device.flasher-6r.emitter-manual-2",
+            "provenance": {
+              "source_refs": [
+                "manual.star-wars-1992.operators",
+                "vpx-table.star-wars-1992.vpw-1-2-2",
+                "vpx-script.star-wars-1992.vpw-1-2-2"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.486,
+            "y": 0.398
           }
         ],
         "status": "observed"
@@ -7034,34 +6497,11 @@
       "id": "device.flasher-7r-r2d2",
       "kind": "flasher",
       "label": "Flasher 7R (R2D2)",
-      "physical": {
-        "notes": "Flash bank 7R (R2D2): placed on the single flash bulb the Bigus 3.0 table binds to channel 131 (`NFadeL 72, l58`, its script.vbs 535). The Bigus object sits on the left rail while the manual names the bank 7R: single-sourced and the side is flagged for physical verification; the retained VPW table comments its bulb assignment out (script.vbs line 1155)."
-      },
       "provenance": {
         "source_refs": [
           "legacy.game.stwr"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.flasher-7r-r2d2.emitter-l58",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.035626,
-            "y": 0.65612
-          }
-        ],
-        "status": "observed"
       }
     },
     {
@@ -7091,133 +6531,6 @@
           "legacy.game.stwr"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f132a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.501057,
-            "y": 0.001164
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f132d_l",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.047808,
-            "y": 0.317714
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f132d_u",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.047438,
-            "y": 0.318067
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f132e_l",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.088341,
-            "y": 0.044002
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f132e_u",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.11412,
-            "y": 0.022786
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f8r_a",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.156223,
-            "y": 0.346688
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f8r_b",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.216709,
-            "y": 0.429555
-          },
-          {
-            "id": "device.flasher-8r-back-left-wall.emitter-f8rf",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.182269,
-            "y": 0.386277
-          }
-        ],
-        "status": "observed"
       }
     },
     {
@@ -7259,12 +6572,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -7272,7 +6582,7 @@
             "y": 0.847274
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -7314,12 +6624,9 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.star-wars-1992.vpw-1-2-2",
-                "vpx-script.star-wars-1992.vpw-1-2-2",
-                "manual.star-wars-1992",
-                "vpx-table.star-wars-1992.bigus-3-0",
-                "vpx-script.star-wars-1992.bigus-3-0"
+                "vpx-script.star-wars-1992.vpw-1-2-2"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "effect",
             "space": "playfield",
@@ -7327,7 +6634,7 @@
             "y": 0.847274
           }
         ],
-        "status": "validated"
+        "status": "observed"
       }
     }
   ],
@@ -7352,61 +6659,86 @@
       "uri": "https://github.com/vpinball/pinmame"
     },
     {
-      "attribution": "VPW crew (Dids666 render, Sixtoe, DJRobX, Jesperpark scanned playfield; table credits Neo, Nfozzy, Flupper, Dark, Ninuzzu, Draifet, Alistaircg)",
-      "id": "vpx-table.star-wars-1992.vpw-1-2-2",
-      "kind": "vpx_table",
-      "known_working": true,
-      "license": "NOASSERTION",
-      "locator": "complete vpxtool git:v0.37.1 extraction; gamedata.json bounds; gameitems per star_wars_geometry.json",
-      "original_filename": "Star Wars (Data East 1992) VPW v1.2.2.vpx",
-      "rights": "NOASSERTION",
-      "sha256": "ea240a0193d6f3d829fdd0c416d18b8dbe733ce5ad4bbefcb4b17b481b9d11ca",
-      "uri": "external:vpx-sources/data-east/star-wars-1992/tables/vpw-1.2.2-ea240a0193d6/Star Wars (Data East 1992) VPW v1.2.2.vpx"
-    },
-    {
-      "attribution": "Dids666 & DJRobX; embedded header credits",
-      "id": "vpx-script.star-wars-1992.vpw-1-2-2",
-      "kind": "vpx_script",
-      "known_working": true,
-      "license": "NOASSERTION",
-      "locator": "script.vbs lines 176-244,253-300,442-526,528-746,819-916,942-1160; embedded script, not a corpus sidecar (the same-version corpus sidecar differs from the embedded script)",
-      "rights": "NOASSERTION",
-      "sha256": "1d5252b9ef7d1d00646df732661a07b384d6d5cb14798ff86337a00de1c7d144",
-      "uri": "external:vpx-sources/data-east/star-wars-1992/extractions/vpw-1.2.2-ea240a0193d6/script.vbs"
-    },
-    {
-      "attribution": "Data East USA, Inc.",
-      "id": "manual.star-wars-1992",
+      "attribution": "Data East Pinball, Inc., 1992",
+      "excerpts": [
+        {
+          "id": "excerpt.star-wars-1992.lamp-page",
+          "image": "evidence/excerpts/data-east.star-wars.1992/lamp-drawing.webp",
+          "image_derivation": "Star_Wars_DE_OPS.pdf page 29, crop box 0.17,0.27,0.49,0.81, scanned page rendered at its native resolution (embedded image xref 105, 1681px across 8.40in), rendered at 200 dpi, grayscale, 539x1179 WebP quality 80",
+          "image_sha256": "20d9bc9281271ab2979547246ecdb407a361dce1ed120e911943af83c38ff890",
+          "locator": "printed p.27 / PDF 29; cabinet p.30 / PDF 32 and shifter p.42 / PDF 44",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-wars.1992/manual-spatial.md",
+          "reviewed": true,
+          "sha256": "0366955066ea26982c0d3b9301fec3a1681fb1c057b4615a321b5bd2dd178d16",
+          "transcribed_by": "integration curator; visually checked native-resolution renders, OCR retained as navigation aid"
+        },
+        {
+          "id": "excerpt.star-wars-1992.flash-page",
+          "image": "evidence/excerpts/data-east.star-wars.1992/flasher-drawing.webp",
+          "image_derivation": "Star_Wars_DE_OPS.pdf page 30, crop box 0.1,0.39,0.4,0.9, scanned page rendered at its native resolution (embedded image xref 110, 1681px across 8.40in), rendered at 200 dpi, grayscale, 505x1113 WebP quality 80",
+          "image_sha256": "0cc6f63f256bb0c0c2ab9987fc51bf110814ac4fec41e22b908d97a5adfed307",
+          "locator": "printed p.28 / PDF 30; cabinet p.30 / PDF 32 and shifter p.42 / PDF 44",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-wars.1992/manual-spatial.md",
+          "reviewed": true,
+          "sha256": "0366955066ea26982c0d3b9301fec3a1681fb1c057b4615a321b5bd2dd178d16",
+          "transcribed_by": "integration curator; visually checked native-resolution renders, OCR retained as navigation aid"
+        }
+      ],
+      "id": "manual.star-wars-1992.operators",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "PDF 4-6 (printed p.48-50) coil, flash-lamp, special-coil and switch tables; PDF 7 (printed p.51) lamp wiring and GI table",
+      "locator": "Operator's manual, printed pp.27-28,30,42 / PDF 29-30,32,44; downloaded 2026-10-22 from https://www.bmigaming.com/Games/Manuals/pinball-machines/Star_Wars_DE_OPS.pdf",
+      "original_filename": "Star_Wars_DE_OPS.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "dda489f3270e465dc285102a1d311d7538f58de9772542c78ba0fedc3c546ab0",
+      "uri": "external:manuals/by-machine/data-east.star-wars.1992/Star_Wars_DE_OPS.pdf"
+    },
+    {
+      "attribution": "Data East Pinball, Inc., 1992",
+      "excerpts": [
+        {
+          "id": "excerpt.star-wars-1992.schematics",
+          "locator": "printed pp.48,50 / PDF 4,6; complete flash branch annotations and switch parts chart",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.star-wars.1992/manual-spatial.md",
+          "reviewed": true,
+          "sha256": "0366955066ea26982c0d3b9301fec3a1681fb1c057b4615a321b5bd2dd178d16",
+          "transcribed_by": "integration curator; visually checked native-resolution renders, OCR retained as navigation aid"
+        }
+      ],
+      "id": "manual.star-wars-1992.schematics",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "printed pp.48,50 / PDF 4,6; downloaded 2026-10-22 from https://www.maypin.eu/pinsdata/starwars_schematics.pdf",
       "original_filename": "starwars_schematics.pdf",
       "rights": "NOASSERTION",
       "sha256": "e2a5dedc7e9529a449151f8b9a7ec8d94eda3054dc1022d1e987e1124f9714d1",
       "uri": "external:manuals/by-machine/data-east.star-wars.1992/starwars_schematics.pdf"
     },
     {
-      "attribution": "Bigus MOD 3.0: Shoopity and Dark on the JPSalas Star Wars table (embedded header: 'Mod permission granted by JPSalas', 'Modders so far: Shoopity, Dark')",
-      "id": "vpx-table.star-wars-1992.bigus-3-0",
+      "attribution": "VPW crew: Dids666, Sixtoe, DJRobX, Jesperpark; embedded table credits",
+      "id": "vpx-table.star-wars-1992.vpw-1-2-2",
       "kind": "vpx_table",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "complete vpxtool git:v0.37.1 extraction; gamedata.json bounds; gameitems per star_wars_bigus_geometry.json",
-      "original_filename": "Star Wars (Data East 1992)_Bigus(MOD)3.0.vpx",
+      "locator": "vpxtool git:0561bb4 extraction and OBJ export, retained 2026-10-22; gamedata.json and gameitems per tools/star_wars_geometry.json; mesh export under data-east/star-wars-1992/obj/vpw-1.2.2-0561bb4",
+      "original_filename": "Star Wars (Data East 1992) VPW v1.2.2.vpx",
       "rights": "NOASSERTION",
-      "sha256": "5057ffe49defd5821c6c5be6b3f5823f9c7cc246572d87ef249c224bf81d832c",
-      "uri": "external:vpx-sources/data-east/star-wars-1992/tables/bigus-3.0-5057ffe49def/Star Wars (Data East 1992)_Bigus(MOD)3.0.vpx"
+      "sha256": "ea240a0193d6f3d829fdd0c416d18b8dbe733ce5ad4bbefcb4b17b481b9d11ca",
+      "uri": "external:vpx-sources/data-east/star-wars-1992/tables/vpw-1.2.2-ea240a0193d6/Star Wars (Data East 1992) VPW v1.2.2.vpx"
     },
     {
-      "attribution": "JPSalas base script with Shoopity's and Dark's modifications; embedded header lines 1-8",
-      "id": "vpx-script.star-wars-1992.bigus-3-0",
+      "attribution": "Dids666 and DJRobX; embedded header credits",
+      "id": "vpx-script.star-wars-1992.vpw-1-2-2",
       "kind": "vpx_script",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "script.vbs lines 71,79-118,214-245,253-345,354-367,431,444-465,519-612; embedded script",
+      "locator": "Embedded script, lines 176-244,253-300,442-566,819-916,967-1185; acquired 2026-10-22 with vpxtool git:0561bb4",
       "rights": "NOASSERTION",
-      "sha256": "8ca2f5fad6d7337114c61f2023478104d7999d653356fe6b9eb0d1ab35d48809",
-      "uri": "external:vpx-sources/data-east/star-wars-1992/extractions/bigus-3.0-5057ffe49def/script.vbs"
+      "sha256": "1d5252b9ef7d1d00646df732661a07b384d6d5cb14798ff86337a00de1c7d144",
+      "uri": "external:vpx-sources/data-east/star-wars-1992/extractions/vpw-1.2.2-0561bb4/script.vbs"
     }
   ]
 }

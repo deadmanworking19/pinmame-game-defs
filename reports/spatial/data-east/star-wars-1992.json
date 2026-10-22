@@ -2,7 +2,7 @@
   "blockers": [
     {
       "dimension": "spatial_placement",
-      "reason": "Two independent factory-layout tables are retained (VPW v1.2.2 and the Bigus 3.0 mod, JPSalas lineage). Their raw per-bounds normalizations differ by a frame artifact; on the pinned frame fit (mechanism controls, lamps/flashers held out) they agree, and a placement validates only where its own object agrees within 0.025 (fit controls on their leave-one-out distance). Not every placement is validated: the conversion-kit region (34/35, 41/42, coils 9/15) is excluded by construction, GI stays observed without quantity per the GI rule, lamp 58, the kickback (leave-one-out 0.0262) and flash banks 26/27 disagree beyond 0.025 (Bigus-side readings disclosed, flagged for physical verification), lamp 31 lies outside the fit controls' extent (extrapolated), the Bigus table models one emitter per flash bank so a bank validates only the bulbs that emitter matches, banks 29/31 are placed from the Bigus table alone, and switches 1/50/51 and lamp 48 have no playfield placement. The manual has no playfield location drawing, so no callout check exists."
+      "reason": "All positions remain observed. The retained operator's manual supplies missing lamp and 6R positions and cabinet identification; the schematic locates the GI relay. Three flash banks remain unplaced. Full physical inventory and non-playfield emitter quantities are not validated."
     }
   ],
   "bounds": [
@@ -12,24 +12,328 @@
     2162.0
   ],
   "coordinate_convention": "x=0 left, 1 right; y=0 rear, 1 front",
-  "decision": "partial; independent cross-provider review belongs to the coordinator",
-  "dropped_bulbs": {
-    "f125d": "Flash 1R left-wall sprite centred at x=-8.9 VPU (outside the playfield edge).",
-    "f132b": "Flash 8R left-wall sprite centred at x=-8.9 VPU (outside the playfield edge).",
-    "f132c": "Flash 8R left-wall sprite centred at x=-8.9 VPU (outside the playfield edge)."
-  },
-  "evidence_paths": {
-    "manual": "external:manuals/by-machine/data-east.star-wars.1992",
-    "vpx": "external:vpx-sources/data-east/star-wars-1992"
-  },
+  "decision": "partial; retained VPW table and factory drawings, all coordinates observed",
+  "discarded_candidates": "Flash-bank sprites, non-bulb/image-mode lamps and lamp 24's Flasher remain in the inventory but are not placements. The manual replaces those lamp helpers and locates lamp 48. Lamps 49-51 each retain the smaller 30-unit-falloff Light; the 100-unit-falloff companions at halo height 220 are render doubles, not additional bulbs.",
   "format": "pinmame-spatial-blockers",
   "machine_id": "data-east.star-wars.1992",
-  "manual_crosschecks": [
-    "PDF 4-5 (printed p.48-49) coil/flash-lamp wiring: every playfield coil's mechanism agrees with the table object its script binding drives (saucers, popper, VUKs, bumpers, slingshots, kickback, plunger).",
-    "PDF 4-5 flash-lamp rows 1R-8R: banks 1R-4R, 6R and 8R place at their script-driven bulbs; 5R and 7R are modelled by the factory, commented out in the retained VPW table and placed from the Bigus 3.0 table's channel-129/131 bindings (recorded, single-sourced).",
-    "PDF 6 (printed p.50) switch table: all 39 switch addresses reconcile with the script-bound objects; switch 50 (launch button) and 51 (Magna-Save/coin door) have no table object.",
-    "PDF 7 (printed p.51) lamp wiring and GI table: lamp addresses 1-64 with the table's MassAssign map; the GI channel places at the 17 playfield GI bulbs of the table's GI collection."
-  ],
+  "manual_fits": {
+    "flash_page": {
+      "control_loo_max": 0.014588407159383561,
+      "extrapolated": "Points beyond the bumper/flipper control extent remain observed; distant rear toy and 8R symbols are cross-checks only and are not published as coordinates.",
+      "status": "observed; independently read controls, not validation against the coordinate source",
+      "transform": [
+        [
+          0.0020636917416312975,
+          -2.8693658309780326e-05,
+          0.0038244661518800835
+        ],
+        [
+          5.834291811776701e-06,
+          0.0009442743058209821,
+          -0.023664213094175404
+        ]
+      ]
+    },
+    "lamp_page": {
+      "control_loo_max": 0.020208895926695152,
+      "extrapolated": "Points beyond the bumper/flipper control extent remain observed; distant rear toy and 8R symbols are cross-checks only and are not published as coordinates.",
+      "status": "observed; independently read controls, not validation against the coordinate source",
+      "transform": [
+        [
+          0.0019300146246006167,
+          -8.228936147462712e-06,
+          -0.0026928671422120215
+        ],
+        [
+          -4.0617746664603396e-06,
+          0.0008834927006225225,
+          -0.009280642062118065
+        ]
+      ]
+    }
+  },
+  "manual_measurements": {
+    "flash_page": {
+      "controls": {
+        "Bumper1": [
+          122,
+          358
+        ],
+        "Bumper2": [
+          41,
+          443
+        ],
+        "Bumper3": [
+          151,
+          456
+        ],
+        "Bumper4": [
+          85,
+          548
+        ],
+        "LeftFlipper": [
+          152,
+          920
+        ],
+        "RightFlipper": [
+          311,
+          921
+        ]
+      },
+      "crop_box": [
+        0.1,
+        0.39,
+        0.4,
+        0.9
+      ],
+      "flashers": {
+        "25": [
+          [
+            174,
+            506
+          ],
+          [
+            34,
+            660
+          ],
+          [
+            421,
+            674
+          ]
+        ],
+        "26": [
+          [
+            209,
+            74
+          ]
+        ],
+        "27": [
+          [
+            277,
+            477
+          ],
+          [
+            314,
+            485
+          ]
+        ],
+        "28": [
+          [
+            447,
+            56
+          ],
+          [
+            453,
+            282
+          ],
+          [
+            450,
+            381
+          ],
+          [
+            426,
+            469
+          ]
+        ],
+        "29": [
+          [
+            317,
+            205
+          ],
+          [
+            402,
+            207
+          ]
+        ],
+        "30": [
+          [
+            250,
+            409
+          ],
+          [
+            240,
+            445
+          ]
+        ],
+        "31": [
+          [
+            108,
+            162
+          ],
+          [
+            157,
+            162
+          ]
+        ],
+        "32": [
+          [
+            48,
+            49
+          ],
+          [
+            37,
+            390
+          ],
+          [
+            83,
+            396
+          ],
+          [
+            107,
+            479
+          ]
+        ]
+      },
+      "frame_corners": [
+        [
+          11,
+          25
+        ],
+        [
+          480,
+          24
+        ],
+        [
+          486,
+          1083
+        ],
+        [
+          15,
+          1087
+        ]
+      ],
+      "image": "evidence/excerpts/data-east.star-wars.1992/flasher-drawing.webp",
+      "image_sha256": "0cc6f63f256bb0c0c2ab9987fc51bf110814ac4fec41e22b908d97a5adfed307",
+      "image_size": [
+        505,
+        1113
+      ],
+      "pdf_page": 30,
+      "printed_page": 28
+    },
+    "lamp_page": {
+      "controls": {
+        "Bumper1": [
+          129,
+          365
+        ],
+        "Bumper2": [
+          41,
+          457
+        ],
+        "Bumper3": [
+          161,
+          478
+        ],
+        "Bumper4": [
+          91,
+          569
+        ],
+        "LeftFlipper": [
+          156,
+          970
+        ],
+        "RightFlipper": [
+          326,
+          970
+        ]
+      },
+      "crop_box": [
+        0.17,
+        0.27,
+        0.49,
+        0.81
+      ],
+      "frame_corners": [
+        [
+          12,
+          10
+        ],
+        [
+          512,
+          10
+        ],
+        [
+          512,
+          1143
+        ],
+        [
+          12,
+          1143
+        ]
+      ],
+      "image": "evidence/excerpts/data-east.star-wars.1992/lamp-drawing.webp",
+      "image_sha256": "20d9bc9281271ab2979547246ecdb407a361dce1ed120e911943af83c38ff890",
+      "image_size": [
+        539,
+        1179
+      ],
+      "lamps": {
+        "18": [
+          438,
+          284
+        ],
+        "21": [
+          398,
+          456
+        ],
+        "22": [
+          351,
+          340
+        ],
+        "23": [
+          344,
+          394
+        ],
+        "24": [
+          315,
+          501
+        ],
+        "26": [
+          221,
+          960
+        ],
+        "28": [
+          257,
+          960
+        ],
+        "33": [
+          89,
+          731
+        ],
+        "34": [
+          203,
+          592
+        ],
+        "35": [
+          234,
+          573
+        ],
+        "36": [
+          369,
+          695
+        ],
+        "37": [
+          368,
+          745
+        ],
+        "46": [
+          145,
+          578
+        ],
+        "48": [
+          438,
+          584
+        ]
+      },
+      "pdf_page": 29,
+      "printed_page": 27
+    },
+    "method": "Manual pixel readings from native-resolution drawing crops, not coordinates generated from VPW. Affine least-squares reconciliation uses four bumper centres and two flipper pivots. Derived coordinates are rounded to three decimals and remain observed. Lamp readings identify the centre of the numbered location symbol; they do not claim sub-bulb precision.",
+    "source": "Star_Wars_DE_OPS.pdf",
+    "source_sha256": "dda489f3270e465dc285102a1d311d7538f58de9772542c78ba0fedc3c546ab0"
+  },
+  "obj_export": "external:vpx-sources/data-east/star-wars-1992/obj/vpw-1.2.2-0561bb4",
   "object_evidence": {
     "BallRelease": {
       "file": "gameitems/Kicker.BallRelease.json",
@@ -108,7 +412,7 @@
         664.409,
         490.929
       ],
-      "sha256": "193f7ed26644f097da9762e8d62a96f21c76155bceec9fcb60cd6cb2255d7ac7",
+      "sha256": "45b077b3cf94aeb7b07040b9d6072498cfd694266f7baaaeeb7ad2778563384e",
       "type": "Primitive",
       "xy": [
         0.702335,
@@ -122,11 +426,25 @@
         669.86998,
         373.08947
       ],
-      "sha256": "193f7ed26644f097da9762e8d62a96f21c76155bceec9fcb60cd6cb2255d7ac7",
+      "sha256": "45b077b3cf94aeb7b07040b9d6072498cfd694266f7baaaeeb7ad2778563384e",
       "type": "Primitive",
       "xy": [
         0.708108,
         0.172567
+      ]
+    },
+    "Drain": {
+      "file": "gameitems/Kicker.Drain.json",
+      "method": "object_center",
+      "raw_xy": [
+        493.758,
+        2071.8584
+      ],
+      "sha256": "d271f32abd88d67a1f21f446a57be408a48c401e446f3c2b9383e0df8a4fc7f5",
+      "type": "Kicker",
+      "xy": [
+        0.521943,
+        0.958306
       ]
     },
     "F132a": {
@@ -136,7 +454,7 @@
         474.0,
         2.51712
       ],
-      "sha256": "d6d8af6eb041421d9dc9ccd4cd482fc295018d5fc8fe8e6f585dab2318dee6d4",
+      "sha256": "8c6849965b86852a025ae3b90a1d57a948cd338b3ff3b4e6ee2e47f0a29e8df2",
       "type": "Flasher",
       "xy": [
         0.501057,
@@ -150,7 +468,7 @@
         -8.83527,
         1079.87285
       ],
-      "sha256": "dddfd1918a5664ba7bcd0f52df90cfe203d2a97dbfb769c10fb831c6443d7a08",
+      "sha256": "c7ffc35875fdae2fe29dbfdedb35b56294fbb341b8800a7f7df2db15ce0721fe",
       "type": "Flasher",
       "xy": [
         -0.00934,
@@ -159,6 +477,13 @@
     },
     "F132d_l": {
       "file": "gameitems/Light.F132d_l.json",
+      "light": {
+        "bulb_halo_height": 0.2,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         45.22666,
@@ -173,6 +498,13 @@
     },
     "F132d_u": {
       "file": "gameitems/Light.f132d_u.json",
+      "light": {
+        "bulb_halo_height": 80.0,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         44.87588,
@@ -187,6 +519,13 @@
     },
     "F132e_l": {
       "file": "gameitems/Light.f132e_l.json",
+      "light": {
+        "bulb_halo_height": 30.0,
+        "falloff_radius": 160.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         83.57091,
@@ -201,6 +540,13 @@
     },
     "F132e_u": {
       "file": "gameitems/Light.f132e_u.json",
+      "light": {
+        "bulb_halo_height": 80.0,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         107.95771,
@@ -257,6 +603,13 @@
     },
     "Light001": {
       "file": "gameitems/Light.Light001.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         715.2819,
@@ -271,6 +624,13 @@
     },
     "Light002": {
       "file": "gameitems/Light.Light002.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         823.0812,
@@ -285,6 +645,13 @@
     },
     "Light003": {
       "file": "gameitems/Light.Light003.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         899.5885,
@@ -299,6 +666,13 @@
     },
     "Light004": {
       "file": "gameitems/Light.Light004.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         51.73779,
@@ -313,6 +687,13 @@
     },
     "Light005": {
       "file": "gameitems/Light.Light005.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         563.6232,
@@ -327,6 +708,13 @@
     },
     "Light006": {
       "file": "gameitems/Light.Light006.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         145.95598,
@@ -341,6 +729,13 @@
     },
     "Light1": {
       "file": "gameitems/Light.Light1.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         818.32654,
@@ -355,6 +750,13 @@
     },
     "Light10": {
       "file": "gameitems/Light.Light10.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         750.34296,
@@ -369,6 +771,13 @@
     },
     "Light11": {
       "file": "gameitems/Light.Light11.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         17.78281,
@@ -383,6 +792,13 @@
     },
     "Light2": {
       "file": "gameitems/Light.Light2.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         819.94684,
@@ -397,6 +813,13 @@
     },
     "Light3": {
       "file": "gameitems/Light.Light3.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         650.3753,
@@ -411,6 +834,13 @@
     },
     "Light4": {
       "file": "gameitems/Light.Light4.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         679.20337,
@@ -425,6 +855,13 @@
     },
     "Light5": {
       "file": "gameitems/Light.Light5.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         210.9219,
@@ -439,6 +876,13 @@
     },
     "Light6": {
       "file": "gameitems/Light.Light6.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         182.20511,
@@ -453,6 +897,13 @@
     },
     "Light7": {
       "file": "gameitems/Light.Light7.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         21.0166,
@@ -467,6 +918,13 @@
     },
     "Light8": {
       "file": "gameitems/Light.Light8.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         394.93292,
@@ -481,6 +939,13 @@
     },
     "Light9": {
       "file": "gameitems/Light.Light9.json",
+      "light": {
+        "bulb_halo_height": 0.0,
+        "falloff_radius": 20.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         707.99866,
@@ -514,7 +979,7 @@
         246.282,
         272.528
       ],
-      "sha256": "193f7ed26644f097da9762e8d62a96f21c76155bceec9fcb60cd6cb2255d7ac7",
+      "sha256": "45b077b3cf94aeb7b07040b9d6072498cfd694266f7baaaeeb7ad2778563384e",
       "type": "Primitive",
       "xy": [
         0.26034,
@@ -579,6 +1044,13 @@
     },
     "f125a_l": {
       "file": "gameitems/Light.f125a_l.json",
+      "light": {
+        "bulb_halo_height": 0.9,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         827.969,
@@ -593,6 +1065,13 @@
     },
     "f125a_u": {
       "file": "gameitems/Light.f125a_u.json",
+      "light": {
+        "bulb_halo_height": 76.5,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         828.03314,
@@ -607,6 +1086,13 @@
     },
     "f125b_l": {
       "file": "gameitems/Light.f125b_l.json",
+      "light": {
+        "bulb_halo_height": 0.9,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         34.74044,
@@ -621,6 +1107,13 @@
     },
     "f125b_u": {
       "file": "gameitems/Light.f125b_u.json",
+      "light": {
+        "bulb_halo_height": 66.0,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         35.57278,
@@ -635,6 +1128,13 @@
     },
     "f125c_l": {
       "file": "gameitems/Light.f125c_l.json",
+      "light": {
+        "bulb_halo_height": 0.2,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         325.50943,
@@ -649,6 +1149,13 @@
     },
     "f125c_u": {
       "file": "gameitems/Light.f125c_u.json",
+      "light": {
+        "bulb_halo_height": 66.0,
+        "falloff_radius": 100.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         320.89716,
@@ -668,7 +1175,7 @@
         -8.85135,
         1079.87285
       ],
-      "sha256": "95422a8eeb7d6a500dd01699d8e7d1cced710a64532976272655da10512f6f46",
+      "sha256": "a594a22e974079e06931f3de8417ebfbfe1d962e01c712e49d3d9b298e3a0d51",
       "type": "Flasher",
       "xy": [
         -0.009357,
@@ -682,7 +1189,7 @@
         944.8094,
         1078.3925
       ],
-      "sha256": "9b717573dd664c8b8c5674e3d23e208a999b5c5ca752372eef22d638e0a51caa",
+      "sha256": "420ae24a40043cb63a384fce8e21d86547f5e84b72034a75824ff2402f2fac09",
       "type": "Flasher",
       "xy": [
         0.998741,
@@ -696,7 +1203,7 @@
         474.0,
         2.51712
       ],
-      "sha256": "5fb6a2d4d498b11e83198cd2e0d3085a6aa586f409e1607898c8bfa566f096b9",
+      "sha256": "29b2574d198180fe58b3e9241c54019e501d7d370ff8919cd26adb42f9ea09df",
       "type": "Flasher",
       "xy": [
         0.501057,
@@ -705,6 +1212,13 @@
     },
     "f126b": {
       "file": "gameitems/Light.f126b.json",
+      "light": {
+        "bulb_halo_height": 50.0,
+        "falloff_radius": 160.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         385.70795,
@@ -724,7 +1238,7 @@
         474.0,
         2.57481
       ],
-      "sha256": "a0d3e41c5df5e025ff62c63b83e810d2476441c07e2bdabbad109c7fe8060cdb",
+      "sha256": "5cd23450be569d0c935c37ef3d04fe19b963a325b388bc2efab52d813242fd05",
       "type": "Flasher",
       "xy": [
         0.501057,
@@ -738,7 +1252,7 @@
         944.81581,
         1078.39972
       ],
-      "sha256": "5ae1f9cf930b7e5ed31e08fa4ae1ebab3e79b05238e6352a692d66f753deebe2",
+      "sha256": "b017bee637a0eb4c14671821e35cda2421118303b6becb84d26d65ab32991e8c",
       "type": "Flasher",
       "xy": [
         0.998748,
@@ -752,7 +1266,7 @@
         944.79472,
         1078.46112
       ],
-      "sha256": "30f3033394d06bc48b54de3e84a1e4027196fc0fc46e589551cbd13f330267c4",
+      "sha256": "3d5afe2e957a0deabfb3b2cce6ee1e06bb3ce297ccb69bede82b6c202e9e0e14",
       "type": "Flasher",
       "xy": [
         0.998726,
@@ -761,6 +1275,13 @@
     },
     "f128d_l": {
       "file": "gameitems/Light.f128d_l.json",
+      "light": {
+        "bulb_halo_height": 30.0,
+        "falloff_radius": 160.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         887.39166,
@@ -775,6 +1296,13 @@
     },
     "f128d_u": {
       "file": "gameitems/Light.f128d_u.json",
+      "light": {
+        "bulb_halo_height": 80.0,
+        "falloff_radius": 200.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         888.0175,
@@ -794,7 +1322,7 @@
         -8.85135,
         1079.87285
       ],
-      "sha256": "c558f3b07d4e0af5745bf988e7345050786bd9c0dbf8c191e0de3b974e6c0525",
+      "sha256": "94ff2c37806fa86057b2e4e0f18f795e1c0403c4cd09cf1c2df4a791c9d2f2af",
       "type": "Flasher",
       "xy": [
         -0.009357,
@@ -803,6 +1331,13 @@
     },
     "f2r": {
       "file": "gameitems/Light.f2r.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 65.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         385.30032,
@@ -817,6 +1352,13 @@
     },
     "f3r_a": {
       "file": "gameitems/Light.f3r_a.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 70.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         535.3332,
@@ -831,6 +1373,13 @@
     },
     "f3r_b": {
       "file": "gameitems/Light.f3r_b.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 70.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         616.56665,
@@ -845,6 +1394,13 @@
     },
     "f4r_a": {
       "file": "gameitems/Light.f4r_a.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 75.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         882.23895,
@@ -864,7 +1420,7 @@
         901.61672,
         498.49245
       ],
-      "sha256": "d1612c04be2c99ade2988f3d42abb3634d0e80d3d46735f0f06d717d6d86e7c1",
+      "sha256": "326d902774c5beb19a207717f36f9958aec4263e24a4dfecce31d23c529fab5d",
       "type": "Flasher",
       "xy": [
         0.953083,
@@ -873,6 +1429,13 @@
     },
     "f4r_b": {
       "file": "gameitems/Light.f4r_b.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 75.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         860.0969,
@@ -892,7 +1455,7 @@
         879.2813,
         706.44705
       ],
-      "sha256": "6d0875054f0d141570967f198c4577f25c6ffbe0cc37a9d6643a306ff6a753f6",
+      "sha256": "dd594970a3d3d99d0543aeed1aee03899fb57fc96c09e2182194cb6c2a9cb52d",
       "type": "Flasher",
       "xy": [
         0.929473,
@@ -901,6 +1464,13 @@
     },
     "f4r_c": {
       "file": "gameitems/Light.f4r_c.json",
+      "light": {
+        "bulb_halo_height": -0.6,
+        "falloff_radius": 65.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         832.91534,
@@ -920,7 +1490,7 @@
         850.56618,
         864.60055
       ],
-      "sha256": "c36cccfa23d5dfc99083189b274b6711ace03b363b11cba7348eabb83d5c1f22",
+      "sha256": "1fd6b9c2a06f0d95c422883e05c70820e001875db4665cf35ecbcea171838df2",
       "type": "Flasher",
       "xy": [
         0.899119,
@@ -929,6 +1499,13 @@
     },
     "f6r_a": {
       "file": "gameitems/Light.f6r_a.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 140.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         467.59665,
@@ -943,6 +1520,13 @@
     },
     "f6r_b": {
       "file": "gameitems/Light.f6r_b.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 140.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         438.2948,
@@ -957,6 +1541,13 @@
     },
     "f8r_a": {
       "file": "gameitems/Light.f8r_a.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 75.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         147.78717,
@@ -971,6 +1562,13 @@
     },
     "f8r_b": {
       "file": "gameitems/Light.f8r_b.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 75.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         205.00652,
@@ -990,7 +1588,7 @@
         172.42636,
         835.1312
       ],
-      "sha256": "dce46b0f23a6b71d7fd629c524721b5ba5d5689bcf9f442abfb0f0bba2dc13b8",
+      "sha256": "4e917f8d5a856721a56e616f3d4e035919fe61c878ac4e58e69d2a2fd4d780f6",
       "type": "Flasher",
       "xy": [
         0.182269,
@@ -999,6 +1597,13 @@
     },
     "l1": {
       "file": "gameitems/Light.l1.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         303.59134,
@@ -1013,6 +1618,13 @@
     },
     "l10": {
       "file": "gameitems/Light.l10.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         494.7772,
@@ -1027,6 +1639,13 @@
     },
     "l11": {
       "file": "gameitems/Light.l11.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         532.2198,
@@ -1041,6 +1660,13 @@
     },
     "l12": {
       "file": "gameitems/Light.l12.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         574.616,
@@ -1055,6 +1681,13 @@
     },
     "l13": {
       "file": "gameitems/Light.l13.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         617.1768,
@@ -1069,6 +1702,13 @@
     },
     "l14": {
       "file": "gameitems/Light.l14.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         655.03766,
@@ -1083,6 +1723,13 @@
     },
     "l15": {
       "file": "gameitems/Light.l15.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         681.8706,
@@ -1097,6 +1744,13 @@
     },
     "l16": {
       "file": "gameitems/Light.l16.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         697.2344,
@@ -1111,6 +1765,13 @@
     },
     "l18": {
       "file": "gameitems/Light.l18.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         810.2354,
@@ -1125,6 +1786,13 @@
     },
     "l19": {
       "file": "gameitems/Light.l19.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         781.2629,
@@ -1139,6 +1807,13 @@
     },
     "l2": {
       "file": "gameitems/Light.l2.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         390.6169,
@@ -1153,6 +1828,13 @@
     },
     "l20": {
       "file": "gameitems/Light.l20.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         752.8244,
@@ -1167,6 +1849,13 @@
     },
     "l21": {
       "file": "gameitems/Light.l21.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         727.82336,
@@ -1181,6 +1870,13 @@
     },
     "l22": {
       "file": "gameitems/Light.l22.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         642.25793,
@@ -1195,6 +1891,13 @@
     },
     "l23": {
       "file": "gameitems/Light.l23.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         626.4279,
@@ -1214,7 +1917,7 @@
         573.40654,
         936.0435
       ],
-      "sha256": "da12bc5856a9fb32603c51cfa33888d6707fa933c9549124ca9a692a60f39088",
+      "sha256": "4f79f592e33c958fdf476e0b6433f3884349c13b34380ed839d341cc8fd5e009",
       "type": "Flasher",
       "xy": [
         0.606138,
@@ -1223,6 +1926,13 @@
     },
     "l26": {
       "file": "gameitems/Light.l26.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         393.47403,
@@ -1237,6 +1947,13 @@
     },
     "l27": {
       "file": "gameitems/Light.l27.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         428.08624,
@@ -1251,6 +1968,13 @@
     },
     "l28": {
       "file": "gameitems/Light.l28.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         467.20236,
@@ -1265,6 +1989,13 @@
     },
     "l3": {
       "file": "gameitems/Light.l3.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         473.42242,
@@ -1279,6 +2010,13 @@
     },
     "l31": {
       "file": "gameitems/Light.l31.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         903.48663,
@@ -1293,6 +2031,13 @@
     },
     "l32": {
       "file": "gameitems/Light.l32.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         56.70826,
@@ -1307,6 +2052,13 @@
     },
     "l33": {
       "file": "gameitems/Light.l33.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         142.6261,
@@ -1321,6 +2073,13 @@
     },
     "l34": {
       "file": "gameitems/Light.l34.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         362.5296,
@@ -1335,6 +2094,13 @@
     },
     "l35": {
       "file": "gameitems/Light.l35.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         412.85715,
@@ -1349,6 +2115,13 @@
     },
     "l36": {
       "file": "gameitems/Light.l36.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         684.5834,
@@ -1363,6 +2136,13 @@
     },
     "l37": {
       "file": "gameitems/Light.l37.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": false,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         692.6803,
@@ -1377,6 +2157,13 @@
     },
     "l38": {
       "file": "gameitems/Light.l38.json",
+      "light": {
+        "bulb_halo_height": 174.0,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         388.1536,
@@ -1391,6 +2178,13 @@
     },
     "l39": {
       "file": "gameitems/Light.l39.json",
+      "light": {
+        "bulb_halo_height": 174.0,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         366.94333,
@@ -1405,6 +2199,13 @@
     },
     "l4": {
       "file": "gameitems/Light.l4.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         559.4399,
@@ -1419,6 +2220,13 @@
     },
     "l40": {
       "file": "gameitems/Light.l40.json",
+      "light": {
+        "bulb_halo_height": 174.0,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         346.22656,
@@ -1433,6 +2241,13 @@
     },
     "l41": {
       "file": "gameitems/Light.l41.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         247.94675,
@@ -1447,6 +2262,13 @@
     },
     "l42": {
       "file": "gameitems/Light.l42.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         329.0537,
@@ -1461,6 +2283,13 @@
     },
     "l43": {
       "file": "gameitems/Light.l43.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         655.64026,
@@ -1475,6 +2304,13 @@
     },
     "l44": {
       "file": "gameitems/Light.l44.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         700.24744,
@@ -1489,6 +2325,13 @@
     },
     "l45": {
       "file": "gameitems/Light.l45.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 65.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         784.5093,
@@ -1503,6 +2346,13 @@
     },
     "l46": {
       "file": "gameitems/Light.l46.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 80.0,
+        "is_bulb_light": false,
+        "is_image_mode": true,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         254.20158,
@@ -1517,6 +2367,13 @@
     },
     "l47": {
       "file": "gameitems/Light.l47.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 35.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         179.99438,
@@ -1531,6 +2388,13 @@
     },
     "l49": {
       "file": "gameitems/Light.l49.json",
+      "light": {
+        "bulb_halo_height": 15.0,
+        "falloff_radius": 30.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         443.91812,
@@ -1545,6 +2409,13 @@
     },
     "l49a": {
       "file": "gameitems/Light.l49a.json",
+      "light": {
+        "bulb_halo_height": 220.0,
+        "falloff_radius": 100.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         445.0455,
@@ -1559,6 +2430,13 @@
     },
     "l5": {
       "file": "gameitems/Light.l5.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         302.38617,
@@ -1573,6 +2451,13 @@
     },
     "l50": {
       "file": "gameitems/Light.l50.json",
+      "light": {
+        "bulb_halo_height": 15.0,
+        "falloff_radius": 30.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         490.51874,
@@ -1587,6 +2472,13 @@
     },
     "l50a": {
       "file": "gameitems/Light.l50a.json",
+      "light": {
+        "bulb_halo_height": 220.0,
+        "falloff_radius": 100.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         490.37875,
@@ -1601,6 +2493,13 @@
     },
     "l51": {
       "file": "gameitems/Light.l51.json",
+      "light": {
+        "bulb_halo_height": 15.0,
+        "falloff_radius": 30.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         533.9269,
@@ -1615,6 +2514,13 @@
     },
     "l51a": {
       "file": "gameitems/Light.l51a.json",
+      "light": {
+        "bulb_halo_height": 220.0,
+        "falloff_radius": 100.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         533.93427,
@@ -1629,6 +2535,13 @@
     },
     "l52": {
       "file": "gameitems/Light.l52.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         434.47897,
@@ -1643,6 +2556,13 @@
     },
     "l53": {
       "file": "gameitems/Light.l53.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         809.41077,
@@ -1657,6 +2577,13 @@
     },
     "l54": {
       "file": "gameitems/Light.l54.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         735.5453,
@@ -1671,6 +2598,13 @@
     },
     "l55": {
       "file": "gameitems/Light.l55.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         129.39061,
@@ -1685,6 +2619,13 @@
     },
     "l56": {
       "file": "gameitems/Light.l56.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         54.50768,
@@ -1699,6 +2640,13 @@
     },
     "l57": {
       "file": "gameitems/Light.l57.json",
+      "light": {
+        "bulb_halo_height": 220.0,
+        "falloff_radius": 100.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         246.5269,
@@ -1713,6 +2661,13 @@
     },
     "l58": {
       "file": "gameitems/Light.l58.json",
+      "light": {
+        "bulb_halo_height": 300.0,
+        "falloff_radius": 50.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         246.52692,
@@ -1727,6 +2682,13 @@
     },
     "l59": {
       "file": "gameitems/Light.l59.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         315.60422,
@@ -1741,6 +2703,13 @@
     },
     "l6": {
       "file": "gameitems/Light.l6.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         390.35306,
@@ -1755,6 +2724,13 @@
     },
     "l60": {
       "file": "gameitems/Light.l60.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         290.81796,
@@ -1769,6 +2745,13 @@
     },
     "l61": {
       "file": "gameitems/Light.l61.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 38.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         225.70827,
@@ -1783,6 +2766,13 @@
     },
     "l62": {
       "file": "gameitems/Light.l62.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 38.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         80.56319,
@@ -1797,6 +2787,13 @@
     },
     "l63": {
       "file": "gameitems/Light.l63.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 38.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         290.9929,
@@ -1811,6 +2808,13 @@
     },
     "l64": {
       "file": "gameitems/Light.l64.json",
+      "light": {
+        "bulb_halo_height": 70.0,
+        "falloff_radius": 38.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         148.32684,
@@ -1825,6 +2829,13 @@
     },
     "l7": {
       "file": "gameitems/Light.l7.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         473.51596,
@@ -1839,6 +2850,13 @@
     },
     "l8": {
       "file": "gameitems/Light.l8.json",
+      "light": {
+        "bulb_halo_height": -0.9,
+        "falloff_radius": 60.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         560.4934,
@@ -1853,6 +2871,13 @@
     },
     "l9": {
       "file": "gameitems/Light.l9.json",
+      "light": {
+        "bulb_halo_height": -0.5,
+        "falloff_radius": 25.0,
+        "is_bulb_light": true,
+        "is_image_mode": false,
+        "show_bulb_mesh": false
+      },
       "method": "object_center",
       "raw_xy": [
         465.5805,
@@ -1914,7 +2939,7 @@
         156.40323,
         121.06113
       ],
-      "sha256": "19758dd152e4e1453f182f0f007d921bd1f72b752d0ac91142ce99439e667405",
+      "sha256": "3bc756119112341fa96af8f9213ea75e5b42b79583d70b182847e1f9a4e249b9",
       "type": "Gate",
       "xy": [
         0.165331,
@@ -1928,7 +2953,7 @@
         483.01645,
         672.32654
       ],
-      "sha256": "ec0e41127c61f57e304f4698b2d4bd49b13aee7aed85f3c853a89ccb21526b2b",
+      "sha256": "15bf6af1a31134cf24ef87cb5db61d8edd2e76803870c5cdd4d0b37445da291d",
       "type": "Gate",
       "xy": [
         0.510588,
@@ -2174,16 +3199,13 @@
       ]
     }
   },
-  "partial_flash_banks": [
-    "device.flasher-5r-death-star",
-    "device.flasher-7r-r2d2"
-  ],
   "projections": {
-    "coil_effect": "A coil's effect projects onto the mechanism object its script binding acts on (saucer kicker, plunger, bumper, slingshot wall, flipper), never a winding centre.",
-    "flash_bank": "A flash bank is placed at every Light/Flasher object its lamp channel drives (Lampz.MassAssign 125-132); banks 5R and 7R, commented out in the retained script, are placed on the single bulb the Bigus 3.0 table binds to channels 129 and 131. A bank's multi-table check validates only the retained bulbs the Bigus single emitter matches.",
-    "lamp_bulb": "A lamp is placed at the Light/Flasher object Lampz.MassAssign binds, never the insert plastics its DisableLighting callbacks light.",
-    "mechanism_mesh": "The Death Star toy, its door bar and the R2D2 head are baked-mesh primitives; they are located by the centre of their world-space mesh bounds in the vpxtool obj export, never by a stored primitive position.",
-    "sensor_object": "A switch is placed on the object its script handler binds (triggers, gates, kickers, hit targets, bumpers); slingshots and drop targets on their wall's area centroid; the four trough contacts on the trough Kicker the ball stack binds (InitExit BallRelease)."
+    "coil_effect": "Mechanism effect anchor from the script binding, not the winding centre.",
+    "door_sensors": "Switches 41/42 share the DSDoor mesh anchor; projected mechanism location, not measured sensor hardware.",
+    "flashers": "1R uses the three upper Lights, dropping lower co-located glows; 2R uses the smallest local falloff Light f2r; 3R uses f3r_a/b; 4R uses f128d_l and f4r_a/b/c. The manual supports these playfield regions, not full bank quantities. 6R uses the two drawing symbols. Back-panel and insert-panel bulbs are not playfield placements. Printed 4R and 6R totals disagree with their location annotations.",
+    "gi": "The 17 Lights in the GI collection are observed only. The table's grouping does not establish factory wiring or quantity.",
+    "outhole": "Switch 10 and solenoid 1 use Drain: the manual names the separate outhole, and the script's SolIn effect and trough-entry event use Drain. The virtual trough's four-switch array is not four physical trough contacts.",
+    "trough": "Switches 11-13 share BallRelease from the scripted trough; projected assembly anchor, not three measured contacts. Solenoid 2 uses the ball-release effect anchor."
   },
   "promotion": {
     "allowed": false,
@@ -2201,486 +3223,24 @@
       "provenance",
       "recreation_notes",
       "spatial_placement",
+      "unresolved_conflicts",
       "variant_differences"
     ]
   },
   "selected_extraction": {
-    "algorithm": "Every relative POSIX path sorted case-sensitively with byte size and full-file SHA256; canonical compact JSON (sorted keys, separators (',',':'), ensure_ascii False) of {files:[{path,sha256,size}], format, game, version:1} plus one LF (tools/build_external_evidence_manifest.py).",
-    "bytes": 399048009,
+    "acquired_at": "2026-10-22",
+    "algorithm": "tools/build_external_evidence_manifest.py, game=stwr_106; case-sensitive POSIX paths, full-file hashes and sizes; canonical JSON plus LF",
+    "bytes": 399048127,
     "files": 1343,
-    "manifest_sha256": "5407b0aefce8e931e87a154e92ef4186497ecd011bc7ea4e41c085836e616059",
-    "root": "external:vpx-sources/data-east/star-wars-1992/extractions/vpw-1.2.2-ea240a0193d6"
+    "manifest_sha256": "8552846c15834c567d4e0b479b06bd11309701a9443c2f5bc968ec0451f40f8b",
+    "root": "external:vpx-sources/data-east/star-wars-1992/extractions/vpw-1.2.2-0561bb4",
+    "tool": "vpxtool git:0561bb4"
   },
-  "supplement": {
-    "ancestry": "The Bigus 3.0 table is the JPSalas lineage, not a derivative of the retained VPW v1.2.2 table: its embedded header (script.vbs lines 1-8) states 'JPSalas Star Wars ... Mod permission granted by JPSalas' and 'Modders so far: Shoopity, Dark'; its embedded script sha256, its playfield image 'pf' (against the VPW 'Blank PF Mat' render) and its bounds 0,0,1024,2102 all differ. It is retained as a second factory-layout table, so per the multi-table rule a placement is validated only when every retained table agrees within 0.025 normalized; the raw per-bounds distances below do not agree broadly (independent playfield renders, and the Bigus table models the Bigus conversion kit), while on the pinned frame fit the placements whose own object agrees within 0.025 validate (fit controls judged on their leave-one-out distance); the rest stay observed. Every Bigus reading is recorded as a per-address supplement measurement, exactly as Lord of the Rings records its independent tables.",
-    "compare_rule": "raw: Euclidean distance between the positions the two pinned geometries record for the same public address, each normalized to its own table's bounds; fitted: the same after the pinned frame fit (Bigus-normalized onto VPW-normalized). Flash banks compare the Bigus emitter to the nearest retained placement. Distances rounded to 4 decimals. A placement validates when its own object is within 0.025 of the Bigus object bound to the same address after the fit (a frame control on its leave-one-out distance), outside the conversion-kit region, both objects being their own script's binding; a device validates when all its placements do.",
-    "control_leave_one_out": {
-      "Bumper1": 0.0047,
-      "Bumper3": 0.0037,
-      "Bumper4": 0.0038,
-      "KickBack": 0.0262,
-      "LeftFlipper": 0.0084,
-      "Plunger": 0.022,
-      "RightFlipper": 0.007,
-      "sw14": 0.0045,
-      "sw17": 0.0132,
-      "sw20": 0.019,
-      "sw21": 0.0062,
-      "sw22": 0.0058,
-      "sw23": 0.0023,
-      "sw25": 0.0057,
-      "sw26": 0.0049,
-      "sw27": 0.0052,
-      "sw28": 0.0078,
-      "sw29": 0.0073,
-      "sw30": 0.0061,
-      "sw31": 0.0048,
-      "sw32": 0.0046,
-      "sw33": 0.0015,
-      "sw36": 0.0195,
-      "sw37": 0.0071,
-      "sw39": 0.0105
-    },
-    "disclosures": [
-      "Frame fit: raw per-bounds normalization is not comparable across tables (bounds include shooter lane and furniture). The pinned frame fit uses 25 script-bound mechanism controls (scale 0.9886 x 0.9496); on it, 43 of 53 compared switch/coil addresses agree within 0.025 (median 0.0054), and of the lamps and flashers held out of the fit 53 of 58 agree (median 0.0069): the raw spread is a frame artifact. A control's in-sample residual is partly the fit's own work, so each control is judged on the distance a fit made without it gives (supplement.control_leave_one_out): the kickback's is 0.0262, so it stays observed. A Bigus object outside the controls' extent is extrapolated and stays observed (supplement.extrapolated). The fit maps Bigus-normalized onto VPW-normalized coordinates; placement coordinates stay in the retained VPW space (a corroborating fit does not move the table's coordinate).",
-      "Conversion-kit region: switches 34/35, the door bar 41/42 and toy coils 9/15 are never validated on the Bigus table — it physically models the Bigus kit there.",
-      "Lamp 58: the Bigus script binds address 58 to its l58 object, which sits on the left rail, and drives flash channel 131 on that same object: the raw and fitted distances (0.53+) keep this device observed and flag it for physical verification.",
-      "Flash banks: the Bigus table models one emitter per bank while the retained table places every bulb. The single emitter corroborates only the retained bulbs it lies within 0.025 of (fitted); every other bulb of the bank stays observed and the bank's device record stays observed. Banks 26/27 match no bulb (nearest 0.11/0.04). No quantity is claimed.",
-      "GI: the Bigus GI collection holds 16 bulb Lights against the VPW table's 17; per the GI rule (a table's GI grouping is not the machine's wiring) GI stays observed without quantity and the counts are recorded, not paired."
-    ],
-    "distances": {
-      "fitted": {
-        "coil.1": 0.0887,
-        "coil.15": 0.0059,
-        "coil.16": 0.0205,
-        "coil.17": 0.0043,
-        "coil.18": 0.0018,
-        "coil.19": 0.0034,
-        "coil.2": 0.0887,
-        "coil.20": 0.0035,
-        "coil.21": 0.0044,
-        "coil.22": 0.0054,
-        "coil.3": 0.0173,
-        "coil.4": 0.0066,
-        "coil.46": 0.0062,
-        "coil.48": 0.0072,
-        "coil.5": 0.0166,
-        "coil.6": 0.0045,
-        "coil.7": 0.0014,
-        "coil.9": 0.0141,
-        "flasher.25": 0.0215,
-        "flasher.26": 0.1105,
-        "flasher.27": 0.0423,
-        "flasher.28": 0.0213,
-        "flasher.30": 0.024,
-        "flasher.32": 0.0114,
-        "lamp.1": 0.0059,
-        "lamp.10": 0.0061,
-        "lamp.11": 0.0067,
-        "lamp.12": 0.0068,
-        "lamp.13": 0.0068,
-        "lamp.14": 0.0057,
-        "lamp.15": 0.0059,
-        "lamp.16": 0.0048,
-        "lamp.18": 0.0074,
-        "lamp.19": 0.0115,
-        "lamp.2": 0.0061,
-        "lamp.20": 0.0036,
-        "lamp.21": 0.0069,
-        "lamp.22": 0.0091,
-        "lamp.23": 0.0013,
-        "lamp.24": 0.0048,
-        "lamp.26": 0.0069,
-        "lamp.27": 0.011,
-        "lamp.28": 0.0066,
-        "lamp.3": 0.008,
-        "lamp.31": 0.0124,
-        "lamp.32": 0.0059,
-        "lamp.33": 0.0053,
-        "lamp.34": 0.0053,
-        "lamp.35": 0.014,
-        "lamp.36": 0.0208,
-        "lamp.37": 0.0167,
-        "lamp.4": 0.0138,
-        "lamp.41": 0.0076,
-        "lamp.42": 0.0073,
-        "lamp.43": 0.0076,
-        "lamp.44": 0.0066,
-        "lamp.45": 0.0466,
-        "lamp.46": 0.0074,
-        "lamp.47": 0.0262,
-        "lamp.5": 0.0047,
-        "lamp.52": 0.0082,
-        "lamp.53": 0.0084,
-        "lamp.54": 0.0093,
-        "lamp.55": 0.0073,
-        "lamp.56": 0.0052,
-        "lamp.58": 0.5312,
-        "lamp.59": 0.0025,
-        "lamp.6": 0.007,
-        "lamp.60": 0.004,
-        "lamp.61": 0.0062,
-        "lamp.62": 0.0031,
-        "lamp.63": 0.0039,
-        "lamp.64": 0.0033,
-        "lamp.7": 0.0082,
-        "lamp.8": 0.0069,
-        "lamp.9": 0.0058,
-        "switch.10": 0.0887,
-        "switch.11": 0.0887,
-        "switch.12": 0.0887,
-        "switch.13": 0.0887,
-        "switch.14": 0.0037,
-        "switch.17": 0.0096,
-        "switch.19": 0.0456,
-        "switch.20": 0.0177,
-        "switch.21": 0.0054,
-        "switch.22": 0.0052,
-        "switch.23": 0.002,
-        "switch.24": 0.0025,
-        "switch.25": 0.005,
-        "switch.26": 0.0046,
-        "switch.27": 0.005,
-        "switch.28": 0.0071,
-        "switch.29": 0.0066,
-        "switch.30": 0.0057,
-        "switch.31": 0.0045,
-        "switch.32": 0.0043,
-        "switch.33": 0.0014,
-        "switch.34": 0.3057,
-        "switch.35": 0.1305,
-        "switch.36": 0.0166,
-        "switch.37": 0.0066,
-        "switch.38": 0.096,
-        "switch.39": 0.0079,
-        "switch.41": 0.004,
-        "switch.42": 0.004,
-        "switch.43": 0.0044,
-        "switch.44": 0.0054,
-        "switch.45": 0.0043,
-        "switch.46": 0.0018,
-        "switch.47": 0.0034,
-        "switch.48": 0.0035
-      },
-      "raw": {
-        "coil.1": 0.0874,
-        "coil.15": 0.0156,
-        "coil.16": 0.0389,
-        "coil.17": 0.0292,
-        "coil.18": 0.0368,
-        "coil.19": 0.0383,
-        "coil.2": 0.0874,
-        "coil.20": 0.0433,
-        "coil.21": 0.056,
-        "coil.22": 0.0573,
-        "coil.3": 0.0448,
-        "coil.4": 0.0472,
-        "coil.46": 0.0643,
-        "coil.48": 0.0643,
-        "coil.5": 0.0119,
-        "coil.6": 0.0334,
-        "coil.7": 0.0397,
-        "coil.9": 0.0147,
-        "flasher.25": 0.0537,
-        "flasher.26": 0.1137,
-        "flasher.27": 0.055,
-        "flasher.28": 0.0199,
-        "flasher.30": 0.0177,
-        "flasher.32": 0.0205,
-        "lamp.1": 0.058,
-        "lamp.10": 0.0441,
-        "lamp.11": 0.0453,
-        "lamp.12": 0.0454,
-        "lamp.13": 0.0455,
-        "lamp.14": 0.0431,
-        "lamp.15": 0.0428,
-        "lamp.16": 0.0409,
-        "lamp.18": 0.0208,
-        "lamp.19": 0.0228,
-        "lamp.2": 0.0581,
-        "lamp.20": 0.0344,
-        "lamp.21": 0.0404,
-        "lamp.22": 0.0371,
-        "lamp.23": 0.0316,
-        "lamp.24": 0.0403,
-        "lamp.26": 0.0647,
-        "lamp.27": 0.0702,
-        "lamp.28": 0.0645,
-        "lamp.3": 0.0591,
-        "lamp.31": 0.0516,
-        "lamp.32": 0.0569,
-        "lamp.33": 0.0519,
-        "lamp.34": 0.0459,
-        "lamp.35": 0.0493,
-        "lamp.36": 0.0621,
-        "lamp.37": 0.0601,
-        "lamp.4": 0.0597,
-        "lamp.41": 0.0533,
-        "lamp.42": 0.0518,
-        "lamp.43": 0.0503,
-        "lamp.44": 0.0471,
-        "lamp.45": 0.0386,
-        "lamp.46": 0.0337,
-        "lamp.47": 0.0642,
-        "lamp.5": 0.0599,
-        "lamp.52": 0.0499,
-        "lamp.53": 0.0589,
-        "lamp.54": 0.0553,
-        "lamp.55": 0.0568,
-        "lamp.56": 0.0581,
-        "lamp.58": 0.5755,
-        "lamp.59": 0.0259,
-        "lamp.6": 0.0611,
-        "lamp.60": 0.0226,
-        "lamp.61": 0.0303,
-        "lamp.62": 0.037,
-        "lamp.63": 0.0391,
-        "lamp.64": 0.0432,
-        "lamp.7": 0.0612,
-        "lamp.8": 0.0616,
-        "lamp.9": 0.0435,
-        "switch.10": 0.0874,
-        "switch.11": 0.0874,
-        "switch.12": 0.0874,
-        "switch.13": 0.0874,
-        "switch.14": 0.0567,
-        "switch.17": 0.0094,
-        "switch.19": 0.0376,
-        "switch.20": 0.047,
-        "switch.21": 0.0577,
-        "switch.22": 0.0547,
-        "switch.23": 0.0535,
-        "switch.24": 0.0584,
-        "switch.25": 0.0512,
-        "switch.26": 0.043,
-        "switch.27": 0.0422,
-        "switch.28": 0.0499,
-        "switch.29": 0.0506,
-        "switch.30": 0.0321,
-        "switch.31": 0.0334,
-        "switch.32": 0.0348,
-        "switch.33": 0.0397,
-        "switch.34": 0.3023,
-        "switch.35": 0.1241,
-        "switch.36": 0.0119,
-        "switch.37": 0.0472,
-        "switch.38": 0.0833,
-        "switch.39": 0.0092,
-        "switch.41": 0.0205,
-        "switch.42": 0.0205,
-        "switch.43": 0.056,
-        "switch.44": 0.0573,
-        "switch.45": 0.0292,
-        "switch.46": 0.0368,
-        "switch.47": 0.0383,
-        "switch.48": 0.0433
-      }
-    },
-    "extrapolated": [
-      "flasher.31",
-      "lamp.31",
-      "lamp.58"
-    ],
-    "frame": {
-      "affine": [
-        0.988603,
-        -0.002896,
-        0.007249,
-        0.001677,
-        0.949594,
-        -0.013154
-      ],
-      "control_extent": [
-        0.049133,
-        0.949219,
-        0.025987,
-        0.986085
-      ],
-      "controls": {
-        "Bumper1": {
-          "binding": "switch.45",
-          "residual": 0.0043
-        },
-        "Bumper3": {
-          "binding": "switch.47",
-          "residual": 0.0034
-        },
-        "Bumper4": {
-          "binding": "switch.48",
-          "residual": 0.0035
-        },
-        "KickBack": {
-          "binding": "coil.16",
-          "residual": 0.0205
-        },
-        "LeftFlipper": {
-          "binding": "coil.48",
-          "residual": 0.0072
-        },
-        "Plunger": {
-          "binding": "coil.3",
-          "residual": 0.0173
-        },
-        "RightFlipper": {
-          "binding": "coil.46",
-          "residual": 0.0062
-        },
-        "sw14": {
-          "binding": "switch.14",
-          "residual": 0.0037
-        },
-        "sw17": {
-          "binding": "switch.17",
-          "residual": 0.0096
-        },
-        "sw20": {
-          "binding": "switch.20",
-          "residual": 0.0177
-        },
-        "sw21": {
-          "binding": "switch.21",
-          "residual": 0.0054
-        },
-        "sw22": {
-          "binding": "switch.22",
-          "residual": 0.0052
-        },
-        "sw23": {
-          "binding": "switch.23",
-          "residual": 0.002
-        },
-        "sw25": {
-          "binding": "switch.25",
-          "residual": 0.005
-        },
-        "sw26": {
-          "binding": "switch.26",
-          "residual": 0.0046
-        },
-        "sw27": {
-          "binding": "switch.27",
-          "residual": 0.005
-        },
-        "sw28": {
-          "binding": "switch.28",
-          "residual": 0.0071
-        },
-        "sw29": {
-          "binding": "switch.29",
-          "residual": 0.0066
-        },
-        "sw30": {
-          "binding": "switch.30",
-          "residual": 0.0057
-        },
-        "sw31": {
-          "binding": "switch.31",
-          "residual": 0.0045
-        },
-        "sw32": {
-          "binding": "switch.32",
-          "residual": 0.0043
-        },
-        "sw33": {
-          "binding": "switch.33",
-          "residual": 0.0014
-        },
-        "sw36": {
-          "binding": "switch.36",
-          "residual": 0.0166
-        },
-        "sw37": {
-          "binding": "switch.37",
-          "residual": 0.0066
-        },
-        "sw39": {
-          "binding": "switch.39",
-          "residual": 0.0079
-        }
-      },
-      "dropped": [
-        {
-          "binding": "switch.19",
-          "object": "sw19",
-          "residual": 0.0431
-        },
-        {
-          "binding": "switch.38",
-          "object": "sw38",
-          "residual": 0.0854
-        }
-      ],
-      "method": "least-squares affine (Bigus-normalized -> VPW-normalized) on script-bound mechanism objects, iterative rejection above 0.04; lamps and flashers are held out of the fit and validate it",
-      "residual_max": 0.0205,
-      "residual_mean": 0.0072
-    },
-    "frame_summary": {
-      "controls": 25,
-      "held_out_devices": 58,
-      "held_out_median_fitted": 0.0069,
-      "held_out_within_0_025": 53,
-      "mechanism_devices": 53,
-      "mechanism_median_fitted": 0.0054,
-      "mechanism_within_0_025": 43,
-      "scale_x": 0.9886,
-      "scale_y": 0.9496
-    },
-    "gi_bulb_counts": {
-      "bigus-3-0": 16,
-      "vpw-1-2-2": 17
-    },
-    "kit_excluded": [
-      "coil.15",
-      "coil.9",
-      "switch.34",
-      "switch.35",
-      "switch.41",
-      "switch.42"
-    ],
-    "script_sha256": "8ca2f5fad6d7337114c61f2023478104d7999d653356fe6b9eb0d1ab35d48809",
-    "selected_extraction": {
-      "algorithm": "Same canonical manifest algorithm as tools/build_external_evidence_manifest.py records for the primary extraction.",
-      "bytes": 95473255,
-      "files": 743,
-      "manifest_sha256": "459915810dd150943ff483b9b3343518d7fa80c9e06cc06ca2e2c401beb4b65b",
-      "root": "external:vpx-sources/data-east/star-wars-1992/extractions/bigus-3.0-5057ffe49def"
-    },
-    "summary": {
-      "addresses_with_a_validated_placement": 90,
-      "agree_within_0_025_fitted": 96,
-      "compared": 111,
-      "max_fitted_distance": 0.5312,
-      "validated_devices": 86,
-      "validated_placements": 92
-    },
-    "table_sha256": "5057ffe49defd5821c6c5be6b3f5823f9c7cc246572d87ef249c224bf81d832c",
-    "transform": "x=raw_x/1024; y=raw_y/2102; round to 6 decimals. Walls use the signed area centroid of their drag points; kickers, triggers, gates, bumpers, flippers, plungers and Lights use object centres; hit targets and the PrBar, PrDS and PrR2D2Head primitives use object positions.",
-    "unbound": {
-      "coil_12": "BarUpdate sub (434-436) is defined; no SolCallback wires it",
-      "lamp_57": "FadePR2 57 (599, sub 648-660) drives the PrR2D2Head plastic's image: a lighting target, not a bulb",
-      "lamps_38_40": "UpdateLamps fades 38/39/40 via FadeDisableLighting l38/l39/l40 (579-581): insert-plastic lighting targets, no bulb objects",
-      "lamps_48_51": "UpdateLamps names l48/l49/l50/l51 (590-593); the table contains none of them",
-      "switch_40": "handler Sub sw40_Hit (345) names an object the table does not contain"
-    }
-  },
-  "transform": "x=raw_x/946; y=raw_y/2162; round to 6 decimals. Slingshot walls, drop-target walls and flasher sprites use the signed area centroid of their drag points; the baked-mesh Death Star, door bar and R2 head use world-space mesh bounds from the vpxtool obj export.",
-  "unplaced_records": [
-    "switch.tilt",
-    "switch.launch-button",
-    "switch.right-magna-save-coin-door",
-    "device.gi-relay",
-    "lamp.scoop-right-jabba"
-  ],
-  "unresolved": {
-    "notes": [
-      "input 1: Plumb-bob tilt on the cabinet; the script binds it via vpmNudge.TiltSwitch = 1 (script.vbs line 196) and no playfield object carries it. The Bigus 3.0 table binds tilt the same way (vpmNudge.TiltSwitch, its script.vbs 71).",
-      "input 50: Ball-play launch button. No handler binds switch 50 anywhere in the retained script, and the table models no launch-button object, so no playfield coordinate can be asserted. The Bigus 3.0 table emulates the launch button through its shift lever (embedded header line 7) and has no switch 50 handler.",
-      "input 51: Magna-Save button at the coin door (manual switch table, printed p.50); cabinet hardware with no playfield object in the table. The Bigus 3.0 table has no Magna-Save handler.",
-      "output 48: The table drives this lamp only through the JabbasInsert plastic callback (script.vbs line 1058); no Light object is assigned to address 48, so no bulb coordinate exists. The Bigus 3.0 table names l48 (its script.vbs 590) and contains no such object either.",
-      "output 11: The GI control relay is driven in software: SolCallback(11) calls SetGI (script.vbs lines 489, 556-566) and the GI bulbs are addressed through the lamp channel (Lampz.obj(111)), so the relay coil itself has no playfield placement. The Bigus 3.0 table drives its GI relay in software too (SolCallback(11) -> SetLamp 65, its script.vbs 364, 431).",
-      "output 29: Flash bank 5R (Death Star): placed on the single flash bulb the Bigus 3.0 table binds to channel 129 (`FadeL 70, l29`, its script.vbs 531); the retained VPW table comments its bulb assignment out (script.vbs line 1148) and the manual names this bank.",
-      "output 31: Flash bank 7R (R2D2): placed on the single flash bulb the Bigus 3.0 table binds to channel 131 (`NFadeL 72, l58`, its script.vbs 535). The Bigus object sits on the left rail while the manual names the bank 7R: single-sourced and the side is flagged for physical verification; the retained VPW table comments its bulb assignment out (script.vbs line 1155)."
-    ]
+  "transform": "x=raw_x/946; y=raw_y/2162; six decimals. Walls use polygon-area centroids. Baked meshes use world-space OBJ bounds (x, y); coordinates were unchanged by re-extraction with git:0561bb4.",
+  "unplaced_records": {
+    "device.flasher-5r-death-star": "The VPW bulb assignment is commented out (channels 129/131). The paired toy symbols are far outside the drawing controls and only support a coarse cross-check.",
+    "device.flasher-7r-r2d2": "The VPW bulb assignment is commented out (channels 129/131). The paired toy symbols are far outside the drawing controls and only support a coarse cross-check.",
+    "device.flasher-8r-back-left-wall": "The operator's drawing and VPW show four playfield candidates, but the schematic specifies three playfield bulbs and one insert-panel bulb. Physical count/location reconciliation remains unresolved, including the rear symbol outside the drawing controls."
   },
   "version": 1
 }

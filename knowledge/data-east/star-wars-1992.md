@@ -34,6 +34,53 @@ Source timing values may describe a particular VPX implementation rather than ph
 
 Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
 
+## Retained spatial evidence (2026-10-22)
+
+The spatial retrofit uses the retained **VPW v1.2.2** table, not the unavailable
+Bigus 3.0 extraction. The table SHA-256 is
+`ea240a0193d6f3d829fdd0c416d18b8dbe733ce5ad4bbefcb4b17b481b9d11ca`;
+its embedded script is `1d5252b9ef7d1d00646df732661a07b384d6d5cb14798ff86337a00de1c7d144`.
+The complete git:0561bb4 extraction, OBJ export and per-object hashes are pinned
+in `tools/star_wars_geometry.json` and `reports/spatial/data-east/star-wars-1992.json`.
+The embedded script selects stwr_107; stwr_106 is the catalog-root label on the
+extraction manifest, not a claim that this table executes that ROM revision.
+
+The full operator's manual has lamp and flasher location drawings (printed
+pp.27-28 / PDF 29-30). The earlier schematics-only scan was not evidence that
+such drawings were absent. Native-resolution crops and complete source-table
+transcriptions are retained in `evidence/excerpts/data-east.star-wars.1992/`.
+The measurement seed retains independently read pixels, frame corners and six
+bumper/flipper controls. All coordinates remain **observed**, including the
+manual-derived lamps and the 6R flasher pair. The source drawing cannot validate
+its own measured coordinates; distant toy symbols are only coarse cross-checks.
+
+Image-mode lamps, the l24f Flasher sprite and the JabbasInsert plastic are not
+physical bulb centres. The factory drawing supplies those missing positions.
+Lamps 49-51 use one local Light each, discarding their larger elevated glow
+doubles. Flash banks 1R-4R use selected physical-region Lights; 6R uses its two
+drawn symbols. Banks 5R, 7R and 8R remain unplaced because the retained evidence
+does not resolve their individual VPW emitter geometry. The schematic's printed
+4R and 6R totals disagree with its location annotations, and its 8R playfield
+count disagrees with the operator's drawing. These are retained as an unresolved
+factory-source conflict. Neither render-helper
+counts nor these inconsistent totals establish complete bank quantities.
+
+The manual identifies switch 50 as **Shift Button** and 51 as **Shift Down** on
+the cabinet shifter. Their stable legacy IDs remain intact, while their labels
+are corrected; a Magna-Save keyboard mapping is not the physical device name.
+The plumb tilt and shifter controls use cabinet/service spatial exclusions. The
+schematic places the GI relay (solenoid 11) on the power supply board, so it uses
+an internal/nonvisual exclusion. These decisions come from positive manual
+evidence, not missing VPW objects.
+
+The record stays partial. Legacy semantics, complete physical quantities,
+mechanisms and ROM-state coverage are not promoted by this spatial retrofit.
+Switch 10 and solenoid 1 are the separate outhole and use the Drain anchor; the
+script's virtual four-switch trough must not relocate them to its exit. Trough
+switches 11-13 share a disclosed BallRelease assembly projection; door sensors
+share the DSDoor mesh projection. Coil positions locate their mechanism effect,
+not a winding. GI grouping remains a table observation without factory quantity.
+
 ## Evidence notes
 
 - `games/stwr.json#/switches/0._inferred_type`: tilt

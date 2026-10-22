@@ -493,7 +493,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Black Knight's curated record is author_ready and leaves the count.
 		# Black Rose's legacy record omitted it too; its curated partial names the unvalidated G.I. bulbs and the unplaced Top Popper flashers.
 		# Star Trek: The Next Generation's 2026-10-21 author-ready promotion removes one spatial-placement gap.
-		# Star Wars' spatial retrofit places its devices as observed against one retained table and
+		# Star Wars' spatial retrofit uses observed table/manual positions and
 		# keeps the requirement listed, adding one.
 		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
@@ -546,7 +546,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The same Star Trek: The Next Generation promotion resolves one unresolved-conflicts requirement.
 		# Baywatch adds the documented #89/#906 flasher-population disagreement.
 		# Mystery Castle adds one: its coil table and GI wiring drawing disagree on relay 16/26 regions.
-		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Star Wars records contradictory factory flash-bank counts.
+		self.assertEqual(42, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(808, len(catalog["machines"]))
 		self.assertEqual(794, catalog["summary"]["game_count"])
 		self.assertEqual(808, catalog["summary"]["machine_count"])

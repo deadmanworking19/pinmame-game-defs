@@ -27,8 +27,9 @@ SCRIPT_SHA256 = "1d5252b9ef7d1d00646df732661a07b384d6d5cb14798ff86337a00de1c7d14
 # Switch address -> the object the embedded script's Hit/UnHit/Controller.Switch code binds.
 # Cited line numbers are in the retained embedded script (script.vbs, sha256 above).
 SWITCH_OBJECTS = {
-    10: ("Kicker", "BallRelease"), 11: ("Kicker", "BallRelease"),
-    12: ("Kicker", "BallRelease"), 13: ("Kicker", "BallRelease"),  # bsTrough InitSwitches/InitExit, 180-186
+    10: ("Kicker", "Drain"),  # physical outhole (manual switch chart); bsTrough entry at Drain, 180-186
+    11: ("Kicker", "BallRelease"), 12: ("Kicker", "BallRelease"),
+    13: ("Kicker", "BallRelease"),  # bsTrough InitSwitches/InitExit, 180-186; shared trough projection
     14: ("Trigger", "sw14"),  # InitImpulseP sw14, 190-192
     17: ("Trigger", "sw17"),  # sw17_hit pulse, 819
     19: ("Gate", "sw19"),  # sw19_hit pulse, 820
@@ -51,7 +52,7 @@ SWITCH_OBJECTS = {
 }
 # Coil effect anchors (the mechanism object the coil acts on, never a winding centre).
 COIL_OBJECTS = {
-    1: ("Kicker", "BallRelease"), 2: ("Kicker", "BallRelease"),  # bsTrough SolIn/SolOut, 481-482, 515-526
+    1: ("Kicker", "Drain"), 2: ("Kicker", "BallRelease"),  # bsTrough SolIn/SolOut effects, 481-482, 515-526
     3: ("Plunger", "Plunger"),  # SolAutoPlungerIM fires the shooter-lane plunger, 483, 541-546
     4: ("Kicker", "sw37"), 7: ("Kicker", "sw33"),  # SolCallback SolLeftEject/SolRightEject, 484, 487
     5: ("Kicker", "sw36"),  # SolLeftPopper kicks the Death Star VUK, 485, 267-277
@@ -64,7 +65,7 @@ COIL_OBJECTS = {
     21: ("Wall", "LeftSlingShot"), 22: ("Wall", "RightSlingShot"),  # 499-500
     46: ("Flipper", "RightFlipper"), 48: ("Flipper", "LeftFlipper"),  # SolCallback sLRFlipper/sLLFlipper, 511-512
 }
-# Lamp address -> the script-driven Light/Flasher objects that are the bulbs themselves
+# Lamp address -> script-driven Light/Flasher candidates, including render helpers.
 # (Lampz.MassAssign in InitLampsNF, 967-1160). Insert plastics named by Lampz.Callback
 # (p1..p60, BumperCapN, pf4/pf8, JabbasInsert) are lighting targets, not bulbs.
 LAMP_LIGHTS = {
@@ -88,7 +89,7 @@ GI_LIGHTS = ("Light1", "Light2", "Light3", "Light4", "Light5", "Light6", "Light7
              "Light005", "Light006")
 # Flash-lamp bank (public solenoid 25-32, lamp channel 125-132) -> the Light/Flasher objects the
 # script's SolCallback/MassAssign drives. Banks 5R (129) and 7R (131) have their MassAssign lines
-# commented out in the retained script: the table models no bulbs for them.
+# commented out in the retained script: no active bulb binding is established for them.
 FLASHER_LIGHTS = {
     25: ("f125a_u", "f125a_l", "f125b_u", "f125b_l", "f125c_u", "f125c_l", "f125d", "f125e"),
     26: ("f126a", "f126b", "f2r"),
@@ -186,6 +187,9 @@ def build(extraction: Path, obj_dir: Path) -> dict:
             "type": kind, "method": method, "raw_xy": [round(x, 5), round(y, 5)],
             "xy": [round((x - left) / (right - left), 6), round((y - top) / (bottom - top), 6)],
         }
+        if kind == "Light":
+            objects[name]["light"] = {key: data[key] for key in
+                ("is_bulb_light", "is_image_mode", "show_bulb_mesh", "falloff_radius", "bulb_halo_height")}
 
     for table in (SWITCH_OBJECTS, COIL_OBJECTS):
         for kind, name in table.values():
