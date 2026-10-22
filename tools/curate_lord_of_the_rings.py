@@ -754,9 +754,9 @@ SOURCES.append({
         _static_excerpt("led-test-and-board-layout-2022", "PDF page 42 LED Test text and PDF page 162 (printed Section 5, Chapter 4, page 144) Playfield 19-LED PC Board component layout", "page 162, crop box 0.02,0.30,0.70,0.82, 900px wide, quality 40"),
         _static_excerpt("balrog-test-2022", "PDF page 42, the LOTR TESTS Balrog (BROG) test text", None),
         _static_excerpt("general-illumination-wiring-2022", "PDF page 121 (printed Section 5, Chapter 2, page 103) General Illumination Circuit Detailed Wiring Diagram, complete circuit table and bottom-view drawing", "page 121, crop box 0,0.08,1,0.92, 900px wide, quality 35"),
-        _static_excerpt("light-reflectors-2022", "PDF page 82 item 5 Light Reflector row and PDF page 83 (printed Section 4, Chapter 1, page 65) item-5 callouts", "page 83, crop box 0.08,0.50,0.53,0.78, 760px wide, quality 40"),
+        _static_excerpt("light-reflectors-2022", "PDF page 82 (printed Section 4, Chapter 1, page 64) complete parts table, including the Light Reflector and the centre-post Plug-Cap note, and PDF page 83 (printed Section 4, Chapter 1, page 65) item-5 callouts", "page 83, crop box 0.08,0.50,0.53,0.78, 760px wide, quality 40"),
         _static_excerpt("under-playfield-locations-2022", "PDF page 123 (printed Section 5, Chapter 2, page 105) Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations", "page 123, crop box 0,0.02,0.62,0.96, 760px wide, quality 35"),
-        _static_excerpt("sword-ramp-and-uk-posts-2022", "PDF page 111 (printed Section 4, Chapter 2, page 93) sword ramp switch and PDF page 126 UK Post Save note", "page 111, crop box 0.35,0,0.98,0.70, 760px wide, quality 35"),
+        _static_excerpt("sword-ramp-and-uk-posts-2022", "PDF page 111 (printed Section 4, Chapter 2, page 93) complete items 1-17 parts table and the sword ramp switch, and PDF page 126 UK Post Save note", "page 111, crop box 0.35,0,0.98,0.70, 760px wide, quality 35"),
     ],
     "id": MANUAL_2022,
     "kind": "manual",
@@ -1161,27 +1161,17 @@ for address, device_id, label, roles, location, note in DEDICATED:
         entry["spatial"] = not_applicable("cabinet_or_service", [MANUAL, PROFILE])
     elif printed_class == "playfield":
         # DS-2 and DS-4, the flipper end-of-stroke switches, printed below the playfield on the flipper
-        # mechanisms. No retained table models them, and the bottom view (PDF 123) draws them in front of
-        # every control that page can be fitted on, so they are projected onto their own mechanism.
+        # mechanisms. No retained table models them; the 2022 bottom view (PDF 123) draws both and the
+        # below-playfield parts drawing (PDF 84) prints letter B beside each.
+        entry["spatial"] = {"placements": [measured(device_id, "sensor")], "status": "validated"}
         side = "left" if address == 83 else "right"
-        pivot = FLIPPER_PIVOTS[side]
-        PROJECTIONS.append({
-            "device": device_id, "anchor": f"vpw-1-6:Flipper.{side.capitalize()}Flipper",
-            "reason": (f"The end-of-stroke switch is part of the {side} flipper mechanism, so it takes the flipper's pivot, "
-                       "where all three retained tables agree within 0.003; DR.4 prints its box "
-                       f"{manual_ref} there."),
-            "x": pivot[0], "y": pivot[1],
-        })
-        entry["spatial"] = {"placements": [{
-            "id": f"{device_id}.sensor",
-            "provenance": {"source_refs": [MANUAL, MANUAL_2022, T_VPW, T_JPS, T_HAN], "status": "observed"},
-            "role": "sensor", "space": "playfield", "x": pivot[0], "y": pivot[1],
-        }], "status": "observed"}
         entry["physical"]["notes"] += (
-            f" Placed at the {side} flipper's pivot, the mechanism this switch belongs to, where DR.4 prints its "
-            f"grey box {manual_ref}. The 2022 manual's vector bottom view (PDF 123) draws the end-of-stroke blade "
-            f"switch itself, labelled {manual_ref.replace('-', '')}, on the flipper mechanism about 0.1 outboard of the pivot, "
-            "but in front of every control that page can be fitted on, so that drawn position would be an extrapolation."
+            f" Measured on the 2022 manual's vector bottom view (PDF 123), which draws the {side} flipper's "
+            f"end-of-stroke blade switch at the outer end of the flipper mechanism, labelled {manual_ref.replace('-', '')}; "
+            "the placement is the centre of the drawn switch. The below-playfield parts drawing (PDF 84) prints its "
+            "letter B, EOS Switch (Flipper) 180-5149-00, beside the same switch, which checks the measurement. The "
+            "topside switch drawing DR.4 prints its grey box nearer the flipper pivot, in open space, because it does "
+            "not draw under-playfield assemblies."
         )
         entry["provenance"]["source_refs"].append(MANUAL_2022)
     else:
@@ -2249,7 +2239,8 @@ _page_fits = "; ".join(
     for key, page in sorted(CALLOUT_DECISIONS["pages"].items(), key=lambda kv: int(kv[0].split("-")[1]))
 )
 _led_table = "\n".join(f"| L{row['designator'][1:]} | {row['public_lamp']} | {row['x']} | {row['y']} |" for row in _led_rows)
-_PAGE_NAMES = {"pdf-6": "DR.4", "pdf-7": "DR.5", "pdf-9": "DR.7", "pdf-123": "the bottom view (PDF 123)"}
+_PAGE_NAMES = {"pdf-6": "DR.4", "pdf-7": "DR.5", "pdf-9": "DR.7", "pdf-84": "the below-playfield parts drawing (PDF 84)",
+               "pdf-123": "the bottom view (PDF 123)"}
 _device_labels = {device["id"]: device["label"] for device in inputs + outputs}
 _measured_groups: dict[tuple[str, str, str | None], int] = {}
 for _row in measurement_rows:
@@ -2327,7 +2318,7 @@ Every one of the {placement_total} placements is validated, each in one recorded
 
 - **Three-table agreement.** Three factory-layout recreations are treated as three measurements; a lamp, switch or flasher placement is validated on their word alone only when **all three agree** within {consensus['agreement_threshold']} normalized units, because independence between them is unestablished and the two available signals disagree. Measured, the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both model while either differs from VPW by up to 0.187; documented, VPW credits an "EBIsLit - Baseline playfield scan" and JPSalas records its playfield as "based on Ebislit's playfield", while Hanibal names no baseline.
 - **A table object confirmed by its own factory callout.** Everything else a table models is checked with `tools/drawing_callouts.py` against the reissue's drawings: the switch drawing DR.4, the lamp drawing DR.5 and the coil and flash lamp drawing DR.7, and for the below-playfield coils the terminal-strip bottom view (PDF 123), which draws every coil assembly in place. Controls are read on each drawing's own line art (bumper caps, flasher domes, round inserts, rollover slots and actuators) and paired with validated placements: {_page_fits}. A placement agrees when its own callout lands within 0.07 under both the control fit and the leave-one-out callout fit; all {len(CALLOUT_DECISIONS['placements'])} checks agree. Two switches follow the drawing rather than the tables' own consensus: 28 Balrog Hit takes Hanibal's object, which the drawing prints its box on, and 41 Top VUK takes VPW's.
-- **A projection onto a mechanism, confirmed by a drawing.** A coil sits at the mechanism it drives: the VUK and saucer kickers, the bumpers, the trough's eject end, the One Ring under its flasher, and for the right tower, orbit pin, sword lock, Balrog motor and auto launch the object the known-working VPW script moves for that coil. Each flipper's end-of-stroke switch takes its flipper's pivot, where all three tables agree within 0.003: the bottom view draws the switch about 0.1 outboard, but in front of every control that page has. The stacking opto 15 shares switch 14's plan position: both beams belong to one dual opto board pair at the trough's eject end, one above the other. Each is validated only because a factory drawing prints its own callout within 0.07 of it: {_projection_pages}.
+- **A projection onto a mechanism, confirmed by a drawing.** A coil sits at the mechanism it drives: the VUK and saucer kickers, the bumpers, the trough's eject end, the One Ring under its flasher, and for the right tower, orbit pin, sword lock, Balrog motor and auto launch the object the known-working VPW script moves for that coil. The stacking opto 15 shares switch 14's plan position: both beams belong to one dual opto board pair at the trough's eject end, one above the other. Each is validated only because a factory drawing prints its own callout within 0.07 of it: {_projection_pages}.
 - **A measurement on the factory drawing that draws the device.** Where no retained table models a device where the factory puts it, the device is measured on the drawing that draws it and, where one exists, checked on a second drawing: {_measured_list}; the nineteen LED windows on DR.5; the {_gi_sockets} G.I. sockets on the G.I. wiring page (PDF 121), {_gi_checked} of them checked against the G.I. labels of PDF 123, which prints none at the other {_gi_sockets - _gi_checked}; the eight back-panel G.I. sockets along the back panel's rear-view inset on the same page, each checked on the panel's exploded front view (PDF 112); and the two return-lane spotlights at the light-reflector leaders of the playfield parts drawing (PDF 83). Switch 24 is the notable one: the ramp parts drawing mounts the Right Ramp Made switch on the sword ramp, where DR.4 prints it, while all three tables register the shot at the right ramp's exit.
 
 The VPW table identifies itself as **"Lord Of The Rings - Valinor Edition"** with original artwork, so where its insert layout departs from the printed diagrams that is an artwork difference rather than an error. Its Fellowship inserts form a closed ring of runes rather than the printed arc of named characters, which accounts for the lamps where VPW alone is the outlier ({_format_addresses(_vpw_only_lamp_rejections)}); DR.5's callouts confirm the JPSalas and Hanibal positions for all of them.

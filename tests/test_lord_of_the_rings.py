@@ -281,7 +281,7 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		report = load_json(SPATIAL_REPORT_PATH)
 		seed = load_json(CALLOUT_SEED_PATH)
 		projected = {item["device"] for item in report["projections"]}
-		self.assertEqual(17, len(projected))
+		self.assertEqual(15, len(projected))
 		confirmed = set(report["validation_basis"]["projection_confirmed_by_drawing"])
 		devices = {d["id"]: d for c in ("inputs", "outputs") for d in self.definition[c]}
 		for device_id in projected:
@@ -356,7 +356,6 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual(len(curator.DRAWING_RESOLVED_SWITCHES), len(resolved))
 		derived |= resolved
 		mechanism_objects = {(x, y) for _object, _how, x, y in curator.MECHANISM_OBJECTS.values()}
-		mechanism_objects |= set(curator.FLIPPER_PIVOTS.values())
 		seed = load_json(CALLOUT_SEED_PATH)
 		measurements = {**seed["measurements"], **seed["elevation_measurements"]}
 		for place_id, place in located(self.definition).items():
@@ -374,8 +373,9 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(self.definition))
 		self.assertEqual(set(seed["checks"]), set(decisions["placements"]))
 		self.assertEqual(166, len(decisions["placements"]))
+		self.assertEqual(8, sum(d["page"] == "pdf-84" for d in decisions["placements"].values()))
 		self.assertTrue(all(decision["agrees"] for decision in decisions["placements"].values()))
-		self.assertEqual(59, len(seed["measurements"]))
+		self.assertEqual(61, len(seed["measurements"]))
 		elevations = {pid: drawing_callouts.elevation_measured(seed, pid) for pid in seed["elevation_measurements"]}
 		self.assertEqual(8, len(elevations))
 		back_panel = drawing_callouts.evaluate_elevations(seed, elevations)
@@ -580,19 +580,17 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual("Service Credit (Green Button)", self.switches[-1]["label"])
 		self.assertEqual("Begin Test (Black Button)", self.switches[0]["label"])
 		self.assertEqual("Memory Protect", self.switches[-3]["label"])
-		import curate_lord_of_the_rings as curator
-
 		seed = load_json(CALLOUT_SEED_PATH)
-		for address, side, label in ((81, "right", "DS-4"), (83, "left", "DS-2")):
+		for address, label in ((81, "DS4"), (83, "DS2")):
 			self.assertTrue(any(role.startswith("internal.") for role in self.switches[address]["roles"]))
 			# The printed dedicated-switch table puts DS-2 and DS-4 below the playfield, on the flipper
 			# mechanisms, so they are placed rather than declared `internal_nonvisual`, which is how an
-			# earlier false claim survived six rounds. The bottom view draws them in front of its
-			# controls, so each is projected onto its own flipper's pivot and checked on DR.4.
+			# earlier false claim survived six rounds. They are measured at the switch the bottom view
+			# draws, never projected onto the pivot, and checked on PDF 84's letter-B boxes.
 			[place] = self.switches[address]["spatial"]["placements"]
-			self.assertEqual(curator.FLIPPER_PIVOTS[side], (place["x"], place["y"]))
-			self.assertNotIn(place["id"], seed["measurements"])
-			self.assertEqual({"page": "pdf-6", "label": label}, seed["checks"][place["id"]])
+			measurement = seed["measurements"][place["id"]]
+			self.assertEqual(("pdf-123", label), (measurement["page"], measurement["label"]))
+			self.assertEqual({"page": "pdf-84", "label": "B"}, seed["checks"][place["id"]])
 
 	def test_uk_only_cabinet_buttons_are_optional(self) -> None:
 		for address in UK_ONLY_SWITCHES:

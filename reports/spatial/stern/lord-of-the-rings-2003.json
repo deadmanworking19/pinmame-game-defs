@@ -65,14 +65,14 @@
 	},
 	"counts": {
 		"callout_checks": 166,
-		"drawing_measurements": 67,
+		"drawing_measurements": 69,
 		"gi_placements": 32,
 		"gi_quantity": 34,
 		"placements": 216,
-		"projections": 17,
+		"projections": 15,
 		"rejected_table_measurements": 35,
-		"validated_by_drawing_measurement": 67,
-		"validated_by_projection_confirmed_by_drawing": 17,
+		"validated_by_drawing_measurement": 69,
+		"validated_by_projection_confirmed_by_drawing": 15,
 		"validated_by_table_object_confirmed_by_drawing": 31,
 		"validated_by_three_table_agreement": 101
 	},
@@ -103,7 +103,7 @@
 				"callout_pairs": 44,
 				"control_loo_max": 0.0019,
 				"control_rms": 0.0009,
-				"controls": 8,
+				"controls": 9,
 				"image": {
 					"path": "by-machine/stern.lord-of-the-rings.2003/official-stern/2022/callout-renders/lotr-2022-pdf123-300dpi.png",
 					"pixels": [
@@ -116,9 +116,9 @@
 				"locator": "Lord_of_the_Rings_Manual-2022.pdf PDF page 123, printed Section 5 Chapter 2 page 105: Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations, a vector bottom view (front edge at the top) labelling every below-playfield switch (S), lamp (L), coil or flasher (Q), the flipper end-of-stroke switches (DS) and the G.I. sockets"
 			},
 			"pdf-6": {
-				"callout_fit_pairs": 42,
-				"callout_loo_max": 0.0619,
-				"callout_pairs": 42,
+				"callout_fit_pairs": 34,
+				"callout_loo_max": 0.0613,
+				"callout_pairs": 34,
 				"control_loo_max": 0.016,
 				"control_rms": 0.0024,
 				"controls": 8,
@@ -167,6 +167,24 @@
 				},
 				"locator": "Lord_of_the_Rings_Manual-2022.pdf PDF page 83, printed Section 4 Chapter 1 page 65: Playfield - General Parts (Above) Continued, a raster playfield drawing (xref 3562) with vector item callouts; item 5 is the Light Reflector (Silver Color Plastic), quantity 2, listed on page 82"
 			},
+			"pdf-84": {
+				"callout_fit_pairs": 8,
+				"callout_loo_max": 0.0604,
+				"callout_pairs": 8,
+				"control_loo_max": 0.0019,
+				"control_rms": 0.0006,
+				"controls": 6,
+				"image": {
+					"path": "by-machine/stern.lord-of-the-rings.2003/official-stern/2022/callout-renders/lotr-2022-pdf084-300dpi.png",
+					"pixels": [
+						2550,
+						3300
+					],
+					"root": "manuals",
+					"sha256": "ce4ab41296b3b5304fc9a2e684dd50a9e44cc6b28834058c4d5b35bcda8c435c"
+				},
+				"locator": "Lord_of_the_Rings_Manual-2022.pdf PDF page 84, printed Section 4 Chapter 1 page 66: Playfield - General Parts & Switches (Below), a raster bottom view (xref 3672) with vector letter boxes; letter A is Micro Sw. (Roller Actuator, Lite Force) 180-5119-02 and B is EOS Switch (Flipper) 180-5149-00"
+			},
 			"pdf-9": {
 				"callout_fit_pairs": 12,
 				"callout_loo_max": 0.0687,
@@ -193,11 +211,11 @@
 		},
 		"retained_artifacts": {
 			"directory": "lord-of-the-rings-2003/completion-2026-10-22/callout-check",
-			"manifest_sha256": "35f8781487b132ebbc5f8a0e900b34eebc55f07f5e79d648654c6c0a593cb1c8"
+			"manifest_sha256": "3fc0a462e26b83c5cd3d9f2534149949770d9339ae00afc2b2345f89283b09a0"
 		},
 		"rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
 		"seed": "tools/seeds/stern/lord-of-the-rings-2003-callouts.json",
-		"seed_sha256": "e9bdb0adc135b04fec8b4a4bdf27e399b2772143cb2949d89fd061c12e21da84",
+		"seed_sha256": "d2289e4eb38b5159ad2f96e1fb5c1ff0c02e5451393c4c627d1b944910786678",
 		"validated": 166
 	},
 	"drawing_measurements": [
@@ -827,6 +845,18 @@
 		},
 		{
 			"check_excluded": null,
+			"checked_on": "pdf-84",
+			"device": "switch.left-flipper-eos",
+			"label": "DS2",
+			"note": "PDF 123 draws the left flipper's end-of-stroke blade switch on the flipper mechanism, labelled DS2; the placement is the centre of that drawn part's bounding box (vector, points [121.47, 133.12, 135.99, 146.8]).",
+			"page": "pdf-123",
+			"placement": "switch.left-flipper-eos.sensor",
+			"point": "symbol_centre",
+			"x": 0.193,
+			"y": 0.879
+		},
+		{
+			"check_excluded": null,
 			"checked_on": null,
 			"device": "switch.matrix-24",
 			"label": "24",
@@ -908,6 +938,18 @@
 			"point": "label_beside_part",
 			"x": 0.715,
 			"y": 0.718
+		},
+		{
+			"check_excluded": null,
+			"checked_on": "pdf-84",
+			"device": "switch.right-flipper-eos",
+			"label": "DS4",
+			"note": "PDF 123 draws the right flipper's end-of-stroke blade switch on the flipper mechanism, labelled DS4; the placement is the centre of that drawn part's bounding box (vector, points [281.03, 164.47, 292.99, 178.02]).",
+			"page": "pdf-123",
+			"placement": "switch.right-flipper-eos.sensor",
+			"point": "symbol_centre",
+			"x": 0.734,
+			"y": 0.833
 		},
 		{
 			"check": {
@@ -1256,20 +1298,6 @@
 			"reason": "The trough's dual opto transmitter and receiver boards (515-0173-00 / 515-0174-00) carry both the eject beam (14) and the stacking beam (15), and PDF 123 labels both boards S14 and S15; the stacking beam sits above the eject beam, so in plan it shares switch 14's position.",
 			"x": 0.858076,
 			"y": 0.871312
-		},
-		{
-			"anchor": "vpw-1-6:Flipper.RightFlipper",
-			"device": "switch.right-flipper-eos",
-			"reason": "The end-of-stroke switch is part of the right flipper mechanism, so it takes the flipper's pivot, where all three retained tables agree within 0.003; DR.4 prints its box DS-4 there.",
-			"x": 0.621009,
-			"y": 0.850172
-		},
-		{
-			"anchor": "vpw-1-6:Flipper.LeftFlipper",
-			"device": "switch.left-flipper-eos",
-			"reason": "The end-of-stroke switch is part of the left flipper mechanism, so it takes the flipper's pivot, where all three retained tables agree within 0.003; DR.4 prints its box DS-2 there.",
-			"x": 0.289107,
-			"y": 0.850172
 		},
 		{
 			"anchor": "switch.14",
@@ -2341,13 +2369,15 @@
 			"lamp.led-board-l17.emitter",
 			"lamp.led-board-l18.emitter",
 			"lamp.led-board-l19.emitter",
+			"switch.left-flipper-eos.sensor",
 			"switch.matrix-24.sensor",
 			"switch.matrix-31.sensor",
 			"switch.matrix-32.sensor",
 			"switch.matrix-59.lower.sensor",
 			"switch.matrix-59.upper.sensor",
 			"switch.matrix-62.lower.sensor",
-			"switch.matrix-62.upper.sensor"
+			"switch.matrix-62.upper.sensor",
+			"switch.right-flipper-eos.sensor"
 		],
 		"projection_confirmed_by_drawing": [
 			"device.auto-launch.effect",
@@ -2364,9 +2394,7 @@
 			"device.top-saucer.effect",
 			"device.top-vuk.effect",
 			"device.trough-up-kicker.effect",
-			"switch.left-flipper-eos.sensor",
-			"switch.matrix-15.sensor",
-			"switch.right-flipper-eos.sensor"
+			"switch.matrix-15.sensor"
 		],
 		"table_object_confirmed_by_drawing": [
 			"device.back-panel-flasher.emitter",
