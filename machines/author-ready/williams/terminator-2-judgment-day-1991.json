@@ -1,16 +1,6 @@
 {
   "conflicts": [
     {
-      "description": "The early manual coil/location list identifies solenoid 12 as Knock Down / SM1-26-600, while the later manual electrical table says Not Used. The retained VPW script has no SolCallback(12). The L-8 ROM's own T.4 SOLENOID TEST names solenoid 12 KNOCK DOWN with the printed BRN-YEL wire and pulses public 12 (runtime.terminator-2.t2-l8.solenoid-flasher-tests), so the production firmware still carries the device; that bounds the question from the emulator side but cannot show whether a coil is fitted. The definition retains the channel as optional and does not manufacture a resolution. Resolution path: a photograph or continuity check of the printed Brn-Yel / J127-5 / Q52 branch on an unrestored production machine, showing whether an SM1-26-600 coil is fitted on it at all. Unresolved.",
-      "id": "conflict.solenoid-12-physical-presence",
-      "path": "outputs.pinmame.output.solenoid.12",
-      "source_refs": [
-        "manual.williams.terminator-2-judgment-day.1991",
-        "pinmame.core.4ec52ff0ac13",
-        "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
-      ]
-    },
-    {
       "description": "The lamp matrix table on printed page 1-33 (repeated on PDF page 117, and on 2-34 where the scan fills in column 8's pin digit) prints columns on J138-1 to J138-7 and J138-9 and rows on J133-1, J133-2 and J133-4 to J133-9, while the lamp matrix schematic on printed page 2-34 draws columns on J137-1 to J137-8 and rows on J133-1 to J133-8; the 1-33 lamp-circuit example also routes its column through J137. Read address by address at native resolution, both sheets give the same eight column and row wire colours and the same addresses 11-88, and the schematic names no lamps. Matrix address/name identity is preserved from the printed matrix table; neither connector reading is synthesized into wiring fields. Resolution path: a photograph of an unrestored machine's power driver board lamp connectors, showing whether the column harness plugs J137 or J138 and which J133 pins the rows use.",
       "id": "conflict.lamp-schematic-connector-labels",
       "path": "outputs.pinmame.output.lamp",
@@ -21,16 +11,6 @@
         "pinmame.core.4ec52ff0ac13"
       ],
       "status": "ignored"
-    },
-    {
-      "description": "The manual names five GI strings (GI 1 Top Insert, GI 2 Left Playfield, GI 3 Right Playfield, GI 4 Not Used, GI 5 Bottom Insert), while the retained VPW script exposes GI2/GI3 emitter arrays and a separate Case 3 Light2-Light5 branch; legacy mapping names also differ. Physical five-channel routing and script callback grouping remain explicit, unresolved evidence rather than an averaged map. Resolution path: run the machine's own general-illumination test on an unrestored production unit and photograph which region lights at each of the five steps, matching each step to the printed drives Wht-Brn/J120-7/Q18, Wht-Vio/J119-1/Q10, Wht-Yel/J121-9/Q14, Wht-Orn/J120-8/Q16 and Wht-Grn/J120-10/Q12; that also settles whether the printed GI 4 string, which carries a connector and transistor but no printed bulb part, is fitted at all. A LibPinMAME harness trace against the retained legal t2_l8 ROM supplies the emulator half of the pairing but cannot say where the bulbs sit. Unresolved.",
-      "id": "conflict.gi-string-routing",
-      "path": "outputs.pinmame.output.gi",
-      "source_refs": [
-        "manual.williams.terminator-2-judgment-day.1991",
-        "vpx-script.t2-vpw-0022",
-        "controller-profile.pinmame-wpc-alpha"
-      ]
     }
   ],
   "controller": {
@@ -43,17 +23,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "unknown",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -259,7 +236,7 @@
       "id": "t2_f19",
       "manufacturer": "FreeWPC",
       "physical_compatibility": "compatible",
-      "variant_notes": "FreeWPC alternative firmware for the stock physical T2 machine; it is a compatible controller variant, not a separate physical machine or retheme.",
+      "variant_notes": "FreeWPC alternative firmware for the stock physical T2 machine; it is a compatible controller variant, not a separate physical machine or retheme. Unlike the Williams builds it reads the WPC_FLIPPERS register.",
       "year": "1991"
     },
     {
@@ -626,8 +603,8 @@
       "label": "Right Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 1; retained VPW switch semantic. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 112 on every update; it cannot be driven directly.",
-        "switch_type": "microswitch"
+        "notes": "Printed WPC switch matrix column 1, row 1: the cabinet right flipper button. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 112 on every update; it cannot be driven directly.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -639,25 +616,18 @@
       },
       "pulse": true,
       "roles": [
-        "flipper.lower.right.switch"
+        "flipper.lower.right.button"
       ],
       "spatial": {
-        "placements": [
-          {
-            "id": "switch.matrix-11.sensor.triggerrf",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "sensor",
-            "space": "playfield",
-            "x": 0.629895,
-            "y": 0.853699
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -681,8 +651,8 @@
       "label": "Left Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 2; retained VPW switch semantic. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 114 on every update; it cannot be driven directly.",
-        "switch_type": "microswitch"
+        "notes": "Printed WPC switch matrix column 1, row 2: the cabinet left flipper button. t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL, so core_updateSw rewrites this switch from generic cabinet input 114 on every update; it cannot be driven directly.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -694,25 +664,18 @@
       },
       "pulse": true,
       "roles": [
-        "flipper.lower.left.switch"
+        "flipper.lower.left.button"
       ],
       "spatial": {
-        "placements": [
-          {
-            "id": "switch.matrix-12.sensor.triggerlf",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "sensor",
-            "space": "playfield",
-            "x": 0.26309,
-            "y": 0.854118
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -736,7 +699,7 @@
       "label": "Start Button",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 1, row 3; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -783,7 +746,7 @@
       "label": "Plumb Bob Tilt",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 4; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 1, row 4; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -830,7 +793,7 @@
       "label": "Trough Left",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 5; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; it is not copied from perspective artwork.",
+        "notes": "Printed WPC switch matrix column 1, row 5; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; the 2-37 drawing prints 15, 16 and 17 along the trough in that order.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -853,7 +816,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -863,7 +827,7 @@
             "y": 0.922582
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -887,7 +851,7 @@
       "label": "Trough Center",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 6; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; it is not copied from perspective artwork.",
+        "notes": "Printed WPC switch matrix column 1, row 6; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; the 2-37 drawing prints 15, 16 and 17 along the trough in that order.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -910,7 +874,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -920,7 +885,7 @@
             "y": 0.9069
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -944,7 +909,7 @@
       "label": "Trough Right",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 7; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; it is not copied from perspective artwork.",
+        "notes": "Printed WPC switch matrix column 1, row 7; retained VPW switch semantic. The exact VPX exposes Drain and BallRelease but no separate trough-contact objects. This is an ordered 40/60/80-percent projection between those anchors, consistent with the manual left/center/right map, with practical uncertainty of about plus or minus 0.03 normalized in both axes; the 2-37 drawing prints 15, 16 and 17 along the trough in that order.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -967,7 +932,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -977,7 +943,7 @@
             "y": 0.891218
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1001,7 +967,7 @@
       "label": "Outhole",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 1, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 1, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1053,7 +1019,7 @@
       "label": "Slam Tilt",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 1; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1065,6 +1031,9 @@
         "status": "validated"
       },
       "pulse": false,
+      "roles": [
+        "cabinet.slam-tilt"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -1098,7 +1067,7 @@
       "label": "Coin Door Closed",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 2; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 2; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1145,7 +1114,7 @@
       "label": "Ticket Dispenser",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 3; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1193,7 +1162,7 @@
       "kind": "constant",
       "label": "Test Position Always Closed",
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 4; retained VPW switch semantic. Spatial blocker: used controller address retained, but the exact corresponding VPX sensor object is not promoted from nearby graphical geometry.",
+        "notes": "Printed WPC switch matrix column 2, row 4; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1236,7 +1205,7 @@
       "label": "Left Outlane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 5; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 5; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1288,7 +1257,7 @@
       "label": "Left Return Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1340,7 +1309,7 @@
       "label": "Right Return Lane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 7; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 7; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1392,7 +1361,7 @@
       "label": "Right Outlane",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 2, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 2, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1444,7 +1413,7 @@
       "label": "Gun Loaded",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 3, row 1; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1496,7 +1465,7 @@
       "label": "Gun Mark",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 2; retained VPW switch semantic. The contact is internal to the moving cannon mechanism. The exact T2_Gun center is a shared assembly projection confirmed by the manual mechanism map and the working cvpmMech windows, not an invented leaf-contact center.",
+        "notes": "Printed WPC switch matrix column 3, row 2; retained VPW switch semantic. The contact is internal to the moving cannon mechanism. The exact T2_Gun centre is a shared assembly projection confirmed by the manual mechanism map and the working cvpmMech windows, not an invented leaf-contact centre.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1516,7 +1485,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -1526,7 +1496,7 @@
             "y": 0.476126
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1550,7 +1520,7 @@
       "label": "Gun Home",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 3; retained VPW switch semantic. The contact is internal to the moving cannon mechanism. The exact T2_Gun center is a shared assembly projection confirmed by the manual mechanism map and the working cvpmMech windows, not an invented leaf-contact center.",
+        "notes": "Printed WPC switch matrix column 3, row 3; retained VPW switch semantic. The contact is internal to the moving cannon mechanism. The exact T2_Gun centre is a shared assembly projection confirmed by the manual mechanism map and the working cvpmMech windows, not an invented leaf-contact centre.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1570,7 +1540,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -1580,7 +1551,7 @@
             "y": 0.476126
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -1604,7 +1575,7 @@
       "label": "Grip Trigger",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 4; retained VPW switch semantic. The physical trigger is on the cabinet gun grip; the working VPX maps PlungerKey directly to Controller.Switch(34), so it must not receive a playfield coordinate.",
+        "notes": "Printed WPC switch matrix column 3, row 4; retained VPW switch semantic. The physical trigger is on the cabinet gun grip; the working VPX maps PlungerKey directly to Controller.Switch(34), so it must not receive a playfield coordinate.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1651,7 +1622,7 @@
       "kind": "switch",
       "label": "Unused matrix position 35",
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 5; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 3, row 5; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -1693,7 +1664,7 @@
       "label": "Mid Left Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 3, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1745,7 +1716,7 @@
       "label": "Mid Center Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 7; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 3, row 7; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1797,7 +1768,7 @@
       "label": "Mid Right Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 3, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 3, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1849,7 +1820,7 @@
       "label": "Left Jet",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 1; retained VPW switch semantic. The retained VPW script pulses switch 42 from its Bumper2 object and switch 43 from Bumper3. Both factory location drawings (switch callouts 41-43 printed inside the bumper caps on 2-37, coil balloons 13-15 on 2-39) put the Right Jet, switch 42 and coil 14, on the right-hand bumper (Bumper3) and the Bottom Jet, switch 43 and coil 15, on the lowest bumper (Bumper2); the table swaps the two bindings, which changes nothing it scores. The placement follows the drawings.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1901,7 +1872,7 @@
       "label": "Right Jet",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 2; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 2; retained VPW switch semantic. The retained VPW script pulses switch 42 from its Bumper2 object and switch 43 from Bumper3. Both factory location drawings (switch callouts 41-43 printed inside the bumper caps on 2-37, coil balloons 13-15 on 2-39) put the Right Jet, switch 42 and coil 14, on the right-hand bumper (Bumper3) and the Bottom Jet, switch 43 and coil 15, on the lowest bumper (Bumper2); the table swaps the two bindings, which changes nothing it scores. The placement follows the drawings.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1916,7 +1887,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "switch.matrix-42.sensor.bumper-bumper2",
+            "id": "switch.matrix-42.sensor.bumper-bumper3",
             "provenance": {
               "source_refs": [
                 "vpx-table.t2-vpw-0022"
@@ -1925,8 +1896,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.559494,
-            "y": 0.271911
+            "x": 0.716717,
+            "y": 0.208798
           }
         ],
         "status": "validated"
@@ -1953,7 +1924,7 @@
       "label": "Bottom Jet",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 3; retained VPW switch semantic. The retained VPW script pulses switch 42 from its Bumper2 object and switch 43 from Bumper3. Both factory location drawings (switch callouts 41-43 printed inside the bumper caps on 2-37, coil balloons 13-15 on 2-39) put the Right Jet, switch 42 and coil 14, on the right-hand bumper (Bumper3) and the Bottom Jet, switch 43 and coil 15, on the lowest bumper (Bumper2); the table swaps the two bindings, which changes nothing it scores. The placement follows the drawings.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1968,7 +1939,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "switch.matrix-43.sensor.bumper-bumper3",
+            "id": "switch.matrix-43.sensor.bumper-bumper2",
             "provenance": {
               "source_refs": [
                 "vpx-table.t2-vpw-0022"
@@ -1977,8 +1948,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.716717,
-            "y": 0.208798
+            "x": 0.559494,
+            "y": 0.271911
           }
         ],
         "status": "validated"
@@ -2005,7 +1976,7 @@
       "label": "Left Sling",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 4; retained VPW switch semantic. The switch is implicit in the exact named slingshot collision wall. The extractor's drag-point centroid is the physical assembly projection, not an invented internal leaf-contact center.",
+        "notes": "Printed WPC switch matrix column 4, row 4; retained VPW switch semantic. The switch is implicit in the exact named slingshot collision wall. The extractor's drag-point centroid is the physical assembly projection, not an invented internal leaf-contact centre.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2025,7 +1996,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -2035,7 +2007,7 @@
             "y": 0.738286
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2059,7 +2031,7 @@
       "label": "Right Sling",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 5; retained VPW switch semantic. The switch is implicit in the exact named slingshot collision wall. The extractor's drag-point centroid is the physical assembly projection, not an invented internal leaf-contact center.",
+        "notes": "Printed WPC switch matrix column 4, row 5; retained VPW switch semantic. The switch is implicit in the exact named slingshot collision wall. The extractor's drag-point centroid is the physical assembly projection, not an invented internal leaf-contact centre.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2079,7 +2051,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -2089,7 +2062,7 @@
             "y": 0.735635
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -2113,7 +2086,7 @@
       "label": "Top Right Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2165,7 +2138,7 @@
       "label": "Mid Right Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 7; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 7; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2217,7 +2190,7 @@
       "label": "Bottom Right Standup Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 4, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 4, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2269,7 +2242,7 @@
       "label": "Left Lock",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 1; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2320,7 +2293,7 @@
       "kind": "switch",
       "label": "Unused matrix position 52",
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 2; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 5, row 2; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -2362,7 +2335,7 @@
       "label": "Low Escape Route",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 3; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2414,7 +2387,7 @@
       "label": "High Escape Route",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 4; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 4; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2466,7 +2439,7 @@
       "label": "Top Lock",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 5; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 5; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2518,7 +2491,7 @@
       "label": "Top Lane Left",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2570,7 +2543,7 @@
       "label": "Top Lane Center",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 7; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 7; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2622,7 +2595,7 @@
       "label": "Top Lane Right",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 5, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 5, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2674,7 +2647,7 @@
       "label": "Left Ramp Entry",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 1; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2726,7 +2699,7 @@
       "label": "Left Ramp Made",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 2; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 2; retained VPW switch semantic. Measured on the 2-37 Switch Locations drawing, where callout 62's leader crosses the playfield wall and ends with a tick on the left ramp's return wireform. The retained VPW table's Trigger.sw62 sits 0.13 normalized higher, at the top bend of the ramp, and the nFozzy table puts its own ramp trigger elsewhere again, so neither table object is the switch's place.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2741,17 +2714,18 @@
       "spatial": {
         "placements": [
           {
-            "id": "switch.matrix-62.sensor.trigger-sw62",
+            "id": "switch.matrix-62.sensor.2-37-callout-62-leader-end",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "manual.williams.terminator-2-judgment-day.1991",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.04177,
-            "y": 0.089419
+            "x": 0.091,
+            "y": 0.216
           }
         ],
         "status": "validated"
@@ -2778,7 +2752,7 @@
       "label": "Right Ramp Entry",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 3; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2830,7 +2804,7 @@
       "label": "Right Ramp Made",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 4; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 4; retained VPW switch semantic. Measured on the 2-37 Switch Locations drawing, where callout 64's long leader, traced pixel by pixel, ends on the right ramp's outer rail. The retained VPW table's Trigger.sw64 sits higher up the ramp, 0.07 normalized away, and the nFozzy table's ramp trigger further still, so neither table object is the switch's place.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2845,17 +2819,18 @@
       "spatial": {
         "placements": [
           {
-            "id": "switch.matrix-64.sensor.trigger-sw64",
+            "id": "switch.matrix-64.sensor.2-37-callout-64-leader-end",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "manual.williams.terminator-2-judgment-day.1991",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.6415,
-            "y": 0.222587
+            "x": 0.625,
+            "y": 0.291
           }
         ],
         "status": "validated"
@@ -2882,7 +2857,7 @@
       "label": "Low Chase Loop",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 5; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 5; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2934,7 +2909,7 @@
       "label": "High Chase Loop",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 6, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2985,7 +2960,7 @@
       "kind": "switch",
       "label": "Unused matrix position 67",
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 7; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 6, row 7; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3026,7 +3001,7 @@
       "kind": "switch",
       "label": "Unused matrix position 68",
       "physical": {
-        "notes": "Printed WPC matrix row 6, column 8; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 6, row 8; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3068,7 +3043,7 @@
       "label": "Target 1 High",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 1; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 1; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3120,7 +3095,7 @@
       "label": "Target 2",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 2; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 2; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3172,7 +3147,7 @@
       "label": "Target 3",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 3; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 3; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3224,7 +3199,7 @@
       "label": "Target 4",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 4; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 4; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3276,7 +3251,7 @@
       "label": "Target 5 Low",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 5; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 5; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3328,7 +3303,7 @@
       "label": "Ball Popper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 6; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 6; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3380,7 +3355,7 @@
       "label": "Drop Target",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 7; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 7; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3432,7 +3407,7 @@
       "label": "Shooter",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed WPC matrix row 7, column 8; retained VPW switch semantic.",
+        "notes": "Printed WPC switch matrix column 7, row 8; retained VPW switch semantic.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -3483,7 +3458,7 @@
       "kind": "switch",
       "label": "Unused matrix position 81",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 1; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 1; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3524,7 +3499,7 @@
       "kind": "switch",
       "label": "Unused matrix position 82",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 2; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 2; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3565,7 +3540,7 @@
       "kind": "switch",
       "label": "Unused matrix position 83",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 3; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 3; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3606,7 +3581,7 @@
       "kind": "switch",
       "label": "Unused matrix position 84",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 4; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 4; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3647,7 +3622,7 @@
       "kind": "switch",
       "label": "Unused matrix position 85",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 5; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 5; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3688,7 +3663,7 @@
       "kind": "switch",
       "label": "Unused matrix position 86",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 6; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 6; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3729,7 +3704,7 @@
       "kind": "switch",
       "label": "Unused matrix position 87",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 7; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 7; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3770,7 +3745,7 @@
       "kind": "switch",
       "label": "Unused matrix position 88",
       "physical": {
-        "notes": "Printed WPC matrix row 8, column 8; printed Not Used position.",
+        "notes": "Printed WPC switch matrix column 8, row 8; printed Not Used position.",
         "switch_type": "unknown"
       },
       "provenance": {
@@ -3806,15 +3781,17 @@
       "id": "switch.generic-111",
       "kind": "switch",
       "label": "Lower Right Flipper EOS",
+      "normally_closed": false,
       "physical": {
         "location": "internal public address space",
-        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it, but core_updateSw keeps a host write and WPC_FLIPPERS can read the column, so whether the ROM reads it is unproven. No physical contact is wired to it.",
+        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it; no CPU-side contact is wired to it, so it rests open (0) unless a host writes it. On this pre-WPC-95 generation wpc_r serves the flipper column at WPC_FLIPPERS (0x3FD4). No Williams T2 program ROM in the authorized library addresses that register, but the FreeWPC 0.19 build (t2_f19) reads it, so the bit stays optional rather than unused.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "rom.t2-l8-authorized-corpus"
         ],
         "status": "validated"
       },
@@ -3890,15 +3867,17 @@
       "id": "switch.generic-113",
       "kind": "switch",
       "label": "Lower Left Flipper EOS",
+      "normally_closed": false,
       "physical": {
         "location": "internal public address space",
-        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it, but core_updateSw keeps a host write and WPC_FLIPPERS can read the column, so whether the ROM reads it is unproven. No physical contact is wired to it.",
+        "notes": "PinMAME's generic end-of-stroke bit for this flipper. Terminator 2's flippers are cabinet-wired (FLIP_SWNO(12,11) with no FLIP_SOL), so core.c's EOS simulation never runs and nothing synthesizes it; no CPU-side contact is wired to it, so it rests open (0) unless a host writes it. On this pre-WPC-95 generation wpc_r serves the flipper column at WPC_FLIPPERS (0x3FD4). No Williams T2 program ROM in the authorized library addresses that register, but the FreeWPC 0.19 build (t2_f19) reads it, so the bit stays optional rather than unused.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "rom.t2-l8-authorized-corpus"
         ],
         "status": "validated"
       },
@@ -4703,12 +4682,13 @@
     },
     {
       "actuators": [
-        "device.drop-target"
+        "device.drop-target",
+        "device.knock-down"
       ],
-      "behavior": "A single switch 77 target is reset by dtDrop1.SolDropUp on solenoid 28.",
+      "behavior": "One A-14615 drop target under the skull, sensed by switch 77. Solenoid 28 (AE-26-1200 reset coil) raises it; the retained script models this as dtDrop1.SolDropUp. Solenoid 12 (the A-14908 knock-down sub-assembly's SM1-26-600 coil, 2-23 parts list) drops it from below without a ball strike; the retained VPW script has no callback for 12 and the production game is not seen to use it in play, but the ROM's solenoid test pulses it, so a recreation that fits it must drop the target and close switch 77 on a pulse.",
       "id": "mechanism.drop-target",
       "kind": "drop_target_bank",
-      "label": "Single skull drop target",
+      "label": "Single skull drop target with knock-down",
       "positions": [
         {
           "description": "Single-bank target.",
@@ -4723,7 +4703,8 @@
         "source_refs": [
           "vpx-script.t2-vpw-0022",
           "manual.williams.terminator-2-judgment-day.1991",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
         ],
         "status": "validated"
       },
@@ -4735,7 +4716,7 @@
       "actuators": [
         "device.kickback"
       ],
-      "behavior": "SolAPlunger is the left outer-lane kicker saver; it is distinct from the auto-plunger output 9.",
+      "behavior": "SolAPlunger fires Plunger1, the left outer-lane kicker saver; it is distinct from the auto-plunger output 9.",
       "id": "mechanism.kickback",
       "kind": "kicker",
       "label": "Left outer-lane kickback",
@@ -4760,6 +4741,50 @@
       "sensors": [
         "switch.matrix-25"
       ]
+    },
+    {
+      "actuators": [
+        "device.synthetic-lower-right-flipper",
+        "device.synthetic-lower-left-flipper"
+      ],
+      "behavior": "Two C-13174 lower flipper assemblies with FL-11630 coils, powered from the power driver board (right Blu-Yel J109-7, left Gry-Yel J109-5) through the Game-On relay (31) and switched by the cabinet buttons; there is no CPU flipper drive. PinMAME fabricates public 45-48 from the buttons for animation, and the matrix copies 11/12 tell the ROM a button is held.",
+      "id": "mechanism.flippers",
+      "kind": "other",
+      "label": "Direct-wired lower flippers",
+      "positions": [
+        {
+          "description": "Animate from synthetic state 46.",
+          "id": "lower-right",
+          "label": "Lower-right flipper",
+          "sensors": [
+            "switch.generic-112",
+            "switch.matrix-11"
+          ]
+        },
+        {
+          "description": "Animate from synthetic state 48.",
+          "id": "lower-left",
+          "label": "Lower-left flipper",
+          "sensors": [
+            "switch.generic-114",
+            "switch.matrix-12"
+          ]
+        }
+      ],
+      "provenance": {
+        "source_refs": [
+          "manual.williams.terminator-2-judgment-day.1991",
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.t2-vpw-0022"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.generic-112",
+        "switch.generic-114",
+        "switch.matrix-11",
+        "switch.matrix-12"
+      ]
     }
   ],
   "outputs": [
@@ -4779,7 +4804,7 @@
       "kind": "coil",
       "label": "Ball Popper",
       "physical": {
-        "notes": "Manual physical device: Ball Popper; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolSkull (retained script callback; opens the skull/ball-popper path from switch 76).",
+        "notes": "Manual physical device: Ball Popper; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolSkull (retained script callback; opens the skull/ball-popper path from switch 76).",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -4796,9 +4821,7 @@
             "id": "device.ball-popper.effect.kicker-sw76",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -4808,7 +4831,7 @@
             "y": 0.098008
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -4833,7 +4856,7 @@
       "kind": "coil",
       "label": "Gun Kicker",
       "physical": {
-        "notes": "Manual physical device: Gun Kicker; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolFireGun.",
+        "notes": "Manual physical device: Gun Kicker; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolFireGun.",
         "part_number": "AE-24-900"
       },
       "provenance": {
@@ -4850,9 +4873,7 @@
             "id": "device.gun-kicker.effect.kicker-sw31",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -4862,7 +4883,7 @@
             "y": 0.42516
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -4887,7 +4908,7 @@
       "kind": "coil",
       "label": "Outhole",
       "physical": {
-        "notes": "Manual physical device: Outhole; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: bsTrough.SolIn (outhole).",
+        "notes": "Manual physical device: Outhole; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: bsTrough.SolIn (outhole).",
         "part_number": "AE-27-1200"
       },
       "provenance": {
@@ -4904,9 +4925,7 @@
             "id": "device.outhole.effect.drain",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -4916,7 +4935,7 @@
             "y": 0.953946
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -4941,7 +4960,7 @@
       "kind": "coil",
       "label": "Trough",
       "physical": {
-        "notes": "Manual physical device: Trough; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: bsTrough.SolOut (ball release).",
+        "notes": "Manual physical device: Trough; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: bsTrough.SolOut (ball release).",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -4958,9 +4977,7 @@
             "id": "device.trough.effect.kicker-ballrelease",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -4970,7 +4987,7 @@
             "y": 0.875536
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -4995,7 +5012,7 @@
       "kind": "coil",
       "label": "Right Sling",
       "physical": {
-        "notes": "Manual physical device: Right Sling; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The exact named slingshot-wall centroid is the physical actuator assembly projection; the manual and controller semantics preserve the right/left coil identity.",
+        "notes": "Manual physical device: Right Sling; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The exact named slingshot-wall centroid is the physical actuator assembly projection; the manual and controller semantics preserve the right/left coil identity.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -5014,7 +5031,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -5024,7 +5042,7 @@
             "y": 0.735635
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5049,7 +5067,7 @@
       "kind": "coil",
       "label": "Left Sling",
       "physical": {
-        "notes": "Manual physical device: Left Sling; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The exact named slingshot-wall centroid is the physical actuator assembly projection; the manual and controller semantics preserve the right/left coil identity.",
+        "notes": "Manual physical device: Left Sling; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The exact named slingshot-wall centroid is the physical actuator assembly projection; the manual and controller semantics preserve the right/left coil identity.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -5068,7 +5086,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -5078,7 +5097,7 @@
             "y": 0.738286
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5103,7 +5122,7 @@
       "kind": "coil",
       "label": "Knocker",
       "physical": {
-        "notes": "Manual physical device: Knocker; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: Knocker sound callback. The knocker is an internal cabinet sound device; the working table models only its callback sound, so it has no normalized playfield coordinate.",
+        "notes": "Manual physical device: Knocker; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: Knocker sound callback. The knocker is an internal cabinet sound device; the working table models only its callback sound, so it has no normalized playfield coordinate.",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5151,7 +5170,7 @@
       "kind": "coil",
       "label": "Kickback",
       "physical": {
-        "notes": "Manual physical device: Kickback; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolAPlunger (left outer-lane kicker saver). The exact left-outlane switch 25 center is the shared kickback assembly projection established by the manual and working SolAPlunger callback; it is not a claim about the under-playfield coil's internal center.",
+        "notes": "Manual physical device: Kickback; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolAPlunger (fires Plunger1, the left outer-lane kicker saver). SolAPlunger fires Plunger1, the table's kickback plunger at the foot of the left outlane, so that object is the coil's effect.",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5165,22 +5184,20 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.kickback.effect.trigger-sw25-kickback-assembly",
+            "id": "device.kickback.effect.plunger-plunger1",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.052614,
-            "y": 0.79993
+            "x": 0.052587,
+            "y": 0.891072
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5205,7 +5222,7 @@
       "kind": "coil",
       "label": "Plunger",
       "physical": {
-        "notes": "Manual physical device: Plunger; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolShooter (auto plunger).",
+        "notes": "Manual physical device: Plunger; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolShooter (bsShooter.SolOut, the shooter-lane saucer at switch 78). The 2-39 drawing's leader for 9 ends on the dashed outline of the C-9638 ball shooter assembly below the playfield's front edge; the placement is the shooter-lane ball seat (Kicker.sw78, the saucer bsShooter kicks) that the assembly's plunger strikes.",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5219,22 +5236,20 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.plunger.effect.plunger1",
+            "id": "device.plunger.effect.kicker-sw78",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.052587,
-            "y": 0.891072
+            "x": 0.938104,
+            "y": 0.899932
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5259,7 +5274,7 @@
       "kind": "coil",
       "label": "Top Lock",
       "physical": {
-        "notes": "Manual physical device: Top Lock; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolTopPopper.",
+        "notes": "Manual physical device: Top Lock; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolTopPopper.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -5276,9 +5291,7 @@
             "id": "device.top-lock.effect.kicker-sw55",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -5288,7 +5301,7 @@
             "y": 0.032822
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5313,7 +5326,7 @@
       "kind": "coil",
       "label": "Gun Motor",
       "physical": {
-        "notes": "Manual physical device: Gun Motor; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: MECHGUN motor.",
+        "notes": "Manual physical device: Gun Motor; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: MECHGUN motor. The gun motor turns the A-14504 platform; the placement is the T2_Gun pivot the retained cvpmMech rotates, a projection of the under-playfield motor.",
         "part_number": "14-7963"
       },
       "provenance": {
@@ -5332,7 +5345,8 @@
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
@@ -5342,7 +5356,7 @@
             "y": 0.476126
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5358,7 +5372,7 @@
           "value": "12"
         }
       ],
-      "availability": "optional",
+      "availability": "used",
       "binding": {
         "device": 12,
         "group": "pinmame.output.solenoid"
@@ -5367,7 +5381,8 @@
       "kind": "coil",
       "label": "Knock Down",
       "physical": {
-        "notes": "Manual physical device: Knock Down; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Conflict: the early manual solenoid/location list calls this Knock Down (SM1-26-600), but the later electrical table marks solenoid 12 Not Used. The retained VPW script has no SolCallback(12). The L-8 ROM still drives it: its T.4 SOLENOID TEST prints KNOCK DOWN with the wires BRN-YEL VIO-ORN, the printed branch, and pulses public 12. Firmware that names and drives a coil does not show that one is fitted, so availability is optional until the printed conflict is resolved. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
+        "assembly_part_number": "A-14908",
+        "notes": "Manual physical device: Knock Down; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The drop-target knock-down coil. The 2-23 A-14615 1-Bank Drop Target Assembly parts list includes item 23, A-14908 Target Knock Down Assembly (01-8647-L actuator, A-14913 frame and eyelet, SM1-26-600 coil), bolted beside the AE-26-1200 reset coil of solenoid 28; the 1-28 solenoid table and the 2-39 Solenoid Locations list print solenoid 12 as Knock Down with that SM1-26-600 coil, and the 2-39 drawing prints balloon 12 on the drop-target assembly. The 2-38 copy of the solenoid table prints the row as Not Used and blanks its part-number cell, but keeps its Low Power type, Brn-Yel wire, J127-5 connection and Q52 transistor, and the 3-8 interboard table wires Solenoid 12 Brown/Yellow to J127-5 and Q52. The L-8 ROM's T.4 SOLENOID TEST names solenoid 12 KNOCK DOWN with the printed BRN-YEL wire and pulses public 12. The retained VPW script has no SolCallback(12), and the nFozzy comparison script keeps a SolDTdown handler for it commented out as a cut feature; owner repair reports describe the small knock-down coil fitted on the drop-target assembly but not seen to fire in normal play, consistent with Not Used on 2-38 meaning that the game rules leave it idle. A recreation fits the coil so that a pulse drops the target and closes switch 77. The knock-down sub-assembly is bolted to the A-14615 drop-target assembly; the placement is the drop target the coil acts on, and the 2-39 drawing prints balloon 12 on that assembly.",
         "part_number": "SM1-26-600"
       },
       "provenance": {
@@ -5375,6 +5390,27 @@
           "manual.williams.terminator-2-judgment-day.1991",
           "pinmame.core.4ec52ff0ac13",
           "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.knock-down.effect.hittarget-sw77-drop-target-assembly",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.terminator-2-judgment-day.1991",
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.301758,
+            "y": 0.138134
+          }
         ],
         "status": "validated"
       },
@@ -5401,7 +5437,7 @@
       "kind": "coil",
       "label": "Left Jet",
       "physical": {
-        "notes": "Manual physical device: Left Jet; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The exact named bumper center is the shared pop-bumper coil/effect anchor; the matching working hit event proves the switch address.",
+        "notes": "Manual physical device: Left Jet; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The exact named bumper centre is the shared pop-bumper coil/effect anchor.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5418,9 +5454,7 @@
             "id": "device.left-jet.effect.bumper-bumper1",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -5430,7 +5464,7 @@
             "y": 0.184143
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5455,7 +5489,7 @@
       "kind": "coil",
       "label": "Right Jet",
       "physical": {
-        "notes": "Manual physical device: Right Jet; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The exact named bumper center is the shared pop-bumper coil/effect anchor; the matching working hit event proves the switch address.",
+        "notes": "Manual physical device: Right Jet; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The retained VPW script pulses switch 42 from its Bumper2 object and switch 43 from Bumper3. Both factory location drawings (switch callouts 41-43 printed inside the bumper caps on 2-37, coil balloons 13-15 on 2-39) put the Right Jet, switch 42 and coil 14, on the right-hand bumper (Bumper3) and the Bottom Jet, switch 43 and coil 15, on the lowest bumper (Bumper2); the table swaps the two bindings, which changes nothing it scores. The placement follows the drawings. The exact named bumper centre is the shared pop-bumper coil/effect anchor.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5469,22 +5503,20 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.right-jet.effect.bumper-bumper2",
+            "id": "device.right-jet.effect.bumper-bumper3",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.559494,
-            "y": 0.271911
+            "x": 0.716717,
+            "y": 0.208798
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5509,7 +5541,7 @@
       "kind": "coil",
       "label": "Bottom Jet",
       "physical": {
-        "notes": "Manual physical device: Bottom Jet; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The exact named bumper center is the shared pop-bumper coil/effect anchor; the matching working hit event proves the switch address.",
+        "notes": "Manual physical device: Bottom Jet; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The retained VPW script pulses switch 42 from its Bumper2 object and switch 43 from Bumper3. Both factory location drawings (switch callouts 41-43 printed inside the bumper caps on 2-37, coil balloons 13-15 on 2-39) put the Right Jet, switch 42 and coil 14, on the right-hand bumper (Bumper3) and the Bottom Jet, switch 43 and coil 15, on the lowest bumper (Bumper2); the table swaps the two bindings, which changes nothing it scores. The placement follows the drawings. The exact named bumper centre is the shared pop-bumper coil/effect anchor.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5523,22 +5555,20 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.bottom-jet.effect.bumper-bumper3",
+            "id": "device.bottom-jet.effect.bumper-bumper2",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.716717,
-            "y": 0.208798
+            "x": 0.559494,
+            "y": 0.271911
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5563,7 +5593,7 @@
       "kind": "coil",
       "label": "Left Lock",
       "physical": {
-        "notes": "Manual physical device: Left Lock; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: SolLeftPopper.",
+        "notes": "Manual physical device: Left Lock; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: SolLeftPopper. The 2-39 drawing's leader for 16 ends at the lower end of the left lane, 0.13 normalized below the lock, while the 2-4 underside map draws the B-9361-R-6 left ball-eject assembly with its B-11203-L-1 coil beside the left lock, where both retained tables put their lock kicker and the 2-37 callout 51 puts the lock switch; the placement is the lock saucer the coil ejects from.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -5580,9 +5610,7 @@
             "id": "device.left-lock.effect.kicker-sw51",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -5592,7 +5620,7 @@
             "y": 0.444927
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -5617,8 +5645,9 @@
       "kind": "flasher",
       "label": "Hot Dog Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Hot Dog Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (4 PL)"
+        "notes": "Manual physical device: Hot Dog Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres. The manual prints four #906 playfield bulbs under the Hot Dog insert; the table models them as two lights (F117/F1173 and F1172/F1174 render pairs), so each placement stands for two bulbs. The factory drawing (Terminator 2 Judgement Day Operations Manual.pdf PDF 105, printed 2-39) draws callout 17 only once, at a nearer placement of this device, so placement device.hot-dog-flashlamps.emitter.f117 stays validated.",
+        "part_number": "#906 (4 PL)",
+        "quantity": 4
       },
       "provenance": {
         "source_refs": [
@@ -5682,8 +5711,9 @@
       "kind": "flasher",
       "label": "Right Sling Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Right Sling Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (1 BB), #89 (1 PL)"
+        "notes": "Manual physical device: Right Sling Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#906 (1 BB), #89 (1 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5734,8 +5764,9 @@
       "kind": "flasher",
       "label": "Left Sling Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Left Sling Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (1 BB), #89 (1 PL)"
+        "notes": "Manual physical device: Left Sling Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#906 (1 BB), #89 (1 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5786,8 +5817,9 @@
       "kind": "flasher",
       "label": "Left Lock Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Left Lock Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (1 BB), #89 (1 PL)"
+        "notes": "Manual physical device: Left Lock Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Measured on the 2-39 Solenoid Locations drawing, whose solid balloon 20 is printed on the left-lock flashlamp between the left lane and the five-target bank. The retained VPW table only has glow lights for it (F120/F120a, falloff 300, in the left lane 0.10 normalized away), so the drawing gives the socket.",
+        "part_number": "#906 (1 BB), #89 (1 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5800,17 +5832,18 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.left-lock-flashlamps.emitter.f120",
+            "id": "device.left-lock-flashlamps.emitter.2-39-balloon-20",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "manual.williams.terminator-2-judgment-day.1991",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.049747,
-            "y": 0.398921
+            "x": 0.153,
+            "y": 0.379
           }
         ],
         "status": "validated"
@@ -5838,8 +5871,9 @@
       "kind": "flasher",
       "label": "Gun Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Gun Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#89 (2 PL)"
+        "notes": "Manual physical device: Gun Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres. The factory drawing (Terminator 2 Judgement Day Operations Manual.pdf PDF 105, printed 2-39) draws callout 21 only once, at a nearer placement of this device, so placement device.gun-flashlamps.emitter.f121 stays validated.",
+        "part_number": "#89 (2 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5903,8 +5937,9 @@
       "kind": "flasher",
       "label": "Right Ramp Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Right Ramp Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (1 BB), #89 (1 PL)"
+        "notes": "Manual physical device: Right Ramp Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#906 (1 BB), #89 (1 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5955,8 +5990,9 @@
       "kind": "flasher",
       "label": "Left Ramp Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Left Ramp Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#906 (1 BB), #89 (1 PL)"
+        "notes": "Manual physical device: Left Ramp Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#906 (1 BB), #89 (1 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6007,8 +6043,9 @@
       "kind": "flasher",
       "label": "Backglass Flashlamp",
       "physical": {
-        "notes": "Manual physical device: Backglass Flashlamp; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. The manual identifies a backglass flashlamp on the Blu-Gry / J125-7 / Q32 branch, and the L-8 ROM's T.5 FLASHER TEST prints F.L. C. BACKGLASS with the wires BLU-GRY RED-WHT and pulses public 24. The retained VPW script has no SolCallback(24); that is a gap in the table, which renders no backglass, and says nothing against the machine. The manual locates this flasher in the backglass/backbox, outside normalized playfield space; the working script has no callback for it.",
-        "part_number": "#906 (1 BB)"
+        "notes": "Manual physical device: Backglass Flashlamp; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The manual identifies a backglass flashlamp on the Blu-Gry / J125-7 / Q32 branch, and the L-8 ROM's T.5 FLASHER TEST prints F.L. C. BACKGLASS with the wires BLU-GRY RED-WHT and pulses public 24. The retained VPW script has no SolCallback(24); that is a gap in the table, which renders no backglass, and says nothing against the machine. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. The manual locates this flasher in the backglass/backbox (#906, 1 BB), outside normalized playfield space; the working script has no callback for it.",
+        "part_number": "#906 (1 BB)",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -6020,7 +6057,7 @@
         "status": "validated"
       },
       "roles": [
-        "backbox.flasher"
+        "cabinet.backbox"
       ],
       "spatial": {
         "provenance": {
@@ -6055,8 +6092,9 @@
       "kind": "flasher",
       "label": "Targets Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Targets Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#89 (2 PL)"
+        "notes": "Manual physical device: Targets Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Measured on the 2-39 Solenoid Locations drawing, where callout 25's two leaders end at two round sockets in the left lane behind the five-target bank. The retained VPW table only has two coincident glow lights for it (F125/F125a, on the targets 0.10 normalized away), so the drawing gives both sockets.",
+        "part_number": "#89 (2 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6069,17 +6107,32 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.targets-flashlamps.emitter.f125",
+            "id": "device.targets-flashlamps.emitter.2-39-callout-25-lower-socket",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "manual.williams.terminator-2-judgment-day.1991",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.18159,
-            "y": 0.347411
+            "x": 0.074,
+            "y": 0.37
+          },
+          {
+            "id": "device.targets-flashlamps.emitter.2-39-callout-25-upper-socket",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.terminator-2-judgment-day.1991",
+                "drawing-callouts.terminator-2.2026-10-22"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.079,
+            "y": 0.329
           }
         ],
         "status": "validated"
@@ -6107,8 +6160,9 @@
       "kind": "flasher",
       "label": "Left Popper Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Left Popper Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#89 (2 PL)"
+        "notes": "Manual physical device: Left Popper Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. The 2-38 copy of the solenoid table prints its six J125 insert pins between rows, half a row lower than the 1-28 copy and the 3-8 interboard wiring table, beside the six rows with a backbox bulb (18-20 and 22-24); the 1-28 copy and the 3-8 table agree on J125-2 for 20, J125-3 for 21, J125-5 for 22, J125-7 for 24, J125-8 for 25 and J125-9 for 26, and the wiring follows them. A wiring-detail disagreement only: the device, its public address and its fitment are not in doubt. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#89 (2 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6172,8 +6226,9 @@
       "kind": "flasher",
       "label": "Right Popper Flashlamps",
       "physical": {
-        "notes": "Manual physical device: Right Popper Flashlamps; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centers.",
-        "part_number": "#89 (2 PL)"
+        "notes": "Manual physical device: Right Popper Flashlamps; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Named retained VPX Light.F objects are direct table geometry; closely coincident render-layer duplicates are not promoted unless they are distinct named emitter centres.",
+        "part_number": "#89 (2 PL)",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6237,7 +6292,7 @@
       "kind": "coil",
       "label": "Drop Target",
       "physical": {
-        "notes": "Manual physical device: Drop Target; printed coil/driver references are on manual pages 48-50, 104-105, 112, and 114. Retained script callback: dtDrop1.SolDropUp.",
+        "notes": "Manual physical device: Drop Target; printed on the 1-28 and 2-38 solenoid tables, the 2-39 Solenoid Locations list and the 3-8 interboard wiring table. Retained script callback: dtDrop1.SolDropUp.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -6254,9 +6309,7 @@
             "id": "device.drop-target.effect.hittarget-sw77",
             "provenance": {
               "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022"
               ],
               "status": "validated"
             },
@@ -6266,203 +6319,13 @@
             "y": 0.138134
           }
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
         "control_connection": "J122-4",
         "control_wire": "Blu-Yel",
         "driver_transistor": "Q20"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "34"
-        }
-      ],
-      "availability": "unused",
-      "binding": {
-        "device": 34,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "device.unused-generic-flipper-output-34",
-      "kind": "coil",
-      "label": "Unused Generic Flipper Output 34",
-      "physical": {
-        "notes": "Lower flipper controller output; callback is not used."
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "internal.unused.generic-flipper"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "36"
-        }
-      ],
-      "availability": "unused",
-      "binding": {
-        "device": 36,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "device.unused-generic-flipper-output-36",
-      "kind": "coil",
-      "label": "Unused Generic Flipper Output 36",
-      "physical": {
-        "notes": "Lower flipper controller output; callback is not used."
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "internal.unused.generic-flipper"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "46"
-        }
-      ],
-      "availability": "used",
-      "binding": {
-        "device": 46,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "device.lower-right-flipper",
-      "kind": "coil",
-      "label": "Lower Right Flipper",
-      "physical": {
-        "notes": "Lower flipper controller output; callback is sLRFlipper.",
-        "part_number": "FL-11630"
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13",
-          "vpx-script.t2-vpw-0022"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "flipper.lower.right"
-      ],
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.lower-right-flipper.effect.triggerrf",
-            "provenance": {
-              "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "effect",
-            "space": "playfield",
-            "x": 0.629895,
-            "y": 0.853699
-          }
-        ],
-        "status": "observed"
-      },
-      "wiring": {
-        "board": "WPC driver board",
-        "control_connection": "J109-7",
-        "control_wire": "Blu-Yel"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "48"
-        }
-      ],
-      "availability": "used",
-      "binding": {
-        "device": 48,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "device.lower-left-flipper",
-      "kind": "coil",
-      "label": "Lower Left Flipper",
-      "physical": {
-        "notes": "Lower flipper controller output; callback is sLLFlipper.",
-        "part_number": "FL-11630"
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13",
-          "vpx-script.t2-vpw-0022"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "flipper.lower.left"
-      ],
-      "spatial": {
-        "placements": [
-          {
-            "id": "device.lower-left-flipper.effect.triggerlf",
-            "provenance": {
-              "source_refs": [
-                "manual.williams.terminator-2-judgment-day.1991",
-                "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "effect",
-            "space": "playfield",
-            "x": 0.26309,
-            "y": 0.854118
-          }
-        ],
-        "status": "observed"
-      },
-      "wiring": {
-        "board": "WPC driver board",
-        "control_connection": "J109-5",
-        "control_wire": "Gry-Yel"
       }
     },
     {
@@ -6481,7 +6344,7 @@
       "kind": "virtual",
       "label": "WPC State Channel 29",
       "physical": {
-        "notes": "PinMAME publishes meaningful WPC controller state at this address; it is not a physical playfield device."
+        "notes": "PinMAME mirrors WPC_GILAMPS bit 5, one of the CPU board's J111 state bits, to public address 29; a live controller state channel, not a playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6520,7 +6383,7 @@
       "kind": "virtual",
       "label": "WPC State Channel 30",
       "physical": {
-        "notes": "PinMAME publishes meaningful WPC controller state at this address; it is not a physical playfield device."
+        "notes": "PinMAME mirrors WPC_GILAMPS bit 6, one of the CPU board's J111 state bits, to public address 30; a live controller state channel, not a playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6559,7 +6422,7 @@
       "kind": "relay",
       "label": "Game-On Solenoid Relay",
       "physical": {
-        "notes": "On this pre-Fliptronic WPC generation, pinned wpc.c identifies public address 31 as the real Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers. It is a cabinet/flipper-enable relay, not a playfield device."
+        "notes": "On this pre-Fliptronic WPC generation, pinned wpc.c identifies public address 31 as the real Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers; pinned core.c also gates the synthetic flipper states on it. It is a cabinet/flipper-enable relay, not a playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6569,7 +6432,8 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.wpc-state",
+        "cabinet.game-on-relay"
       ],
       "spatial": {
         "provenance": {
@@ -6637,7 +6501,46 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 33",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused.wpc-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "34"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-state-generic-output-34",
+      "kind": "virtual",
+      "label": "Unused WPC State/Generic Output 34",
+      "physical": {
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6676,7 +6579,46 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 35",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused.wpc-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "36"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-state-generic-output-36",
+      "kind": "virtual",
+      "label": "Unused WPC State/Generic Output 36",
+      "physical": {
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6715,7 +6657,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 37",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6754,7 +6696,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 38",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6793,7 +6735,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 39",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6832,7 +6774,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 40",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6871,7 +6813,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 41",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6910,7 +6852,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 42",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6949,7 +6891,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 43",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -6988,7 +6930,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 44",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -7018,16 +6960,16 @@
           "value": "45"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 45,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.unused-wpc-state-generic-output-45",
+      "id": "device.synthetic-lower-right-flipper-power",
       "kind": "virtual",
-      "label": "Unused WPC State/Generic Output 45",
+      "label": "Synthetic Lower Right Flipper Power",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "Fabricated by core_updateSw from the live lower-right flipper button while the Game-On relay (31) is on: core_getSol 45 reads the power bit of PinMAME's synthetic flipper state. The physical FL-11630 flipper takes its power from the power driver board (Blu-Yel, J109-7) through the Game-On relay and is switched by the cabinet button; there is no CPU flipper drive."
       },
       "provenance": {
         "source_refs": [
@@ -7037,7 +6979,48 @@
         "status": "validated"
       },
       "roles": [
-        "internal.unused.wpc-output"
+        "internal.synthetic-flipper"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "46"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-lower-right-flipper",
+      "kind": "virtual",
+      "label": "Synthetic Lower Right Flipper",
+      "physical": {
+        "notes": "PinMAME's combined lower-right flipper state (sLRFlipper) that the retained script's SolCallback(sLRFlipper) consumes to animate the bat; not an additional coil. The physical FL-11630 flipper takes its power from the power driver board (Blu-Yel, J109-7) through the Game-On relay and is switched by the cabinet button."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.t2-vpw-0022"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper",
+        "flipper.lower.right"
       ],
       "spatial": {
         "provenance": {
@@ -7057,16 +7040,16 @@
           "value": "47"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 47,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.unused-wpc-state-generic-output-47",
+      "id": "device.synthetic-lower-left-flipper-power",
       "kind": "virtual",
-      "label": "Unused WPC State/Generic Output 47",
+      "label": "Synthetic Lower Left Flipper Power",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "Fabricated by core_updateSw from the live lower-left flipper button while the Game-On relay (31) is on: core_getSol 47 reads the power bit of PinMAME's synthetic flipper state. The physical FL-11630 flipper takes its power from the power driver board (Gry-Yel, J109-5) through the Game-On relay and is switched by the cabinet button; there is no CPU flipper drive."
       },
       "provenance": {
         "source_refs": [
@@ -7076,7 +7059,48 @@
         "status": "validated"
       },
       "roles": [
-        "internal.unused.wpc-output"
+        "internal.synthetic-flipper"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "48"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-lower-left-flipper",
+      "kind": "virtual",
+      "label": "Synthetic Lower Left Flipper",
+      "physical": {
+        "notes": "PinMAME's combined lower-left flipper state (sLLFlipper) that the retained script's SolCallback(sLLFlipper) consumes to animate the bat; not an additional coil. The physical FL-11630 flipper takes its power from the power driver board (Gry-Yel, J109-5) through the Game-On relay and is switched by the cabinet button."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.t2-vpw-0022"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper",
+        "flipper.lower.left"
       ],
       "spatial": {
         "provenance": {
@@ -7105,7 +7129,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 49",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -7144,7 +7168,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 50",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME compatibility/state channel; Terminator 2 declares no upper flippers, no custom solenoids and no simulator ball-shooter state, so nothing drives this public address."
       },
       "provenance": {
         "source_refs": [
@@ -8759,7 +8783,9 @@
       "kind": "lamp",
       "label": "Eyes Lower",
       "physical": {
-        "notes": "Printed lamp matrix address 5-1; manual lamp address 51. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-5 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored)."
+        "notes": "Printed lamp matrix address 5-1; manual lamp address 51. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 1 on J133-1; the 2-34 lamp schematic draws them on J137-5 and J133-1. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored).",
+        "part_number": "#44",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8821,7 +8847,9 @@
       "kind": "lamp",
       "label": "Eyes Upper",
       "physical": {
-        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-5 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored). The working script drives the exact Primitive.L52 skull-eye mesh. That primitive has an object-space origin at (0,0), so the exact adjacent skull drop-target center is retained as a disclosed assembly projection rather than treating (0,0) as a lamp position."
+        "notes": "Printed lamp matrix address 5-2; manual lamp address 52. Connector labels differ between printed sheets: the 1-33 lamp matrix table prints column 5 on J138-5 and row 2 on J133-2; the 2-34 lamp schematic draws them on J137-5 and J133-2. Both give the same wires and address, so this is a wiring detail, not a conflict (conflict.lamp-schematic-connector-labels is ignored). The working script fades the skull images of Primitive.L52, the T-800 skull mesh above the drop target, for this lamp; the 2-35 lamp drawing prints 52 (in head) with two leaders into the skull for its two #44 bulbs. The primitive is stored at the origin with its geometry baked into the mesh, so the placement is the world-bounds centre of the mesh (world x = 19.8 obj x, world y = 19.5 obj z), a projection of both eye bulbs onto the head.",
+        "part_number": "#44",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8834,22 +8862,23 @@
       "spatial": {
         "placements": [
           {
-            "id": "lamp.matrix-52.emitter.primitive-l52-skull-assembly-projection",
+            "id": "lamp.matrix-52.emitter.primitive-l52-skull-mesh-world-bounds-centre",
             "provenance": {
               "source_refs": [
                 "manual.williams.terminator-2-judgment-day.1991",
                 "vpx-table.t2-vpw-0022",
-                "vpx-script.t2-vpw-0022"
+                "vpx-script.t2-vpw-0022",
+                "drawing-callouts.terminator-2.2026-10-22"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.301758,
-            "y": 0.138134
+            "x": 0.30151,
+            "y": 0.142518
           }
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -10331,18 +10360,33 @@
       },
       "id": "gi.string-1",
       "kind": "gi",
-      "label": "GI 1: Top Insert",
+      "label": "Top Insert String",
       "physical": {
-        "notes": "Manual GI string: GI 1: Top Insert; printed GI table on manual pages 48-50. Manual five-string naming is retained; the VPW script exposes only GI2/GI3 emitter arrays and a separate Light2-Light5 branch. See the conflict record and spatial audit. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
+        "location": "backbox insert panel, top",
+        "notes": "General-illumination string 1, Top Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 0 alone while it prints TOP INSERT and WHT-BRN BRN, and the 2-39 Solenoid Locations list prints 01 #555 Top Insert String. The 1-28 and 2-38 solenoid tables print this row as 01 Top Insert G.I., Wht-Brn, J120-7, Q18, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the brown string to the insert only (feed J120-1, return J120-7): it lights the upper half of the backbox insert panel behind the translite. The retained VPW script's UpdateGI Case 0 does nothing, and the nFozzy table drives only its backglass sprite from public 0.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
-          "vpx-script.t2-vpw-0022",
+          "runtime.terminator-2.t2-l8.gi-test",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.insert-panel"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991",
+            "runtime.terminator-2.t2-l8.gi-test"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -10365,23 +10409,38 @@
       },
       "id": "gi.string-2",
       "kind": "gi",
-      "label": "GI 2: Left Playfield",
+      "label": "Bottom Insert String",
       "physical": {
-        "notes": "Manual GI string: GI 2: Left Playfield; printed GI table on manual pages 48-50. Manual five-string naming is retained; the VPW script exposes only GI2/GI3 emitter arrays and a separate Light2-Light5 branch. See the conflict record and spatial audit. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
+        "location": "backbox insert panel, bottom",
+        "notes": "General-illumination string 2, Bottom Insert String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 1 alone while it prints BOTTOM INSERT and WHT-ORN ORN, and the 2-39 Solenoid Locations list prints 02 #555 Bottom Insert String. The 1-28 and 2-38 solenoid tables print this row as 02 Left Playfield G.I., Wht-Vio, J119-1, Q10, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table prints the insert pins J120-2 (feed) and J120-8 (return) on its Green row and no connector at all on its Orange row, while the 1-28 and 2-38 tables put J120-8 on Wht-Orn; on the WPC power driver board J120-2/J120-8 are the orange string's insert pins, and the ROM names the orange string BOTTOM INSERT, so this string lights the lower half of the backbox insert panel. The retained VPW script has no Case 1 at all.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
-          "vpx-script.t2-vpw-0022",
+          "runtime.terminator-2.t2-l8.gi-test",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.insert-panel"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991",
+            "runtime.terminator-2.t2-l8.gi-test"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "WPC driver board",
-        "control_connection": "J119-1",
-        "control_wire": "Wht-Vio",
+        "control_connection": "J120-8",
+        "control_wire": "Wht-Orn",
         "driver_transistor": "Q10"
       }
     },
@@ -10399,91 +10458,32 @@
       },
       "id": "gi.string-3",
       "kind": "gi",
-      "label": "GI 3: Right Playfield",
+      "label": "Right Playfield String",
       "physical": {
-        "notes": "Manual GI string: GI 3: Right Playfield; printed GI table on manual pages 48-50. Manual five-string naming is retained; the VPW script exposes only GI2/GI3 emitter arrays and a separate Light2-Light5 branch. See the conflict record and spatial audit. The placement list is the retained script's Case 2 GI2/GI3 emitter group. Its physical five-string identity conflicts with the manual GI table; this is intentionally conflicted evidence, not a resolved five-channel mapping.",
+        "notes": "General-illumination string 3, Right Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 2 alone while it prints RIGHT PLAYFIELD and WHT-YEL YEL, and the 2-39 Solenoid Locations list prints 03 #555 Right Playfield String. The 1-28 and 2-38 solenoid tables print this row as 03 Right Playfield G.I., Wht-Yel, J121-9, Q14, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the yellow string to the playfield only (feed J121-3, return J121-9). The retained VPW script drives every playfield G.I. light it has from public 2 (UpdateGI Case 2: arrays GI2 and GI3) and has no Case 4, so it lights the left side from this string as well; that is a simplification of the table, not a property of the machine. Placements: the 21 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a socket the nFozzy table models for public 2 (a piece of its GI_bulbR bulb mesh, a jet-cap bulb primitive or one of its string lights); the manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a socket, listed in the spatial audit, are not placed.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
+          "runtime.terminator-2.t2-l8.gi-test",
+          "pinmame.core.4ec52ff0ac13",
           "vpx-script.t2-vpw-0022",
-          "pinmame.core.4ec52ff0ac13"
+          "vpx-table.t2-nfozzy-1-12a",
+          "vpx-script.t2-modern-comparison"
         ],
         "status": "validated"
       },
       "spatial": {
         "placements": [
           {
-            "id": "gi.string-3.emitter.b1",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.48207,
-            "y": 0.184143
-          },
-          {
-            "id": "gi.string-3.emitter.b2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.559494,
-            "y": 0.271911
-          },
-          {
-            "id": "gi.string-3.emitter.b3",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.716717,
-            "y": 0.208798
-          },
-          {
-            "id": "gi.string-3.emitter.gi-15",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.485061,
-            "y": 0.293621
-          },
-          {
-            "id": "gi.string-3.emitter.gi-16",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.55252,
-            "y": 0.315156
-          },
-          {
             "id": "gi.string-3.emitter.gi-17",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10496,7 +10496,10 @@
             "id": "gi.string-3.emitter.gi-18",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10509,7 +10512,10 @@
             "id": "gi.string-3.emitter.gi-19",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10519,23 +10525,13 @@
             "y": 0.109805
           },
           {
-            "id": "gi.string-3.emitter.gi-20",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.751492,
-            "y": 0.118832
-          },
-          {
             "id": "gi.string-3.emitter.gi-001",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10545,23 +10541,13 @@
             "y": 0.120761
           },
           {
-            "id": "gi.string-3.emitter.gi-002",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.436722,
-            "y": 0.094357
-          },
-          {
             "id": "gi.string-3.emitter.gi-21",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10571,10 +10557,29 @@
             "y": 0.161347
           },
           {
+            "id": "gi.string-3.emitter.b1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.480095,
+            "y": 0.182946
+          },
+          {
             "id": "gi.string-3.emitter.gi-22",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10584,101 +10589,109 @@
             "y": 0.200744
           },
           {
-            "id": "gi.string-3.emitter.gi-23",
+            "id": "gi.string-3.emitter.b5",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.265327,
-            "y": 0.215044
+            "x": 0.716301,
+            "y": 0.20801
           },
           {
-            "id": "gi.string-3.emitter.gi-24",
+            "id": "gi.string-3.emitter.b3",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.167672,
-            "y": 0.153719
+            "x": 0.55941,
+            "y": 0.272376
           },
           {
-            "id": "gi.string-3.emitter.gi-25",
+            "id": "gi.string-3.emitter.gi-15",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.126761,
-            "y": 0.159142
+            "x": 0.485061,
+            "y": 0.293621
           },
           {
-            "id": "gi.string-3.emitter.gi-26",
+            "id": "gi.string-3.emitter.gi-34",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.87866,
-            "y": 0.02376
+            "x": 0.748453,
+            "y": 0.302558
           },
           {
-            "id": "gi.string-3.emitter.gi-27",
+            "id": "gi.string-3.emitter.gi-33",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.931776,
-            "y": 0.023917
+            "x": 0.789795,
+            "y": 0.312344
           },
           {
-            "id": "gi.string-3.emitter.gi-28",
+            "id": "gi.string-3.emitter.gi-16",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.94523,
-            "y": 0.049722
-          },
-          {
-            "id": "gi.string-3.emitter.gi-29",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.t2-vpw-0022"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.945428,
-            "y": 0.331937
+            "x": 0.55252,
+            "y": 0.315156
           },
           {
             "id": "gi.string-3.emitter.gi-30",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10691,7 +10704,10 @@
             "id": "gi.string-3.emitter.gi-31",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10704,7 +10720,10 @@
             "id": "gi.string-3.emitter.gi-32",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
@@ -10714,72 +10733,87 @@
             "y": 0.541727
           },
           {
-            "id": "gi.string-3.emitter.gi-33",
+            "id": "gi.string-3.emitter.gi-11",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.789795,
-            "y": 0.312344
+            "x": 0.853842,
+            "y": 0.609888
           },
           {
-            "id": "gi.string-3.emitter.gi-34",
+            "id": "gi.string-3.emitter.gi-10",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.748453,
-            "y": 0.302558
+            "x": 0.857803,
+            "y": 0.642244
           },
           {
-            "id": "gi.string-3.emitter.gi-35",
+            "id": "gi.string-3.emitter.gi-6",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.101807,
-            "y": 0.108598
+            "x": 0.73013,
+            "y": 0.7117
           },
           {
-            "id": "gi.string-3.emitter.gi-37",
+            "id": "gi.string-3.emitter.gi-5",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.75315,
-            "y": 0.809838
+            "x": 0.690173,
+            "y": 0.772548
           },
           {
-            "id": "gi.string-3.emitter.gi-38",
+            "id": "gi.string-3.emitter.gi-2",
             "provenance": {
               "source_refs": [
-                "vpx-table.t2-vpw-0022"
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.144315,
-            "y": 0.811588
+            "x": 0.683105,
+            "y": 0.832441
           }
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
@@ -10795,39 +10829,104 @@
           "value": "3"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 3,
         "group": "pinmame.output.gi"
       },
       "id": "gi.string-4",
       "kind": "gi",
-      "label": "GI 4: Not Used",
+      "label": "CPU String",
       "physical": {
-        "notes": "Manual GI string: GI 4: Not Used; printed GI table on manual pages 48-50. Later manual GI table marks GI 4 Not Used; the retained script has a Case 3 visual Light2-Light5 branch, so those facts are not merged into a physical string mapping."
+        "assembly_part_number": "A-14518",
+        "notes": "General-illumination string 4, CPU String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 3 alone while it prints CPU STRING and WHT-GRN GRN, and the 2-39 Solenoid Locations list prints 04 #555 CPU String. The 1-28 and 2-38 solenoid tables print this row as 04 Not Used, Wht-Orn, J120-8, Q16, blank bulb. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the green string's playfield pins J121-5 (feed) and J121-10 (return). The 2-4 major-mechanisms map marks one G. I. Lamp Assembly, A-14518 (lamp board C), a straight four-socket board on the playfield centre line under the CPU inserts; the retained VPW script's UpdateGI Case 3 switches its four Light2-Light5 lights there, and the nFozzy table drives its four Lgi CPU-insert sprites from public 3. After the fresh-NVRAM restart the ROM flickers this string by itself, so it carries effects of its own. Placements: the four lights Light2-Light5 that the retained VPW script's UpdateGI Case 3 switches, under the CPU inserts, each within 0.004 normalized of one of the four Lgi sprites the nFozzy table drives from public 3, on the four sockets of the A-14518 G. I. lamp board.",
+        "part_number": "#555",
+        "quantity": 4
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
+          "runtime.terminator-2.t2-l8.gi-test",
+          "pinmame.core.4ec52ff0ac13",
           "vpx-script.t2-vpw-0022",
-          "pinmame.core.4ec52ff0ac13"
+          "vpx-table.t2-nfozzy-1-12a",
+          "vpx-script.t2-modern-comparison"
         ],
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "gi.string-4.emitter.light3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.485441,
+            "y": 0.416936
+          },
+          {
+            "id": "gi.string-4.emitter.light2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.483732,
+            "y": 0.438977
+          },
+          {
+            "id": "gi.string-4.emitter.light4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.483705,
+            "y": 0.459459
+          },
+          {
+            "id": "gi.string-4.emitter.light5",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.479826,
+            "y": 0.481605
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
-        "control_connection": "J120-8",
-        "control_wire": "Wht-Orn",
+        "control_connection": "J121-10",
+        "control_wire": "Wht-Grn",
         "driver_transistor": "Q16"
       }
     },
@@ -10845,23 +10944,143 @@
       },
       "id": "gi.string-5",
       "kind": "gi",
-      "label": "GI 5: Bottom Insert",
+      "label": "Left Playfield String",
       "physical": {
-        "notes": "Manual GI string: GI 5: Bottom Insert; printed GI table on manual pages 48-50. Manual five-string naming is retained; the VPW script exposes only GI2/GI3 emitter arrays and a separate Light2-Light5 branch. See the conflict record and spatial audit. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.",
+        "notes": "General-illumination string 5, Left Playfield String: the L-8 ROM's T.6 GEN'L. ILLUM. test changes public G.I. 4 alone while it prints LEFT PLAYFIELD and WHT-VIO VIO, and the 2-39 Solenoid Locations list prints 05 #555 Left Playfield String. The 1-28 and 2-38 solenoid tables print this row as 05 Bottom Insert G.I., Wht-Grn, J120-10, Q12, #555. The ROM's T.6 GEN'L. ILLUM. test names the five public strings in the order of the 2-39 Solenoid Locations list (01 Top Insert, 02 Bottom Insert, 03 Right Playfield, 04 CPU String, 05 Left Playfield) and prints the board-standard wire pairs, brown, orange, yellow, green and violet for strings 1 to 5. The 1-28 and 2-38 solenoid tables keep the board's triacs in that string order (Q18, Q10, Q14, Q16, Q12) but print their names and return wires as 02 Left Playfield Wht-Vio, 04 Not Used Wht-Orn and 05 Bottom Insert Wht-Grn, and the 3-9 interboard table numbers its feeds in yet another order; owner repair reports agree with the ROM (the violet string lights the whole left side of the playfield and the coin-door lamps, the green string the CPU inserts). The definition follows the ROM, the 2-39 list and the 3-9 routing; each table's own row is transcribed in its excerpt. The 3-9 interboard table routes the violet string to the playfield (feed J121-6, return J121-11) and to the cabinet (feed J119-3, return J119-1): besides the left side of the playfield it lights the coin-door lamps, which are not placed. The retained VPW script's UpdateGI Case 4 is a bare Exit Sub under the comment Left Playfield, so the table lights this side from public 2 instead (see public 2). Placements: the 7 sockets both retained tables model for this string. Each is a light the VPW script's UpdateGI drives that lies within 0.01 normalized of a socket the nFozzy table models for public 4 (a piece of its GI_bulbL bulb mesh or one of its string lights); the manual prints no per-string bulb count, so the quantity is not asserted. The VPW lights without such a socket, listed in the spatial audit, are not placed.",
         "part_number": "#555"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.terminator-2-judgment-day.1991",
+          "runtime.terminator-2.t2-l8.gi-test",
+          "pinmame.core.4ec52ff0ac13",
           "vpx-script.t2-vpw-0022",
-          "pinmame.core.4ec52ff0ac13"
+          "vpx-table.t2-nfozzy-1-12a",
+          "vpx-script.t2-modern-comparison"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.string-5.emitter.gi-24",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.167672,
+            "y": 0.153719
+          },
+          {
+            "id": "gi.string-5.emitter.gi-25",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.126761,
+            "y": 0.159142
+          },
+          {
+            "id": "gi.string-5.emitter.gi-23",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.265327,
+            "y": 0.215044
+          },
+          {
+            "id": "gi.string-5.emitter.gi-7",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.045898,
+            "y": 0.629578
+          },
+          {
+            "id": "gi.string-5.emitter.gi-4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.167698,
+            "y": 0.710547
+          },
+          {
+            "id": "gi.string-5.emitter.gi-3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.206652,
+            "y": 0.773414
+          },
+          {
+            "id": "gi.string-5.emitter.gi-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.t2-vpw-0022",
+                "vpx-script.t2-vpw-0022",
+                "vpx-table.t2-nfozzy-1-12a",
+                "vpx-extraction.t2-nfozzy-1-12a"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.209204,
+            "y": 0.833123
+          }
         ],
         "status": "validated"
       },
       "wiring": {
         "board": "WPC driver board",
-        "control_connection": "J120-10",
-        "control_wire": "Wht-Grn",
+        "control_connection": "J121-11 + J119-1",
+        "control_wire": "Wht-Vio",
         "driver_transistor": "Q12"
       }
     }
@@ -10892,6 +11111,19 @@
         "status": "validated"
       },
       "source": "device.drop-target"
+    },
+    {
+      "destination": "switch.matrix-77",
+      "id": "relationship.drop-target-knock-down",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.williams.terminator-2-judgment-day.1991",
+          "runtime.terminator-2.t2-l8.solenoid-flasher-tests"
+        ],
+        "status": "validated"
+      },
+      "source": "device.knock-down"
     }
   ],
   "schema_version": 2,
@@ -10910,7 +11142,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPCDMD=0x4; src/wpc/sims/wpc/full/t2.c GEN_WPCDMD, wpc_dispDMD, t2 driver family",
+      "locator": "src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPCDMD=0x4; src/wpc/sims/wpc/full/t2.c GEN_WPCDMD, wpc_dispDMD, FLIP_SWNO(12,11) without FLIP_SOL, t2 driver family; src/wpc/core.c core_getSol 45-48 synthetic lower-flipper states; src/wpc/wpc.c wpc_r WPC_FLIPPERS returns ~swMatrix[CORE_FLIPPERSWCOL] on pre-WPC-95 generations",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "sha256": "e894868e68958d1343abfd89dcd229ff7c7d629effb364026b57d8aedb6924e7",
       "uri": "https://github.com/vpinball/pinmame"
@@ -11022,12 +11254,168 @@
           "reviewed": true,
           "sha256": "b20bc68978416c288342b9215e367c30a1c922fb66082eaefc785abc510bfa50",
           "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-board-legend",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-board-legend.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 70, crop box 0.12,0.775,0.92,0.95, scanned page rendered at its native resolution (embedded image xref 621, 2551px across 8.26in), rendered at 309 dpi, grayscale, 2041x633 WebP quality 80",
+          "image_sha256": "ffdcc6b69919854701f2570d9ad9bd5d9ffe80a19de6cffa84d442dd34037c3f",
+          "locator": "PDF page 70, printed page 2-4, Lamp Boards legend A-K below the major-mechanisms map",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-board-legend.md",
+          "reviewed": true,
+          "sha256": "1af05f9fac615101a13a06f6dd47564d53dd8ce9990b71c208ca31f3ac728172",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.drop-target-assembly",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/drop-target-assembly.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 89, crop box 0.02,0.04,0.98,0.94, scanned page rendered at its native resolution (embedded image xref 792, 2551px across 8.26in), rendered at 126 dpi, capped to 1000px wide, grayscale, 1001x1328 WebP quality 80",
+          "image_sha256": "f4f80ad8d9a0cf0bf4607c8e0a9f929e24734ee8fbab7bb5c22c4bfb66e03509",
+          "locator": "PDF page 89, printed page 2-23, A-14615 1-Bank Drop Target Assembly drawing and parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/drop-target-assembly.md",
+          "reviewed": true,
+          "sha256": "089dd50f90edcf837b74c6d0df746d759776750d0f6baabaf6b4def96d4f4914",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.lamp-locations",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-locations.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 101, crop box 0.5,0.08,0.9,0.72, scanned page rendered at its native resolution (embedded image xref 900, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1021x2312 WebP quality 80",
+          "image_sha256": "f94c2a497ac2b3c5d0165ace2129036100ec03d745a4fb327170d627b63bcc73",
+          "locator": "PDF page 101, printed page 2-35, Lamp Locations drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/lamp-locations.md",
+          "reviewed": true,
+          "sha256": "52c60aa696caa8faadbd673ad42b7bb9d5f3d3b69b2111681fbb821c3d4e3342",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.switch-locations",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/switch-locations.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 103, crop box 0.4,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 918, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1455x2708 WebP quality 80",
+          "image_sha256": "7fad9e9ffef7cf9d6f56aa28499dde129e3281d77bada602cdcb75eccd5bf6e0",
+          "locator": "PDF page 103, printed page 2-37, Switch Locations drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/switch-locations.md",
+          "reviewed": true,
+          "sha256": "602346beb9a0534442a5ca7449155f95b4129bbdc3654553c75409c3ee14ec80",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.solenoid-table-2-38-01-16",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38-01-16.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.1,0.9,0.39, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x580 WebP quality 80",
+          "image_sha256": "58e154ffd5621ad7d7b1528bffa4f573f4c6b8d57e74b413a803cac8fbd5c10f",
+          "locator": "PDF page 104, printed page 2-38, Solenoid Table (second copy) rows 1-16",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38.md",
+          "reviewed": true,
+          "sha256": "9ccf5325b629d29fdf2895836eed838be20fbc95168abe4d6422cfdd2b0a931d",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.solenoid-table-2-38-17-flippers",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38-17-flippers.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 104, crop box 0.12,0.37,0.9,0.68, scanned page rendered at its native resolution (embedded image xref 927, 2551px across 8.26in), rendered at 171 dpi, capped to 1100px wide, grayscale, 1101x620 WebP quality 80",
+          "image_sha256": "7a3dd442ea5781a85e2ea9c3577581f1009ebecfdf6b7715e1b14ffaee1cb11d",
+          "locator": "PDF page 104, printed page 2-38, Solenoid Table (second copy) rows 16-28, G.I. and lower flippers",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-table-2-38.md",
+          "reviewed": true,
+          "sha256": "9ccf5325b629d29fdf2895836eed838be20fbc95168abe4d6422cfdd2b0a931d",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.solenoid-locations-lists-1",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists-1.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.1,0.52,0.56, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x1133 WebP quality 80",
+          "image_sha256": "f55b0334de952c7a97e77abf47818c46a46dbff39389d366430eedf989ed3c0b",
+          "locator": "PDF page 105, printed page 2-39, Solenoid Locations list 01-28",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists.md",
+          "reviewed": true,
+          "sha256": "97be4dd91b76981e3855bbc3a49f8b45440e6007e500a0eadc82d96f03ae879b",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.solenoid-locations-lists-2",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists-2.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.06,0.54,0.52,0.8, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 210 dpi, capped to 800px wide, grayscale, 801x641 WebP quality 80",
+          "image_sha256": "39e126e495f7328608c7919449028e22f9992ebaeed651cc93860c386a2c9ea0",
+          "locator": "PDF page 105, printed page 2-39, Solenoid Locations General Illumination Circuits and Flippers lists",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations-lists.md",
+          "reviewed": true,
+          "sha256": "97be4dd91b76981e3855bbc3a49f8b45440e6007e500a0eadc82d96f03ae879b",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.solenoid-locations",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 105, crop box 0.42,0.11,0.97,0.86, scanned page rendered at its native resolution (embedded image xref 936, 2551px across 8.26in), rendered at 309 dpi, grayscale, 1404x2708 WebP quality 80",
+          "image_sha256": "8987d184a12179498371d549271d84fb59461dc0a16efc840719953aab4b5242",
+          "locator": "PDF page 105, printed page 2-39, Solenoid Locations drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/solenoid-locations.md",
+          "reviewed": true,
+          "sha256": "8ce1e52b7ad2a6de8775e4f34ce764488d81c455c0bcf4688630701fc11958ad",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.interboard-solenoid-circuits-1",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-1.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.04,0.94,0.34, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80",
+          "image_sha256": "73ba9fda3883ab93cba215b75fb754a30c214b5e0f954de2fdc6828728472655",
+          "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Solenoid Circuits 1-14",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits.md",
+          "reviewed": true,
+          "sha256": "365bdbbd7305fa17e0d0f5b68488661bae8f77b65b2c8fb15bc1ce5ebe80ba45",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.interboard-solenoid-circuits-2",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-2.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.32,0.94,0.62, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x544 WebP quality 80",
+          "image_sha256": "286958e9a19ad1e4524211f23ac344ff1612232c88dc7ac7a377e3c09efd8cf5",
+          "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Solenoid Circuits 14-28 and the tieback diode",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits.md",
+          "reviewed": true,
+          "sha256": "365bdbbd7305fa17e0d0f5b68488661bae8f77b65b2c8fb15bc1ce5ebe80ba45",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.interboard-solenoid-circuits-3",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits-3.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 114, crop box 0.08,0.6,0.94,0.93, scanned page rendered at its native resolution (embedded image xref 1017, 2551px across 8.26in), rendered at 155 dpi, capped to 1100px wide, grayscale, 1101x598 WebP quality 80",
+          "image_sha256": "2c5ad98c84de24d66927e1aee0e074cd5eece5f09b137534de66123852cbdcff",
+          "locator": "PDF page 114, printed page 3-8, Interboard Wiring: Flipper Circuits",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-solenoid-circuits.md",
+          "reviewed": true,
+          "sha256": "365bdbbd7305fa17e0d0f5b68488661bae8f77b65b2c8fb15bc1ce5ebe80ba45",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
+        },
+        {
+          "id": "excerpt.t2.interboard-gi-circuits",
+          "image": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-gi-circuits.webp",
+          "image_derivation": "Terminator 2 Judgement Day Operations Manual.pdf page 115, crop box 0.08,0.05,0.92,0.33, scanned page rendered at its native resolution (embedded image xref 1026, 2551px across 8.26in), rendered at 187 dpi, capped to 1300px wide, grayscale, 1301x614 WebP quality 80",
+          "image_sha256": "2d17e1215aa0b427e5a7bd490a34c3aa1461b56ae172a1d626baadc5038777db",
+          "locator": "PDF page 115, printed page 3-9, Interboard Wiring: General Illumination Circuits",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.terminator-2-judgment-day.1991/interboard-gi-circuits.md",
+          "reviewed": true,
+          "sha256": "d7329ab4a802172dfe2ef01514a52f73145c52fe892efb4434176c994d0e4675",
+          "transcribed_by": "curator, manually read and visually checked against the retained crop"
         }
       ],
       "id": "manual.williams.terminator-2-judgment-day.1991",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "ARC ARC manifest ID other.arcarc.williams.terminator-2-judgment-day.1991.8540d654b39c; retained 118-page image-only Williams operations manual. The attached crops were rendered directly from exact 8540d654… bytes: switch matrix p.46, solenoid/GI table p.48, lamp matrix p.53, major-mechanism map p.70, and A-14504 platform-gun assembly p.90.",
+      "locator": "ARC ARC manifest ID other.arcarc.williams.terminator-2-judgment-day.1991.8540d654b39c; retained 118-page image-only Williams operations manual. The attached crops were rendered directly from the exact 8540d654... bytes: switch matrix p.46, solenoid/GI table p.48 (1-28), lamp matrix p.53, major-mechanism map and lamp-board legend p.70, drop-target assembly p.89, platform-gun assembly p.90, lamp schematic p.100, lamp, switch and solenoid location drawings p.101, p.103 and p.105, the second solenoid table p.104 (2-38), the 2-39 location lists p.105, and the 3-8/3-9 interboard wiring tables p.114-115.",
       "original_filename": "Terminator 2 Judgement Day Operations Manual.pdf",
       "sha256": "8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b",
       "uri": "external:pinmame-manuals/by-machine/williams.terminator-2-judgment-day.1991/arcarc/Terminator%202%20Judgement%20Day%20Operations%20Manual.pdf"
@@ -11045,7 +11433,7 @@
       "id": "vpx-table.t2-vpw-0022",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Retained known-working VPW 0022 physical table; geometry source only for named VPX objects and embedded-script container",
+      "locator": "Retained known-working VPW 0022 physical table; geometry source for named VPX objects and embedded-script container",
       "original_filename": "Terminator 2 VPW_0022.vpx",
       "sha256": "3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c",
       "uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/source/Terminator%202%20VPW_0022.vpx"
@@ -11070,6 +11458,24 @@
       "uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json"
     },
     {
+      "attribution": "nFozzy and community table authors",
+      "id": "vpx-table.t2-nfozzy-1-12a",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "Retained nFozzy 1.12a table (cGameName t2_l8; embedded script SHA-256 89547dd4b1bf41314e99237868e30bc7fe5b1c5ce3f66c1f7c2fce6b5a1b7a53, whose G.I. block matches the pinned comparison script). Used only for its general-illumination model: it reads Controller.ChangedGIStrings and binds public G.I. 0 to its backglass sprite, 2 to the right-playfield lightmaps and the GI_bulbR bulb mesh, 3 to the four Lgi CPU-insert sprites and 4 to the left-playfield lightmaps and the GI_bulbL bulb mesh. Its mechanisms and other geometry are not used.",
+      "original_filename": "Terminator 2 (Williams 1991) 1.12a.vpx",
+      "sha256": "2bae1ce5cf8c17233b5d4679032d6aa8c81e31ed32b2219a9363ad8cba244ded",
+      "uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/nfozzy-1-12a/source/Terminator%202%20%28Williams%201991%29%201.12a.vpx"
+    },
+    {
+      "attribution": "vpxtool extraction",
+      "id": "vpx-extraction.t2-nfozzy-1-12a",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "Canonical manifest covers every sorted relative POSIX path, byte size, and SHA-256 under nfozzy-1-12a/extracted-vpxtool; manifest SHA-256 ce5765a02329975e00b0e52d9bba1be86eea49f01def99c62221b8621a902213; 938 files, 53404733 bytes, bounds left=0 top=0 right=952.94116 bottom=2164.706; its points are compared after normalizing by these bounds",
+      "uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/nfozzy-1-12a/extracted-vpxtool.manifest.json"
+    },
+    {
       "attribution": "g5k table authors",
       "id": "vpx-script.t2-g5k-v1-1a",
       "kind": "vpx_script",
@@ -11086,7 +11492,7 @@
       "kind": "vpx_script",
       "known_working": false,
       "license": "NOASSERTION",
-      "locator": "Comparison-only modern script; its four-position trough, pulsed 62/64, virtual devices, and keyframed/magnet cannon are excluded from this physical VPW definition",
+      "locator": "Comparison copy of the nFozzy script; its four-position trough, pulsed 62/64, virtual devices, and keyframed/magnet cannon are excluded from this physical VPW definition. Its G.I. block (Flashers.obj(0)-(4)) is cited for the per-string grouping only, together with the ROM's own G.I. test",
       "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
       "sha256": "1bbcc5873a1db87fe59d1daefbb69b68872cf58f029320a9d7d9410db7c59d97",
       "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Terminator%202%20%28Williams%201991%29.vbs"
@@ -11096,7 +11502,7 @@
       "id": "rom.t2-l8-authorized-corpus",
       "kind": "rom_static_analysis",
       "license": "NOASSERTION",
-      "locator": "Pre-existing authorized local ROM evidence; bytes are not copied into this repository",
+      "locator": "Pre-existing authorized local ROM evidence; bytes are not copied into this repository. A byte scan of the program ROMs of every T2 driver in the library for the WPC_FLIPPERS register address 0x3FD4 finds no read in any Williams build (L-2 only writes it; FreeWPC 0.19 reads it with LDB)",
       "sha256": "4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1",
       "uri": "external:pinmame-roms/t2_l8.zip"
     },
@@ -11108,6 +11514,24 @@
       "locator": "One hash-pinned LibPinMAME harness run of t2_l8 from empty NVRAM (scenario tools/harness-scenarios/wpc-alpha/t2-solenoid-flasher-tests.json) that steps T.4 SOLENOID TEST through solenoids 1-14 and T.5 FLASHER TEST through flashers 17-27 in repeat mode. Each step pulses one public address while the ROM prints its name and wire colours: solenoid 12 is KNOCK DOWN (BRN-YEL VIO-ORN) and flasher 24 is F.L. C. BACKGLASS (BLU-GRY RED-WHT).",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "uri": "internal:evidence/runtime/wpc-alpha/terminator-2-t2_l8-solenoid-flasher-tests.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.terminator-2.t2-l8.gi-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "One hash-pinned LibPinMAME harness run of t2_l8 from empty NVRAM (scenario tools/harness-scenarios/wpc-alpha/t2-gi-test.json) that steps T.6 GEN'L. ILLUM. through all illumination and then each string; every step changes one public G.I. output alone while the ROM prints its name and wires: public 0 TOP INSERT (WHT-BRN BRN), 1 BOTTOM INSERT (WHT-ORN ORN), 2 RIGHT PLAYFIELD (WHT-YEL YEL), 3 CPU STRING (WHT-GRN GRN), 4 LEFT PLAYFIELD (WHT-VIO VIO). After the fresh-NVRAM restart the ROM also flickers public 3 by itself.",
+      "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "uri": "internal:evidence/runtime/wpc-alpha/terminator-2-t2_l8-gi-test.json"
+    },
+    {
+      "attribution": "PinMAME game definitions contributors",
+      "id": "drawing-callouts.terminator-2.2026-10-22",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "2026-10-22 factory location-drawing callout check of the manual's drawings 2-35 (lamps), 2-37 (switches) and 2-39 (solenoids and flashlamps), on the committed native-resolution excerpt crops: every callout transcribed by an independent reader working only from the page, the curator's verified corrections, per-page control fits from the three jet-bumper caps and the two flipper pivots, and the callout fit; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py), and the seed's measurements give the placements read off the drawing where no table object marks the part. Reads, tiles, overlays and generators are retained under review-artifacts with a pinned manifest.",
+      "sha256": "5458e23d579500341aa0e96eb494f6f82e5dc8796252f99474d6b38c1ba2566d",
+      "uri": "internal:tools/seeds/williams/terminator-2-judgment-day-1991-callouts.json"
     }
   ]
 }

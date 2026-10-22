@@ -495,7 +495,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Star Trek: The Next Generation's 2026-10-21 author-ready promotion removes one spatial-placement gap.
 		# Star Wars' spatial retrofit uses observed table/manual positions and
 		# keeps the requirement listed, adding one.
-		# Centaur's 2026-10-22 author-ready promotion removes one.
+		# Centaur's 2026-10-22 author-ready promotion removes one, and Terminator 2's removes one more.
 		self.assertEqual(710, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
@@ -549,6 +549,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Mystery Castle adds one: its coil table and GI wiring drawing disagree on relay 16/26 regions.
 		# Star Wars records contradictory factory flash-bank counts.
 		# Centaur's promotion settles its lamp-113 conflict, removing one.
+		# Terminator 2's ROM G.I. test and drop-target parts list settle both of its conflicts, removing one more.
 		self.assertEqual(41, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		self.assertEqual(809, len(catalog["machines"]))
@@ -563,7 +564,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
-		# main record, removing one more. Centaur's 2026-10-22 promotion moves one record to author_ready.
+		# main record, removing one more. Centaur's 2026-10-22 promotion and Terminator 2's each move one
+		# record to author_ready.
 		self.assertEqual(757, catalog["summary"]["partial_count"])
 		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}

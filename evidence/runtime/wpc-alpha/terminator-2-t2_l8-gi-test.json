@@ -1,0 +1,228 @@
+{
+  "driver_ids": [
+    "t2_l8"
+  ],
+  "extractor": {
+    "id": "tools/terminator_2_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.terminator-2-judgment-day.1991"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game t2_l8 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-alpha/t2-gi-test.json --dmd-dir <external-dmd-dir> --watch-switch 5 --watch-switch 7 --watch-switch 8 --watch-switch 22 --output <external-run.json>. T.6 GEN'L. ILLUM. in stop mode first steps all illumination through its brightness levels, then each string in turn; every Up press while a string is selected changes that one public G.I. output alone.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "t2_l8",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TERMINATOR 2 / 50013 REV. L-8",
+          "label": "Enter 2 (game identification)",
+          "nonzero_pixels": 326,
+          "pixel_sha256": "35a65147ce01b135a9dee0d6a71077885e69457763ff191f0632723a28629d07"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ALL ILLUMINATION / T.6 BRIGHT=2 STOP",
+          "label": "T.6 Up 1 (held)",
+          "nonzero_pixels": 409,
+          "pixel_sha256": "02b446114a05088de47ef11820e7889ec98e9d3a34ba3eb123b3ea41a66aa684"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "TOP INSERT / T.6 BRIGHT=2 STOP / WHT-BRN BRN",
+          "label": "T.6 Up 9 (held)",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "d8dbb5ef1acb006c9ce1d803b996382a0a6aba42fcdf4d2d1a58712134e4ece5"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOTTOM INSERT / T.6 BRIGHT=2 STOP / WHT-ORN ORN",
+          "label": "T.6 Up 17 (held)",
+          "nonzero_pixels": 542,
+          "pixel_sha256": "3290bbb01f33ac6b03576c30b2f2b68279ee210f04ac2a70b86af51057655224"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT PLAYFIELD / T.6 BRIGHT=2 STOP / WHT-YEL YEL",
+          "label": "T.6 Up 25 (held)",
+          "nonzero_pixels": 530,
+          "pixel_sha256": "4f11a77d3212f655f30c81674b18499a8ed513dab7d964bb500893351014c222"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "CPU STRING / T.6 BRIGHT=2 STOP / WHT-GRN GRN",
+          "label": "T.6 Up 33 (held)",
+          "nonzero_pixels": 486,
+          "pixel_sha256": "51f173df39f66ff74d9a4a0854f043ec8819c48fac1647e3fb97f8b2b2d1471f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "LEFT PLAYFIELD / T.6 BRIGHT=2 STOP / WHT-VIO VIO",
+          "label": "T.6 Up 41 (held)",
+          "nonzero_pixels": 516,
+          "pixel_sha256": "a6881767e4d312888505c0af532b91824d73ab1f5a3a745cd1e699fd427d7188"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            5
+          ],
+          "input_address": 5,
+          "input_kind": "switch",
+          "label": "After the fresh-NVRAM restart the ROM turns public GI 0, 1, 2 and 4 on once and switches public GI 3 off and on by itself (41 times in this run)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.6 ALL ILLUMINATION steps the brightness of public GI 0, 1, 2, 3 and 4 together",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 TOP INSERT (WHT-BRN BRN): Up steps the brightness of public GI 0 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 BOTTOM INSERT (WHT-ORN ORN): Up steps the brightness of public GI 1 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 RIGHT PLAYFIELD (WHT-YEL YEL): Up steps the brightness of public GI 2 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 CPU STRING (WHT-GRN GRN): Up steps the brightness of public GI 3 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.6 LEFT PLAYFIELD (WHT-VIO VIO): Up steps the brightness of public GI 4 alone",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        11,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 64,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "t2_l8-gi-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM restored its factory settings before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/terminator-2-1991/harness/gi-test/t2_l8/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-alpha/t2-gi-test.json",
+        "scenario_sha256": "4d7875445171afb0ebd25647dbbf31f2b4ed7bf115a6b9b7ffb9ec61b1106fbb",
+        "self_test_pulses": 0,
+        "sha256": "d42991f00d8c05aefd038b2cd31e4b72b7145624cb08da8af095fe3b4e1e9b3e",
+        "snapshot_count": 117,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest gi-test/t2_l8/manifest.json SHA-256 6075aa1184b703c09bafd2be29ecd11e4877bd21e86bb1096b98c0c827814269.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/terminator-2-1991/harness/gi-test/t2_l8",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "d42991f00d8c05aefd038b2cd31e4b72b7145624cb08da8af095fe3b4e1e9b3e"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

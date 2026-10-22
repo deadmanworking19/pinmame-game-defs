@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import os
@@ -11,8 +12,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-DEFINITION_PATH = ROOT / "machines/partial/williams/terminator-2-judgment-day-1991.json"
+DEFINITION_PATH = ROOT / "machines/author-ready/williams/terminator-2-judgment-day-1991.json"
 AUDIT_PATH = ROOT / "reports/spatial/williams/terminator-2-judgment-day-1991.json"
+SEED_PATH = ROOT / "tools/seeds/williams/terminator-2-judgment-day-1991-callouts.json"
 
 
 def load(path: Path) -> dict[str, object]:
@@ -23,41 +25,52 @@ def bindings(definition: dict[str, object], collection: str, group: str) -> dict
 	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
 
 
+def xy(device: dict[str, object]) -> list[tuple[float, float]]:
+	return [(item["x"], item["y"]) for item in device["spatial"]["placements"]]
+
+
 class Terminator2DefinitionTests(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls) -> None:
 		cls.definition = load(DEFINITION_PATH)
 		cls.audit = load(AUDIT_PATH)
 
-	def test_definition_is_fail_closed_and_preserves_conflicts(self) -> None:
+	def test_definition_is_author_ready_with_only_an_ignored_wiring_detail(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
-		self.assertEqual({"conflict.solenoid-12-physical-presence", "conflict.lamp-schematic-connector-labels", "conflict.gi-string-routing"}, {item["id"] for item in self.definition["conflicts"]})
-		# The lamp sheets disagree only on connector labels, a wiring detail kept as an ignored conflict.
-		statuses = {item["id"]: item.get("status", "unresolved") for item in self.definition["conflicts"]}
-		self.assertEqual("ignored", statuses.pop("conflict.lamp-schematic-connector-labels"))
-		self.assertEqual({"unresolved"}, set(statuses.values()))
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
+		self.assertEqual({"validated"}, set(self.definition["coverage"]["dimensions"].values()))
+		self.assertFalse((ROOT / "machines/partial/williams/terminator-2-judgment-day-1991.json").exists())
+		(conflict,) = self.definition["conflicts"]
+		self.assertEqual("conflict.lamp-schematic-connector-labels", conflict["id"])
+		self.assertEqual("ignored", conflict["status"])
 		for lamp in (item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"):
 			self.assertEqual("validated", lamp["provenance"]["status"])
 			self.assertIn(f"J137-{lamp['binding']['device'] // 10}", lamp["physical"]["notes"])
 			self.assertIn("conflict.lamp-schematic-connector-labels is ignored", lamp["physical"]["notes"])
-		self.assertNotEqual("author_ready", self.definition["coverage"]["status"])
+		for collection in ("inputs", "outputs"):
+			for device in self.definition[collection]:
+				self.assertEqual("validated", device["provenance"]["status"], device["id"])
+				self.assertIn(device["spatial"]["status"], {"validated", "not_applicable"}, device["id"])
 
 	def test_switch_matrix_and_controller_inputs_are_complete(self) -> None:
 		switches = bindings(self.definition, "inputs", "pinmame.input.switch")
-		self.assertEqual(set(range(1, 9)) | {row * 10 + column for row in range(1, 9) for column in range(1, 9)} | set(range(111, 119)), set(switches))
+		self.assertEqual(set(range(1, 9)) | {column * 10 + row for column in range(1, 9) for row in range(1, 9)} | set(range(111, 119)), set(switches))
 		self.assertEqual(set(range(1, 9)), set(bindings(self.definition, "inputs", "pinmame.input.dip")))
 		self.assertEqual("constant", switches[24]["kind"])
 		self.assertTrue(switches[24]["constant_active"])
+		self.assertEqual("constant", switches[24]["spatial"]["reason"])
 		self.assertTrue(switches[22]["normally_closed"])
+		self.assertEqual(["cabinet.slam-tilt"], switches[21]["roles"])
+		self.assertEqual("cabinet_or_service", switches[21]["spatial"]["reason"])
 		self.assertEqual("Gun Loaded", switches[31]["label"])
+		# The printed matrix itself names both 38 and 47 "Mid Right Stand-up Target".
 		self.assertEqual("Mid Right Standup Target", switches[47]["label"])
 		self.assertEqual("Top Lane Center", switches[57]["label"])
 		self.assertEqual("Shooter", switches[78]["label"])
 		self.assertEqual("unused", switches[88]["availability"])
-		self.assertEqual("validated", switches[51]["spatial"]["status"])
+		self.assertIn("Printed WPC switch matrix column 1, row 5", switches[15]["physical"]["notes"])
+		self.assertEqual({"namespace": "manual.address", "value": "1-5"}, switches[15]["aliases"][1])
 
 	def test_flipper_buttons_are_the_generic_column_button_bits(self) -> None:
 		# t2GameData declares FLIP_SWNO(12,11) with no FLIP_SOL: core_updateSw copies the generic
@@ -70,71 +83,119 @@ class Terminator2DefinitionTests(unittest.TestCase):
 			self.assertFalse(button["normally_closed"])
 			self.assertEqual("cabinet_or_service", button["spatial"]["reason"])
 			self.assertIn(f"copies it to matrix switch {matrix}", button["physical"]["notes"])
+			self.assertEqual([f"flipper.lower.{side}.button"], switches[matrix]["roles"])
+			self.assertEqual("cabinet_or_service", switches[matrix]["spatial"]["reason"])
 			self.assertIn(f"from generic cabinet input {address}", switches[matrix]["physical"]["notes"])
 			self.assertIn("cannot be driven directly", switches[matrix]["physical"]["notes"])
-		# Nothing synthesizes the EOS bits, but they are host-writable and readable, so unproven.
+		# Nothing synthesizes the EOS bits and no contact is wired; only the FreeWPC build reads the register.
 		for address, side in ((111, "right"), (113, "left")):
 			eos = switches[address]
 			self.assertEqual("optional", eos["availability"])
 			self.assertEqual([f"internal.flipper.lower.{side}.eos"], eos["roles"])
-			self.assertNotIn("normally_closed", eos)
+			self.assertFalse(eos["normally_closed"])
+			self.assertIn("FreeWPC 0.19", eos["physical"]["notes"])
 			self.assertEqual("internal_nonvisual", eos["spatial"]["reason"])
 		for address in (115, 116, 117, 118):
 			self.assertEqual("unused", switches[address]["availability"])
 			self.assertEqual(["internal.unused.flipper"], switches[address]["roles"])
 
+	def test_solenoid_12_is_the_fitted_knock_down_coil(self) -> None:
+		solenoids = bindings(self.definition, "outputs", "pinmame.output.solenoid")
+		knock_down = solenoids[12]
+		self.assertEqual(("Knock Down", "coil", "used"), (knock_down["label"], knock_down["kind"], knock_down["availability"]))
+		self.assertEqual("SM1-26-600", knock_down["physical"]["part_number"])
+		self.assertEqual("A-14908", knock_down["physical"]["assembly_part_number"])
+		self.assertEqual({"control_wire": "Brn-Yel", "control_connection": "J127-5", "driver_transistor": "Q52"}, {key: knock_down["wiring"][key] for key in ("control_wire", "control_connection", "driver_transistor")})
+		for text in ("Target Knock Down Assembly", "KNOCK DOWN", "Not Used", "no SolCallback(12)"):
+			self.assertIn(text, knock_down["physical"]["notes"])
+		self.assertIn("runtime.terminator-2.t2-l8.solenoid-flasher-tests", knock_down["provenance"]["source_refs"])
+		self.assertNotIn("vpx-script.t2-vpw-0022", knock_down["provenance"]["source_refs"])
+		drop_target = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.drop-target")
+		self.assertEqual(["device.drop-target", "device.knock-down"], drop_target["actuators"])
+		relationships = {item["id"]: item for item in self.definition["relationships"]}
+		self.assertEqual(("device.knock-down", "switch.matrix-77"), (relationships["relationship.drop-target-knock-down"]["source"], relationships["relationship.drop-target-knock-down"]["destination"]))
+		self.assertEqual({"relationship.trough-release", "relationship.drop-target-reset", "relationship.drop-target-knock-down"}, set(relationships))
+		excerpt = (ROOT / "evidence/excerpts/williams.terminator-2-judgment-day.1991/drop-target-assembly.md").read_text(encoding="utf-8")
+		self.assertIn("| 23. | A-14908 | Target Knock Down Assembly |", excerpt)
+		self.assertIn("| c) | SM1-26-600 | Coil Assembly |", excerpt)
+
+	def test_gi_strings_follow_the_rom_test(self) -> None:
+		gi = bindings(self.definition, "outputs", "pinmame.output.gi")
+		expected = {
+			0: ("Top Insert String", "Wht-Brn", "J120-7", "Q18", "TOP INSERT"),
+			1: ("Bottom Insert String", "Wht-Orn", "J120-8", "Q10", "BOTTOM INSERT"),
+			2: ("Right Playfield String", "Wht-Yel", "J121-9", "Q14", "RIGHT PLAYFIELD"),
+			3: ("CPU String", "Wht-Grn", "J121-10", "Q16", "CPU STRING"),
+			4: ("Left Playfield String", "Wht-Vio", "J121-11 + J119-1", "Q12", "LEFT PLAYFIELD"),
+		}
+		self.assertEqual(set(expected), set(gi))
+		for address, (label, wire, connection, triac, rom) in expected.items():
+			device = gi[address]
+			self.assertEqual((label, "used"), (device["label"], device["availability"]))
+			self.assertEqual((wire, connection, triac), (device["wiring"]["control_wire"], device["wiring"]["control_connection"], device["wiring"]["driver_transistor"]))
+			self.assertIn(rom, device["physical"]["notes"])
+			self.assertIn("runtime.terminator-2.t2-l8.gi-test", device["provenance"]["source_refs"])
+		for address in (0, 1):
+			self.assertEqual(["cabinet.insert-panel"], gi[address]["roles"])
+			self.assertEqual("cabinet_or_service", gi[address]["spatial"]["reason"])
+		self.assertEqual(4, gi[3]["physical"]["quantity"])
+		self.assertEqual("A-14518", gi[3]["physical"]["assembly_part_number"])
+		self.assertEqual(["light2", "light3", "light4", "light5"], sorted(item["id"].rsplit(".", 1)[1] for item in gi[3]["spatial"]["placements"]))
+		self.assertEqual(21, len(gi[2]["spatial"]["placements"]))
+		self.assertEqual(7, len(gi[4]["spatial"]["placements"]))
+		self.assertTrue(all(x > 0.39 for x, _ in xy(gi[2])))
+		self.assertTrue(all(x < 0.27 for x, _ in xy(gi[4])))
+		for address in (2, 4):
+			self.assertNotIn("quantity", gi[address]["physical"])
+		for address in (2, 3, 4):
+			for item in gi[address]["spatial"]["placements"]:
+				self.assertEqual("validated", item["provenance"]["status"])
+				self.assertIn("vpx-table.t2-nfozzy-1-12a", item["provenance"]["source_refs"])
+		placed = {item["id"].rsplit(".", 1)[1] for address in (2, 3, 4) for item in gi[address]["spatial"]["placements"]}
+		self.assertFalse(placed & {name.lower().replace("_", "-") for name in self.audit["general_illumination"]["not_placed"]})
+
 	def test_outputs_displays_mechanisms_and_variants_are_explicit(self) -> None:
 		solenoids = bindings(self.definition, "outputs", "pinmame.output.solenoid")
 		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")
-		gi = bindings(self.definition, "outputs", "pinmame.output.gi")
 		self.assertEqual(set(range(1, 51)), set(solenoids))
+		self.assertEqual({"used"}, {solenoids[address]["availability"] for address in range(1, 29)})
 		for address in (29, 30):
-			self.assertEqual("virtual", solenoids[address]["kind"], address)
-			self.assertEqual("used", solenoids[address]["availability"], address)
-			self.assertEqual(["internal.wpc-state"], solenoids[address]["roles"], address)
-		self.assertEqual("relay", solenoids[31]["kind"])
-		self.assertEqual("used", solenoids[31]["availability"])
-		self.assertEqual(["internal.wpc-state"], solenoids[31]["roles"])
+			self.assertEqual(("virtual", "used", ["internal.wpc-state"]), (solenoids[address]["kind"], solenoids[address]["availability"], solenoids[address]["roles"]))
+		self.assertEqual(("relay", "used", ["internal.wpc-state", "cabinet.game-on-relay"]), (solenoids[31]["kind"], solenoids[31]["availability"], solenoids[31]["roles"]))
 		self.assertEqual("cabinet_or_service", solenoids[31]["spatial"]["reason"])
 		self.assertIn("real Game-On solenoid", solenoids[31]["physical"]["notes"])
 		self.assertEqual("unused", solenoids[32]["availability"])
-		self.assertEqual(["internal.unused.wpc-output"], solenoids[32]["roles"])
 		self.assertIn("constant zero", solenoids[32]["physical"]["notes"])
+		for address, side, roles in ((45, "Right", ["internal.synthetic-flipper"]), (46, "Right", ["internal.synthetic-flipper", "flipper.lower.right"]), (47, "Left", ["internal.synthetic-flipper"]), (48, "Left", ["internal.synthetic-flipper", "flipper.lower.left"])):
+			self.assertEqual(("virtual", "used", roles), (solenoids[address]["kind"], solenoids[address]["availability"], solenoids[address]["roles"]))
+			self.assertIn(side, solenoids[address]["label"])
+			self.assertEqual("virtual", solenoids[address]["spatial"]["reason"])
+		self.assertIn("J109-7", solenoids[46]["physical"]["notes"])
+		self.assertIn("J109-5", solenoids[48]["physical"]["notes"])
+		self.assertEqual({"unused"}, {solenoids[address]["availability"] for address in (33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 49, 50)})
 		self.assertEqual(set(row * 10 + column for row in range(1, 9) for column in range(1, 9)), set(lamps))
-		self.assertEqual(set(range(5)), set(gi))
-		self.assertEqual("optional", solenoids[12]["availability"])
-		self.assertNotIn("vpx-script.t2-vpw-0022", solenoids[12]["provenance"]["source_refs"])
-		self.assertIn("no SolCallback(12)", solenoids[12]["physical"]["notes"])
-		self.assertIn("KNOCK DOWN", solenoids[12]["physical"]["notes"])
-		self.assertIn("runtime.terminator-2.t2-l8.solenoid-flasher-tests", solenoids[12]["provenance"]["source_refs"])
 		# The manual and the ROM's flasher test agree on 24; the script's missing callback is a table gap.
-		self.assertEqual("used", solenoids[24]["availability"])
 		self.assertIn("F.L. C. BACKGLASS", solenoids[24]["physical"]["notes"])
 		self.assertIn("gap in the table", solenoids[24]["physical"]["notes"])
-		self.assertIn("runtime.terminator-2.t2-l8.solenoid-flasher-tests", solenoids[24]["provenance"]["source_refs"])
-		conflict = {item["id"]: item for item in self.definition["conflicts"]}["conflict.solenoid-12-physical-presence"]
-		resolution = conflict["description"].split("Resolution path:", 1)[1]
-		self.assertNotIn("harness", resolution)
-		self.assertIn("KNOCK DOWN", conflict["description"])
-		self.assertIn("Not Used", json.dumps(self.definition["conflicts"]))
+		self.assertEqual(["cabinet.backbox"], solenoids[24]["roles"])
+		self.assertEqual({17: 4, 18: 2, 19: 2, 20: 2, 21: 2, 22: 2, 23: 2, 24: 1, 25: 2, 26: 2, 27: 2}, {address: solenoids[address]["physical"]["quantity"] for address in range(17, 28)})
+		for address in (18, 19, 20, 21, 22, 23, 24, 25, 26):
+			self.assertIn("half a row lower", solenoids[address]["physical"]["notes"])
+		self.assertEqual("J126-4 + J125-2", solenoids[20]["wiring"]["control_connection"])
 		self.assertEqual("flasher", solenoids[17]["kind"])
 		self.assertEqual("coil", solenoids[28]["kind"])
 		self.assertEqual({"control_wire": "Vio-Brn", "control_connection": "J130-1", "driver_transistor": "Q82"}, {key: solenoids[1]["wiring"][key] for key in ("control_wire", "control_connection", "driver_transistor")})
-		self.assertEqual("J109-7", solenoids[46]["wiring"]["control_connection"])
-		self.assertEqual("J120-7", gi[0]["wiring"]["control_connection"])
-		self.assertEqual("Lower Right Flipper", solenoids[46]["label"])
-		self.assertEqual("Lower Left Flipper", solenoids[48]["label"])
 		self.assertEqual("dmd", self.definition["displays"][0]["kind"])
-		self.assertEqual(9, len(self.definition["mechanisms"]))
-		self.assertEqual({"relationship.trough-release", "relationship.drop-target-reset"}, {relationship["id"] for relationship in self.definition["relationships"]})
-		self.assertNotIn("switch.matrix-31", {relationship["source"] for relationship in self.definition["relationships"]})
+		self.assertEqual(10, len(self.definition["mechanisms"]))
+		flippers = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.flippers")
+		self.assertEqual(["device.synthetic-lower-right-flipper", "device.synthetic-lower-left-flipper"], flippers["actuators"])
 		self.assertEqual({"t2_d2", "t2_d3", "t2_d4", "t2_d6", "t2_d8", "t2_l2", "t2_l2sp1", "t2_l3", "t2_l4", "t2_l6", "t2_l8", "t2_l81", "t2_l82", "t2_l83", "t2_l84", "t2_p2f", "t2_p2g", "t2_f19", "t2_f20", "t2_f32"}, {driver["id"] for driver in self.definition["drivers"]})
 		self.assertTrue(all(driver["physical_compatibility"] == "compatible" for driver in self.definition["drivers"] if driver["id"].startswith("t2_f")))
 		self.assertFalse((ROOT / "machines/stubs/t2_l8.json").exists())
-		self.assertFalse((ROOT / "knowledge/stubs/t2_l8.md").exists())
 		self.assertEqual("Data Base 3", lamps[25]["label"])
+		self.assertEqual({51: 2, 52: 2}, {address: lamps[address]["physical"]["quantity"] for address in (51, 52)})
 
-	def test_retained_script_semantics_and_spatial_provenance_are_exact(self) -> None:
+	def test_retained_script_semantics_and_spatial_placements_are_exact(self) -> None:
 		trough = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.three-ball-trough")
 		gun = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.gun-traverse")
 		switches = bindings(self.definition, "inputs", "pinmame.input.switch")
@@ -145,82 +206,115 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertIn("switch 18 as the outhole/exit and switches 17, 16, and 15 as the three stack seats", knowledge)
 		self.assertIn("length 240", gun["behavior"])
 		self.assertIn("CurrentPos=aNewPos/3", gun["behavior"])
-		self.assertEqual("conflicted", bindings(self.definition, "outputs", "pinmame.output.gi")[2]["spatial"]["status"])
-		self.assertEqual((0.938104, 0.899932), tuple(switches[78]["spatial"]["placements"][0][key] for key in ("x", "y")))
-		self.assertEqual((0.614497, 0.922582), tuple(switches[15]["spatial"]["placements"][0][key] for key in ("x", "y")))
-		self.assertEqual("observed", switches[15]["spatial"]["status"])
-		self.assertEqual((0.48207, 0.184143), tuple(switches[41]["spatial"]["placements"][0][key] for key in ("x", "y")))
-		self.assertEqual((0.206389, 0.738286), tuple(switches[44]["spatial"]["placements"][0][key] for key in ("x", "y")))
-		self.assertEqual((0.204672, 0.237459), tuple(switches[61]["spatial"]["placements"][0][key] for key in ("x", "y")))
+		self.assertEqual([(0.938104, 0.899932)], xy(switches[78]))
+		self.assertEqual([(0.614497, 0.922582)], xy(switches[15]))
+		self.assertEqual([(0.48207, 0.184143)], xy(switches[41]))
+		# Both factory drawings put the Right Jet on the right-hand bumper and the Bottom Jet on the lowest one.
+		self.assertEqual([(0.716717, 0.208798)], xy(switches[42]))
+		self.assertEqual([(0.559494, 0.271911)], xy(switches[43]))
+		self.assertEqual(xy(switches[42]), xy(solenoids[14]))
+		self.assertEqual(xy(switches[43]), xy(solenoids[15]))
+		self.assertIn("swaps the two bindings", switches[42]["physical"]["notes"])
+		self.assertEqual([(0.206389, 0.738286)], xy(switches[44]))
+		self.assertEqual([(0.204672, 0.237459)], xy(switches[61]))
+		# SolAPlunger fires Plunger1 (kickback); SolShooter kicks the shooter-lane saucer.
+		self.assertEqual([(0.052587, 0.891072)], xy(solenoids[8]))
+		self.assertEqual(xy(switches[78]), xy(solenoids[9]))
+		self.assertEqual(xy(switches[77]), xy(solenoids[12]))
+		self.assertEqual([(0.30151, 0.142518)], xy(lamps[52]))
 		self.assertEqual("not_applicable", switches[34]["spatial"]["status"])
 		self.assertEqual("cabinet_or_service", switches[34]["spatial"]["reason"])
 		self.assertEqual("not_applicable", solenoids[7]["spatial"]["status"])
 		self.assertEqual("not_applicable", solenoids[24]["spatial"]["status"])
-		self.assertEqual("observed", lamps[52]["spatial"]["status"])
-		self.assertEqual(["manual.williams.terminator-2-judgment-day.1991", "vpx-table.t2-vpw-0022", "vpx-script.t2-vpw-0022"], lamps[52]["spatial"]["placements"][0]["provenance"]["source_refs"])
 		for device in [*self.definition["inputs"], *self.definition["outputs"]]:
 			for item in device.get("spatial", {}).get("placements", []):
-				self.assertIn("vpx-table.t2-vpw-0022", item["provenance"]["source_refs"])
+				refs = item["provenance"]["source_refs"]
+				self.assertTrue("vpx-table.t2-vpw-0022" in refs or refs == ["manual.williams.terminator-2-judgment-day.1991", "drawing-callouts.terminator-2.2026-10-22"], item["id"])
 				self.assertLessEqual(len(str(item["x"]).split(".")[-1]), 6)
 
-	def test_audit_is_separate_fail_closed_evidence(self) -> None:
-		self.assertEqual("pinmame-spatial-blockers", self.audit["format"])
+	def test_measured_placements_reproduce_from_the_seed(self) -> None:
+		import drawing_callouts
+
+		seed = load(SEED_PATH)
+		placed = drawing_callouts.placements_of(self.definition)
+		self.assertEqual({
+			"switch.matrix-62.sensor.2-37-callout-62-leader-end", "switch.matrix-64.sensor.2-37-callout-64-leader-end",
+			"device.left-lock-flashlamps.emitter.2-39-balloon-20",
+			"device.targets-flashlamps.emitter.2-39-callout-25-upper-socket", "device.targets-flashlamps.emitter.2-39-callout-25-lower-socket",
+		}, set(seed["measurements"]))
+		for key in seed["measurements"]:
+			self.assertEqual(drawing_callouts.measured(seed, key), placed[key])
+			self.assertNotIn(key, seed["checks"])
+		self.assertEqual({"device.plunger.effect.kicker-sw78", "device.left-lock.effect.kicker-sw51"}, set(seed["excluded_checks"]))
+		self.assertFalse(set(seed["excluded_checks"]) & set(seed["checks"]))
+
+	def test_drawing_check_recomputes_from_the_seed_alone(self) -> None:
+		import curate_terminator_2_spatial as spatial
+		import drawing_callouts
+
+		seed = load(SEED_PATH)
+		decisions = drawing_callouts.evaluate(seed, drawing_callouts.placements_of(spatial.located_definition()))
+		disagree = {pid: decision for pid, decision in decisions["placements"].items() if not decision["agrees"]}
+		self.assertEqual({"device.gun-flashlamps.emitter.f121", "device.hot-dog-flashlamps.emitter.f117"}, set(disagree))
+		self.assertTrue(all(decision["read"] is None for decision in disagree.values()))
+		self.assertEqual(127, len(decisions["placements"]))
+		for page in decisions["pages"].values():
+			self.assertEqual(5, page["controls"])
+			self.assertLessEqual(page["control_loo_max"], 0.025)
+		self.assertEqual(self.audit["drawing_callout_check"]["validated"], 125)
+		# A placement moved off its callout is refused.
+		moved = spatial.located_definition()
+		target = next(device for device in moved["outputs"] if device["id"] == "device.gun-motor")
+		target["spatial"]["placements"][0]["x"] = 0.5
+		with self.assertRaises(RuntimeError):
+			spatial.promote_from_drawings(moved, seed)
+
+	def test_audit_is_author_ready_evidence(self) -> None:
+		self.assertEqual("pinmame-spatial-audit", self.audit["format"])
+		self.assertEqual("author_ready", self.audit["status"])
+		self.assertEqual([], self.audit["unresolved"])
+		self.assertEqual([], self.audit["blockers"])
 		self.assertTrue(self.audit["extraction"]["fail_closed"])
 		self.assertEqual("f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9", self.audit["extraction"]["manifest_sha256"])
-		self.assertEqual("external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json", self.audit["extraction"]["manifest_uri"])
-		self.assertIn("sorted relative POSIX path", self.audit["extraction"]["manifest_algorithm"])
-		self.assertIn("GI string geometry/routing", json.dumps(self.audit["unresolved"]))
-		self.assertEqual([
-			{"kind": "spatial", "scope": "solenoid/effect geometry", "addresses": [12]},
-			{"kind": "spatial", "scope": "GI string geometry/routing", "addresses": [0, 1, 4], "group": "pinmame.output.gi"},
-		], self.audit["unresolved"])
-		self.assertIn("Light2", self.audit["candidate_geometry"]["excluded_graphical_objects"])
+		self.assertEqual("ce5765a02329975e00b0e52d9bba1be86eea49f01def99c62221b8621a902213", self.audit["comparison_extraction"]["manifest_sha256"])
+		self.assertEqual(hashlib.sha256(SEED_PATH.read_bytes()).hexdigest(), self.audit["source_hashes"]["callout_seed_sha256"])
+		self.assertEqual(15, len(self.audit["general_illumination"]["not_placed"]))
 		sources = {item["id"]: item for item in self.definition["sources"]}
 		manual = sources["manual.williams.terminator-2-judgment-day.1991"]
 		self.assertEqual("8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b", manual["sha256"])
-		self.assertEqual("Terminator 2 Judgement Day Operations Manual.pdf", manual["original_filename"])
-		self.assertEqual({
-			"excerpt.t2.switch-matrix", "excerpt.t2.solenoid-table-01-08", "excerpt.t2.solenoid-table-09-16",
-			"excerpt.t2.solenoid-table-flashers-gi", "excerpt.t2.lamp-matrix", "excerpt.t2.lamp-schematic",
-			"excerpt.t2.major-mechanisms-map", "excerpt.t2.cannon-platform-assembly",
-		}, {excerpt["id"] for excerpt in manual["excerpts"]})
+		self.assertEqual(21, len(manual["excerpts"]))
 		self.assertTrue(all("scanned page rendered at its native resolution" in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
-		self.assertTrue(all("pdftoppm" not in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
 		self.assertEqual("3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c", sources["vpx-table.t2-vpw-0022"]["sha256"])
-		self.assertEqual("b5153ac46f6d4b58afb676c1f7bfdff17c6ffb953941daed8dd841c679f4e831", sources["vpx-script.t2-vpw-0022"]["sha256"])
-		self.assertEqual("https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Terminator%202%20%28Williams%201991%29.vbs", sources["vpx-script.t2-modern-comparison"]["uri"])
+		self.assertEqual("2bae1ce5cf8c17233b5d4679032d6aa8c81e31ed32b2219a9363ad8cba244ded", sources["vpx-table.t2-nfozzy-1-12a"]["sha256"])
+		self.assertEqual(hashlib.sha256(SEED_PATH.read_bytes()).hexdigest(), sources["drawing-callouts.terminator-2.2026-10-22"]["sha256"])
 
 	def test_curator_check_is_clean(self) -> None:
-		environment = {**__import__("os").environ, "PYTHONPATH": "src"}
+		environment = {**os.environ, "PYTHONPATH": os.pathsep.join(["src", "tools"])}
 		result = subprocess.run([sys.executable, "tools/curate_terminator_2.py", "--check"], cwd=ROOT, env=environment, capture_output=True, text=True)
 		self.assertEqual(0, result.returncode, result.stdout + result.stderr)
 
-	def test_retained_extraction_manifest_recomputes_every_file(self) -> None:
+	def test_retained_extractions_rederive_the_gi_sockets_and_skull(self) -> None:
 		source_root_value = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
 		if not source_root_value:
 			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
-		source_root = Path(source_root_value)
-		extraction_root = source_root / "williams/terminator-2-judgment-day-1991/extracted-vpxtool"
-		manifest_path = source_root / "williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json"
-		actual = load(manifest_path)
-		paths = sorted((path for path in extraction_root.rglob("*") if path.is_file()), key=lambda path: path.relative_to(extraction_root).as_posix())
-		expected_files = []
-		for path in paths:
-			digest = hashlib.sha256()
-			with path.open("rb") as stream:
-				for block in iter(lambda: stream.read(1024 * 1024), b""):
-					digest.update(block)
-			expected_files.append({
-				"path": path.relative_to(extraction_root).as_posix(),
-				"size": path.stat().st_size,
-				"sha256": digest.hexdigest(),
-			})
-		self.assertEqual({"format": "pinmame-vpx-extraction-manifest", "version": 1, "files": expected_files}, actual)
-		canonical = (json.dumps(actual, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
-		self.assertEqual("f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9", hashlib.sha256(canonical).hexdigest())
-		self.assertEqual(548, len(actual["files"]))
-		self.assertEqual(132477924, sum(item["size"] for item in actual["files"]))
+		import curate_terminator_2 as semantic
+		import curate_terminator_2_spatial as spatial
 
+		source_root = Path(source_root_value)
+		self.assertEqual(548, len(semantic.verify_extraction_manifest(source_root)["files"]))
+		self.assertEqual(938, len(semantic.verify_nfozzy_manifest(source_root)["files"]))
+		spatial.verify_gi_sockets(source_root)
+		spatial.verify_skull_mesh(source_root)
+		derived = spatial.derive_gi_sockets(source_root)
+		self.assertEqual({2: 21, 3: 4, 4: 7}, {address: len(sockets) for address, sockets in derived.items()})
+
+	def test_retained_callout_artifacts_match_the_seed(self) -> None:
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import drawing_callouts
+
+		self.assertGreater(drawing_callouts.verify_retained(load(SEED_PATH), ROOT, None, Path(review_root)), 3)
 
 
 class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
@@ -231,9 +325,6 @@ class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
 	LIBRARY_SHA256 = "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
 
 	def test_the_rom_names_and_pulses_12_and_24(self) -> None:
-		import hashlib
-		import os
-
 		evidence = json.loads(self.PATH.read_text(encoding="utf-8"))
 		self.assertEqual(["t2_l8"], evidence["driver_ids"])
 		runtime = evidence["runtime"]
@@ -288,6 +379,55 @@ class Terminator2SolenoidFlasherTestEvidence(unittest.TestCase):
 		self.assertEqual(set(raw_label), set(summary))
 		for label, frame in summary.items():
 			self.assertEqual(raw_frames[raw_label[label]], frame, label)
+
+
+class Terminator2GiTestEvidence(unittest.TestCase):
+	"""The ROM's T.6 test names each public G.I. string; the compact evidence is rebuilt from the retained run when present."""
+
+	PATH = ROOT / "evidence" / "runtime" / "wpc-alpha" / "terminator-2-t2_l8-gi-test.json"
+	SCENARIO = ROOT / "tools" / "harness-scenarios" / "wpc-alpha" / "t2-gi-test.json"
+
+	def test_the_rom_names_each_public_string(self) -> None:
+		evidence = load(self.PATH)
+		runtime = evidence["runtime"]
+		self.assertEqual(["t2_l8"], evidence["driver_ids"])
+		self.assertEqual("dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead", runtime["emulator"]["sha256"])
+		self.assertEqual("97aa922bf8e4b6970126192ec1ac1fb0305a4f62", runtime["emulator"]["built_from_revision"])
+		(raw,) = runtime["raw_runs"]
+		self.assertEqual(hashlib.sha256(self.SCENARIO.read_bytes()).hexdigest(), raw["scenario_sha256"])
+		self.assertNotIn(b"\r\n", self.SCENARIO.read_bytes())
+		self.assertEqual(raw["sha256"], evidence["source"]["sha256"])
+		labels = [item["label"] for item in runtime["observations"]["named_action_observations"]]
+		for address, name in ((0, "TOP INSERT (WHT-BRN BRN)"), (1, "BOTTOM INSERT (WHT-ORN ORN)"), (2, "RIGHT PLAYFIELD (WHT-YEL YEL)"), (3, "CPU STRING (WHT-GRN GRN)"), (4, "LEFT PLAYFIELD (WHT-VIO VIO)")):
+			self.assertIn(f"T.6 {name}: Up steps the brightness of public GI {address} alone", labels)
+		self.assertTrue(labels[0].startswith("After the fresh-NVRAM restart the ROM turns public GI 0, 1, 2 and 4 on once and switches public GI 3 off and on by itself"))
+		seed = load(ROOT / "tools/seeds/williams/terminator-2-judgment-day-1991-frames.json")[self.PATH.name]
+		self.assertEqual(seed, {item["label"]: {"pixel_sha256": item["pixel_sha256"], "reading": item["interpreted_text"]} for item in runtime["observations"]["diagnostic_snapshots"]})
+
+	def test_the_builder_reproduces_and_refuses_drift(self) -> None:
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import terminator_2_runtime_evidence as builder
+		from pinmame_game_defs.jsonio import canonical_bytes
+
+		root = Path(review_root)
+		self.assertEqual(canonical_bytes(builder.build(root)), self.PATH.read_bytes())
+		run = builder._load_run(root / builder.HARNESS_DIRECTORY / builder.RUN_DIRECTORY)
+		builder.build_observations(run)
+		# A string that changes with another one is refused.
+		mixed = copy.deepcopy(run)
+		step = next(item for item in mixed["steps"] if item["label"] == "T.6 Up 34")
+		step["transitions"]["gis"].append({"number": 2, "states": [0, 8]})
+		with self.assertRaises(ValueError):
+			builder.build_observations(mixed)
+		# A reading pinned to another frame is refused.
+		swapped = copy.deepcopy(run)
+		snapshot = next(item for item in swapped["snapshots"] if item["label"] == "T.6 Up 33 (held)")
+		donor = next(item for item in swapped["snapshots"] if item["label"] == "T.6 Up 41 (held)")
+		snapshot["displays"] = copy.deepcopy(donor["displays"])
+		with self.assertRaises(ValueError):
+			builder._check_pinned_frames(builder.build_observations(swapped))
 
 
 if __name__ == "__main__":
