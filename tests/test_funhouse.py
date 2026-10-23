@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
@@ -13,6 +15,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "funhouse-1990.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "funhouse-1990.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "funhouse-1990.json"
+CALLOUT_SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "funhouse-1990-callouts.json"
+RUNTIME_PATH = ROOT / "evidence" / "runtime" / "wpc-alpha" / "funhouse-fh_l9-gi-test.json"
+SCENARIO_PATH = ROOT / "tools" / "harness-scenarios" / "wpc-alpha" / "fh-gi-test.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "funhouse-1990.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-alpha.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990.json"
@@ -56,12 +61,17 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_single_spatial_blocker(self) -> None:
+	def test_partial_identity_names_the_apron_gi_blocker(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
+		# Every placement the record makes is validated, but the apron G.I. bulbs of public 4 have no source position.
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
-		self.assertEqual({"validated"}, {value for key, value in self.definition["coverage"]["dimensions"].items() if key != "spatial_placement"})
+		dimensions = self.definition["coverage"]["dimensions"]
+		self.assertEqual("unknown", dimensions["spatial_placement"])
+		self.assertEqual({"validated"}, {value for key, value in dimensions.items() if key != "spatial_placement"})
+		self.assertFalse(AUTHOR_READY_PATH.exists())
+		self.assertIn("under the apron", self.gi[4]["physical"]["notes"])
+		self.assertIn("Resolution path:", KNOWLEDGE_PATH.read_text(encoding="utf-8"))
 		self.assertEqual("williams.funhouse.1990", self.definition["machine"]["id"])
 		self.assertEqual("Williams", self.definition["machine"]["manufacturer"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -100,6 +110,8 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertEqual("2026-08-07T15:17:32Z", by_id["vpx-table.fh-1-3"]["acquired_at"])
 		self.assertEqual("2026-08-07T15:17:33Z", by_id["vpx-script.fh-1-3"]["acquired_at"])
 		self.assertIn("vpxtool git:v0.33.3", by_id["vpx-extraction.fh-1-3"]["locator"])
+		self.assertEqual("45ee7c7bb500749feecabd96eef6b5ffe1d4a9ff4b611176bf1155a60ca2b413", by_id["vpx-table.fh-2-0c"]["sha256"])
+		self.assertIn("f05e57012e5f7290f74bd50e986e6668b5721c066cf9d1c0612c18747f5b7595", by_id["vpx-extraction.fh-2-0c"]["locator"])
 
 	def test_controller_profile_reused_unchanged(self) -> None:
 		profile = load_json(CONTROLLER_PATH)
@@ -153,7 +165,10 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertEqual(set(range(1, 51)), set(self.solenoids))
 		for address in {17, 18, 19, 20, 23, 24}:
 			self.assertEqual("flasher", self.solenoids[address]["kind"], address)
-			self.assertEqual(self.solenoids[address]["physical"]["quantity"], len(self.solenoids[address]["spatial"]["placements"]), address)
+			placements = len(self.solenoids[address]["spatial"]["placements"])
+			# Both Clock bulbs light the clock from under its centre and share one placement.
+			self.assertEqual(1 if address == 19 else self.solenoids[address]["physical"]["quantity"], placements, address)
+		self.assertEqual(2, self.solenoids[19]["physical"]["quantity"])
 		self.assertEqual(2, len({(placement["x"], placement["y"]) for placement in self.solenoids[20]["spatial"]["placements"]}))
 		self.assertEqual(
 			[(0.446452, 0.46247), (0.460268, 0.512137)],
@@ -204,15 +219,25 @@ class FunHouseDefinitionTests(unittest.TestCase):
 			self.assertEqual(1, self.lamps[address]["physical"]["quantity"], address)
 			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]), address)
 
-	def test_steps_lamps_use_one_hotspot_each_in_vertical_order(self) -> None:
+	def test_steps_switches_and_lamps_are_drawing_measurements_in_order(self) -> None:
+		import drawing_callouts
+
+		seed = load_json(CALLOUT_SEED_PATH)
+		for collection, addresses, role, suffix in ((self.switches, (36, 26, 15), "sensor", "hb-9-slot"), (self.lamps, (56, 55, 54), "emitter", "hb-7-socket")):
+			ys = []
+			for address in addresses:
+				device = collection[address]
+				self.assertEqual("validated", device["spatial"]["status"])
+				(placement,) = device["spatial"]["placements"]
+				self.assertEqual(f"{device['id']}.{role}.{suffix}", placement["id"])
+				self.assertEqual(drawing_callouts.measured(seed, placement["id"]), (placement["x"], placement["y"]))
+				self.assertEqual(["manual.williams.funhouse.1990.operator-handbook", "human-review.funhouse.drawing-callouts"], placement["provenance"]["source_refs"])
+				ys.append(placement["y"])
+			# Top, middle and bottom step run from the rear forwards.
+			self.assertEqual(sorted(ys), ys)
 		for address in (54, 55, 56):
-			self.assertEqual("validated", self.lamps[address]["spatial"]["status"])
 			self.assertEqual(1, self.lamps[address]["physical"]["quantity"])
-			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]))
 			self.assertIn("_finger_1", self.lamps[address]["physical"]["notes"])
-		y = {address: self.lamps[address]["spatial"]["placements"][0]["y"] for address in (54, 55, 56)}
-		self.assertLess(y[56], y[55])
-		self.assertLess(y[55], y[54])
 
 	def test_gangway_typo_is_resolved_and_no_conflicts_remain(self) -> None:
 		self.assertEqual("Gangway 100,000", self.lamps[12]["label"])
@@ -222,22 +247,223 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertIn("photo.williams.funhouse.1990.a13", refs)
 		self.assertEqual([], self.definition["conflicts"])
 
-	def test_gi_enumeration_and_physical_hotspots(self) -> None:
+	def test_gi_strings_follow_the_rom_test(self) -> None:
 		self.assertEqual(set(range(5)), set(self.gi))
-		self.assertEqual("not_applicable", self.gi[0]["spatial"]["status"])
-		self.assertNotIn("spatial", self.gi[3])
-		self.assertEqual("Q18", self.gi[0]["wiring"]["driver_transistor"])
-		self.assertEqual("Q10", self.gi[1]["wiring"]["driver_transistor"])
-		self.assertEqual("Q14", self.gi[2]["wiring"]["driver_transistor"])
-		self.assertEqual("Q16", self.gi[3]["wiring"]["driver_transistor"])
-		self.assertEqual("Q12", self.gi[4]["wiring"]["driver_transistor"])
-		for address, quantity in ((1, 3), (2, 15), (4, 14)):
+		expected = {
+			0: ("Backglass Upper G.I.", "Brown", "White-Brown", "J120-1", "Q18", "F110"),
+			1: ("Rudy / Backglass G.I.", "Orange", "White-Orange", "J120-2", "Q10", "F109"),
+			2: ("Rear Playfield G.I.", "Yellow", "White-Yellow", "J120-3", "Q14", "F108"),
+			3: ("Backglass Center G.I.", "Green", "White-Green", "J120-5", "Q16", "F107"),
+			4: ("Front Playfield G.I.", "Violet", "White-Violet", "J120-6 / J119-3", "Q12", "F106"),
+		}
+		for address, (label, feed, return_wire, connection, triac, fuse) in expected.items():
+			device = self.gi[address]
+			self.assertEqual(label, device["label"])
+			wiring = device["wiring"]
+			self.assertEqual((feed, return_wire, connection, triac, fuse), (wiring["control_wire"], wiring["return_wire"], wiring["control_connection"], wiring["driver_transistor"], wiring["return_component"]), address)
+			self.assertIn("runtime.funhouse.fh-l9.gi-test", device["provenance"]["source_refs"])
+			self.assertNotIn("quantity", device["physical"])
+		for address in (0, 3):
+			self.assertEqual("not_applicable", self.gi[address]["spatial"]["status"])
+			self.assertEqual("cabinet_or_service", self.gi[address]["spatial"]["reason"])
+			self.assertEqual(["cabinet.backglass"], self.gi[address]["roles"])
+		self.assertIn("not a playfield branch", self.gi[3]["physical"]["notes"])
+		for address, count in ((1, 1), (2, 14), (4, 11)):
 			self.assertEqual("validated", self.gi[address]["spatial"]["status"])
-			self.assertEqual(quantity, self.gi[address]["physical"]["quantity"])
-			self.assertEqual(quantity, len(self.gi[address]["spatial"]["placements"]))
-		self.assertEqual("Rudy G.I.", self.gi[1]["label"])
-		self.assertEqual("Upper/Rear Playfield G.I.", self.gi[2]["label"])
-		self.assertEqual("Lower Playfield G.I.", self.gi[4]["label"])
+			self.assertEqual(count, len(self.gi[address]["spatial"]["placements"]), address)
+		# Rudy's spotlight is the RudyShade Light, not the f_refl glow sprites painted on him.
+		(spotlight,) = self.gi[1]["spatial"]["placements"]
+		self.assertEqual((0.76868, 0.317499), (spotlight["x"], spotlight["y"]))
+		self.assertIn("forum.pinside.funhouse-gi-orange-string", spotlight["provenance"]["source_refs"])
+		lower = {(placement["x"], placement["y"]) for placement in self.gi[4]["spatial"]["placements"]}
+		self.assertIn((0.563099, 0.472939), lower)  # LowerGI_B19, the double that shows its bulb mesh
+		self.assertIn((0.060409, 0.506492), lower)  # Light38 on BulbFil6
+		self.assertNotIn((0.219483, 0.780739), lower)  # LowerGI_B14, a render double of Light33's socket
+		# The Bottom_GI render lights below the flippers sit on no bulb in either table.
+		self.assertNotIn((0.747153, 0.944086), lower)
+		self.assertNotIn((0.175111, 0.944281), lower)
+		upper = {(placement["x"], placement["y"]) for placement in self.gi[2]["spatial"]["placements"]}
+		self.assertNotIn((0.523551, 0.112567), upper)  # Light22, a render light under no bulb
+		self.assertIn("forum.pinside.funhouse-gi-violet-string", self.gi[4]["provenance"]["source_refs"])
+
+	def test_gi_sockets_are_bulbs_the_revision_table_models(self) -> None:
+		import curate_funhouse as curator
+
+		for address in (2, 4):
+			placements = self.gi[address]["spatial"]["placements"]
+			self.assertEqual([position for _, _, position in curator.GI_SOCKETS[address]], [(item["x"], item["y"]) for item in placements])
+			for placement in placements:
+				self.assertIn("vpx-table.fh-2-0c", placement["provenance"]["source_refs"])
+			self.assertEqual(len(placements), len({bulb for _, bulb, _ in curator.GI_SOCKETS[address]}))
+		source_root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not source_root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
+		root = Path(source_root)
+		curator.verify_extraction_manifest(root)
+		curator.verify_revision_manifest(root)
+		self.assertEqual((curator.GI_SOCKETS, curator.GI_UNMATCHED), curator.derive_gi_sockets(root))
+
+	def test_gi_runtime_evidence_pins_every_rom_screen(self) -> None:
+		evidence = load_json(RUNTIME_PATH)
+		runtime = evidence["runtime"]
+		self.assertEqual("fh_l9", runtime["game"])
+		self.assertEqual("97aa922bf8e4b6970126192ec1ac1fb0305a4f62", runtime["emulator"]["built_from_revision"])
+		self.assertEqual(hashlib.sha256(SCENARIO_PATH.read_bytes()).hexdigest(), runtime["raw_runs"][0]["scenario_sha256"])
+		labels = [item["label"] for item in runtime["observations"]["named_action_observations"]]
+		for address, screens in (
+			(0, "BACKGLASS UPPER: Up steps the brightness of public GI 0 alone, and Start then Up show WHT-BRN BRN / P.F. J120-7 120-1 / B.B. J121-7 121-1 / F110 5 AMP S.B. / DRIVER Q18"),
+			(1, "RUDY / BACKGLASS: Up steps the brightness of public GI 1 alone, and Start then Up show WHT-ORN ORN / P.F. J120-8 120-2 / B.B. J121-8 121-2 / F109 5 AMP S.B. / DRIVER Q10"),
+			(2, "REAR PLAYFIELD: Up steps the brightness of public GI 2 alone, and Start then Up show WHT-YEL YEL / P.F. J120-9 120-3 / B.B. J121-9 121-3 / F108 5 AMP S.B. / DRIVER Q14"),
+			(3, "BACKGLASS CENTER: Up steps the brightness of public GI 3 alone, and Start then Up show WHT-GRN GRN / P.F. J120-10 120-5 / B.B. J121-10 121-5 / F107 5 AMP S.B. / DRIVER Q16"),
+			(4, "FRONT PLAYFIELD: Up steps the brightness of public GI 4 alone, and Start then Up show WHT-VIO VIO / P.F. J120-11 120-6 / B.B. J121-11 121-6 / F106 5 AMP S.B. / DRIVER Q12"),
+		):
+			self.assertIn(f"T.6 circuit {screens}", labels, address)
+		self.assertEqual([0, 1, 2, 3, 4], runtime["observations"]["gi_addresses_seen"])
+
+	def test_runtime_segment_decoding_refuses_a_changed_reading(self) -> None:
+		import funhouse_runtime_evidence as builder
+
+		evidence = load_json(RUNTIME_PATH)
+		responses = [
+			response
+			for item in evidence["runtime"]["observations"]["named_action_observations"]
+			for response in item.get("display_responses", [])
+		]
+		# Every retained response decodes to the text it records.
+		for response in responses:
+			self.assertEqual(response["interpreted_text"], builder.decode(response["segments"]))
+		upper = [r for r in responses if r["snapshot_label"] == "String 3 info Up 4 (driver)" and r["display_index"] in (0, 1, 2)]
+		snapshot = {"label": "String 3 info Up 4 (driver)", "displays": [{"index": r["display_index"], "segments": r["segments"]} for r in upper]}
+		self.assertEqual(3, len(builder._responses(snapshot, (0, 1, 2), "BACKGLASS CENTER")))
+		with self.assertRaises(ValueError):
+			builder._responses(snapshot, (0, 1, 2), "TOP PLAYFIELD")
+		changed = copy.deepcopy(snapshot)
+		changed["displays"][0]["segments"][0] = 0x0079  # an E where the line starts with B
+		with self.assertRaises(ValueError):
+			builder._responses(changed, (0, 1, 2), "BACKGLASS CENTER")
+
+	def test_runtime_builder_reproduces_and_refuses_drift(self) -> None:
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import funhouse_runtime_evidence as builder
+		from pinmame_game_defs.jsonio import canonical_bytes
+
+		root = Path(review_root)
+		self.assertEqual(canonical_bytes(builder.build(root)), RUNTIME_PATH.read_bytes())
+		run = builder._load_run(root / builder.HARNESS_DIRECTORY / builder.RUN_DIRECTORY)
+		builder.build_observations(run)
+		# A press that changes another string as well is refused: every brightness step of a circuit and of ALL,
+		# the empty press at full brightness, each selection and the return to ALL.
+		for label in ("T.6 Up 33", "T.6 Up 14", "T.6 Up 6", "T.6 Up 15", "T.6 Up 7", "T.6 Up 24", "T.6 Up 48"):
+			mixed = copy.deepcopy(run)
+			step = next(item for item in mixed["steps"] if item["label"] == label)
+			number = next(n for n in (2, 0, 3, 5) if n not in {item["number"] for item in step["transitions"]["gis"]})
+			step["transitions"]["gis"].append({"number": number, "states": [0, 8]})
+			with self.assertRaises(ValueError, msg=label):
+				builder.build_observations(mixed)
+		# A brightness press that changes nothing is refused too.
+		quiet = copy.deepcopy(run)
+		next(item for item in quiet["steps"] if item["label"] == "T.6 Up 14")["transitions"]["gis"] = []
+		with self.assertRaises(ValueError):
+			builder.build_observations(quiet)
+		# An info screen swapped in from another circuit is refused.
+		swapped = copy.deepcopy(run)
+		snapshot = next(item for item in swapped["snapshots"] if item["label"] == "String 3 info Up 3 (fuse)")
+		donor = next(item for item in swapped["snapshots"] if item["label"] == "String 1 info Up 3 (fuse)")
+		snapshot["displays"] = copy.deepcopy(donor["displays"])
+		with self.assertRaises(ValueError):
+			builder.build_observations(swapped)
+
+	def test_drawing_check_validates_every_marked_placement(self) -> None:
+		import curate_funhouse as curator
+
+		seed = load_json(CALLOUT_SEED_PATH)
+		definition, decisions = curator.build_with_decisions()
+		self.assertEqual(102, len(decisions["placements"]))
+		agreeing = {pid for pid, decision in decisions["placements"].items() if decision["agrees"]}
+		self.assertEqual(100, len(agreeing))
+		# The two others are second bulbs under an insert the drawing marks once.
+		self.assertEqual({"lamp.matrix-53.emitter.2", "device.2-superdog-flashers.emitter.2"}, set(decisions["placements"]) - agreeing)
+		for pid in set(decisions["placements"]) - agreeing:
+			self.assertIsNone(decisions["placements"][pid]["read"])
+		for page in decisions["pages"].values():
+			self.assertEqual(8, page["controls"])
+			self.assertLessEqual(page["control_loo_max"], 0.05)
+		placements = {placement["id"]: placement for collection in ("inputs", "outputs") for device in definition[collection] for placement in (device.get("spatial") or {}).get("placements") or []}
+		for pid in agreeing:
+			self.assertIn("human-review.funhouse.drawing-callouts", placements[pid]["provenance"]["source_refs"], pid)
+		self.assertTrue(set(seed["excluded_checks"]).isdisjoint(seed["checks"]))
+		self.assertTrue(set(seed["measurements"]).isdisjoint(seed["checks"]))
+		self.assertEqual(hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(), {source["id"]: source for source in definition["sources"]}["human-review.funhouse.drawing-callouts"]["sha256"])
+		# A placement moved off its callout is refused.
+		moved = curator.build()
+		lamp = next(device for device in moved["outputs"] if device["id"] == "lamp.matrix-17")
+		lamp["spatial"]["placements"][0]["y"] = round(lamp["spatial"]["placements"][0]["y"] - 0.1, 6)
+		with self.assertRaises(RuntimeError):
+			curator.check_against_drawings(moved, seed)
+
+	def test_multiball_release_and_rudy_coils_sit_on_their_parts(self) -> None:
+		release = self.solenoids[8]["spatial"]["placements"][0]
+		self.assertEqual((0.194789, 0.184393), (release["x"], release["y"]))
+		lock = self.switches[28]["spatial"]["placements"][0]
+		self.assertLess(abs(release["x"] - lock["x"]) + abs(release["y"] - lock["y"]), 0.05)
+		clock_centre = self.lamps[28]["spatial"]["placements"][0]
+		self.assertGreater(abs(release["y"] - clock_centre["y"]), 0.3)
+		for address in (25, 26, 27, 28):
+			(placement,) = self.solenoids[address]["spatial"]["placements"]
+			self.assertEqual((0.65028, 0.229335), (placement["x"], placement["y"]), address)
+			self.assertIn("PrLids", self.solenoids[address]["physical"]["notes"])
+		for address in (21, 22):
+			self.assertEqual(self.switches[51]["spatial"]["placements"][0]["x"], self.solenoids[address]["spatial"]["placements"][0]["x"])
+
+	def test_lamps_and_domes_sit_on_their_bulbs_not_glow_sprites(self) -> None:
+		import curate_funhouse as curator
+
+		objects = curator.WORLD_BOUNDS["objects"]
+		parts = {("lamp", 57): "BulbFil2", ("lamp", 58): "BulbFil1", **{("lamp", address): f"L{address}" for address in (71, 74, 75, 76, 77, 78)}}
+		for (_, address), name in parts.items():
+			(placement,) = self.lamps[address]["spatial"]["placements"]
+			self.assertEqual(tuple(objects[name]["centre"]), (placement["x"], placement["y"]), address)
+		for address, name in ((17, "Flasher1"), (23, "Flasher2"), (24, "Flasher6")):
+			placement = self.solenoids[address]["spatial"]["placements"][0]
+			self.assertEqual(tuple(objects[name]["centre"]), (placement["x"], placement["y"]), address)
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if review_root:
+			export = Path(review_root) / "funhouse-1990" / "vpx-world-obj" / "Funhouse (Williams 1990)_1.3.obj"
+			self.assertEqual(curator.WORLD_BOUNDS["export_sha256"], hashlib.sha256(export.read_bytes()).hexdigest())
+			bounds: dict[str, list[float]] = {}
+			current = None
+			with export.open(encoding="utf-8") as stream:
+				for line in stream:
+					if line.startswith("o "):
+						current = line[2:].strip()
+					elif line.startswith("v ") and current in objects:
+						x, y = (float(value) for value in line.split()[1:3])
+						box = bounds.setdefault(current, [x, x, y, y])
+						box[:] = [min(box[0], x), max(box[1], x), min(box[2], y), max(box[3], y)]
+			for name, item in objects.items():
+				box = bounds[name]
+				self.assertEqual(item["centre"], [round((box[0] + box[1]) / 2 / 964, 6), round((box[2] + box[3]) / 2 / 2162, 6)], name)
+		source_root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not source_root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
+		gameitems = Path(source_root) / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		sprites = set()
+		for path in gameitems.glob("Flasher.*.json"):
+			item = json.loads(path.read_text(encoding="utf-8"))["Flasher"]
+			sprites.add((round(item["pos_x"] / 964, 6), round(item["pos_y"] / 2162, 6)))
+		for device in [*self.lamps.values(), *(self.solenoids[address] for address in range(17, 25) if address not in (21, 22))]:
+			for placement in device.get("spatial", {}).get("placements", []):
+				self.assertNotIn((placement["x"], placement["y"]), sprites, placement["id"])
+
+	def test_retained_callout_artifacts_match_the_seed(self) -> None:
+		review_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not review_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import drawing_callouts
+
+		self.assertGreater(drawing_callouts.verify_retained(load_json(CALLOUT_SEED_PATH), ROOT, None, Path(review_root)), 3)
 
 	def test_displays_and_mechanisms_are_complete(self) -> None:
 		self.assertEqual(2, len(self.definition["displays"]))
@@ -248,22 +474,17 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertEqual({0, 1}, {display["controller_index"] for display in self.definition["displays"]})
 		self.assertEqual({"mechanism.rudy-jaw", "mechanism.rudy-eyes", "mechanism.trap-door", "mechanism.step-gate", "mechanism.ramp-diverter", "mechanism.trough-and-shooters", "mechanism.tunnel-kickout", "mechanism.rudys-hideout", "mechanism.dummy-eject-hole", "mechanism.multiball-lock", "mechanism.jet-bumpers", "mechanism.slingshots", "mechanism.flippers"}, {mechanism["id"] for mechanism in self.definition["mechanisms"]})
 
-	def test_spatial_positions_are_normalized_and_only_gi_3_is_missing(self) -> None:
-		missing = []
+	def test_every_device_has_a_validated_or_controlled_spatial_record(self) -> None:
 		for collection in (self.switches, self.solenoids, self.lamps, self.gi):
 			for device in collection.values():
-				spatial = device.get("spatial")
-				if spatial is None:
-					missing.append((device["binding"]["group"], device["binding"]["device"]))
-					continue
-				if spatial["status"] != "validated":
-					continue
-				for placement in spatial["placements"]:
+				spatial = device["spatial"]
+				self.assertIn(spatial["status"], {"validated", "not_applicable"}, device["id"])
+				for placement in spatial.get("placements", []):
+					self.assertEqual("validated", placement["provenance"]["status"], placement["id"])
 					for axis in ("x", "y"):
 						self.assertGreaterEqual(placement[axis], 0.0)
 						self.assertLessEqual(placement[axis], 1.0)
 						self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
-		self.assertEqual([("pinmame.output.gi", 3)], missing)
 
 	def test_geometric_ordering_regressions(self) -> None:
 		switch_x = {address: switch["spatial"]["placements"][0]["x"] for address, switch in self.switches.items() if switch.get("spatial") and switch["spatial"]["status"] == "validated"}
@@ -291,16 +512,20 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		with self.assertRaises(SystemExit):
 			_run_curator_without_mode()
 
-	def test_spatial_audit_matches_curator_and_names_gi_blocker(self) -> None:
+	def test_spatial_audit_matches_curator(self) -> None:
 		import curate_funhouse as curator
 
-		report = curator.build_spatial_report(curator.build())
+		report = curator.build_spatial_report(*curator.build_with_decisions())
 		self.assertEqual(report, load_json(SPATIAL_REPORT_PATH))
 		self.assertEqual("pinmame-spatial-blockers", report["format"])
 		self.assertEqual("partial", report["status"])
-		self.assertEqual(1, len(report["blockers"]))
-		self.assertIn("socket-level", report["blockers"][0])
-		self.assertEqual([{"group": "pinmame.output.gi", "address": 3}], report["unresolved"])
+		self.assertEqual([curator.APRON_GI_BLOCKER], report["blockers"])
+		self.assertIn("Resolution path:", curator.APRON_GI_BLOCKER)
+		self.assertEqual([], report["unresolved"])
+		self.assertEqual(36, len(report["excluded_checks"]))
+		self.assertEqual(6, len(report["drawing_measurements"]))
+		self.assertEqual([0, 3], report["general_illumination"]["backbox_only"])
+		self.assertEqual(hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(), report["source_hashes"]["callout_seed_sha256"])
 		self.assertEqual("vpxtool git:v0.33.3", report["extraction"]["vpxtool_version"])
 		self.assertEqual(curator.render_spatial_report(report), SPATIAL_REPORT_MARKDOWN_PATH.read_text(encoding="utf-8"))
 

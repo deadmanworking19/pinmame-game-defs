@@ -1,6 +1,6 @@
 {
   "blockers": [
-    "G.I. public address 3 / printed circuit 04 is a mixed center-backglass and right-rear-playfield branch. The handbook proves the playfield branch exists, but none of the retained known-working scripts or extracted table objects identifies its individual emitters; a socket-level wiring survey is required before spatial placement can be validated."
+    "Public G.I. 4 (FRONT PLAYFIELD) also feeds G.I. bulbs under the apron, which a parts supplier names in the owner thread on the violet string and which the retained 1.3 table suggests with two render lights under its apron instruction cards. No manual page, drawing or parts list draws them, and neither retained table models a bulb there, so their number and positions are unknown and the string's placements are incomplete. Resolution path: a recreation that models those bulbs, or a drawing that locates them, checked for number and sockets against a photograph of a FunHouse playfield with the apron removed, which any owner can take."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -13,13 +13,209 @@
     "x": "x/964; 0=left, 1=right",
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
-  "excluded_object_classes": [
-    "l51a/l51b, l52a/l52b, l72a/l72b co-located brightness-doubling and same-fixture secondary Light objects (manual prints one bulb per address with no quantity marker)",
-    "Bot_finger_2-4, Mid_finger_2-4, and Top_finger_2-4 render layers around the five-unit-radius physical hotspot objects used for lamps 54-56",
-    "Co-located larger-radius GI_Upper and GI_Lower render layers grouped into 15 and 14 physical emitter hotspots respectively; the smallest-radius named object supplies each coordinate",
-    "fmflNN / cfXX flash-modulation and clock-face helper Light/Flasher objects paired with each primary lNN lamp object",
-    "LBballoon/LRballoon/LYballoon/lHotDogCartB optional-mod decorative objects gated behind BalloonMod/HotDogCartMod table toggles"
-  ],
+  "drawing_callout_check": {
+    "checked": 102,
+    "limit": 0.07,
+    "not_validated": {
+      "device.2-superdog-flashers.emitter.2": {
+        "label": "20",
+        "page": "hb-5",
+        "reason": "every callout of this label marks a nearer placement"
+      },
+      "lamp.matrix-53.emitter.2": {
+        "label": "53",
+        "page": "hb-7",
+        "reason": "every callout of this label marks a nearer placement"
+      }
+    },
+    "pages": {
+      "hb-5": {
+        "callout_fit_pairs": 17,
+        "callout_loo_max": 0.0577,
+        "callout_pairs": 17,
+        "control_loo_max": 0.0483,
+        "control_rms": 0.0159,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-solenoid-locations.webp",
+          "pixels": [
+            2178,
+            4080
+          ],
+          "root": "repository",
+          "sha256": "040135229803d527c0f9397b884667d10f4e32f1ffef462607c9e66f662a7c15"
+        },
+        "locator": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf PDF page 6, printed 5: Solenoid Locations drawing (committed excerpt crop operator-handbook-solenoid-locations.webp)"
+      },
+      "hb-7": {
+        "callout_fit_pairs": 60,
+        "callout_loo_max": 0.0553,
+        "callout_pairs": 60,
+        "control_loo_max": 0.047,
+        "control_rms": 0.0156,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-locations.webp",
+          "pixels": [
+            2079,
+            4131
+          ],
+          "root": "repository",
+          "sha256": "c4d3acbc94200f5db16160c4bd3b376e5cda7c34cc17258ad9889c0de3ddb731"
+        },
+        "locator": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf PDF page 8, printed 7: Lamp Locations drawing (committed excerpt crop operator-handbook-lamp-locations.webp)"
+      },
+      "hb-9": {
+        "callout_fit_pairs": 23,
+        "callout_loo_max": 0.058,
+        "callout_pairs": 23,
+        "control_loo_max": 0.0451,
+        "control_rms": 0.0148,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-locations.webp",
+          "pixels": [
+            2442,
+            4233
+          ],
+          "root": "repository",
+          "sha256": "8d98aec02a8284e4633fc1ca110d55841ddfcc1de0ad7cd9e3eb18129203bb4e"
+        },
+        "locator": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf PDF page 10, printed 9: Switch Locations drawing (committed excerpt crop operator-handbook-switch-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-23",
+      "transcription": "independent readers working only from gridded tiles of the committed excerpt crops, without table data",
+      "verification": "the curator overlaid every page (reads, controls and the table placements mapped through each page's control fit) and measured every control on fine-grid crops: the three jet-bumper caps (the readers' reads, confirmed), the three flipper pivots as the centre of each bat's rounded end (replacing the readers' estimates, one of them 25 px off on the solenoid page, and adding the upper-left pivot two readers missed) and the outer frame's top corners from the frame lines' pixel profiles, which match the table bounds (leave-one-out at most 0.025); reads are kept as transcribed. Only reads whose point marks a part are checked: a number printed with no leader in open space or along an edge marks none, and its placements are listed as excluded with that reason. The cabinet-area reads 11, 12, 13, 14, 21, 22 and 88 are outside the playfield. The switch page prints 81 where no other 31 appears; the matrix marks 81 Not Used, so it is read literally and checks nothing. The three Steps switches and the three Steps lamps are measured on the drawing"
+    },
+    "retained_artifacts": {
+      "directory": "funhouse-1990/callout-check",
+      "manifest_sha256": "8b177d15dccaa7c58c32061b1bdd5ec3fe0b52694c594b78e7c375b6d8f9948b"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/williams/funhouse-1990-callouts.json",
+    "seed_sha256": "9aaeef83f1090dd49587b231ba381b239f31f4323b570ed802355dd5ff346bfd",
+    "validated": 100
+  },
+  "drawing_measurements": {
+    "lamp.matrix-54.emitter.hb-7-socket": {
+      "label": "54",
+      "normalized": [
+        0.188,
+        0.326
+      ],
+      "note": "Steps Lights Frenzy lamp: centre of the small round socket printed just right of the number 54, the lowest of the three.",
+      "page": "hb-7",
+      "pixel": [
+        439.5,
+        1492.0
+      ]
+    },
+    "lamp.matrix-55.emitter.hb-7-socket": {
+      "label": "55",
+      "normalized": [
+        0.167,
+        0.296
+      ],
+      "note": "Steps Lights Ex. Ball lamp: centre of the small round socket printed just right of the number 55 below 56.",
+      "page": "hb-7",
+      "pixel": [
+        398.0,
+        1381.0
+      ]
+    },
+    "lamp.matrix-56.emitter.hb-7-socket": {
+      "label": "56",
+      "normalized": [
+        0.157,
+        0.254
+      ],
+      "note": "Steps 500,000 lamp: centre of the small round socket printed just right of the number 56 on the Steps track's left rail.",
+      "page": "hb-7",
+      "pixel": [
+        375.0,
+        1221.5
+      ]
+    },
+    "switch.matrix-15.sensor.hb-9-slot": {
+      "label": "15",
+      "normalized": [
+        0.096,
+        0.27
+      ],
+      "note": "Bottom step switch (Steps Lights Frenzy): centre of the lowest wire slot across the Steps track, where leader 15 ends on the slot's left end.",
+      "page": "hb-9",
+      "pixel": [
+        457.0,
+        1224.0
+      ]
+    },
+    "switch.matrix-26.sensor.hb-9-slot": {
+      "label": "26",
+      "normalized": [
+        0.087,
+        0.249
+      ],
+      "note": "Middle step switch (Steps Lights Ex. Ball): centre of the middle wire slot across the Steps track, where leader 26 ends on the slot's left end.",
+      "page": "hb-9",
+      "pixel": [
+        439.0,
+        1144.0
+      ]
+    },
+    "switch.matrix-36.sensor.hb-9-slot": {
+      "label": "36",
+      "normalized": [
+        0.078,
+        0.227
+      ],
+      "note": "Top step switch (Steps 500,000): centre of the uppermost of the three wire slots across the Steps track, midway between its rounded ends, where leader 36 ends on the slot's left end.",
+      "page": "hb-9",
+      "pixel": [
+        421.0,
+        1062.0
+      ]
+    }
+  },
+  "excluded_checks": {
+    "device.3-blue-flashers.emitter.1": "the drawing prints 17 only in the row of leader-less back-panel labels along the top rail, which does not draw the part, so it checks nothing; the placement is the table's Flupper dome primitive on the back panel",
+    "device.3-clear-flashers.emitter.1": "the drawing prints 24 only in the row of leader-less back-panel labels along the top rail, which does not draw the part, so it checks nothing; the placement is the table's Flupper dome primitive on the back panel",
+    "device.3-red-flashers.emitter.1": "the drawing prints 23 only in the row of leader-less back-panel labels along the top rail, which does not draw the part, so it checks nothing; the placement is the table's Flupper dome primitive on the back panel",
+    "device.dummy-eject-hole.effect": "the drawing prints 16 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.eyelids-close.effect": "the drawing prints 27 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.eyelids-open.effect": "the drawing prints 26 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.eyes-left.effect": "the drawing prints 28 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.eyes-right.effect": "the drawing prints 25 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.kickbig.effect": "the drawing prints 3 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.mouth-motor.effect": "the drawing prints 21 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.outhole.effect": "the drawing prints 1 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.ramp-diverter.effect": "the drawing prints 2 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.trap-door-closed.effect": "the drawing prints 6 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.trap-door-open.effect": "the drawing prints 5 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.trough.effect": "the drawing prints 15 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "device.up-down-driver.effect": "the drawing prints 22 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-16.sensor": "the drawing prints 16 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-25.sensor": "the drawing prints 25 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-27.sensor": "the drawing prints 27 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-28.sensor": "the drawing prints 28 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-32.sensor": "the drawing prints 32 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-34.sensor": "the drawing prints 34 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-35.sensor": "the drawing prints 35 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-37.sensor": "the drawing prints 37 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-38.sensor": "the drawing prints 38 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-45.sensor": "the drawing prints 45 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-46.sensor": "the drawing prints 46 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-48.sensor": "the drawing prints 48 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-51.sensor": "the drawing prints 51 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-55.sensor": "the drawing prints 55 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-56.sensor": "the drawing prints 56 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-63.sensor": "the drawing prints 63 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-65.sensor": "the drawing prints 65 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-72.sensor": "the drawing prints 72 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-73.sensor": "the drawing prints 73 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status",
+    "switch.matrix-74.sensor": "the drawing prints 74 with no leader where it names no single part (in open space, along an edge or inside a larger outline), so it checks nothing; the placement keeps its table status"
+  },
   "extraction": {
     "fail_closed": true,
     "file_count": 2212,
@@ -31,6 +227,239 @@
     "vpxtool_version": "vpxtool git:v0.33.3"
   },
   "format": "pinmame-spatial-blockers",
+  "general_illumination": {
+    "backbox_only": [
+      0,
+      3
+    ],
+    "match_limit": 0.01,
+    "method": "Public G.I. names, wires, pins, fuses and triacs come from the L-9 ROM's T.6 test. Public 1's socket is the spotlight, the RudyShade Light under the table's lamp-shade primitives (Case 1). For public 2 and 4 the retained 1.3 table draws a bulb at only some of the Lights its script drives (Case 2 GI_Upper, Case 4 GI_Lower), so the bulbs come from version 2.0c of the same table, which models a bulb (pBulb glass, pFiliment filament, pFBase base) under each Light its script assigns to the same public string (GI_UpperBulbs, GI_LowerBulbs). A socket is a 2.0c bulb with a driven 1.3 Light within 0.01 normalized; of the co-located 1.3 render doubles the placement is the one that shows its own bulb mesh, else the one on a BulbFil filament primitive, else the one with the smallest falloff radius. A 1.3 Light under no 2.0c bulb makes no socket. Both tables split the strings as the ROM's names do (Rudy's spotlight, rear playfield, front playfield) and as the owners traced the orange and violet strings, no retained table contradicts the split, and public 0 and 3 light only the backbox (docs/SPATIAL.md, G.I. string membership). The manuals draw no G.I. socket and give no per-string bulb count, so no quantity is asserted.",
+    "not_placed": {
+      "Bottom_GI_32, Bottom_GI_39": "public 4 render lights under the apron instruction cards; neither table models a bulb there, and the apron G.I. bulbs a parts supplier names are the record's blocker",
+      "Light22": "public 2 render light 0.026 normalized from the Light23 socket; neither table models a bulb under it",
+      "LowerGI_B14": "halo partner of LowerGI_B4 at Light33's socket, 0.014 normalized from it and on no bulb",
+      "RudySign1, RudySign2": "f_refl glow sprites Case 1 drives on Rudy's face; the spotlight that lights them is RudyShade",
+      "public 1 backbox branch, public 4 coin-door lamps": "cabinet parts of playfield strings, not placed"
+    },
+    "placed": {
+      "1": [
+        [
+          0.76868,
+          0.317499
+        ]
+      ],
+      "2": [
+        [
+          0.159636,
+          0.026365
+        ],
+        [
+          0.893615,
+          0.028146
+        ],
+        [
+          0.056362,
+          0.061723
+        ],
+        [
+          0.952628,
+          0.064875
+        ],
+        [
+          0.299793,
+          0.083924
+        ],
+        [
+          0.176233,
+          0.11846
+        ],
+        [
+          0.540764,
+          0.131754
+        ],
+        [
+          0.358806,
+          0.189862
+        ],
+        [
+          0.166603,
+          0.275318
+        ],
+        [
+          0.049908,
+          0.331432
+        ],
+        [
+          0.191442,
+          0.334527
+        ],
+        [
+          0.897303,
+          0.336229
+        ],
+        [
+          0.063739,
+          0.371313
+        ],
+        [
+          0.078492,
+          0.40256
+        ]
+      ],
+      "4": [
+        [
+          0.563099,
+          0.472939
+        ],
+        [
+          0.060409,
+          0.506492
+        ],
+        [
+          0.121318,
+          0.570539
+        ],
+        [
+          0.120396,
+          0.583696
+        ],
+        [
+          0.777842,
+          0.623165
+        ],
+        [
+          0.215693,
+          0.767503
+        ],
+        [
+          0.661275,
+          0.768162
+        ],
+        [
+          0.767688,
+          0.792313
+        ],
+        [
+          0.150942,
+          0.807551
+        ],
+        [
+          0.686954,
+          0.817347
+        ],
+        [
+          0.20094,
+          0.8229
+        ]
+      ]
+    },
+    "sockets": {
+      "2": [
+        {
+          "light": "Light18",
+          "revision_bulb": "pBulb21"
+        },
+        {
+          "light": "Light24",
+          "revision_bulb": "pBulb23"
+        },
+        {
+          "light": "Light17",
+          "revision_bulb": "pBulb22"
+        },
+        {
+          "light": "Light25",
+          "revision_bulb": "pBulb24"
+        },
+        {
+          "light": "Light20",
+          "revision_bulb": "pBulb20"
+        },
+        {
+          "light": "Light19",
+          "revision_bulb": "pBulb19"
+        },
+        {
+          "light": "Light23",
+          "revision_bulb": "pBulb18"
+        },
+        {
+          "light": "Light21",
+          "revision_bulb": "pBulb17"
+        },
+        {
+          "light": "Light39",
+          "revision_bulb": "pBulb16"
+        },
+        {
+          "light": "Light12",
+          "revision_bulb": "pBulb14"
+        },
+        {
+          "light": "Light8",
+          "revision_bulb": "pBulb15"
+        },
+        {
+          "light": "Light26",
+          "revision_bulb": "pBulb25"
+        },
+        {
+          "light": "Light13",
+          "revision_bulb": "pBulb13"
+        },
+        {
+          "light": "Light14",
+          "revision_bulb": "pBulb12"
+        }
+      ],
+      "4": [
+        {
+          "light": "LowerGI_B19",
+          "revision_bulb": "pBulb8"
+        },
+        {
+          "light": "Light38",
+          "revision_bulb": "pBulb11"
+        },
+        {
+          "light": "Light34",
+          "revision_bulb": "pBulb9"
+        },
+        {
+          "light": "Light35",
+          "revision_bulb": "pBulb10"
+        },
+        {
+          "light": "Light37",
+          "revision_bulb": "pBulb7"
+        },
+        {
+          "light": "Light33",
+          "revision_bulb": "pBulb1"
+        },
+        {
+          "light": "Light30",
+          "revision_bulb": "pBulb6"
+        },
+        {
+          "light": "Light29",
+          "revision_bulb": "pBulb5"
+        },
+        {
+          "light": "Light31",
+          "revision_bulb": "pBulb2"
+        },
+        {
+          "light": "Light27",
+          "revision_bulb": "pBulb4"
+        },
+        {
+          "light": "Light32",
+          "revision_bulb": "pBulb3"
+        }
+      ]
+    }
+  },
   "machine_id": "williams.funhouse.1990",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -87,6 +516,10 @@
     "cabinet_or_service": [
       {
         "address": 0,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 3,
         "group": "pinmame.output.gi"
       },
       {
@@ -189,12 +622,22 @@
       }
     ]
   },
-  "placement_count": 180,
+  "placement_count": 173,
   "projections": [
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained table's Drain kicker object, shared with the outhole solenoid (1)."
+    },
     {
       "address": 76,
       "group": "pinmame.input.switch",
       "reason": "Projected onto the trap door primitive's own rotation state (PrTrap.RotX); the retained script sets this switch programmatically rather than reading a separate contact-switch object."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto switch 46's position; the retained script's bsHideout saucer helper shares switch 46's own kicker object."
     },
     {
       "address": 5,
@@ -207,29 +650,14 @@
       "reason": "Projected onto the trap door primitive; see solenoid 5."
     },
     {
-      "address": 3,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 46's position; the retained script's bsHideout saucer helper shares switch 46's own kicker object."
-    },
-    {
       "address": 16,
       "group": "pinmame.output.solenoid",
       "reason": "Projected onto switch 65's position; the retained script's bsRudy saucer helper shares switch 65's own kicker object."
     },
     {
-      "address": 8,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 28's position; the retained script's MBRelease handler acts directly on the WaSw28 lock-wall object with no separate release-mechanism object."
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.gi",
-      "reason": "Projected onto Rudy's own sign/shade assembly (RudySign1, RudySign2, RudyShade); the retained script's GI Case 1 drives that collection directly rather than a generic playfield wash."
-    },
-    {
       "address": 21,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 51 (Dummy Jaw); no dedicated jaw-motor VPX object was identified separately from Rudy's head figure."
+      "reason": "Projected onto switch 51 (Dummy Jaw) at Rudy's mouth; no dedicated jaw-motor VPX object exists apart from the head figure."
     },
     {
       "address": 22,
@@ -239,29 +667,25 @@
     {
       "address": 25,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 51 (Dummy Jaw); the only fixed point recorded for Rudy's Head Assembly."
+      "reason": "Projected onto Rudy's eyelid assembly, the centre of the PrLids primitive's world-space mesh bounds, which spans both eyes."
     },
     {
       "address": 26,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."
+      "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."
     },
     {
       "address": 27,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."
+      "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."
     },
     {
       "address": 28,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."
-    },
-    {
-      "address": 73,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the retained table's Drain kicker object, shared with the outhole solenoid (1)."
+      "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."
     }
   ],
+  "promotion_decision": "partial: the apron G.I. bulbs of public G.I. 4 are known but unplaced. Otherwise every used switch, coil, motor, flasher, lamp and G.I. string has a validated placement or a controlled not-applicable record, every placement the factory drawings mark agrees with its callout, and the definition carries no conflict.",
   "resolved_input_addresses": [
     15,
     16,
@@ -685,32 +1109,229 @@
       "group": "pinmame.output.solenoid"
     }
   ],
+  "revision_extraction": {
+    "fail_closed": true,
+    "file_count": 2695,
+    "manifest_sha256": "f05e57012e5f7290f74bd50e986e6668b5721c066cf9d1c0612c18747f5b7595",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/funhouse-1990/v2-0c/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.fh-2-0c",
+    "total_bytes": 216969293,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
   "source_hashes": {
+    "callout_seed_sha256": "9aaeef83f1090dd49587b231ba381b239f31f4323b570ed802355dd5ff346bfd",
     "embedded_script_sha256": "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863",
     "manual_sha256": "b658e7d0985a5e8588981c974d9c9448ea7cc574b2d21e5acb386c718a1f0f47",
     "operator_handbook_sha256": "bb30eacaac0ee7001f59339102da5a1bfe528c2a4dbd63d2247e00fba89f1b13",
     "playfield_photo_sha256": "b56821de487adc55f128e4a94d8d55a4ef2c2e23cd1c0291f1118363c6ecaa81",
+    "revision_script_sha256": "446c6bf558fd1b471000b2552c63225780535c509683b7f098c18eb709570749",
+    "revision_table_sha256": "45ee7c7bb500749feecabd96eef6b5ffe1d4a9ff4b611176bf1155a60ca2b413",
     "table_sha256": "69c37fa9a84e669a2934d6da0e5ee0277c4a0ef01e71eaa19e7271ba3396873e"
   },
   "status": "partial",
-  "unresolved": [
-    {
-      "address": 3,
-      "group": "pinmame.output.gi"
-    }
-  ],
-  "unresolved_input_addresses": [],
-  "unresolved_output_bindings": [
-    {
-      "address": 3,
-      "group": "pinmame.output.gi"
-    }
-  ],
+  "unresolved": [],
   "version": 1,
-  "visual_review_cache": {
-    "root": "external:pinmame-manuals/rendered/williams.funhouse.1990/",
-    "transcription": {
-      "path": "external:pinmame-review-artifacts/funhouse/manual-transcription.md"
-    }
+  "world_bounds": {
+    "export": "vpxtool git:v0.33.3 export obj --units vpu of the retained table; world x and y are table x and y, z is minus height",
+    "export_sha256": "ac1ab343fa91d845ae2deaed128a808499212e518c77cc2bac90a44f47453046",
+    "note": "Lock_Release_Prim (solenoid 8) is not in the export; its local mesh is symmetric about its origin (x -41.85..41.85, y -38.05..38.05) and unrotated, so its position (187.77698, 398.6577) is its plan centre.",
+    "objects": {
+      "BulbFil1": {
+        "centre": [
+          0.665407,
+          0.535709
+        ],
+        "use": "lamp 58's overhead bulb",
+        "x": [
+          631.8482,
+          651.056
+        ],
+        "y": [
+          1148.5985,
+          1167.8063
+        ]
+      },
+      "BulbFil2": {
+        "centre": [
+          0.262382,
+          0.322563
+        ],
+        "use": "lamp 57's overhead bulb",
+        "x": [
+          243.3322,
+          262.54
+        ],
+        "y": [
+          687.7782,
+          706.986
+        ]
+      },
+      "Flasher1": {
+        "centre": [
+          0.605635,
+          0.075096
+        ],
+        "use": "back-panel dome of flasher 17",
+        "x": [
+          551.4502,
+          616.2143
+        ],
+        "y": [
+          133.9312,
+          190.782
+        ]
+      },
+      "Flasher2": {
+        "centre": [
+          0.764751,
+          0.096573
+        ],
+        "use": "back-panel dome of flasher 23",
+        "x": [
+          704.8377,
+          769.6018
+        ],
+        "y": [
+          180.365,
+          237.2157
+        ]
+      },
+      "Flasher6": {
+        "centre": [
+          0.927329,
+          0.118305
+        ],
+        "use": "back-panel dome of flasher 24",
+        "x": [
+          861.563,
+          926.3271
+        ],
+        "y": [
+          227.349,
+          284.1997
+        ]
+      },
+      "L71": {
+        "centre": [
+          0.337732,
+          0.202892
+        ],
+        "use": "lamp 71's glass",
+        "x": [
+          316.3575,
+          334.7896
+        ],
+        "y": [
+          419.3924,
+          457.911
+        ]
+      },
+      "L74": {
+        "centre": [
+          0.337743,
+          0.205808
+        ],
+        "use": "lamp 74's glass",
+        "x": [
+          316.3682,
+          334.8003
+        ],
+        "y": [
+          425.697,
+          464.2156
+        ]
+      },
+      "L75": {
+        "centre": [
+          0.337751,
+          0.209287
+        ],
+        "use": "lamp 75's glass",
+        "x": [
+          316.3756,
+          334.8077
+        ],
+        "y": [
+          433.2191,
+          471.7376
+        ]
+      },
+      "L76": {
+        "centre": [
+          0.337771,
+          0.21355
+        ],
+        "use": "lamp 76's glass",
+        "x": [
+          316.3953,
+          334.8274
+        ],
+        "y": [
+          442.4356,
+          480.9542
+        ]
+      },
+      "L77": {
+        "centre": [
+          0.337741,
+          0.217175
+        ],
+        "use": "lamp 77's glass",
+        "x": [
+          316.366,
+          334.7981
+        ],
+        "y": [
+          450.2728,
+          488.7914
+        ]
+      },
+      "L78": {
+        "centre": [
+          0.33772,
+          0.223001
+        ],
+        "use": "lamp 78's glass",
+        "x": [
+          316.3456,
+          334.7777
+        ],
+        "y": [
+          462.8688,
+          501.3874
+        ]
+      },
+      "PrLids": {
+        "centre": [
+          0.65028,
+          0.229335
+        ],
+        "use": "projection of solenoids 25-28",
+        "x": [
+          528.0463,
+          725.6938
+        ],
+        "y": [
+          454.4735,
+          537.1692
+        ]
+      },
+      "pShade1": {
+        "centre": [
+          0.76802,
+          0.31329
+        ],
+        "use": "lamp shade over the RudyShade light, public G.I. 1's socket",
+        "x": [
+          686.1957,
+          794.5472
+        ],
+        "y": [
+          638.7455,
+          715.9221
+        ]
+      }
+    },
+    "retained": "external:pinmame-review-artifacts/funhouse-1990/vpx-world-obj"
   }
 }

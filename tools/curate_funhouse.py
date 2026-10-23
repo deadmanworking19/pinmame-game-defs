@@ -18,11 +18,15 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
+import math
 import os
 from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+
+import drawing_callouts
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +34,8 @@ PARTIAL_PATH = ROOT / "machines/partial/williams/funhouse-1990.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/funhouse-1990.json"
 DEFINITION_PATH = PARTIAL_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/funhouse-1990.json"
+CALLOUT_SEED_RELATIVE = "tools/seeds/williams/funhouse-1990-callouts.json"
+CALLOUT_SEED_PATH = ROOT / CALLOUT_SEED_RELATIVE
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/funhouse-1990.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/funhouse-1990.md"
 
@@ -44,7 +50,14 @@ PLAYFIELD_PHOTO_SOURCE = "photo.williams.funhouse.1990.a13"
 VPX_TABLE_SOURCE = "vpx-table.fh-1-3"
 VPX_SCRIPT_SOURCE = "vpx-script.fh-1-3"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.fh-1-3"
+REVISION_TABLE_SOURCE = "vpx-table.fh-2-0c"
+REVISION_EXTRACTION_SOURCE = "vpx-extraction.fh-2-0c"
 VPXTABLE_SCRIPTS_SOURCE = "vpx-script.funhouse-community-current"
+RUNTIME_GI_SOURCE = "runtime.funhouse.fh-l9.gi-test"
+RUNTIME_GI_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+PINSIDE_ORANGE_SOURCE = "forum.pinside.funhouse-gi-orange-string"
+PINSIDE_VIOLET_SOURCE = "forum.pinside.funhouse-gi-violet-string"
+CALLOUT_SOURCE = "human-review.funhouse.drawing-callouts"
 
 TABLE_SHA256 = "69c37fa9a84e669a2934d6da0e5ee0277c4a0ef01e71eaa19e7271ba3396873e"
 SCRIPT_SHA256 = "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863"
@@ -57,6 +70,14 @@ EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/funhouse-1990/extracted-vpxto
 EXTRACTION_MANIFEST_SHA256 = "85620e05458bd72bc57c2e203001a0f35db9806431e66e07ee08f05e90346ba9"
 EXTRACTION_FILE_COUNT = 2212
 EXTRACTION_TOTAL_BYTES = 219908807
+# Version 2.0c of the same table, retained for the bulbs it models at the G.I. sockets.
+REVISION_TABLE_SHA256 = "45ee7c7bb500749feecabd96eef6b5ffe1d4a9ff4b611176bf1155a60ca2b413"
+REVISION_SCRIPT_SHA256 = "446c6bf558fd1b471000b2552c63225780535c509683b7f098c18eb709570749"
+REVISION_EXTRACTION_RELATIVE_PATH = Path("williams/funhouse-1990/v2-0c/extracted-vpxtool")
+REVISION_MANIFEST_RELATIVE_PATH = Path("williams/funhouse-1990/v2-0c/extracted-vpxtool.manifest.json")
+REVISION_MANIFEST_SHA256 = "f05e57012e5f7290f74bd50e986e6668b5721c066cf9d1c0612c18747f5b7595"
+REVISION_FILE_COUNT = 2695
+REVISION_TOTAL_BYTES = 216969293
 
 TABLE_BOUNDS = "left=0 top=0 right=964 bottom=2162"
 
@@ -106,6 +127,7 @@ SWITCH_LABELS = {
 }
 # 78, 81-88 are all printed "Not Used"; 23 (Ticket Dispenser) is separately printed "Not Used".
 UNUSED_MATRIX_ADDRESSES = {23, 78, 81, 82, 83, 84, 85, 86, 87, 88}
+STEPS_SWITCHES = {15, 26, 36}
 # The only two switches this manual marks "(opto)" anywhere -- neither the switch-locations page
 # nor the switch-matrix page shades any cell for opto construction on this machine.
 OPTO_SWITCHES = {51, 55}
@@ -216,25 +238,49 @@ SOLENOID_CALLBACKS = {
 	27: "SolEyesClosed", 28: "SolEyesLeft",
 }
 
-# --- Printed general-illumination table (manual page 2-40) ------------------------------------
+# --- General illumination (ROM T.6 test, manual page 2-40, handbook page 5) --------------------
+# Labels are the names the L-9 ROM's T.6 G.I. test prints for each public string.
 GI_LABELS = {
-	0: "Upper Backglass G.I.", 1: "Rudy G.I.", 2: "Upper/Rear Playfield G.I.",
-	3: "Center Backglass / Right Rear Playfield G.I.", 4: "Lower Playfield G.I.",
+	0: "Backglass Upper G.I.", 1: "Rudy / Backglass G.I.", 2: "Rear Playfield G.I.",
+	3: "Backglass Center G.I.", 4: "Front Playfield G.I.",
 }
-GI_MANUAL_LABELS = {
-	0: "Upper Backglass G.I.", 1: "Front Playfield G.I.", 2: "Rear Playfield G.I.",
-	3: "Center Backglass / Right Rear Playfield G.I.", 4: "Top Playfield G.I.",
+# T.6 screens per public string: name, Start screen (wires), P.F. pins, B.B. pins, fuse, driver.
+GI_ROM_SCREENS = {
+	0: ("BACKGLASS UPPER", "WHT-BRN BRN", "P.F. J120-7 120-1", "B.B. J121-7 121-1", "F110 5 AMP S.B.", "DRIVER Q18"),
+	1: ("RUDY / BACKGLASS", "WHT-ORN ORN", "P.F. J120-8 120-2", "B.B. J121-8 121-2", "F109 5 AMP S.B.", "DRIVER Q10"),
+	2: ("REAR PLAYFIELD", "WHT-YEL YEL", "P.F. J120-9 120-3", "B.B. J121-9 121-3", "F108 5 AMP S.B.", "DRIVER Q14"),
+	3: ("BACKGLASS CENTER", "WHT-GRN GRN", "P.F. J120-10 120-5", "B.B. J121-10 121-5", "F107 5 AMP S.B.", "DRIVER Q16"),
+	4: ("FRONT PLAYFIELD", "WHT-VIO VIO", "P.F. J120-11 120-6", "B.B. J121-11 121-6", "F106 5 AMP S.B.", "DRIVER Q12"),
 }
+# The printed row of the same number, literally: the 2-40 list name and the handbook's name, return wire, pin and triac.
+GI_PRINTED_ROWS = {
+	0: ('2-40 "01 Upper Backglass G.I."', 'handbook "01 Upper Backglass, White-Brown, J120-7, Q18"'),
+	1: ('2-40 "02 Front Playfield G.I."', 'handbook "02 Front Playfield, White-Violet, J119-1, Q10"'),
+	2: ('2-40 "03 Rear Playfield G.I."', 'handbook "03 Rear Playfield, White-Yellow, J121-9, Q14"'),
+	3: ('2-40 "04 Cntr Bckglss/Rt. Rr Plfld G.I."', 'handbook "04 Center Backglass / Right Rear Playfield, White-Orange, J120-8, Q16"'),
+	4: ('2-40 "05 Top Playfield G.I."', 'handbook "05 Top Playfield, White-Green, J120-10, Q12"'),
+}
+GI_PRINTED_NOTE = (
+	"Both printed lists keep their transistor column in string order (Q18, Q10, Q14, Q16, Q12 for strings 1-5), but rows 02, "
+	"04 and 05 carry their names, wires and pins one string out of place: on the power driver board Q10 drives orange "
+	"(J120-2/J120-8), Q16 green (J120-5/J120-10) and Q12 violet (J120-6/J120-11 and the J119 cabinet branch), and the ROM's "
+	"T.6 test prints exactly those wires, pins and fuses for public strings 1, 3 and 4. The name follows the wire: \"Front "
+	"Playfield\" (white-violet, J119-1) is public 4, \"Center Backglass / Right Rear Playfield\" (white-orange, J120-8) is "
+	"public 1, and \"Top Playfield\" (white-green, J120-10) stands where the ROM names public 3 BACKGLASS CENTER. This is a "
+	"wiring-detail misprint of the kind Terminator 2's tables carry, not a disagreement about the machine."
+)
 GI_SCRIPT_REGIONS = {
-	0: "Upper BackGlass (Case 0)", 1: "Rudy (Case 1)", 2: "Upper Playfield (Case 2)",
-	3: "Center BackGlass (Case 3)", 4: "Lower Playfield (Case 4)",
+	0: "Upper BackGlass (Case 0, no handler)", 1: "Rudy (Case 1)", 2: "Upper Playfield (Case 2)",
+	3: "Center BackGlass (Case 3, no handler)", 4: "Lower Playfield (Case 4)",
 }
+# Board-internal wiring per public string, as the ROM's T.6 screens print it; J119 is the violet cabinet branch the
+# 2-40 interboard table (3-17) prints.
 GI_FEED_WIRING = {
-	0: dict(control_connection="J120-1", control_wire="Brown", driver_transistor="Q18", insert_connection="J121-1", return_connection="J120-7 / J121-7", return_wire="White-Brown", return_component="F10"),
-	1: dict(control_connection="J120-6 / J119-3", control_wire="Violet", driver_transistor="Q10", insert_connection="J121-6", return_connection="J120-11 / J121-11 / J119-1", return_wire="White-Violet", return_component="F6"),
-	2: dict(control_connection="J120-3", control_wire="Yellow", driver_transistor="Q14", insert_connection="J121-3", return_connection="J120-9 / J121-9", return_wire="White-Yellow", return_component="F8"),
-	3: dict(control_connection="J120-2", control_wire="Orange", driver_transistor="Q16", insert_connection="J121-2", return_connection="J120-8 / J121-8", return_wire="White-Orange", return_component="F9"),
-	4: dict(control_connection="J120-5", control_wire="Green", driver_transistor="Q12", insert_connection="J121-5", return_connection="J120-10 / J121-10", return_wire="White-Green", return_component="F7"),
+	0: dict(control_connection="J120-1", control_wire="Brown", driver_transistor="Q18", insert_connection="J121-1", return_connection="J120-7 / J121-7", return_wire="White-Brown", return_component="F110"),
+	1: dict(control_connection="J120-2", control_wire="Orange", driver_transistor="Q10", insert_connection="J121-2", return_connection="J120-8 / J121-8", return_wire="White-Orange", return_component="F109"),
+	2: dict(control_connection="J120-3", control_wire="Yellow", driver_transistor="Q14", insert_connection="J121-3", return_connection="J120-9 / J121-9", return_wire="White-Yellow", return_component="F108"),
+	3: dict(control_connection="J120-5", control_wire="Green", driver_transistor="Q16", insert_connection="J121-5", return_connection="J120-10 / J121-10", return_wire="White-Green", return_component="F107"),
+	4: dict(control_connection="J120-6 / J119-3", control_wire="Violet", driver_transistor="Q12", insert_connection="J121-6", return_connection="J120-11 / J121-11 / J119-1", return_wire="White-Violet", return_component="F106"),
 }
 
 # --- Printed lamp table (manual pages 2-36 locations, 2-37 wiring) ----------------------------
@@ -274,13 +320,13 @@ LAMP_ROW_WIRING = {
 }
 
 # --- Normalized playfield coordinates from the retained VPX extraction (x/964, y/2162) --------
+# The Steps switches 15, 26 and 36 and the Steps lamps 54-56 are drawing measurements in the callout seed instead.
 SWITCH_POSITIONS = {
-	15: [(0.145448, 0.30695)],
 	16: [(0.687465, 0.112309)], 17: [(0.15384, 0.596574)], 18: [(0.615994, 0.443693)],
-	25: [(0.288262, 0.135109)], 26: [(0.145027, 0.263304)], 27: [(0.239196, 0.147339)],
+	25: [(0.288262, 0.135109)], 27: [(0.239196, 0.147339)],
 	28: [(0.193812, 0.158922)], 31: [(0.554663, 0.521479)], 32: [(0.512372, 0.454203)],
 	33: [(0.158116, 0.067089)], 34: [(0.528313, 0.504013)], 35: [(0.140276, 0.628762)],
-	36: [(0.146513, 0.217511)], 37: [(0.520533, 0.479226)], 38: [(0.761925, 0.390557)],
+	37: [(0.520533, 0.479226)], 38: [(0.761925, 0.390557)],
 	41: [(0.211364, 0.738475)], 42: [(0.131072, 0.7303)], 43: [(0.054941, 0.715251)],
 	44: [(0.374725, 0.280513)], 45: [(0.711618, 0.346901)], 46: [(0.78147, 0.13193)],
 	47: [(0.059097, 0.89204)], 48: [(0.831538, 0.427095)], 51: [(0.630723, 0.273491)],
@@ -297,18 +343,20 @@ SWITCH_POSITIONS = {
 SOLENOID_POSITIONS = {
 	1: [(0.500721, 0.960313)], 2: [(0.900092, 0.335841)], 3: [(0.78147, 0.13193)],
 	4: [(0.693624, 0.61287)], 5: [(0.81201, 0.238809)], 6: [(0.81201, 0.238809)],
-	8: [(0.433493, 0.564827)], 9: [(0.615994, 0.443693)], 10: [(0.843763, 0.431839)],
+	8: [(0.194789, 0.184393)], 9: [(0.615994, 0.443693)], 10: [(0.843763, 0.431839)],
 	11: [(0.764603, 0.518256)], 12: [(0.211364, 0.738475)], 13: [(0.657699, 0.73899)],
 	14: [(0.100533, 0.84034)], 15: [(0.877269, 0.863859)], 16: [(0.660429, 0.20844)],
-	17: [(0.607818, 0.066095), (0.257915, 0.313511), (0.931763, 0.490629)],
+	# The back-panel Flupper domes Flasher1, Flasher2 and Flasher6 are placed at their world-space mesh bounds centres.
+	17: [(0.605635, 0.075096), (0.257915, 0.313511), (0.931763, 0.490629)],
 	18: [(0.585264, 0.326788)],
-	19: [(0.434362, 0.658164), (0.434362, 0.658164)],
+	19: [(0.434362, 0.658164)],
 	20: [(0.446452, 0.46247), (0.460268, 0.512137)],
-	23: [(0.766934, 0.087572), (0.252168, 0.291859), (0.932054, 0.531739)],
-	24: [(0.929512, 0.109304), (0.247033, 0.270019), (0.932168, 0.572932)],
+	23: [(0.764751, 0.096573), (0.252168, 0.291859), (0.932054, 0.531739)],
+	24: [(0.927329, 0.118305), (0.247033, 0.270019), (0.932168, 0.572932)],
 	21: [(0.630723, 0.273491)], 22: [(0.630723, 0.273491)],
-	25: [(0.630723, 0.273491)], 26: [(0.630723, 0.273491)],
-	27: [(0.630723, 0.273491)], 28: [(0.630723, 0.273491)],
+	# PrLids' world-space mesh bounds centre (vpxtool export obj --units vpu): x 528.0463..725.6938, y 454.4735..537.1692.
+	25: [(0.65028, 0.229335)], 26: [(0.65028, 0.229335)],
+	27: [(0.65028, 0.229335)], 28: [(0.65028, 0.229335)],
 }
 
 LAMP_POSITIONS = {
@@ -323,32 +371,56 @@ LAMP_POSITIONS = {
 	41: [(0.347821, 0.657825)], 42: [(0.390515, 0.690546)], 43: [(0.476207, 0.690458)],
 	44: [(0.509063, 0.676773)], 45: [(0.508473, 0.638964)], 46: [(0.511423, 0.59882)],
 	47: [(0.356393, 0.598672)], 48: [(0.359823, 0.638964)], 51: [(0.765445, 0.51738)],
-	52: [(0.61674, 0.442817)], 54: [(0.199859, 0.281846)], 55: [(0.201836, 0.23651)],
-	56: [(0.201117, 0.192765)], 57: [(0.264182, 0.328014)], 58: [(0.665193, 0.541238)],
+	# 57 and 58 are the overhead BulbFil2 and BulbFil1 filament bulbs, not the wf_on_blur sprites the script flashes.
+	52: [(0.61674, 0.442817)], 57: [(0.262382, 0.322563)], 58: [(0.665407, 0.535709)],
 	53: [(0.453204, 0.476406), (0.459149, 0.498521)],
 	61: [(0.129717, 0.690238), (0.735779, 0.675768)], 62: [(0.185918, 0.623502)],
 	63: [(0.437713, 0.41654)], 64: [(0.283597, 0.377782)], 65: [(0.230091, 0.418084)],
 	66: [(0.158393, 0.410765)], 67: [(0.468272, 0.293594)], 68: [(0.47594, 0.255018)],
-	71: [(0.33818, 0.207722)],
-	72: [(0.844033, 0.430917)], 73: [(0.542804, 0.551548)], 74: [(0.337743, 0.208183)],
-	75: [(0.337751, 0.211662)], 76: [(0.337771, 0.215925)], 77: [(0.337741, 0.21955)],
-	78: [(0.33772, 0.225376)], 81: [(0.267608, 0.453786)], 82: [(0.054208, 0.678508), (0.876241, 0.698937)],
+	# The Magic Mirror lamps 71 and 74-78 are the L71 and L74-L78 lamp-glass primitives at their world-space mesh bounds
+	# centres; F71 and F71a are f_refl sprites.
+	71: [(0.337732, 0.202892)],
+	72: [(0.844033, 0.430917)], 73: [(0.542804, 0.551548)], 74: [(0.337743, 0.205808)],
+	75: [(0.337751, 0.209287)], 76: [(0.337771, 0.21355)], 77: [(0.337741, 0.217175)],
+	78: [(0.33772, 0.223001)], 81: [(0.267608, 0.453786)], 82: [(0.054208, 0.678508), (0.876241, 0.698937)],
 	83: [(0.357697, 0.433994)], 84: [(0.302018, 0.41577)], 85: [(0.391661, 0.348521)],
 	86: [(0.350594, 0.378278)], 87: [(0.4368, 0.382814)],
 }
-GI_RUDY_POSITIONS = [(0.698912, 0.09342), (0.83687, 0.113912), (0.76868, 0.317499)]
-GI_UPPER_POSITIONS = [
-	(0.159636, 0.026365), (0.893615, 0.028146), (0.056362, 0.061723), (0.952628, 0.064875),
-	(0.299793, 0.083924), (0.523551, 0.112567), (0.176233, 0.11846), (0.540764, 0.131754),
-	(0.358806, 0.189862), (0.166603, 0.275318), (0.049908, 0.331432), (0.191442, 0.334527),
-	(0.897303, 0.336229), (0.063739, 0.371313), (0.078492, 0.40256),
-]
-GI_LOWER_POSITIONS = [
-	(0.562996, 0.473099), (0.063132, 0.509797), (0.121318, 0.570539), (0.120396, 0.583696),
-	(0.777842, 0.623165), (0.215693, 0.767503), (0.661275, 0.768162), (0.219483, 0.780739),
-	(0.767688, 0.792313), (0.150942, 0.807551), (0.686954, 0.817347), (0.20094, 0.8229),
-	(0.747153, 0.944086), (0.175111, 0.944281),
-]
+# Rudy's spotlight: the RudyShade Light under the pShade1/pShade2 lamp-shade primitives. RudySign1/RudySign2 are f_refl
+# glow sprites the table paints on Rudy and are not sockets.
+GI_RUDY_POSITIONS = [(0.76868, 0.317499)]
+# Public string: (retained 1.3 table's G.I. collection the script's handler drives, the 2.0c table's bulb collection the
+# same string drives through ModLampz.MassAssign).
+GI_COLLECTIONS = {2: ("GI_Upper", "GI_UpperBulbs"), 4: ("GI_Lower", "GI_LowerBulbs")}
+GI_MATCH_LIMIT = 0.01
+# Playfield G.I. sockets of public 2 and 4, rear to front: (the retained 1.3 table's Light, the bulb glass primitive the 2.0c
+# revision of the same table models under a Light its script drives from the same string, the 1.3 Light's normalized
+# position). Each 1.3 Light within GI_MATCH_LIMIT of such a bulb joins that bulb's socket, and of the co-located render
+# doubles the placement is the one that shows its own bulb mesh, else the one on a BulbFil filament primitive, else the one
+# with the smallest falloff radius. A Light no 2.0c bulb lies under makes no socket (docs/SPATIAL.md, picking the bulb).
+# derive_gi_sockets() recomputes this table and GI_UNMATCHED from both retained extractions.
+GI_SOCKETS: dict[int, tuple[tuple[str, str, tuple[float, float]], ...]] = {
+	2: (
+		("Light18", "pBulb21", (0.159636, 0.026365)), ("Light24", "pBulb23", (0.893615, 0.028146)),
+		("Light17", "pBulb22", (0.056362, 0.061723)), ("Light25", "pBulb24", (0.952628, 0.064875)),
+		("Light20", "pBulb20", (0.299793, 0.083924)), ("Light19", "pBulb19", (0.176233, 0.11846)),
+		("Light23", "pBulb18", (0.540764, 0.131754)), ("Light21", "pBulb17", (0.358806, 0.189862)),
+		("Light39", "pBulb16", (0.166603, 0.275318)), ("Light12", "pBulb14", (0.049908, 0.331432)),
+		("Light8", "pBulb15", (0.191442, 0.334527)), ("Light26", "pBulb25", (0.897303, 0.336229)),
+		("Light13", "pBulb13", (0.063739, 0.371313)), ("Light14", "pBulb12", (0.078492, 0.40256)),
+	),
+	4: (
+		("LowerGI_B19", "pBulb8", (0.563099, 0.472939)), ("Light38", "pBulb11", (0.060409, 0.506492)),
+		("Light34", "pBulb9", (0.121318, 0.570539)), ("Light35", "pBulb10", (0.120396, 0.583696)),
+		("Light37", "pBulb7", (0.777842, 0.623165)), ("Light33", "pBulb1", (0.215693, 0.767503)),
+		("Light30", "pBulb6", (0.661275, 0.768162)), ("Light29", "pBulb5", (0.767688, 0.792313)),
+		("Light31", "pBulb2", (0.150942, 0.807551)), ("Light27", "pBulb4", (0.686954, 0.817347)),
+		("Light32", "pBulb3", (0.20094, 0.8229)),
+	),
+}
+GI_UNMATCHED = {2: ("Light22",), 4: ("Bottom_GI_32", "Bottom_GI_39", "LowerGI_B14")}
+GI_UPPER_POSITIONS = [position for _, _, position in GI_SOCKETS[2]]
+GI_LOWER_POSITIONS = [position for _, _, position in GI_SOCKETS[4]]
 
 
 def _file_sha256(path: Path) -> str:
@@ -389,9 +461,9 @@ def configured_vpx_sources_root(*, required: bool) -> Path | None:
 	return Path(value).expanduser().resolve()
 
 
-def verify_extraction_manifest(source_root: Path) -> dict[str, Any]:
-	extraction_root = source_root / EXTRACTION_RELATIVE_PATH
-	manifest_path = source_root / EXTRACTION_MANIFEST_RELATIVE_PATH
+def _verify_manifest(source_root: Path, extraction: Path, manifest: Path, identity: tuple[int, int, str]) -> dict[str, Any]:
+	extraction_root = source_root / extraction
+	manifest_path = source_root / manifest
 	if not manifest_path.is_file():
 		raise RuntimeError(f"FunHouse retained extraction manifest is missing: {manifest_path}")
 	actual = load_json(manifest_path)
@@ -402,12 +474,78 @@ def verify_extraction_manifest(source_root: Path) -> dict[str, Any]:
 	file_count = len(files)
 	total_bytes = sum(int(item["size"]) for item in files)
 	manifest_sha256 = hashlib.sha256(canonical_bytes(actual)).hexdigest()
-	if (file_count, total_bytes, manifest_sha256) != (EXTRACTION_FILE_COUNT, EXTRACTION_TOTAL_BYTES, EXTRACTION_MANIFEST_SHA256):
+	if (file_count, total_bytes, manifest_sha256) != identity:
 		raise RuntimeError(
-			"FunHouse retained extraction identity mismatch: "
+			f"FunHouse retained extraction identity mismatch under {extraction_root}: "
 			f"files={file_count}, bytes={total_bytes}, manifest_sha256={manifest_sha256}"
 		)
 	return actual
+
+
+def verify_extraction_manifest(source_root: Path) -> dict[str, Any]:
+	identity = (EXTRACTION_FILE_COUNT, EXTRACTION_TOTAL_BYTES, EXTRACTION_MANIFEST_SHA256)
+	return _verify_manifest(source_root, EXTRACTION_RELATIVE_PATH, EXTRACTION_MANIFEST_RELATIVE_PATH, identity)
+
+
+def verify_revision_manifest(source_root: Path) -> dict[str, Any]:
+	identity = (REVISION_FILE_COUNT, REVISION_TOTAL_BYTES, REVISION_MANIFEST_SHA256)
+	return _verify_manifest(source_root, REVISION_EXTRACTION_RELATIVE_PATH, REVISION_MANIFEST_RELATIVE_PATH, identity)
+
+
+def _gameitem(extraction_root: Path, kind: str, name: str) -> dict[str, Any]:
+	return json.loads((extraction_root / "gameitems" / f"{kind}.{name}.json").read_text(encoding="utf-8"))[kind]
+
+
+def _collection(extraction_root: Path, name: str) -> list[str]:
+	collections = json.loads((extraction_root / "collections.json").read_text(encoding="utf-8"))
+	return next(item["items"] for item in collections if item["name"] == name)
+
+
+def _primitives(extraction_root: Path, prefix: str) -> dict[str, tuple[float, float]]:
+	items = {}
+	for path in (extraction_root / "gameitems").glob(f"Primitive.{prefix}*.json"):
+		item = json.loads(path.read_text(encoding="utf-8"))["Primitive"]
+		items[item["name"]] = (item["position"]["x"], item["position"]["y"])
+	return items
+
+
+def _normalized(x: float, y: float) -> tuple[float, float]:
+	return round(x / 964.0, 6), round(y / 2162.0, 6)
+
+
+def derive_gi_sockets(source_root: Path) -> tuple[dict[int, tuple[tuple[str, str, tuple[float, float]], ...]], dict[int, tuple[str, ...]]]:
+	"""Recompute GI_SOCKETS from both retained extractions, and name each driven light no 2.0c bulb lies under."""
+	table = source_root / EXTRACTION_RELATIVE_PATH
+	revision = source_root / REVISION_EXTRACTION_RELATIVE_PATH
+	filaments = _primitives(table, "BulbFil")
+	glasses = _primitives(revision, "pBulb")
+	sockets: dict[int, tuple[tuple[str, str, tuple[float, float]], ...]] = {}
+	unmatched: dict[int, tuple[str, ...]] = {}
+	for public, (collection, bulb_collection) in GI_COLLECTIONS.items():
+		bulbs: dict[str, tuple[float, float]] = {}
+		for name in _collection(revision, bulb_collection):
+			centre = _gameitem(revision, "Light", name)["center"]
+			under = [glass for glass, (x, y) in glasses.items() if math.hypot(x - centre["x"], y - centre["y"]) <= 1.0]
+			if len(under) != 1:
+				raise RuntimeError(f"2.0c light {name} must sit on exactly one bulb glass, found {under}")
+			bulbs[under[0]] = _normalized(*glasses[under[0]])
+		groups: dict[str, list[tuple[tuple[bool, bool, float, str], str, tuple[float, float]]]] = {}
+		missing = []
+		for name in _collection(table, collection):
+			light = _gameitem(table, "Light", name)
+			x, y = light["center"]["x"], light["center"]["y"]
+			position = _normalized(x, y)
+			distance, bulb = min((math.dist(position, centre), glass) for glass, centre in bulbs.items())
+			if distance > GI_MATCH_LIMIT:
+				missing.append(name)
+				continue
+			on_filament = any(math.hypot(fx - x, fy - y) <= 1.0 for fx, fy in filaments.values())
+			rank = (not light["show_bulb_mesh"], not on_filament, light["falloff_radius"], name)
+			groups.setdefault(bulb, []).append((rank, name, position))
+		chosen = [(min(members)[1], bulb, min(members)[2]) for bulb, members in groups.items()]
+		sockets[public] = tuple(sorted(chosen, key=lambda item: (item[2][1], item[2][0])))
+		unmatched[public] = tuple(sorted(missing))
+	return sockets, unmatched
 
 
 def write_extraction_manifest(source_root: Path) -> Path:
@@ -440,6 +578,21 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
+
+
+def measured(identifier: str, role: str) -> dict[str, Any]:
+	"""Place a device from its drawing measurements in the callout seed, each reproduced through its page's control fit."""
+	seed = load_json(CALLOUT_SEED_PATH)
+	keys = sorted(key for key, item in seed["measurements"].items() if item["device"] == identifier)
+	if not keys:
+		raise RuntimeError(f"no drawing measurement for {identifier}")
+	placements = []
+	for key in keys:
+		if not key.startswith(f"{identifier}.{role}."):
+			raise RuntimeError(f"drawing measurement {key} does not belong to {identifier}")
+		x, y = drawing_callouts.measured(seed, key)
+		placements.append({"id": key, "role": role, "space": "playfield", "x": x, "y": y, "provenance": provenance(OPERATOR_HANDBOOK_SOURCE, CALLOUT_SOURCE)})
+	return {"status": "validated", "placements": placements}
 
 
 # Committed crops are binary, so unlike the transcriptions they are hashed from
@@ -570,7 +723,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.solenoid-locations",
 					"locator": "PDF page 101, printed 2-40, solenoid and general-illumination locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.md",
-					"sha256": "7afd56bc2cd4c72a2fc89c29519b05cf8fcb6758e8bb13cbb9942d03726e034e",
+					"sha256": "c692640c182a3187131057414b4c71a1415ff9fb61042166cd491ac02718cb2b",
 					"image": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-locations.webp"],
 					"image_derivation": "Funhouse_OPS.pdf page 101, crop box 0.06,0.06,0.58,0.65, scanned page rendered at its native resolution (embedded image xref 425, 2550px across 8.50in), rendered at 300 dpi, 1324x1938 WebP quality 80",
@@ -594,7 +747,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.general-illumination-flipper-circuits",
 					"locator": "PDF page 120, printed 3-17, General Illumination/Flipper/Power/Logic/Display Circuits interboard wiring tables",
 					"path": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.md",
-					"sha256": "1798116b6e9c38a2f02aef1f38ea90760f500ebfba4b8a52ae73b38c3d6b0d3d",
+					"sha256": "5b682f43d7552c7bef3779db37ec6bba0f44fd756675195c6bbd7219d93b7dce",
 					"image": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination-flipper-circuits.webp"],
 					"image_derivation": "Funhouse_OPS.pdf page 120, crop box 0.03,0.035,0.97,0.78, scanned page rendered at its native resolution (embedded image xref 517, 3287px across 10.96in), rendered at 253 dpi, capped to 2600px wide, 2601x1598 WebP quality 80",
@@ -659,12 +812,48 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.operator-handbook-switch-gi",
 					"locator": "PDF pages 5 and 9-10, G.I. table and switch matrix/location drawing",
 					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.md",
-					"sha256": "c3eb1b27f58312463fdadbd7e35d96693bdf91d1015143121bfcd3795362e120",
+					"sha256": "e5eba5a25eea0b97fe419d43e62c5805a0b3c7dca0bb91085555bf9505b99d5d",
 					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-switch-gi-evidence.webp"],
 					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 5, crop box 0.1,0.15,0.9,0.77, scanned page rendered at its native resolution (embedded image xref 12, 3300px across 5.50in), rendered at 136 dpi, capped to 600px wide, 600x720 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from rendered page images",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.funhouse.operator-handbook-solenoid-locations",
+					"locator": "PDF page 6, printed 5, Solenoid Locations drawing",
+					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-solenoid-locations.md",
+					"sha256": "af6ea22289eeb30b963e82380439a8c77995ef7c00f9897d6e332b0ed9c37ac9",
+					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-solenoid-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-solenoid-locations.webp"],
+					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 6, crop box 0.25,0.11,0.91,0.91, scanned page rendered at its native resolution (embedded image xref 15, 3300px across 5.50in), rendered at 600 dpi, grayscale, 2178x4080 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page; every callout position also transcribed by an independent reader (tools/seeds/williams/funhouse-1990-callouts.json)",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.funhouse.operator-handbook-lamp-locations",
+					"locator": "PDF page 8, printed 7, Lamp Locations drawing",
+					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-locations.md",
+					"sha256": "bb08ebe03378e6927dce7274d90289c5b5adaa428d5c656cf6656ddad03e8a0d",
+					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-lamp-locations.webp"],
+					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 8, crop box 0.23,0.11,0.86,0.92, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 600 dpi, grayscale, 2079x4131 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page; every callout position also transcribed by an independent reader (tools/seeds/williams/funhouse-1990-callouts.json)",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.funhouse.operator-handbook-switch-locations",
+					"locator": "PDF page 10, printed 9, Switch Locations drawing",
+					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-locations.md",
+					"sha256": "63ea3194e70c3374aad9cd5586987facbd2c597d9d12b3dcc3e3967d83a25718",
+					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-switch-locations.webp"],
+					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 10, crop box 0.15,0.09,0.89,0.92, scanned page rendered at its native resolution (embedded image xref 27, 3300px across 5.50in), rendered at 600 dpi, grayscale, 2442x4233 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page; every callout position also transcribed by an independent reader (tools/seeds/williams/funhouse-1990-callouts.json)",
 					"reviewed": True,
 				},
 			],
@@ -758,6 +947,122 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": REVISION_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/williams/funhouse-1990/v2-0c/source/Funhouse%20%28Williams%201990%29.vpx",
+			"original_filename": "Funhouse (Williams 1990).vpx",
+			"sha256": REVISION_TABLE_SHA256,
+			"acquired_at": "2026-10-23T14:13:47Z",
+			"locator": (
+				"A later edit of the same community table, from the local table library: its table info gives version 2.0c "
+				"where the retained 1.3 file gives 1.2d, and both keep release date 2/19/2017 and the Rev1.3 description. "
+				f"Embedded script SHA-256 {REVISION_SCRIPT_SHA256}, with the same active cGameName fh_905h. "
+				"Bounds left=0 top=0 right=964 bottom=2162, as in version 1.3. Used only for the G.I. bulbs it models: a pBulb "
+				"glass, pFiliment filament and pFBase base primitive under each Light of GI_UpperBulbs, which its script "
+				"assigns to public G.I. 2 (ModLampz.MassAssign(2)), and of GI_LowerBulbs, assigned to public G.I. 4. It shares "
+				"its authors with version 1.3, so it confirms where they model a bulb, not the position independently. Its "
+				"other geometry and its script are not used."
+			),
+			"license": "NOASSERTION",
+			"attribution": "VPX table authors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": REVISION_EXTRACTION_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/williams/funhouse-1990/v2-0c/extracted-vpxtool.manifest.json",
+			"acquired_at": "2026-10-23T14:13:47Z",
+			"locator": (
+				"Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under "
+				f"v2-0c/extracted-vpxtool; manifest SHA-256 {REVISION_MANIFEST_SHA256}; {REVISION_FILE_COUNT} files, "
+				f"{REVISION_TOTAL_BYTES} bytes, produced with vpxtool git:v0.33.3 from the retained version 2.0c table."
+			),
+			"license": "NOASSERTION",
+			"attribution": "vpxtool extraction",
+		},
+		{
+			"id": RUNTIME_GI_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "internal:evidence/runtime/wpc-alpha/funhouse-fh_l9-gi-test.json",
+			"revision": RUNTIME_GI_PINMAME_REVISION,
+			"locator": (
+				"One hash-pinned LibPinMAME harness run of fh_l9 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-alpha/fh-gi-test.json) that steps T.6 GEN'L. ILLUM. through all illumination and "
+				"then each circuit; every brightness step changes one public G.I. output alone while the ROM names it, and Start "
+				"then Up show its wires, playfield and backbox pins, fuse and driver: public 0 BACKGLASS UPPER (WHT-BRN BRN, "
+				"J120-7/120-1, J121-7/121-1, F110, Q18), 1 RUDY / BACKGLASS (WHT-ORN ORN, J120-8/120-2, J121-8/121-2, F109, Q10), "
+				"2 REAR PLAYFIELD (WHT-YEL YEL, J120-9/120-3, J121-9/121-3, F108, Q14), 3 BACKGLASS CENTER (WHT-GRN GRN, "
+				"J120-10/120-5, J121-10/121-5, F107, Q16), 4 FRONT PLAYFIELD (WHT-VIO VIO, J120-11/120-6, J121-11/121-6, F106, Q12)."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
+		{
+			"id": PINSIDE_ORANGE_SOURCE,
+			"kind": "human_review",
+			"uri": "https://pinside.com/pinball/forum/topic/funhouse-gi-wiring-electrical-help-please",
+			"acquired_at": "2026-10-23T00:00:00Z",
+			"locator": (
+				"Pinside topic \"Funhouse: GI wiring / electrical help please *SOLVED*\", posts #1-#9: an owner finds the spotlight "
+				"that shines on Rudy and the lower third of the backbox G.I. dark on one orange/white-orange string entering J120 "
+				"(pins 2 and 8), and replacing fuse F109 restores both."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Pinside contributors pezpunk and Schwaggs",
+			"excerpts": [
+				{
+					"id": "excerpt.funhouse.pinside-gi-orange-string",
+					"locator": "Posts #1, #6, #7 and #9",
+					"path": "evidence/excerpts/williams.funhouse.1990/pinside-gi-orange-string.md",
+					"sha256": "1fe17759c0938c8a87f1ceeb8dd7c63fe049d648e4de63b0f116a78b6f0205e6",
+					"method": "manual",
+					"transcribed_by": "curator, copied from the rendered forum page",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": PINSIDE_VIOLET_SOURCE,
+			"kind": "human_review",
+			"uri": "https://pinside.com/pinball/forum/topic/funhouse-gi-problem",
+			"acquired_at": "2026-10-23T00:00:00Z",
+			"locator": (
+				"Pinside topic \"Funhouse G.I. Problem (SOLVED)\", posts #1-#16: an owner's front-playfield G.I. and coin-door lamps "
+				"go dark together on the white-violet string with fuse F106 (triac Q12, connectors J119 and J121) until a shorted "
+				"lamp socket is found; a parts supplier notes G.I. bulbs under the apron."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Pinside contributors provato, ChrisHibler and Lermods",
+			"excerpts": [
+				{
+					"id": "excerpt.funhouse.pinside-gi-violet-string",
+					"locator": "Posts #1, #12, #13 and #16",
+					"path": "evidence/excerpts/williams.funhouse.1990/pinside-gi-violet-string.md",
+					"sha256": "b470b20dcbe92b15bba48a3304a0c18f84a24e79920b7fc3a0910b1ece1e7bc1",
+					"method": "manual",
+					"transcribed_by": "curator, copied from the rendered forum page",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": CALLOUT_SOURCE,
+			"kind": "human_review",
+			"uri": f"internal:{CALLOUT_SEED_RELATIVE}",
+			"sha256": hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest(),
+			"locator": (
+				"2026-10-23 factory location-drawing callout check of the November 1990 handbook's three drawings (printed 5 "
+				"solenoids and flashlamps, 7 lamps, 9 switches) on the committed native-resolution excerpt crops: every callout "
+				"transcribed by an independent reader working only from the page, per-page control fits from the three jet-bumper "
+				"caps, the three flipper pivots and the outer frame's top corners, and the callout fit; a table placement whose own "
+				"callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py), and the seed's "
+				"measurements give the Steps switches and lamps read off the drawing. Reads, tiles, overlays and generators are "
+				"retained under review-artifacts with a pinned manifest."
+			),
+			"license": "NOASSERTION",
+			"attribution": "PinMAME game definitions contributors",
+		},
 	]
 
 
@@ -850,6 +1155,14 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += " The November 1990 handbook places this at the rightmost trough position; the retained script's ballrelease kicker asserts this switch while occupied and clears it when solenoid 15 ejects the ball, so that kicker supplies the validated coordinate."
 			if address == 73:
 				notes += " Projected onto the retained table's Drain kicker object, which the outhole solenoid (1) also shares; no separate switch-only object exists."
+			if address in STEPS_SWITCHES:
+				notes += (
+					" One of the three step switches on the Steps ramp (15 lowest, 26 middle, 36 top; the handbook's switch-locations "
+					"drawing leads each number to its own wire slot across the Steps track). The coordinate is the centre of that slot "
+					"measured on the drawing: the retained table's invisible star trigger for this switch sits on the track's right rail, "
+					"0.06-0.07 normalized from the slot's centre and beyond the 0.07 limit from the leader's end, with the three triggers "
+					"spread twice as far apart as the drawn slots."
+				)
 			physical["notes"] = notes
 
 			extra: dict[str, Any] = {
@@ -871,7 +1184,7 @@ def input_devices() -> list[dict[str, Any]]:
 				availability = "used"
 				extra["normally_closed"] = address in OPTO_SWITCHES
 				if address in {11, 12}:
-					role = "flipper.lower.right.button-matrix-copy" if address == 11 else "flipper.left.button-matrix-copy"
+					role = "flipper.lower.right.button" if address == 11 else "flipper.left.button"
 					extra["roles"] = [role]
 					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, CORE_SOURCE)
 					physical["location"] = "cabinet flipper-button input"
@@ -886,6 +1199,8 @@ def input_devices() -> list[dict[str, Any]]:
 					physical["location"] = "cabinet"
 					if address == 22:
 						extra["initial_active"] = True
+				elif address in STEPS_SWITCHES:
+					extra["spatial"] = measured(identifier, "sensor")
 				else:
 					spatial_refs = (OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE) if address == 63 else (VPX_TABLE_SOURCE,)
 					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *spatial_refs)
@@ -985,9 +1300,18 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			physical["quantity"] = quantity
 			notes += f" Printed flashlamp complement: {quantity} {part_number} bulb(s) on this circuit."
 			if address in {17, 23, 24}:
-				notes += " The retained table supplies one distinct emitter object for each printed bulb, so every socket has its own placement."
+				notes += (
+					" The three bulbs are a dome on the back panel at the top right (the table's Flupper dome primitive, placed at its "
+					"world-space mesh bounds centre), a diamond insert "
+					"beside the Steps (the table's Light under it) and a dome on the right side wall (the table's Light at it); the "
+					"handbook's solenoid-locations drawing prints the number on both playfield sockets and once more in the row of "
+					"leader-less back-panel labels along the top rail."
+				)
 			elif address == 19:
-				notes += " The retained table abstracts both printed sockets into one physical Light fixture; the two explicit co-located placements preserve the manual quantity without inventing a separation the table does not provide."
+				notes += (
+					" Both bulbs light the clock from under its centre, where the handbook's solenoid-locations drawing prints 19 once "
+					"and the retained table models one Light fixture, so they share one placement."
+				)
 			elif address == 20:
 				notes += " The retained table supplies distinct F20 and F20a Light objects, and the pinned community script assigns both to output 20; each printed Superdog socket therefore has its own placement."
 		if address in SOLENOID_CALLBACKS:
@@ -1008,7 +1332,15 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				" One of four independent drive lines on Rudy's Head Assembly: 25/28 select eye left/right "
 				"position, 26/27 latch the eyelids open/closed. Pinned fh_handleMech treats eyelid open/close "
 				"as a persistent latch and eye left/right as a momentary position read each mechanics tick. "
-				"Projected onto switch 51 (Dummy Jaw), the only fixed point recorded for Rudy's Head Assembly."
+				"Projected onto Rudy's eyelid assembly, the centre of the PrLids primitive's world-space mesh bounds, which spans "
+				"both eyes; the eye and eyelid drives sit inside the head behind the face, where the handbook's solenoid-locations "
+				"drawing prints 25-28 inside Rudy's head outline."
+			)
+		if address == 8:
+			notes += (
+				" Placed on the lock-release gate the retained script's MBRelease handler swings (Lock_Release_Prim, together "
+				"with the hidden Flipper1 gate and the WaSw28 lock wall it drops); the handbook's solenoid-locations drawing prints "
+				"8 on the release box there, beside the lock switches 25, 27 and 28."
 			)
 		if address in {5, 6}:
 			notes += " Trap door open/close drive; trap-door-closed switch 76 is set programmatically from the trap door's own rotation angle rather than read from a separate switch object (see mechanism.trap-door)."
@@ -1108,11 +1440,25 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				notes += ' The lamp-matrix page additionally prints "(Left)" on this cell; the lamp-locations page has no such qualifier, and there are only three jet bumpers on this machine (Left/Right/Lower per the solenoid table), so this is read as a positional descriptor rather than a naming conflict.'
 			if address == 88:
 				notes += " Cabinet Start-button backlight, explicitly annotated \"(cabinet)\" on the lamp-locations page."
+			if address in {57, 58}:
+				sprite, bulb = ("F57_FS", "BulbFil2 filament in its BulbTop2 glass") if address == 57 else ("F58_FS", "BulbFil1 filament in its BulbTop1 glass")
+				notes += (
+					f" The script flashes {sprite} and its partner and desktop copies, wf_on_blur glow sprites; the bulb is the "
+					f"overhead {bulb}, 12 units from them, placed at its centre."
+				)
+			if address in {71, 74, 75, 76, 77, 78}:
+				notes += (
+					f" One of the Magic Mirror's column of six lamps. The bulb is the L{address} lamp-glass primitive, placed at the "
+					"centre of its world-space mesh bounds (its stored position lies 0.0024 normalized behind that)"
+					+ ("; F71 and F71a, which the script also flashes, are f_refl glow sprites." if address == 71 else ".")
+				)
 			if address in {54, 55, 56}:
 				notes += (
-					" The handbook lamp-location drawing confirms one physical socket at this address. The retained "
-					"table's five-unit-radius `_finger_1` object is the actual hotspot; `_finger_2` through `_finger_4` "
-					"are larger render layers around the same insert effect and are excluded from the physical count."
+					" One of the three Steps lamps (54 bottom, 55 middle, 56 top). The handbook's lamp-locations drawing prints each "
+					"number on the Steps track's left rail beside its own small round socket; the coordinate is the centre of that "
+					"socket measured on the drawing. The retained table lights the Steps award from `_finger_1` hotspots raised about "
+					"200 units on a sign 0.05-0.08 normalized rear of and beside the drawn sockets (`_finger_2` to `_finger_4` are "
+					"render layers), so the three bulbs of the assembly are all measured rather than splitting it between the two sources."
 				)
 			physical["notes"] = notes
 
@@ -1141,10 +1487,12 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				availability = "used"
 				extra["roles"] = ["cabinet.start"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			elif address in {54, 55, 56}:
+				availability = "used"
+				extra["spatial"] = measured(identifier, "emitter")
 			else:
 				availability = "used"
-				spatial_refs = (OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE) if address in {54, 55, 56} else (VPX_TABLE_SOURCE,)
-				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], *spatial_refs)
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
 			items.append(
 				_device(
 					identifier,
@@ -1165,17 +1513,19 @@ def gi_outputs() -> list[dict[str, Any]]:
 	for address, label in GI_LABELS.items():
 		identifier = f"gi.string-{address}"
 		wiring_data = GI_FEED_WIRING[address]
+		name, wires, playfield_pins, backbox_pins, fuse, driver = GI_ROM_SCREENS[address]
+		list_row, handbook_row = GI_PRINTED_ROWS[address]
 		notes = (
-			f"Printed general-illumination string {address + 1:02d} is labeled {GI_MANUAL_LABELS[address]}; "
-			f"the retained script's runtime region is {GI_SCRIPT_REGIONS[address]}. Insert-panel connector: "
-			f"{wiring_data['insert_connection']}. Script behavior is canonical for runtime semantics, while the "
-			"printed name is retained as a manual-label alias and physical-construction note."
+			f"General-illumination string {address + 1}. The L-9 ROM's T.6 G.I. test changes public G.I. {address} alone while it "
+			f"shows {name}, and on Start prints {wires} / {playfield_pins} / {backbox_pins} / {fuse} / {driver}. The printed row of "
+			f"the same number reads {list_row} and {handbook_row}. {GI_PRINTED_NOTE} The retained script's runtime region is "
+			f"{GI_SCRIPT_REGIONS[address]}. Insert-panel connector: {wiring_data['insert_connection']}."
 		)
+		refs = (MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, RUNTIME_GI_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		extra: dict[str, Any] = {
 			"aliases": [
 				{"namespace": "pinmame.gi", "value": str(address)},
 				{"namespace": "manual.address", "value": f"{address + 1:02d}"},
-				{"namespace": "manual.label", "value": GI_MANUAL_LABELS[address]},
 			],
 		"wiring": {
 				"board": "WPC-Alpha power driver board",
@@ -1188,54 +1538,60 @@ def gi_outputs() -> list[dict[str, Any]]:
 			},
 		}
 		physical: dict[str, Any] = {}
+		gi_spatial_refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, RUNTIME_GI_SOURCE)
 		if address == 0:
-			notes += " This is a physical backglass-only branch with no playfield emitter and is outside playfield authoring space."
+			notes += " A backbox string: it lights the upper part of the backglass insert panel and has no playfield socket."
 			extra["roles"] = ["cabinet.backglass"]
-			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE)
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, RUNTIME_GI_SOURCE, VPX_SCRIPT_SOURCE)
 		elif address == 1:
 			notes += (
-				" Retained script Case 1 drives only RudySign1, RudySign2, and RudyShade, so the three real "
-				"implemented objects locate this runtime group on Rudy's sign/shade assembly."
+				" It feeds the spotlight that lights Rudy's face and the lower part of the backbox insert panel: an owner traced "
+				"both to the orange/white-orange pair on J120-2/J120-8 and fuse F109 (Pinside). The playfield socket is that "
+				"spotlight, the retained table's RudyShade Light under its pShade1/pShade2 lamp-shade primitives at the front "
+				"right of Rudy. RudySign1 and RudySign2, which the script's Case 1 also drives, are f_refl glow sprites the "
+				"table paints on Rudy and make no socket. The backbox branch is not placed, and no source gives a bulb count, "
+				"so no quantity is asserted."
 			)
-			physical["quantity"] = len(GI_RUDY_POSITIONS)
-			extra["spatial"] = located(identifier, "emitter", GI_RUDY_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
+			refs += (PINSIDE_ORANGE_SOURCE,)
+			extra["spatial"] = located(identifier, "emitter", GI_RUDY_POSITIONS, *gi_spatial_refs, PINSIDE_ORANGE_SOURCE)
 		elif address == 2:
 			notes += (
-				" Retained script Case 2 drives GI_Upper. Its 19 render objects reduce to 15 physical emitter "
-				"hotspots after clustering co-located brightness layers; the smallest-radius named light in each "
-				"cluster supplies the coordinate, with no centroid or synthetic point."
+				" The script's Case 2 drives the GI_Upper collection, 19 render Lights of which only three sit on a bulb the "
+				"retained table draws (BulbFil filament primitives). Version 2.0c of the same table models a bulb, with glass, "
+				"filament and base primitives, under each of the 14 Lights its script drives from this string through "
+				"GI_UpperBulbs, and each placement is the 1.3 Light within 0.002 normalized of one of them: 14 sockets, one per "
+				"bulb, collapsing render doubles to the one on a BulbFil primitive. Light22, 0.026 normalized from the Light23 "
+				"socket, has no 2.0c bulb and makes no socket. Both tables split this string from public 4 as the ROM's REAR and "
+				"FRONT PLAYFIELD names do. No source gives a bulb count, so no quantity is asserted."
 			)
-			physical["quantity"] = len(GI_UPPER_POSITIONS)
-			extra["spatial"] = located(identifier, "emitter", GI_UPPER_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
+			refs += (REVISION_TABLE_SOURCE,)
+			extra["spatial"] = located(identifier, "emitter", GI_UPPER_POSITIONS, *gi_spatial_refs, REVISION_TABLE_SOURCE)
 		elif address == 3:
 			notes += (
-				" The handbook proves that printed circuit 04 is a mixed physical branch serving both the center "
-				"backglass and right-rear playfield. Every retained known-working script omits a distinct handler, "
-				"so the individual right-rear playfield emitters remain unresolved and no coordinate or quantity is invented."
+				" A backbox string. The ROM names it BACKGLASS CENTER, the retained script drives nothing on the playfield from it, "
+				"and the backbox's upper and lower parts are on public 0 and public 1; the printed \"Top Playfield\" name on its "
+				"white-green row is the misplaced name described above, not a playfield branch."
 			)
-			extra["roles"] = ["cabinet.backglass", "playfield.general-illumination"]
+			extra["roles"] = ["cabinet.backglass"]
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, RUNTIME_GI_SOURCE, VPX_SCRIPT_SOURCE)
 		elif address == 4:
 			notes += (
-				" Retained script Case 4 drives GI_Lower. Its 45 render objects reduce to 14 physical emitter "
-				"hotspots after clustering co-located brightness layers; the smallest-radius named light in each "
-				"cluster supplies the coordinate, with no centroid or synthetic point."
+				" It feeds the front playfield and the coin-door lamps through the J119 cabinet branch: an owner traced both to the "
+				"violet/white-violet pair, fuse F106 and triac Q12 (Pinside). The script's Case 4 drives the GI_Lower collection, "
+				"45 Lights at 11 sockets once co-located render doubles are collapsed: seven sit on BulbFil filament primitives "
+				"and four show their own bulb mesh, and version 2.0c of the same table models a bulb at each of the 11 under the "
+				"Lights it drives from this string through GI_LowerBulbs. The parts supplier in the same thread names G.I. bulbs "
+				"under the apron, which neither table models: the two Bottom_GI render lights below the flippers sit on no bulb, so "
+				"they are not placed, and since no source gives the apron bulbs' number or positions this string's placements are "
+				"incomplete and the record stays partial. LowerGI_B14, the halo partner of LowerGI_B4 at Light33's socket and 0.014 normalized from it, "
+				"sits on no bulb either. The coin-door lamps are not placed, and no source gives a bulb count, so no quantity is "
+				"asserted."
 			)
-			physical["quantity"] = len(GI_LOWER_POSITIONS)
-			extra["spatial"] = located(identifier, "emitter", GI_LOWER_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
+			refs += (REVISION_TABLE_SOURCE, PINSIDE_VIOLET_SOURCE)
+			extra["spatial"] = located(identifier, "emitter", GI_LOWER_POSITIONS, *gi_spatial_refs, REVISION_TABLE_SOURCE, PINSIDE_VIOLET_SOURCE)
 		physical["notes"] = notes
 		extra["physical"] = physical
-		items.append(
-			_device(
-				identifier,
-				label,
-				"gi",
-				"pinmame.output.gi",
-				address,
-				"used",
-				(MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
-				**extra,
-			)
-		)
+		items.append(_device(identifier, label, "gi", "pinmame.output.gi", address, "used", refs, **extra))
 	return items
 
 
@@ -1531,7 +1887,7 @@ def drivers() -> list[dict[str, Any]]:
 	return items
 
 
-def build() -> dict[str, Any]:
+def build_with_decisions() -> tuple[dict[str, Any], dict[str, Any]]:
 	definition = {
 		"format": "pinmame-machine-definition",
 		"schema_version": 2,
@@ -1577,49 +1933,136 @@ def build() -> dict[str, Any]:
 	duplicates = sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1})
 	if duplicates:
 		raise RuntimeError(f"FunHouse device identifiers are not unique: {duplicates}")
-	return definition
+	return definition, check_against_drawings(definition, load_json(CALLOUT_SEED_PATH))
 
 
-def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
-	"""Summarize every spatial disposition so the promotion decision is auditable."""
+def build() -> dict[str, Any]:
+	return build_with_decisions()[0]
+
+
+def check_against_drawings(definition: dict[str, Any], seed: dict[str, Any]) -> dict[str, Any]:
+	"""Check every placement the factory drawings mark and refuse any that disagrees.
+
+	A checked placement whose callout agrees also cites the callout seed. A placement whose label the drawing prints only
+	at a nearer placement of the same device (a second bulb under one drawn insert) keeps its table status, as does every
+	placement the seed does not check.
+	"""
+	decisions = drawing_callouts.apply_to_definition(definition, seed, CALLOUT_SOURCE)
+	failed = sorted(pid for pid, decision in decisions["placements"].items() if not decision["agrees"] and decision["read"] is not None)
+	if failed:
+		raise RuntimeError(f"FunHouse placements disagree with their factory-drawing callouts: {failed}")
+	agreeing = {pid for pid, decision in decisions["placements"].items() if decision["agrees"]}
+	for collection in ("inputs", "outputs"):
+		for device in definition[collection]:
+			for placement in (device.get("spatial") or {}).get("placements") or []:
+				refs = placement["provenance"]["source_refs"]
+				if placement["id"] in agreeing and CALLOUT_SOURCE not in refs:
+					refs.append(CALLOUT_SOURCE)
+	not_validated = sorted(
+		device["id"] for device in definition["inputs"] + definition["outputs"]
+		if (device.get("spatial") or {}).get("status") not in {"validated", "not_applicable"}
+	)
+	if not_validated:
+		raise RuntimeError(f"FunHouse devices without validated or not-applicable spatial records: {not_validated}")
+	return decisions
+
+
+PROJECTIONS = [
+	{"group": "pinmame.input.switch", "address": 73, "reason": "Projected onto the retained table's Drain kicker object, shared with the outhole solenoid (1)."},
+	{"group": "pinmame.input.switch", "address": 76, "reason": "Projected onto the trap door primitive's own rotation state (PrTrap.RotX); the retained script sets this switch programmatically rather than reading a separate contact-switch object."},
+	{"group": "pinmame.output.solenoid", "address": 3, "reason": "Projected onto switch 46's position; the retained script's bsHideout saucer helper shares switch 46's own kicker object."},
+	{"group": "pinmame.output.solenoid", "address": 5, "reason": "Projected onto the trap door primitive; open/close solenoids share the mechanism's own position with switch 76."},
+	{"group": "pinmame.output.solenoid", "address": 6, "reason": "Projected onto the trap door primitive; see solenoid 5."},
+	{"group": "pinmame.output.solenoid", "address": 16, "reason": "Projected onto switch 65's position; the retained script's bsRudy saucer helper shares switch 65's own kicker object."},
+	{"group": "pinmame.output.solenoid", "address": 21, "reason": "Projected onto switch 51 (Dummy Jaw) at Rudy's mouth; no dedicated jaw-motor VPX object exists apart from the head figure."},
+	{"group": "pinmame.output.solenoid", "address": 22, "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 21."},
+	{"group": "pinmame.output.solenoid", "address": 25, "reason": "Projected onto Rudy's eyelid assembly, the centre of the PrLids primitive's world-space mesh bounds, which spans both eyes."},
+	{"group": "pinmame.output.solenoid", "address": 26, "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."},
+	{"group": "pinmame.output.solenoid", "address": 27, "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."},
+	{"group": "pinmame.output.solenoid", "address": 28, "reason": "Projected onto Rudy's eyelid assembly; see solenoid 25."},
+]
+WORLD_BOUNDS = {
+	"export": "vpxtool git:v0.33.3 export obj --units vpu of the retained table; world x and y are table x and y, z is minus height",
+	"export_sha256": "ac1ab343fa91d845ae2deaed128a808499212e518c77cc2bac90a44f47453046",
+	"retained": "external:pinmame-review-artifacts/funhouse-1990/vpx-world-obj",
+	"objects": {
+		"PrLids": {"x": [528.0463, 725.6938], "y": [454.4735, 537.1692], "centre": [0.65028, 0.229335], "use": "projection of solenoids 25-28"},
+		"pShade1": {"x": [686.1957, 794.5472], "y": [638.7455, 715.9221], "centre": [0.76802, 0.31329], "use": "lamp shade over the RudyShade light, public G.I. 1's socket"},
+		"Flasher1": {"x": [551.4502, 616.2143], "y": [133.9312, 190.782], "centre": [0.605635, 0.075096], "use": "back-panel dome of flasher 17"},
+		"Flasher2": {"x": [704.8377, 769.6018], "y": [180.365, 237.2157], "centre": [0.764751, 0.096573], "use": "back-panel dome of flasher 23"},
+		"Flasher6": {"x": [861.563, 926.3271], "y": [227.349, 284.1997], "centre": [0.927329, 0.118305], "use": "back-panel dome of flasher 24"},
+		"BulbFil1": {"x": [631.8482, 651.056], "y": [1148.5985, 1167.8063], "centre": [0.665407, 0.535709], "use": "lamp 58's overhead bulb"},
+		"BulbFil2": {"x": [243.3322, 262.54], "y": [687.7782, 706.986], "centre": [0.262382, 0.322563], "use": "lamp 57's overhead bulb"},
+		"L71": {"x": [316.3575, 334.7896], "y": [419.3924, 457.911], "centre": [0.337732, 0.202892], "use": "lamp 71's glass"},
+		"L74": {"x": [316.3682, 334.8003], "y": [425.697, 464.2156], "centre": [0.337743, 0.205808], "use": "lamp 74's glass"},
+		"L75": {"x": [316.3756, 334.8077], "y": [433.2191, 471.7376], "centre": [0.337751, 0.209287], "use": "lamp 75's glass"},
+		"L76": {"x": [316.3953, 334.8274], "y": [442.4356, 480.9542], "centre": [0.337771, 0.21355], "use": "lamp 76's glass"},
+		"L77": {"x": [316.366, 334.7981], "y": [450.2728, 488.7914], "centre": [0.337741, 0.217175], "use": "lamp 77's glass"},
+		"L78": {"x": [316.3456, 334.7777], "y": [462.8688, 501.3874], "centre": [0.33772, 0.223001], "use": "lamp 78's glass"},
+	},
+	"note": "Lock_Release_Prim (solenoid 8) is not in the export; its local mesh is symmetric about its origin (x -41.85..41.85, y -38.05..38.05) and unrotated, so its position (187.77698, 398.6577) is its plan centre.",
+}
+GI_METHOD = (
+	"Public G.I. names, wires, pins, fuses and triacs come from the L-9 ROM's T.6 test. Public 1's socket is the spotlight, the "
+	"RudyShade Light under the table's lamp-shade primitives (Case 1). For public 2 and 4 the retained 1.3 table draws a bulb at "
+	"only some of the Lights its script drives (Case 2 GI_Upper, Case 4 GI_Lower), so the bulbs come from version 2.0c of the same "
+	"table, which models a bulb (pBulb glass, pFiliment filament, pFBase base) under each Light its script assigns to the same "
+	"public string (GI_UpperBulbs, GI_LowerBulbs). A socket is a 2.0c bulb with a driven 1.3 Light within 0.01 normalized; of the "
+	"co-located 1.3 render doubles the placement is the one that shows its own bulb mesh, else the one on a BulbFil filament "
+	"primitive, else the one with the smallest falloff radius. A 1.3 Light under no 2.0c bulb makes no socket. Both tables split "
+	"the strings as the ROM's names do (Rudy's spotlight, rear playfield, front playfield) and as the owners traced the orange and "
+	"violet strings, no retained table contradicts the split, and public 0 and 3 light only the backbox (docs/SPATIAL.md, G.I. "
+	"string membership). The manuals draw no G.I. socket and give no per-string bulb count, so no quantity is asserted."
+)
+APRON_GI_BLOCKER = (
+	"Public G.I. 4 (FRONT PLAYFIELD) also feeds G.I. bulbs under the apron, which a parts supplier names in the owner thread "
+	"on the violet string and which the retained 1.3 table suggests with two render lights under its apron instruction cards. "
+	"No manual page, drawing or parts list draws them, and neither retained table models a bulb there, so their number and "
+	"positions are unknown and the string's placements are incomplete. Resolution path: a recreation that models those "
+	"bulbs, or a drawing that locates them, checked for number and sockets against a photograph of a FunHouse playfield "
+	"with the apron removed, which any owner can take."
+)
+GI_NOT_PLACED = {
+	"RudySign1, RudySign2": "f_refl glow sprites Case 1 drives on Rudy's face; the spotlight that lights them is RudyShade",
+	"Light22": "public 2 render light 0.026 normalized from the Light23 socket; neither table models a bulb under it",
+	"Bottom_GI_32, Bottom_GI_39": (
+		"public 4 render lights under the apron instruction cards; neither table models a bulb there, and the apron G.I. "
+		"bulbs a parts supplier names are the record's blocker"
+	),
+	"LowerGI_B14": "halo partner of LowerGI_B4 at Light33's socket, 0.014 normalized from it and on no bulb",
+	"public 1 backbox branch, public 4 coin-door lamps": "cabinet parts of playfield strings, not placed",
+}
+
+
+def build_spatial_report(definition: dict[str, Any], decisions: dict[str, Any]) -> dict[str, Any]:
+	"""Summarize every spatial disposition and the drawing check so the promotion decision is auditable."""
 	located_inputs: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
-	unresolved_inputs: list[int] = []
 	for device in definition["inputs"]:
+		spatial = device["spatial"]
 		address = int(device["binding"]["device"])
-		spatial = device.get("spatial")
-		if spatial is None:
-			unresolved_inputs.append(address)
-		elif spatial["status"] == "not_applicable":
+		if spatial["status"] == "not_applicable":
 			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
 		else:
 			located_inputs.append(address)
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
-	unresolved_outputs: list[dict[str, Any]] = []
-	placement_count = 0
 	for device in definition["outputs"]:
 		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
-		spatial = device.get("spatial")
-		if spatial is None:
-			unresolved_outputs.append(binding)
-		elif spatial["status"] == "not_applicable":
+		spatial = device["spatial"]
+		if spatial["status"] == "not_applicable":
 			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
 		else:
-			placement_count += len(spatial["placements"])
 			located_outputs.append(binding)
-	for device in definition["inputs"]:
-		spatial = device.get("spatial")
-		if spatial is not None and spatial["status"] != "not_applicable":
-			placement_count += len(spatial["placements"])
+	placements = drawing_callouts.placements_of(definition)
+	seed = load_json(CALLOUT_SEED_PATH)
+	seed_sha256 = hashlib.sha256(CALLOUT_SEED_PATH.read_bytes()).hexdigest()
+	gi = {device["binding"]["device"]: device for device in definition["outputs"] if device["binding"]["group"] == "pinmame.output.gi"}
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
-		"blockers": [
-			"G.I. public address 3 / printed circuit 04 is a mixed center-backglass and right-rear-playfield branch. The handbook proves the playfield branch exists, but none of the retained known-working scripts or extracted table objects identifies its individual emitters; a socket-level wiring survey is required before spatial placement can be validated."
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 964.0, "bottom": 2162.0},
@@ -1636,14 +2079,27 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"total_bytes": EXTRACTION_TOTAL_BYTES,
 			"vpxtool_version": "vpxtool git:v0.33.3",
 		},
+		"revision_extraction": {
+			"fail_closed": True,
+			"file_count": REVISION_FILE_COUNT,
+			"manifest_sha256": REVISION_MANIFEST_SHA256,
+			"manifest_uri": "external:pinmame-vpx-sources/williams/funhouse-1990/v2-0c/extracted-vpxtool.manifest.json",
+			"source_ref": REVISION_EXTRACTION_SOURCE,
+			"total_bytes": REVISION_TOTAL_BYTES,
+			"vpxtool_version": "vpxtool git:v0.33.3",
+		},
+		"world_bounds": WORLD_BOUNDS,
 		"source_hashes": {
+			"callout_seed_sha256": seed_sha256,
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
 			"operator_handbook_sha256": OPERATOR_HANDBOOK_SHA256,
 			"playfield_photo_sha256": PLAYFIELD_PHOTO_SHA256,
 			"table_sha256": TABLE_SHA256,
+			"revision_table_sha256": REVISION_TABLE_SHA256,
+			"revision_script_sha256": REVISION_SCRIPT_SHA256,
 		},
-		"placement_count": placement_count,
+		"placement_count": len(placements),
 		"resolved_input_addresses": sorted(located_inputs),
 		"resolved_output_bindings": sorted(located_outputs, key=lambda item: (item["group"], item["address"])),
 		"not_applicable_inputs": {reason: sorted(addresses) for reason, addresses in sorted(not_applicable_inputs.items())},
@@ -1651,45 +2107,35 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"unresolved_input_addresses": sorted(unresolved_inputs),
-		"unresolved_output_bindings": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
-		"projections": [
-			{"group": "pinmame.input.switch", "address": 76, "reason": "Projected onto the trap door primitive's own rotation state (PrTrap.RotX); the retained script sets this switch programmatically rather than reading a separate contact-switch object."},
-			{"group": "pinmame.output.solenoid", "address": 5, "reason": "Projected onto the trap door primitive; open/close solenoids share the mechanism's own position with switch 76."},
-			{"group": "pinmame.output.solenoid", "address": 6, "reason": "Projected onto the trap door primitive; see solenoid 5."},
-			{"group": "pinmame.output.solenoid", "address": 3, "reason": "Projected onto switch 46's position; the retained script's bsHideout saucer helper shares switch 46's own kicker object."},
-			{"group": "pinmame.output.solenoid", "address": 16, "reason": "Projected onto switch 65's position; the retained script's bsRudy saucer helper shares switch 65's own kicker object."},
-			{"group": "pinmame.output.solenoid", "address": 8, "reason": "Projected onto switch 28's position; the retained script's MBRelease handler acts directly on the WaSw28 lock-wall object with no separate release-mechanism object."},
-			{"group": "pinmame.output.gi", "address": 1, "reason": "Projected onto Rudy's own sign/shade assembly (RudySign1, RudySign2, RudyShade); the retained script's GI Case 1 drives that collection directly rather than a generic playfield wash."},
-			{"group": "pinmame.output.solenoid", "address": 21, "reason": "Projected onto switch 51 (Dummy Jaw); no dedicated jaw-motor VPX object was identified separately from Rudy's head figure."},
-			{"group": "pinmame.output.solenoid", "address": 22, "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 21."},
-			{"group": "pinmame.output.solenoid", "address": 25, "reason": "Projected onto switch 51 (Dummy Jaw); the only fixed point recorded for Rudy's Head Assembly."},
-			{"group": "pinmame.output.solenoid", "address": 26, "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."},
-			{"group": "pinmame.output.solenoid", "address": 27, "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."},
-			{"group": "pinmame.output.solenoid", "address": 28, "reason": "Projected onto switch 51 (Dummy Jaw); see solenoid 25."},
-			{"group": "pinmame.input.switch", "address": 73, "reason": "Projected onto the retained table's Drain kicker object, shared with the outhole solenoid (1)."},
-		],
-		"visual_review_cache": {
-			"root": "external:pinmame-manuals/rendered/williams.funhouse.1990/",
-			"transcription": {
-				"path": "external:pinmame-review-artifacts/funhouse/manual-transcription.md",
-			},
+		"drawing_callout_check": drawing_callouts.summary(seed, decisions, CALLOUT_SEED_RELATIVE, seed_sha256),
+		"excluded_checks": seed["excluded_checks"],
+		"drawing_measurements": {
+			key: {"page": item["page"], "label": item["label"], "pixel": item["pixel"], "normalized": item["normalized"], "note": item["note"]}
+			for key, item in sorted(seed["measurements"].items())
 		},
-		"excluded_object_classes": [
-			"l51a/l51b, l52a/l52b, l72a/l72b co-located brightness-doubling and same-fixture secondary Light objects (manual prints one bulb per address with no quantity marker)",
-			"Bot_finger_2-4, Mid_finger_2-4, and Top_finger_2-4 render layers around the five-unit-radius physical hotspot objects used for lamps 54-56",
-			"Co-located larger-radius GI_Upper and GI_Lower render layers grouped into 15 and 14 physical emitter hotspots respectively; the smallest-radius named object supplies each coordinate",
-			"fmflNN / cfXX flash-modulation and clock-face helper Light/Flasher objects paired with each primary lNN lamp object",
-			"LBballoon/LRballoon/LYballoon/lHotDogCartB optional-mod decorative objects gated behind BalloonMod/HotDogCartMod table toggles",
-		],
-		"unresolved": (
-			[{"group": "pinmame.input.switch", "address": address} for address in sorted(unresolved_inputs)]
-			+ sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"]))
+		"general_illumination": {
+			"method": GI_METHOD,
+			"placed": {str(address): [[placement["x"], placement["y"]] for placement in gi[address]["spatial"]["placements"]] for address in sorted(gi) if gi[address]["spatial"]["status"] != "not_applicable"},
+			"sockets": {str(public): [{"light": light, "revision_bulb": bulb} for light, bulb, _ in sockets] for public, sockets in GI_SOCKETS.items()},
+			"match_limit": GI_MATCH_LIMIT,
+			"backbox_only": [address for address in sorted(gi) if gi[address]["spatial"]["status"] == "not_applicable"],
+			"not_placed": GI_NOT_PLACED,
+		},
+		"projections": PROJECTIONS,
+		"unresolved": [],
+		"blockers": [APRON_GI_BLOCKER],
+		"promotion_decision": (
+			"partial: the apron G.I. bulbs of public G.I. 4 are known but unplaced. Otherwise every used switch, coil, motor, flasher, "
+			"lamp and G.I. string has a validated placement or a controlled "
+			"not-applicable record, every placement the factory drawings mark agrees with its callout, and the definition carries "
+			"no conflict."
 		),
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
+	check = report["drawing_callout_check"]
+	pages = ", ".join(f"{key} ({page['locator'].split(' (')[0].split(': ')[-1]}; {page['controls']} controls, control leave-one-out at most {page['control_loo_max']}, {page['callout_pairs']} callout pairs)" for key, page in sorted(check["pages"].items()))
 	lines = [
 		"# FunHouse (Williams, 1990) spatial review",
 		"",
@@ -1699,20 +2145,36 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Evidence decisions",
 		"",
-		"- The embedded script is the runtime address and causality authority; the Williams manuals are the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology; the retained table supplies geometry.",
-		"- The original operations manual has a usable but column-scrambled text layer, so its tables were read from rendered page images. The supplied November 1990 handbook was likewise visually checked at 250 dpi, with 600 dpi crops for small callouts.",
-		"- FunHouse's switch matrix has exactly two opto positions (51 and 55), both marked `(opto)` in the manual and both normalized by pinned PinMAME's inverted-switch mask.",
+		"- The embedded script is the runtime address and causality authority; the Williams manuals are the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology; the retained table supplies geometry, checked against the factory location drawings.",
+		"- Each placement is the table object the script binds for the device: the trigger, target, kicker, bumper or slingshot wall for a switch, the object a solenoid callback moves, and for a lamp or flasher the Light the script fades, or the bulb the table models where the script flashes only a glow sprite (lamps 57 and 58 on their overhead BulbFil filaments). A primitive is placed at the centre of its world-space mesh bounds, never at its stored position: the Magic Mirror lamp glasses L71 and L74-L78 and the back-panel flasher domes.",
+		f"- Drawing check: {check['rule']} Pages: {pages}. {check['validated']} of {check['checked']} checked placements agree; the others are second bulbs under an insert the drawing marks once.",
+		"- The November 1990 handbook prints the factory drawings at 600 dpi; they are the same artwork as the operations manual's 2-36, 2-38 and 2-40 drawings. Each page is fitted on its three jet-bumper caps, its three flipper pivots and its outer frame's top corners, which match the table bounds.",
+		"- A number the drawing prints with no leader in open space or along an edge marks no part, so it checks nothing; the placements whose only read is such a number are listed as excluded checks. The flashers 17, 23 and 24 each have a back-panel dome, which the drawing labels only in a leader-less row along the top rail.",
+		"- The three Steps switches (15, 26, 36) and the three Steps lamps (54, 55, 56) are drawing measurements: the drawing puts the switches on three wire slots across the Steps track and the lamps on small sockets on its left rail, while the table's invisible star triggers lie 0.06-0.07 from the slots, outside the drawn track and twice as far apart, and its raised `_finger_1` sign hotspots 0.05-0.08 from the sockets.",
+		"- Solenoid 8 (Multi-ball Release) is the lock-release gate primitive the script's MBRelease swings, where the drawing prints 8; the coils of Rudy's eyes and eyelids (25-28) project onto the eyelid assembly inside his head.",
 		"- Lamp 12 is `Gangway 100,000`: two Williams lamp-matrix pages and the physical playfield photograph agree, resolving the older lamp-location page's isolated `10,000` as a typo.",
-		"- The handbook's lamp-location drawing identifies lamps 56, 55, and 54 as the top, middle, and bottom sockets in the Steps stack. The retained table's `_finger_1` objects are the physical hotspots; `_finger_2` through `_finger_4` are render layers.",
-		"- Printed flasher 20 has two Superdog bulbs. The retained table supplies distinct F20 and F20a objects, and the pinned community script assigns both to output 20, so both physical sockets retain their own measured coordinates.",
 		"- Switch 63 is placed on the retained `ballrelease` kicker because the handbook locates it at the right trough and the script asserts and clears that exact switch as the kicker receives and releases the ball.",
-		"- Runtime G.I. names and grouping follow the known-working script. GI_Upper's 19 render objects form 15 physical hotspots and GI_Lower's 45 render objects form 14; each coordinate is an actual smallest-radius named light, never a centroid.",
 		"- FunHouse is pre-Fliptronics WPC-Alpha hardware. It has lower-right, lower-left, and upper-left direct-wired physical flippers. PinMAME publishes two button-driven synthetic sides at 45-48 for digital animation; the left callback drives both fitted left bats, and those virtual states have no playfield coordinates of their own.",
-		"- Printed G.I. circuit 04 is a mixed center-backglass/right-rear-playfield branch. The playfield emitters are not identified by any retained known-working table, so output G.I. address 3 remains deliberately unresolved.",
 		"",
-		"## Explicit projections",
+		"## General illumination",
+		"",
+		report["general_illumination"]["method"],
 		"",
 	]
+	for address, positions in report["general_illumination"]["placed"].items():
+		sockets = report["general_illumination"]["sockets"].get(address, [])
+		detail = ", ".join("{} ({})".format(item["light"], item["revision_bulb"]) for item in sockets)
+		lines.append(f"- Public {address}: {len(positions)} socket{'s' if len(positions) != 1 else ''}{': ' + detail if detail else ''}.")
+	lines.append(f"- Public {' and '.join(str(address) for address in report['general_illumination']['backbox_only'])}: backbox only, controlled `cabinet_or_service` records.")
+	for name, reason in report["general_illumination"]["not_placed"].items():
+		lines.append(f"- Not placed, {name}: {reason}.")
+	lines += ["", "## Drawing measurements", ""]
+	for key, item in report["drawing_measurements"].items():
+		lines.append(f"- `{key}` on {item['page']} at pixel {item['pixel']}: ({item['normalized'][0]}, {item['normalized'][1]}). {item['note']}")
+	lines += ["", "## Excluded checks", ""]
+	for key, reason in report["excluded_checks"].items():
+		lines.append(f"- `{key}`: {reason}.")
+	lines += ["", "## Explicit projections", ""]
 	for entry in report["projections"]:
 		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
 	lines += [
@@ -1722,23 +2184,27 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Unresolved input addresses: {len(report['unresolved_input_addresses'])}",
-		f"- Unresolved output bindings: {len(report['unresolved_output_bindings'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
 	for reason, bindings in report["not_applicable_outputs"].items():
 		lines.append(f"- Outputs with a controlled `{reason}` record: {len(bindings)}")
+	lines += ["", "## Blockers", ""]
+	lines += [f"- {blocker}" for blocker in report["blockers"]]
 	lines += [
 		"",
 		"## Promotion decision",
 		"",
-		"The record remains `partial`: its public contract, semantics, wiring, mechanisms, variants, and recreation knowledge are validated, but the individual right-rear-playfield emitters on mixed G.I. address 3 cannot be placed without guessing. `coverage.missing` is exactly `[\"spatial_placement\"]`; a socket-level circuit-04 survey is the concrete promotion requirement.",
+		report["promotion_decision"],
 		"",
 		"## Retained evidence",
 		"",
 		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 `{EXTRACTION_MANIFEST_SHA256}`, "
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
+		f"- Version 2.0c table SHA-256 `{REVISION_TABLE_SHA256}`, extraction manifest `{report['revision_extraction']['manifest_uri']}`, "
+		f"SHA-256 `{REVISION_MANIFEST_SHA256}`, {REVISION_FILE_COUNT} files, {REVISION_TOTAL_BYTES} bytes.",
+		f"- World-space OBJ export SHA-256 `{report['world_bounds']['export_sha256']}`, retained at `{report['world_bounds']['retained']}`.",
+		f"- Drawing-callout reads, tiles, overlays and generators: `external:pinmame-review-artifacts/{check['retained_artifacts']['directory']}`, manifest SHA-256 `{check['retained_artifacts']['manifest_sha256']}`.",
 		"- Human transcription of every printed table read from the rendered original manual pages: `external:pinmame-review-artifacts/funhouse/manual-transcription.md`.",
 		f"- Maintainer-supplied November 1990 operator handbook SHA-256 `{OPERATOR_HANDBOOK_SHA256}` and lower-playfield photograph SHA-256 `{PLAYFIELD_PHOTO_SHA256}`.",
 		"",
@@ -1747,10 +2213,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 
 
 def generate(root: Path = ROOT) -> Path:
-	definition = build()
+	definition, decisions = build_with_decisions()
 	write_json(root / DEFINITION_PATH.relative_to(ROOT), definition)
 	write_json(root / SEED_PATH.relative_to(ROOT), definition)
-	report = build_spatial_report(definition)
+	report = build_spatial_report(definition, decisions)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
 	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
@@ -1769,13 +2235,13 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"FunHouse definition is missing: {definition_path}")
 	if not seed_path.is_file():
 		raise RuntimeError(f"FunHouse seed is missing: {seed_path}")
-	definition = build()
+	definition, decisions = build_with_decisions()
 	expected = canonical_bytes(definition)
 	if definition_path.read_bytes() != expected:
 		raise RuntimeError(f"FunHouse definition drifted from its deterministic curator: {definition_path}")
 	if seed_path.read_bytes() != expected:
 		raise RuntimeError(f"FunHouse seed is not byte-identical to the canonical definition: {seed_path}")
-	report = build_spatial_report(definition)
+	report = build_spatial_report(definition, decisions)
 	report_path = root / SPATIAL_REPORT_PATH.relative_to(ROOT)
 	markdown_path = root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT)
 	if not report_path.is_file() or report_path.read_bytes() != canonical_bytes(report):
@@ -1801,7 +2267,10 @@ def main() -> None:
 		source_root = configured_vpx_sources_root(required=True)
 		assert source_root is not None
 		verify_extraction_manifest(source_root)
-		print("FunHouse retained extraction matches its pinned manifest identity.")
+		verify_revision_manifest(source_root)
+		if derive_gi_sockets(source_root) != (GI_SOCKETS, GI_UNMATCHED):
+			raise RuntimeError("FunHouse G.I. sockets drifted from the two retained extractions")
+		print("FunHouse retained extractions match their pinned manifest identities and the G.I. sockets.")
 	elif args.check:
 		check(ROOT)
 	elif args.regenerate:
