@@ -38,7 +38,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 60 | The Walking Dead | `stern.the-walking-dead-premium-limited-edition.2014` | 100% |
 | 60 | The Walking Dead | `stern.the-walking-dead-pro.2014` | 100% |
 | 61 | The Shadow | `bally.the-shadow.1994` | 94% |
-| 67 | Creature from the Black Lagoon | `bally.creature-from-the-black-lagoon.1992` | 81% |
+| 67 | Creature from the Black Lagoon | `bally.creature-from-the-black-lagoon.1992` | 88% |
 | 71 | FunHouse | `williams.funhouse.1990` | 94% |
 | 77 | Whirlwind | `williams.whirlwind.1990` | 81% |
 | 79 | Bram Stoker's Dracula | `williams.bram-stoker-s-dracula.1993` | 94% |

@@ -1,0 +1,295 @@
+{
+  "driver_ids": [
+    "cftbl_p3"
+  ],
+  "extractor": {
+    "id": "tools/creature_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.creature-from-the-black-lagoon.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game cftbl_p3 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/cftbl-switch-edges-fliptronic.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechanisms stay disabled. Each set_switch holds one public level for 1.5 s; the snapshot after it records the ROM's T.1 display and the watched public switch levels. An ordinary rollover (25) and a masked opto (34) are controls; 115-118 are the upper Fliptronic positions, which cftblGameData does not synthesize (FLIP_SOL(FLIP_L) only).",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "cftbl_p3",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "THE CREATURE / 20018 REV. P-3",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "838940306ab4d3c455944f476cb540e5cf5d2fc240b0c0e69403498604ca5927"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "P OF PAID / T.1 LAST SW 25 / WHT-GRN GRN-RED",
+          "label": "25 -> 1",
+          "nonzero_pixels": 684,
+          "pixel_sha256": "317ae8fbe133e1bb325a18c51e57ce4b33f41785241b402146a8b2770edfc144"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 25 / WHT-GRN GRN-RED",
+          "label": "25 -> 0",
+          "nonzero_pixels": 740,
+          "pixel_sha256": "3d783fab9db6bd19a24e785d3c828861a5638039d8b316f2e5df7d10fa0a3c4f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RIGHT POPPER / T.1 LAST SW 34 / WHT-YEL GRN-ORN",
+          "label": "34 -> 1",
+          "nonzero_pixels": 714,
+          "pixel_sha256": "9203566488ac92aefe3a78d3d4e401339780566f6b61cdeac2533747a37441f3"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 34 / WHT-YEL GRN-ORN",
+          "label": "34 -> 0",
+          "nonzero_pixels": 721,
+          "pixel_sha256": "ea9b34e3af8a436652135c25090a4885418b6f21556b0a9d39be920e185c6a41"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 34 / WHT-YEL GRN-ORN (no switch named; the switch grid marks one Fliptronic-column position closed)",
+          "label": "115 -> 1",
+          "nonzero_pixels": 728,
+          "pixel_sha256": "6a9f9a5c2da56f69f2c677b301d969fb51f6b375d001b2f97260ac76e42536fc"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW 34 / WHT-YEL GRN-ORN",
+          "label": "115 -> 0",
+          "nonzero_pixels": 721,
+          "pixel_sha256": "ea9b34e3af8a436652135c25090a4885418b6f21556b0a9d39be920e185c6a41"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R FLIPPER EOS / T.1 LAST SW F1 / BLK-GRN BLK",
+          "label": "116 -> 1",
+          "nonzero_pixels": 684,
+          "pixel_sha256": "b09792900e9b6629196476095fea5510f4dc213d79a31f21305fada0dd0a3473"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN BLK",
+          "label": "116 -> 0",
+          "nonzero_pixels": 667,
+          "pixel_sha256": "0c4893757d81f04ea369414e6cadaa8fe81fa7a03a1de65224d96f521aee1481"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN BLK (no switch named; the switch grid marks one Fliptronic-column position closed)",
+          "label": "117 -> 1",
+          "nonzero_pixels": 674,
+          "pixel_sha256": "a96e8503dedd529437eb82ddb0aabfb4dd777bf742aed7b55c220f9db6ae0c9f"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F1 / BLK-GRN BLK",
+          "label": "117 -> 0",
+          "nonzero_pixels": 667,
+          "pixel_sha256": "0c4893757d81f04ea369414e6cadaa8fe81fa7a03a1de65224d96f521aee1481"
+        },
+        {
+          "active_solenoid_addresses": [
+            31,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L FLIPPER EOS / T.1 LAST SW F3 / BLK-BLU BLK",
+          "label": "118 -> 1",
+          "nonzero_pixels": 676,
+          "pixel_sha256": "6f9aa73432e02c9c244aa386268aa144682a2985c98b9263a1bce7433ca8a618"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SWITCH EDGES / T.1 LAST SW F3 / BLK-BLU BLK",
+          "label": "118 -> 0",
+          "nonzero_pixels": 666,
+          "pixel_sha256": "da1834dfff3ca9f881a85025f91d845ca4803533db7845452e0ebd82c2aa27fc"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "T.1 names 'P OF PAID' while host public 25 is 1 and clears it at 0; no output moves",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "T.1 names 'RIGHT POPPER' while host public 34 is 1 and clears it at 0; no output moves",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            115
+          ],
+          "input_address": 115,
+          "input_kind": "switch",
+          "label": "T.1 with host public 115 at 1: the switch grid marks it closed, the ROM names no switch and drives no output; at 0 the mark clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            116
+          ],
+          "input_address": 116,
+          "input_kind": "switch",
+          "label": "T.1 with host public 116 set to 1: the ROM fires the lower right flipper (45/46, power then hold while the input stays at 1) and names the synthesized end-of-stroke bit (R FLIPPER EOS); at 0 the hold winding drops and the name clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            117
+          ],
+          "input_address": 117,
+          "input_kind": "switch",
+          "label": "T.1 with host public 117 at 1: the switch grid marks it closed, the ROM names no switch and drives no output; at 0 the mark clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            118
+          ],
+          "input_address": 118,
+          "input_kind": "switch",
+          "label": "T.1 with host public 118 set to 1: the ROM fires the lower left flipper (47/48, power then hold while the input stays at 1) and names the synthesized end-of-stroke bit (L FLIPPER EOS); at 0 the hold winding drops and the name clears",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        20,
+        24,
+        31,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 45,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "p3-cftbl-switch-edges-fliptronic",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/creature/harness/p3-cftbl-switch-edges-fliptronic/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/cftbl-switch-edges-fliptronic.json",
+        "scenario_sha256": "5ef3cfff48de0cab2cde2a00d7f8968109c0f02867fe0b5e49d7140490d112d3",
+        "self_test_pulses": 0,
+        "sha256": "b944c7764bf317cafc192b8c59d4925b1440ea20500afc2d97da2e050d7e836e",
+        "snapshot_count": 46,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          25,
+          34,
+          115,
+          116,
+          117,
+          118
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8717d3e7f77871fd9fe032829a26d3d0aa253f7773c568f8c10090a8757ce2ba"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest p3-cftbl-switch-edges-fliptronic/manifest.json SHA-256 b2934d0d3badaf63db1e755f05ca127c6a585fd61ed98bec04533eb77c01329c.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/creature/harness/p3-cftbl-switch-edges-fliptronic",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "b944c7764bf317cafc192b8c59d4925b1440ea20500afc2d97da2e050d7e836e"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

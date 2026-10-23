@@ -1,0 +1,165 @@
+{
+  "driver_ids": [
+    "cftbl_p3"
+  ],
+  "extractor": {
+    "id": "tools/creature_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.creature-from-the-black-lagoon.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game cftbl_p3 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/cftbl-ramp-lights-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. T.15 RAMP LIGHTS TEST runs in its cycling mode, is stopped with Enter and restarted. Twelve frames 0.25 s apart cover the first cycling phase; the lamp transitions recorded in each frame are the chase lamps 91-98 PinMAME computes from solenoids 20 and 24 (WPC_CFTBL), and the G.I. transitions are the strings the ROM switches.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "cftbl_p3",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "THE CREATURE / 20018 REV. P-3",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 331,
+          "pixel_sha256": "838940306ab4d3c455944f476cb540e5cf5d2fc240b0c0e69403498604ca5927"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            24,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP LIGHTS / CYCLING",
+          "label": "Enter (start T.15 RAMP LIGHTS TEST)",
+          "nonzero_pixels": 408,
+          "pixel_sha256": "52e7546028b92fe4efa46998f17ed4625be5f4e285359fcc97ac613138d784a2"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            24,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP LIGHTS / STOPPED",
+          "label": "Enter (T.15 stopped)",
+          "nonzero_pixels": 450,
+          "pixel_sha256": "6962e5b2517394da5b60923c9b090aa2696997422e3910d0b809d258cf36d7b6"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            24,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "RAMP LIGHTS / CYCLING",
+          "label": "Enter (T.15 cycling again)",
+          "nonzero_pixels": 408,
+          "pixel_sha256": "52e7546028b92fe4efa46998f17ed4625be5f4e285359fcc97ac613138d784a2"
+        }
+      ],
+      "gi_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "lamp_addresses_seen": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.15 RAMP LIGHTS TEST cycling: the ROM steps solenoids 20 and 24 through the four decoder codes and PinMAME's computed chase lamps come on in the order 91, 92, 93, 94 and wrap, each of 95-98 changing with its partner 91-94",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20,
+            24
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "Enter stops T.15: the ROM switches G.I. strings 0 and 3 off and no other string changes, while PinMAME keeps publishing the selected chase pair (94 and 98), so lamps 91-98 carry the decoder selection whatever the G.I.; Enter again restores both strings to full brightness",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        }
+      ],
+      "solenoid_addresses_seen": [
+        20,
+        24,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 48,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "p3-cftbl-ramp-lights-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/creature/harness/p3-cftbl-ramp-lights-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/cftbl-ramp-lights-test.json",
+        "scenario_sha256": "36187b9736ed983043d7a558396a290bac44cc7442d78880b285c64d07080569",
+        "self_test_pulses": 0,
+        "sha256": "d8466e5a5f84274cba4374c7e0b51b4fe30ac8f319082561c12af677dedeea21",
+        "snapshot_count": 49,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8717d3e7f77871fd9fe032829a26d3d0aa253f7773c568f8c10090a8757ce2ba"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest p3-cftbl-ramp-lights-test/manifest.json SHA-256 df458e9b83d706cbafd5fc06b0ebe0e79f16a6336ae58941102e67664d5b900c.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/creature/harness/p3-cftbl-ramp-lights-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "d8466e5a5f84274cba4374c7e0b51b4fe30ac8f319082561c12af677dedeea21"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -178,7 +178,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 172 | 1992 | Al's Garage Band goes on a World Tour | Alvin G | partial | 13% |
 | 173 | 1992 | U.S.A. Football | Alvin G | partial | 13% |
 | 174 | 1992 | Black Rose | Bally | partial | 88% |
-| 175 | 1992 | Creature from the Black Lagoon | Bally | partial | 81% |
+| 175 | 1992 | Creature from the Black Lagoon | Bally | partial | 88% |
 | 176 | 1992 | Doctor Who | Bally | partial | 94% |
 | 177 | 1992 | The Addams Family | Bally | author_ready | 100% |
 | 178 | 1992 | Aaron Spelling (1.01) | Data East | partial | 13% |

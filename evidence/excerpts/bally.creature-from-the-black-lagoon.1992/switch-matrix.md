@@ -60,17 +60,12 @@ below).
 
 `J2XX = CPU Board, J9XX = Fliptronic II Board` (printed caption under the table).
 
-**This is the source of `conflict.upper-flipper-switches-unconfirmed-fitment`.** This page prints all
-eight F1-F8 positions with real, distinct wire colors and Fliptronic-II-board connector pins, labeled
-"Upper Right/Left Flipper End of Stroke/Opto" for F5-F8 with no "Not Used" marking anywhere on this
-page. But `switch-locations.md` (the playfield-diagram parts list, a different page of the same
-manual) lists only F1-F4 and does not mention F5-F8 at all, not even as a "Not Used" row, and the
-Solenoid/Flasher Locations page (`solenoid-flasher-locations.md`) prints only two flipper coils
-(Lower Left FL-15411, Lower Right FL-11629) with no upper-flipper coil circuit at any address —
-consistent with pinned `cftbl.c`'s `FLIP_SOL(FLIP_L)` (lower coils only) but not conclusive about
-whether the EOS/opto *switches* for the absent upper flippers were also left unpopulated. Two
-same-manual pages disagree on whether F5-F8 are fitted hardware; this excerpt is the wiring-page half
-of that disagreement.
+This page prints all eight F1-F8 positions with wire colours and Fliptronic II connector pins and labels
+F5-F8 "Upper Right/Left Flipper End of Stroke/Opto", although the machine has no upper flipper and
+`switch-locations.md` lists only F1-F4. The game's own board pages settle each position: the Fliptronic II
+connector list (`fliptronic-ii-board.md`) prints J906-4 (F5) Not Used and sends J906-5 (F7) to an upper left
+end-of-stroke switch that the machine does not have, while J905-3 (F6) and J905-5 (F8) run to the second opto
+of the right and left cabinet Flipper Opto Switch Boards (`flipper-opto-board.md`).
 
 ## Opto-relevant switch-matrix circuit description (bottom of page)
 

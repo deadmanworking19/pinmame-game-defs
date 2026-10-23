@@ -62,11 +62,8 @@ Only two addresses in this list carry the two-row "assembly / opto-assembly" LED
 disclosure that the rest of this evidence set relies on for opto identity: **34** (`A-14231 (LED)` over
 `A-14232 (Trans.)`, Right Popper) and **37** (same pair, Lower Right Popper). Every other populated
 address prints a single ordinary switch part (`5647-12693-xx`, `SW-1A-xxx`, `SW-11A-37`, `20-`, `27-`,
-`5643-`, or `A-16206-2`), including the two addresses PinMAME's inverted-switch mask also normalizes
-(15 Top Left Rollover, 38 Ramp Up/Down) — neither prints an LED/Trans pair or any other opto-construction
-marker, so their normally-closed polarity is recorded from the retained script's own inverted hit/unhit
-handling (switch 15) and from the ramp mechanism's own position-sensor logic (switch 38), not from this
-parts list. F1-F4 are the only Fliptronic flipper-block positions printed on this page; F5-F8 do not
-appear at all (not even as a "Not Used" row), which is the basis of
-`conflict.upper-flipper-switches-unconfirmed-fitment` recorded against the Switch Matrix wiring page
-below.
+`5643-`, or `A-16206-2`), including the two addresses PinMAME's inverted-switch mask also covers
+(15 Top Left Rollover, 38 Ramp Up/Down). Neither prints an LED/Trans pair: 15 is a micro switch rollover that
+rests open, which PinMAME publishes inverted (the retained script holds it at 1 while no ball is on it), and 38
+is the lift ramp's position switch. F1-F4 are the only Fliptronic flipper-block positions printed on this page;
+the Fliptronic II and flipper opto board pages settle F5-F8 (`fliptronic-ii-board.md`, `flipper-opto-board.md`).

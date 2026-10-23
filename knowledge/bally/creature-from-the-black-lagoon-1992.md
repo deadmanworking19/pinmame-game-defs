@@ -1,231 +1,200 @@
 # Creature from the Black Lagoon (Bally, 1992)
 
-Coverage: **partial - physical I/O inventory, WPC-Fliptronic bindings, mechanism causality, driver-variant boundary, and recreation behavior are validated; spatial placement and physical wiring are conflicted pending several genuinely unresolved gaps documented below**
+Coverage: **partial**. Every public address is enumerated, named, wired and polarized, the mechanisms and the
+driver variants are described, and the factory drawings validate most placements. Two requirements stay open:
+the 32 chase bulbs cannot be assigned to their strings (`spatial_placement`), and the manual's chase-board
+diagram and its parts list disagree on which ramp boards each chase group drives (`unresolved_conflicts`,
+`conflict.chase-light-board-group-assignment`).
 
 ## Identity and evidence precedence
 
-This is the Bally WPC-Fliptronic physical product released 1992/93, IPDB 588. It covers the eight-driver
-`cftbl_*` clone tree: `cftbl_l4` (parent, production L-4), `cftbl_l4c` (2020 community "L-4C Competition +
-LED Ghost MOD"), `cftbl_d4`/`cftbl_d3`/`cftbl_d2` (LED Ghost Fix revisions), `cftbl_l3`/`cftbl_l2` (earlier
-firmware), and `cftbl_p3` (P-3 Prototype, SP-1, 1992, with an early sound ROM). Every one of these is a
-ROM revision for the same physical machine.
+The Bally WPC-Fliptronic machine of 1992 (model 20018, IPDB 588). The eight `cftbl_*` drivers are firmware
+revisions of it: `cftbl_l4` (parent, production L-4), `cftbl_l3` and `cftbl_l2`, the community "LED Ghost Fix"
+revisions `cftbl_d4`, `cftbl_d3` and `cftbl_d2`, the 2020 community `cftbl_l4c`, and the prototype `cftbl_p3`
+("REV. P-3"). No source describes the prototype machines' own hardware, but replayed on the P-3 ROM the T.1, T.5,
+T.12 and T.15 scenarios name and drive the same addresses with the same wires as L-4, so it is recorded
+`compatible`; only three display strings differ (T.5 "LFT SUBWAY FLHR" for 2 and "CREATURE FLSHR" for 11, T.1
+"P OF PAID" for 25).
 
-Evidence precedence for this definition: the retained known-working script is runtime and
-mechanism-causality ground truth; the Bally operations manual controls physical construction, part
-numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller
-generation, public address topology, and driver-declared hardware options; the retained VPX geometry
-supplies normalized coordinates. The retained manual PDF carries a real (Adobe Paper Capture) OCR text
-layer, but it garbles every multi-column table used here, so every printed table was read from 300 dpi
-renders and transcribed into `evidence/excerpts/bally.creature-from-the-black-lagoon.1992/`, indexed by
-`external:pinmame-review-artifacts/creature/manual-transcription.md`; the OCR text is a search index
-only and never an authority.
-
-**This retained extraction is the smallest curated in the project to date (856 files).** Several
-documented devices have no matching VPX object at all; this record stays honestly `partial` rather than
-reaching for projections that would misrepresent the table's actual fidelity.
+The retained known-working table is VPW's v1.0 (SHA-256 `960ebdd1...`), whose script binds `cftbl_l4`. It is the
+runtime authority and the geometry source for the objects its script binds. It supersedes the older community
+table the earlier curation used, which bound a 32-light chase animation to G.I. 0 and modelled none of the socket
+boards. The operations manual (arcade-museum.com scan, SHA-256 `d84d28a8...`) controls construction, wiring,
+quantities and location; its OCR text layer garbles every table, so every table was read from rendered pages
+and transcribed under `evidence/excerpts/bally.creature-from-the-black-lagoon.1992/`. IPDB's factory parts list
+supplies the chase boards and cables. Pinned PinMAME `97aa922b` controls the controller topology, and five
+LibPinMAME harness runs of `cftbl_l4` (four of them replayed on `cftbl_p3`) supply the ROM's own names and behaviour.
 
 ## Controller platform and address topology
 
-`GEN_WPCFLIPTRON` (`PINMAME_HARDWARE_GEN_WPCFLIPTRON = 0x8`) with `wpc_dispDMD`. The controller profile
-is `pinmame.wpc-fliptronic`, reused unchanged.
+`GEN_WPCFLIPTRON` with `wpc_dispDMD` (`pinmame.wpc-fliptronic`, hardware generation `0x8`).
+`cftblGameData` declares `FLIP_SW(FLIP_L | FLIP_U) | FLIP_SOL(FLIP_L)`, `lampCol = 1` and
+`gameSpecific1 = WPC_CFTBL`, no custom solenoids and no fast-flip address.
 
-- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row (40 used, 24 "Not
-  Used"), Fliptronic 111-118. `cftblGameData`'s inverted-switch mask
-  `{0x00,0x10,0x00,0xc8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}` normalizes column 1 bit 4 (address 15)
-  and column 3 bits 3/6/7 (addresses 34, 37, 38).
-- Solenoids: physical drivers 1-28 with no LPDC board (this generation has no 37-44 duplication range;
-  see the controller profile). No custom solenoids (`custSol = 0`).
-- Lamps: 8x8 matrix 11-88, every position populated (no "Not Used" lamp address), **plus** a real
-  auxiliary column at 91-98 that the manual never itemizes by individual bulb name (see the Sequential
-  G.I. mechanism below). `cftblGameData` declares `lampCol = 1`.
-- GI: five strings on public addresses 0-4, of which address 3 has no bound playfield emitter in this
-  recreation.
+- Switches: coin door 1-8, matrix 11-88 (40 used, 24 printed Not Used), Fliptronic 111-118.
+- Solenoids: drivers 1-28; 29-31 mirror `WPC_GILAMPS` bits 5-7 (31 is active in the service menu); 32 is
+  constant zero; 33-36 are the Fliptronic upper-flipper circuits, here the backbox insert flashers; 37-44 are
+  unused (no LPDC board on this generation); 45-48 are the lower flippers' power and hold windings; 49 and 50
+  are PinMAME's simulator and reserved channels.
+- Lamps: the full 8x8 matrix (no Not Used lamp) and the chase strings at 91-98 (see below).
+- G.I.: five strings 0-4. Strings 0 and 3 feed only the chase board.
 
-## Opto polarity: two true optos, two mechanically inverted switches
+## Switch polarity
 
-Unlike every other WPC-Fliptronic/WPC-95 machine curated in this project so far, this manual's switch-
-matrix wiring page (3-2) carries **no shaded-cell opto legend at all** -- every cell is plain text. Opto
-construction instead comes from the Switch Locations parts list's two-row LED-plus-phototransistor
-disclosure (A-14231 LED over A-14232 Trans.), which appears at exactly two addresses: **34** (Right
-Popper) and **37** (Lower Right Popper). PinMAME's inverted-switch mask normalizes those two, **plus two
-more that carry no opto-construction marker at all**: 15 (Top Left Rollover, printed part
-`5647-12693-19`, an ordinary leaf switch) and 38 (Ramp Up/Down, printed part `5647-12693-11`, likewise
-ordinary). Neither is a manual-vs-emulator conflict: the retained script's own `sw15_Hit`/`sw15_Unhit`
-handlers invert the usual hit/unhit polarity (clearing the switch on Hit, setting it on UnHit -- the
-opposite of every other rollover in the file), and switch 38 is a ramp-position microswitch whose public
-state pinned `cftbl_handleMech` sets purely from the motor's own commanded direction
-(`core_setSw(swRampUpDown, locals.creaturerampPos)`), never from a Hit event. Both are recorded
-`normally_closed = true` on independent corroborating evidence, not because they carry the manual's opto
-marker.
+`cftblGameData`'s inverted-switch mask covers 15, 34, 37 and 38, but only 34 and 37 are optos (the Switch
+Locations list prints an A-14231 LED over an A-14232 phototransistor for each popper). Their contacts rest
+closed and PinMAME's mask normalizes them: public 1 means a ball is in the popper, and the ROM's T.1 names
+RIGHT POPPER while public 34 is 1.
 
-**Lesson for future WPC-Fliptronic/WPC-95 curation:** PinMAME's inverted-switch mask normalizes both true
-optos and ordinary normally-closed mechanical switches identically. Do not assume every masked address is
-an opto; check the manual's own LED/Trans (or shaded-cell) construction marker specifically, and use the
-retained script's hit/unhit handling or a mechanism's own position-sensor logic to corroborate polarity
-for masked addresses that carry no opto-construction evidence.
+- **15, Top Left Rollover**, is an ordinary micro switch (5647-12693-19) that closes while a ball is on it, so
+  `normally_closed` is false. Because PinMAME inverts it, a recreation publishes **1 while no ball is on it and 0
+  while one is**, the opposite of every other rollover. The VPW script does exactly that (start-up 1, `Hit` 0,
+  `Unhit` 1), and the definition declares `initial_active` for it.
+- **38, Ramp Up/Down**, is the lift ramp's position switch. Public 1 means the ramp is down: the script writes 1
+  when the down coil (26) fires and 0 when the up coil (23) fires, and `cftbl_handleMech` does the same. With the
+  mask, the contact the matrix sees closes while the ramp is up.
 
-## Fliptronic block: an unresolved same-manual disagreement (`conflict.upper-flipper-switches-unconfirmed-fitment`)
+Every other matrix switch rests open.
 
-`cftblGameData` declares `FLIP_SW(FLIP_L | FLIP_U) | FLIP_SOL(FLIP_L)`: switch bits for both lower and
-upper flippers, but solenoid bits for lower flippers only (no upper flipper coils fitted -- the
-Solenoid/Flasher Locations and Table pages print exactly two flipper coils, FL-15411 Lower Left and
-FL-11629 Lower Right, and nothing at printed addresses 33-36).
+## Fliptronic block
 
-The Switch Locations parts list (printed 2-41) lists only F1-F4 (Right Flipper EOS/Opto Board, Left
-Flipper EOS/Opto Board) with real part numbers, and simply omits F5-F8 -- not even as a "Not Used" row,
-unlike every genuinely unfitted matrix range on the same page. But the Switch Matrix wiring page
-(printed 3-2), a different page of the same manual, prints real, distinct wire colors and Fliptronic-II-
-board connector pins for **all eight** F1-F8 positions, labeling F5-F8 "Upper Right/Left Flipper End of
-Stroke/Opto" with no "Not Used" marking anywhere on that page -- the identical treatment given to the
-fitted F1-F4 positions. The retained known-working script makes no `Controller.Switch` call anywhere for
-addresses 111-118, so it supplies no corroborating runtime evidence either way.
+The Switch Matrix page still prints F5-F8 as "Upper Right/Left Flipper End of Stroke/Opto", but the game has no
+upper flipper. The board pages settle each position:
 
-Two pages of the same primary source disagree on whether this hardware is fitted, and this is not a case
-where majority-evidence or the retained script settles it (unlike, for example, Twilight Zone's
-slingshot-naming case). Switches 115-118 are recorded with **neither** a location **nor** a
-`not_applicable` spatial record -- either would assert something not yet established -- and the coverage
-gap is named explicitly rather than guessed at.
+- **115 (F5)** and **117 (F7)** are not fitted: the Fliptronic II connector list prints J906-4 Not Used, and
+  J906-5 names an upper left end-of-stroke switch the machine does not have. In T.1 the ROM names nothing for
+  either.
+- **116 (F6)** and **118 (F8)** are the second optos of the right and left cabinet Flipper Opto Switch Boards
+  (A-15894, two optos per board; the left board's J1-2 "upper flipper" runs to J905-5, the right board's to
+  J905-3). In T.1, public 116 fires the lower right flipper (45/46) and 118 the lower left (47/48): **a recreation
+  drives 116 with 112 and 118 with 114**.
+- The four upper-flipper drive lines J902-6, -4, -3 and -1 are printed "to insert flashers". The ROM's T.5 names
+  public 33-36 **CREATURE FL. 1** to **4** with their wires BLK-YEL, ORN-VIO, BLK-BLU and ORN-GRY: four backbox
+  insert flashers.
+- The lower flippers are FL-11629 (right, A-15205-R-2) and FL-15411 (left, A-15205-L-4). The ROM's T.12 FLIPPER
+  COIL TEST has four items (R./L. FLIP. POWER and HOLD) and never drives 33-36. PinMAME synthesizes the
+  end-of-stroke bits 111 and 113.
 
-## Trough, outhole, and shooter lane
+## Trough, outhole and shooter lane
 
-Three balls rest on plain leaf switches 56 (Right Trough, nearest the release), 57 (Center Trough), and
-58 (Left Trough, drain entrance) -- a simpler three-position trough than the four/five-position optical
-troughs on later WPC-Fliptronic and WPC-95 machines. The retained script's `UpdateTroughTimer` cascades
-balls toward the release end whenever a downstream position empties, and solenoid 4 (`ReleaseBall`) kicks
-the ball at 56 out to the shooter lane. A drained ball rests on outhole switch 55 and solenoid 12
-(`SolOuthole`) kicks it into the trough. There is no auto-plunger: the retained extraction includes a
-single manual pull-`Plunger` primitive, and switch 66 (Shooter) simply senses the ball resting in the
-lane before the player plunges it.
+A drained ball rolls onto outhole switch 55; the outhole kicker (12, A-8039-3) kicks it into a three-ball
+trough on switches 58, 57 and 56. The ball release (4, B-9362-L-2) feeds the ball on 56 into the shooter lane,
+where the player plunges it from switch 66 with a manual plunger up past the P-A-I-D lanes 25-28.
 
-## Three entry holes, one shared subway tunnel
+## Holes, subway and poppers
 
-Pinned `cftbl_stateDef` routes both "Left Subway" (switch 16, the driver's own key-help comment calls it
-"K-I-S-S Hole") and "Center Subway" (switch 17, "Snackbar Hole") to the identical `stLowRPopper` ball
-state -- both holes feed an internal tunnel that exits through the Lower Right Popper (switch 37,
-solenoid 3). "Right Subway" (the F-I-L-M hole) is a separate, standalone kickback hole: it exits through
-the Top Right Popper (switch 34, solenoid 1) directly, the same physical hole the ball entered.
+The left hole (switch 16) awards K-I-S-S and the centre hole (switch 17) the Snack Bar: in a game the ROM
+flashes K-I-S-S lamp 21 for 16 and lights Snack Bar lamp 53 with HIT TARGETS TO OPEN SNACKBAR for 17. Both drop
+the ball into a subway that ends in the lower right popper (opto 37), kicked out by solenoid 3. The F-I-L-M hole
+at the upper right is its own popper (opto 34, solenoid 1). **The switch drawing (2-41) transposes callouts 16
+and 17**; the ROM, the rules and the printed names agree with the table, so those placements follow the table.
 
-## Creature Ramp: motorized up/down ramp
+## Lift ramp and ramps
 
-A DC gearmotor (assembly A-16042) raises and lowers the curly "Creature Ramp" between an Up position (the
-ball climbs it) and a Down position (the ball instead takes the ordinary left ramp). Solenoid 23 drives it
-up, solenoid 26 drives it down, and switch 38 senses the commanded position (see the polarity note above).
-Pinned `cftbl_stateDef`'s `stLRamp` hook state reads `core_getSw(swRampUpDown)` to decide which path a
-ball entering the left-ramp mouth (switch 36) takes. Switches 35 (Right Ramp Enter), 61 (Right Ramp
-Exit), 62 (Left Ramp Exit), and 64 (Upper Ramp) sense the remaining entry/exit points around the two ramp
-paths.
+The A-16042 Lift Ramp Assembly under the head of the left ramp has an up coil (23, SM1-2B-900-DC) and a down coil
+(26, AE-26-1200), both with tieback diodes, and switch 38. `cftbl.c`'s simulator sends a ball from the left ramp
+entrance (36) up the Creature ramp to switch 64 and on to the bowl while 38 is 1, and along the swirl ramp past
+switch 62 to the right inlane otherwise. The right ramp has its entrance switch 35 and its exit switch 61. The
+VPW table binds its sw62 and sw64 triggers the other way round from both factory drawings (2-41 and the 2-44
+ramp drawing), so 62 and 64 are measured on the switch drawing.
 
-## Sequential G.I.: the curly-ramp chase lights (`WPC_CFTBL` custom hardware)
+## Sequential G.I.: the chase lights
 
-This is the standout feature unique to this driver. Pinned `wpc.h` defines `WPC_CFTBL = 0x01`,
-documented as "chase light 2 bit decoder from solenoid #3 output, wired through triacs to 2 GI outputs,
-leading to 8 additional PWM controlled GI", and `cftblGameData` sets this bit in `gameSpecific1`.
+The swirl ramp and the bowl carry 32 #86 chase bulbs: 24 on three flexible eight-lamp boards on the ramp
+(A-16089 "lt-1"; A-16088 "lt-2" chained into A-16087 "lt-3") and 8 on the bowl's A-15672. They are driven by the
+**Chase Light II board A-15541** under the playfield (printed 3-14 and 3-15):
 
-The mechanism has four parts, and the manual prints two pairs of them under the **same** name because
-they share one physical board (A-15541):
+- G.I. string 01 (public **G.I. 0**, J120-7/J120-1) enters as "G.I. (1)" and is switched by four triacs onto
+  LAMP 1A-4A on J4 (Orange-Brown, -Red, -Black, -Yellow). String 04 (public **G.I. 3**, J120-10/J120-5) enters as
+  "G.I. (2)" and goes onto LAMP 1B-4B on J3 (Orange-Green, -Blue, -Violet, -Gray).
+- Solenoids **20** and **24** are not coils: they are select lines DRIV. 1 and DRIVE. 2. Through 2N4403s they
+  drive the A and B inputs of both halves of a 74LS139, so both groups always select the same string number.
+- The 74LS139's outputs are active low and go through a ULN2803 to the 2N4403s that gate the triacs. **The
+  selected output turns its string off and the other three conduct: three strings are lit and one is dark**, and
+  the chase is a dark string stepping through each group. UFO Pinball's analysis of the board says the same
+  ("three circuits are on, and one circuit is off").
+- Pinned `wpc.c` publishes the chase at lamps **91-98** as `0x11 << code`, the selected code (solenoid 20 plus
+  twice solenoid 24) in both groups, **whatever the G.I. does**; only its separate physical-output (modulated lamp)
+  path ANDs the selection with G.I. triacs 0 and 3. So **public 91+k is 1 while string k+1 of group A is the dark
+  one**, and 95+k likewise for group B, and a string's bulbs are lit while its G.I. is on and its address is 0. The
+  ROM's T.15 RAMP LIGHTS TEST cycles 91, 92, 93, 94 (with 95-98 alongside); stopping it switches G.I. 0 and 3 off
+  while PinMAME keeps publishing the selected pair (93/97 on L-4).
+- The VPW script lights its chase phase while the address is 1 and its G.I. is on, so it shows one phase lit and
+  three dark, the inverse of the board. It also gates the whole ramp with G.I. 0 and the bowl with G.I. 3.
 
-- **Solenoids 20 and 24** are not coils. They are the board's own 2-bit decoder address-select lines,
-  driven from an entirely different connector pair (`J118-2`/`Q36`/`J126-4` for 20, `Q32`/`J126-8` for
-  24) than the GI power buses below, and neither drives a playfield bulb by itself. This curation
-  overrides their `kind` to `control_signal` despite the manual's own inconsistent "Solenoid Type"
-  column (printing "Flasher" for 20 but "Low Power" for 24, an internal disagreement for what is
-  functionally the identical role).
-- **GI addresses 0 and 3** ("Sequential G.I. #1"/"#2") are the true power buses, wired to a genuinely
-  different connector pair (`J120-1`/`Q18`/`J120-7` for GI 0, `J120-5`/`Q15`/`J120-10` for GI 3).
-- Pinned `wpc.c`'s `WPC_SOLENOID3`/`WPC_GILAMPS` handling computes `chase_2b` from solenoids 20/24's
-  pulsed state and `chase_gi` from whether GI triacs 0 and 3 are conducting, then writes the selected
-  8-bit pattern directly into `coreGlobals.lampMatrix[8]` -- the public lamp matrix's 9th row. **This
-  means public lamp addresses 91-98 are real, individually addressable outputs for the 8 physical
-  curly-ramp chase bulbs**, computed by the emulator's hardware model rather than driven through the
-  ordinary lamp-strobe scan, and the manual never itemizes them by individual bulb name (it only names
-  the assembly "Sequential G.I. #1/#2" as a whole).
+What is settled about the groups: the bowl's cable H-15870 carries the J3 colours, so the bowl is on G.I. 3 and
+lamps 95-98. What is not (`conflict.chase-light-board-group-assignment`):
 
-The retained VPX table does not model this faithfully: it never reads `Controller.Lamp` for any of
-91-98. Instead its own `chaselights` collection (32 `swirlramplight` Light objects -- four times the
-true 8-bulb count) cycles through a self-contained internal timer (`swirlramplight1_Timer`) keyed only
-to GI address 0's on/off state, approximating rather than reproducing the true decoder-selected pattern.
-The table's own commented-out `SeqGI1`/`SeqGI2` handlers (bound to solenoids 20/24) carry the author's own
-note: `'does not work properly with rom !!! so I did not use this, but for reference`. GI address 3 has
-no bound emitter collection at all (`FadeGI 203` runs but no matching `UpdateGIObjects` call exists), so
-it has no playfield placement in this recreation.
+- The block diagram (3-14) draws J4 to A-16087 alone and J3 to A-16088 chained on to A-16089, while the parts
+  list chains A-16088 into A-16087 and gives A-16089 its own cable. The ramp's two cables are H-15871 (J4 colours)
+  and H-16213, "front chase lite cable" (J3 colours); nothing says which board each plugs into, and the manual's
+  cable list adds an H-16214 "Center Chase Light Cable" that neither assembly lists.
+- No source gives the order of the four strings along any board's eight sockets.
+- The Power Driver Board connector list (3-23) sends solenoid 20 to the chase board's J2-2 and 24 to J2-1, the
+  opposite of the chase board's own page, which would swap strings 2 and 3.
 
-**Lesson for future curation:** a `lampCol` declaration does not always mean an ordinary auxiliary lamp
-column with printed per-bulb names. Check the driver's `gameSpecific1`/`gameSpecific2` custom-hardware
-bits (`WPC_CFTBL` here) before assuming a lamp-matrix column follows the standard strobe-scan
-convention -- this one is entirely computed inside the core's own solenoid/GI handling.
+Leads, not authority: a Pinside owner describes the ramp's two sections as "the ones towards the right and back
+of the ramp" and "the ones on the left and front", flashing out of step when two plugs under the playfield are
+swapped, and another reports one string dark on "5 in the ramp and 2 in the bowl". Both fit the reading that the
+16-bulb A-16087/A-16088 pair (front) and the bowl are on G.I. 3 and A-16089 on G.I. 0, but neither settles it.
+**Resolution:** on a working machine, pull J3 and then J4 at the Chase Light II board and note which ramp and bowl
+bulbs go dark. Then film the ramp and bowl while the T.15 test cycles and note which bulbs go dark together and in
+which order; stopping the test is no use, because it switches the chase power off. With the ramp off, a continuity
+check from each board's header pins to its sockets gives the same answer. Until then lamps 91-98 and G.I. 0 and 3
+carry no placement.
 
-## The hologram: cabinet-mounted illusion
+## The hologram
 
-A three-part cabinet-mounted mechanism creates the machine's signature effect -- a hologram of the
-Creature that appears to float above the playfield. A 48VAC push motor (solenoid 21, "Hologram Push
-Motor") positions a mechanism under the playfield; a #1156 lamp (solenoid 28, "Hologram Lamp")
-illuminates a hidden image; and a 48VAC spinning mirror motor (solenoid 27, "Creature Mirror Motor")
-reflects it up through the playfield glass. Solenoids 27 and 28 are both printed "Δ Located in cabinet
-bottom" on the Solenoid/Flasher Locations page -- genuinely cabinet hardware, not playfield hardware,
-even though the visible effect reads as a playfield feature. The retained script's `HoloLamp` handler
-(bound to solenoid 28) sets a `holoState` flag and makes a `creature` Flasher object visible; a separate
-`reflectionTrigger` disables ball-reflection rendering while the hologram is active so a mirrored ball
-does not break the illusion. A distinct backbox-insert-only flasher (solenoid 11, "Creature Flasher")
-lights a companion insert graphic and is not part of the hologram projection itself -- it is the only
-solenoid-table item that prints an Insert connection with no Playfield connection at all.
+The Creature appears in the playfield window by a cabinet illusion: the hologram lamp (28, #1156) and the mirror
+motor (27, 48 VAC) sit in the cabinet bottom, and the push motor (21, 48 VAC) under the playfield. Solenoid 11,
+"Hologram Creature Flasher (Insert)", is two #906 bulbs on the backbox insert, not part of the projection.
 
 ## Other mechanisms
 
-Three jet bumpers (Left 45/coil 13, Right 46/coil 14, Bottom 33/coil 15) and two slingshots (Left
-47/coil 6, Right 48/coil 5) are standard WPC devices. The four-letter P-A-I-D rollover lane (25-28) and
-four Snackbar standup targets (Cola 41, Hot Dog 42, Popcorn 43, Ice Cream 44) are simple award features
-with no custom mechanism logic. The Creature Bowl orbit loop passes a single switch (65) up to four times
-per lap; pinned `cftbl_stateDef` chains four "In Bowl Loop" states and a final "Creature Bowl" state, all
-keyed on the same switch, counting passes rather than sensing four distinct physical positions. Switch 18
-(Center Shot, feeding the "Move Your Car" lamp/feature) has a script handler (`Sub sw18_Hit`) but no
-matching table object anywhere in the retained extraction -- unreachable and spatially unresolved in this
-specific recreation.
+Three jet bumpers: top left (13, switch 45), top right (14, switch 46) and bottom (15, switch 33). Two slingshots:
+left (6, switch 47) and right (5, switch 48). Four Snack Bar stand-up targets: Cola 41, Hot Dog 42, Popcorn 43,
+Ice Cream 44. The whirlpool bowl (A-15993) has its micro switch 65 and the bowl flasher 10.
 
-## Lamps, flashers, and general illumination
+## Lamps, flashers and general illumination
 
-All 64 lamp-matrix positions are populated; unlike the switch matrix, there is no "Not Used" lamp
-address. Addresses 71-78 spell the backbox "CREATURE" header (printed "*Located on backbox insert"
-individually on each letter); the retained table's matching `Light.L71`-`L78` objects independently
-confirm this, sitting at normalized x outside [0,1] (behind the rear/backglass edge). Lamp 88 (Start
-Button) is the cabinet pushbutton's own illumination.
+- 71-78 spell the backbox C-R-E-A-T-U-R-E header; 88 is the Start button lamp. Lamp 18 "Admit One" sits on the
+  back panel above the playfield's top right edge.
+- Lamps 28, 37 and 44 have two bulbs each (both outlanes; two inserts in each lane), as the drawing and the table
+  agree.
+- The four sockets of the A-14305 board in the centre of the swirl (55-58), the two C-12709 boards at the upper
+  left (63-65) and right of centre (66-68), and lamp 51 are placeholders in the VPW table; their placements are
+  measured on the lamp drawing.
+- Most flashers have one #89 dome on the playfield and two #906 bulbs on the backbox insert (17 has one). 9 is the
+  two back flashers in the top corners and 25 the two Start Movie flashers on the lane walls.
+- The printed G.I. strings 02, 03 and 05, "Insert/Playfield Middle", "Upper" and "Lower", are public 1, 2 and 4
+  (#44 on the playfield, #555 on the insert). The VPW table drives a light collection for each, but those lights
+  are invisible light-map sources, not modelled sockets, so their placements are only candidates.
 
-Six solenoid-driven flashers (2 Left Subway Enter, 9 Back Flashers, 16 Right Popper Slide, 18 Right
-Ramp, 19 Left Ramp, and, among the ones with a bound object, 8/10/11/17/22) are real fitted circuits per
-the manual, but only five of them (8, 10, 11, 17, 22) have any matching VPX object at all
-(`FlSol08`/`FlSol10`/`FlSol11`/`FlSol17`/`FlSol22`), and every one of those five sits at normalized y well
-outside [0,1] -- reading as the table's backbox/insert-panel companion bulb rather than the playfield
-dome the manual documents. None of the six is given a fabricated coordinate; all are left spatially
-unresolved.
+## Spatial summary
+
+The three location drawings (2-40, 2-41, 2-43) were transcribed by readers working only from the drawing crops,
+and `tools/drawing_callouts.py` validates 86 of the 88 table placements it checks (lamps 25 and 26 have no printed
+balloon). The table placements it does not check are the 16/17 holes (validated by the table, the ROM and the
+rules), the flipper windings (projected onto the pivots) and the trough: the drawing labels the trough switches
+55-58 with pointerless balloons one ball position away from the switches they name, so those four and the trough
+and outhole coils projected onto their ball seats stay observed. 22 placements are measured on the drawings and
+stay observed. The spatial report is `reports/spatial/bally/creature-from-the-black-lagoon-1992.md`.
 
 ## Author construction checklist
 
-- Build the three-position trough with the drain at Left Trough, the manual pull-plunger shooter lane,
-  both slingshots, three jet bumpers, the shared KISS/Snackbar subway tunnel exiting at the Lower Right
-  Popper, the standalone F-I-L-M top-right-popper kickback, the motorized up/down Creature Ramp, the
-  P-A-I-D rollover lane, the four Snackbar standup targets, and the Creature Bowl orbit loop.
-- Preserve opto/NC polarity for 15, 34, 37, and 38; 34/37 are true LED/Trans optos, 15/38 are mechanically
-  normally-closed switches corroborated by script/mechanism logic rather than a printed opto marker.
-- Build the Sequential G.I. chase-light mechanism as real emulator-computed hardware, not an ordinary lamp
-  column: GI 0/3 are power buses, solenoids 20/24 are address-select lines, and lamps 91-98 are the eight
-  individually addressable chase bulbs the true hardware exposes (even though no retained VPX table reads
-  them yet).
-- Build the three-part cabinet-mounted hologram mechanism (push motor, lamp, spinning mirror motor) as
-  genuinely non-playfield hardware.
-- Treat Fliptronic switches 115-118 as unconfirmed rather than either fitted or unfitted until better
-  evidence resolves `conflict.upper-flipper-switches-unconfirmed-fitment`.
-- Do not invent a playfield location for switch 18, GI address 3, lamps 91-98, or the six unbound
-  flasher solenoids named above; the retained table's own evidence does not reach that far.
+- Publish switch 15 inverted (1 at rest) and drive 116/118 together with 112/114.
+- Treat 20 and 24 as chase-board select lines and G.I. 0 and 3 as the chase groups' power; light a chase string
+  while its G.I. is on and its lamp address (91-98) is 0.
+- Put the backbox insert flashers on 33-36 and solenoid 11, and the hologram on 21, 27 and 28.
+- Do not invent chase-bulb positions per string until the conflict is resolved.
 
 ## Sources
 
-- `manual.bally.creature-from-the-black-lagoon.1992`: Bally Creature from the Black Lagoon operations
-  manual, SHA-256 `d84d28a807505339f57676e0222adc6cc6fe7bef7371d31f9a9076ec33021d97`.
-- `manual-support.bally.creature-from-the-black-lagoon.1992`: retained human transcription index, SHA-256
-  `5c30e18c830a9f2192d250bdc9ed178a4d7216a47cf637429776e098b5d5ec72`.
-- `vpx-script.cftbl-source`: retained known-working embedded script, SHA-256
-  `e6393a87a33c1e53e3b32c3cff2af19dc14b2b4c8764f71dbb57736cadb98df8`, binding `cftbl_l4`.
-- `vpx-table.cftbl-source`: retained table, SHA-256
-  `0527ebf5d66a6fa45d40a1ce2bdf1f395af7a3d77aed9bd4eb437399ee0bbb34`, bounds
-  `left=0 top=0 right=964 bottom=2162`.
-- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/cftbl.c` and the WPC-Fliptronic/`WPC_CFTBL`
-  handling in `src/wpc/wpc.c`/`src/wpc/wpc.h` at the pinned revision.
+- `manual.bally.creature-from-the-black-lagoon.1992` (SHA-256 `d84d28a807505339f57676e0222adc6cc6fe7bef7371d31f9a9076ec33021d97`).
+- `parts-list.bally.creature-from-the-black-lagoon.1992.ipdb` (SHA-256 `17fe20d30906d64655ebb7d5d6e5ba492c84b5d395e604c7ce2d7af9ef012e14`).
+- `vpx-table.cftbl-vpw-1-0` and `vpx-script.cftbl-vpw-1-0` (script SHA-256 `110d85325e33cbaf465f5a60f3aeeb2069329c55719435e7b76380748ba70ea6`).
+- `pinmame.core.97aa922bf8e4`: `src/wpc/sims/wpc/full/cftbl.c` and `src/wpc/wpc.c`.
+- The runtime runs under `evidence/runtime/wpc-fliptronic/creature-cftbl_l4-*.json` and `creature-cftbl_p3-*.json`.
+- Leads only: UFO Pinball, "Technical Analysis of the CFTBL Chase Board", http://www.ufopinball.com/CFTBL-Chase/tech.htm;
+  Pinside threads https://pinside.com/pinball/forum/topic/creature-from-the-black-lagoon-ramp-chase-lights-issue and
+  https://pinside.com/pinball/forum/topic/cftbl-ramp-chase-lights.

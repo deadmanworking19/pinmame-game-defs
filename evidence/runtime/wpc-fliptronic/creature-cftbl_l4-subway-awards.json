@@ -1,0 +1,166 @@
+{
+  "driver_ids": [
+    "cftbl_l4"
+  ],
+  "extractor": {
+    "id": "tools/creature_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.creature-from-the-black-lagoon.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game cftbl_l4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/cftbl-subway-awards.json --dmd-dir <external-dmd-dir> --output <external-run.json>. A game is started from four coins and Start with the three trough switches closed; the host moves the served ball to the shooter lane and plunges it. The lamp transitions after each subway closure show the feature the ROM awards, which ties each switch number to its shot: the K-I-S-S (Taillight Park) hole and the Snack Bar hole.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "cftbl_l4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            20,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "HIT TARGETS / TO OPEN / SNACKBAR (cook with a spatula, cap lettered SNACK BAR)",
+          "label": "center subway 17",
+          "nonzero_pixels": 1567,
+          "pixel_sha256": "f8af4a213da52cb97915afa4e86cc1e65d1be2d4c7ed3e401529a2743aa4a93c"
+        },
+        {
+          "active_solenoid_addresses": [
+            20,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "(animation, no text: a couple kissing in a parked car)",
+          "label": "left subway 16 again",
+          "nonzero_pixels": 1902,
+          "pixel_sha256": "e924c0e27058e2cd2bc259e22495f0296a0df3325058eacfe38ff41b205fb7f6"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "In a game, closing the left subway switch 16 flashes the K of K-I-S-S (lamp 21); a second closure advances to I (lamp 22) and shows the kissing-couple animation",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "In a game, closing the center subway switch 17 lights the first Snack Bar target lamp (53, Cola) and shows HIT TARGETS TO OPEN SNACKBAR",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "A ball delivered to the lower right popper switch 37 after either subway is kicked out by solenoid 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        3,
+        4,
+        8,
+        20,
+        24,
+        31
+      ],
+      "switch_to_lamp": {
+        "16": 21,
+        "17": 53
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 35,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 56
+          },
+          {
+            "state": 1,
+            "switch": 57
+          },
+          {
+            "state": 1,
+            "switch": 58
+          },
+          {
+            "state": 1,
+            "switch": 15
+          }
+        ],
+        "name": "cftbl-subway-awards",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/creature/harness/cftbl-subway-awards/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/cftbl-subway-awards.json",
+        "scenario_sha256": "e5f6a5c13b54cb0785c0f4f5d6ff05193293dae2b86ad2567dfb63f26597ed9f",
+        "self_test_pulses": 0,
+        "sha256": "906c4015b3cf534f32ab6531d892b8f209dea58722476d68b5dd5eb713bbea51",
+        "snapshot_count": 36,
+        "watch_switches": [
+          1,
+          5,
+          13,
+          15,
+          16,
+          17,
+          22,
+          37,
+          56,
+          57,
+          58,
+          66
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a1eb5cb3d1f8a7b48592f9ed8b789c45d201260b37bf6bf7ac6db88d6cec1b09"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cftbl-subway-awards/manifest.json SHA-256 451d22f571d89a78bf988117f8434afd54e741ab663a227dd5a24489a056c1c9.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/creature/harness/cftbl-subway-awards",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "906c4015b3cf534f32ab6531d892b8f209dea58722476d68b5dd5eb713bbea51"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

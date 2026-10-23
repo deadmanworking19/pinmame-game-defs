@@ -1,0 +1,194 @@
+{
+  "driver_ids": [
+    "cftbl_l4"
+  ],
+  "extractor": {
+    "id": "tools/creature_runtime_evidence.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.creature-from-the-black-lagoon.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game cftbl_l4 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/wpc-fliptronic/cftbl-flipper-coil-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Each Up press selects the next flipper winding; in repeat mode the ROM pulses it. The test has four items, the two lower flippers' power and holding windings, and wraps; it never drives the upper Fliptronic outputs 33-36.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "cftbl_l4",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "THE CREATURE / 20018 REV. L-4",
+          "label": "Enter 1 (game identification)",
+          "nonzero_pixels": 327,
+          "pixel_sha256": "399545fab4846fa242ab2c2ca3f2e999ceb1dd1cd080613fd501b78db3b65f5a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. POWER / T.12 01 REPEAT / BLU-VIO BLU-YEL",
+          "label": "T.12 step 0, frame 1",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "cd259800221cbd1ed3cad2e888ce5201282a7224ab0872a29f7841befbeb9c0b"
+        },
+        {
+          "active_solenoid_addresses": [
+            46
+          ],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. HOLD / T.12 02 REPEAT / ORN-GRN BLU-YEL",
+          "label": "T.12 step 1",
+          "nonzero_pixels": 494,
+          "pixel_sha256": "0438be0235bfc8c9c9fd1387b8e435f27d68b7471a85f76e8bec468482c65869"
+        },
+        {
+          "active_solenoid_addresses": [
+            47,
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. POWER / T.12 03 REPEAT / BLU-GRY GRY-YEL",
+          "label": "T.12 step 2",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "cebdabf3c4840b8053a655aee2a546b6e8bca6411ab6a2c9a6c0ff076d2c7d9f"
+        },
+        {
+          "active_solenoid_addresses": [
+            48
+          ],
+          "display_index": 0,
+          "interpreted_text": "L. FLIP. HOLD / T.12 04 REPEAT / ORN-BLU GRY-YEL",
+          "label": "T.12 step 3",
+          "nonzero_pixels": 479,
+          "pixel_sha256": "2a12d503b960c43603b1bb0f2e9cb81a28d4d7656982e285328cf9ac5473f826"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "R. FLIP. POWER / T.12 01 REPEAT / BLU-VIO BLU-YEL",
+          "label": "T.12 step 4",
+          "nonzero_pixels": 495,
+          "pixel_sha256": "cd259800221cbd1ed3cad2e888ce5201282a7224ab0872a29f7841befbeb9c0b"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 01 (R. FLIP. POWER, BLU-VIO BLU-YEL) publishes 45/46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 02 (R. FLIP. HOLD, ORN-GRN BLU-YEL) publishes 46",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 03 (L. FLIP. POWER, BLU-GRY GRY-YEL) publishes 47/48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "T.12 FLIPPER COIL TEST item 04 (L. FLIP. HOLD, ORN-BLU GRY-YEL) publishes 48",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            48
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        20,
+        24,
+        31,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 54,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "cftbl-flipper-coil-test",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/creature/harness/cftbl-flipper-coil-test/run.json",
+        "scenario_path": "tools/harness-scenarios/wpc-fliptronic/cftbl-flipper-coil-test.json",
+        "scenario_sha256": "ad1e5a2837609eb9efe089e4366a581a26b854bfcc9fae4e2e988fa6578cc58d",
+        "self_test_pulses": 0,
+        "sha256": "c7ef28f1c6e7613cbdacd2d5ce51d5d7369aaa1f2d434a850b8ec8f54eaa4aa8",
+        "snapshot_count": 55,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22
+        ]
+      }
+    ],
+    "rom_archive_sha256": "a1eb5cb3d1f8a7b48592f9ed8b789c45d201260b37bf6bf7ac6db88d6cec1b09"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted pulses; every diagnostic snapshot's interpreted_text is the curator's visual reading of its retained DMD frame, identified by its pixel SHA-256. The exact external directory manifest (built by tools/build_external_evidence_manifest.py) lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes. Exact external directory manifest cftbl-flipper-coil-test/manifest.json SHA-256 8f18f5fd5d379918acbd47830fe9b75b04475c2699a208c3c26c18f0286c4f1d.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/creature/harness/cftbl-flipper-coil-test",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "c7ef28f1c6e7613cbdacd2d5ce51d5d7369aaa1f2d434a850b8ec8f54eaa4aa8"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

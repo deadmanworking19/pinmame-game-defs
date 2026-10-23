@@ -1,11 +1,4 @@
 {
-  "blockers": [
-    "Switch 18 (Center Shot / Move Your Car feature) has a script handler (Sub sw18_Hit) but no matching table object anywhere in the retained extraction, so its spatial placement is unresolved.",
-    "Fliptronic switches 115-118 (upper flipper block) have unconfirmed fitment (conflict.upper-flipper-switches-unconfirmed-fitment) and therefore carry neither a location nor a not_applicable record.",
-    "GI address 3 ('Sequential G.I. #2') is a real printed GI string with no bound emitter collection in the retained table, so it has no placement.",
-    "Lamp addresses 91-98 (the true Sequential G.I. chase-light bulbs, computed by PinMAME's WPC_CFTBL hardware model) are not read by the retained script at all, so none has a placement.",
-    "Solenoids 2, 9, 16, 18, 19, and 25 are real fitted flashers per the manual with no matching playfield-facing VPX object: the retained table's only bound object for the related addresses 8, 10, 11, 17, and 22 (FlSol08/10/11/17/22) sits at normalized y well outside [0,1], reading as a backbox/insert-panel companion bulb rather than the playfield dome the manual documents, so those five addresses are left unresolved rather than placed at an out-of-bounds coordinate."
-  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -17,641 +10,261 @@
     "x": "x/964; 0=left, 1=right",
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
-  "excluded_object_classes": [],
+  "drawing_callout_check": {
+    "checked": 88,
+    "limit": 0.07,
+    "not_validated": {
+      "lamp.matrix-25.emitter": {
+        "label": "25",
+        "page": "2-40",
+        "reason": "no callout of this label on the drawing"
+      },
+      "lamp.matrix-26.emitter": {
+        "label": "26",
+        "page": "2-40",
+        "reason": "no callout of this label on the drawing"
+      }
+    },
+    "pages": {
+      "2-40": {
+        "callout_fit_pairs": 44,
+        "callout_loo_max": 0.0321,
+        "callout_pairs": 44,
+        "control_loo_max": 0.0263,
+        "control_rms": 0.0106,
+        "controls": 7,
+        "image": {
+          "path": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/lamp-drawing.webp",
+          "pixels": [
+            764,
+            1751
+          ],
+          "root": "repository",
+          "sha256": "4a93f0b88f50c81dd583560544ac90464902bf593668be8e5dd5083e77518cbb"
+        },
+        "locator": "Creature_From_The_Black_Lagoon_OPS.pdf PDF 100, printed 2-40: Lamp Locations drawing (committed excerpt crop lamp-drawing.webp)"
+      },
+      "2-41": {
+        "callout_fit_pairs": 23,
+        "callout_loo_max": 0.051,
+        "callout_pairs": 23,
+        "control_loo_max": 0.0202,
+        "control_rms": 0.0076,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/switch-drawing.webp",
+          "pixels": [
+            781,
+            1704
+          ],
+          "root": "repository",
+          "sha256": "535d9110a3ef1625d2b7af9ecf31909d967dc93fe0978056f535be5b9754e6b3"
+        },
+        "locator": "Creature_From_The_Black_Lagoon_OPS.pdf PDF 101, printed 2-41: Switch Locations drawing (committed excerpt crop switch-drawing.webp)"
+      },
+      "2-43": {
+        "callout_fit_pairs": 19,
+        "callout_loo_max": 0.0379,
+        "callout_pairs": 19,
+        "control_loo_max": 0.0256,
+        "control_rms": 0.0094,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/solenoid-flasher-drawing.webp",
+          "pixels": [
+            747,
+            1657
+          ],
+          "root": "repository",
+          "sha256": "51668849efe7cef81316f6833cd7fea500b33b57412bfb14e8159be1d1bb8498"
+        },
+        "locator": "Creature_From_The_Black_Lagoon_OPS.pdf PDF 103, printed 2-43: Solenoid/Flasher Locations drawing (committed excerpt crop solenoid-flasher-drawing.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-23",
+      "transcription": "independent readers working only from gridded tiles of the committed drawing crops, without table data",
+      "verification": "the curator overlaid every page with the reads, the controls and the table placements mapped through the page's control fit; kept the readers' jet-bumper, flipper-pivot and frame-corner controls after checking them on the overlays, dropped the lamp page's misread lower jet bumper and read the switch page's top-right frame corner on a widened crop; marked the cabinet reads 13, 18 and 88 as outside the playfield; measured the placements no table object supplies at the socket centres and leader ends checked on zoomed crops; and recorded as excluded checks the table placements whose callout a documented finding puts on another part"
+    },
+    "retained_artifacts": {
+      "directory": "creature/callout-check",
+      "manifest_sha256": "9cf94e90b436c1a20c590ad79921e66ef601e08b758c60b3d164778624476174"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/bally/creature-from-the-black-lagoon-1992-callouts.json",
+    "seed_sha256": "b13c796bf2aa815e1b630bcc5b493066229b7c7de9898681689d1becf91dde25",
+    "validated": 86
+  },
   "extraction": {
     "fail_closed": true,
-    "file_count": 856,
-    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
-    "manifest_sha256": "bd9d362125af6225a95d10a2192230dac0d285b52da5e50e438e74536ff9b11c",
-    "manifest_uri": "external:pinmame-vpx-sources/bally/creature-from-the-black-lagoon-1992/extracted-vpxtool.manifest.json",
-    "source_ref": "vpx-extraction.cftbl-source",
-    "total_bytes": 125041427,
-    "vpxtool_version": "vpxtool"
+    "file_count": 3345,
+    "manifest_sha256": "bd06526a5fd2c0327964545403eb276fc7be4e982c2b7f1f1e5b065be5752cf9",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/creature-from-the-black-lagoon-1992/vpw-1-0/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.cftbl-vpw-1-0",
+    "total_bytes": 898771914
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "bally.creature-from-the-black-lagoon.1992",
-  "not_applicable_inputs": {
-    "cabinet_or_service": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      13,
-      14,
-      21,
-      22,
-      112,
-      114
+  "not_applicable_device_count": 85,
+  "placement_status": {
+    "candidate": [
+      "gi.string-1",
+      "gi.string-2",
+      "gi.string-4"
     ],
-    "dip_switch": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8
+    "observed": [
+      "device.hologram-push-motor",
+      "device.outhole",
+      "device.trough-ball-release",
+      "device.up-down-ramp-down",
+      "device.up-down-ramp-up",
+      "lamp.matrix-18",
+      "lamp.matrix-25",
+      "lamp.matrix-26",
+      "lamp.matrix-51",
+      "lamp.matrix-55",
+      "lamp.matrix-56",
+      "lamp.matrix-57",
+      "lamp.matrix-58",
+      "lamp.matrix-63",
+      "lamp.matrix-64",
+      "lamp.matrix-65",
+      "lamp.matrix-66",
+      "lamp.matrix-67",
+      "lamp.matrix-68",
+      "switch.matrix-18",
+      "switch.matrix-35",
+      "switch.matrix-36",
+      "switch.matrix-38",
+      "switch.matrix-55",
+      "switch.matrix-56",
+      "switch.matrix-57",
+      "switch.matrix-58",
+      "switch.matrix-61",
+      "switch.matrix-62",
+      "switch.matrix-64"
     ],
-    "internal_nonvisual": [
-      111,
-      113
-    ],
-    "unused": [
-      11,
-      12,
-      23,
-      24,
-      31,
-      32,
-      67,
-      68,
-      71,
-      72,
-      73,
-      74,
-      75,
-      76,
-      77,
-      78,
-      81,
-      82,
-      83,
-      84,
-      85,
-      86,
-      87,
-      88
+    "validated": [
+      "device.back-flashers",
+      "device.bottom-jet",
+      "device.bottom-left-flasher",
+      "device.bottom-right-flasher",
+      "device.bowl-flasher",
+      "device.center-hole-flasher",
+      "device.left-jet",
+      "device.left-ramp-flasher",
+      "device.left-slingshot",
+      "device.left-subway-enter-flasher",
+      "device.lower-left-flipper-hold",
+      "device.lower-left-flipper-power",
+      "device.lower-right-flipper-hold",
+      "device.lower-right-flipper-power",
+      "device.lower-right-popper",
+      "device.right-jet",
+      "device.right-popper-slide-flasher",
+      "device.right-ramp-flasher",
+      "device.right-slingshot",
+      "device.start-movie-flashers",
+      "device.top-right-popper",
+      "lamp.matrix-11",
+      "lamp.matrix-12",
+      "lamp.matrix-13",
+      "lamp.matrix-14",
+      "lamp.matrix-15",
+      "lamp.matrix-16",
+      "lamp.matrix-17",
+      "lamp.matrix-21",
+      "lamp.matrix-22",
+      "lamp.matrix-23",
+      "lamp.matrix-24",
+      "lamp.matrix-27",
+      "lamp.matrix-28",
+      "lamp.matrix-31",
+      "lamp.matrix-32",
+      "lamp.matrix-33",
+      "lamp.matrix-34",
+      "lamp.matrix-35",
+      "lamp.matrix-36",
+      "lamp.matrix-37",
+      "lamp.matrix-38",
+      "lamp.matrix-41",
+      "lamp.matrix-42",
+      "lamp.matrix-43",
+      "lamp.matrix-44",
+      "lamp.matrix-45",
+      "lamp.matrix-46",
+      "lamp.matrix-47",
+      "lamp.matrix-48",
+      "lamp.matrix-52",
+      "lamp.matrix-53",
+      "lamp.matrix-54",
+      "lamp.matrix-61",
+      "lamp.matrix-62",
+      "lamp.matrix-81",
+      "lamp.matrix-82",
+      "lamp.matrix-83",
+      "lamp.matrix-84",
+      "lamp.matrix-85",
+      "lamp.matrix-86",
+      "lamp.matrix-87",
+      "switch.matrix-15",
+      "switch.matrix-16",
+      "switch.matrix-17",
+      "switch.matrix-25",
+      "switch.matrix-26",
+      "switch.matrix-27",
+      "switch.matrix-28",
+      "switch.matrix-33",
+      "switch.matrix-34",
+      "switch.matrix-37",
+      "switch.matrix-41",
+      "switch.matrix-42",
+      "switch.matrix-43",
+      "switch.matrix-44",
+      "switch.matrix-45",
+      "switch.matrix-46",
+      "switch.matrix-47",
+      "switch.matrix-48",
+      "switch.matrix-51",
+      "switch.matrix-52",
+      "switch.matrix-53",
+      "switch.matrix-54",
+      "switch.matrix-63",
+      "switch.matrix-65",
+      "switch.matrix-66"
     ]
   },
-  "not_applicable_outputs": {
-    "cabinet_or_service": [
-      {
-        "address": 71,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 72,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 73,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 74,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 75,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 76,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 77,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 78,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 88,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 7,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 27,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 28,
-        "group": "pinmame.output.solenoid"
-      }
-    ],
-    "internal_nonvisual": [
-      {
-        "address": 20,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 24,
-        "group": "pinmame.output.solenoid"
-      }
-    ]
+  "projection_classes": {
+    "gi": "The table's G.I. light collections for strings 1, 2 and 4, as candidates only: the lights are invisible light-map sources, not modelled sockets, and no drawing or bulb count locates G.I. bulbs.",
+    "lamp": "The Light each lamp's TimerInterval binds, observed and validated where the lamp drawing's callout agrees; 28, 37 and 44 place both bulbs. The sockets of the A-14305 and C-12709 boards (55-58, 63-68) and lamp 51, which the table models only as placeholders, are measured on the lamp drawing and stay observed; the Admit One lamp 18 on the back panel takes the drawing's x at the playfield's rear edge. The backbox letters 71-78 and the Start button lamp 88 are controlled not-applicable records.",
+    "solenoid": "The script-driven flasher Light, the popper kicker, the slingshot wall or the jet bumper for each solenoid, observed and validated where the solenoid drawing's own symbol agrees. The trough and outhole coils project onto the ball seats they kick and stay observed with them, and the flipper windings project onto the flipper pivots, without a check; the hologram push motor and the lift ramp coils are measured on the drawing.",
+    "switch": "The VPX collision object the retained script binds to each matrix switch (trigger, kicker, target, bumper or slingshot wall), observed and validated where the switch drawing's own callout agrees within the limit. Switches 16 and 17, whose callouts the drawing transposes, keep the table object without a check. The trough switches 55-58, which the drawing labels with pointerless balloons one ball position away, keep the table's ball seats without a check and stay observed. The ramp switches 18, 35, 36, 61, 62 and 64, whose table triggers sit 0.08 or more from the drawn switches or are swapped (62/64), and the lift ramp switch 38, which has no table object, are measured on the switch drawing and stay observed."
   },
-  "placement_count": 161,
-  "projections": [
-    {
-      "address": 33,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the Bumper3 jet-bumper object (table object center): the retained script's Bumper3_Hit handler pulses switch 33 directly from the bumper ring's own collision event, matching Bottom Jet."
-    },
-    {
-      "address": 38,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the moveRamp Primitive (table object center), the mechanism's own moving ramp section: the retained script sets Controller.Switch(38) directly from the ramp motor's up/down state inside the SolRampUp/SolRampDown handlers, not from a Hit event on a fixed object, and pinned cftbl_handleMech does the same via core_setSw(swRampUpDown, locals.creaturerampPos)."
-    },
-    {
-      "address": 45,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the Bumper1 jet-bumper object (table object center): Bumper1_Hit pulses switch 45 (Left Jet) directly from the bumper ring's own collision event."
-    },
-    {
-      "address": 46,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the Bumper2 jet-bumper object (table object center): Bumper2_Hit pulses switch 46 (Right Jet) directly from the bumper ring's own collision event."
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the sw34 Kicker object: solenoid 1 (RightUpperKicker) fires the same Top Right Popper kicker that switch 34 (Right Popper) senses -- the same physical hole."
-    },
-    {
-      "address": 3,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the sw37 Kicker object: solenoid 3 (RightLowerKicker) fires the same Lower Right Popper kicker that switch 37 senses -- the same physical hole."
-    },
-    {
-      "address": 4,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the sw56 Kicker object: solenoid 4 (ReleaseBall) fires the trough-release kicker at the Right Trough position (switch 56)."
-    },
-    {
-      "address": 12,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the sw55 Kicker object: solenoid 12 (SolOuthole) fires the Outhole kicker at the same position switch 55 senses."
-    },
-    {
-      "address": 13,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the Bumper1 jet-bumper object: solenoid 13 (Left Jet) is the coil inside the same bumper ring switch 45 senses."
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the Bumper2 jet-bumper object: solenoid 14 (Right Jet) is the coil inside the same bumper ring switch 46 senses."
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the Bumper3 jet-bumper object: solenoid 15 (Bottom Jet) is the coil inside the same bumper ring switch 33 senses."
-    },
-    {
-      "address": 21,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the Flasher 'creature' object (the hologram's own on-table position); see mechanism.hologram."
-    }
-  ],
-  "resolved_input_addresses": [
-    15,
-    16,
-    17,
-    25,
-    26,
-    27,
-    28,
-    33,
-    34,
-    35,
-    36,
-    37,
-    38,
-    45,
-    46,
-    51,
-    52,
-    53,
-    54,
-    55,
-    56,
-    57,
-    58,
-    61,
-    62,
-    63,
-    64,
-    65,
-    66
-  ],
-  "resolved_output_bindings": [
-    {
-      "address": 0,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 2,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 4,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 11,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 12,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 13,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 16,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 17,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 18,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 21,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 22,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 23,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 24,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 25,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 26,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 27,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 28,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 31,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 32,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 33,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 34,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 35,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 36,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 37,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 38,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 41,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 42,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 43,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 45,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 46,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 47,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 48,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 51,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 52,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 53,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 54,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 55,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 56,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 57,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 58,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 61,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 62,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 63,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 64,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 65,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 66,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 67,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 68,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 81,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 82,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 83,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 84,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 85,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 86,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 87,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 3,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 4,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 12,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 13,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 21,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
+  "promotion_decision": "partial: the factory drawings validate most table placements, but the chase-light strings and G.I. 0 and 3 cannot be placed until their wiring is settled, the G.I. strings are only candidates, and the trough and the drawing measurements stay observed.",
   "source_hashes": {
-    "embedded_script_sha256": "e6393a87a33c1e53e3b32c3cff2af19dc14b2b4c8764f71dbb57736cadb98df8",
+    "callout_seed_sha256": "b13c796bf2aa815e1b630bcc5b493066229b7c7de9898681689d1becf91dde25",
+    "embedded_script_sha256": "110d85325e33cbaf465f5a60f3aeeb2069329c55719435e7b76380748ba70ea6",
     "manual_sha256": "d84d28a807505339f57676e0222adc6cc6fe7bef7371d31f9a9076ec33021d97",
-    "table_sha256": "0527ebf5d66a6fa45d40a1ce2bdf1f395af7a3d77aed9bd4eb437399ee0bbb34"
+    "parts_list_sha256": "17fe20d30906d64655ebb7d5d6e5ba492c84b5d395e604c7ce2d7af9ef012e14",
+    "table_sha256": "960ebdd19b1a0f6d88822add16bbaf8a05d11bd5f1b8b26dc387a6db21705def"
   },
-  "status": "partial",
-  "unresolved": [
-    "switch address 18",
-    "switch address 115",
-    "switch address 116",
-    "switch address 117",
-    "switch address 118",
-    "gi address 3",
-    "lamp addresses 91-98",
-    "solenoid address 2",
-    "solenoid address 9",
-    "solenoid address 16",
-    "solenoid address 18",
-    "solenoid address 19",
-    "solenoid address 25"
-  ],
-  "unresolved_inputs": [
-    18,
-    41,
-    42,
-    43,
-    44,
-    47,
-    48,
-    115,
-    116,
-    117,
-    118
-  ],
-  "unresolved_outputs": [
-    {
-      "address": 3,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 91,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 92,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 93,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 94,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 95,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 96,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 97,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 98,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 2,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 5,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 6,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 8,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 9,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 10,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 11,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 16,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 17,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 18,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 19,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 22,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 23,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 25,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 26,
-      "group": "pinmame.output.solenoid"
-    }
+  "unresolved_geometry": [
+    "The 32 #86 chase bulbs on the swirl ramp's three boards and the bowl's board: which bulbs belong to which of the eight strings (lamps 91-98) and which ramp boards G.I. 0 and G.I. 3 power are unresolved (conflict.chase-light-board-group-assignment), so lamps 91-98 and G.I. 0 and 3 have no placement.",
+    "The general-illumination bulbs of strings 1, 2 and 4 rest on the retained table's light-map sources; no modelled socket, drawing or count locates them, so they are only candidates.",
+    "The trough switches 55-58 and the trough and outhole coils rest on the table's ball seats, which the switch drawing does not mark, so they stay observed.",
+    "Drawing measurements stay observed: no retained table object corroborates their positions."
   ],
   "version": 1,
-  "visual_review_cache": {
-    "root": "external:pinmame-manuals/rendered/bally.creature-from-the-black-lagoon.1992/",
-    "transcription": {
-      "path": "external:pinmame-review-artifacts/creature/manual-transcription.md",
-      "sha256": "5c30e18c830a9f2192d250bdc9ed178a4d7216a47cf637429776e098b5d5ec72"
-    }
-  }
+  "without_placements": [
+    "gi.string-0",
+    "gi.string-3",
+    "lamp.chase-91",
+    "lamp.chase-92",
+    "lamp.chase-93",
+    "lamp.chase-94",
+    "lamp.chase-95",
+    "lamp.chase-96",
+    "lamp.chase-97",
+    "lamp.chase-98"
+  ]
 }

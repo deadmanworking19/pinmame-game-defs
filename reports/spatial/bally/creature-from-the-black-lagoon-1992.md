@@ -1,54 +1,38 @@
-# Creature from the Black Lagoon (Bally, 1992) spatial review
+# Creature from the Black Lagoon (Bally, 1992) spatial blockers
 
-Status: partial. This audit itself finds several genuinely unresolved gaps -- this is the smallest retained VPX extraction curated in this project to date (856 files), and its fidelity does not stretch to cover every documented device -- so the physical machine record at `machines/partial/bally/creature-from-the-black-lagoon-1992.json` stays `partial` for reasons that include, but are not limited to, this audit's own findings.
+Retained VPW v1.0 VPX SHA-256 `960ebdd19b1a0f6d88822add16bbaf8a05d11bd5f1b8b26dc387a6db21705def`; script `110d85325e33cbaf465f5a60f3aeeb2069329c55719435e7b76380748ba70ea6`; 3345-file extraction manifest `bd06526a5fd2c0327964545403eb276fc7be4e982c2b7f1f1e5b065be5752cf9`; manual `d84d28a807505339f57676e0222adc6cc6fe7bef7371d31f9a9076ec33021d97`.
 
-The matching source is the retained known-working `Creature From The Black Lagoon (Bally 1992).vpx` at SHA-256 `0527ebf5d66a6fa45d40a1ce2bdf1f395af7a3d77aed9bd4eb437399ee0bbb34`. The retained `vpxtool` extraction produced the embedded script at SHA-256 `e6393a87a33c1e53e3b32c3cff2af19dc14b2b4c8764f71dbb57736cadb98df8`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=964 bottom=2162`, and every canonical coordinate is x/964 and y/2162 rounded to at most six fractional places.
+Bounds: `left=0 top=0 right=964 bottom=2162`. Every canonical coordinate is x/964 and y/2162 rounded to at most six places (factory-drawing measurements to three).
 
-## Evidence decisions
+## Placement status
 
-- The embedded VPW-style script is the runtime address and causality authority; the Bally operations manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology; the retained table supplies geometry.
-- The retained manual PDF carries a real (Adobe Paper Capture) OCR text layer, but it garbles every multi-column table used here. Every printed table used in this definition was read from 300 dpi renders and transcribed into `evidence/excerpts/bally.creature-from-the-black-lagoon.1992/`, indexed by `external:pinmame-review-artifacts/creature/manual-transcription.md`.
-- Several switches have no dedicated playfield trigger object because the retained script sets their public state directly from another mechanism's own event (a jet-bumper Hit, the ramp motor's own up/down command) rather than from a Hit/Trigger event on a fixed object. Those addresses are documented projections onto the real table object that carries the underlying mechanism state.
-- Switch 18 has a script handler with no matching object anywhere in the extraction (not even under a different type), so it is left genuinely unresolved rather than projected onto anything.
-- Fliptronic switches 115-118 have unconfirmed fitment (two pages of the same manual disagree) and are recorded with neither a location nor a not_applicable spatial record, since either would assert something not yet established.
-- Solenoids 20 and 24 are the Sequential G.I. board's own 2-bit decoder address-select lines, not coils or bulbs, and take a controlled `internal_nonvisual` record. Solenoids 27 and 28 are printed cabinet-bottom hardware and take `cabinet_or_service`. Solenoid 7 (Knocker) is the standard WPC cabinet-mounted knocker and also takes `cabinet_or_service`.
-- Lamp addresses 91-98 are a real, PinMAME-computed public address group (the true Sequential G.I. chase-light bulbs, per pinned wpc.c's WPC_CFTBL handling) that the retained table's script never reads, so none has a coordinate.
-- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both PinMAME core and manual provenance.
+- `validated`: 87 devices
+- `observed`: 30 devices
+- `candidate`: 3 devices
+- controlled `not_applicable` records: 85
+- used devices with no placement record: 10 (`gi.string-0`, `gi.string-3`, `lamp.chase-91`, `lamp.chase-92`, `lamp.chase-93`, `lamp.chase-94`, `lamp.chase-95`, `lamp.chase-96`, `lamp.chase-97`, `lamp.chase-98`)
 
-## Explicit projections
+## Projection classes
 
-- Switch 33: Projected onto the Bumper3 jet-bumper object (table object center): the retained script's Bumper3_Hit handler pulses switch 33 directly from the bumper ring's own collision event, matching Bottom Jet.
-- Switch 38: Projected onto the moveRamp Primitive (table object center), the mechanism's own moving ramp section: the retained script sets Controller.Switch(38) directly from the ramp motor's up/down state inside the SolRampUp/SolRampDown handlers, not from a Hit event on a fixed object, and pinned cftbl_handleMech does the same via core_setSw(swRampUpDown, locals.creaturerampPos).
-- Switch 45: Projected onto the Bumper1 jet-bumper object (table object center): Bumper1_Hit pulses switch 45 (Left Jet) directly from the bumper ring's own collision event.
-- Switch 46: Projected onto the Bumper2 jet-bumper object (table object center): Bumper2_Hit pulses switch 46 (Right Jet) directly from the bumper ring's own collision event.
-- Solenoid 1: Projected onto the sw34 Kicker object: solenoid 1 (RightUpperKicker) fires the same Top Right Popper kicker that switch 34 (Right Popper) senses -- the same physical hole.
-- Solenoid 3: Projected onto the sw37 Kicker object: solenoid 3 (RightLowerKicker) fires the same Lower Right Popper kicker that switch 37 senses -- the same physical hole.
-- Solenoid 4: Projected onto the sw56 Kicker object: solenoid 4 (ReleaseBall) fires the trough-release kicker at the Right Trough position (switch 56).
-- Solenoid 12: Projected onto the sw55 Kicker object: solenoid 12 (SolOuthole) fires the Outhole kicker at the same position switch 55 senses.
-- Solenoid 13: Projected onto the Bumper1 jet-bumper object: solenoid 13 (Left Jet) is the coil inside the same bumper ring switch 45 senses.
-- Solenoid 14: Projected onto the Bumper2 jet-bumper object: solenoid 14 (Right Jet) is the coil inside the same bumper ring switch 46 senses.
-- Solenoid 15: Projected onto the Bumper3 jet-bumper object: solenoid 15 (Bottom Jet) is the coil inside the same bumper ring switch 33 senses.
-- Solenoid 21: Projected onto the Flasher 'creature' object (the hologram's own on-table position); see mechanism.hologram.
+- **switch:** The VPX collision object the retained script binds to each matrix switch (trigger, kicker, target, bumper or slingshot wall), observed and validated where the switch drawing's own callout agrees within the limit. Switches 16 and 17, whose callouts the drawing transposes, keep the table object without a check. The trough switches 55-58, which the drawing labels with pointerless balloons one ball position away, keep the table's ball seats without a check and stay observed. The ramp switches 18, 35, 36, 61, 62 and 64, whose table triggers sit 0.08 or more from the drawn switches or are swapped (62/64), and the lift ramp switch 38, which has no table object, are measured on the switch drawing and stay observed.
+- **lamp:** The Light each lamp's TimerInterval binds, observed and validated where the lamp drawing's callout agrees; 28, 37 and 44 place both bulbs. The sockets of the A-14305 and C-12709 boards (55-58, 63-68) and lamp 51, which the table models only as placeholders, are measured on the lamp drawing and stay observed; the Admit One lamp 18 on the back panel takes the drawing's x at the playfield's rear edge. The backbox letters 71-78 and the Start button lamp 88 are controlled not-applicable records.
+- **solenoid:** The script-driven flasher Light, the popper kicker, the slingshot wall or the jet bumper for each solenoid, observed and validated where the solenoid drawing's own symbol agrees. The trough and outhole coils project onto the ball seats they kick and stay observed with them, and the flipper windings project onto the flipper pivots, without a check; the hologram push motor and the lift ramp coils are measured on the drawing.
+- **gi:** The table's G.I. light collections for strings 1, 2 and 4, as candidates only: the lights are invisible light-map sources, not modelled sockets, and no drawing or bulb count locates G.I. bulbs.
 
-## Counts
+## Drawing callout check
 
-- Placements: 161
-- Located input addresses: 29
-- Located output bindings: 67
-- Unresolved input addresses: 11
-- Unresolved output bindings: 24
-- Inputs with a controlled `cabinet_or_service` record: 14
-- Inputs with a controlled `dip_switch` record: 8
-- Inputs with a controlled `internal_nonvisual` record: 2
-- Inputs with a controlled `unused` record: 24
-- Outputs with a controlled `cabinet_or_service` record: 12
-- Outputs with a controlled `internal_nonvisual` record: 2
+A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it. It validates 86 of the 88 table placements it checks ([seed](../../../tools/seeds/bally/creature-from-the-black-lagoon-1992-callouts.json)); the rest keep their observed status:
+
+- `lamp.matrix-25.emitter`: callout 25 on 2-40, no callout of this label on the drawing.
+- `lamp.matrix-26.emitter`: callout 26 on 2-40, no callout of this label on the drawing.
+
+## Unresolved physical geometry
+
+- The 32 #86 chase bulbs on the swirl ramp's three boards and the bowl's board: which bulbs belong to which of the eight strings (lamps 91-98) and which ramp boards G.I. 0 and G.I. 3 power are unresolved (conflict.chase-light-board-group-assignment), so lamps 91-98 and G.I. 0 and 3 have no placement.
+- The general-illumination bulbs of strings 1, 2 and 4 rest on the retained table's light-map sources; no modelled socket, drawing or count locates them, so they are only candidates.
+- The trough switches 55-58 and the trough and outhole coils rest on the table's ball seats, which the switch drawing does not mark, so they stay observed.
+- Drawing measurements stay observed: no retained table object corroborates their positions.
 
 ## Promotion decision
 
-This record cannot be promoted to `author_ready`. Beyond the unresolved spatial gaps this audit itself reports (switch 18, switches 115-118, GI address 3, lamp addresses 91-98, and five unbound flasher solenoids), the record carries a non-empty `conflicts` array (`conflict.upper-flipper-switches-unconfirmed-fitment`) and `coverage.dimensions.physical_wiring = "conflicted"`. The definition stays `partial` with `coverage.missing = ["output_enumeration", "spatial_placement", "unresolved_conflicts"]`: the current solenoid inventory stops at the printed 1-28 table and does not yet enumerate the full WPC state/Fliptronic public range. A clearer photograph or parts listing of an unrestored machine's Fliptronic II board settles the upper-flipper question and a LibPinMAME gameplay-harness trace against a legal cftbl ROM (or a richer retained VPX recreation) resolves the remaining spatial gaps.
-
-## Retained evidence
-
-- Extraction manifest `external:pinmame-vpx-sources/bally/creature-from-the-black-lagoon-1992/extracted-vpxtool.manifest.json`, 856 files.
-- Human transcription index of every printed table read from the rendered manual pages at `external:pinmame-review-artifacts/creature/manual-transcription.md`, plus the underlying VPX geometry dump at `external:pinmame-review-artifacts/creature/vpx-geometry.txt`.
+partial: the factory drawings validate most table placements, but the chase-light strings and G.I. 0 and 3 cannot be placed until their wiring is settled, the G.I. strings are only candidates, and the trough and the drawing measurements stay observed.
