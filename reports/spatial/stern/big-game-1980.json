@@ -1,0 +1,910 @@
+{
+  "blockers": [
+    "Public 20 (continuous driver Q18) is driven by the ROM in attract mode with no documented load, so its availability stays unknown and output semantics stays missing; see the knowledge note.",
+    "Every lamp placement is `observed`: the manual prints no lamp-location drawing, and there is one retained factory-layout table, so nothing independent can check the lamp positions; the IPDB photographs confirm order and side by eye only.",
+    "General illumination has no placement: no retained source gives its bulb quantity or positions, and the table's GI light collection is render membership, not a socket count.",
+    "Switch and coil placements the factory drawings do not confirm under the callout check stay `observed`; they are listed under `callout_check.not_validated`."
+  ],
+  "callout_check": {
+    "checked": 49,
+    "limit": 0.07,
+    "not_validated": {
+      "device.lower-left-thumper-bumper.effect": {
+        "callout_offset": 0.1084,
+        "control_offset": 0.064,
+        "label": "1",
+        "page": "pdf-21"
+      },
+      "device.saucer-eject.effect": {
+        "callout_offset": 0.1443,
+        "control_offset": 0.047,
+        "label": "14",
+        "page": "pdf-21"
+      },
+      "device.top-left-bank-reset.effect": {
+        "callout_offset": 0.0904,
+        "control_offset": 0.0417,
+        "label": "4",
+        "page": "pdf-21"
+      },
+      "switch.right-spinner.sensor": {
+        "callout_offset": 0.0577,
+        "control_offset": 0.0715,
+        "label": "5",
+        "page": "pdf-19"
+      },
+      "switch.saucer.sensor": {
+        "callout_offset": 0.0703,
+        "control_offset": 0.0438,
+        "label": "34",
+        "page": "pdf-19"
+      }
+    },
+    "pages": {
+      "pdf-19": {
+        "callout_fit_pairs": 34,
+        "callout_loo_max": 0.0583,
+        "callout_pairs": 35,
+        "control_loo_max": 0.0153,
+        "control_rms": 0.006,
+        "controls": 7,
+        "image": {
+          "path": "by-machine/stern.big-game.1980/callout-renders/switches-pdf-19.png",
+          "pixels": [
+            1791,
+            2361
+          ],
+          "root": "manuals",
+          "sha256": "caf298552cb7db8e026731f50f4629d0bedf78042ec5b2a843f53ca2f98e13bf"
+        },
+        "locator": "Stern_1980_Big_Game_Manual.pdf PDF 19: switch location drawing (BIG GAME / SWITCHES), the whole page rendered at 216 dpi, three times the 72 dpi scan"
+      },
+      "pdf-21": {
+        "callout_fit_pairs": 11,
+        "callout_loo_max": 0.058,
+        "callout_pairs": 14,
+        "control_loo_max": 0.0167,
+        "control_rms": 0.0066,
+        "controls": 7,
+        "image": {
+          "path": "by-machine/stern.big-game.1980/callout-renders/solenoids-pdf-21.png",
+          "pixels": [
+            1797,
+            2364
+          ],
+          "root": "manuals",
+          "sha256": "ef353064c9b4994faac1fdb701a4a10c19194565e71f36f855b228a838361579"
+        },
+        "locator": "Stern_1980_Big_Game_Manual.pdf PDF 21: solenoid location drawing (BIG GAME / SOLENOIDS), the whole page rendered at 216 dpi, three times the 72 dpi scan"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-23",
+      "transcription": "independent readers working only from gridded tiles of the page renders, without table data",
+      "verification": "the curator overlaid every read on its page against the table placements mapped through the page's control fit (overlay-switches.png, overlay-solenoids.png); corrections, if any, are recorded with a reason"
+    },
+    "retained_artifacts": {
+      "directory": "big-game-1980/callout-check",
+      "manifest_sha256": "2108020fc84d6546aed9de0fd509acceb992c4c944dd4eacfcb10390df1d78bf"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/stern/big-game-1980-callouts.json",
+    "seed_sha256": "0c351760164fd50324867f4d30d0709eab865d727c17630314e3f705de8f3d88",
+    "validated": 44
+  },
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2115.0,
+      "left": 0.0,
+      "right": 1093.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/1093.0; 0=left, 1=right",
+    "y": "y/2115.0; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "gi*, Light001-Light007 and accent* lights: render and general-illumination helpers; Big Game's general illumination has no controller address and no bulb inventory in any retained source",
+    "l13, l29, l45, l61, l63: backglass text boxes of the backbox lamps (a controlled cabinet_or_service record each)",
+    "l14, l15, l16, l30, l31: glows under the five star roll-over buttons (not bulb lights); the script binds them to lamp numbers 14, 15, 16, 30 and 31 and keeps them lit, and no printed row names a lamp under a button",
+    "BallRelease: the shooter-lane kicker the script serves the ball from, a virtual destination rather than the out-hole kicker",
+    "Gate2: a hidden gate in the shooter lane; Gate1 and Gate3 are the two passive gates of the mechanism record and carry no controller binding"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 689,
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py: every file as sorted relative POSIX path, size and SHA-256, compact canonical JSON plus LF, manifest files excluded",
+    "manifest_sha256": "ca8c7886640ec273ad41afd4884d5abee5be71a65ca0b2805c0526800808a691",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/big-game-1980/redbone-1.2.0/Big Game (Stern 1980) - redbone(MOD) v1.2.0/manifest.json",
+    "script_sha256": "61b2cf1d0cd6e6e09e7582a1ab5f8c3c092d54da113a74c436de552646d93e85",
+    "source_ref": "vpx-extraction.big-game-redbone-1-2-0",
+    "table_sha256": "6d37ab3ac46fdc116c3324c46bffae19ce784fc4bbece209b13f31840f823bfe",
+    "total_bytes": 22106949,
+    "vpxtool_version": "git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "located_records": [
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-flippers",
+      "placements": 2
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "id": "device.lower-left-thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "id": "device.lower-right-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "id": "device.lower-right-thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "id": "device.out-hole-kicker",
+      "placements": 1
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-flippers",
+      "placements": 2
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "id": "device.saucer-eject",
+      "placements": 1
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "id": "device.top-left-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "id": "device.top-right-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "id": "device.top-thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-bonus-2x",
+      "placements": 1
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-bonus-3x",
+      "placements": 1
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-1",
+      "placements": 1
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-2",
+      "placements": 1
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-3",
+      "placements": 1
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-4",
+      "placements": 1
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-5",
+      "placements": 1
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-6",
+      "placements": 1
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-7",
+      "placements": 1
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-8",
+      "placements": 1
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-9",
+      "placements": 1
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-x-and-left-spinner",
+      "placements": 2
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y",
+      "placements": 1
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-1",
+      "placements": 1
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-2",
+      "placements": 1
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-3",
+      "placements": 1
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-4",
+      "placements": 1
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-5",
+      "placements": 1
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-6",
+      "placements": 1
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-7",
+      "placements": 1
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-8",
+      "placements": 1
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-y-9",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-1",
+      "placements": 1
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-2",
+      "placements": 1
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-3",
+      "placements": 1
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-4",
+      "placements": 1
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-5",
+      "placements": 1
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-6",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-7",
+      "placements": 1
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-8",
+      "placements": 1
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-9",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.card-z-and-right-roll-overs-2000",
+      "placements": 2
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.extra-ball-outlane",
+      "placements": 1
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.extra-ball-side-lane",
+      "placements": 1
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.extra-score-per-line",
+      "placements": 1
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.left-standups-5000",
+      "placements": 2
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-a",
+      "placements": 2
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-b",
+      "placements": 2
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-e",
+      "placements": 2
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-g-big",
+      "placements": 2
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-g-game",
+      "placements": 2
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-i",
+      "placements": 2
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.letter-m",
+      "placements": 2
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.lower-right-bank-25000",
+      "placements": 1
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.reserve-bonus",
+      "placements": 1
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-spinner-1000",
+      "placements": 1
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.shoot-again",
+      "placements": 1
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-outlane",
+      "placements": 1
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-side-lane",
+      "placements": 1
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-left-bank-25000",
+      "placements": 1
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-middle-lane-5000",
+      "placements": 1
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-right-bank-25000",
+      "placements": 1
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "id": "switch.center-roll-over-button",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "id": "switch.left-flipper-end-of-stroke-contacts",
+      "placements": 2
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-outlane",
+      "placements": 1
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-side-lane",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-spinner",
+      "placements": 1
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-left-thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-right-drop-target-7",
+      "placements": 1
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-right-drop-target-8",
+      "placements": 1
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-right-drop-target-9",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "id": "switch.lower-right-thumper-bumper",
+      "placements": 1
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "id": "switch.outhole",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "id": "switch.right-flipper-end-of-stroke-contacts",
+      "placements": 2
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-lower-roll-over-button",
+      "placements": 1
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-middle-roll-over-button",
+      "placements": 1
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-outlane",
+      "placements": 1
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-spinner",
+      "placements": 1
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "id": "switch.saucer",
+      "placements": 1
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "id": "switch.standup-target-a",
+      "placements": 1
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "id": "switch.standup-target-g",
+      "placements": 1
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-10-point-switches",
+      "placements": 2
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-drop-target-1",
+      "placements": 1
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-drop-target-2",
+      "placements": 1
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-drop-target-3",
+      "placements": 1
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-lane",
+      "placements": 1
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-left-roll-over-button",
+      "placements": 1
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-middle-lane",
+      "placements": 1
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-right-drop-target-4",
+      "placements": 1
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-right-drop-target-5",
+      "placements": 1
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-right-drop-target-6",
+      "placements": 1
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-right-lane",
+      "placements": 1
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-right-roll-over-button",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-thumper-bumper",
+      "placements": 1
+    }
+  ],
+  "machine_id": "stern.big-game.1980",
+  "not_applicable_records": {
+    "cabinet_or_service": [
+      "device.coin-lockout",
+      "device.knocker",
+      "display.credits",
+      "display.match-ball-in-play",
+      "display.player-1-score",
+      "display.player-2-score",
+      "display.player-3-score",
+      "display.player-4-score",
+      "lamp.game-over",
+      "lamp.high-score-to-date",
+      "lamp.match",
+      "lamp.tilt",
+      "switch.coin-chute-1",
+      "switch.coin-chute-2",
+      "switch.coin-chute-3",
+      "switch.cpu-diagnostic-button",
+      "switch.credit-button",
+      "switch.left-flipper-button",
+      "switch.remote-memory-clear",
+      "switch.right-flipper-button",
+      "switch.self-test-button",
+      "switch.slam",
+      "switch.sound-diagnostic-button",
+      "switch.tilt"
+    ],
+    "dip_switch": [
+      "dip.option-switch-1",
+      "dip.option-switch-10",
+      "dip.option-switch-11",
+      "dip.option-switch-12",
+      "dip.option-switch-13",
+      "dip.option-switch-14",
+      "dip.option-switch-15",
+      "dip.option-switch-16",
+      "dip.option-switch-17",
+      "dip.option-switch-18",
+      "dip.option-switch-19",
+      "dip.option-switch-2",
+      "dip.option-switch-20",
+      "dip.option-switch-21",
+      "dip.option-switch-22",
+      "dip.option-switch-23",
+      "dip.option-switch-24",
+      "dip.option-switch-25",
+      "dip.option-switch-26",
+      "dip.option-switch-27",
+      "dip.option-switch-28",
+      "dip.option-switch-29",
+      "dip.option-switch-3",
+      "dip.option-switch-30",
+      "dip.option-switch-31",
+      "dip.option-switch-32",
+      "dip.option-switch-4",
+      "dip.option-switch-5",
+      "dip.option-switch-6",
+      "dip.option-switch-7",
+      "dip.option-switch-8",
+      "dip.option-switch-9"
+    ],
+    "internal_nonvisual": [
+      "device.continuous-driver-18",
+      "device.flipper-enable-relay"
+    ],
+    "unused": [
+      "device.unused-continuous-driver-17",
+      "device.unused-solenoid-10",
+      "device.unused-solenoid-11",
+      "device.unused-solenoid-12",
+      "device.unused-solenoid-16",
+      "lamp.unused-scr-q19",
+      "lamp.unused-scr-q31",
+      "lamp.unused-scr-q5",
+      "lamp.unused-scr-q6",
+      "switch.upper-left-flipper-position",
+      "switch.upper-right-flipper-position"
+    ],
+    "virtual": [
+      "output.left-flipper-power-state",
+      "output.right-flipper-power-state"
+    ]
+  },
+  "placement_statuses": {
+    "observed": 71,
+    "validated": 44
+  },
+  "projections": [
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the left slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the right slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on the table's Drain kicker, its ball-collection proxy below the apron; the out-hole switch itself is not modelled. The shooter-lane BallRelease kicker is the virtual serve destination and is not used."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "One placement per contact, each at the mean of the drag points of the rubber wall the script pulses (sw37 left of the top lanes, sw37a right of them)."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the left slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the right slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top-left bank it resets: the mean of the table's own three target objects. The reset coil sits under the bank and has no object."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top-right bank it resets: the mean of the table's own three target objects."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the lower-right bank it resets: the mean of the table's own three target objects."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the table's Drain kicker, the ball-collection proxy where the ball enters the out-hole; the out-hole coil is not modelled."
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "reason": "Placed on the left flipper pivots (lower, upper): each end-of-stroke contact is mounted on its flipper assembly."
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "reason": "Placed on the right flipper pivots (lower, upper): each end-of-stroke contact is mounted on its flipper assembly."
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the two right flipper pivots, both moved by this one callback."
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the two left flipper pivots, both moved by this one callback."
+    }
+  ],
+  "readiness": {
+    "missing": [
+      "output_semantics",
+      "spatial_placement"
+    ],
+    "status": "partial",
+    "unresolved_conflicts": 0
+  },
+  "table_lamp_defects": {
+    "30": "Placed on the `100 OR 1000 WHEN LIT` insert beside the right spinning target (table light l6), which the row `RIGHT SPIN. TARG. 1,000` names; the retained script binds that light to lamp 6. The script binds lamp 30 to l30, a glow under the top-left roll-over button (not a bulb light), which is not placed; no printed row names a lamp at that button.",
+    "37": "The second placement is the `200 OR 2000 WHEN LIT` insert beside the left spinning target (table light l48), which the row `\"X\" & LEFT SPIN. TARG.` names. The retained script binds that light to lamp 6, a defect of the table: in the retained gameplay run the left spinner scored its lit 2,000 while card X (this lamp) was on and lamp 6 was off.",
+    "5": "The second placement is the `100 / 2.000 WHEN LIT` insert beside the right roll-over buttons (table light l64), which the row's `R. 1,000 WHEN LIT` names. The retained script binds that light to lamp 34 (the reserve bonus) instead, a defect of the table: in the retained gameplay run the right roll-over buttons scored their lit 2,000 while card Z (this lamp) was on and lamp 34 was off.",
+    "6": "Placed on the `5.000 WHEN LIT` insert above the middle top lane (table light l72), which the row `TOP R.O.W. \"I\" 5,000` names. The retained script does not drive that light from lamp 6; it lights it itself whenever lamps 10, 26 and 42 (B, I, G) are all on, the condition under which the ROM turns lamp 6 on, and it binds lamp 6 to the two spinner inserts instead (lights l6 and l48), a defect of the table."
+  },
+  "unplaced_records": [
+    {
+      "address": 1,
+      "group": "physical.output.gi",
+      "id": "gi.general-illumination"
+    }
+  ],
+  "version": 1
+}

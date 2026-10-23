@@ -593,7 +593,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 587 | 1980 | STUB - Black Magic 4 | Recel | stub | 0% |
 | 588 | 1980 | STUB - Flipper Game, The | Recel | stub | 0% |
 | 589 | 1980 | Ali | Stern | partial | 94% |
-| 590 | 1980 | Big Game | Stern | partial | 19% |
+| 590 | 1980 | Big Game | Stern | partial | 88% |
 | 591 | 1980 | Cheetah | Stern | partial | 19% |
 | 592 | 1980 | Flight 2000 | Stern | partial | 19% |
 | 593 | 1980 | Galaxy | Stern | partial | 19% |

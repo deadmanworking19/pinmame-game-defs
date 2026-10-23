@@ -1,0 +1,407 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "biggame",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33
+  ],
+  "notes": "Fresh-state Stern MPU-200 gameplay switch exercise. The ball starts on the outhole switch (public 33). Three coins, the credit button and a released outhole start a game; each playfield switch is then closed alone, each drop bank is completed by holding its targets down until the reset fires, the saucer is filled and released, the flipper positions are pressed, the ball drains and is served again, and a tilt ends the ball.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 5,
+      "label": "credit button starts a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top thumper sw9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "lower left thumper sw10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "lower right thumper sw11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left slingshot sw12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right slingshot sw13"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left spinner sw4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right spinner sw5"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top left lane sw17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top middle lane sw18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right lane sw19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "stand-up G sw20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "stand-up A sw21"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "middle roll-over button sw25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top left roll-over button sw26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "middle left roll-over sw27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right return lane sw28"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left return lane sw29"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "right outlane sw35"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "left outlane sw36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top 10 points sw37"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right roll-over button sw38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right middle roll-over button sw39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "top right lower roll-over button sw40"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 1,
+      "label": "top left bank: 14 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1,
+      "label": "top left bank: 15 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 3,
+      "label": "top left bank: 16 down completes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "top left bank: 14 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "top left bank: 15 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2,
+      "label": "top left bank: 16 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1,
+      "label": "top right bank: 22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1,
+      "label": "top right bank: 23 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 3,
+      "label": "top right bank: 24 down completes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "top right bank: 22 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "top right bank: 23 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2,
+      "label": "top right bank: 24 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 1,
+      "label": "lower right bank: 30 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1,
+      "label": "lower right bank: 31 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 3,
+      "label": "lower right bank: 32 down completes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "lower right bank: 30 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "lower right bank: 31 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 2,
+      "label": "lower right bank: 32 raised by the reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball enters the saucer sw34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 2,
+      "label": "saucer ejects the ball"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "left flipper button 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "right flipper button 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "upper left flipper position 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "upper right flipper position 81"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 8,
+      "label": "ball drains onto the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 4,
+      "label": "second ball leaves the outhole"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "settle_s": 4,
+      "label": "tilt sw7"
+    }
+  ]
+}
