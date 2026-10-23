@@ -108,7 +108,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 159 | Viking | `bally.viking.1979` | 94% |
 | 160 | TX-Sector | `gottlieb.tx-sector.1988` | 13% |
 | 162 | Black Knight | `williams.black-knight.1980` | 100% |
-| 163 | Space Station | `williams.space-station.1987` | 19% |
+| 163 | Space Station | `williams.space-station.1987` | 94% |
 | 165 | Stars | `stern.stars.1978` | 13% |
 | 166 | Medusa | `bally.medusa.1981` | 19% |
 | 167 | Big Game | `stern.big-game.1980` | 88% |

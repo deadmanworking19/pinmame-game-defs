@@ -1,0 +1,194 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Space Station power-up probe from the retained initialized NVRAM with Auto-Up (-6 = 1) and both position switches (52, 53) open at start. Once the ROM energizes the motor relay (16), the host writes the two position switches as (52,53) = (0,1) -> (1,1) -> (1,0) -> (0,0) every 1.3 s for two modelled turns, whether or not the relay is still on, then holds the last pattern. This is a synthetic pattern, not a measurement of the physical cam: the run records at which modelled pattern the ROM releases the relay.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 52,
+      "state": 0
+    },
+    {
+      "switch": 53,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    52,
+    53
+  ],
+  "actions": [
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "active_only": true,
+      "timeout_s": 10,
+      "label": "Space Station motor relay (16) energizes at power-up"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 1"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.3,
+      "label": "motor turns a quarter (turn 2)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 52 = 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "position switch 53 = 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 15,
+      "label": "observe the motor relay after the modelled turns"
+    }
+  ]
+}

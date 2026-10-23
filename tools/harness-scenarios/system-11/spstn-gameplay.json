@@ -1,0 +1,569 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Space Station gameplay probe from the retained initialized NVRAM with the three trough switches (11-13) held from start and Auto-Up (-6 = 1): two coins, Credit, a ball served and plunged, the mini-playfield lanes, jet bumper, kicker and 10-point switches, every SHUTTLE and STATION standup, the Change target, the U-S-A lanes and the roll-under closed one at a time, the 3-bank of drop targets held down and released after its reset, the left drain lane with the kickback lit, a ball through the right popper, a ball docked in each lock, the left popper with two balls docked, the right single drop target held down, then three plumb-bob tilt closures and a drain. The host answers drives only with fixed, scripted switch changes; the Space Station position switches (52, 53) stay open and PinMAME's mechanics are off.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    11,
+    12,
+    13,
+    33,
+    41,
+    42,
+    43,
+    45,
+    47,
+    57,
+    58,
+    59
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "max_pulses": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Credit button raises game-on (23)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "ball shooter lane feeder (2) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "trough loses its third ball as the ball is served"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in the shooter lane (43)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "mini-playfield lane rollover (14)"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "mini-playfield lane rollover (15)"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "mini-playfield lane rollover (16)"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "jet bumper switch (60)"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "jet bumper switch (61)"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "jet bumper switch (62)"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "slingshot switch (63)"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "slingshot switch (64)"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10-point / matrix switch (50)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10-point / matrix switch (54)"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10-point / matrix switch (51)"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (18)"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (19)"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (20)"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (21)"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (22)"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (23)"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "SHUTTLE standup (24)"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (25)"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (26)"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (27)"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (28)"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (29)"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (30)"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "STATION standup (31)"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "Change Shuttle/Station Score target (35)"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "U-S-A lane (38)"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "U-S-A lane (39)"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "U-S-A lane (40)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "top left roll-under (37)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "3-bank drop target 57 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "3-bank drop target 58 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "3-bank drop target 59 down"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "3-bank reset (6) fires once the bank is down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "3-bank reset: 57 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "3-bank reset: 58 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "3-bank reset: 59 up"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 17,
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "max_pulses": 1,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "ball rolls over the left drain lane (17) and the left re-entry kickback (13) fires"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "ball back in play"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball enters the right ball popper (42)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "active_only": true,
+      "timeout_s": 10,
+      "label": "right ball popper (4) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball leaves the right ball popper"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "right lock entry ramp switch (46)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "ball docks in the right lock (45)"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "left lock entry wire-ramp switch (48)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "ball docks in the left lock (47)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball enters the left ball popper (41) with two balls docked"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "left ball popper (3) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "ball leaves the left ball popper"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17,
+        32
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "a dock kickout (17 or 32) fires for multiball"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "observe the multiball release"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "right lock empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "left lock empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "right single drop target (33) down"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe the Stop 'N' Score timer and any drop-target reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "single drop target back up"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "plumb-bob tilt closure 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "plumb-bob tilt closure 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "plumb-bob tilt closure 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 4,
+      "label": "tilt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball drains onto the outhole (10)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "outhole kicker (1) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole kicks the ball into the trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball back in the trough"
+    },
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "end of ball"
+    }
+  ]
+}

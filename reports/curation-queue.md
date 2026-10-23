@@ -329,7 +329,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 323 | 1987 | Gold Mine (Shuffle) (L-2) | Williams | partial | 13% |
 | 324 | 1987 | Millionaire | Williams | partial | 19% |
 | 325 | 1987 | Shuffle Inn (Shuffle) (L-1) | Williams | partial | 13% |
-| 326 | 1987 | Space Station | Williams | partial | 19% |
+| 326 | 1987 | Space Station | Williams | partial | 94% |
 | 327 | 1987 | Top Dawg (Shuffle) (L-1) | Williams | partial | 13% |
 | 328 | 1987 | New Star's Phoenix | Zaccaria | partial | 13% |
 | 329 | 1987 | Spooky | Zaccaria | partial | 13% |

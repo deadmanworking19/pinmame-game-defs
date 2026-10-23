@@ -498,8 +498,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Centaur's 2026-10-22 author-ready promotion removes one, and Terminator 2's removes one more.
 		# World Cup Soccer's 2026-10-23 author-ready promotion removes one more, and the Lord of the Rings
 		# Limited Edition's another. Bram Stoker's Dracula's 2026-10-23 rework validates every placement,
-		# removing one more.
-		self.assertEqual(706, report["missing_requirement_counts"]["spatial_placement"])
+		# removing one more. Space Station's legacy record omitted it too; its curated partial keeps every table
+		# placement observed, adding one.
+		self.assertEqual(707, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

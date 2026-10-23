@@ -1,0 +1,1280 @@
+{
+  "driver_ids": [
+    "spstn_l5"
+  ],
+  "extractor": {
+    "id": "space-station-harness-runs",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.space-station.1987"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game spstn_l5 --rom-path <vpinmame-roms> --work-dir <run>/state --scenario tools/harness-scenarios/system-11/spstn-<run>.json --boot-wait 0 --output <run>/run.json. The initialization run (spstn-nvram-init.json) starts from an empty state directory and stops on FACTORY SETTING; every other run starts from a new state directory holding only that run's nvram/spstn_l5.nv. Diagnostic scenarios wait 8 s, set Manual-Down (-6 = 0), pulse Advance (-7) to enter the tests, set Auto-Up (-6 = 1) and pulse Advance until the checkpoint text is displayed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "sha256": "dfcd9f9407dcb4e107d6ea066ceaccdb07333b552cd30fc1bfc491a385a4dead"
+    },
+    "game": "spstn_l5",
+    "observations": {
+      "named_output_addresses": {
+        "coil-01-outhole": 1,
+        "coil-02-relnch-flasher": 25,
+        "coil-03-ball-release": 2,
+        "coil-04-left-flasher": 26,
+        "coil-05-lf-ball-popper": 3,
+        "coil-06-right-flasher": 27,
+        "coil-07-rt-ball-popper": 4,
+        "coil-08-top-flasher": 28,
+        "coil-09-panel-flasher": 29,
+        "coil-10-3-bank": 6,
+        "coil-11-flame-flasher": 30,
+        "coil-12-insert-knocker": 7,
+        "coil-13-station-flasher": 31,
+        "coil-14-right-drop-tg": 8,
+        "coil-15-left-dock": 32,
+        "coil-16-playfld-gen-ilu": 9,
+        "coil-17-playfld-grn-gi": 10,
+        "coil-18-insert-gi": 11,
+        "coil-19-ac-select": 12,
+        "coil-20-left-reentry": 13,
+        "coil-21-panel-lights": 15,
+        "coil-22-space-station": 16,
+        "coil-23-right-dock": 17,
+        "coil-24-left-sling": 18,
+        "coil-25-right-jet": 19,
+        "coil-26-right-sling": 20,
+        "coil-27-left-jet": 21,
+        "coil-28-bottom-jet": 22,
+        "lamp-01-bon-bal-plyr-1": 1,
+        "lamp-02-bon-bal-plyr-2": 2,
+        "lamp-03-bon-bal-plyr-3": 3,
+        "lamp-04-bon-bal-plyr-4": 4,
+        "lamp-05-extra-ball": 5,
+        "lamp-06-right-release": 6,
+        "lamp-07-left-release": 7,
+        "lamp-08-docking-wl-left": 8,
+        "lamp-09-change-shuttle": 9,
+        "lamp-10-change-station": 10,
+        "lamp-11-1x-bonus": 11,
+        "lamp-12-2x-bonus": 12,
+        "lamp-13-4x-bonus": 13,
+        "lamp-14-upper-lamp-1": 14,
+        "lamp-15-upper-lamp-2": 15,
+        "lamp-16-upper-lamp-3": 16,
+        "lamp-17-left-drain": 17,
+        "lamp-18-shuttle-s": 18,
+        "lamp-19-shuttle-h": 19,
+        "lamp-20-shuttle-u": 20,
+        "lamp-21-shuttle-1st-t": 21,
+        "lamp-22-shuttle-2nd-t": 22,
+        "lamp-23-shuttle-l": 23,
+        "lamp-24-shuttle-e": 24,
+        "lamp-25-station-s": 25,
+        "lamp-26-station-1st-t": 26,
+        "lamp-27-station-a": 27,
+        "lamp-28-station-2nd-t": 28,
+        "lamp-29-station-i": 29,
+        "lamp-30-station-o": 30,
+        "lamp-31-station-n": 31,
+        "lamp-32-right-drain": 32,
+        "lamp-33-stop-n-score": 33,
+        "lamp-34-docking-wl-rght": 34,
+        "lamp-35-special": 35,
+        "lamp-36-1oo-k-when-lt": 36,
+        "lamp-37-station-wheel-4": 37,
+        "lamp-38-usa-u": 38,
+        "lamp-39-usa-s": 39,
+        "lamp-40-usa-a": 40,
+        "lamp-41-station-wheel-6": 41,
+        "lamp-42-relaun-w-lit": 42,
+        "lamp-43-docked-left": 43,
+        "lamp-44-hold-bonus": 44,
+        "lamp-45-docked-right": 45,
+        "lamp-46-station-wheel-3": 46,
+        "lamp-47-station-wheel-2": 47,
+        "lamp-48-station-wheel-1": 48,
+        "lamp-49-flame-1": 49,
+        "lamp-50-sh-scor-special": 50,
+        "lamp-51-sh-scor-ex-ball": 51,
+        "lamp-52-sh-scor-sok-ren": 52,
+        "lamp-53-sh-scor-sok-bon": 53,
+        "lamp-54-sh-scor-1so-k": 54,
+        "lamp-55-sh-scor-7s-k": 55,
+        "lamp-56-sh-scor-2s-k": 56,
+        "lamp-57-station-wheel-s": 57,
+        "lamp-58-st-scor-special": 58,
+        "lamp-59-st-scor-ex-ball": 59,
+        "lamp-60-st-scor-sok-ren": 60,
+        "lamp-61-st-scor-sok-bon": 61,
+        "lamp-62-st-scor-1so-k": 62,
+        "lamp-63-st-scor-7s-k": 63,
+        "lamp-64-st-scor-2s-k": 64
+      },
+      "runs": {
+        "boot-baseline": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1 held from emulator start. Solenoid on-spans: 3: 1.922-2.047 s; 4: 1.781-1.922 s; 13: 0.265-0.328 s; 14: 0.265-0.328 s; 16: 0.265-0.328 s, 1.25-6.531 s; 17: 1.406-1.547 s; 23: 1.265-1.547 s; 32: 1.609-1.734 s (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-drop-33": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 33=1 held from emulator start. Solenoid on-spans: 3: 1.938-2.047 s; 4: 1.797-1.922 s; 13: 0.266-0.313 s; 14: 0.266-0.313 s; 16: 0.266-0.313 s, 1.266-6.594 s; 17: 1.407-1.532 s; 23: 1.266-1.532 s; 32: 1.594-1.735 s (observed to 30.016 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-drops-57-59": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 57=1, 58=1, 59=1 held from emulator start. Solenoid on-spans: 3: 1.938-2.063 s; 4: 1.797-1.938 s; 13: 0.266-0.313 s; 14: 0.266-0.313 s; 16: 0.266-0.313 s, 1.266-6.563 s; 17: 1.422-1.532 s; 23: 1.266-1.532 s; 32: 1.594-1.75 s (observed to 30.032 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-lock-45": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 45=1 held from emulator start. Solenoid on-spans: 3: 1.938-2.063 s; 4: 1.797-1.938 s; 13: 0.25-0.313 s; 14: 0.25-0.313 s; 16: 0.25-0.313 s, 1.282-6.532 s; 17: 1.422-1.547 s, 2.125-2.235 s; 23: 1.282-1.547 s, 2.032-2.282 s; 32: 1.594-1.735 s (observed to 30.032 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-lock-47": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 47=1 held from emulator start. Solenoid on-spans: 3: 1.953-2.062 s; 4: 1.797-1.953 s; 13: 0.265-0.312 s; 14: 0.265-0.312 s; 16: 0.265-0.312 s, 1.281-6.515 s; 17: 1.422-1.531 s; 23: 1.281-1.531 s; 32: 15 pulses from 1.593 s to 29.906 s, spacing 0.53-2.2 s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-locks-45-47": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 45=1, 47=1 held from emulator start. Solenoid on-spans: 3: 1.922-2.047 s; 4: 1.813-1.922 s; 13: 0.266-0.328 s; 14: 0.266-0.328 s; 16: 0.266-0.328 s, 1.266-6.547 s; 17: 1.407-1.532 s, 2.328-2.469 s; 23: 1.266-1.532 s, 2.219-2.516 s; 32: 15 pulses from 1.594 s to 29.938 s, spacing 0.53-2.23 s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-outhole-10": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 10=1 held from emulator start. Solenoid on-spans: 1: 13 pulses from 2.031 s to 28.438 s, spacing 2.16-2.25 s; 3: 1.922-2.031 s; 4: 1.781-1.922 s; 13: 0.266-0.313 s; 14: 0.266-0.313 s; 16: 0.266-0.313 s, 1.281-6.547 s; 17: 1.422-1.531 s; 23: 1.281-1.531 s; 32: 1.594-1.719 s (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            1,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-poppers-41-42": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 41=1, 42=1 held from emulator start. Solenoid on-spans: 3: 14 pulses from 1.922 s to 28.578 s, spacing 0.26-2.27 s; 4: 14 pulses from 1.797 s to 28.5 s, spacing 0.26-2.28 s; 13: 0.266-0.328 s; 14: 0.266-0.328 s; 16: 0.266-0.328 s, 1.266-6.703 s; 17: 1.406-1.531 s; 23: 1.266-1.531 s; 32: 1.594-1.734 s (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-shooter-43": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 43=1 held from emulator start. Solenoid on-spans: 3: 1.954-2.063 s; 4: 1.797-1.954 s; 13: 0.266-0.329 s; 14: 0.266-0.329 s; 16: 0.266-0.329 s, 1.282-6.547 s; 17: 1.422-1.547 s; 23: 1.282-1.547 s; 32: 1.61-1.735 s (observed to 30.047 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-station-52": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 52=1 held from emulator start. Solenoid on-spans: 3: 1.922-2.047 s; 4: 1.812-1.922 s; 13: 0.265-0.312 s; 14: 0.265-0.312 s; 16: 0.265-0.312 s, 1.265-6.547 s; 17: 1.422-1.547 s; 23: 1.265-1.547 s; 32: 1.609-1.734 s (observed to 30.031 s). Motor relay (16) against the modelled position pattern: 0.015 s (52,53)=(1,0); 0.265 s 16=1; 0.312 s 16=0; 1.265 s 16=1; 6.547 s 16=0 (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-station-52-53": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 52=1, 53=1 held from emulator start. Solenoid on-spans: 3: 1.968-2.062 s; 4: 1.812-1.968 s; 13: 0.265-0.328 s; 14: 0.265-0.328 s; 16: 0.265-0.328 s, 1.281-6.531 s; 17: 1.422-1.562 s; 23: 1.281-1.562 s; 32: 1.625-1.75 s (observed to 30.031 s). Motor relay (16) against the modelled position pattern: 0.015 s (52,53)=(1,0); 0.015 s (52,53)=(1,1); 0.265 s 16=1; 0.328 s 16=0; 1.281 s 16=1; 6.531 s 16=0 (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-station-53": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 53=1 held from emulator start. Solenoid on-spans: 3: 1.969-2.094 s; 4: 1.813-1.953 s; 13: 0.266-0.328 s; 14: 0.266-0.328 s; 16: 0.266-0.328 s, 1.281-6.61 s; 17: 1.438-1.563 s; 23: 1.281-1.563 s; 32: 1.61-1.75 s (observed to 30.031 s). Motor relay (16) against the modelled position pattern: 0.016 s (52,53)=(0,1); 0.266 s 16=1; 0.328 s 16=0; 1.281 s 16=1; 6.61 s 16=0 (observed to 30.031 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "boot-trough-11-13": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1 held from emulator start. Solenoid on-spans: 13: 0.266-0.328 s; 14: 0.266-0.328 s; 16: 0.266-0.328 s, 1.266-6.5 s (observed to 30.016 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "coil-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL"
+            }
+          ],
+          "limitation": "A pulsed address is ROM activity, not proof that a load is fitted.",
+          "note": "Advance walk to COIL TEST (player 3 display 05), then two identical cycles of 28 named steps. Step:address = player 1 and 2 displays: 1:1 = OUTHOLE; 2:25 = RELNCH FLASHER; 3:2 = BALL RELEASE; 4:26 = LEFT FLASHER; 5:3 = LF BALL POPPER; 6:27 = RIGHT FLASHER; 7:4 = RT BALL POPPER; 8:28 = TOP FLASHER; 9:29 = PANEL FLASHER; 10:6 = 3 BANK; 11:30 = FLAME FLASHER; 12:7 = INSERT KNOCKER; 13:31 = STATION FLASHER; 14:8 = RIGHT DROP TG; 15:32 = LEFT DOCK; 16:9 = PLAYFLD GEN ILU; 17:10 = PLAYFLD GRN GI; 18:11 = INSERT GI; 19:12 = AC SELECT; 20:13 = LEFT REENTRY; 21:15 = PANEL LIGHTS; 22:16 = SPACE STATION; 23:17 = RIGHT DOCK; 24:18 = LEFT SLING; 25:19 = RIGHT JET; 26:20 = RIGHT SLING; 27:21 = LEFT JET; 28:22 = BOTTOM JET. The A/C select relay (12) is energized before and held through each step that pulses 25, 26, 27, 28, 29, 30, 31, 32, pulsed by itself in its own AC SELECT step, and released for every other step. No step pulses 5 or 14.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "gameplay": {
+          "diagnostic_checkpoints": [],
+          "limitation": "The host answers the ROM's drives with fixed, scripted switch changes; a pulse the ROM fires proves only that the address changed under these conditions, not a mechanism's travel time or the physical device's identity.",
+          "note": "Scripted scenario (73 actions, see the scenario notes). Solenoid on-spans: 1: 98.875-99.0 s, 120.953-121.078 s, 147.359-147.5 s; 2: 28 pulses from 13.859 s to 157.687 s, spacing 0.3-60.03 s; 3: 98.453-98.578 s, 106.593-106.734 s, 120.546-120.687 s; 4: 72.234-72.359 s, 98.609-98.718 s, 120.687-120.796 s; 6: 66.25-66.343 s, 67.546-67.718 s; 8: 8 pulses from 99.015 s to 136.671 s, spacing 1.36-22.06 s; 13: 4 pulses from 0.265 s to 120.796 s, spacing 22.08-68.39 s; 14: 0.265-0.312 s; 16: 8 pulses from 0.265 s to 138.343 s, spacing 1.02-90.83 s; 17: 4 pulses from 104.406 s to 147.656 s, spacing 9.41-24.2 s; 18: 29.656-29.781 s; 19: 26.406-26.531 s; 20: 31.265-31.406 s; 21: 24.765-24.906 s; 22: 28.031-28.156 s; 23: 13.312-141.453 s, 147.546-147.781 s, 152.828-end s; 32: 7 pulses from 96.625 s to 147.75 s, spacing 2.14-25.02 s (observed to 159.703 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "nvram-init": {
+          "note": "Boot to FACTORY SETTING from an empty state directory; the NVRAM written on stop is the only state later spstn_l5 runs inherit.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "single-lamps": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 4,
+              "matched_text": "SINGLE"
+            }
+          ],
+          "note": "Advance walk to SINGLE LAMPS (player 3 display 04); each Credit press (public 3) steps the designator, and designator n blinks public lamp n alone for every n from 1 to 64. Designator = player 1 and 2 displays: 1 = BON BAL PLYR 1; 2 = BON BAL PLYR 2; 3 = BON BAL PLYR 3; 4 = BON BAL PLYR 4; 5 = EXTRA BALL; 6 = RIGHT RELEASE; 7 = LEFT RELEASE; 8 = DOCKING WL LEFT; 9 = CHANGE SHUTTLE; 10 = CHANGE STATION; 11 = 1X BONUS; 12 = 2X BONUS; 13 = 4X BONUS; 14 = UPPER LAMP 1; 15 = UPPER LAMP 2; 16 = UPPER LAMP 3; 17 = LEFT DRAIN; 18 = SHUTTLE S; 19 = SHUTTLE H; 20 = SHUTTLE U; 21 = SHUTTLE 1ST T; 22 = SHUTTLE 2ND T; 23 = SHUTTLE L; 24 = SHUTTLE E; 25 = STATION S; 26 = STATION 1ST T; 27 = STATION A; 28 = STATION 2ND T; 29 = STATION I; 30 = STATION O; 31 = STATION N; 32 = RIGHT DRAIN; 33 = STOP N SCORE; 34 = DOCKING WL RGHT; 35 = SPECIAL; 36 = 1OO K WHEN LT; 37 = STATION WHEEL 4; 38 = USA U; 39 = USA S; 40 = USA A; 41 = STATION WHEEL 6; 42 = RELAUN W LIT; 43 = DOCKED LEFT; 44 = HOLD BONUS; 45 = DOCKED RIGHT; 46 = STATION WHEEL 3; 47 = STATION WHEEL 2; 48 = STATION WHEEL 1; 49 = FLAME 1; 50 = SH SCOR SPECIAL; 51 = SH SCOR EX BALL; 52 = SH SCOR SOK REN; 53 = SH SCOR SOK BON; 54 = SH SCOR 1SO K; 55 = SH SCOR 7S K; 56 = SH SCOR 2S K; 57 = STATION WHEEL S; 58 = ST SCOR SPECIAL; 59 = ST SCOR EX BALL; 60 = ST SCOR SOK REN; 61 = ST SCOR SOK BON; 62 = ST SCOR 1SO K; 63 = ST SCOR 7S K; 64 = ST SCOR 2S K.",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "station-reactive-ccw": {
+          "limitation": "The position pattern is a synthetic host model written on a fixed schedule, not a measurement of the physical cam; the run shows only at which modelled pattern the ROM released the motor relay.",
+          "note": "Motor relay (16) against the modelled position pattern: 0.016 s (52,53)=(0,0); 0.266 s 16=1; 0.329 s 16=0; 1.235 s 16=1; 1.594 s (52,53)=(0,0); 1.594 s (52,53)=(0,1); 1.625 s 16=0; 2.907 s (52,53)=(1,1); 4.219 s (52,53)=(1,0); 5.532 s (52,53)=(0,0); 6.844 s (52,53)=(0,1); 8.157 s (52,53)=(1,1); 9.469 s (52,53)=(1,0); 10.782 s (52,53)=(0,0) (observed to 25.797 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "station-reactive-cw": {
+          "limitation": "The position pattern is a synthetic host model written on a fixed schedule, not a measurement of the physical cam; the run shows only at which modelled pattern the ROM released the motor relay.",
+          "note": "Motor relay (16) against the modelled position pattern: 0.016 s (52,53)=(0,0); 0.281 s 16=1; 0.328 s 16=0; 1.25 s 16=1; 1.594 s (52,53)=(1,0); 2.906 s (52,53)=(1,1); 4.219 s (52,53)=(0,1); 4.25 s 16=0; 5.531 s (52,53)=(0,1); 5.531 s (52,53)=(0,0); 6.844 s (52,53)=(1,0); 8.156 s (52,53)=(1,1); 9.469 s (52,53)=(0,1); 10.781 s (52,53)=(0,0) (observed to 25.797 s).",
+          "solenoid_addresses_seen": [
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            23,
+            32
+          ]
+        },
+        "switch-levels": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 6,
+              "matched_text": "LEVELS"
+            }
+          ],
+          "limitation": "Host-held levels written on every poll; a name shown while public n is held at 1 means the ROM reads that address as active at 1. A held pulse also rewrites the FLIP_SWNO targets 55 and 56 on every poll, masking core_updateSw's copy.",
+          "note": "Advance walk to SWITCH LEVELS (player 3 display 06); each public address 1-64 and 81-88 held at 1 alone for 1.5 s. Address = player 1 and 2 displays / player 3 display [active solenoids] while held: 1 = PLUMB TILT / 06 01 [23]; 2 = BALL TILT / 06 02 [23]; 3 = CREDIT BUTTON / 06 03 [23]; 4 = COIN SLOT 1 / 06 04 [23]; 5 = COIN SLOT 2 / 06 05 [23]; 6 = COIN SLOT 3 / 06 06 [23]; 7 = SLAM TILT / 06 07 [23]; 8 = HISCORE RESET / 06 08 [23]; 9 = PLAYFLD TILT / 06 09 [23]; 10 = OUTHOLE / 06 10 [23]; 11 = TROUGH BALL 1 / 06 11 [23]; 12 = TROUGH BALL 2 / 06 12 [23]; 13 = TROUGH BALL 3 / 06 13 [23]; 14 = ROLOVER 1 / 06 14 [23]; 15 = ROLOVER 2 / 06 15 [23]; 16 = ROLOVER 3 / 06 16 [23]; 17 = LEFT DRAIN / 06 17 [23]; 18 = SHUTTLE S / 06 18 [23]; 19 = SHUTTLE H / 06 19 [23]; 20 = SHUTTLE U / 06 20 [23]; 21 = SHUTTLE 1ST T / 06 21 [23]; 22 = SHUTTLE 2ND T / 06 22 [23]; 23 = SHUTTLE L / 06 23 [23]; 24 = SHUTTLE E / 06 24 [23]; 25 = STATION S / 06 25 [23]; 26 = STATION 1ST T / 06 26 [23]; 27 = STATION A / 06 27 [23]; 28 = STATION 2ND T / 06 28 [23]; 29 = STATION I / 06 29 [23]; 30 = STATION O / 06 30 [23]; 31 = STATION N / 06 31 [23]; 32 = RIGHT DRAIN / 06 32 [23]; 33 = R SNGLE DROP TG / 06 33 [23]; 34 = NOT USED / 06 34 [23]; 35 = SHT CHG BOTTOM / 06 35 [23]; 36 = NOT USED / 06 36 [23]; 37 = ROL UND TOP L / 06 37 [23]; 38 = USA U / 06 38 [23]; 39 = USA S / 06 39 [23]; 40 = USA A / 06 40 [23]; 41 = L BALL POPPER / 06 41 [23]; 42 = R BALL POPPER / 06 42 [23]; 43 = PLUNGER / 06 43 [23]; 44 = (blank) / 06 44 [23]; 45 = RIGHT LOCK UP / 06 45 [23]; 46 = R LOCK ENTRY / 06 46 [23]; 47 = LEFT LOCK UP / 06 47 [23]; 48 = L LOCK ENTRY / 06 48 [23]; 49 = NOT USED / 06 49 [23]; 50 = TOP RGT 1O PTS / 06 50 [23]; 51 = LEFT 1O PTS / 06 51 [23]; 52 = SPC STA SWTCH 1 / 06 52 [23]; 53 = SPC STA SWTCH 2 / 06 53 [23]; 54 = LOW RGT 1O PTS / 06 54 [23]; 55 = LEFT FLIPPER / 06 55 [23]; 56 = RIGHT FLIPPER / 06 56 [23]; 57 = 3 BANK BOTTOM / 06 57 [23]; 58 = 3 BANK CENTER / 06 58 [23]; 59 = 3 BANK TOP / 06 59 [23]; 60 = LEFT BUMPER / 06 60 [21, 23]; 61 = RIGHT BUMPER / 06 61 [19, 23]; 62 = BOTTOM BUMPER / 06 62 [22, 23]; 63 = LEFT KICKER / 06 63 [18, 23]; 64 = RIGHT KICKER / 06 64 [20, 23]; 81 = SWITCH LEVELS / 06 [23]; 82 = RIGHT FLIPPER / 06 56 [23, 45, 46]; 83 = SWITCH LEVELS / 06 [23]; 84 = LEFT FLIPPER / 06 55 [23, 47, 48]; 85 = SWITCH LEVELS / 06 [23]; 86 = SWITCH LEVELS / 06 [23]; 87 = SWITCH LEVELS / 06 [23]; 88 = SWITCH LEVELS / 06 [23].",
+          "solenoid_addresses_seen": [
+            1,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "name": "nvram-init",
+        "nvram_initialization": "Fresh empty state directory; this is the one retained spstn_l5 initialization run (FACTORY SETTING), whose nvram/spstn_l5.nv is the only state any later run inherits.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-nvram-init.json",
+        "scenario_sha256": "06d473f230d5820cafb51211b076b6fd0a4b1e0ae1e9a5cca2df0275714b8f14",
+        "self_test_pulses": 0,
+        "sha256": "352c5bf07f870b864d93de836b4ad21dd4abc864f43cfe16bf5d865f70777a6d",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "coil-test",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-coil-test.json",
+        "scenario_sha256": "487008a4cabf997662c7f4f21d54a18c24a16ae8eb37cddc5c71849f5619da82",
+        "self_test_pulses": 6,
+        "sha256": "7e7e43c1dfa3bdb1f7d9995c3570255e08d891f7a2db389bb2dbd11f664843ef",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 69,
+        "boot_wait_s": 0,
+        "name": "single-lamps",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-single-lamps.json",
+        "scenario_sha256": "c6276d9af0e6ba1faee65235c1b7bb97c2055b1c39a38ab077a1e9317ac4040a",
+        "self_test_pulses": 5,
+        "sha256": "3c9bae2cb42f4e74716309499bb256e75c1229e14ccc6435e41bb4741e364523",
+        "snapshot_count": 70,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 78,
+        "boot_wait_s": 0,
+        "name": "switch-levels",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-switch-levels.json",
+        "scenario_sha256": "219bde7f2af228c6f474ee234ed1fcda96b4cfc068c0cfdd7f7edb960d2b8272",
+        "self_test_pulses": 7,
+        "sha256": "204cbe50e6a4faa28e35e5a017e7c801f4f9df736a74a54e266f1b60e1c9a457",
+        "snapshot_count": 151,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "boot-baseline",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-baseline.json",
+        "scenario_sha256": "08b38a2eb8729eaa0e97641a382d5215c67a120e84d16331db88b1d14b6c28af",
+        "self_test_pulses": 0,
+        "sha256": "4829b60b6e69993205506ff3879bc8f03a2fb8aa0e3c3b2b36ebb7ea92a3353f",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 10
+          }
+        ],
+        "name": "boot-outhole-10",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-outhole-10.json",
+        "scenario_sha256": "16dbd222c3a893886b06c48b636cc07e7c60524f353ce3e5b7de7ca87a4aef89",
+        "self_test_pulses": 0,
+        "sha256": "8878b51f27ccacee15c3afd523d9d90d656ec4f7824bed21ba0eaf201030f54c",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          10
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "boot-trough-11-13",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-trough-11-13.json",
+        "scenario_sha256": "2657cd6fa17b9d6f3a636a65cf79dcf98214457cb361665cfe8a8302cb6c0ef0",
+        "self_test_pulses": 0,
+        "sha256": "a8ae18313e220e48e0c2170736e80dabe39f6bb2778a5be47a8e458eb16ccf16",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 41
+          },
+          {
+            "state": 1,
+            "switch": 42
+          }
+        ],
+        "name": "boot-poppers-41-42",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-poppers-41-42.json",
+        "scenario_sha256": "f8de318e18fdee39fd3453c8938b59a8b7475336e53051c2ee9a2d5575f2148b",
+        "self_test_pulses": 0,
+        "sha256": "d22d8183699250b57bf56643ab77e06a8f3345f44176bdef5707e950751feb6f",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          41,
+          42
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "boot-shooter-43",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-shooter-43.json",
+        "scenario_sha256": "7fee99c913a2f61cf9e273bbd59ce01aea7833a02c6c020cb8358d38a551fb1d",
+        "self_test_pulses": 0,
+        "sha256": "d344f129e4b40011b5fd6a968807785c680a2975cc81227d4220ed852c445249",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          43
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 45
+          },
+          {
+            "state": 1,
+            "switch": 47
+          }
+        ],
+        "name": "boot-locks-45-47",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-locks-45-47.json",
+        "scenario_sha256": "0920549b200845d887915d4f4361b0e2588241c51664187022e86849f6bcbfe7",
+        "self_test_pulses": 0,
+        "sha256": "6392840b4f90b3608a0aac1e5890f893c64a05362805e7fe7272c18b6aaf8249",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          45,
+          47
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 45
+          }
+        ],
+        "name": "boot-lock-45",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-lock-45.json",
+        "scenario_sha256": "df5a45e15194336169735bbb0745fa907c90892c52227c812c70b25a6468ddb4",
+        "self_test_pulses": 0,
+        "sha256": "3caacb5150b6dbea139a3902fc3e8970bf1ddd472f707a9479e0d0a868c49598",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          45
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 47
+          }
+        ],
+        "name": "boot-lock-47",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-lock-47.json",
+        "scenario_sha256": "a2a42ff4515b3089ff60c13cc0394b6ff997199af92607f82c092f96b3544f49",
+        "self_test_pulses": 0,
+        "sha256": "d1f0e46be45772b6a7d2468e94ef46234c283db8487f8b315614202e7eecc4c0",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          47
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 33
+          }
+        ],
+        "name": "boot-drop-33",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-drop-33.json",
+        "scenario_sha256": "5c47347a063f99709b566f545776406080035c8371155036c93a3ae7607e1276",
+        "self_test_pulses": 0,
+        "sha256": "d762887cd184feb11ed11da74b28f223e23d2595f0eb0a55c9e7729ca9fb003c",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          33
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 57
+          },
+          {
+            "state": 1,
+            "switch": 58
+          },
+          {
+            "state": 1,
+            "switch": 59
+          }
+        ],
+        "name": "boot-drops-57-59",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-drops-57-59.json",
+        "scenario_sha256": "c70aedc5be06b2cc4dccadd2feaf79aa9c38ef27006166302ff684dfb37d8323",
+        "self_test_pulses": 0,
+        "sha256": "86c88facca8dc5eb7189298381ce988018f51d1620e9ea6e7ccb2f2d457ba5ed",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          57,
+          58,
+          59
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 52
+          }
+        ],
+        "name": "boot-station-52",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-station-52.json",
+        "scenario_sha256": "ed52bc8744a64274620135da798b97b7a4afa1c76ea3c71ae92ebc3a62277652",
+        "self_test_pulses": 0,
+        "sha256": "769806cc43e3a5c8bb423be6922a0949574c3f4b9fb07101a743e08e78612217",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          52
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 53
+          }
+        ],
+        "name": "boot-station-53",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-station-53.json",
+        "scenario_sha256": "e57bab96013bf0d66bf3968790a1c932d3e3f05e9d1a495d18933679bddffefe",
+        "self_test_pulses": 0,
+        "sha256": "5f84d457955e05418f604429a8a47edd221eda8ecbdc3a528f9d5d9292f498d0",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          53
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 52
+          },
+          {
+            "state": 1,
+            "switch": 53
+          }
+        ],
+        "name": "boot-station-52-53",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-boot-station-52-53.json",
+        "scenario_sha256": "86a0162d26636f6ec37d5aeb6639bafda03b8ccad740b88bfd4562ab4d7b1ec6",
+        "self_test_pulses": 0,
+        "sha256": "5cfe4a90fd5fb284a8d7793d531c8ec1e766d9f628bc254b350197561bb0a8c4",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          52,
+          53
+        ]
+      },
+      {
+        "action_count": 26,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 0,
+            "switch": 52
+          },
+          {
+            "state": 0,
+            "switch": 53
+          }
+        ],
+        "name": "station-reactive-ccw",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-station-reactive-ccw.json",
+        "scenario_sha256": "e1f62c24a5b3adb84714c5ad299a883d470beac784ff9efea6d18a1be1d5e822",
+        "self_test_pulses": 0,
+        "sha256": "5d0593cbad138fb92e79311b2d75345c2317fc85665f4c0d4cceeaaef9d4223a",
+        "snapshot_count": 27,
+        "watch_switches": [
+          -7,
+          -6,
+          52,
+          53
+        ]
+      },
+      {
+        "action_count": 26,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 0,
+            "switch": 52
+          },
+          {
+            "state": 0,
+            "switch": 53
+          }
+        ],
+        "name": "station-reactive-cw",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-station-reactive-cw.json",
+        "scenario_sha256": "ee665f837467ee9964e6fb411caebe022eaac4658a525488449e92969ef63988",
+        "self_test_pulses": 0,
+        "sha256": "f7ad81e6b0a51ccef0587be531a04602fa137e2769bfbcfe3cfea4002aacae5e",
+        "snapshot_count": 27,
+        "watch_switches": [
+          -7,
+          -6,
+          52,
+          53
+        ]
+      },
+      {
+        "action_count": 73,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "Fresh state directory holding only nvram/spstn_l5.nv (SHA-256 864f256a01c7fcf76947687b315f58d74570c3db2cf3d5dcb26c20ba17b69db8) from the retained initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/spstn-gameplay.json",
+        "scenario_sha256": "00787976ca8ef7583986bca243c9d0917872ce07386dee7d9d47d28cebaae4d5",
+        "self_test_pulses": 0,
+        "sha256": "c1b7eb4294c61cc947aa56754d33f2b4d3a17e6fcf8654e8d8ee9f841c6ea368",
+        "snapshot_count": 74,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          3,
+          6,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          33,
+          35,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          45,
+          46,
+          47,
+          48,
+          50,
+          51,
+          54,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      }
+    ],
+    "rom_archive_sha256": "8c5cdaf5a8e6a4b112873f17c6a66ca34de6ac15eb830474965cdfa035434f7c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and NVRAM remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF, of {files: [{path, sha256, size}], format: 'pinmame-external-evidence-manifest', game, version: 1}; files lists every file under source.path recursively (each run's run.json, copied scenario.json, stdout and stderr logs, and every state-directory file including the inherited and written NVRAM) except manifest.json and manifest.sha256, sorted by POSIX relative path. tools/build_external_evidence_manifest.py writes and re-checks it.",
+    "path": "external:pinmame-review-artifacts/williams.space-station.1987/harness",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+    "sha256": "1b8a433f0809327a41060d9b4f3731419815a42a99a58fa62c5447aa085492d8"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
