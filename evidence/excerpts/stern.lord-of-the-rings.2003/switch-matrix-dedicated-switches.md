@@ -108,6 +108,6 @@ Transcribed from `Lord-of-the-Rings-Manual.pdf`, PDF page 6, printed `DR. 4`. Th
 | DS-5 | *(blank)* | U206 | GRY-GRN | CN6-P7 | *(blank)* | *(blank)* |
 | DS-6 | #6 VOLUME (RED BUTTON) | U206 | GRY-BLU | CN6-P8 | on Coin Door | 180-5192-02 |
 | DS-7 | #7 SERV. CRED. (GREEN BUTTON) | U206 | GRY-VIO | CN6-P9 | on Coin Door | 180-5192-04 |
-| DS-8 | #8 BEGIN TEST (BLACK BUTTON) | U206 | GRY-BLK | CN6-P10 | on Coin Door | 180-5192-02 |
+| DS-8 | #8 BEGIN TEST (BLACK BUTTON) | U206 | GRY-BLK | CN6-P10 | on Coin Door | 180-5192-00 |
 
 Addressing: `address = (column - 1) * 8 + row`. Geometry: 8 drive columns (Q1-Q8, GRN-*, CN5) x 8 return rows (U400/U401, WHT-*, CN7).
