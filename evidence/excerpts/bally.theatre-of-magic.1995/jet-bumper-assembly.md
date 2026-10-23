@@ -21,7 +21,7 @@ Associated Parts:
 | 8 | 03-8254-12 | Jet Bumper Cap, Tr. Orange |
 
 Reading: each jet bumper carries one #555 wedge bulb. The printed lamp matrix (printed 2-40) has no
-bumper lamp, so these bulbs are not matrix lamps; they are playfield G.I. bulbs, and #555 is the bulb
-the Solenoid/Flasher Table prints for G.I. strings 01 and 02. This corroborates, but does not by
-itself establish, that strings 01 and 02 are the playfield strings; the Power Driver Board connector
-list (printed 3-27) establishes it.
+bumper lamp, so these bulbs are not matrix lamps; they are playfield G.I. bulbs. Owners put the
+playfield G.I. on strings 03-05 (`gi-playfield-field-reports.md`), for which the Solenoid/Flasher
+Table prints #44, so the table's one bulb per string names the string's usual bulb, not every
+socket on it.

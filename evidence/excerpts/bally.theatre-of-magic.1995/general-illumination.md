@@ -22,18 +22,25 @@ Column headers, as printed at the top of the table: `Voltage Connections` (sub-c
 Footnote on the page: `J1xx=Power Driver Board; J9xx=Fliptronic II Board; 24-6549=#44 bulb;
 24-8704=#89 bulb; 24-8768=#555 bulb; 24-8802=#906 bulb`.
 
-## These rows are printed under the wrong location columns
+## Which location columns are right
 
 The game's own Power Driver Board connector list (printed 3-27, PDF page 149; see
-`power-driver-gi-connectors-j119-j120.md` and `power-driver-gi-connectors-j121.md`) reads every one
-of these pins the other way round: J120-1/-2/-7/-8 go "to playfield" and J121-3/-5/-6/-9/-10/-11 go
-"to insert". The same list agrees with this table's Playfield and Backbox columns on every flashlamp
-row (J122 "to playfield flashlamps", J124 "to insert flashlamp"), so its playfield/insert vocabulary
-is not in doubt and only the five G.I. rows are misprinted. The bulbs move with the connectors: #555
-(24-8768, a wedge-base bulb) is the playfield string bulb, the same part the Jet Bumper Assembly
-fits (printed 2-20, `jet-bumper-assembly.md`). That #44 (24-6549) is the insert-board bulb is an
-inference from the connector list; no insert-board parts page is retained, and 24-6549 appears only
-in the table legends.
+`power-driver-gi-connectors-j119-j120.md` and `power-driver-gi-connectors-j121.md`) prints the same
+pins with the opposite destination words: J120-1/-2/-7/-8 "to playfield" and J121-3/-5/-6/-9/-10/-11
+"to insert". One of the two pages is wrong, and the manual cannot say which. Owners of real machines
+can. Four independent repair reports (`gi-backbox-field-reports.md`) trace a dark backbox to J120,
+its Brown and Orange strings (01 and 02) or its fuses F109/F110. On one machine both strings were
+dead and the playfield G.I. kept working. Four more threads (`gi-playfield-field-reports.md`) are
+about the playfield strings, and two of them put string 04 on the left side of the playfield and
+string 05 on the right. So this table's location columns are right and
+the connector list's destination words are the misprint, for the G.I. pins only. Its pin numbers and
+wire colours agree with this table, and its flashlamp rows agree with this table's columns (J122 "to
+playfield flashlamps", J124 "to insert flashlamp").
+
+The bulbs agree too. Owners name #44 as the playfield G.I. bulb ("GI 44s/89s", "SMD type #44 LEDs"
+in a playfield holder), and this table prints #44 for strings 03-05 and #555 for 01-02. The printed
+bulb column names one bulb per string. The jet bumpers are a known exception: their assembly fits a
+#555 wedge (printed 2-20, `jet-bumper-assembly.md`) although they are playfield G.I.
 
 The table also prints each string's return pin (J120-1 "Brown Return G.I." on the connector list)
 under Voltage Connections and its 6.8VAC supply pin (J120-7 "White-Brown 6.8VAC") under Drive
@@ -41,8 +48,10 @@ Connections. The printed G.I. circuit (printed 3-10, PDF page 132) puts the tria
 The definition therefore records the return pin as each string's control connection and the 6.8VAC
 pin as its power connection.
 
-The retained known-working script's `UpdateGI` (lines 1658-1716) dims playfield Light collections for
-cases 0-3. Cases 0 and 1 are the two real playfield strings. Cases 2 and 3 are insert strings 03 and
-04; the manual controls their physical classification and the script their runtime binding, so the
-disagreement is recorded as `conflict.gi-strings-3-4-insert-vs-script-playfield-binding`. It has no
-case 4.
+The retained known-working script's `UpdateGI` (lines 1658-1716) dims playfield Light collections
+for cases 0-3. That is not this machine's split. Cases 0 and 1 are the backbox strings 01 and 02,
+and they drive the playfield collections `GITop`/`GIBumpers` and `GILeft`. Cases 2 and 3 are
+playfield strings 03 and 04, but they drive the right-hand collections `GIRight` and `GIMiddle`,
+while owners put string 04 on the left side. There is no case 4 for string 05, the right side. This
+is a defect in the table's lighting script, not a disagreement about the machine. The definition
+records it on the G.I. devices and does not take bulb-to-string membership from it.

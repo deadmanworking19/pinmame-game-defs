@@ -68,7 +68,7 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["unresolved_conflicts", "spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
 		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
@@ -91,27 +91,17 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 		self.assertEqual("vpx", playfield["units"])
 		self.assertNotEqual(2162.0, playfield["height"], "must not silently reuse the common WPC bottom bound")
 
-	def test_only_the_insert_string_split_authority_conflict_remains(self) -> None:
-		# The Power Driver Board connector list (printed 3-27) settles which strings feed the
-		# playfield, so the former manual-table-vs-script conflict must not come back. The
-		# script's playfield binding of insert strings 03/04 is the runbook's split-authority
-		# case and stays a first-class conflict with a resolution path.
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.gi-strings-3-4-insert-vs-script-playfield-binding"}, set(conflicts))
-		conflict = conflicts["conflict.gi-strings-3-4-insert-vs-script-playfield-binding"]
-		self.assertNotIn("status", conflict)
-		self.assertIn("Resolution path:", conflict["description"])
-		self.assertIn("3-27", conflict["description"])
-		self.assertEqual(
-			{"manual.bally.theatre-of-magic.1995", "vpx-script.tom-2-4"}, set(conflict["source_refs"])
-		)
+	def test_no_gi_conflict_remains(self) -> None:
+		# Owners' repair reports settle the manual's two disagreeing G.I. pages for the
+		# Solenoid/Flasher Table, so neither former G.I. conflict may come back, and the
+		# script's per-string collections are a table defect recorded on the devices.
+		self.assertEqual([], self.definition["conflicts"])
 		text = json.dumps(self.definition)
 		self.assertNotIn("conflict.gi-strings-1-2-backbox-vs-script-playfield-binding", text)
-		# Every conflict a note cites must exist in the record.
+		self.assertNotIn("conflict.gi-strings-3-4-insert-vs-script-playfield-binding", text)
 		import re
 
-		cited = set(re.findall(r"conflict\.[a-z0-9-]*[a-z0-9]", text))
-		self.assertEqual(set(), cited - set(conflicts))
+		self.assertEqual([], re.findall(r"conflict\.[a-z0-9-]*[a-z0-9]", text))
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -231,13 +221,17 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 		self.assertEqual("Lower Right Flipper Power", self.solenoids[45]["label"])
 		self.assertEqual("Lower Left Flipper Power", self.solenoids[47]["label"])
 
-	def test_gi_playfield_strings_follow_the_power_driver_connector_list(self) -> None:
+	def test_gi_strings_follow_the_solenoid_table_and_owner_reports(self) -> None:
 		expected = {
 			0: ("J120-1", "Q18", "J120-7"),
 			1: ("J120-2", "Q10", "J120-8"),
 			2: ("J121-3", "Q14", "J121-9"),
 			3: ("J121-5", "Q16", "J121-10"),
 			4: ("J121-6", "Q12", "J121-11"),
+		}
+		reports = {
+			"human-review.theatre-of-magic.backbox-gi-reports",
+			"human-review.theatre-of-magic.playfield-gi-reports",
 		}
 		for address, (control, transistor, power) in expected.items():
 			wiring = self.gi[address]["wiring"]
@@ -246,53 +240,82 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 			self.assertEqual(power, wiring["power_connection"], address)
 			self.assertNotIn("Backbox", control + power, address)
 			self.assertNotIn("Playfield", control + power, address)
-		for address in (2, 3, 4):
+			self.assertTrue(reports <= set(self.gi[address]["provenance"]["source_refs"]), address)
+			self.assertNotIn("quantity", self.gi[address]["physical"], address)
+		# Strings 01-02 (J120) light the backbox insert board, whatever the connector
+		# list's destination words say.
+		for address in (0, 1):
+			notes = self.gi[address]["physical"]["notes"]
 			self.assertEqual("not_applicable", self.gi[address]["spatial"]["status"], address)
 			self.assertEqual("cabinet_or_service", self.gi[address]["spatial"]["reason"], address)
-			self.assertIn("to insert", self.gi[address]["physical"]["notes"], address)
-		self.assertIn("coin door", self.gi[4]["physical"]["notes"])
-		self.assertEqual(["cabinet.backbox", "cabinet.coin-door"], self.gi[4]["roles"])
-		for address in (2, 3):
 			self.assertEqual(["cabinet.backbox"], self.gi[address]["roles"], address)
-			self.assertIn(
-				"conflict.gi-strings-3-4-insert-vs-script-playfield-binding",
-				self.gi[address]["physical"]["notes"],
-				address,
-			)
-		for address in (0, 1):
+			self.assertIn("'to playfield'", notes, address)
+			self.assertIn("A backbox insert-board string", notes, address)
+			self.assertIn("defect in the table's lighting script", notes, address)
+		self.assertIn("upper half of the backbox", self.gi[1]["physical"]["notes"])
+		# Strings 03-05 (J121) are the playfield strings.
+		for address in (2, 3, 4):
+			notes = self.gi[address]["physical"]["notes"]
+			self.assertIn("'to insert'", notes, address)
+			self.assertIn("A playfield string", notes, address)
+		self.assertNotIn("spatial", self.gi[2])
+		for address, area, count in ((3, "left side", 9), (4, "right side", 9)):
 			spatial = self.gi[address]["spatial"]
-			self.assertEqual("observed", spatial["status"], address)
-			self.assertNotIn("quantity", self.gi[address]["physical"], address)
-			self.assertIn("to playfield", self.gi[address]["physical"]["notes"], address)
+			self.assertEqual("candidate", spatial["status"], address)
+			self.assertEqual(count, len(spatial["placements"]), address)
+			self.assertIn(area, self.gi[address]["physical"]["notes"], address)
 			for placement in spatial["placements"]:
-				self.assertEqual("observed", placement["provenance"]["status"], address)
+				self.assertEqual("candidate", placement["provenance"]["status"], address)
 				self.assertEqual("emitter", placement["role"], address)
-		self.assertEqual(22, len(self.gi[0]["spatial"]["placements"]))
-		self.assertEqual(9, len(self.gi[1]["spatial"]["placements"]))
+				self.assertIn("human-review.theatre-of-magic.playfield-gi-reports", placement["provenance"]["source_refs"])
+		self.assertIn("coin door", self.gi[4]["physical"]["notes"])
+		self.assertEqual(["cabinet.coin-door"], self.gi[4]["roles"])
+		self.assertNotIn("roles", self.gi[2])
+		self.assertNotIn("roles", self.gi[3])
+
+	def test_candidate_gi_bulbs_lie_in_the_owners_areas(self) -> None:
+		import curate_theatre_of_magic as curator
+
+		# The candidates rest on "left side" and "right side", so every one must lie
+		# clearly on that side of the playfield, below the top lanes.
+		for address, (collection, area, bulbs) in curator.GI_CANDIDATE_POSITIONS.items():
+			for name, x, y in bulbs:
+				self.assertGreater(y, 0.4, name)
+				if area == "left side":
+					self.assertLess(x, 0.25, name)
+				else:
+					self.assertEqual("right side", area)
+					self.assertGreater(x, 0.65, name)
+		self.assertEqual({3: "GILeft", 4: "GIRight"}, {a: c for a, (c, _, _) in curator.GI_CANDIDATE_POSITIONS.items()})
+		self.assertEqual(
+			{"GITop": 0, "GIBumpers": 0, "GILeft": 1, "GIRight": 2, "GIMiddle": 3}, curator.GI_SCRIPT_CASES
+		)
 
 	def test_gi_placements_are_one_object_per_bulb_with_no_render_doubles(self) -> None:
 		import curate_theatre_of_magic as curator
 
-		for address, objects in curator.GI_POSITIONS.items():
+		for address, (_collection, _area, objects) in curator.GI_CANDIDATE_POSITIONS.items():
 			placements = self.gi[address]["spatial"]["placements"]
 			self.assertEqual([(x, y) for _, x, y in objects], [(p["x"], p["y"]) for p in placements], address)
 			names = [name for name, _, _ in objects]
 			self.assertEqual(len(names), len(set(names)), address)
 		every = [
 			(name, x, y)
-			for objects in list(curator.GI_POSITIONS.values()) + list(curator.UNASSIGNED_PLAYFIELD_GI.values())
+			for objects in [bulbs for _c, _a, bulbs in curator.GI_CANDIDATE_POSITIONS.values()]
+			+ list(curator.UNASSIGNED_PLAYFIELD_GI.values())
 			for name, x, y in objects
 		]
+		self.assertEqual(45, len(every))
 		limit = curator.GI_RENDER_DOUBLE_DISTANCE
 		for index, (name, x, y) in enumerate(every):
 			for other, ox, oy in every[index + 1:]:
 				distance = (((x - ox) * PLAYFIELD_WIDTH) ** 2 + ((y - oy) * PLAYFIELD_HEIGHT) ** 2) ** 0.5
 				self.assertGreater(distance, limit, f"{name} and {other} are render doubles of one bulb")
-		# No reflection sprite, off-playfield helper or bumper halo light is ever placed;
+		# No reflection sprite, off-playfield helper or bumper halo light is ever listed;
 		# each jet bumper's G.I. bulb is its modelled bulb l1/l2/l3.
 		for name, _, _ in every:
 			self.assertTrue(name.lower().startswith("light") or name in {"l1", "l2", "l3"}, name)
-		self.assertEqual({"l1", "l2", "l3"}, {name for name, _, _ in curator.GI_POSITIONS[0] if not name.startswith("light")})
+		self.assertEqual({"l1", "l2", "l3"}, {name for name, _, _ in curator.UNASSIGNED_PLAYFIELD_GI["GIBumpers"]})
 
 	def test_lamp_quantities_and_cabinet_lamps_are_explicit(self) -> None:
 		for address in (26, 45, 54, 63, 81):
@@ -320,8 +343,8 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 			spatial = device.get("spatial")
 			if spatial is None or spatial["status"] == "not_applicable":
 				continue
-			# Only the two playfield G.I. strings may fall short of validated.
-			expected_status = "observed" if device["id"] in {"gi.string-1", "gi.string-2"} else "validated"
+			# Only the left- and right-side playfield G.I. strings may fall short of validated.
+			expected_status = "candidate" if device["id"] in {"gi.string-4", "gi.string-5"} else "validated"
 			self.assertEqual(expected_status, spatial["status"], device["id"])
 			for placement in spatial["placements"]:
 				located += 1
@@ -418,6 +441,15 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 			"5f8bb3e0493c408484e475516e2f2c3d84b3487dcfb63eb231bca2c40b531253",
 			sources["vpx-table.tom-2-4"]["sha256"],
 		)
+		for source_id in ("human-review.theatre-of-magic.backbox-gi-reports", "human-review.theatre-of-magic.playfield-gi-reports"):
+			source = sources[source_id]
+			self.assertEqual("human_review", source["kind"])
+			self.assertTrue(source["uri"].startswith("https://"), source_id)
+			self.assertIn(
+				"6635a6eb0fdbbaaa157ea486e7f5d98ba1044be84f36cbeebdadf28174686ed5", source["locator"], source_id
+			)
+			self.assertTrue(source.get("attribution"), source_id)
+			self.assertEqual(1, len(source["excerpts"]), source_id)
 		self.assertNotIn("runtime.theatre-of-magic", sources)
 		self.assertNotIn("rom.tom", sources)
 		for source in self.definition["sources"]:
@@ -577,14 +609,36 @@ class TheatreOfMagicRetainedEvidenceTests(unittest.TestCase):
 				key=lambda item: item[0].lower(),
 			)
 
-		for address, collection_names in curator.GI_COLLECTIONS.items():
+		for address, (collection, _area, bulbs) in curator.GI_CANDIDATE_POSITIONS.items():
 			self.assertEqual(
-				sorted(curator.GI_POSITIONS[address], key=lambda item: item[0].lower()),
-				representatives(collection_names),
+				sorted(bulbs, key=lambda item: item[0].lower()),
+				representatives((collection,)),
 				address,
 			)
 		for collection, objects in curator.UNASSIGNED_PLAYFIELD_GI.items():
 			self.assertEqual(sorted(objects, key=lambda item: item[0].lower()), representatives((collection,)), collection)
+
+
+	def test_owner_gi_reports_are_retained_under_their_manifest(self) -> None:
+		import hashlib
+
+		import curate_theatre_of_magic as curator
+		from build_external_evidence_manifest import check_manifest
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		directory = Path(root) / "theatre-of-magic-1995" / "field-reports"
+		self.assertEqual(curator.FIELD_REPORTS_MANIFEST_SHA256, check_manifest(directory, "tom_13"))
+		# Every retained page an excerpt cites by hash is in the directory with that hash.
+		for excerpt in ("gi-backbox-field-reports.md", "gi-playfield-field-reports.md"):
+			text = (ROOT / "evidence" / "excerpts" / "bally.theatre-of-magic.1995" / excerpt).read_text(encoding="utf-8")
+			import re
+
+			cited = re.findall(r"`([A-Za-z0-9._-]+\.(?:html|json|jpeg))`(?: \(|, )SHA-256\s+`([0-9a-f]{64})`", text)
+			self.assertEqual(4 if excerpt.startswith("gi-backbox") else 6, len(cited), excerpt)
+			for name, digest in cited:
+				self.assertEqual(digest, hashlib.sha256((directory / name).read_bytes()).hexdigest(), name)
 
 
 if __name__ == "__main__":

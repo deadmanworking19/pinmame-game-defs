@@ -553,7 +553,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Centaur's promotion settles its lamp-113 conflict, removing one.
 		# Terminator 2's ROM G.I. test and drop-target parts list settle both of its conflicts, removing one more.
 		# World Cup Soccer's location drawings and jet-bumper harness run settle its jet-bumper conflict, removing one more.
-		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Theatre of Magic's owner G.I. reports withdraw its insert-string conflict, removing one.
+		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		self.assertEqual(809, len(catalog["machines"]))
 		self.assertEqual(795, catalog["summary"]["game_count"])

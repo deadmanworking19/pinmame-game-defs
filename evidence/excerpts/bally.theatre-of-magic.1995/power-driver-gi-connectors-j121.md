@@ -35,7 +35,10 @@ against a native-resolution render of the page.
 | J124-5 | Blue-Yellow Sol 28 to insert flashlamp |
 
 Reading: J121 carries G.I. strings 03, 04 and 05 (Yellow, Green and Violet returns; the wire colours
-the Solenoid/Flasher Table prints for strings 03-05) to the insert board in the backbox. The
-Solenoid/Flasher Table prints these pins under its Playfield columns; see `general-illumination.md`.
-J122 and J124 show that this list uses "insert" for the table's Backbox column: the table prints
-flashers 25-28 with a Playfield drive on J122 and a Backbox drive on J124.
+the Solenoid/Flasher Table prints for strings 03-05). Its destination words, "to insert", are wrong
+for this game. Owners of real machines put string 04 on the left side of the playfield and string 05
+on the right side (`gi-playfield-field-reports.md`). With both J120 strings dead, the playfield G.I.
+still lit (`gi-backbox-field-reports.md`). The Solenoid/Flasher Table prints these pins under its
+Playfield columns (`general-illumination.md`). The flashlamp rows are not affected: J122 "to
+playfield flashlamps" and J124 "to insert flashlamp" match the table's Playfield and Backbox drives
+for flashers 25-28, so only the G.I. destination words are misprinted.

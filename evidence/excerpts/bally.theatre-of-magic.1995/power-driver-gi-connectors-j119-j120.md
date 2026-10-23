@@ -30,6 +30,9 @@ A-17051-1 is the Coin Door Interface PCB Assembly (printed 3-32, PDF page 154; s
 `coin-door-interface-gi.md`).
 
 Reading: J120 carries G.I. strings 01 and 02 (Brown/White-Brown and Orange/White-Orange, the wire
-colours the Solenoid/Flasher Table prints for strings 01 and 02) to the playfield. The Solenoid/Flasher
-Table prints the same pins under its Backbox columns; see `general-illumination.md`. J119 carries a
-White-Violet / Violet pair, string 05's colours (J121-11 / J121-6), to the coin door interface board.
+colours the Solenoid/Flasher Table prints for strings 01 and 02). Its destination words, "to
+playfield", are wrong for this game. Owners of real machines trace a dark backbox to these pins (a
+burnt J120-8, both J120 strings dead with the playfield still lit; `gi-backbox-field-reports.md`),
+and the Solenoid/Flasher Table prints the same pins under its Backbox columns (`general-illumination.md`).
+Strings 01 and 02 light the backbox insert board. J119 carries a White-Violet / Violet pair, string
+05's colours (J121-11 / J121-6), to the coin door interface board.
