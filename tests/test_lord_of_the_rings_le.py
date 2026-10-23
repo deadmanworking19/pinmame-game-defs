@@ -101,7 +101,12 @@ class LordOfTheRingsLimitedEditionTests(unittest.TestCase):
 					self.assertEqual(original.get(field), device.get(field), f"{key} {field}")
 		self.assertEqual([m["id"] for m in self.base["mechanisms"]], [m["id"] for m in self.definition["mechanisms"]])
 		for le, base in zip(self.definition["mechanisms"], self.base["mechanisms"]):
-			self.assertEqual({k: v for k, v in base.items() if k != "provenance"}, {k: v for k, v in le.items() if k != "provenance"})
+			self.assertEqual({k: v for k, v in base.items() if k not in ("provenance", "behavior")}, {k: v for k, v in le.items() if k not in ("provenance", "behavior")})
+			self.assertTrue(le["behavior"].startswith(base["behavior"]), le["id"])
+			if le["id"] == "mechanism.ring-magnet":
+				self.assertIn("F7, 4A", le["behavior"][len(base["behavior"]):])
+			else:
+				self.assertEqual(base["behavior"], le["behavior"])
 		self.assertEqual(self.base["relationships"], self.definition["relationships"])
 		self.assertEqual([{k: v for k, v in d.items() if k != "provenance"} for d in self.base["displays"]],
 		                 [{k: v for k, v in d.items() if k != "provenance"} for d in self.definition["displays"]])
@@ -230,6 +235,33 @@ class LordOfTheRingsLimitedEditionTests(unittest.TestCase):
 
 		pdf = manuals / LE_DOCUMENTS / "firepowerpinball" / "LOTR-LE-ONLY-Cabinet-Matrix-11x17.pdf"
 		self.assertEqual(self.chart, lotr_le_chart_transcription.transcribe(pdf))
+
+	def test_io_board_parts_seed_matches_the_retained_schematic(self) -> None:
+		parts = load_json(ROOT / "tools" / "seeds" / "stern" / "lord-of-the-rings-limited-edition-2009-io-board-parts.json")
+		self.assertEqual(["—", *(str(n) for n in range(1, 68))], [item["item"] for item in parts["items"]])
+		designators = {item["item"]: item["ref"] for item in parts["items"]}
+		self.assertEqual(", ".join(f"Q{n}" for n in range(33, 43)), designators["31"])
+		self.assertEqual(", ".join(f"U{n}" for n in range(10, 18)), designators["33"])
+		manuals = _root("PINMAME_MANUALS_ROOT")
+		if manuals is None:
+			self.skipTest("retained manuals are not available")
+		import lotr_le_io_board_parts
+
+		pdf = manuals / LE_DOCUMENTS / "firepowerpinball" / "Sec 5 Chp 4-3 IO-520-5249-schematics-11x17.pdf"
+		self.assertEqual(parts, lotr_le_io_board_parts.transcribe(pdf))
+
+	def test_the_curator_refuses_a_coil_row_the_2003_table_does_not_print(self) -> None:
+		import curate_lord_of_the_rings_le as curator
+
+		row = curator.COILS[19]
+		original = row["coil"]
+		try:
+			row["coil"] = "26-1200 / 090-5020-00B"
+			with self.assertRaises(SystemExit):
+				curator._check_coil_row(19)
+		finally:
+			row["coil"] = original
+		curator._check_coil_row(19)
 
 	def test_retained_le_documents_match_their_sources(self) -> None:
 		manuals = _root("PINMAME_MANUALS_ROOT")

@@ -4,8 +4,10 @@ The same scenario plays a game on ``lotr_le`` (10.02, the 2009 Limited Edition) 
 (10.00, the 2003 production machine): it boots with four balls in the trough, starts a game, serves
 a ball and closes every ordinary playfield switch twice. The comparison is about the right Helm's
 Deep flasher. 10.00 drives it on public solenoid 14 and never touches 28. 10.02 drives 14 and 28
-together: every on and every off transition of one has the same transition of the other at the same
-emulated time, so 28 is a mirror of 14 in play, not only in the flash-lamp test. That is why a
+together: every on and every off transition of one has the same transition of the other within
+``SAME_INSTANT_S`` on the harness clock, so 28 is a mirror of 14 in play, not only in the flash-lamp
+test. The harness stamps each solenoid callback with the host's monotonic clock when it receives it,
+so this is coincidence of the published transitions, not a measured emulated instant. That is why a
 Limited Edition, whose loom moves the flasher to driver 28 and leaves 14 unconnected, lights it,
 and why the firmware still works in a cabinet wired like the 2003 machine.
 
@@ -32,8 +34,8 @@ LIBRARY_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 ROM_ARCHIVE_SHA256 = "4999a0032bef06bf00bab90e069e65a676e48959333c338b13ef601a1cc31cc6"
 HARNESS = "lord-of-the-rings-limited-edition-2009/curation-2026-10-23/harness"
 EVIDENCE = "evidence/runtime/whitestar/lord-of-the-rings-limited-edition-gameplay.json"
-# Two transitions are the same event when the emulator reports them within this many seconds; the
-# runner timestamps each callback separately, so simultaneous outputs differ in the fourth decimal.
+# Two transitions count as one event when their callbacks reach the harness within this many seconds
+# of each other; the runner stamps each callback on receipt with the host's monotonic clock.
 SAME_INSTANT_S = 0.001
 RUNS = {
 	"lotr_le": {
@@ -107,7 +109,7 @@ def build(artifacts: Path) -> dict:
 		seen = sorted({number for number in _on_sequence(run)})
 		if driver == "lotr_le":
 			note = (f"10.02, the Limited Edition's firmware. Solenoid 14 switched on {activations} times during the game, and every on and off "
-			        f"transition of 14 has the same transition of 28 within {SAME_INSTANT_S * 1000:g} ms of emulated time, and vice versa: "
+			        f"transition of 14 has the same transition of 28 within {SAME_INSTANT_S * 1000:g} ms on the harness clock (host monotonic time at callback receipt), and vice versa: "
 			        "the firmware drives 28 as a mirror of 14, so the right Helm's Deep flasher lights on either driver.")
 		else:
 			note = (f"10.00, the 2003 production machine's firmware, under the same scenario. Solenoid 14 switched on "

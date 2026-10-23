@@ -42,6 +42,8 @@ SPATIAL_REPORT_PATH = ROOT / "reports/spatial/stern/lord-of-the-rings-limited-ed
 KNOWLEDGE_PATH = ROOT / "knowledge/stern/lord-of-the-rings-limited-edition-2009.md"
 EXCERPT_DIR = ROOT / "evidence/excerpts/stern.lord-of-the-rings-limited-edition.2009"
 CHART = load_json(CHART_PATH)
+IO_PARTS_PATH = ROOT / "tools/seeds/stern/lord-of-the-rings-limited-edition-2009-io-board-parts.json"
+IO_PARTS = load_json(IO_PARTS_PATH)
 
 CATALOG = "pinmame.catalog.97aa922bf8e4"
 CORE = "pinmame.core.97aa922bf8e4"
@@ -136,6 +138,7 @@ OVERLAYS = [
 		("High-current bridge, lower feed", "J11-P2 I/O BD., FROM BLK-ORG AC Voltages IN 48v AC", "J11-P3 I/O BD., FROM BLK-YEL AC Voltages IN 48v AC"),
 		("Ring magnet fuse", "F20 Slo-Blo FOR MAGNET", "F7 4A* Slo-Blo (T), Ring Magnet *May need 5A S.B."),
 		("High-current coil fuse", "3A Slo-Blo F21", "F8 3A Slo-Blo (T)"),
+		("High-current bridge labels", "BRIDGE 1 50v HIGH CURRENT COILS, GND, BRDG1", "the same three labels, redrawn unchanged with the rest of that corner"),
 	]),
 	("103", "General Illumination Circuit Detailed Wiring Diagram", [
 		("J15 pin 9 wire", "VIOLET", "GRY-YEL"),
@@ -170,6 +173,7 @@ OVERLAYS = [
 		("Lamp row 8 return wire (J12-P9, Q40)", "RED-GRY", "BRN-BLK"),
 		("Lamp row 9 return wire (J12-P10, Q41)", "RED-WHT", "ORG-WHT"),
 		("Both grids", "unlabelled", "column labels C1-C8 and row labels R1-R8 (switches) and R1-R10 (lamps)"),
+		("Captions beside switches 3 and 7", "*Future Expansion, printed rotated beside each", "*Future Expansion, redrawn unchanged beside each"),
 	]),
 	("105", "Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations", [
 		("Terminal strip D (Q25 Pops X3 jumper)", "ORANGE", "ORANGE to YEL-ORG"),
@@ -186,8 +190,15 @@ OVERLAYS = [
 # Where the overlays disagree with the chart this record follows, by device, for the device notes.
 SWITCH_COLUMN_OVERLAY = {1: "PINK-GRY", 2: "GRN-BLK", 3: "GRN", 7: "BRN-WHT"}
 SWITCH_ROW_OVERLAY = {3: "VIO", 4: "PINK-VIO", 8: "GRN-WHT"}
+_COIL_BUS = (
+	"The owner's annotated manual page 100 also reads BRN-BLU at J10-P4/5. His page 101 relabels the 2003 drawing's J10 pins 4,5 as 7,6, the board-side pins of the 520-5249-00 behind the \"Z\" adapter, "
+	"and draws that 50v bus YEL-BLK; this chart keeps the harness-side J10-P4/5 and BRN-BLU."
+)
 COIL_OVERLAY_NOTES = {
-	5: "The owner's annotated manual page 100 reads its control line as ORG-YEL; his page 101 and this chart print GRY-BLK.",
+	**{address: _COIL_BUS for address in (1, 2, 3, 4, 7, 9, 10, 11)},
+	5: "The owner's annotated manual page 100 reads its control line as ORG-YEL; his page 101 and this chart print GRY-BLK. " + _COIL_BUS,
+	6: "The owner's annotated manual page 101 relabels the magnet's high-power feed J10-P3 as J10-P8, the board-side pin of the 520-5249-00, and its fuse F20 as F7, 4A, with \"*May need 5A S.B.\"; this chart keeps J10-P3.",
+	8: "The owner's annotated manual page 100 leaves this row's printed GRY-YEL~3A Fuse~YEL-VIO unannotated; his page 101 draws the bus that feeds it, J10 pins 1,2 on the 2003 board relabelled 10,9, as BRN-BLU, as this chart prints.",
 	25: "The owner's annotated manual page 101 reads its control line at J6 pin 1 as BLK; this chart prints BLK-BRN.",
 	26: "The owner's annotated manual page 101 reads its control line at J6 pin 2 as BLK-YEL; this chart prints BLK-RED.",
 	46: "The owner's annotated manual pages 100 and 106 read its fuse feed as ORG-BRN~3A Fuse~BRN-BLU from J10-P4/5, and page 101 draws the board-side 50v line as BRN-BLU on J10 pins 10,9; this chart prints BLU-YEL~3A Fuse~YEL-BLK at J10-P1/2.",
@@ -317,13 +328,12 @@ def _excerpt_contents() -> dict[Path, str]:
 		"# I/O Power Driver PCB S.A.M. System (520-5249-00)",
 		"`Sec 5 Chp 4-3 IO-520-5249-schematics-11x17.pdf`, a Stern manual chapter the LE owner published as `SAM I/O Power Driver Board 520-5249-00`: https://firepowerpinball.com/2ya/lotr/Sec%205%20Chp%204-3%20IO-520-5249-schematics-11x17.pdf (SHA-256 `ab5c8226945de803b1236db9d06d69043e9a744e7f46fbe140a787a660d15492`). Seven pages, vector; read from the text layer.",
 		"Page titles: `I/O POWER DRIVER PCB S.A.M. System (520-5249-00) Schematic (Sheet 1 of 4)` to `(Sheet 4 of 4)` on Section 5, Chapter 4 pages 118-125, `... Component Layout` on page 128 and `... Parts` on page 129.",
-		"Parts list, the rows for the driver transistors and the lamp-column drivers, as printed:",
-		_table(["Item", "Qty.", "SPI part number (Mfg. P.N.)", "Ref-designator", "Description"], [
-			[31, 10, "110-0088-01 (203-0003591)", "Q33, Q34, Q35, Q36, Q37, Q38, Q39, Q40, Q41, Q42", "Fet Tht. TO-220 STP20NE06L NFet 60V 20A"],
-			[32, 16, "110-0106-00 (203-0003592)", "Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16", "Fet Tht. TO-220 20N10L NFet 100V 20A"],
-			[33, 8, "110-0089-00 (203-0003597)", "U10, U11, U12, U13, U14, U15, U16, U17", "Fet Tht. PENTAWAT VN02N NFet HighSide 26V 6A"],
-			[35, 16, "110-0067-00 (213-0003565)", "Q17, Q18, Q19, Q20, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28,Q29, Q30, Q31, Q32", "Transistor Tht. TO-220 TIP122 NPN 100V 5A"],
-		]),
+		f"The complete parts list of page 129, `{IO_PARTS['title']}`, as printed: the assembly line and items 1-67. Read from the text layer by column with `tools/lotr_le_io_board_parts.py` "
+		"(seed `tools/seeds/stern/lord-of-the-rings-limited-edition-2009-io-board-parts.json`); a reference or description printed on two lines is joined with a space. Four cells are given as the page renders them: "
+		"the page overprints two words of items 33 and 39 on each other, its text layer drops item 55's ohm sign, and item 62's manufacturer number runs into the next column.",
+		f"Header: `{IO_PARTS['header']}`.",
+		_table(["Item", "Qty.", "SPI part number", "(Mfg. P.N.)", "Ref-designator", "Description"],
+		       [[e["item"], e["qty"], e["part"], e["mfg"], e["ref"], e["description"]] for e in IO_PARTS["items"]]),
 		"So the 520-5249-00 board carries the same driver designators the Limited Edition chart prints: Q1-Q32 for the solenoids, Q33-Q42 for the lamp rows and U10-U17 for the lamp columns.",
 	]) + "\n"
 	return {
@@ -459,8 +469,8 @@ LE_SOURCES = [
 		"attribution": f"Stern Pinball, Inc.; published by {OWNER} as the LE's I/O driver board schematic",
 		"excerpts": [
 			_excerpt("io-power-driver-520-5249-00.md", "excerpt.lotr-le.io-power-driver-520-5249-00",
-			         "The page titles and the parts-list rows for the driver transistors and lamp-column drivers",
-			         "manual", "curator, read from the PDF text layer"),
+			         "The page titles and the complete parts list of page 129, assembly line and items 1-67",
+			         "mixed", "curator, from the PDF text layer by tools/lotr_le_io_board_parts.py, the four rendered cells read at 220 dpi"),
 		],
 		"id": IO_BOARD,
 		"kind": "manual",
@@ -476,7 +486,7 @@ LE_SOURCES = [
 		"id": RUNTIME_GAMEPLAY,
 		"kind": "runtime_scenario",
 		"license": "NOASSERTION",
-		"locator": f"Two hash-pinned LibPinMAME runs of one game, served and played by closing every ordinary playfield switch twice, on lotr_le (10.02) and on lotr (10.00) (scenarios tools/harness-scenarios/whitestar/lotr-le-gameplay.json and lotr-gameplay.json, compact evidence {RUNTIME_GAMEPLAY_PATH} built by tools/lotr_le_gameplay_evidence.py). 10.02 switches 28 on and off at the same emulated instant as 14 every time; 10.00 drives 14 and never 28.",
+		"locator": f"Two hash-pinned LibPinMAME runs of one game, served and played by closing every ordinary playfield switch twice, on lotr_le (10.02) and on lotr (10.00) (scenarios tools/harness-scenarios/whitestar/lotr-le-gameplay.json and lotr-gameplay.json, compact evidence {RUNTIME_GAMEPLAY_PATH} built by tools/lotr_le_gameplay_evidence.py). 10.02 switches 28 on and off together with 14 every time, each pair of solenoid callbacks within 1 ms of each other on the harness clock; 10.00 drives 14 and never 28.",
 		"revision": LIBRARY_REVISION,
 		"uri": f"internal:{RUNTIME_GAMEPLAY_PATH}",
 	},
@@ -573,7 +583,24 @@ def _lamp(device: dict, address: int) -> None:
 		_append_note(device, f"The Limited Edition chart prints {' and '.join(changed)}; the LE owner's annotated manual page 104 reads the same.")
 
 
+# Coil rows whose printed name the LE chart changes; every other row's name and coil type must be the 2003 table's.
+RENAMED_COILS = {15: "LEFT FLIPPER (50v YEL/BLK)", 16: "RIGHT FLIPPER (50v YEL/BLK)", 24: "OPTIONAL COIL (KNOCKER)"}
+
+
+def _coil_type(text: str | None) -> str:
+	return " ".join((text or "").replace("20.5", "20\u00bd").replace(" / ", " ").split())
+
+
+def _check_coil_row(address: int) -> None:
+	printed, original = COILS[address], base.COILS[address]
+	expected_name = RENAMED_COILS.get(address, original.get("name"))
+	if printed["name"] != expected_name or _coil_type(printed.get("coil")) != _coil_type(original.get("coil_spec")):
+		raise SystemExit(f"coil {address}: the LE chart prints {printed}, the 2003 table {original}")
+
+
 def _coil(device: dict, record: dict, address_label: str) -> None:
+	if record in COILS.values():
+		_check_coil_row(record["address"])
 	old = device["wiring"]
 	wiring = dict(old)
 	for src, dst in (("power_wire", "power_wire"), ("power_connection", "power_connection"), ("control_wire", "control_wire"), ("control_connection", "control_connection")):
@@ -677,7 +704,7 @@ def _unused_14(previous: dict) -> dict:
 		"physical": {"notes": (
 			f"Printed #14 {record['name']} on the Limited Edition chart, its row shaded grey with no power line, voltage or bulb, and its control cells still printing {record['control_wire']} at {record['control_connection']}: "
 			"the wire the 2003 machine runs from J9-P7 to its right Helm's Deep flasher, which the edition moves to J6-P4 and driver 28. The LE owner's annotated manual pages 100 and 101 read 'NOT USED N.C. J9-P7' and 'N.C. NOT USED (See #28 J6-4)'. "
-			"Nothing is connected, yet the 10.02 firmware still drives 14: in its own flash-lamp test and in play it switches 14 and 28 together, at the same emulated instant every time, so a cabinet wired like the 2003 machine would still light the flasher. "
+			"Nothing is connected, yet the 10.02 firmware still drives 14: in its own flash-lamp test and in play it switches 14 and 28 together every time, each pair of transitions reaching the harness within 1 ms of each other, so a cabinet wired like the 2003 machine would still light the flasher. "
 			"That mirror is what PinMAME publishes here; on the Limited Edition no load answers it."
 		)},
 		"provenance": {"source_refs": [CHART_SOURCE, PAGES, REPORT, OWNER_PAGE, RUNTIME_FLASH, RUNTIME_GAMEPLAY, CORE], "status": "validated"},
@@ -789,6 +816,11 @@ def _build_definition() -> dict:
 		_add_refs(display["provenance"], CORE)
 	for mechanism in derived["mechanisms"]:
 		_add_refs(mechanism["provenance"], CHART_SOURCE)
+		if mechanism["id"] == "mechanism.ring-magnet":
+			_add_refs(mechanism["provenance"], PAGES)
+			mechanism["behavior"] += (
+				" On the Limited Edition's 520-5249-00 board the LE owner's annotated manual page 101 numbers the magnet's fuse F7, 4A, with \"*May need 5A S.B.\"; F20 is the 2003 board's number."
+			)
 	used = _used_refs(derived)
 	derived["sources"] = _sources()
 	missing = used - {source["id"] for source in derived["sources"]}
@@ -846,14 +878,14 @@ Shared routing does not make shared hardware, and three independent kinds of evi
 
 - **The factory list.** IPDB's list of factory changes includes "Game has the option to add a Shaker Motor", which the 2003 game never had, and quotes Lonnie Ropp's confirmation that the shaker code was added to the original code and secured with a new PAL chip version.
 - **An owner's first-hand documents.** Richard Harvey ("firepower") documented his new-in-box Limited Edition on a blog and a documentation page: a report that the cabinet chart Stern stapled into the LE was the 2003 one and that "wire colors and 2 solenoids positions were changed"; a corrected LE cabinet chart; the manual's Section 5 pages 100-106 annotated with his machine's wiring; and a list of the edition's changes, including "520-5249-00 SAM I/O Power Driver used (instead of 520-5137-01 White Star)" and "Helms Deep Rt. (Flash Lamp) moved from Sol #14 to Sol #28".
-- **The firmware.** 10.02 drives the right Helm's Deep flasher on 14 and 28 together, 10.00 on 14 alone. Hash-pinned runs of each ROM's own flash-lamp test (`evidence/runtime/whitestar/lord-of-the-rings-flash-test.json`, `{RUNTIME_FLASH_PATH}`) and of a served and played game (`{RUNTIME_GAMEPLAY_PATH}`) show 10.02 switching 28 on and off at the same emulated instant as 14 every time, and 10.00 never touching 28.
+- **The firmware.** 10.02 drives the right Helm's Deep flasher on 14 and 28 together, 10.00 on 14 alone. Hash-pinned runs of each ROM's own flash-lamp test (`evidence/runtime/whitestar/lord-of-the-rings-flash-test.json`, `{RUNTIME_FLASH_PATH}`) and of a served and played game (`{RUNTIME_GAMEPLAY_PATH}`) show 10.02 switching 28 on and off together with 14 every time, each pair of solenoid callbacks reaching the harness within 1 ms of each other, and 10.00 never touching 28.
 
 ## The Limited Edition evidence
 
 No factory Limited Edition document is available. The owner says Stern supplied the LE with a manual hand-edited from the 2003 one, "with whiteout and a photocopier", still with mistakes and missing pages 100-106; his own draft of a complete LE manual, his LE quick reference and Stern's shaker kit instructions are no longer online and were never archived. What is retained:
 
 - **The LE cabinet chart** (`cabinet-chart` excerpt, structured as `tools/seeds/stern/lord-of-the-rings-limited-edition-2009-chart.json`). Stern's 11x17 Lord of the Rings cabinet chart (SPI Nr. 755-5310-80) as the owner corrected it for his LE and published it "to go inside LE lower cabinet". It is the edition's only complete wiring table, so the structured wiring follows it. Its switch matrix, dedicated switches and lamp matrix match the 2003 manual's cell for cell - every name, location, switch part number and bulb - apart from four printing differences: it spells lamps 15 and 33 LEGOLAS where the 2003 scan prints LEGOLES, prints lamp 5's number as `4`, its green POTD bulbs read `Grn.` where the 2003 transcription read `Gm.`, and it leaves DS-3's location cell blank where the 2003 manual prints `on Cabinet Side`. Its coil table matches too, except rows #12, #14 and #28 and the wire colours. The chart also carries the switch, coil and lamp location maps of the playfield.
-- **The annotated manual pages** (`owner-annotated-manual-pages` excerpt). The scans are the 2003 manual's own Section 5 pages - page 100 matches Stern's reissue of the 2003 manual cell for cell - so only the owner's overlays describe the LE. They agree with the chart on the 12/14/28 rows, the 520-5249-00 board and the lamp wiring, and disagree with it on several wire colours and on which J10 pins feed the flippers (see below).
+- **The annotated manual pages** (`owner-annotated-manual-pages` excerpt). The scans are the 2003 manual's own Section 5 pages - page 100 matches Stern's reissue of the 2003 manual cell for cell - so only the owner's overlays describe the LE. They agree with the chart on rows 14 and 28, the 520-5249-00 board and the lamp wiring (page 100 still prints 12 NOT USED; the shaker on 12 rests on the chart, the owner's notes and IPDB's change list), and disagree with it on several wire colours and on which J10 pins feed the flippers (see below).
 - **The owner's documentation, knocker and shaker pages** (`owner-documentation-pages` excerpt).
 - **Stern's 520-5249-00 I/O power driver board schematic** (`io-power-driver-520-5249-00` excerpt): the board carries the same driver designators the chart prints, Q1-Q32 for the solenoids, Q33-Q42 for the lamp rows and U10-U17 for the lamp columns.
 - **Stern service bulletin 148** (`service-bulletin-148` excerpt), for the Balrog LED module.
@@ -901,6 +933,7 @@ The switch matrix and dedicated switches keep the 2003 colours on the chart. The
 {_base_section("Opto polarity: PinMAME normalizes nothing here")}
 
 {_base_section("Custom mechanisms")}
+- **On the Limited Edition** the One Ring magnet's own fuse is numbered F7 on the 520-5249-00 board, 4A, which the LE owner's annotated page 101 says "*May need 5A S.B."; F20 is the 2003 board's number.
 
 {_base_section("How coordinates were resolved")}
 

@@ -69,6 +69,7 @@ Below is every overlay, page by page: where it sits, what the scan prints there,
 | High-current bridge, lower feed | J11-P2 I/O BD., FROM BLK-ORG AC Voltages IN 48v AC | J11-P3 I/O BD., FROM BLK-YEL AC Voltages IN 48v AC |
 | Ring magnet fuse | F20 Slo-Blo FOR MAGNET | F7 4A* Slo-Blo (T), Ring Magnet *May need 5A S.B. |
 | High-current coil fuse | 3A Slo-Blo F21 | F8 3A Slo-Blo (T) |
+| High-current bridge labels | BRIDGE 1 50v HIGH CURRENT COILS, GND, BRDG1 | the same three labels, redrawn unchanged with the rest of that corner |
 
 ## Page 103: General Illumination Circuit Detailed Wiring Diagram
 
@@ -109,6 +110,7 @@ Below is every overlay, page by page: where it sits, what the scan prints there,
 | Lamp row 8 return wire (J12-P9, Q40) | RED-GRY | BRN-BLK |
 | Lamp row 9 return wire (J12-P10, Q41) | RED-WHT | ORG-WHT |
 | Both grids | unlabelled | column labels C1-C8 and row labels R1-R8 (switches) and R1-R10 (lamps) |
+| Captions beside switches 3 and 7 | *Future Expansion, printed rotated beside each | *Future Expansion, redrawn unchanged beside each |
 
 ## Page 105: Playfield Terminal Strips, Fuses & Misc. Wiring Descriptions & Locations
 

@@ -24,7 +24,7 @@ Transcribed from `Lord-of-the-Rings-Manual.pdf`, PDF page 8, printed `DR. 6`. Th
 | 16 | RIGHT FLIPPER (50v RED/YEL) | high_current_2 | *(blank)* | *(blank)* | Q16 | I/O Power Driver | BLU-YEL -> 3A Fuse -> RED-YEL | J10-P1/2 | 50v DC | ORG-VIO | J9-P9 | 22-900 / 090-5020-20T |
 | 17 | LEFT SLINGSHOT | low_current_1 | *(blank)* | *(blank)* | Q17 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-BRN | J7-P2 | 23-800 / 090-5001-00T |
 | 18 | RIGHT SLINGSHOT | low_current_1 | *(blank)* | *(blank)* | Q18 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-RED | J7-P3 | 23-800 / 090-5001-00T |
-| 19 | TOP SAUCER | low_current_1 | *(blank)* | *(blank)* | Q19 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-ORG | J7-P4 | 26-1200 / 090-5020-00B |
+| 19 | TOP SAUCER | low_current_1 | *(blank)* | *(blank)* | Q19 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-ORG | J7-P4 | 26-1200 / 090-5044-00B |
 | 20 | BALROG MOTOR RELAY | low_current_1 | *(blank)* | *(blank)* | Q20 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-YEL | J7-P6 | DC Relay 520-5066-00 |
 | 21 | SWORD LOCK RELEASE | low_current_1 | *(blank)* | *(blank)* | Q21 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-GRN | J7-P7 | 27-1500 / 090-5004-00T |
 | 22 | BALROG MOTOR | low_current_1 | *(blank)* | *(blank)* | Q22 | I/O Power Driver | BRN | J7-P1 | 20v DC | VIO-BLU | J7-P8 | Motor 041-5088-01 |
