@@ -1,57 +1,43 @@
-# Batman Forever (Sega 1995)
+# Sega Batman Forever (1995)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+Batman Forever is Sega model 38 (IPDB 3593, July 1995, about 2,500 units), a widebody game on the Data East/Sega CPU revision 3b with DE2 sound and the 192 × 64 backbox DMD. It has three flippers, three turbo bumpers, two slingshots, the C-A-V-E four-target drop bank, nine stand-up targets, a top eject saucer, a VUK, the three-ball Batcave lock and its exit kicker, the Laser Kick, a ramp diverter and the motorized Batwing Cannon fired from a gun-grip trigger on the cabinet. The verified identity is IPDB 3593 and OPDB G59zN-MLy0N. The exact evidence is linked by source IDs and complete excerpts in the [definition](../../machines/partial/sega/batman-forever-1995.json).
 
-This record was promoted from the generated catalog stub `stub.pinmame.batmanf` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+All 23 pinned PinMAME drivers stay on this record. They share `init_batmanf` and the same I/O and differ only in ROM images: CPU revisions 1.02-4.0, eleven language releases, a timed-play display, a Dutch 3.02 CPU with the 4.01 display, and the 2024 and 2025 unofficial 5.0/5.01 firmware, which are firmware dates on the same machine. Only the drivers whose names start with `batmanf` match PinMAME's Batman Forever brightness models for G.I. and flashers; the `bmf_` clones fall back to the default output model. That affects emulated brightness only.
 
-## Identity
+## Controller contract
 
-- PinMAME catalog: root driver `batmanf`, description "Batman Forever (4.0)", manufacturer
-  "Sega", catalog year "1995".
-- OPDB record `G59zN-MLy0N` (IPDB 3593) names this machine "Batman Forever"
-  (Sega, manufacture date 1995-07-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `batmanf`;
-  whether every listed driver really runs on this physical machine is unverified.
+Read the public state as PinMAME delivers it. The 8 × 8 switch matrix uses sequential addresses 1-64, column-major, with no inversion. With every switch open the ROM's SWITCH TEST reads NONE, so every fitted contact rests open. The trough up-kicker opto at 15 follows the manual's opto theory: a blocked beam is a closed switch, so 15 reads 1 while a ball sits at the up-kicker.
 
-## Drivers this record holds
+Drive the cabinet flipper buttons at 84 (left) and 82 (right). PinMAME copies them into matrix 63 and 64 on every update and overwrites any direct write to 63 or 64; the table writes 63/64 itself but only its de.vbs call, which writes 84/82, takes effect. Outputs 45/46 and 47/48 are paired synthetic states fabricated from the buttons, not independent windings. The left button enables the lower left flipper; the right button's switch stack enables both the lower right and the upper right flipper, which have no CPU driver of their own. The lower flippers have board-local N.C. EOS switches; the upper right flipper's EOS is Not Used. PinMAME exposes no EOS input.
 
-- `batmanf` (1995, Sega).
-- `batmanf1` (1995, Sega, clone of `batmanf`).
-- `batmanf2` (1995, Sega, clone of `batmanf`).
-- `batmanf3` (1995, Sega, clone of `batmanf`).
-- `batmanf5` (2024, Sega, clone of `batmanf`).
-- `batmanf501` (2025, Sega, clone of `batmanf`).
-- `bmf_at` (1995, Sega, clone of `batmanf`).
-- `bmf_be` (1995, Sega, clone of `batmanf`).
-- `bmf_ch` (1995, Sega, clone of `batmanf`).
-- `bmf_cn` (1995, Sega, clone of `batmanf`).
-- `bmf_de` (1995, Sega, clone of `batmanf`).
-- `bmf_fr` (1995, Sega, clone of `batmanf`).
-- `bmf_it` (1995, Sega, clone of `batmanf`).
-- `bmf_it2` (1995, Sega, clone of `batmanf`).
-- `bmf_it3` (1995, Sega, clone of `batmanf`).
-- `bmf_jp` (1995, Sega, clone of `batmanf`).
-- `bmf_nl` (1995, Sega, clone of `batmanf`).
-- `bmf_nl302` (1995, Sega, clone of `batmanf`).
-- `bmf_no` (1995, Sega, clone of `batmanf`).
-- `bmf_sp` (1995, Sega, clone of `batmanf`).
-- `bmf_sv` (1995, Sega, clone of `batmanf`).
-- `bmf_time` (1995, Sega, clone of `batmanf`).
-- `bmf_uk` (1995, Sega, clone of `batmanf`).
+The PPB's A/B relay at 10 switches the eight drives 1-8 between the coil loads 1L-8L and the flasher circuits 1R-8R (public 25-32). Special solenoids follow the Data East permutation, and the ROM's coil test confirms the order: left, bottom and right bumpers 17-19, left and right slings 20-21, Laser Kick 22. Output 23 is the virtual game-on enable. The eight CN3 printer lines at 37-44 remain unknown. The manual describes a PRNT menu with printer adjustments 52-54, and its cabinet wiring diagram draws a printer board on the CPU data lines. But this ROM's main menu shows no PRNT icon, its adjustments end at Sega 43 and Batman 52 (Novice Game Available), and no run saw a transition at 37-44. The service buttons are momentary in PinMAME (`DE_COMPORTS2`); the table's de.vbs toggles the green one instead.
 
-## VPX script candidates (candidate)
+Drivers 6 (6L) and 13 have no load. The driver chart prints both rows shaded NOT USED, the coil wiring diagram prints "NO COIL AT THIS LOCATION" at 6L and draws nothing on CN12-6, and the 3-flipper board takes no CPU driver. The ROM's own diagnostics still publish state there: CYCLING COILS pulses 6 and holds 13 for about 2.5 s, and RUN on "#13: NOT USED" in the COIL TEST holds 13 on. No gameplay or attract run ever published either.
 
-- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 61 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+## Ball handling and mechanisms
 
-## What a curator must establish next
+The four-ball trough runs diagonally under the right apron: subminiature switches 11 (left) to 14 (right), then the lock-out cam at the upper end. Output 1 releases the ball at 14 and the others roll down one position; the released ball blocks opto 15 at the up-kicker, and output 2 lifts it into shooter lane 16. On a ball's first serve the ROM shows the skill-shot choice and fires the autolaunch (output 3) when the cabinet gun trigger 49 is pulled. A ball served to replace a locked ball launched without the trigger. If 16 stays closed the ROM fires 3 again and reports "OPERATOR ALERT! AUTOLAUNCH NOT WORKING". The table models the trough and up-kicker as two ball stacks with no per-switch objects.
 
-Controller platform from the pinned PinMAME driver source; full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+The top eject saucer at the upper left (41, output 5) starts lit Gotham Events. The VUK at the upper right (32, output 4) sends every ball up a wire ramp to the Batcave on the left side, where up to three balls rest on 62 (bottom), 61 and 60 (top). When completed C-A-V-E targets have lit locks, a ball arriving at 62 stays locked and the ROM serves a replacement from the trough. Output 9 releases the bottom ball to the Batcave exit kicker at 30, and output 16 kicks it down the Batcave exit wire ramp over the lower arch onto the playfield. The ROM debounces the kicker and lock switches longer than the rollovers: its switch test named 32 after about 0.6 s and 60-62 after about 1.2 s.
+
+The C-A-V-E bank (18-21, left side) resets through output 7, which fired 0.2 s after the fourth target dropped in the harness gameplay run. The targets stay closed while down. The five green "?" stand-ups are 25-29, the Two-Face coin stand-ups 42/43 (top 2-bank) and 50/51 (right 2-bank). The manual's parts list prints 51 as RIGHT GOOD HEADS and swaps the left and middle ramp exits; the switch grid, the Tech Chart, the ROM and the table agree on 51 RIGHT BAD HEADS, 53 LEFT RAMP EXIT and 54 MIDDLE RAMP EXIT.
+
+The left and middle ramps are one combined plastic ramp. Its exit feeds a double stack wire ramp whose bridge diverter is moved by output 12: energized, it drops a left-ramp ball onto the lower wire, which delivers it into the Batwing Cannon. A loaded ball closes 44 at the cannon's plunger. The ROM then energizes output 14, about 2 s later in the harness. Output 14 drives a relay on relay board 520-5010-00 that switches 28 VAC to the cannon motor. The motor swings the cannon through a crank and cam links, and home switch 46 sits on that drive. The gun trigger 49 fires the cannon coil, output 15, about 0.1 s later, and the ball leaves wherever the cannon points. In FOREVER mode the cannon oscillates and must catch a ball as it passes home. Switch 45, BATWING CANNON SAFETY, is on the assembly, but neither the manual nor the ROM says what it senses; the table only pulses it when 15 fires. A recreation must model the cannon's swing and home switch itself: the table uses a cvpmMech on 14 with 46 closed at both ends of a 500 ms, 200-step travel, which is table tuning.
+
+The Laser Kick under the left arch (switch 33, output 22) returns an outlane ball when lit; completing the top lanes relights it. Bumpers 57-59 and slings 35/36 fire their own coils within milliseconds.
+
+## Lighting and positions
+
+All 64 lamp addresses except 36, 37, 38 and 60 are fitted, one bulb each. 63 and 64 are the cabinet buttons. Bulb types follow the lamp grid (#555 wedge or #44 bayonet), except lamp 50: the manual grid prints #555, while the later Tech Chart and the ROM's lamp test print #44. The wiring diagram's list puts 49 and 50 at the left ramp entrance. The ramp assembly's rollunder gate carries a two-lamp sign with #555 wedge bulbs, but names no lamp numbers. Lamps 33 and 34 are the two #555 Spot-Lites on the left/middle ramp.
+
+Each flasher circuit 1R-8R has four sockets, and the driver chart and the wiring diagram agree on the #89/#906 mix of each. 1R-3R are four playfield #89s. 4R-8R combine playfield or back-panel #89s with backbox insert #906s. 5R's playfield socket is at the left/middle ramp; one wiring-diagram label says 2-bank stand-up, against the chart, the location drawing and the ROM. G.I. is one relay at output 11 on the power supply board; the table lights its G.I. while 11 is off. The exact G.I. socket count and string allocation are not settled.
+
+Coordinates use x=0 left, x=1 right, y=0 rear and y=1 apron, divided by the retained table's exact 1093 × 2162 bounds. The table positions come from one recreation lineage. The factory switch, coil, flash lamp and lamp location drawings (PDF 31, 33 and 37) were read independently and fitted to the table on turbo bumper caps and flipper pivots, or on lamp inserts where a drawing shows neither. They validate 108 of the 118 placements they check. The rest stay observed, with a note on each device. Switches 30, 36, 41 and 44 and the diverter coil 12 fall just outside the 0.07 limit, most of them marked by a box beside the part rather than a leader. The table's back-panel flasher lights (4R-7R) are not checked: the drawing marks the back panel only with a row of leader-less boxes on its top rail. The top eject coil sits well to the right of the saucer the table places. The right ramp exit's callout box sits far below where the table puts that switch. The table's only 3R light sits where the drawing puts 5R's ramp flasher. The switch drawing labels the left and middle ramp exits the parts list's way, so its 53 and 54 callouts each land at the other exit.
+
+The table binds two lamp objects by the wrong TimerInterval: Lamp34 to 33 and Lamp59 to 58. So the table never lights lamp 34 or 59, and lamp 58 also lights the right bumper. Lamps 33 and 34 are placed as candidates where the lamp drawing marks them, because both table objects sit at its left edge, away from the ramp. Lamp 59 is placed at its object in the right bumper cap. The trough switches, lock switches 60-62, cannon switches 45/46 and lock-out coil 1 have no table object, and the drawings place them outside the area their control points cover, so they stay unplaced. The drop-bank reset coil is projected onto the bank's centre. Flasher sockets are only partly modelled. See the [spatial report](../../reports/spatial/sega/batman-forever-1995.json) for objects, coordinates, hashes, omissions and rejected helpers.
+
+## Service tests and remaining requirements
+
+Fresh-state runs with the batmanf ROM (USA CPU 4.01NV, display A4.01) exercised the Portals SWITCH TEST (every address, with the ROM printing each switch's name, part, wires and pins), the SINGLE LAMP TEST (each step lit exactly one lamp), the COIL TEST (each entry fired only its own address) and CYCLING COILS, and walked the main menu and every Sega and Batman adjustment. A gameplay run passed same-run checkpoints for the serve, skill-shot launch, top eject, bumpers, slings, Laser Kick, drop-bank reset, VUK, lock-and-replace, Batcave exit, cannon motor and cannon fire, and observed both paired flipper states. Every cited frame is pinned to its pixel digest. See [runtime evidence](../../evidence/runtime/data-east/batman-forever-batmanf-service-tests.json).
+
+This record remains partial for three dimensions: input semantics (the country jumper's values are not assigned, and no source says what cannon switch 45 senses), output semantics (CN3 lines 37-44 and the physical G.I. inventory are unsettled) and spatial placement (table placements the drawings do not confirm or cannot check, missing trough, lock and cannon geometry, candidate Spot-Lites, incomplete flasher sockets and no G.I. survey). No ROM, manual, VPX, NVRAM or photograph is redistributed in Git.

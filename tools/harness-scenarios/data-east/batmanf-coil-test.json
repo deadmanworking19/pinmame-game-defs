@@ -1,0 +1,874 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "batmanf",
+  "notes": "Single COIL TEST walk from fresh NVRAM after counted menu presses: Start on + shows the next entry with its wiring; except on entry 11 (#6L NOT USED, which offers no RUN), the right flipper button selects RUN, Start fires the shown entry and the left button returns to +. Frames and transitions are read afterwards.",
+  "watch_switches": [
+    15,
+    63,
+    64,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "boot-settle"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 3,
+      "label": "to-main-menu"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "to-diagnostics"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 60,
+      "settle_s": 0.7,
+      "label": "select-coil"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "to-coil-menu"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 80,
+      "settle_s": 1.5,
+      "label": "to-coil-test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-1-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-1-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-1-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-1-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-2-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-2-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-2-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-2-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-3-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-3-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-3-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-3-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-4-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-4-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-4-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-4-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-5-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-5-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-5-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-5-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-6-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-6-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-6-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-6-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-7-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-7-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-7-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-7-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-8-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-8-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-8-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-8-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-9-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-9-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-9-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-9-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-10-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-10-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-10-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-10-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-11-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-12-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-12-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-12-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-12-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-13-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-13-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-13-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-13-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-14-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-14-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-14-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-14-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-15-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-15-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-15-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-15-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-16-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-16-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-16-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-16-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-17-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-17-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-17-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-17-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-18-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-18-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-18-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-18-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-19-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-19-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-19-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-19-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-20-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-20-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-20-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-20-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-21-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-21-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-21-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-21-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-22-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-22-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-22-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-22-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-23-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-23-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-23-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-23-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-24-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-24-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-24-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-24-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-25-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-25-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-25-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-25-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-26-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-26-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-26-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-26-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-27-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-27-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-27-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-27-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-28-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-28-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-28-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-28-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-29-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-29-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-29-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-29-select-plus"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 1.2,
+      "label": "entry-30-shown"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-30-select-run"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 60,
+      "settle_s": 2.0,
+      "label": "entry-30-fired"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 60,
+      "settle_s": 0.6,
+      "label": "entry-30-select-plus"
+    }
+  ]
+}

@@ -98,14 +98,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Joker Poker now has a game-specific retained-table and source basis.
 		# Baywatch now has a reviewed machine seed instead of the bulk-promotion marker.
 		# Mystery Castle's curation replaces its bulk-promotion identity marker.
-		self.assertEqual(632, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Batman Forever now has a reviewed machine seed instead of the bulk-promotion marker.
+		self.assertEqual(631, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(632, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(631, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:
