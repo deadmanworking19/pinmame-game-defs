@@ -70,13 +70,11 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		# G.I. string 02 is the only device without a placement, and no conflict remains.
+		# Only the playfield G.I. survey is missing, and no conflict remains.
 		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["semantic_naming"])
+		self.assertEqual([], self.definition["conflicts"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"spatial_placement", "physical_wiring"}:
-				continue
-			self.assertIn(state, {"validated", "not_applicable"}, dimension)
+			self.assertEqual("observed" if dimension == "spatial_placement" else "validated", state, dimension)
 		self.assertEqual("bally.twilight-zone.1993", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(2684, self.definition["machine"]["ipdb_id"])
@@ -393,30 +391,141 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 
 	def test_gi_strings_follow_the_complete_manual(self) -> None:
 		self.assertEqual({0, 1, 2, 3, 4}, set(self.gi))
-		# G.I. string 02 (public 1) is mixed playfield + insert with no bulb list: physical, but unplaced.
+		# No string records a quantity: 01 and 05 carry the table's emitters, which owners count short of the sockets,
+		# and 02 and 03 also light backbox insert bulbs nobody counts.
+		for address, string in self.gi.items():
+			self.assertNotIn("quantity", string["physical"], address)
+		# Strings 01 and 05: the retained table's emitters, which the two tables and the owners' counts show are not the
+		# socket list, so they stay observed and name their resolution path.
+		for address in (0, 4):
+			string = self.gi[address]
+			self.assertEqual("observed", string["spatial"]["status"], address)
+			self.assertEqual({"observed"}, {p["provenance"]["status"] for p in string["spatial"]["placements"]}, address)
+			notes = string["physical"]["notes"]
+			for phrase in (
+				"not the strings' socket list", "light9", "Light56", "l104b", "28 G.I. positions", "gumball", "34 #44",
+				"Pinside topic 163470", "Resolution path: a bulb survey of strings 01 and 05",
+			):
+				self.assertIn(phrase, notes, address)
+		# G.I. string 02 (public 1): the street lamp's bulbs, co-located on the centre of its shade; the count of two rests
+		# on owner reports, so the placements are observed.
 		mini = self.gi[1]
-		self.assertNotIn("spatial", mini)
-		self.assertNotIn("quantity", mini["physical"])
+		self.assertEqual("observed", mini["spatial"]["status"])
+		self.assertEqual([(0.125525, 0.278616)] * 2, [(p["x"], p["y"]) for p in mini["spatial"]["placements"]])
+		self.assertEqual({"observed"}, {p["provenance"]["status"] for p in mini["spatial"]["placements"]})
 		notes = mini["physical"]["notes"]
-		for phrase in ("No spatial placement", "A-16806", "Light20", "Light43", "continuity or bulb survey of G.I. string 02"):
+		for phrase in (
+			"A-16806", "Sleeve, Yellow", "only G.I. string that prints a #555 playfield bulb", "page 2-54 names all 64",
+			"Only two in the 'upper playfield', in the street lamp", "2 Warm Flex 555s (Street light)",
+			"remove the rivets of the lamp sockets", "BM_Parts with 198 vertices", "0.0018 away", "l101", "Light20",
+			"no quantity is recorded", "the count of two rests on owner and vendor reports",
+			"Resolution path: a photograph or survey of the sockets of a stock street lamp",
+		):
 			self.assertIn(phrase, notes)
-		# G.I. string 03 (public 2): the clock assembly's two sockets, co-located on the clock axis.
+		refs = mini["provenance"]["source_refs"]
+		self.assertIn("human-review.twilight-zone.pinside-gi-guide", refs)
+		self.assertIn("human-review.twilight-zone.pinballmod-lamp", refs)
+		# G.I. string 03 (public 2): the four #86 lamps of the clock's Minute Opto board, co-located on the clock axis.
 		clock = self.gi[2]
-		self.assertEqual(2, clock["physical"]["quantity"])
-		# Projected onto the clock axis, which is not a bulb object, so the two placements are observed.
-		self.assertEqual("observed", clock["spatial"]["status"])
-		self.assertEqual({"observed"}, {p["provenance"]["status"] for p in clock["spatial"]["placements"]})
-		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
-		points = {(p["x"], p["y"]) for p in clock["spatial"]["placements"]}
-		self.assertEqual(2, len(clock["spatial"]["placements"]))
-		self.assertEqual({(self.solenoids[56]["spatial"]["placements"][0]["x"], self.solenoids[56]["spatial"]["placements"][0]["y"])}, points)
-		for phrase in ("A-16124", "Light Bulb Sleeve - Red", "Light Bulb Sleeve - Yellow", "GIClock", "not socket positions", "The projection hides an offset", "about an inch apart"):
+		self.assertEqual("validated", clock["spatial"]["status"])
+		self.assertEqual({"validated"}, {p["provenance"]["status"] for p in clock["spatial"]["placements"]})
+		axis = (self.solenoids[56]["spatial"]["placements"][0]["x"], self.solenoids[56]["spatial"]["placements"][0]["y"])
+		self.assertEqual([axis] * 4, [(p["x"], p["y"]) for p in clock["spatial"]["placements"]])
+		for phrase in ("A-16220", "24-8829", "Bulb #86, 6.3, .2A", "J2 pins", "Yellow-White", "J121-9", "matrix lamps 83 Piano Yellow and 84 Piano Red", "GIClock"):
 			self.assertIn(phrase, clock["physical"]["notes"])
+		for address, sleeve in ((83, "Light Bulb Sleeve - Yellow"), (84, "Light Bulb Sleeve - Red")):
+			self.assertIn(sleeve, self.lamps[address]["physical"]["notes"], address)
+			self.assertIn("G.I. string 03", self.lamps[address]["physical"]["notes"], address)
 		# G.I. string 04 (public 3) "Insert Main" is backbox-only by the 2-52 columns and the 3-33 connector list.
 		self.assertEqual(("not_applicable", "cabinet_or_service"), (self.gi[3]["spatial"]["status"], self.gi[3]["spatial"]["reason"]))
 		self.assertIn("Return G.I. to insert", self.gi[3]["physical"]["notes"])
-		self.assertEqual("validated", self.gi[0]["spatial"]["status"])
 		self.assertGreater(len(self.gi[0]["spatial"]["placements"]), 1)
+		# Wiring: the return pins the triacs switch, and the 6.8VAC feeds.
+		expected = {
+			0: ("J121-1", "Brown", "Q18", "J121-7", "White-Brown"),
+			1: ("J121-2 / J120-2", "Orange", "Q10", "J121-8 / J120-8", "White-Orange"),
+			2: ("J121-3 / J120-3", "Yellow", "Q14", "J121-9 / J120-9", "White-Yellow"),
+			3: ("J120-5", "Green", "Q16", "J120-10", "White-Green"),
+			4: ("J121-6", "Violet", "Q12", "J121-11", "White-Violet"),
+		}
+		for address, fields in expected.items():
+			wiring = self.gi[address]["wiring"]
+			self.assertEqual(fields, tuple(wiring[k] for k in ("control_connection", "control_wire", "driver_transistor", "power_connection", "power_wire")), address)
+			self.assertEqual((6.8, "ac"), (wiring["nominal_voltage_v"], wiring["voltage_type"]), address)
+
+	def test_every_used_physical_device_carries_its_printed_wiring(self) -> None:
+		exempt_kinds = {"virtual", "dip_switch"}
+		missing = [
+			device["id"]
+			for device in self.definition["inputs"] + self.definition["outputs"]
+			if device["availability"] == "used" and device["kind"] not in exempt_kinds and not device.get("wiring")
+		]
+		self.assertEqual([], missing)
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+
+	def test_lamp_wiring_follows_the_page_2_54_matrix(self) -> None:
+		columns = {1: ("J137-1", "Yellow-Brown", "Q98"), 7: ("J138-7", "Yellow-Violet", "Q92"), 8: ("J138-9", "Yellow-Gray", "Q91")}
+		rows = {1: ("J133-1", "Red-Brown", "Q90"), 3: ("J133-4", "Red-Orange", "Q88"), 8: ("J133-9", "Red-Gray", "Q83")}
+		for column, (drive, drive_wire, column_driver) in columns.items():
+			for row, (ret, return_wire, row_driver) in rows.items():
+				wiring = self.lamps[column * 10 + row]["wiring"]
+				self.assertEqual(
+					(drive, drive_wire, ret, return_wire, f"{column_driver} column driver with {row_driver} row driver"),
+					tuple(wiring[k] for k in ("drive_connection", "drive_wire", "return_connection", "return_wire", "driver_transistor")),
+				)
+		excerpt = (ROOT / "evidence/excerpts/bally.twilight-zone.1993/lamp-matrix.md").read_text(encoding="utf-8")
+		for row in ("| 7 | Yellow-Violet | J138-7 | Q92 |", "| 3 | Red-Orange | J133-4 | Q88 |", "83 Piano Yellow", "88 Start Button", "12 Hitch Hicker (Door)"):
+			self.assertIn(row, excerpt)
+		self.assertIn("\"Start Button\"", self.lamps[88]["physical"]["notes"])
+
+	def test_solenoid_wiring_follows_page_2_52(self) -> None:
+		expected = {
+			1: ("WPC power driver board", "J130-1", "Vio-Brn", "Q82", "J107-3"),
+			16: ("WPC power driver board", "J127-9", "Brn-Gry", "Q44", "J107-2"),
+			21: ("WPC power driver board", "J125-6", "Blu-Grn", "Q28", "J109-5"),
+			28: ("WPC power driver board", "J124-5", "Blu-Yel", "Q20", "J107-6"),
+		}
+		for address, fields in expected.items():
+			wiring = self.solenoids[address]["wiring"]
+			self.assertEqual(fields, tuple(wiring[k] for k in ("board", "control_connection", "control_wire", "driver_transistor", "power_connection")), address)
+		self.assertNotIn("wiring", self.solenoids[22])
+		for address, (board, pin, wire) in {
+			51: ("8-Driver PCB A-16100", "J4-1", "Brn-Wht"), 55: ("8-Driver PCB A-16100", "J3-5", "Grn-Wht"),
+			56: ("D.C. Motor Control Assembly A-16120", "J1-2", "Blu-Wht"), 57: ("D.C. Motor Control Assembly A-16120", "J1-1", "Vio-Wht"),
+			58: ("8-Driver PCB A-16100", "J5-1", "Gry-Wht"),
+		}.items():
+			wiring = self.solenoids[address]["wiring"]
+			self.assertEqual((board, pin, wire), (wiring["board"], wiring["control_connection"], wiring["control_wire"]), address)
+			self.assertNotIn("driver_transistor", wiring, address)
+
+	def test_flipper_windings_carry_the_fliptronic_wiring_and_every_supply_reading(self) -> None:
+		expected = {
+			33: ("J902-6", "Q2", "J907-4", "Blu-Yel", "FL-11722", "pin 1", "J907-6"),
+			34: ("J902-4", "Q7", "J907-4", "Blu-Yel", "FL-11722", "pin 1", "J907-6"),
+			35: ("J902-3", "Q1", "J907-1", "Gry-Yel", "FL-11753", "pin 4", "J907-9"),
+			36: ("J902-1", "Q5", "J907-1", "Gry-Yel", "FL-11753", "pin 4", "J907-9"),
+			45: ("J902-13", "Q4", "J907-9", "Blu-Yel", "FL-15411", "pin 7", "J907-1"),
+			46: ("J902-11", "Q11", "J907-9", "Blu-Yel", "FL-15411", "pin 7", "J907-1"),
+			47: ("J902-9", "Q3", "J907-7", "Gry-Yel", "FL-15411", "pin 9", "J907-4"),
+			48: ("J902-7", "Q9", "J907-7", "Gry-Yel", "FL-15411", "pin 9", "J907-4"),
+		}
+		for address, (drive, transistor, supply, supply_wire, coil, drawn, listed) in expected.items():
+			coil_device = self.solenoids[address]
+			wiring = coil_device["wiring"]
+			self.assertEqual("Fliptronic II board A-15472", wiring["board"], address)
+			self.assertEqual((drive, transistor, supply, supply_wire), (wiring["control_connection"], wiring["driver_transistor"], wiring["power_connection"], wiring["power_wire"]), address)
+			self.assertEqual(coil, coil_device["physical"]["part_number"], address)
+			notes = coil_device["physical"]["notes"]
+			self.assertIn(f"J907 {drawn}", notes, address)
+			self.assertIn(f"from {listed}", notes, address)
+		excerpt = (ROOT / "evidence/excerpts/bally.twilight-zone.1993/fliptronic-ii-wiring.md").read_text(encoding="utf-8")
+		for line in ("| 9 | Gray-Yellow +50Vdc (top line) | LOWER LEFT FLIPPER COIL |", "- J907-6 Blue-Yellow, +50V to upper right flipper", "| Lower left | J907-7 (Gry-Yel) | 9 | J907-4 (loop J907-5) |"):
+			self.assertIn(line, excerpt)
+
+	def test_dedicated_and_flipper_switches_carry_the_page_2_50_wiring(self) -> None:
+		self.assertEqual(("WPC CPU board", "J205-6", "Orange-Green"), tuple(self.switches[5]["wiring"][k] for k in ("board", "drive_connection", "drive_wire")))
+		self.assertEqual(("Fliptronic II board A-15472", "J905-5", "Black-Blue"), tuple(self.switches[118]["wiring"][k] for k in ("board", "drive_connection", "drive_wire")))
+		self.assertEqual(("J906-1", "Black-Green"), (self.switches[111]["wiring"]["drive_connection"], self.switches[111]["wiring"]["drive_wire"]))
 
 	def test_the_knocker_is_backbox_hardware(self) -> None:
 		knocker = self.solenoids[7]
@@ -505,20 +614,24 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 		self.assertEqual("internal_nonvisual", strobe["spatial"]["reason"])
 		self.assertEqual(["internal.clock-opto-strobe"], strobe["roles"])
 
-	def test_unplaced_physical_devices_omit_spatial_and_say_why(self) -> None:
-		unplaced = {
+	def test_every_device_has_a_spatial_record_and_the_blockers_are_the_playfield_gi(self) -> None:
+		unplaced = [device["id"] for device in self.definition["inputs"] + self.definition["outputs"] if "spatial" not in device]
+		self.assertEqual([], unplaced)
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual(("partial", []), (report["status"], report["unresolved"]))
+		self.assertEqual(2, len(report["blockers"]))
+		self.assertTrue(all("Resolution path:" in blocker for blocker in report["blockers"]))
+		markdown = (ROOT / "reports" / "spatial" / "bally" / "twilight-zone-1993.md").read_text(encoding="utf-8")
+		self.assertIn("The placements of G.I. strings 01, 02 and 05 are observed, not validated", markdown)
+		self.assertNotIn("carries a validated placement", markdown)
+		# Only the three playfield G.I. strings fall short of validated; every other located device is validated.
+		short = sorted(
 			(device["binding"]["group"], device["binding"]["device"])
 			for device in self.definition["inputs"] + self.definition["outputs"]
-			if "spatial" not in device
-		}
-		self.assertEqual({("pinmame.output.gi", 1)}, unplaced)
-		for group, address in unplaced:
-			device = {"pinmame.input.switch": self.switches, "pinmame.output.solenoid": self.solenoids, "pinmame.output.gi": self.gi}[group][address]
-			self.assertEqual("used", device["availability"], (group, address))
-			self.assertIn("No spatial placement", device["physical"]["notes"], (group, address))
-		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual(unplaced, {(entry["group"], entry["address"]) for entry in report["unresolved"]})
-		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
+			if device["spatial"]["status"] not in {"validated", "not_applicable"}
+		)
+		self.assertEqual([("pinmame.output.gi", 0), ("pinmame.output.gi", 1), ("pinmame.output.gi", 4)], short)
 
 	def test_door_panel_lamps_are_playfield_inserts_and_buttons_are_cabinet(self) -> None:
 		for address in list(range(11, 19)) + list(range(21, 29)):
@@ -708,8 +821,9 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 		self.assertIn(("pinmame.input.switch", 45), direct)
 		self.assertIn(("pinmame.output.solenoid", 18), direct)
 		projected = {(entry["group"], entry["address"]) for entry in report["projections"]}
+		self.assertIn(("pinmame.output.gi", 1), projected)
 		self.assertIn(("pinmame.output.gi", 2), projected)
-		self.assertEqual(1, len(report["unresolved"]))
+		self.assertEqual(0, len(report["unresolved"]))
 
 	def test_device_identifiers_are_unique(self) -> None:
 		identifiers = [d["id"] for d in self.definition["inputs"] + self.definition["outputs"]]
@@ -777,6 +891,7 @@ GEOMETRY_FILES = {
 	"vpx-geometry-2026-09-25.txt": "2.4.5",
 	"vpx-geometry-2026-09-25-round3.txt": "2.4.5",
 	"vpx-geometry-2026-09-26.txt": "2020",
+	"vpx-geometry-2026-10-23.txt": "2.4.5",
 }
 
 
@@ -818,6 +933,7 @@ def _hard_coded_coordinates() -> list[tuple[str, float, float]]:
 		("LAMP_POSITIONS", curator.LAMP_POSITIONS),
 		("GI_POSITIONS", curator.GI_POSITIONS),
 		("GI_CLOCK_POSITIONS", {2: curator.GI_CLOCK_POSITIONS}),
+		("GI_STREET_LAMP_POSITIONS", {1: curator.GI_STREET_LAMP_POSITIONS}),
 	):
 		for address, points in table.items():
 			for x, y in points:
@@ -911,7 +1027,10 @@ class TwilightZoneRetainedGeometryTests(unittest.TestCase):
 			"vpx-geometry-2026-09-25.txt": curator.VPX_GEOMETRY_SUPPLEMENT_SHA256,
 			"vpx-geometry-2026-09-25-round3.txt": curator.VPX_GEOMETRY_SUPPLEMENT_2_SHA256,
 			"vpx-geometry-2026-09-26.txt": curator.VPX_GEOMETRY_SUPPLEMENT_3_SHA256,
+			"vpx-geometry-2026-10-23.txt": curator.VPX_GEOMETRY_SUPPLEMENT_4_SHA256,
 			"manual-transcription.md": curator.MANUAL_TRANSCRIPTION_SHA256,
+			"completion-2026-10-23/pinside-tz-gi-guide-wayback-20200813202616.html": curator.PINSIDE_GI_CAPTURE_SHA256,
+			"completion-2026-10-23/pinballmod-the-lamp-wayback-20190826223642.html": curator.PINBALLMOD_CAPTURE_SHA256,
 		}
 		for name, digest in expected.items():
 			self.assertEqual(digest, hashlib.sha256((folder / name).read_bytes()).hexdigest(), name)
@@ -949,12 +1068,42 @@ class TwilightZoneRetainedGeometryTests(unittest.TestCase):
 		import curate_twilight_zone as curator
 
 		for item_type, name, raw_x, raw_y, _, _, table in set(self._used_rows(folder)):
+			if item_type == "MeshBounds":
+				continue  # re-derived from the world-space export by the test below
 			gameitems = Path(vpx_root).expanduser().resolve() / _table_extraction(table) / "gameitems"
 			path = gameitems / f"{item_type}.{name}.json"
 			self.assertTrue(path.is_file(), path)
 			actual = self._object_point(item_type, load_json(path)[item_type])
 			self.assertAlmostEqual(raw_x, actual[0], places=3, msg=f"{item_type}.{name}")
 			self.assertAlmostEqual(raw_y, actual[1], places=3, msg=f"{item_type}.{name}")
+
+
+	def test_the_street_lamp_shade_is_rederived_from_the_world_space_exports(self) -> None:
+		vpx_root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not vpx_root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
+		import hashlib
+		import curate_twilight_zone as curator
+
+		root = Path(vpx_root).expanduser().resolve()
+		for relative, digest, name, bounds, count in (
+			(curator.WORLD_OBJ_RELATIVE_PATH, curator.WORLD_OBJ_SHA256, "BM_Parts", curator.STREET_LAMP_SHADE_BOUNDS, curator.STREET_LAMP_SHADE_VERTICES),
+			(curator.WORLD_OBJ_2020_RELATIVE_PATH, curator.WORLD_OBJ_2020_SHA256, "TopPFLamp", curator.STREET_LAMP_SHADE_2020_BOUNDS, 23),
+		):
+			path = root / relative
+			self.assertEqual(digest, hashlib.sha256(path.read_bytes()).hexdigest(), relative)
+			pieces = curator.world_mesh_pieces(path, name)
+			matches = [piece for piece in pieces if all(abs(a - b) < 1e-3 for a, b in zip(piece[1], bounds))]
+			self.assertEqual([count], [piece[0] for piece in matches], relative)
+		# The pinned row of the fourth supplement is the 2.4.5 shade's centre, and so are both placements.
+		centre = ((curator.STREET_LAMP_SHADE_BOUNDS[0] + curator.STREET_LAMP_SHADE_BOUNDS[2]) / 2, (curator.STREET_LAMP_SHADE_BOUNDS[1] + curator.STREET_LAMP_SHADE_BOUNDS[3]) / 2)
+		folder = self._review_folder()
+		if folder is not None:
+			rows = [row for row in _geometry_rows((folder / "vpx-geometry-2026-10-23.txt").read_text(encoding="utf-8")) if row[0] == "MeshBounds"]
+			self.assertEqual(1, len(rows))
+			self.assertAlmostEqual(centre[0], rows[0][2], places=4)
+			self.assertAlmostEqual(centre[1], rows[0][3], places=4)
+		self.assertEqual([(round(centre[0] / curator.BOUNDS_X, 6), round(centre[1] / curator.BOUNDS_Y, 6))] * 2, curator.GI_STREET_LAMP_POSITIONS)
 
 
 class TwilightZoneExtractionManifestTests(unittest.TestCase):
@@ -1009,6 +1158,8 @@ class TwilightZoneSourceTests(unittest.TestCase):
 				"excerpt.twilight-zone.backbox-assembly", "excerpt.twilight-zone.clock-assembly",
 				"excerpt.twilight-zone.mini-playfield-assembly", "excerpt.twilight-zone.power-driver-connectors",
 				"excerpt.twilight-zone.mini-playfield-switch-drawing", "excerpt.twilight-zone.switch-matrix",
+				"excerpt.twilight-zone.lamp-matrix", "excerpt.twilight-zone.fliptronic-ii-wiring",
+				"excerpt.twilight-zone.clock-opto-boards",
 			},
 			excerpts,
 		)
@@ -1016,6 +1167,20 @@ class TwilightZoneSourceTests(unittest.TestCase):
 		self.assertIn(curator.EXTRACTION_2020_MANIFEST_SHA256, self.sources["vpx-extraction.tz-ninuzzu-2020"]["locator"])
 		self.assertEqual("runtime_scenario", self.sources["runtime.twilight-zone.clock-test"]["kind"])
 		self.assertIn("IPDB copy", self.sources["manual.bally.twilight-zone.1993"]["locator"])
+		for identifier, digest in (
+			("human-review.twilight-zone.pinside-gi-guide", curator.PINSIDE_GI_CAPTURE_SHA256),
+			("human-review.twilight-zone.pinballmod-lamp", curator.PINBALLMOD_CAPTURE_SHA256),
+		):
+			source = self.sources[identifier]
+			self.assertEqual(("human_review", digest), (source["kind"], source["sha256"]), identifier)
+			self.assertIn("web.archive.org/web/", source["locator"], identifier)
+			self.assertTrue(all(excerpt.get("reviewed") for excerpt in source["excerpts"]), identifier)
+		clock = (ROOT / "evidence/excerpts/bally.twilight-zone.1993/clock-opto-boards.md").read_text(encoding="utf-8")
+		for line in ("| 24-8829 | LMP1 - LMP4 | Bulb #86, 6.3, .2A |", "- J2-5 Yellow", "- J2-3 Yellow-White", "J2 pin 6 joins LAMP 1 and LAMP 2"):
+			self.assertIn(line, clock)
+		pinside = (ROOT / "evidence/excerpts/bally.twilight-zone.1993/pinside-tz-gi-guide.md").read_text(encoding="utf-8")
+		self.assertIn("Only two in the \"upper playfield\", in the street lamp.", pinside)
+		self.assertIn("could only find 28 GI-positions", pinside)
 
 	def test_retained_manuals_match_their_pinned_hashes(self) -> None:
 		root = os.environ.get("PINMAME_MANUALS_ROOT")

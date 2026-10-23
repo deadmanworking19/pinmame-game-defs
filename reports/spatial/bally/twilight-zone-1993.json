@@ -1,6 +1,7 @@
 {
   "blockers": [
-    "1 physical device carries no spatial record because no defensible coordinate exists (gi 1); it is listed with its reason under `unresolved`."
+    "G.I. strings 01 and 05 (public G.I. 0 and 4): the placements are the retained table's 24 G.I. emitters, not the strings' socket list. The ancestral 2020 table shows bulbs at eight positions the 2.4.5 table leaves empty, and owners count 28 G.I. positions under the main playfield plus one in the gumball stack. Resolution path: a bulb survey of both strings on a physical machine (every socket's position and string).",
+    "G.I. string 02 (public G.I. 1): its playfield bulbs are in the mini-playfield's street lamp, placed on the lamp's shade, but the count of two rests on owner and vendor reports. Resolution path: a photograph or survey of the sockets of a stock street lamp."
   ],
   "coordinate_convention": {
     "second_table": "Objects of the 2020 ninuzzu table are normalized by that table's own bounds (left=0 top=0 right=1093 bottom=2162): x/1093.0, y/2162.0. 60 same-named Trigger/Kicker/Bumper/Gate/Spinner objects of the two tables agree to a median 0.004 normalized, 53 of them within 0.01.",
@@ -114,7 +115,9 @@
     "Trigger.DivTrig and Wall.DivWall (invisible ball-catch trigger and collision wall of the right ramp diverter; solenoid 5 is placed on the blade primitive BM_RDiv instead)",
     "2020 table Light.f18d/f20d/f41d (each co-located with the smaller-falloff Light f18c/f20c/f41c that is used) and 2020 Light.f18/f18a/f18b, f19, f20/f20a/f20b, f41/f41a/f41b (the sockets the 2.4.5 table already models; its Lights are used for those)",
     "2020 table Flasher objects (f18e, f18flash, f19b, f20e, f20flash, f20r, f41e, f41flash, f41r, and the GIClock glow sprites Flasher1-Flasher4) -- glow, reflection or backglass sprites, not sockets",
-    "2020 table GIMinipf collection -- an author's grouping that includes Light20/Light43 on the main-playfield jet bumpers, not a socket list for G.I. string 02"
+    "2020 table GIMinipf collection -- an author's grouping that includes Light20/Light43 on the main-playfield jet bumpers, not a socket list for G.I. string 02",
+    "2.4.5 Light.l101 (G.I. string 02's light-baking source, 0.024 from the street lamp's shade) and the 2020 table's street-lamp glow sprites Flasher.light46/light47 and GIMinipf render lights light44/light45 -- not bulbs; the shade itself is read from the world-space export",
+    "2020 table Primitive.TopPFLamp position (the foot of the street lamp's post, not its shade)"
   ],
   "extraction": {
     "fail_closed": true,
@@ -278,11 +281,12 @@
     ]
   },
   "notes": [
-    "The complete operations manual from IPDB (machine 2684) carries the Switch Matrix (2-50), Solenoid/Flasher Table (2-52) and Lamp Matrix (2-54) wiring pages that the retained Internet Archive scan lacks. This pass uses them for the clock drives, the knocker's backbox wiring, the G.I. strings' playfield/backbox split, the flasher socket counts, the mini-playfield switch drawing and the switch matrix wiring (every used matrix switch, including column 9, the clock optos at public 121-128); the lamp matrix and the other outputs' wire colours and connector/pin assignments have not been transferred yet.",
-    "Two placements are observed rather than validated: G.I. string 03's two clock sockets, projected onto the clock axis, which is not a bulb object (page 2-33 draws the sockets about an inch apart inside the clock housing). With G.I. string 02, which has no placement, they are the spatial records that are not validated.",
+    "The complete operations manual from IPDB (machine 2684) carries every page the retained Internet Archive scan lacks. The wiring of every used switch, solenoid, flipper winding, lamp and G.I. string comes from it: the switch matrix and the dedicated and flipper switch blocks (2-50), the Solenoid/Flasher Table with its G.I. and Flipper Circuits rows (2-52), the Lamp Matrix (2-54), the Flipper Circuit Diagram and the Fliptronic II board's connector list (3-25, 3-28) and the power driver board's connector list (3-33).",
+    "G.I. string 03's playfield bulbs are the four #86 lamps on the clock's Minute Opto board, projected onto the clock axis and validated; the two clock-bracket sockets an earlier revision placed there are matrix lamps 83 and 84. G.I. string 02's playfield bulbs are in the mini-playfield's street lamp, projected onto the centre of the lamp's shade, which the 2.4.5 table bakes into BM_Parts and is read from its world-space OBJ export (vpx-geometry-2026-10-23.txt); their count of two rests on owner reports, so they stay observed.",
+    "G.I. strings 01 and 05 are placed on the retained table's 24 G.I. emitters, observed and without a quantity: the two retained tables model different bulb sets and owners count about 29 main-playfield G.I. sockets, so neither table's set is the socket list.",
     "conflict.clock-motor-direction-naming was withdrawn: the manual's clock test text (page 1-18), its solenoid table (pages 2-52/2-53), the retained script's cross-reference and the ROM's own clock test agree that public 56 is Clock Reverse and 57 Clock Forward; only pinned PinMAME's tz.c #define names read the other way, while its live clock model (tz.c:601-624, mech.c:140-145) runs forward on 57."
   ],
-  "placement_count": 200,
+  "placement_count": 204,
   "projections": [
     {
       "address": 26,
@@ -440,9 +444,14 @@
       "reason": "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): this drive line runs the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel, through the D.C. Motor Control Board A-16120; the clock test text on page 1-18 puts that board \"UNDER the playfield at approximately the same position as the clock\" and the drives 42 and 43 on the 8-Driver Board in the backbox. Page 2-53 draws callouts 42/43 right of centre above the slot machine and page 2-47 (item 17, \"D.C. Motor Assembly\") puts A-16120 under the rear right of the playfield; the motor itself is on the clock."
     },
     {
+      "address": 1,
+      "group": "pinmame.output.gi",
+      "reason": "Projected onto the centre of the street lamp's shade as two co-located placements, observed because the count of two rests on owner reports. Neither table stores the lamp with a centre of its own, so the shade is read from the retained 2.4.5 table's world-space OBJ export (vpxtool export obj --units vpu): the welded piece of the baked mesh BM_Parts with 198 vertices, a hood about 150 VPU (three inches) long lying along the lamp's arm, whose x/y bounds have their midpoint at 135.86, 603.12 VPU (vpx-geometry-2026-10-23.txt). Each bulb lies inside that hood, within about 0.07 normalized of the centre along the arm. The 2020 table's stock lamp primitive TopPFLamp has its shade 0.0018 away. The 2.4.5 script's one binding for the string, l101, is a light-baking source 0.024 from the shade centre, not a bulb. The 2020 table's GIMinipf collection, which its UpdateGI dims from G.I. string index 1, holds render lights and the lamp mod's glow sprites and also Light20 and Light43 on the main-playfield jet bumpers, whose lamps are matrix lamps 61-63; it is an author's grouping, not a socket list."
+    },
+    {
       "address": 2,
       "group": "pinmame.output.gi",
-      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the anchor already used for clock outputs 56/57 and optos 121-128) as two co-located placements, quantity 2, recorded as observed because the axis is not a bulb object. The projection hides an offset: the page 2-33 drawing puts the two sockets side by side on bracket 24, about an inch apart, inside the clock housing's footprint, so each real socket lies within the housing, near but not on the axis. The Clock Assembly A-16124 (parts list page 2-32, drawing page 2-33; renumbered A-16124-1 by Manual Amendment 16-50020-AMD-1, which changes no socket item) carries item 25 \"A-12887 Socket & Bulb Assembly\", whose leader reaches two sockets on item 24 \"01-11337 Clock Mounting Bracket\", one bulb in item 27 \"Light Bulb Sleeve - Red\" and one in item 29 \"Light Bulb Sleeve - Yellow\". That these two sockets are string 03's playfield bulbs rests on the string's printed name \"Clock & Insert\" and its playfield connection; no page lists the string's sockets. The quantity counts only these two playfield sockets: the string's insert-board bulbs are backbox hardware with no playfield coordinate and no printed count. The 2020 ninuzzu table's GIClock collection, which its UpdateGI dims from G.I. string index 2, holds four Flasher glow sprites (image F_refl) at two positions beside the clock, about (0.715, 0.283) and (0.791, 0.287); they corroborate that the recreation models two emitters at the clock and are not socket positions. The retained 2.4.5 script's single binding for the string, l102, only drives baked clock lightmaps from an off-playfield raw position (x=-230.57) and is not used."
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the anchor already used for clock outputs 56/57 and optos 121-128) as four co-located placements. The lamps sit on the same Minute Opto board as optos 121-124, and page 2-17 draws them set diagonally around the large circle at the board's centre, so each lies within about an inch of the axis inside the clock. No table models them: the 2020 ninuzzu table's GIClock collection, which its UpdateGI dims from G.I. string index 2, holds four Flasher glow sprites (image F_refl) at two positions beside the clock, about (0.715, 0.283) and (0.791, 0.287), and the retained 2.4.5 script's one binding for the string, l102, only drives baked clock light maps from an off-playfield raw position (x=-230.57)."
     }
   ],
   "resolved_input_addresses": [
@@ -513,6 +522,10 @@
   "resolved_output_bindings": [
     {
       "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
       "group": "pinmame.output.gi"
     },
     {
@@ -946,13 +959,7 @@
     "table_sha256": "4fcca01a076591384caec5b06d4f58547299cbeae9fac2a67faa29cc5af0d814"
   },
   "status": "partial",
-  "unresolved": [
-    {
-      "address": 1,
-      "group": "pinmame.output.gi",
-      "reason": "Mixed mini-playfield + backbox insert string with no bulb list: the Mini-Playfield Assembly A-16806 (pages 2-40/2-41) shows a #555 socket (item 10, yellow sleeve item 49) in the Street Light and item 10's leader to a second socket in its back view, with no printed quantity; the 2020 table's GIMinipf collection includes Light20/Light43 on main-playfield jet bumpers 1 and 2, so its membership is an author's choice, and the 2.4.5 table binds a single light (l101). Resolution: a continuity or bulb survey of G.I. string 02 on a physical machine."
-    }
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "geometry": {
@@ -971,10 +978,22 @@
       "path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt",
       "sha256": "f5560fd3d0cc5b7f940955c9d20848ede4fe815dc4a89092dcb4aabea1b329c5"
     },
+    "geometry_supplement_4": {
+      "path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-10-23.txt",
+      "sha256": "2ab3cc979b1885aea180f6dfffcd5b80272ca4adf452adb079e6ae390afcd08c"
+    },
     "root": "external:pinmame-manuals/rendered/bally.twilight-zone.1993/",
     "transcription": {
       "path": "external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md",
       "sha256": "022e91ceaedb44fdaf410cca90bfa534aa11c89fcd832dd2a0f94166c24de39a"
+    },
+    "world_obj": {
+      "path": "external:pinmame-vpx-sources/bally/twilight-zone-1993/export-obj-vpu/Twilight Zone (Bally 1993) 2.4.5.obj",
+      "sha256": "8a933255641a5d04d70cefac4464104677b17c030837053943f2ef87ebefd71c"
+    },
+    "world_obj_2020": {
+      "path": "external:pinmame-vpx-sources/bally/twilight-zone-1993/ninuzzu-2020/export-obj-vpu/Twilight Zone (Bally 1993).obj",
+      "sha256": "8f7bad9e960296be8799bc70854932ff123e184099292ce1993c3d40a326fbb4"
     }
   }
 }

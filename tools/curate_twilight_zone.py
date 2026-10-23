@@ -48,6 +48,11 @@ RUNTIME_CLOCK_PATH = "evidence/runtime/wpc-fliptronic/twilight-zone-clock-test.j
 RUNTIME_CLOCK_MECH_SOURCE = "runtime.twilight-zone.clock-test-mech"
 RUNTIME_CLOCK_MECH_PATH = "evidence/runtime/wpc-fliptronic/twilight-zone-clock-test-mech.json"
 RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+# Owner and vendor reports on the G.I. bulbs the manual does not count, retained as Internet Archive captures.
+PINSIDE_GI_SOURCE = "human-review.twilight-zone.pinside-gi-guide"
+PINSIDE_GI_CAPTURE_SHA256 = "e08799200c3784c4c3ad1ae028f3740524b27ff7670e92cb5bc3bc02a5e8b664"
+PINBALLMOD_SOURCE = "human-review.twilight-zone.pinballmod-lamp"
+PINBALLMOD_CAPTURE_SHA256 = "ced0a42c12978006bf2e49687c761780dd444fcc8433fe0b1814f8020dc48162"
 
 MANUAL_IPDB_SHA256 = "b026feca0fe20a709a7224b49cdb7330586b041798f1a02193c53a00738fa105"
 MANUAL_AMENDMENT_SHA256 = "36b83c898727d4215ec9157f1236a2a074374187a39f665d82efa8f39e95a856"
@@ -77,6 +82,14 @@ VPX_GEOMETRY_SUPPLEMENT_2_SHA256 = "1cab0a1ff393a96e2fa43e49ac31039e05280d462293
 # frame comparison between the two tables, and the least-squares fits of the page 2-53 and 2-50 drawings with every
 # measured callout pixel and offset. The three earlier files stay byte-identical.
 VPX_GEOMETRY_SUPPLEMENT_3_SHA256 = "f5560fd3d0cc5b7f940955c9d20848ede4fe815dc4a89092dcb4aabea1b329c5"
+# A fourth supplement for the 2026-10-23 pass: the mini-playfield street lamp's shade, read from world-space OBJ
+# exports of both tables (`vpxtool export obj --units vpu`), whose bounds are embedded below. The four earlier
+# files stay byte-identical.
+VPX_GEOMETRY_SUPPLEMENT_4_SHA256 = "2ab3cc979b1885aea180f6dfffcd5b80272ca4adf452adb079e6ae390afcd08c"
+WORLD_OBJ_RELATIVE_PATH = Path("bally/twilight-zone-1993/export-obj-vpu/Twilight Zone (Bally 1993) 2.4.5.obj")
+WORLD_OBJ_SHA256 = "8a933255641a5d04d70cefac4464104677b17c030837053943f2ef87ebefd71c"
+WORLD_OBJ_2020_RELATIVE_PATH = Path("bally/twilight-zone-1993/ninuzzu-2020/export-obj-vpu/Twilight Zone (Bally 1993).obj")
+WORLD_OBJ_2020_SHA256 = "8f7bad9e960296be8799bc70854932ff123e184099292ce1993c3d40a326fbb4"
 
 EXTRACTION_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool.manifest.json")
@@ -874,37 +887,191 @@ GI_WIRING_NOTES = {
 	3: "Page 2-52 wires it to the backbox only (J-120-5 and J-120-10, triac Q16, Wht-Grn, backbox bulb 24-8768); page 3-33 lists J120-5 \"Green, Return G.I. to insert\". " + _GI_COLUMN_NOTE,
 	4: "Page 2-52 wires it to the playfield only (J-121-6 and J-121-11, triac Q12, Wht-Vio, playfield bulb 24-6549); page 3-33 lists J121-6 \"Violet, Return G.I. to playfield\". " + _GI_COLUMN_NOTE,
 }
-GI_MINI_PLAYFIELD_BLOCKER = (
-	"No spatial placement: the playfield part of this mixed string has no bulb list. The Mini-Playfield Assembly A-16806 "
-	"(parts list page 2-40, drawing page 2-41) shows item 10 \"A-12887 Socket Assembly, #555 Bulb\" with item 49 "
-	"\"Sleeve, Yellow\" in the Street Light (item 2), and in its back view item 10's leader reaches a second socket; the "
-	"page prints no quantity, and no page enumerates this string's bulbs. The retained 2.4.5 script binds the string to a "
-	"single light (l101, x=0.118778 y=0.301331 on the mini-playfield). The 2020 ninuzzu table's GIMinipf collection, "
-	"which its UpdateGI dims from G.I. string index 1, includes Light20 and Light43, which sit on main-playfield jet "
-	"bumpers 1 and 2 (within about 0.01), so its membership is an author's choice, not a socket list. The backbox insert "
-	"part (J-120-2) is cabinet hardware with no playfield coordinate. Resolution: a continuity or bulb survey of G.I. "
-	"string 02 on a physical machine."
+# G.I. wiring as fields: (return connection, return wire, triac, 6.8VAC connection, 6.8VAC wire). Page 2-52 prints
+# the triac and the connections (return under Voltage Connections, 6.8VAC under Drive Connections) and the feed's
+# colour as "Drive Wire Color"; the wire names are page 3-33's.
+GI_WIRING = {
+	0: ("J121-1", "Brown", "Q18", "J121-7", "White-Brown"),
+	1: ("J121-2 / J120-2", "Orange", "Q10", "J121-8 / J120-8", "White-Orange"),
+	2: ("J121-3 / J120-3", "Yellow", "Q14", "J121-9 / J120-9", "White-Yellow"),
+	3: ("J120-5", "Green", "Q16", "J120-10", "White-Green"),
+	4: ("J121-6", "Violet", "Q12", "J121-11", "White-Violet"),
+}
+_GI_OWNER_REPORTS = (
+	"Pinside topic 163470 (2016), retained as an Internet Archive capture"
 )
-# The clock's two G.I. sockets, projected co-located onto the clock axis (the anchor of the clock motor outputs and
-# optos); the FunHouse record's co-located clock placements are the precedent.
-GI_CLOCK_POSITIONS = [_norm(CLOCK_AXIS), _norm(CLOCK_AXIS)]
+# Strings 01 and 05: the retained table's emitters, which are not the strings' socket list, so they stay observed and
+# carry no quantity.
+GI_TABLE_EMITTER_NOTE = (
+	"The manual prints no per-string bulb count and no G.I. location drawing. The placements are the retained 2.4.5 "
+	"table's G.I. emitters for this string (UpdateGI in the retained script), split between strings 01 and 05 by the "
+	"strings' printed names \"Playfield Left\" and \"Playfield Right\" and their J121 playfield wiring, and they are "
+	"recorded as observed because they are not the strings' socket list. The 2.4.5 table models 11 emitters on string 01 "
+	"and 13 on string 05, 24 together. The ancestral 2020 table shows 26 bulbs on its GILeft and GIRight collections, "
+	"eight of them where the 2.4.5 table has none (light9, light8, light25 and Light1 on the left; light15, light21, "
+	"light23 and Light56 on the right), while two 2.4.5 emitters, l100 and l104b, have no 2020 bulb within 0.02. An owner "
+	"counted 28 G.I. positions under the main playfield, another places one more G.I. bulb in the gumball stack, and a "
+	"vendor's LED kit instructions give the playfield G.I. as 34 #44 bulbs and 2 #555 bulbs (street light) "
+	f"({_GI_OWNER_REPORTS}). No quantity is recorded. Resolution path: a bulb survey of strings 01 and 05 on a physical "
+	"machine, giving every socket's position and the string it is on (for example by switching one string off in the "
+	"ROM's T.6 General Illumination test)."
+)
+# String 02's playfield bulbs: the two #555 bulbs in the mini-playfield's street lamp. Neither table stores the lamp
+# with its own centre (the 2.4.5 table bakes it into BM_Parts; the 2020 table's TopPFLamp position is its post's foot),
+# so the shade is read from world-space OBJ exports. Its x/y bounds in the 2.4.5 export, in VPU:
+STREET_LAMP_SHADE_BOUNDS = (62.2458, 530.2169, 209.4795, 676.0287)
+STREET_LAMP_SHADE_2020_BOUNDS = (63.4642, 529.1200, 213.0794, 669.0185)
+STREET_LAMP_SHADE_VERTICES = 198
+
+
+def _mesh_centre(bounds: tuple[float, float, float, float]) -> tuple[float, float]:
+	return (round((bounds[0] + bounds[2]) / 2 / BOUNDS_X, 6), round((bounds[1] + bounds[3]) / 2 / BOUNDS_Y, 6))
+
+
+GI_STREET_LAMP_POSITIONS = [_mesh_centre(STREET_LAMP_SHADE_BOUNDS), _mesh_centre(STREET_LAMP_SHADE_BOUNDS)]
+GI_STREET_LAMP_NOTE = (
+	"Its playfield bulbs are the #555 bulbs in the mini-playfield's street lamp. Page 2-52 prints the string's "
+	"playfield bulb as 24-8768, the #555, and the Mini-Playfield Assembly A-16806 (parts list page 2-40, drawing page "
+	"2-41) fits item 10 \"A-12887 Socket Assembly, #555 Bulb\" with item 49 \"Sleeve, Yellow\" on the Street Light "
+	"(item 2), whose front view shows the sleeved bulb at the lamp's open end. The street lamp is no lamp-matrix position "
+	"(page 2-54 names all 64) and no flasher, and string 02 is the only G.I. string that prints a #555 playfield bulb "
+	"(strings 01 and 05 print #44, string 03 the #86 clock lamps, string 04 has no playfield bulb), so the street lamp's "
+	"bulbs are this string's. No page prints how many there are, and the count of two rests on owner and vendor reports, "
+	"so both placements are recorded as observed: an owner reports \"Only two in the 'upper playfield', in the street "
+	"lamp\", a vendor's LED kit instructions list \"2 Warm Flex 555s (Street light)\" "
+	f"({_GI_OWNER_REPORTS}), and a replacement lamp's maker tells fitters to \"remove the rivets of the lamp sockets\" "
+	"(PinballMOD, Internet Archive capture of 2019); the A-16806 drawing shows only the bulb at the open end. The string "
+	"also lights the backbox insert board (J120-2 and J120-8), whose bulbs have no playfield coordinate and no printed "
+	"count, so no quantity is recorded. Resolution path: a photograph or survey of the sockets of a stock street lamp."
+)
+GI_STREET_LAMP_PLACEMENT_NOTE = (
+	"Projected onto the centre of the street lamp's shade as two co-located placements, observed because the count "
+	"of two rests on owner reports. Neither table stores the lamp "
+	"with a centre of its own, so the shade is read from the retained 2.4.5 table's world-space OBJ export (vpxtool "
+	"export obj --units vpu): the welded piece of the baked mesh BM_Parts with 198 vertices, a hood about 150 VPU (three "
+	"inches) long lying along the lamp's arm, whose x/y bounds have their midpoint at 135.86, 603.12 VPU "
+	"(vpx-geometry-2026-10-23.txt). Each bulb lies inside that hood, within about 0.07 normalized of the centre along "
+	"the arm. The 2020 table's stock lamp primitive TopPFLamp has its shade 0.0018 away. The 2.4.5 script's one binding "
+	"for the string, l101, is a light-baking source 0.024 from the shade centre, not a bulb. The 2020 table's GIMinipf "
+	"collection, which its UpdateGI dims from G.I. string index 1, holds render lights and the lamp mod's glow sprites "
+	"and also Light20 and Light43 on the main-playfield jet bumpers, whose lamps are matrix lamps 61-63; it is an "
+	"author's grouping, not a socket list."
+)
+# String 03's playfield bulbs: LMP1-LMP4 of the Minute Opto PCB A-16220, projected co-located onto the clock axis.
+GI_CLOCK_POSITIONS = [_norm(CLOCK_AXIS)] * 4
+GI_CLOCK_NOTE = (
+	"Its playfield bulbs are the four #86 lamps LMP1-LMP4 on the clock's Minute Opto PCB A-16220. Page 2-52 prints the "
+	"string's playfield bulb as 24-8829, and the manual's only 24-8829 parts are \"Bulb #86, 6.3, .2A\" at LMP1 - LMP4 of "
+	"that board (page 2-17, in sockets 24-8830). The board's schematic (page 3-18) wires LAMP 1 - LAMP 4 to its J2 pins "
+	"3-6 and nothing else to them, and prints those wires Yellow (J2-5, J2-6) and Yellow-White (J2-3, J2-4): this "
+	"string's playfield pair is J121-3 \"Yellow, Return G.I. to playfield\" and J121-9 \"White-Yellow, 6.8VAC to "
+	"playfield\" (page 3-33), the second colour printed in the other order. The schematic draws D1-D4 in series with the "
+	"lamps as diodes, and the page 2-17 parts list fits 0 ohm resistors there. The two A-12887 sockets on the clock's "
+	"mounting bracket (Clock Assembly A-16124, pages 2-32/2-33, items 24, 25, 27 and 29, with a 1N4004 diode, item 31, "
+	"on their leads; Manual Amendment 16-50020-AMD-1 renumbers the assembly A-16124-1 and changes none of these items) "
+	"are not this string's: they are matrix lamps 83 Piano Yellow and 84 Piano Red, which an earlier "
+	"revision of this definition placed here as the string's two sockets. The string also lights the backbox insert "
+	"board (J120-3 and J120-9), whose bulbs have no playfield coordinate and no printed count, so no quantity is "
+	"recorded."
+)
 GI_CLOCK_PLACEMENT_NOTE = (
 	"Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the anchor already used for clock "
-	"outputs 56/57 and optos 121-128) as two co-located placements, quantity 2, recorded as observed because the axis is not a bulb object. The projection hides an offset: the "
-	"page 2-33 drawing puts the two sockets side by side on bracket 24, about an inch apart, inside the clock "
-	"housing's footprint, so each real socket lies within the housing, near but not on the axis. The Clock Assembly A-16124 (parts list "
-	"page 2-32, drawing page 2-33; renumbered A-16124-1 by Manual Amendment 16-50020-AMD-1, which changes no socket item) "
-	"carries item 25 \"A-12887 Socket & Bulb Assembly\", whose leader reaches two sockets on item 24 \"01-11337 Clock "
-	"Mounting Bracket\", one bulb in item 27 \"Light Bulb Sleeve - Red\" and one in item 29 \"Light Bulb Sleeve - "
-	"Yellow\". That these two sockets are string 03's playfield bulbs rests on the string's printed name \"Clock & "
-	"Insert\" and its playfield connection; no page lists the string's sockets. The quantity counts only these two "
-	"playfield sockets: the string's insert-board bulbs are backbox hardware with no playfield coordinate and no printed "
-	"count. The 2020 ninuzzu table's GIClock collection, which its UpdateGI dims from G.I. string index 2, holds four "
-	"Flasher glow sprites (image F_refl) at two positions beside the clock, about (0.715, 0.283) and (0.791, 0.287); "
-	"they corroborate that the recreation models two emitters at the clock and are not socket positions. The retained "
-	"2.4.5 script's single binding for the string, l102, only drives baked clock lightmaps from an off-playfield raw "
-	"position (x=-230.57) and is not used."
+	"outputs 56/57 and optos 121-128) as four co-located placements. The lamps sit on the same Minute Opto board as "
+	"optos 121-124, and page 2-17 draws them set diagonally around the large circle at the board's centre, so each lies "
+	"within about an inch of the axis inside the clock. No table models them: the 2020 ninuzzu table's GIClock "
+	"collection, which its UpdateGI dims from G.I. string index 2, holds four Flasher glow sprites (image F_refl) at two "
+	"positions beside the clock, about (0.715, 0.283) and (0.791, 0.287), and the retained 2.4.5 script's one binding "
+	"for the string, l102, only drives baked clock light maps from an off-playfield raw position (x=-230.57)."
 )
+# --- Wiring from the complete IPDB manual.
+POWER_DRIVER_BOARD = "WPC power driver board"
+# Page 2-52, coil rows 01-28: (drive connection, drive wire, transistor, supply pin). Each row prints its power
+# driver board drive pin under Voltage Connections and its J107/J109 supply pin under Drive Connections
+# (solenoid-flasher-table.md); page 3-33 names every one of these drive pins for its solenoid. Row 22 prints "----".
+SOLENOID_WIRING = {
+	1: ("J130-1", "Vio-Brn", "Q82", "J107-3"), 2: ("J130-2", "Vio-Red", "Q80", "J107-3"),
+	3: ("J130-4", "Vio-Org", "Q78", "J107-3"), 4: ("J130-5", "Vio-Yel", "Q76", "J107-3"),
+	5: ("J130-6", "Vio-Grn", "Q64", "J107-3"), 6: ("J130-7", "Vio-Blu", "Q66", "J107-3"),
+	7: ("J130-8", "Vio-Blk", "Q68", "J107-3"), 8: ("J130-9", "Vio-Gry", "Q70", "J107-3"),
+	9: ("J127-1", "Brn-Blk", "Q58", "J107-2"), 10: ("J127-3", "Brn-Red", "Q56", "J107-2"),
+	11: ("J127-4", "Brn-Org", "Q54", "J107-2"), 12: ("J127-5", "Brn-Yel", "Q52", "J107-2"),
+	13: ("J127-6", "Brn-Grn", "Q50", "J107-2"), 14: ("J127-7", "Brn-Blu", "Q48", "J107-2"),
+	15: ("J127-8", "Brn-Vio", "Q46", "J107-2"), 16: ("J127-9", "Brn-Gry", "Q44", "J107-2"),
+	17: ("J125-1", "Blk-Brn", "Q42", "J107-6"), 18: ("J125-2", "Blk-Red", "Q40", "J107-6"),
+	19: ("J125-3", "Blk-Org", "Q38", "J107-6"), 20: ("J125-5", "Blk-Yel", "Q36", "J107-6"),
+	21: ("J125-6", "Blu-Grn", "Q28", "J109-5"), 23: ("J125-8", "Blu-Vio", "Q34", "J109-5"),
+	24: ("J125-9", "Blu-Gry", "Q32", "J107-6"), 25: ("J124-1", "Blu-Brn", "Q26", "J109-5"),
+	26: ("J124-2", "Blu-Red", "Q24", "J109-7"), 27: ("J124-3", "Blu-Org", "Q22", "J109-7"),
+	28: ("J124-5", "Blu-Yel", "Q20", "J107-6"),
+}
+# Page 2-52, rows 37-44 (public 51-58): (board, drive connection, drive wire, supply). The footnotes put the single-
+# starred pins on the 8-Driver P.C.B. A-16100 and the double-starred ones on the D.C. Motor Control Assembly A-16120;
+# the page prints no transistor for these rows.
+AUX_SOLENOID_WIRING = {
+	51: ("8-Driver PCB A-16100", "J4-1", "Brn-Wht", "J107-6 (power driver board)"),
+	52: ("8-Driver PCB A-16100", "J4-2", "Red-Wht", "J107-6 (power driver board)"),
+	53: ("8-Driver PCB A-16100", "J4-3", "Org-Wht", "J107-6 (power driver board)"),
+	54: ("8-Driver PCB A-16100", "J4-5", "Yel-Wht", "J107-6 (power driver board)"),
+	55: ("8-Driver PCB A-16100", "J3-5", "Grn-Wht", "J107-6 (power driver board)"),
+	56: ("D.C. Motor Control Assembly A-16120", "J1-2", "Blu-Wht", "J1-5"),
+	57: ("D.C. Motor Control Assembly A-16120", "J1-1", "Vio-Wht", "J1-5"),
+	58: ("8-Driver PCB A-16100", "J5-1", "Gry-Wht", "J107-6 (power driver board)"),
+}
+FLIPTRONIC_BOARD = "Fliptronic II board A-15472"
+# Page 2-52's Flipper Circuits rows: (drive connection, drive wire, transistor, supply pin, supply wire). Pages 3-25
+# and 3-28 agree on every J902 pin, wire and transistor and give other J907 pins (fliptronic-ii-wiring.md).
+FLIPPER_WIRING = {
+	33: ("J902-6", "Blk-Yel", "Q2", "J907-4", "Blu-Yel"), 34: ("J902-4", "Org-Vio", "Q7", "J907-4", "Blu-Yel"),
+	35: ("J902-3", "Blk-Blu", "Q1", "J907-1", "Gry-Yel"), 36: ("J902-1", "Org-Gry", "Q5", "J907-1", "Gry-Yel"),
+	45: ("J902-13", "Blu-Vio", "Q4", "J907-9", "Blu-Yel"), 46: ("J902-11", "Org-Grn", "Q11", "J907-9", "Blu-Yel"),
+	47: ("J902-9", "Blu-Gry", "Q3", "J907-7", "Gry-Yel"), 48: ("J902-7", "Org-Blu", "Q9", "J907-7", "Gry-Yel"),
+}
+FLIPPER_SIDES = {33: "upper right", 34: "upper right", 35: "upper left", 36: "upper left", 45: "lower right", 46: "lower right", 47: "lower left", 48: "lower left"}
+# The supply pin each page gives each flipper: (page 3-25's drawing, page 3-28's list).
+FLIPPER_SUPPLY_OTHER_READINGS = {
+	"upper right": ("pin 1", "J907-6"), "upper left": ("pin 4", "J907-9"),
+	"lower right": ("pin 7", "J907-1"), "lower left": ("pin 9", "J907-4"),
+}
+# Page 2-53's Flipper Coils list (coil, assembly); page 2-52 prints the same coil numbers.
+FLIPPER_COIL_PARTS = {
+	"upper right": ("FL-11722", "A-15205-R-3"), "upper left": ("FL-11753", "A-15205-L-1"),
+	"lower right": ("FL-15411", "A-15205-R-4"), "lower left": ("FL-15411", "A-15205-L-4"),
+}
+# Page 2-54 lamp-matrix headings: column -> (wire, connector, transistor), row -> (wire, connector, transistor).
+LAMP_COLUMN_WIRING = {
+	1: ("Yellow-Brown", "J137-1", "Q98"), 2: ("Yellow-Red", "J137-2", "Q97"), 3: ("Yellow-Orange", "J137-3", "Q96"),
+	4: ("Yellow-Black", "J137-4", "Q95"), 5: ("Yellow-Green", "J137-5", "Q94"), 6: ("Yellow-Blue", "J137-6", "Q93"),
+	7: ("Yellow-Violet", "J138-7", "Q92"), 8: ("Yellow-Gray", "J138-9", "Q91"),
+}
+LAMP_ROW_WIRING = {
+	1: ("Red-Brown", "J133-1", "Q90"), 2: ("Red-Black", "J133-2", "Q89"), 3: ("Red-Orange", "J133-4", "Q88"),
+	4: ("Red-Yellow", "J133-5", "Q87"), 5: ("Red-Green", "J133-6", "Q86"), 6: ("Red-Blue", "J133-7", "Q85"),
+	7: ("Red-Violet", "J133-8", "Q84"), 8: ("Red-Gray", "J133-9", "Q83"),
+}
+# Page 2-50's dedicated and flipper grounded switch blocks: address -> (wire, connector).
+DEDICATED_SWITCH_WIRING = {
+	1: ("Orange-Brown", "J205-1"), 2: ("Orange-Red", "J205-2"), 3: ("Orange-Black", "J205-3"), 4: ("Orange-Yellow", "J205-4"),
+	5: ("Orange-Green", "J205-6"), 6: ("Orange-Blue", "J205-7"), 7: ("Orange-Violet", "J205-8"), 8: ("Orange-Gray", "J205-9"),
+}
+FLIPPER_SWITCH_WIRING = {
+	111: ("Black-Green", "J906-1"), 112: ("Blue-Violet", "J905-1"), 113: ("Black-Blue", "J906-3"), 114: ("Blue-Gray", "J905-2"),
+	115: ("Black-Violet", "J906-4"), 116: ("Black-Yellow", "J905-3"), 117: ("Black-Gray", "J906-5"), 118: ("Black-Blue", "J905-5"),
+}
+# Lamps 83 and 84 are the two sockets on the clock's mounting bracket.
+LAMP_CLOCK_BRACKET_NOTES = {
+	83: (
+		"One of the two A-12887 sockets on the clock's mounting bracket (Clock Assembly A-16124, pages 2-32/2-33, items 24 "
+		"and 25), the one whose bulb wears item 29 \"Light Bulb Sleeve - Yellow\", matching its printed name; the sockets' "
+		"leads carry a 1N4004 diode (item 31), as a lamp-matrix lamp's do. An earlier revision of this definition counted "
+		"these two sockets as G.I. string 03's."
+	),
+	84: (
+		"One of the two A-12887 sockets on the clock's mounting bracket (Clock Assembly A-16124, pages 2-32/2-33, items 24 "
+		"and 25), the one whose bulb wears item 27 \"Light Bulb Sleeve - Red\", matching its printed name; the sockets' "
+		"leads carry a 1N4004 diode (item 31), as a lamp-matrix lamp's do. An earlier revision of this definition counted "
+		"these two sockets as G.I. string 03's."
+	),
+}
 
 
 def _file_sha256(path: Path) -> str:
@@ -988,6 +1155,55 @@ def verify_2020_extraction_manifest(source_root: Path) -> dict[str, Any]:
 	if identity != (EXTRACTION_2020_FILE_COUNT, EXTRACTION_2020_TOTAL_BYTES, EXTRACTION_2020_MANIFEST_SHA256):
 		raise RuntimeError(f"Twilight Zone 2020 table extraction identity mismatch: files, bytes, manifest_sha256 = {identity}")
 	return actual
+
+
+def world_mesh_pieces(obj_path: Path, object_name: str) -> list[tuple[int, tuple[float, float, float, float]]]:
+	"""Split one object of a `vpxtool export obj --units vpu` world-space export into its connected pieces.
+
+	Vertices whose coordinates agree at 0.1 VPU are welded first, because a baked mesh stores each triangle with its
+	own vertices. Returns each piece's vertex count and x/y bounds (xmin, ymin, xmax, ymax) in VPU, largest first.
+	"""
+	vertices: dict[int, tuple[float, float, float]] = {}
+	faces: list[list[int]] = []
+	count = 0
+	current = None
+	with obj_path.open("rb") as stream:
+		for line in stream:
+			head = line[:2]
+			if head == b"v ":
+				if current == object_name:
+					x, y, z = (float(value) for value in line.split()[1:4])
+					vertices[count] = (x, y, z)
+				count += 1
+			elif head == b"f " and current == object_name:
+				faces.append([int(token.split(b"/")[0]) - 1 for token in line.split()[1:]])
+			elif head == b"o ":
+				current = line[2:].strip().decode("utf-8")
+	first_at: dict[tuple[float, float, float], int] = {}
+	parent = {index: first_at.setdefault(tuple(round(c, 1) for c in point), index) for index, point in vertices.items()}
+
+	def find(index: int) -> int:
+		while parent[index] != index:
+			parent[index] = parent[parent[index]]
+			index = parent[index]
+		return index
+
+	for face in faces:
+		root = find(face[0])
+		for index in face[1:]:
+			other = find(index)
+			if other != root:
+				parent[other] = root
+	pieces: dict[int, list[tuple[float, float, float]]] = {}
+	for index, point in vertices.items():
+		pieces.setdefault(find(index), []).append(point)
+	result = []
+	for points in pieces.values():
+		xs = [point[0] for point in points]
+		ys = [point[1] for point in points]
+		result.append((len(points), (min(xs), min(ys), max(xs), max(ys))))
+	return sorted(result, key=lambda piece: (-piece[0], piece[1]))
+
 
 # --- ROM clock test (T.16 on the 9.2 ROM): integrate public 56/57 per named operation of the retained run.
 CLOCK_TEST_OPERATIONS = {
@@ -1127,6 +1343,13 @@ EXCERPT_TEXT_HASHES = {
 	"mini-playfield-switch-drawing.md": "0718b567ff484cd944acee8daab695c8036676c2b376c6ceb9b6538d3139afb2",
 	"manual-amendment-clock-assembly.md": "12b29e9d296a2922afe3116701fecb176ca0cf29299e844e12932f29321aa6d1",
 	"switch-matrix.md": "7c9737f72045c4325f3d9651f521cd55157de64abd2304cbb2b2cd4746d9af87",
+	# Added by the 2026-10-23 pass: the lamp matrix, the Fliptronic II pages, the clock opto boards, and the owner and
+	# vendor reports on the street lamp and the G.I. bulb count.
+	"lamp-matrix.md": "7c219a98bedb8398972f2d92583ddf557570c0eba34412baf8028741e7c96710",
+	"fliptronic-ii-wiring.md": "122f8a5d4e0434d2b94c4ed1da0c02ef2e34467f236d95e824537d4cf247b82c",
+	"clock-opto-boards.md": "78b6db32cc9e7ea8767ca5a6b9be74ccf9ff9f33c6e7d595dd618011f54b81c1",
+	"pinside-tz-gi-guide.md": "49b6d4c3f7e6bc46584dcbd4b1849427f344d69f81ed20202fecf605a15ae68f",
+	"pinballmod-mini-playfield-lamp.md": "ec109406073c0c8a64cc2e72420db49c274f20d482a43ed1ab28cd714859f573",
 }
 _IPDB_EXCERPT_ROOT = "evidence/excerpts/bally.twilight-zone.1993"
 _IPDB_READ = "curator, read from the 300 dpi render of the complete IPDB copy; the PDF's OCR layer only located the page"
@@ -1311,8 +1534,9 @@ def source_records() -> list[dict[str, Any]]:
 				"300 dpi page scans with an Acrobat Paper Capture OCR layer, from IPDB machine 2684 "
 				"(https://www.ipdb.org/machine.cgi?id=2684: Bally 'Twilight Zone', 1993), retained at "
 				"external:pinmame-manuals/by-machine/bally.twilight-zone.1993/ipdb-2684/. It carries every page the "
-				"Internet Archive scan lacks. PDF page = printed page for the pages used: PDF 26 = 1-18, 72 = 2-4, "
-				"100/101 = 2-32/2-33, 108/109 = 2-40/2-41, 118 = 2-50, 120 = 2-52, 121 = 2-53, 159 = 3-33. Every cited "
+				"Internet Archive scan lacks. PDF page = printed page for the pages used: PDF 26 = 1-18, 72 = 2-4, 85 = 2-17, "
+				"100/101 = 2-32/2-33, 108/109 = 2-40/2-41, 118 = 2-50, 120 = 2-52, 121 = 2-53, 122 = 2-54, 144 = 3-18, "
+				"151 = 3-25, 154 = 3-28, 159 = 3-33. Every cited "
 				"cell was read from native 300 dpi renders (render-ops/); the PDF's OCR layer and a local Windows OCR "
 				"pass (ocr-windows-ops/) were used only to find pages."
 			),
@@ -1401,6 +1625,91 @@ def source_records() -> list[dict[str, Any]]:
 					"transcribed_by": _IPDB_READ,
 					"reviewed": True,
 				},
+				{
+					"id": "excerpt.twilight-zone.lamp-matrix",
+					"locator": "PDF page 122, printed 2-54, Lamp Matrix: column and row wiring and all 64 cells",
+					"path": f"{_IPDB_EXCERPT_ROOT}/lamp-matrix.md",
+					"sha256": EXCERPT_TEXT_HASHES["lamp-matrix.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.fliptronic-ii-wiring",
+					"locator": "PDF pages 151 and 154, printed 3-25 (Flipper Circuit Diagram) and 3-28 (Fliptronic II Board A-15472 connector list)",
+					"path": f"{_IPDB_EXCERPT_ROOT}/fliptronic-ii-wiring.md",
+					"sha256": EXCERPT_TEXT_HASHES["fliptronic-ii-wiring.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.clock-opto-boards",
+					"locator": "PDF pages 85 and 144, printed 2-17 (Minute and Hour Opto PCB parts lists) and 3-18 (Minute Opto P.C.B. connector list and schematic)",
+					"path": f"{_IPDB_EXCERPT_ROOT}/clock-opto-boards.md",
+					"sha256": EXCERPT_TEXT_HASHES["clock-opto-boards.md"],
+					"method": "manual",
+					"transcribed_by": _IPDB_READ,
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": PINSIDE_GI_SOURCE,
+			"kind": "human_review",
+			"uri": "https://pinside.com/pinball/forum/topic/tz-gi-guide",
+			"sha256": PINSIDE_GI_CAPTURE_SHA256,
+			"acquired_at": "2026-10-23T14:01:10Z",
+			"locator": (
+				"Pinside topic 163470 \"TZ G.I. Guide?\" (2016, ten posts), read from the Internet Archive capture of "
+				"2020-08-13 (https://web.archive.org/web/20200813202616id_/https://pinside.com/pinball/forum/topic/tz-gi-guide) "
+				"because Pinside refused guest access; retained at external:pinmame-review-artifacts/twilight-zone-1993/"
+				"completion-2026-10-23/pinside-tz-gi-guide-wayback-20200813202616.html. Owner reports, not factory documents: "
+				"post 5 puts two G.I. bulbs in the mini-playfield's street lamp and one in the gumball stack, post 8 quotes a "
+				"vendor's LED kit instructions (34 #44 and 2 #555 street-light bulbs of playfield G.I.), and post 9 counts 28 "
+				"G.I. positions under the main playfield."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Pinside members nibre, Taxman, OLDPINGUY, Coyote and emsrph",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.twilight-zone.pinside-tz-gi-guide",
+					"locator": "The whole topic, posts 1-10",
+					"path": f"{_IPDB_EXCERPT_ROOT}/pinside-tz-gi-guide.md",
+					"sha256": EXCERPT_TEXT_HASHES["pinside-tz-gi-guide.md"],
+					"method": "manual",
+					"transcribed_by": "curator, from the retained capture",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": PINBALLMOD_SOURCE,
+			"kind": "human_review",
+			"uri": "http://pinballmod.com/producto/the-lamp/",
+			"sha256": PINBALLMOD_CAPTURE_SHA256,
+			"acquired_at": "2026-10-23T14:20:07Z",
+			"locator": (
+				"PinballMOD's product page \"Twilight Zone Custom mini-playfield Lamp MOD\", read from the Internet Archive "
+				"capture of 2019-08-26 (https://web.archive.org/web/20190826223642id_/http://pinballmod.com:80/producto/the-lamp/), "
+				"retained at external:pinmame-review-artifacts/twilight-zone-1993/completion-2026-10-23/"
+				"pinballmod-the-lamp-wayback-20190826223642.html. A vendor's description of the stock street lamp it replaces: "
+				"open at its end, with riveted lamp sockets."
+			),
+			"license": "NOASSERTION",
+			"attribution": "PinballMOD (pinballmod.com)",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.twilight-zone.pinballmod-mini-playfield-lamp",
+					"locator": "The page title and its whole Description section",
+					"path": f"{_IPDB_EXCERPT_ROOT}/pinballmod-mini-playfield-lamp.md",
+					"sha256": EXCERPT_TEXT_HASHES["pinballmod-mini-playfield-lamp.md"],
+					"method": "manual",
+					"transcribed_by": "curator, from the retained capture",
+					"reviewed": True,
+				},
 			],
 		},
 		{
@@ -1485,7 +1794,12 @@ def source_records() -> list[dict[str, Any]]:
 				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25.txt, "
 				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_SHA256}, and "
 				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt, "
-				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_2_SHA256}."
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_2_SHA256}. The street lamp's shade, which the table bakes into the merged "
+				"mesh BM_Parts, is read from the world-space OBJ export "
+				f"external:pinmame-vpx-sources/{WORLD_OBJ_RELATIVE_PATH.as_posix()} (vpxtool git:v0.33.3, export obj --units "
+				f"vpu; SHA-256 {WORLD_OBJ_SHA256}, reproducible byte for byte) and recorded in "
+				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-10-23.txt, "
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_4_SHA256}."
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
@@ -1536,7 +1850,9 @@ def source_records() -> list[dict[str, Any]]:
 				f"{EXTRACTION_2020_FILE_COUNT} files, {EXTRACTION_2020_TOTAL_BYTES} bytes, produced with vpxtool "
 				"git:v0.33.3 from a copy of the table in the working root. Raw per-object coordinates are retained in "
 				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt, "
-				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_3_SHA256}."
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_3_SHA256}. Its stock street lamp TopPFLamp is read from the world-space OBJ "
+				f"export external:pinmame-vpx-sources/{WORLD_OBJ_2020_RELATIVE_PATH.as_posix()} (vpxtool git:v0.33.3, export "
+				f"obj --units vpu; SHA-256 {WORLD_OBJ_2020_SHA256}), recorded in vpx-geometry-2026-10-23.txt."
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
@@ -1602,6 +1918,7 @@ def input_devices() -> list[dict[str, Any]]:
 	items: list[dict[str, Any]] = []
 	for address in range(1, 9):
 		label, role, note = DEDICATED_SWITCH_LABELS[address]
+		wire, connection = DEDICATED_SWITCH_WIRING[address]
 		items.append(
 			_device(
 				f"switch.cabinet-{address}",
@@ -1610,15 +1927,20 @@ def input_devices() -> list[dict[str, Any]]:
 				"pinmame.input.switch",
 				address,
 				"used",
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				(MANUAL_SOURCE, MANUAL_IPDB_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[
 					{"namespace": "pinmame.switch", "value": str(address)},
 					{"namespace": "manual.address", "value": f"D{address}"},
 				],
 				normally_closed=False,
 				roles=[role],
-				physical={"location": "coin door", "switch_type": "button", "notes": f"Standard WPC dedicated grounded switch D{address}. {note}"},
+				physical={
+					"location": "coin door",
+					"switch_type": "button",
+					"notes": f"Standard WPC dedicated grounded switch D{address}. {note} Wiring from page 2-50's dedicated switch block: {wire}, {connection}.",
+				},
 				spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE, CORE_SOURCE),
+				wiring={"board": "WPC CPU board", "drive_connection": connection, "drive_wire": wire},
 			)
 		)
 
@@ -1789,6 +2111,11 @@ def input_devices() -> list[dict[str, Any]]:
 				"is carried by its power/hold coil placements."
 			)
 			spatial = not_applicable("internal_nonvisual", MANUAL_SOURCE)
+		wire, connection = FLIPPER_SWITCH_WIRING[address]
+		physical["notes"] += (
+			f" Wiring from page 2-50's flipper switch block: {wire}, {connection} on the Fliptronic II board, which pages "
+			"3-25 and 3-28 print the same."
+		)
 		items.append(
 			_device(
 				f"switch.generic-{address}",
@@ -1797,7 +2124,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"pinmame.input.switch",
 				address,
 				availability,
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				(MANUAL_SOURCE, MANUAL_IPDB_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[
 					{"namespace": "pinmame.switch", "value": str(address)},
 					{"namespace": "manual.address", "value": f"F{address - 110}"},
@@ -1806,6 +2133,7 @@ def input_devices() -> list[dict[str, Any]]:
 				normally_closed=False,
 				physical=physical,
 				spatial=spatial,
+				wiring={"board": FLIPTRONIC_BOARD, "drive_connection": connection, "drive_wire": wire},
 			)
 		)
 
@@ -1951,6 +2279,47 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				)
 			if address == 59:
 				notes += " Software-only state, not a real coil; PinMAME's tz_getSol special-cases it and the retained script comment calls it \"unreliable with SolModCallbacks\"."
+			wiring: dict[str, Any] | None = None
+			if address in SOLENOID_WIRING:
+				connection, wire, transistor, supply = SOLENOID_WIRING[address]
+				wiring = {"board": POWER_DRIVER_BOARD, "control_connection": connection, "control_wire": wire, "driver_transistor": transistor, "power_connection": supply}
+				notes += (
+					f" Wiring from page 2-52: drive {connection} ({wire}, {transistor}), supply {supply}; the row prints the drive "
+					"pin under Voltage Connections and the supply pin under Drive Connections."
+				)
+			elif address in AUX_SOLENOID_WIRING:
+				board, connection, wire, supply = AUX_SOLENOID_WIRING[address]
+				wiring = {"board": board, "control_connection": connection, "control_wire": wire, "power_connection": supply}
+				notes += (
+					f" Wiring from page 2-52's row {MANUAL_SOLENOID_ALIASES[address]}: {connection} ({wire}) on the {board}, supply "
+					f"{supply}; the page prints no transistor for it."
+				)
+			elif address in FLIPPER_WIRING:
+				connection, wire, transistor, supply, supply_wire = FLIPPER_WIRING[address]
+				side = FLIPPER_SIDES[address]
+				drawn, listed = FLIPPER_SUPPLY_OTHER_READINGS[side]
+				coil, flipper_assembly = FLIPPER_COIL_PARTS[side]
+				physical["part_number"] = coil
+				physical["assembly_part_number"] = flipper_assembly
+				wiring = {
+					"board": FLIPTRONIC_BOARD,
+					"control_connection": connection,
+					"control_wire": wire,
+					"driver_transistor": transistor,
+					"power_connection": supply,
+					"power_wire": supply_wire,
+					"nominal_voltage_v": 50,
+					"voltage_type": "dc",
+				}
+				notes += (
+					f" Coil {coil} on flipper assembly {flipper_assembly} (page 2-53's Flipper Coils list; page 2-52 prints the "
+					f"same coil). Wiring from page 2-52's Flipper Circuits rows: drive {connection} ({wire}, {transistor}) on the "
+					f"Fliptronic II board, supply {supply} ({supply_wire}), which pages 3-25 and 3-28 call +50V. Those two pages "
+					f"agree with the drive pin, wire and transistor but not with the supply pin: the 3-25 drawing runs this coil's "
+					f"supply from J907 {drawn} and the 3-28 connector list from {listed}. All three give the left flippers' "
+					"supply as Gray-Yellow and the right flippers' as Blue-Yellow; the supply pin follows page 2-52, the game's "
+					"wiring table."
+				)
 			physical["notes"] = notes
 
 			aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
@@ -1959,6 +2328,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			else:
 				aliases.append({"namespace": "manual.address", "value": f"{address:02d}"})
 			extra: dict[str, Any] = {"aliases": aliases, "physical": physical}
+			if wiring is not None:
+				extra["wiring"] = wiring
 			if not fitted:
 				availability = "unused"
 				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
@@ -2002,6 +2373,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				refs = refs + (VPX_2020_SCRIPT_SOURCE,)
 			if address in CLOCK_DRIVE_NOTES:
 				refs = (MANUAL_SOURCE, MANUAL_IPDB_SOURCE, RUNTIME_CLOCK_SOURCE, RUNTIME_CLOCK_MECH_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			# The wiring is page 2-52's (and for the flippers pages 3-25/3-28's), all in the complete IPDB copy.
+			if wiring is not None and MANUAL_IPDB_SOURCE not in refs:
+				refs = refs + (MANUAL_IPDB_SOURCE,)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
@@ -2073,6 +2447,16 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"Locations drawing (page 2-55) prints callouts 87 and 88 below the playfield outline, at the cabinet "
 					"front."
 				)
+			if address == 88:
+				notes += " Page 2-54's lamp matrix prints this cell \"Start Button\"; the label keeps page 2-55's \"Credit Button\"."
+			if address in LAMP_CLOCK_BRACKET_NOTES:
+				notes += " " + LAMP_CLOCK_BRACKET_NOTES[address]
+			drive_wire, drive_connection, column_driver = LAMP_COLUMN_WIRING[column]
+			return_wire, return_connection, row_driver = LAMP_ROW_WIRING[row]
+			notes += (
+				f" Wiring from page 2-54: column {column} {drive_wire} {drive_connection} ({column_driver}), row {row} "
+				f"{return_wire} {return_connection} ({row_driver})."
+			)
 			physical["notes"] = notes
 
 			extra: dict[str, Any] = {
@@ -2081,6 +2465,14 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					{"namespace": "manual.address", "value": f"{address:02d}"},
 				],
 				"physical": physical,
+				"wiring": {
+					"board": POWER_DRIVER_BOARD,
+					"drive_connection": drive_connection,
+					"drive_wire": drive_wire,
+					"driver_transistor": f"{column_driver} column driver with {row_driver} row driver",
+					"return_connection": return_connection,
+					"return_wire": return_wire,
+				},
 			}
 			if address in {87, 88}:
 				availability = "used"
@@ -2102,7 +2494,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"pinmame.output.lamp",
 					address,
 					availability,
-					(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
+					(MANUAL_SOURCE, MANUAL_IPDB_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
 					**extra,
 				)
 			)
@@ -2122,26 +2514,33 @@ def gi_outputs() -> list[dict[str, Any]]:
 				{"namespace": "manual.address", "value": f"{address + 1:02d}"},
 			],
 		}
+		connection, wire, triac, feed, feed_wire = GI_WIRING[address]
+		extra["wiring"] = {
+			"board": POWER_DRIVER_BOARD,
+			"control_connection": connection,
+			"control_wire": wire,
+			"driver_transistor": triac,
+			"power_connection": feed,
+			"power_wire": feed_wire,
+			"nominal_voltage_v": 6.8,
+			"voltage_type": "ac",
+		}
 		physical: dict[str, Any] = {}
 		refs = (MANUAL_SOURCE, MANUAL_IPDB_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		if address in GI_POSITIONS:
-			positions = GI_POSITIONS[address]
-			physical["quantity"] = len(positions)
-			notes += (
-				" The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate "
-				"come from the retained table's GI emitter collection for this string (UpdateGI in the retained "
-				"script)."
-			)
-			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+			notes += " " + GI_TABLE_EMITTER_NOTE
+			extra["spatial"] = located(identifier, "emitter", GI_POSITIONS[address], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, status="observed")
+			refs = refs + (PINSIDE_GI_SOURCE,)
 		elif address == 1:
-			notes += " " + GI_MINI_PLAYFIELD_BLOCKER
-		elif address == 2:
-			physical["quantity"] = len(GI_CLOCK_POSITIONS)
-			notes += " " + GI_CLOCK_PLACEMENT_NOTE
+			notes += " " + GI_STREET_LAMP_NOTE + " " + GI_STREET_LAMP_PLACEMENT_NOTE
 			extra["spatial"] = located(
-				identifier, "emitter", GI_CLOCK_POSITIONS, VPX_TABLE_SOURCE, MANUAL_IPDB_SOURCE, MANUAL_AMENDMENT_SOURCE, MANUAL_SOURCE,
-				status="observed",
+				identifier, "emitter", GI_STREET_LAMP_POSITIONS, VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE, VPX_2020_TABLE_SOURCE, MANUAL_IPDB_SOURCE,
+				PINSIDE_GI_SOURCE, PINBALLMOD_SOURCE, status="observed",
 			)
+			refs = refs + (PINSIDE_GI_SOURCE, PINBALLMOD_SOURCE, VPX_2020_SCRIPT_SOURCE)
+		elif address == 2:
+			notes += " " + GI_CLOCK_NOTE + " " + GI_CLOCK_PLACEMENT_NOTE
+			extra["spatial"] = located(identifier, "emitter", GI_CLOCK_POSITIONS, VPX_TABLE_SOURCE, MANUAL_IPDB_SOURCE)
 			refs = refs + (MANUAL_AMENDMENT_SOURCE, VPX_2020_SCRIPT_SOURCE)
 		else:
 			notes += (
@@ -2544,7 +2943,7 @@ def build() -> dict[str, Any]:
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "observed",
+				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -2580,15 +2979,6 @@ def _unplaced_reason(device: dict[str, Any]) -> str:
 		return UNPLACED_SWITCHES[address]
 	if group == "pinmame.output.solenoid" and address in UNPLACED_SOLENOIDS:
 		return UNPLACED_SOLENOIDS[address]
-	if group == "pinmame.output.gi" and address == 1:
-		return (
-			"Mixed mini-playfield + backbox insert string with no bulb list: the Mini-Playfield Assembly A-16806 (pages "
-			"2-40/2-41) shows a #555 socket (item 10, yellow sleeve item 49) in the Street Light and item 10's leader to a "
-			"second socket in its back view, with no printed quantity; the 2020 table's GIMinipf collection includes "
-			"Light20/Light43 on main-playfield jet bumpers 1 and 2, so its membership is an author's choice, and the 2.4.5 "
-			"table binds a single light (l101). Resolution: a continuity or bulb survey of G.I. string 02 on a physical "
-			"machine."
-		)
 	raise RuntimeError(f"Twilight Zone device {device['id']} has no spatial record and no documented reason")
 
 
@@ -2627,33 +3017,41 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		{"group": "pinmame.output.solenoid", "address": address, "reason": reason}
 		for address, reason in sorted(SOLENOID_PLACEMENT_NOTES.items())
 	] + [
+		{"group": "pinmame.output.gi", "address": 1, "reason": GI_STREET_LAMP_PLACEMENT_NOTE},
 		{"group": "pinmame.output.gi", "address": 2, "reason": GI_CLOCK_PLACEMENT_NOTE},
 	]
 	# A projection places a device on another object of its own mechanism; the other notes place a device on the
 	# retained table's own object for it and only explain the choice.
 	projections = [entry for entry in placement_notes if entry["reason"].startswith("Projected onto")]
 	direct_placements = [entry for entry in placement_notes if not entry["reason"].startswith("Projected onto")]
-	unresolved_labels = ", ".join(f"{entry['group'].rsplit('.', 1)[-1]} {entry['address']}" for entry in unresolved)
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
 		"blockers": [
-			f"{len(unresolved)} physical device carries no spatial record because no defensible coordinate exists "
-			f"({unresolved_labels}); it is listed with its reason under `unresolved`.",
+			"G.I. strings 01 and 05 (public G.I. 0 and 4): the placements are the retained table's 24 G.I. emitters, not "
+			"the strings' socket list. The ancestral 2020 table shows bulbs at eight positions the 2.4.5 table leaves "
+			"empty, and owners count 28 G.I. positions under the main playfield plus one in the gumball stack. Resolution "
+			"path: a bulb survey of both strings on a physical machine (every socket's position and string).",
+			"G.I. string 02 (public G.I. 1): its playfield bulbs are in the mini-playfield's street lamp, placed on the "
+			"lamp's shade, but the count of two rests on owner and vendor reports. Resolution path: a photograph or survey "
+			"of the sockets of a stock street lamp.",
 		],
 		"notes": [
-			"The complete operations manual from IPDB (machine 2684) carries the Switch Matrix (2-50), Solenoid/Flasher "
-			"Table (2-52) and Lamp Matrix (2-54) wiring pages that the retained Internet Archive scan lacks. This pass "
-			"uses them for the clock drives, the knocker's backbox wiring, the G.I. strings' playfield/backbox split, the "
-			"flasher socket counts, the mini-playfield switch drawing and the switch matrix wiring (every used matrix "
-			"switch, including column 9, the clock optos at public 121-128); the lamp matrix and the other outputs' wire "
-			"colours and connector/pin assignments have not been transferred yet.",
-			"Two placements are observed rather than validated: G.I. string 03's two clock sockets, projected onto "
-			"the clock axis, which is not a bulb object (page 2-33 draws the sockets about an inch apart inside the "
-			"clock housing). With G.I. string 02, which has no placement, they are the spatial records that are not "
-			"validated.",
+			"The complete operations manual from IPDB (machine 2684) carries every page the retained Internet Archive "
+			"scan lacks. The wiring of every used switch, solenoid, flipper winding, lamp and G.I. string comes from it: "
+			"the switch matrix and the dedicated and flipper switch blocks (2-50), the Solenoid/Flasher Table with its "
+			"G.I. and Flipper Circuits rows (2-52), the Lamp Matrix (2-54), the Flipper Circuit Diagram and the Fliptronic II "
+			"board's connector list (3-25, 3-28) and the power driver board's connector list (3-33).",
+			"G.I. string 03's playfield bulbs are the four #86 lamps on the clock's Minute Opto board, projected onto the "
+			"clock axis and validated; the two clock-bracket sockets an earlier revision placed there are matrix lamps 83 "
+			"and 84. G.I. string 02's playfield bulbs are in the mini-playfield's street lamp, projected onto the centre of "
+			"the lamp's shade, which the 2.4.5 table bakes into BM_Parts and is read from its world-space OBJ export "
+			"(vpx-geometry-2026-10-23.txt); their count of two rests on owner reports, so they stay observed.",
+			"G.I. strings 01 and 05 are placed on the retained table's 24 G.I. emitters, observed and without a quantity: "
+			"the two retained tables model different bulb sets and owners count about 29 main-playfield G.I. sockets, so "
+			"neither table's set is the socket list.",
 			"conflict.clock-motor-direction-naming was withdrawn: the manual's clock test text (page 1-18), its "
 			"solenoid table (pages 2-52/2-53), the retained script's cross-reference and the ROM's own clock test agree "
 			"that public 56 is Clock Reverse and 57 Clock Forward; only pinned PinMAME's tz.c #define names read the other "
@@ -2731,6 +3129,18 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-26.txt",
 				"sha256": VPX_GEOMETRY_SUPPLEMENT_3_SHA256,
 			},
+			"geometry_supplement_4": {
+				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-10-23.txt",
+				"sha256": VPX_GEOMETRY_SUPPLEMENT_4_SHA256,
+			},
+			"world_obj": {
+				"path": f"external:pinmame-vpx-sources/{WORLD_OBJ_RELATIVE_PATH.as_posix()}",
+				"sha256": WORLD_OBJ_SHA256,
+			},
+			"world_obj_2020": {
+				"path": f"external:pinmame-vpx-sources/{WORLD_OBJ_2020_RELATIVE_PATH.as_posix()}",
+				"sha256": WORLD_OBJ_2020_SHA256,
+			},
 		},
 		"excluded_object_classes": [
 			"Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- render controllers for baked lightmaps, not physical GI emitters",
@@ -2741,6 +3151,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"2020 table Light.f18d/f20d/f41d (each co-located with the smaller-falloff Light f18c/f20c/f41c that is used) and 2020 Light.f18/f18a/f18b, f19, f20/f20a/f20b, f41/f41a/f41b (the sockets the 2.4.5 table already models; its Lights are used for those)",
 			"2020 table Flasher objects (f18e, f18flash, f19b, f20e, f20flash, f20r, f41e, f41flash, f41r, and the GIClock glow sprites Flasher1-Flasher4) -- glow, reflection or backglass sprites, not sockets",
 			"2020 table GIMinipf collection -- an author's grouping that includes Light20/Light43 on the main-playfield jet bumpers, not a socket list for G.I. string 02",
+			"2.4.5 Light.l101 (G.I. string 02's light-baking source, 0.024 from the street lamp's shade) and the 2020 table's street-lamp glow sprites Flasher.light46/light47 and GIMinipf render lights light44/light45 -- not bulbs; the shade itself is read from the world-space export",
+			"2020 table Primitive.TopPFLamp position (the foot of the street lamp's post, not its shade)",
 		],
 		"unresolved": sorted(unresolved, key=lambda item: (item["group"], item["address"])),
 	}
@@ -2751,8 +3163,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Twilight Zone (Bally, 1993) spatial review",
 		"",
 		f"Status: {report['status']}. The physical machine record is `partial` at "
-		"`machines/partial/bally/twilight-zone-1993.json`; it has no conflicts, and the one physical device listed under "
-		"Unresolved spatial evidence has no defensible coordinate; see the promotion decision below.",
+		"`machines/partial/bally/twilight-zone-1993.json`; it has no conflicts, every physical device carries a "
+		"placement or a controlled `not_applicable` record, and the main-playfield and street-lamp G.I. placements stay "
+		"observed; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Twilight Zone (Bally 1993) 2.4.5.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 `{SCRIPT_SHA256}`; that "
@@ -2774,9 +3187,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"`external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md`, and its three location "
 		"drawings (pages 2-51, 2-53, 2-55) are committed as page-scale excerpts. The complete 164-page copy from IPDB "
 		f"(SHA-256 `{MANUAL_IPDB_SHA256}`) supplies the pages that scan lacks; the regions used are committed as excerpts "
-		"(the whole Solenoid/Flasher Table on page 2-52, the clock test text on page 1-18, the backbox, clock and "
-		"mini-playfield assembly pages, the power driver board's connector list on page 3-33, and the switch matrix, the "
-		"switch list items F1-F8 and 11-33 and the mini-playfield switch drawing on page 2-50). Manual Amendment "
+		"(the whole Solenoid/Flasher Table on page 2-52, the Lamp Matrix on page 2-54, the clock test text on page 1-18, "
+		"the backbox, clock and mini-playfield assembly pages, the clock opto boards on pages 2-17 and 3-18, the flipper "
+		"circuit diagram and Fliptronic II board on pages 3-25 and 3-28, the power driver board's connector list on page "
+		"3-33, and the switch matrix, the switch list items F1-F8 and 11-33 and the mini-playfield switch drawing on page "
+		"2-50). Manual Amendment "
 		"16-50020-AMD-1 renumbers the clock assembly to A-16124-1, which changes no socket item, and changes switch "
 		"61's part to 5647-12693-57, which the definition records.",
 		"- Switches 45 and 46 each have two contacts (page 2-51 \"(2)\"). They are placed on the 2020 table's own switch "
@@ -2792,11 +3207,29 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"count and where each socket sits, and the coordinates come from the table.",
 		"- The knocker is backbox hardware: page 2-52 prints its connections under the Backbox columns and page 2-4 lists "
 		"the B-10686-1 Knocker & Bracket Assy. in the backbox assembly.",
-		"- G.I. string 03 (\"Clock & Insert\", public G.I. 2) is placed as the clock assembly's two sockets (A-16124 item "
-		"25), projected co-located onto the clock axis although page 2-33 draws them side by side on bracket 24 about an "
-		"inch apart inside the clock housing's footprint, so both placements are observed, not validated; its "
-		"insert-board bulbs are backbox hardware. G.I. string 04 "
-		"(\"Insert Main\", public G.I. 3) is wired to the backbox only.",
+		"- G.I. string 02 (\"Mini-playfield & Insert\", public G.I. 1) lights the #555 bulbs in the mini-playfield's "
+		"street lamp. The manual fixes the string and the bulb type: its playfield bulb is the #555, the only G.I. string "
+		"with one, and the Mini-Playfield Assembly A-16806 fits a #555 socket with a yellow sleeve on the Street Light, "
+		"which is no lamp-matrix position and no flasher. No page prints the count; an owner (\"Only two in the 'upper "
+		"playfield', in the street lamp\") and a vendor's kit instructions (\"2 Warm Flex 555s (Street light)\") give "
+		"two, and a replacement lamp's maker speaks of its \"lamp sockets\". Owner reports are leads, so the two "
+		"placements, projected onto the centre of the lamp's shade read from the 2.4.5 table's world-space export (the "
+		"2020 table's stock lamp has its shade 0.0018 away), stay observed.",
+		"- G.I. string 03 (\"Clock & Insert\", public G.I. 2) lights the four #86 lamps LMP1-LMP4 of the clock's Minute "
+		"Opto PCB A-16220: page 2-52 prints its playfield bulb as 24-8829, which the manual fits only there (page 2-17), "
+		"and the board's schematic (page 3-18) wires the lamps to the string's Yellow and Yellow-White pair. They are "
+		"projected onto the clock axis, around which page 2-17 draws them. The two A-12887 sockets on the clock's "
+		"mounting bracket, which an earlier revision placed as this string's, are matrix lamps 83 and 84. Both strings' "
+		"insert-board bulbs are backbox hardware. G.I. string 04 (\"Insert Main\", public G.I. 3) is wired to the "
+		"backbox only.",
+		"- G.I. strings 01 and 05 keep the retained table's 24 G.I. emitters as placements, split by the strings' printed "
+		"names and wiring, but observed and without a quantity: the ancestral 2020 table shows bulbs at eight positions "
+		"the 2.4.5 table leaves empty and lacks two of its emitters, an owner counted 28 G.I. positions under the main "
+		"playfield and another places one more in the gumball stack.",
+		"- Page 2-52, page 3-25 and page 3-28 give three different J907 supply pins for the four flipper coils, all "
+		"agreeing on the colours (Gray-Yellow left, Blue-Yellow right) and on every J902 drive pin; the definition "
+		"follows page 2-52 and states the other readings on each winding. This is a wiring-detail disagreement, not a "
+		"conflict.",
 		"- A `not_applicable` spatial record is used only for a device that genuinely has no playfield position: "
 		"coin-door, cabinet-button, and backbox devices the manual places off the playfield, unused addresses, "
 		"PinMAME-internal state channels, DIP switches, the clock strobe control line, and the four flipper "
@@ -2846,6 +3279,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	]
 	for entry in report["unresolved"]:
 		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
+	if not report["unresolved"]:
+		lines.append(
+			"None: every physical device carries a spatial record. The placements of G.I. strings 01, 02 and 05 are "
+			"observed, not validated; the blockers above name why and what would settle them."
+		)
 	lines += [
 		"",
 		"## Counts",
@@ -2863,15 +3301,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Identity, controller platform, address enumeration, semantic naming, mechanism inventory/behavior, variant "
-		"coverage, and recreation knowledge are complete and validated, and the definition carries no conflicts. "
-		"Promotion to `author_ready` is refused because G.I. string 02 (\"Mini-playfield & Insert\", public G.I. 1) "
-		"has no defensible playfield placement: no page enumerates its bulbs, the mini-playfield assembly shows a #555 "
-		"socket in the Street Light and a second socket in its back view without a quantity, and the recreations' "
-		"groupings are authors' choices. `coverage.missing` is therefore `[\"spatial_placement\"]`. Resolving it needs a "
-		"continuity or bulb survey of G.I. string 02 on a physical machine. G.I. string 03's two clock sockets are "
-		"placed but only observed (projected onto the clock axis); measuring the page 2-33 bracket offset, or a "
-		"survey of the clock housing, would validate them.",
+		"Identity, controller platform, address enumeration, semantic naming, physical wiring, mechanism "
+		"inventory/behavior, variant coverage and recreation knowledge are complete and validated, and the definition "
+		"carries no conflicts. Promotion to `author_ready` is refused because the playfield G.I. is not surveyed: strings "
+		"01 and 05 are placed on the retained table's 24 emitters, which the two retained tables and the owners' counts "
+		"show are not the socket list, and string 02's count of two street-lamp bulbs rests on owner reports. "
+		"`coverage.missing` is therefore `[\"spatial_placement\"]`. Each blocker names its resolution path: a bulb survey "
+		"of strings 01 and 05, and a photograph or survey of a stock street lamp's sockets.",
 		"",
 		"## Retained evidence",
 		"",
@@ -2887,6 +3323,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- The 2026-09-26 supplement `vpx-geometry-2026-09-26.txt`, SHA-256 `{VPX_GEOMETRY_SUPPLEMENT_3_SHA256}`: the "
 		"2020 table's objects, the frame comparison, and the page 2-53 and 2-50 drawing fits with every measured callout "
 		"pixel, residual, leave-one-out error and offset.",
+		f"- The 2026-10-23 supplement `vpx-geometry-2026-10-23.txt`, SHA-256 `{VPX_GEOMETRY_SUPPLEMENT_4_SHA256}`: the "
+		"street lamp's shade in both tables' world-space OBJ exports "
+		f"(SHA-256 `{WORLD_OBJ_SHA256}` and `{WORLD_OBJ_2020_SHA256}`).",
+		"- The Internet Archive captures of the Pinside topic \"TZ G.I. Guide?\" and of PinballMOD's mini-playfield lamp "
+		"page under `external:pinmame-review-artifacts/twilight-zone-1993/completion-2026-10-23/`, SHA-256 "
+		f"`{PINSIDE_GI_CAPTURE_SHA256}` and `{PINBALLMOD_CAPTURE_SHA256}`.",
 		f"- The ROM clock-test runs summarized in `{RUNTIME_CLOCK_PATH}` (clock model off) and "
 		f"`{RUNTIME_CLOCK_MECH_PATH}` (clock model on).",
 		"",

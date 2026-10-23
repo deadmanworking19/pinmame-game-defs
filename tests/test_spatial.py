@@ -401,8 +401,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# which found its one unplaced device, auxiliary lamp 113, to be an unwired A9 circuit. Monster Bash is
 		# also not a retrofit: it was demoted for an unresolved switch-polarity conflict (74-78),
 		# not a missing spatial record, so it is not counted here either. Twilight Zone genuinely
-		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
-		# VPX object), so it is counted alongside Terminator 2.
+		# has unresolved spatial gaps (its main-playfield G.I. sockets and the count of its street-lamp
+		# bulbs are not surveyed), so it is counted alongside Terminator 2.
 		# Star Trek: The Next Generation is likewise not a retrofit: it was curated directly from a
 		# legacy candidate-only stub, and three lamps (53, 85, 86) have no world-space Light object
 		# in the retained extraction (only a local-origin Primitive with an unresolved parent
