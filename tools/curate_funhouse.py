@@ -58,6 +58,8 @@ RUNTIME_GI_PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 PINSIDE_ORANGE_SOURCE = "forum.pinside.funhouse-gi-orange-string"
 PINSIDE_VIOLET_SOURCE = "forum.pinside.funhouse-gi-violet-string"
 CALLOUT_SOURCE = "human-review.funhouse.drawing-callouts"
+# Rendered page text of both Pinside threads, retained outside the repository with an external evidence manifest.
+FIELD_REPORTS_MANIFEST_SHA256 = "158aa3a878128a3ba5aff2c0fc064373258ab5d3e411ff0e60850a5c48febdc9"
 
 TABLE_SHA256 = "69c37fa9a84e669a2934d6da0e5ee0277c4a0ef01e71eaa19e7271ba3396873e"
 SCRIPT_SHA256 = "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863"
@@ -261,8 +263,9 @@ GI_PRINTED_ROWS = {
 	4: ('2-40 "05 Top Playfield G.I."', 'handbook "05 Top Playfield, White-Green, J120-10, Q12"'),
 }
 GI_PRINTED_NOTE = (
-	"Both printed lists keep their transistor column in string order (Q18, Q10, Q14, Q16, Q12 for strings 1-5), but rows 02, "
-	"04 and 05 carry their names, wires and pins one string out of place: on the power driver board Q10 drives orange "
+	"The handbook keeps its transistor column in string order (Q18, Q10, Q14, Q16, Q12 for strings 1-5), but its rows 02, 04 "
+	"and 05 carry their names, wires and pins one string out of place, and the 2-40 list, which prints only number, bulb and "
+	"name, puts the same names in the same rows: on the power driver board Q10 drives orange "
 	"(J120-2/J120-8), Q16 green (J120-5/J120-10) and Q12 violet (J120-6/J120-11 and the J119 cabinet branch), and the ROM's "
 	"T.6 test prints exactly those wires, pins and fuses for public strings 1, 3 and 4. The name follows the wire: \"Front "
 	"Playfield\" (white-violet, J119-1) is public 4, \"Center Backglass / Right Rear Playfield\" (white-orange, J120-8) is "
@@ -747,7 +750,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.general-illumination-flipper-circuits",
 					"locator": "PDF page 120, printed 3-17, General Illumination/Flipper/Power/Logic/Display Circuits interboard wiring tables",
 					"path": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.md",
-					"sha256": "5b682f43d7552c7bef3779db37ec6bba0f44fd756675195c6bbd7219d93b7dce",
+					"sha256": "cf9c8fa5ced3759695ccabc1c3fb7ba63a943bac6631ecd9d8184ae3d1b07a8f",
 					"image": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination-flipper-circuits.webp"],
 					"image_derivation": "Funhouse_OPS.pdf page 120, crop box 0.03,0.035,0.97,0.78, scanned page rendered at its native resolution (embedded image xref 517, 3287px across 10.96in), rendered at 253 dpi, capped to 2600px wide, 2601x1598 WebP quality 80",
@@ -800,7 +803,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.operator-handbook-lamps",
 					"locator": "PDF pages 7-8, lamp matrix and lamp-location drawing",
 					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.md",
-					"sha256": "9f5f69e9c1b0ba87228f32e0a5a0deb77283bc706b6bc1b709cfd1dc35fe5567",
+					"sha256": "0e997ebe853684f708b4975576f779562631d8545d85794d501c68e7277a13fb",
 					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-lamp-evidence.webp"],
 					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 8, crop box 0.13,0.24,0.58,0.56, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 485 dpi, capped to 1200px wide, 1201x1319 WebP quality 80",
@@ -1006,7 +1009,9 @@ def source_records() -> list[dict[str, Any]]:
 			"locator": (
 				"Pinside topic \"Funhouse: GI wiring / electrical help please *SOLVED*\", posts #1-#9: an owner finds the spotlight "
 				"that shines on Rudy and the lower third of the backbox G.I. dark on one orange/white-orange string entering J120 "
-				"(pins 2 and 8), and replacing fuse F109 restores both."
+				"(pins 2 and 8), and replacing fuse F109 restores both. Rendered page text retained outside the repository as "
+				"external:pinmame-review-artifacts/funhouse-1990/field-reports/pinside-funhouse-gi-wiring-electrical-help-please.txt, "
+				f"external evidence manifest SHA-256 {FIELD_REPORTS_MANIFEST_SHA256}."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Pinside contributors pezpunk and Schwaggs",
@@ -1030,7 +1035,9 @@ def source_records() -> list[dict[str, Any]]:
 			"locator": (
 				"Pinside topic \"Funhouse G.I. Problem (SOLVED)\", posts #1-#16: an owner's front-playfield G.I. and coin-door lamps "
 				"go dark together on the white-violet string with fuse F106 (triac Q12, connectors J119 and J121) until a shorted "
-				"lamp socket is found; a parts supplier notes G.I. bulbs under the apron."
+				"lamp socket is found; a parts supplier notes G.I. bulbs under the apron. Rendered page text retained outside the "
+				"repository as external:pinmame-review-artifacts/funhouse-1990/field-reports/pinside-funhouse-gi-problem.txt, "
+				f"external evidence manifest SHA-256 {FIELD_REPORTS_MANIFEST_SHA256}."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Pinside contributors provato, ChrisHibler and Lermods",
