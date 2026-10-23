@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 DEFINITION_PATH = ROOT / "machines" / "author-ready" / "stern" / "lord-of-the-rings-2003.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "stern" / "lord-of-the-rings-2003.json"
 PARTIAL_PATH = ROOT / "machines" / "partial" / "stern" / "lord-of-the-rings-2003.json"
-LE_PATH = ROOT / "machines" / "partial" / "stern" / "lord-of-the-rings-limited-edition-2009.json"
+LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "lord-of-the-rings-limited-edition-2009.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "lord-of-the-rings-2003.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "whitestar.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "stern" / "lord-of-the-rings-2003.json"
@@ -501,9 +501,8 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual((4858, "GrqZX-MD15w"), (self.definition["machine"]["ipdb_id"], self.definition["machine"]["opdb_id"]))
 		self.assertEqual(["lotr_le"], [driver["id"] for driver in limited["drivers"]])
 		self.assertEqual("identical", limited["drivers"][0]["physical_compatibility"])
-		self.assertEqual("partial", limited["coverage"]["status"])
-		self.assertNotIn("identity", limited["coverage"]["missing"])
-		self.assertIn("variant_differences", limited["coverage"]["missing"])
+		self.assertEqual("author_ready", limited["coverage"]["status"])
+		self.assertEqual([], limited["coverage"]["missing"])
 		self.assertEqual("pinmame.whitestar", limited["controller"]["platform"])
 		family = load_json(ROOT / "families" / "opdb" / "grqzx.json")
 		self.assertEqual({"stern.lord-of-the-rings.2003", "stern.lord-of-the-rings-limited-edition.2009"},

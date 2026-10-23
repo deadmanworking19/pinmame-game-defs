@@ -1,0 +1,671 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lotr",
+  "notes": "Boot with four balls on trough switches 11-14 and the stacking opto 15 clear, sit 60 s in attract mode, insert three coins on the center slot (public 5), press Start (54), emulate the serve (trough position 11 empties, the ball rests on the shooter lane switch 16 and leaves), then close every ordinary playfield switch once per pass with a 1.5 s gap, two passes, recording every solenoid transition. Run on lotr_le (10.02) and lotr (10.00) to compare which public solenoids each firmware drives for the right Helm's Deep flasher.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "wait",
+      "seconds": 60.0,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "trough position 11 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "served ball on the shooter lane switch 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball leaves the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 9 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 10 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 17 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 18 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 19 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 20 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 21 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 22 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 23 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 24 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 25 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 28 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 29 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 30 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 33 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 34 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 35 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 36 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 37 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 38 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 39 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 40 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 41 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 42 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 43 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 44 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 45 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 46 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 47 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 48 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 49 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 50 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 51 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 52 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 53 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 57 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 58 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 59 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 60 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 61 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 1: switch 62 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 9 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 10 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 17 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 18 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 19 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 20 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 21 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 22 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 23 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 24 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 25 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 28 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 29 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 30 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 33 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 34 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 35 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 36 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 37 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 38 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 39 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 40 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 41 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 42 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 43 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 44 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 45 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 46 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 47 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 48 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 49 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 50 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 51 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 52 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 53 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 57 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 58 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 59 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 60 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 61 closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "pass 2: switch 62 closed once"
+    }
+  ]
+}

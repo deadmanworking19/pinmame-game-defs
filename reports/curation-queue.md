@@ -38,7 +38,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 32 | 2010 | Big Buck Hunter Pro | Stern | partial | 63% |
 | 33 | 2010 | Iron Man | Stern | author_ready | 100% |
 | 34 | 2009 | 24 | Stern | partial | 63% |
-| 35 | 2009 | Lord of the Rings Limited Edition | Stern | partial | 25% |
+| 35 | 2009 | Lord of the Rings Limited Edition | Stern | author_ready | 100% |
 | 36 | 2009 | NBA | Stern | partial | 19% |
 | 37 | 2008 | Batman: The Dark Knight Pro | Stern | partial | 94% |
 | 38 | 2008 | CSI: Crime Scene Investigation | Stern | partial | 19% |

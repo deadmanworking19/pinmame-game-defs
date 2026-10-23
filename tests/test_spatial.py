@@ -369,7 +369,7 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(39, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(40, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -380,16 +380,16 @@ class SpatialMigrationTests(unittest.TestCase):
 		# (a non-game record) and fifteen System III games, of which Torneo's two dumps share one record. The 97aa922b baseline
 		# renames the four pinHeck sets after their code version and adds America's Most Haunted V22 to that record. The 2026-10-09 Black Hole curation folds its blkholea
 		# residual record into the main one, and the 2026-10-22 Lord of the Rings promotion splits off the 2009
-		# Limited Edition as a record of its own.
+		# Limited Edition as a record of its own, and the 2026-10-23 Limited Edition curation promotes that record.
 		self.assertEqual(795, report["machine_count"])
-		self.assertEqual(39, report["author_ready_count"])
+		self.assertEqual(40, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(741, report["partial_count"])
+		self.assertEqual(740, report["partial_count"])
 		self.assertEqual(15, report["stub_count"])
 		self.assertEqual(14, report["non_game_record_count"])
 		self.assertEqual(809, report["catalog_record_count"])
@@ -496,8 +496,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Star Wars' spatial retrofit uses observed table/manual positions and
 		# keeps the requirement listed, adding one.
 		# Centaur's 2026-10-22 author-ready promotion removes one, and Terminator 2's removes one more.
-		# World Cup Soccer's 2026-10-23 author-ready promotion removes one more.
-		self.assertEqual(708, report["missing_requirement_counts"]["spatial_placement"])
+		# World Cup Soccer's 2026-10-23 author-ready promotion removes one more, and the Lord of the Rings
+		# Limited Edition's another.
+		self.assertEqual(707, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -557,7 +558,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(809, len(catalog["machines"]))
 		self.assertEqual(795, catalog["summary"]["game_count"])
 		self.assertEqual(809, catalog["summary"]["machine_count"])
-		self.assertEqual(39, catalog["summary"]["author_ready_count"])
+		self.assertEqual(40, catalog["summary"]["author_ready_count"])
 		self.assertEqual(15, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
@@ -566,9 +567,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# records (frpwr_a7, frpwr_d7, frpwr_e7) into one System 7 conversion record, which also
 		# took frpwr_b7 and frpwr_c7 from the production machine, so the physical-game count fell
 		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
-		# main record, removing one more. Centaur's 2026-10-22 promotion, Terminator 2's and World Cup
-		# Soccer's 2026-10-23 one each move one record to author_ready.
-		self.assertEqual(755, catalog["summary"]["partial_count"])
+		# main record, removing one more. Centaur's 2026-10-22 promotion, Terminator 2's, World Cup
+		# Soccer's and the Lord of the Rings Limited Edition's 2026-10-23 ones each move one record to author_ready.
+		self.assertEqual(754, catalog["summary"]["partial_count"])
 		self.assertEqual(14, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

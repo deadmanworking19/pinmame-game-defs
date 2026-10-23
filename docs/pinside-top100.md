@@ -10,7 +10,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 6 | Attack from Mars | `bally.attack-from-mars.1995` | 100% |
 | 13 | Monster Bash | `williams.monster-bash.1998` | 100% |
 | 15 | Lord of the Rings | `stern.lord-of-the-rings.2003` | 100% |
-| 15 | Lord of the Rings | `stern.lord-of-the-rings-limited-edition.2009` | 25% |
+| 15 | Lord of the Rings | `stern.lord-of-the-rings-limited-edition.2009` | 100% |
 | 16 | Twilight Zone | `bally.twilight-zone.1993` | 94% |
 | 24 | Cactus Canyon | `bally.cactus-canyon.1998` | 100% |
 | 25 | Indiana Jones: The Pinball Adventure | `williams.indiana-jones-the-pinball-adventure.1993` | 100% |
