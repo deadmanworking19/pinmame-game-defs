@@ -33,15 +33,17 @@ same seven inserts either way.)
 **Internal manual disagreement:** this page prints address 63 as "R. Skill **100K**",
 while the Lamp Locations parts list (page 107, printed 2-44) prints the same address as
 "R Skill **500K**". Both are transcribed verbatim; neither page is preferred over the
-other since this is a backbox scoring-legend value (not a wiring, polarity, or placement
-fact) and the device already carries a controlled `cabinet_or_service` spatial record
-regardless of which value is correct.
+other since this is a scoring-legend value on the playfield back panel (not a wiring,
+polarity, or placement fact), and the lamp's address, wiring and position are the same
+whichever value is correct.
 
 ## Lamp Locations (page 107, printed 2-44)
 
 The diagram draws a separate "A-16399 Back Panel Assy." box **above** the main playfield
 outline containing exactly four lamps: 58, 61, 62, 63. These do not appear anywhere on
-the main playfield diagram below that box.
+the main playfield diagram below that box. The box draws the upright panel at the
+playfield's rear edge (printed 2-39, `back-panel-assembly.md`). The Location column below
+is this transcription's reading of the drawing, not a printed column.
 
 | Addr | Bulb | Description | Location |
 | --- | --- | --- | --- |
@@ -75,15 +77,15 @@ the main playfield diagram below that box.
 | 48 | #555 | (D)racula | playfield |
 | 51 | #555 | Coffin Lamp 1 | playfield |
 | 52 | #555 | Coffin Lamp 2 | playfield |
-| 53 | #44 | Magnet | playfield (no VPX object — see below) |
+| 53 | #44 | Magnet | playfield (on the moving Mist Magnet carrier — see below) |
 | 54 | #44 | Shoot Again | playfield |
 | 55 | #44 | Love Never Dies | playfield |
 | 56 | #555 | Coffin Lamp 3 | playfield |
 | 57 | #555 | L. Ramp Lock | playfield |
-| **58** | **#555** | **L. Ramp Diverted** | **Back Panel Assy. (backbox)** |
-| **61** | **#555** | **L. Skill 100K** | **Back Panel Assy. (backbox)** |
-| **62** | **#555** | **M. Skill 1 Mil.** | **Back Panel Assy. (backbox)** |
-| **63** | **#555** | **R. Skill 500K** | **Back Panel Assy. (backbox)** |
+| **58** | **#555** | **L. Ramp Diverted** | **Back Panel Assy. (playfield back panel)** |
+| **61** | **#555** | **L. Skill 100K** | **Back Panel Assy. (playfield back panel)** |
+| **62** | **#555** | **M. Skill 1 Mil.** | **Back Panel Assy. (playfield back panel)** |
+| **63** | **#555** | **R. Skill 500K** | **Back Panel Assy. (playfield back panel)** |
 | 64 | #555 | T. 3-lane: Left | playfield |
 | 65 | #555 | T. 3-lane: Middle | playfield |
 | 66 | #555 | T. 3-lane: Right | playfield |
@@ -109,16 +111,22 @@ the main playfield diagram below that box.
 ## Resolved facts
 
 - **Lamps 58, 61, 62, 63** are drawn only inside the "Back Panel Assy." box, never on the
-  main playfield diagram. The retained VPX table corroborates this independently: its
-  `Light.l58`/`Light.L61`/`Light.L62`/`Light.L63` objects all normalize to y &lt; 0.011,
-  i.e. sitting right at the playfield's rear edge rather than at a genuine mid-playfield
-  position — consistent with a table author placing translite/backbox lamps near the top
-  edge of the play surface for lack of anywhere better to put them. All four take a
-  controlled `cabinet_or_service` spatial record.
-- **Lamp 53 (Magnet, #44)** has no matching `Light` object anywhere in the retained
-  extraction and is never referenced in `script.vbs`. It is a genuine bulb per this page
-  but has no resolvable spatial evidence; its `spatial` key is omitted rather than a
-  coordinate being invented.
+  main playfield diagram. That assembly, A-16399 Back Panel & Decal Assembly (printed 2-39,
+  `back-panel-assembly.md`), is the upright panel at the playfield's rear edge: it carries a
+  playfield plastic, the 3-lamp PCB A-16337-1 (the A-16337 the Lamp Locations list gives
+  lamps 61-63) and the B-12224 single lamp assembly (lamp 58's). The retained VPX table puts
+  `Light.l58`/`Light.L61`/`Light.L62`/`Light.L63` along the playfield's rear edge
+  (normalized y &lt; 0.011), the panel's plane, in the inset's order 61, 62, 63, 58; through
+  the lamp drawing's control fit the centre of each lamp's insert symbol in the inset lies
+  within 0.023 in x of its table light. Each lamp takes one placement at its table light.
+- **Lamp 53 (Magnet, #44)** is the bulb on the Mist Magnet carrier. The drawing prints
+  balloon 53 at the left end of the row of thirteen small round inserts the carrier runs
+  under, with a free-standing arrow pointing along the row and no leader to a fixed socket
+  (`lamp-locations-drawing.md`); the A-16266 Coil Magnet & Screw Assembly page fits a light
+  socket and bulb beside the coil on the carrier, and the game story says the light moves in
+  unison with the magnet (`magnet-carrier-assembly.md`). The retained table has no `Light`
+  for it and `script.vbs` never reads lamp 53; it lights thirteen fixed lights `ml1`-`ml13`
+  from the carrier position instead.
 - The seven Dracula name-chase lamps (23, 36, 48, 67, 71, 72, 82) spell D-R-A-C-U-L-A in
   address order 48→36→23→71→67→72→82. The five R. Lane "Video" lamps
   (31-35) spell VIDEO in already-ascending address order.

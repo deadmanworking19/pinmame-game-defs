@@ -17,11 +17,22 @@ from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
 
+import drawing_callouts
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PARTIAL_PATH = ROOT / "machines/partial/williams/bram-stoker-s-dracula-1993.json"
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/bram-stoker-s-dracula-1993.json"
+# Partial while conflict.flasher-19-playfield-bulb-count stays unresolved; no author-ready copy may exist.
 DEFINITION_PATH = PARTIAL_PATH
+STALE_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/bram-stoker-s-dracula-1993.json"
+CALLOUT_SEED_RELATIVE = "tools/seeds/williams/bram-stoker-s-dracula-1993-callouts.json"
+CALLOUT_SEED_PATH = ROOT / CALLOUT_SEED_RELATIVE
+CALLOUT_SOURCE = "drawing-callouts.dracula.2026-10-23"
+PHYSICAL_SOURCE = "human-review.dracula-physical-corroboration-2026-10-23"
+PHYSICAL_EVIDENCE_DIRECTORY = "dracula/physical-photos"
+PHYSICAL_EVIDENCE_MANIFEST_SHA256 = "7a262bfa8950e235574621c58d2cd725ee52a608644a31c5cd533aab60e6ed7a"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/bram-stoker-s-dracula-1993.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/bram-stoker-s-dracula-1993.md"
 
@@ -32,6 +43,8 @@ EXCERPT_IMAGE_HASHES = {
 	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
 	for path in sorted((ROOT / EXCERPT_BASE).glob("*.webp"))
 }
+# The crops added on 2026-10-23 reproduce only on this renderer (PyMuPDF versions differ in output).
+RENDERER = "rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)"
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
@@ -43,6 +56,7 @@ VPX_TABLE_SOURCE = "vpx-table.drac-vpw-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.drac-vpw-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.drac-vpw-1-0"
 IPDB_SOURCE = "ipdb.williams.bram-stoker-s-dracula.1993"
+FLIPTRONIC_CIRCUITS_SOURCE = "human-review.fliptronic-ii-upper-circuits"
 
 TABLE_SHA256 = "e291eb0ab61eb8940aba6f54d16efd512d4565cbb6af29fcae5530035de7575e"
 SCRIPT_SHA256 = "32f4f0ed85702cc015563eb262ea6c5b7cb7c90f6d30fa6b73c36f3c37c42c5f"
@@ -120,7 +134,7 @@ SWITCH_TYPES = {
 	13: "button", 14: "tilt", 15: "microswitch", 16: "microswitch", 17: "microswitch",
 	21: "leaf", 22: "microswitch", 24: "other",
 	25: "microswitch", 26: "microswitch", 27: "microswitch", 28: "microswitch",
-	31: "microswitch", 34: "microswitch", 35: "microswitch", 36: "microswitch",
+	31: "microswitch", 34: "button", 35: "microswitch", 36: "microswitch",
 	37: "microswitch", 38: "microswitch",
 	41: "microswitch", 42: "microswitch", 43: "microswitch", 44: "microswitch", 48: "microswitch",
 	51: "opto", 52: "opto", 53: "opto", 54: "opto", 55: "opto", 56: "opto", 57: "opto",
@@ -236,44 +250,68 @@ VIRTUAL_SOLENOID_LABELS = {
 	50: "Reserved WPC Output 50",
 }
 
-# address -> {control_connection, driver_transistor, power_connection, part_number, printed_type}
+# address -> {control_connection, control_wire, driver_transistor, power_connection, part_number, printed_type}
+# control_connection/control_wire are the printed Drive Connection and Drive Wire Color columns,
+# power_connection the Voltage Connection column. 33-36 and 45-48 are Fliptronic II board circuits.
 SOLENOID_WIRING = {
-	1: dict(control_connection="J130-1", driver_transistor="Q82", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
-	2: dict(control_connection="J130-2", driver_transistor="Q80", power_connection="J107-3", part_number="AE-24-900", printed_type="High Power"),
-	3: dict(control_connection="J130-4", driver_transistor="Q78", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
-	4: dict(control_connection="J130-5", driver_transistor="Q76", power_connection="J107-3", part_number="AE-26-1200", printed_type="High Power"),
-	5: dict(control_connection="J130-6", driver_transistor="Q64", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
-	6: dict(control_connection="J130-7", driver_transistor="Q66", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
-	7: dict(control_connection="J130-8", driver_transistor="Q68", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
-	8: dict(control_connection="J130-9", driver_transistor="Q70", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
-	9: dict(control_connection="J127-1", driver_transistor="Q58", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	10: dict(control_connection="J127-3", driver_transistor="Q56", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	11: dict(control_connection="J127-4", driver_transistor="Q54", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	12: dict(control_connection="J127-5", driver_transistor="Q52", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	13: dict(control_connection="J127-6", driver_transistor="Q50", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	14: dict(control_connection="J127-7", driver_transistor="Q48", power_connection="J107-2", part_number="SM1-28-900", printed_type="Low Power"),
-	15: dict(control_connection="J127-8", driver_transistor="Q46", power_connection="J107-2", part_number="AE-27-1200", printed_type="Low Power"),
-	16: dict(control_connection="J127-9", driver_transistor="Q44", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
-	17: dict(control_connection="J126-1 (pf), J125-1 (bb)", driver_transistor="Q42", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	18: dict(control_connection="J126-2 (pf), J125-2 (bb)", driver_transistor="Q40", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	19: dict(control_connection="J126-3 (pf), J125-3 (bb)", driver_transistor="Q38", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	20: dict(control_connection="J126-4 (pf), J125-5 (bb)", driver_transistor="Q36", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	21: dict(control_connection="J126-5 (pf), J125-6 (bb)", driver_transistor="Q28", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	22: dict(control_connection="J126-6 (pf), J125-7 (bb)", driver_transistor="Q30", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	23: dict(control_connection="J126-7 (pf), J125-8 (bb)", driver_transistor="Q34", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	24: dict(control_connection="J126-8 (pf), J125-9 (bb)", driver_transistor="Q32", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
-	25: dict(control_connection="*J122-1", driver_transistor="Q26", power_connection="J107-1", part_number="AE-26-1200", printed_type="Low Power"),
-	26: dict(control_connection="J128-2 (bb)", driver_transistor="Q24", power_connection="J106-5 (bb)", printed_type="Flasher (Low Power)"),
-	27: dict(control_connection="*J122-3", driver_transistor="Q22", power_connection="J107-1", part_number="20-9831", printed_type="Low Power"),
-	28: dict(control_connection="J122-4", driver_transistor="Q20", power_connection="J107-6", part_number="14-7981", printed_type="Low Power"),
-	33: dict(control_connection="J902-3", driver_transistor="Q1", power_connection="J907-2", part_number="AE-26-1500", printed_type="Up Lt. F. Power"),
-	34: dict(control_connection="J902-1", driver_transistor="Q5", power_connection="J907-1", part_number="AE-26-1500", printed_type="Up Lt. F. Hold"),
-	35: dict(control_connection="J902-6", driver_transistor="Q2", power_connection="J907-5", part_number="AE-26-1500", printed_type="Up Rt. F. Power"),
-	36: dict(control_connection="J902-4", driver_transistor="Q7", power_connection="J907-4", part_number="A-14406", printed_type="Up Rt. F. Hold"),
-	45: dict(control_connection="J902-11,13", driver_transistor="Q4", power_connection="J907-8,9", part_number="FL-15411", printed_type="Fliptronic power"),
-	46: dict(control_connection="J902-11,13", driver_transistor="Q11", power_connection="J907-8,9", part_number="FL-15411", printed_type="Fliptronic hold"),
-	47: dict(control_connection="J902-7,9", driver_transistor="Q3", power_connection="J907-6,7", part_number="FL-15411", printed_type="Fliptronic power"),
-	48: dict(control_connection="J902-7,9", driver_transistor="Q9", power_connection="J907-6,7", part_number="FL-15411", printed_type="Fliptronic hold"),
+	1: dict(control_connection="J130-1", control_wire="Vio-Brn", driver_transistor="Q82", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
+	2: dict(control_connection="J130-2", control_wire="Vio-Red", driver_transistor="Q80", power_connection="J107-3", part_number="AE-24-900", printed_type="High Power"),
+	3: dict(control_connection="J130-4", control_wire="Vio-Org", driver_transistor="Q78", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
+	4: dict(control_connection="J130-5", control_wire="Vio-Yel", driver_transistor="Q76", power_connection="J107-3", part_number="AE-26-1200", printed_type="High Power"),
+	5: dict(control_connection="J130-6", control_wire="Vio-Grn", driver_transistor="Q64", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
+	6: dict(control_connection="J130-7", control_wire="Vio-Blu", driver_transistor="Q66", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
+	7: dict(control_connection="J130-8", control_wire="Vio-Blk", driver_transistor="Q68", power_connection="J107-3", part_number="AE-23-800", printed_type="High Power"),
+	8: dict(control_connection="J130-9", control_wire="Vio-Gry", driver_transistor="Q70", power_connection="J107-3", part_number="AE-26-1500", printed_type="High Power"),
+	9: dict(control_connection="J127-1", control_wire="Brn-Blk", driver_transistor="Q58", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	10: dict(control_connection="J127-3", control_wire="Brn-Red", driver_transistor="Q56", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	11: dict(control_connection="J127-4", control_wire="Brn-Org", driver_transistor="Q54", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	12: dict(control_connection="J127-5", control_wire="Brn-Yel", driver_transistor="Q52", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	13: dict(control_connection="J127-6", control_wire="Brn-Grn", driver_transistor="Q50", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	14: dict(control_connection="J127-7", control_wire="Brn-Blu", driver_transistor="Q48", power_connection="J107-2", part_number="SM1-28-900", printed_type="Low Power"),
+	15: dict(control_connection="J127-8", control_wire="Brn-Vio", driver_transistor="Q46", power_connection="J107-2", part_number="AE-27-1200", printed_type="Low Power"),
+	16: dict(control_connection="J127-9", control_wire="Brn-Gry", driver_transistor="Q44", power_connection="J107-2", part_number="AE-26-1200", printed_type="Low Power"),
+	17: dict(control_connection="J126-1 (pf), J125-1 (bb)", control_wire="Blk-Brn", driver_transistor="Q42", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	18: dict(control_connection="J126-2 (pf), J125-2 (bb)", control_wire="Blk-Red", driver_transistor="Q40", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	19: dict(control_connection="J126-3 (pf), J125-3 (bb)", control_wire="Blk-Org", driver_transistor="Q38", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	20: dict(control_connection="J126-4 (pf), J125-5 (bb)", control_wire="Blk-Yel", driver_transistor="Q36", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	21: dict(control_connection="J126-5 (pf), J125-6 (bb)", control_wire="Blu-Grn", driver_transistor="Q28", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	22: dict(control_connection="J126-6 (pf), J125-7 (bb)", control_wire="Blu-Blk", driver_transistor="Q30", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	23: dict(control_connection="J126-7 (pf), J125-8 (bb)", control_wire="Blu-Vio", driver_transistor="Q34", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	24: dict(control_connection="J126-8 (pf), J125-9 (bb)", control_wire="Blu-Gry", driver_transistor="Q32", power_connection="J107-6 (pf), J106-5 (bb)", printed_type="Flasher"),
+	25: dict(control_connection="*J122-1", control_wire="Blu-Brn", driver_transistor="Q26", power_connection="J107-1", part_number="AE-26-1200", printed_type="Low Power"),
+	26: dict(control_connection="J128-2 (bb)", control_wire="Blu-Red", driver_transistor="Q24", power_connection="J106-5 (bb)", printed_type="Flasher (Low Power)"),
+	27: dict(control_connection="*J122-3", control_wire="Blu-Org", driver_transistor="Q22", power_connection="J107-1", part_number="20-9831", printed_type="Low Power"),
+	28: dict(control_connection="J122-4", control_wire="Blu-Yel", driver_transistor="Q20", power_connection="J107-6", part_number="14-7981", printed_type="Low Power"),
+	# 33-36 follow the Fliptronic II board's own circuit for each public address (UPPER_FLIPPER_CIRCUITS),
+	# taking this machine's connector, wire and transistor for that circuit from its printed 3-8 row and
+	# the 3-18 flipper-circuit page. The printed 3-8 table pairs each of these four addresses with the
+	# other side's circuit (PRINTED_UPPER_FLIPPER_ROWS); see conflict.upper-flipper-circuit-side-naming.
+	33: dict(control_connection="J902-6", control_wire="Blk-Yel", driver_transistor="Q2", power_connection="J907-5", part_number="AE-26-1500", printed_type="Up Lt. F. Power"),
+	34: dict(control_connection="J902-4", control_wire="Org-Vio", driver_transistor="Q7", power_connection="J907-4", part_number="AE-26-1500", printed_type="Up Lt. F. Hold"),
+	35: dict(control_connection="J902-3", control_wire="Blk-Blu", driver_transistor="Q1", power_connection="J907-2", part_number="AE-26-1500", printed_type="Up Rt. F. Power"),
+	36: dict(control_connection="J902-1", control_wire="Org-Gry", driver_transistor="Q5", power_connection="J907-1", part_number="A-14406", printed_type="Up Rt. F. Hold"),
+	# The 3-8 Flipper Circuits rows print one merged drive cell per flipper (J902-11,13 and J902-7,9)
+	# with separate power and hold wire colours; the 3-18 Fliptronic II Flipper Circuits page splits
+	# them: J902-13 Blue-Violet and J902-9 Blue-Gray are the power windings, J902-11 Orange-Green and
+	# J902-7 Orange-Blue the holding windings.
+	45: dict(control_connection="J902-13", control_wire="Blu-Vio", driver_transistor="Q4", power_connection="J907-8,9", part_number="FL-15411", printed_type="Fliptronic power"),
+	46: dict(control_connection="J902-11", control_wire="Org-Grn", driver_transistor="Q11", power_connection="J907-8,9", part_number="FL-15411", printed_type="Fliptronic hold"),
+	47: dict(control_connection="J902-9", control_wire="Blu-Gry", driver_transistor="Q3", power_connection="J907-6,7", part_number="FL-15411", printed_type="Fliptronic power"),
+	48: dict(control_connection="J902-7", control_wire="Org-Blu", driver_transistor="Q9", power_connection="J907-6,7", part_number="FL-15411", printed_type="Fliptronic hold"),
+}
+FLIPTRONIC_ADDRESSES = {33, 34, 35, 36, 45, 46, 47, 48}
+# The Fliptronic II circuit each public address drives: the pinned controller profile and PinMAME's
+# core.h names (sURFlipPow/sURFlip 33/34, sULFlipPow/sULFlip 35/36), Twilight Zone's known-working
+# script driving its upper-right flipper from 33/34 with that flipper wired on Q2/Q7 (J902-6/J902-4) in
+# its own manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that
+# number these rows (on the pins; on the transistors all but The Shadow's main table, which prints Q2/Q7 on 35/36).
+UPPER_FLIPPER_CIRCUITS = {33: "upper-right power", 34: "upper-right hold", 35: "upper-left power", 36: "upper-left hold"}
+# What this manual's 3-8 table prints on the row of each address, kept verbatim.
+PRINTED_UPPER_FLIPPER_ROWS = {
+	33: "Up Lt. F. Power, J907-2, Q1, J902-3, Blk-Blu",
+	34: "Up Lt. F. Hold, J907-1, Q5, J902-1, Org-Gry",
+	35: "Up Rt. F. Power, J907-5, Q2, J902-6, Blk-Yel",
+	36: "Up Rt. F. Hold, J907-4, Q7, J902-4, Org-Vio",
 }
 SOLENOID_ASSEMBLIES = {
 	1: "A-14525", 2: "A-16261", 3: "A-16263", 4: "A-16264", 5: "A-16262", 6: "A-16256",
@@ -300,17 +338,18 @@ SOLENOID_CALLBACKS = {
 	36: "SolLGate (LGate.open, Wall_LO.isdropped)",
 	46: "SolRFlipper (core.vbs sLRFlipper)", 48: "SolLFlipper (core.vbs sLLFlipper)",
 }
-# address -> (VPX light object(s), playfield placement count, backbox-only)
+# address -> (bulb quantity, playfield and backbox; bulb note). The 3-8 table prints each flasher's
+# playfield and backbox bulbs, and the 3-9 Flashlamp Wiring page names the function each one serves.
 FLASHER_OBJECTS = {
-	17: (["F17_Dome"], "(3) #906 on the playfield and (1) #906 on the back panel; the retained script's Flasher17 sub drives one light object (F17_Dome) for both the printed 'T.R Corner' and 'Dracula' functions."),
-	18: (["F18"], "(1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F18) for both the printed 'Jackpot' and 'Stoker' functions."),
-	19: (["F19", "F19a"], "(1) #89 on the playfield and (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F19 near the left 3-bank, F19a near center), matching the printed '3-bank' and 'House' functions."),
-	20: (["F20", "F20_Dome"], "(1) #89 and (1) #906 on the playfield plus (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F20, F20_Dome), matching the printed 'T.L. Corner' and 'Mina' functions."),
-	21: (["F21", "F21a"], "(2) #89 on the playfield and (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F21, F21a) near the castle lock lane, matching the printed 'Castle' and 'Helsing' functions."),
-	22: (["F22"], "(1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F22) for both the printed 'L. Ramp' and 'L. Logo' functions."),
-	23: (["F23"], "(1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F23) for both the printed 'R. Ramp' and 'R. Logo' functions."),
-	24: (["F24"], "(1) #89 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F24) for both the printed 'Asylum' and 'Renfield' functions."),
-	26: (["F26"], "(3) #906, all on the back panel (speaker panel); the retained table's F26 light object normalizes to a negative y (outside playfield bounds), independently corroborating the manual's backbox-only wiring."),
+	17: (4, "(3) #906 on the playfield and (1) #906 in the backbox; the 3-9 Flashlamp Wiring page names the playfield flashlamps 'T.R. Corner' and the backbox one 'Dracula'. The retained script's Flasher17 sub drives one light object, F17_Dome in the top right corner. The 2-45 solenoid drawing prints three callouts 17 on the playfield: one in the top right corner, at F17_Dome, and two arrows ending on the two sockets on either side of the coffin, which IPDB picture 12459 shows as two blue domes flanking a cross on the coffin's head piece. No table object marks those two, so they are measured on the drawing."),
+	18: (2, "(1) #906 on the playfield ('Jackpot' on the 3-9 page) and (1) #906 in the backbox ('Stoker'); the retained script drives one playfield light object (F18), where the 2-45 drawing prints the one callout 18."),
+	19: (3, "The 3-8 table prints (1) #89 on the playfield and (1) #906 in the backbox, and the 3-9 Flashlamp Wiring page names the playfield flashlamp '3-Bank's' and lists 'House' among the backbox flashlamps. The 2-45 drawing prints two callouts 19 on the playfield, one beside the middle 3-bank and one at the playfield's left edge behind the left 3-bank, and the retained known-working script drives a playfield light at each (F19a and F19); both placements agree with their callouts under the drawing check. The drawing's two callouts and the script's two lights give two playfield bulbs, one at each 3-bank, against the one the 3-8 table and the Williams tech chart count; the 3-9 name '3-Bank's' (apostrophe as printed) names no single bank. conflict.flasher-19-playfield-bulb-count holds the disagreement unresolved. The quantity follows the drawing: those two and the House bulb in the backbox."),
+	20: (3, "(1) #89 and (1) #906 on the playfield ('T.L. Corner' on the 3-9 page) plus (1) #906 in the backbox ('Mina'); the retained script drives two playfield light objects (F20, F20_Dome), at the two callouts 20 of the 2-45 drawing."),
+	21: (3, "(2) #89 on the playfield ('Castle' on the 3-9 page) and (1) #906 in the backbox ('Helsing'); the retained script drives two playfield light objects (F21, F21a) near the castle lock lane, at the two callouts 21 of the 2-45 drawing."),
+	22: (2, "(1) #906 on the playfield ('L. Ramp' on the 3-9 page) and (1) #906 in the backbox ('L. Logo'); the retained script drives one playfield light object (F22)."),
+	23: (2, "(1) #906 on the playfield ('R. Ramp' on the 3-9 page) and (1) #906 in the backbox ('R. Logo'); the retained script drives one playfield light object (F23)."),
+	24: (2, "(1) #89 on the playfield ('Asylum' on the 3-9 page) and (1) #906 in the backbox ('Renfield'); the retained script drives one playfield light object (F24)."),
+	26: (3, "(3) #906, all in the backbox ('Speaker Panel' among the 3-9 page's backbox flashlamps); the retained table's F26 light object normalizes to a negative y (outside playfield bounds), independently corroborating the manual's backbox-only wiring."),
 }
 
 # --- Printed lamp matrix (manual page 114, printed 3-2; Lamp Locations page 107, printed 2-44).
@@ -362,10 +401,16 @@ LAMP_ASSEMBLIES = {
 	84: ("A-16107", "#555"), 85: ("A-16107", "#555"), 86: ("A-16107", "#555"),
 	87: ("A-15896-1", None), 88: ("20-9663-1", None),
 }
-# Lamps drawn only inside the manual's "A-16399 Back Panel Assy." box, never on the main
-# playfield diagram; the retained table independently corroborates this (all four normalize
-# to y < 0.011, sitting right at the playfield's rear edge rather than mid-playfield).
-BACKBOX_LAMPS = {58, 61, 62, 63}
+# Lamps on the playfield's upright back panel: the A-16399 Back Panel & Decal Assembly (printed 2-39)
+# carries the 3-lamp PCB A-16337-1 (61-63) and the B-12224 single lamp assembly (58), and the lamp
+# drawing draws them in an inset box above the playfield. Each takes the retained table's script-bound
+# Light on the playfield's rear edge, the panel's plane (address -> light and its normalized centre).
+BACK_PANEL_LAMPS = {
+	58: ("l58", (0.647155, 0.010767)),
+	61: ("L61", (0.46273, 0.010158)),
+	62: ("L62", (0.523968, 0.010017)),
+	63: ("L63", (0.582613, 0.010599)),
+}
 # Dracula name-chase inserts (letters D-R-A-C-U-L-A) and the R. Lane VIDEO chase inserts.
 LAMP_DRACULA_CHASE = {48: "D", 36: "R", 23: "A", 71: "C", 67: "U", 72: "L", 82: "A"}
 LAMP_VIDEO_CHASE = {31: "V", 32: "I", 33: "D", 34: "E", 35: "O"}
@@ -396,7 +441,6 @@ SWITCH_POSITIONS = {
 	15: [(0.279762, 0.040054)], 16: [(0.183657, 0.062736)], 17: [(0.943364, 0.888014)],
 	25: [(0.378121, 0.141314)], 26: [(0.473133, 0.141826)], 27: [(0.569755, 0.141183)],
 	28: [(0.248180, 0.226698)], 31: [(0.942700, 0.616447)],
-	34: [(0.943714, 0.961670)],
 	35: [(0.053912, 0.733048)], 36: [(0.129065, 0.735966)], 37: [(0.776394, 0.735917)],
 	38: [(0.851310, 0.733792)],
 	41: [(0.871152, 0.865797)], 42: [(0.789770, 0.887669)], 43: [(0.703057, 0.910312)],
@@ -409,22 +453,39 @@ SWITCH_POSITIONS = {
 	66: [(0.147015, 0.454212)], 67: [(0.144622, 0.482631)], 68: [(0.142623, 0.510655)],
 	71: [(0.792129, 0.532952)], 72: [(0.678707, 0.166887)], 73: [(0.130348, 0.233751)],
 	77: [(0.776315, 0.192236)],
-	81: [(0.409565, 0.472090)], 82: [(0.409565, 0.472090)], 83: [(0.409565, 0.472090)],
+	81: [(0.116482, 0.561548)], 82: [(0.132222, 0.576111)], 83: [(0.891975, 0.408000)],
 	84: [(0.895362, 0.117461)], 85: [(0.522557, 0.123063)],
 	86: [(0.468406, 0.380144)], 87: [(0.530592, 0.375149)], 88: [(0.590912, 0.370173)],
 }
 SWITCH_PROJECTIONS = {
-	34: "Projected onto the retained Plunger object (Plunger.Plunger): the Launch Ball switch is a mechanical switch on the plunger assembly itself, not a separate playfield sensor.",
 	61: "Projected onto the retained Bumper2 object, which the retained script's Bumper2_Hit handler pulses as switch 61 (Left Jet).",
 	62: "Projected onto the retained Bumper3 object, which the retained script's Bumper3_Hit handler pulses as switch 62 (Right Jet).",
 	63: "Projected onto the retained Bumper1 object, which the retained script's Bumper1_Hit handler pulses as switch 63 (Bottom Jet).",
 	64: "Projected onto the retained LeftSlingShot wall, which the retained script's LeftSlingShot_Slingshot handler pulses as switch 64.",
 	65: "Projected onto the retained RightSlingShot wall, which the retained script's RightSlingShot_Slingshot handler pulses as switch 65.",
 	77: "Projected onto the Right Ramp mechanism (Ramp.RightRamp): the retained script sets public switch 77 directly from the SolRRampUp/SolRRampDown solenoid commands (Controller.Switch(77) = True/False) rather than from a discrete sensor object, even though the Switch Locations parts list prints a real part number (5647-12693-36) for it.",
-	81: "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the motorized magnet carriage has no single resting position (see the Mist Magnet mechanism), and switch 81 is set from the carriage's software-tracked position (MagnetPos > 490) rather than a discrete sensor object at a fixed location.",
-	82: "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the retained script's MistTimer_Timer sets switch 82 from a ball-crossing line test against this same zone rather than a Hit event on a separate object; see switch 81.",
-	83: "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): switch 83 is set from the carriage's software-tracked position (MagnetPos < 10); see switch 81.",
 }
+# The Mist Magnet switches have no table object of their own; the retained script computes them from
+# the carriage track, so each placement is the point of that track where the switch acts, which the
+# 2-46 switch drawing marks at the same end of the mist path.
+MAGNET_SWITCH_GEOMETRY = {
+	81: "Placed at the left end of the Mist Magnet carriage's travel, raw (111, 1189.16): the retained script's SetMagnetPosition puts the carriage at x = 850 - 739 * MagnetPos / 500 on y = -0.44 x + 1238 and asserts switch 81 for MagnetPos > 490, the last 2 percent of travel towards that end. The 2-46 switch drawing prints balloon 81, tagged (Under Playfield), with no leader at the playfield's left edge beside that end of the path, so it marks the end without marking a part; the placement is the end of travel the leaf switch detects, not a drawn part.",
+	82: "Placed at the left end of the ball-on-magnet beam, raw (126, 1220): the retained script's MistTimer_Timer reads switch 82 from a line test along the whole mist path, the line its comment gives as running from (126, 1220) to (870, 885), and the 2-46 switch drawing runs callout 82's leader the length of the path to a dot at its left end, within 0.005 normalized of that point. The opto watches the whole path; the placement is the end the drawing marks.",
+	83: "Placed at the right end of the Mist Magnet carriage's travel, raw (850, 864): the retained script asserts switch 83 for MagnetPos < 10, the first 2 percent of travel from that end (see switch 81), and the 2-46 switch drawing ends callout 83's leader in a dot at the right end of the mist path.",
+}
+# Devices that ride on or drive the Mist Magnet carrier have no fixed position. They are projected onto
+# the area centroid of the retained table's Trigger.Magnet zone, raw (464.13, 1035.17): the thin
+# four-point band the zone draws along the carriage track (drag points (62.33, 1171.91), (81.31, 1249.90),
+# (868.21, 893.44), (873.15, 813.50)). The trigger's stored centre, raw (390.29, 999.72), lies outside
+# that band and is not used.
+MAGNET_CARRIER_PROJECTION = (0.48705, 0.488832)
+# The bulb on the carrier lights the row of thirteen small inserts from below, so it travels under that
+# row, beside the coil. The retained table models the row as thirteen fixed lights ml1-ml13, and ml7,
+# raw (464.91, 1119.45), is the middle one.
+MAGNET_LAMP_PROJECTION = (0.487873, 0.528631)
+# A socket no table object marks, measured on a factory drawing: the callout seed's measurements pin the
+# drawing pixel, normalized through that page's control fit.
+DRAWING = "drawing"
 
 SOLENOID_POSITIONS = {
 	1: [(0.943714, 0.961670)],
@@ -436,7 +497,7 @@ SOLENOID_POSITIONS = {
 	14: [(0.776315, 0.192236)],
 	15: [(0.495477, 0.964765)],
 	16: [(0.871152, 0.865797)],
-	17: [(0.928339, 0.006092)],
+	17: [(0.928339, 0.006092), DRAWING, DRAWING],
 	18: [(0.357234, 0.370633)],
 	19: [(0.060191, 0.446545), (0.522646, 0.355495)],
 	20: [(0.178430, 0.119540), (0.080379, 0.005735)],
@@ -445,7 +506,7 @@ SOLENOID_POSITIONS = {
 	23: [(0.759221, 0.309357)],
 	24: [(0.083059, 0.369293)],
 	25: [(0.279762, 0.040054)],
-	27: [(0.409565, 0.472090)], 28: [(0.409565, 0.472090)],
+	27: [MAGNET_CARRIER_PROJECTION], 28: [MAGNET_CARRIER_PROJECTION],
 	33: [(0.740491, 0.051904)], 34: [(0.840463, 0.415911)],
 	35: [(0.878573, 0.559420)], 36: [(0.163790, 0.560275)],
 	45: [(0.620992, 0.841783)], 46: [(0.620992, 0.841783)],
@@ -523,21 +584,76 @@ def provenance(*source_refs: str) -> dict[str, Any]:
 	return {"status": "validated", "source_refs": list(source_refs)}
 
 
-def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str) -> dict[str, Any]:
+def _callout_seed() -> dict[str, Any]:
+	return load_json(CALLOUT_SEED_PATH)
+
+
+def _cross(o: tuple[float, float], a: tuple[float, float], b: tuple[float, float]) -> float:
+	return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+
+def _within_control_hull(seed: dict[str, Any], placement_id: str, x: float, y: float) -> bool:
+	"""Whether a drawing measurement lies strictly inside the convex hull of its page's controls.
+
+	Only then is it interpolated rather than extrapolated. A bounding box is not enough: the frame
+	corners alone span the whole table.
+	"""
+	points = sorted({tuple(control["xy"]) for control in seed["pages"][seed["measurements"][placement_id]["page"]]["controls"]})
+	lower: list[tuple[float, float]] = []
+	upper: list[tuple[float, float]] = []
+	for point in points:
+		while len(lower) >= 2 and _cross(lower[-2], lower[-1], point) <= 0:
+			lower.pop()
+		lower.append(point)
+	for point in reversed(points):
+		while len(upper) >= 2 and _cross(upper[-2], upper[-1], point) <= 0:
+			upper.pop()
+		upper.append(point)
+	hull = lower[:-1] + upper[:-1]
+	return all(_cross(a, b, (x, y)) > 0 for a, b in zip(hull, hull[1:] + hull[:1]))
+
+
+def located(identifier: str, role: str, positions: list[Any], *source_refs: str, drawn: bool = True) -> dict[str, Any]:
+	"""Placements for one device, each with the status its evidence gives it before the callout check.
+
+	A placement the callout seed checks starts ``observed`` and only ``drawing_callouts.apply_to_definition``
+	can validate it. A placement the seed excludes (a projection, a part the drawing does not number, or
+	one marked "Not Shown") keeps the validated table status its own reasoning gives it, and a ``DRAWING``
+	socket takes the seed's reproducible measurement, corroborated by physical photographs. A device whose
+	drawing has no callouts at all (``drawn=False``: the GI strings) keeps its table status; any other
+	placement the seed does not account for is refused.
+	"""
+	seed = _callout_seed()
 	placements = []
-	for index, (x, y) in enumerate(positions, start=1):
+	for index, position in enumerate(positions, start=1):
 		suffix = f".{index}" if len(positions) > 1 else ""
+		placement_id = f"{identifier}.{role}{suffix}"
+		if position == DRAWING:
+			x, y = drawing_callouts.measured(seed, placement_id)
+			if not _within_control_hull(seed, placement_id, x, y):
+				raise RuntimeError(f"Dracula drawing measurement {placement_id} lies outside its page's control hull")
+			placement_provenance = provenance(MANUAL_SOURCE, CALLOUT_SOURCE, PHYSICAL_SOURCE)
+		else:
+			x, y = position
+			placement_provenance = provenance(*source_refs)
+			if not drawn or placement_id in seed["excluded_checks"]:
+				pass
+			elif placement_id in seed["checks"]:
+				placement_provenance["status"] = "observed"
+			else:
+				raise RuntimeError(f"Dracula callout seed neither checks nor excludes {placement_id}")
 		placements.append(
 			{
-				"id": f"{identifier}.{role}{suffix}",
+				"id": placement_id,
 				"role": role,
 				"space": "playfield",
 				"x": x,
 				"y": y,
-				"provenance": provenance(*source_refs),
+				"provenance": placement_provenance,
 			}
 		)
-	return {"status": "validated", "placements": placements}
+	status = "observed" if any(p["provenance"]["status"] == "observed" for p in placements) else "validated"
+	return {"status": status, "placements": placements}
 
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
@@ -588,10 +704,11 @@ def source_records() -> list[dict[str, Any]]:
 			"original_filename": "Dracula_Bram_Stoker_OPS.pdf",
 			"sha256": MANUAL_SHA256,
 			"locator": (
-				"152-page scan of the Williams Bram Stoker's Dracula operations manual. Printed pages 2-44 through "
-				"2-46 carry the lamp/solenoid/switch location parts lists; printed pages 3-2 through 3-21 carry the "
-				"lamp matrix, switch matrix, dedicated switches, solenoid/flasher table, general illumination "
-				"circuit, and Fliptronic II flipper circuit diagrams."
+				"152-page scan of the Williams Bram Stoker's Dracula operations manual. Printed page 2-27 draws the "
+				"Mist Magnet carrier and 2-39 the playfield back panel; printed pages 2-44 through 2-46 carry the "
+				"lamp/solenoid/switch location drawings and parts lists; printed pages 3-2 through 3-21 carry the "
+				"lamp matrix, switch matrix, dedicated switches, solenoid/flasher table, flashlamp wiring, general "
+				"illumination circuit, and Fliptronic II flipper circuit diagrams."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive",
@@ -625,7 +742,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.dracula.lamp-matrix-and-locations",
 					"locator": "PDF page 114 (printed 3-2, Lamp Matrix) and PDF page 107 (printed 2-44, Lamp Locations)",
 					"path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/lamp-matrix-and-locations.md",
-					"sha256": "689739d03e65c1a8c4e11d4f2c2b283f7e0613dbec51a353b56e182ac12cc958",
+					"sha256": "b7e9d8c71b0e7f88025c49cc1695a6e5ed4f58b8b690f17cdeda12d966799d9c",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -649,7 +766,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.dracula.solenoid-flasher-wiring",
 					"locator": "PDF page 120, printed page 3-8, SOLENOID/FLASHER TABLE",
 					"path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/solenoid-flasher-wiring.md",
-					"sha256": "e560110be4445935305c5a99a55d1b23b498ccd52d7c3eafd8478f8f99356d90",
+					"sha256": "6276e82c2cf58fd19fc12af618b1475f936db331b704890baa16d35f86e4dc4e",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -668,6 +785,66 @@ def source_records() -> list[dict[str, Any]]:
 					"image": f"{EXCERPT_BASE}/general-illumination.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
 					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 128, crop box 0.07,0.1,0.93,0.92, scanned page rendered at its native resolution (embedded image xref 560, 1650px across 11.00in), rendered at 150 dpi, 1420x1046 WebP quality 80",
+				},
+				{
+					"id": "excerpt.dracula.lamp-locations-drawing",
+					"locator": "PDF page 107, printed page 2-44, LAMPS LOCATIONS playfield drawing",
+					"path": f"{EXCERPT_BASE}/lamp-locations-drawing.md",
+					"sha256": "808eed8fb94576572605a3e9a7f7c95750c9e084b12a7bbc59e29b2bde412934",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/lamp-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations-drawing.webp"],
+					"image_derivation": f"Dracula_Bram_Stoker_OPS.pdf page 107, crop box 0.49,0.105,0.905,0.93, scanned page rendered at its native resolution (embedded image xref 458, 1275px across 8.50in), rendered at 150 dpi, grayscale, 530x1362 WebP quality 80; {RENDERER}",
+				},
+				{
+					"id": "excerpt.dracula.magnet-carrier-assembly",
+					"locator": "PDF page 90, printed page 2-27, A-16266 Coil Magnet & Screw Assembly drawing and parts list; PDF page 4, Dracula Game Story",
+					"path": f"{EXCERPT_BASE}/magnet-carrier-assembly.md",
+					"sha256": "6e2db784e622fad0e67909c97a9c4791ea86678a5a755b0ca9ce0ba9f641f047",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/magnet-carrier-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["magnet-carrier-assembly.webp"],
+					"image_derivation": f"Dracula_Bram_Stoker_OPS.pdf page 90, crop box 0.06,0.05,0.96,0.86, scanned page rendered at its native resolution (embedded image xref 382, 1275px across 8.50in), rendered at 150 dpi, grayscale, 1148x1337 WebP quality 80; {RENDERER}",
+				},
+				{
+					"id": "excerpt.dracula.fliptronic-flipper-circuits",
+					"locator": "PDF page 130, printed page 3-18, Fliptronic II Flipper Circuits",
+					"path": f"{EXCERPT_BASE}/fliptronic-flipper-circuits.md",
+					"sha256": "ec919e11ba1442bb6606042e396343ef5a68bf17bc29f036f2fd41f7b1da2ba3",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/fliptronic-flipper-circuits.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["fliptronic-flipper-circuits.webp"],
+					"image_derivation": f"Dracula_Bram_Stoker_OPS.pdf page 130, crop box 0.07,0.12,0.92,0.8, scanned page rendered at its native resolution (embedded image xref 570, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1403x867 WebP quality 80; {RENDERER}",
+				},
+				{
+					"id": "excerpt.dracula.back-panel-assembly",
+					"locator": "PDF page 102, printed page 2-39, A-16399 Back Panel & Decal Assembly drawing and parts list",
+					"path": f"{EXCERPT_BASE}/back-panel-assembly.md",
+					"sha256": "5ddd3c4be754dac8edb0cf49b66f5fd9e51cce76e3e5b21d01329dd5f6dc5f90",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/back-panel-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["back-panel-assembly.webp"],
+					"image_derivation": f"Dracula_Bram_Stoker_OPS.pdf page 102, crop box 0.08,0.08,0.96,0.85, scanned page rendered at its native resolution (embedded image xref 435, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1452x982 WebP quality 80; {RENDERER}",
+				},
+				{
+					"id": "excerpt.dracula.flashlamp-wiring",
+					"locator": "PDF page 121, printed page 3-9, Flashlamp Wiring",
+					"path": f"{EXCERPT_BASE}/flashlamp-wiring.md",
+					"sha256": "460a80157b133f83d23370c5229eaff8a0182047d99de9cebaa2b922c7f2a33d",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/flashlamp-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["flashlamp-wiring.webp"],
+					"image_derivation": f"Dracula_Bram_Stoker_OPS.pdf page 121, crop box 0.04,0.08,0.84,0.84, scanned page rendered at its native resolution (embedded image xref 525, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1320x969 WebP quality 80; {RENDERER}",
 				},
 			],
 		},
@@ -747,6 +924,95 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "Internet Pinball Database",
+		},
+		{
+			"id": CALLOUT_SOURCE,
+			"kind": "human_review",
+			"uri": f"internal:{CALLOUT_SEED_RELATIVE}",
+			"sha256": _file_sha256(CALLOUT_SEED_PATH),
+			"locator": (
+				"2026-10-23 factory location-drawing callout check of the manual's lamp drawing 2-44, solenoid/"
+				"flasher drawing 2-45 and switch drawing 2-46 (the committed excerpt crops): every callout "
+				"transcribed by an independent reader working only from the page, per-page control fits from the "
+				"drawn playfield frame's top-left and top-right corners, which match the table bounds, and the jet "
+				"bumper caps and flipper pivots (the lamp drawing, which draws neither flippers nor the bottom jet, "
+				"from its two jet-bumper rings and the four drain and return lane rollover slots), and the callout "
+				"fit; a table placement whose own callout lands within 0.07 normalized under both fits is "
+				"validated (tools/drawing_callouts.py). Its measurements section pins the drawing pixels, and the "
+				"coordinates the page's control fit gives them, for the two coffin flasher sockets the table does "
+				"not model; both lie inside the convex hull of their page's controls. Reads, controls, corrections, "
+				"overlays and generators are retained under the working root's review-artifacts/dracula/"
+				"callout-check with a pinned manifest."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics Games drawings; pinmame-game-defs curation",
+		},
+		{
+			"id": PHYSICAL_SOURCE,
+			"kind": "human_review",
+			"uri": f"external:pinmame-review-artifacts/{PHYSICAL_EVIDENCE_DIRECTORY}/manifest.json",
+			"revision": "2026-10-23",
+			"sha256": PHYSICAL_EVIDENCE_MANIFEST_SHA256,
+			"locator": (
+				"Retained physical photographs of production Bram Stoker's Dracula machines from the IPDB "
+				"machine-3072 gallery, an owner's description of the Mist Magnet and a reproduction of the Williams "
+				"tech chart, pinned by the folder's canonical manifest. They corroborate the identity and count of "
+				"the two coffin flasher domes this definition measures on the solenoid drawing, the skill-shot back "
+				"panel standing at the rear edge of the playfield, the light riding on the magnet carrier, and that "
+				"the playfield has no arrow insert at the left end of the Mist Magnet path; the chart repeats the "
+				"3-8 table's one-bulb count for flasher 19. They supply no coordinate."
+			),
+			"license": "NOASSERTION",
+			"attribution": "IPDB contributors (photographs); WMS Industries (machine artwork); pinmame-game-defs curation",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.dracula.physical-photo-corroboration",
+					"locator": "What each retained photograph shows of the coffin flasher domes and the mist art",
+					"path": f"{EXCERPT_BASE}/physical-photo-corroboration.md",
+					"sha256": "6fef9850fd003527a0cc0e036f481b6db846ba1eb4a64b2ee2c554790fa5bb4b",
+					"method": "manual",
+					"transcribed_by": "curator, from the retained photographs",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": FLIPTRONIC_CIRCUITS_SOURCE,
+			"kind": "human_review",
+			"uri": f"internal:{EXCERPT_BASE}/fliptronic-ii-upper-circuits.md",
+			"revision": "2026-10-23",
+			"sha256": _file_sha256(ROOT / EXCERPT_BASE / "fliptronic-ii-upper-circuits.md"),
+			"locator": (
+				"Cross-machine reading of which Fliptronic II upper-flipper circuit each public solenoid 33-36 drives. "
+				"Twilight Zone (same board generation): its manual's Flipper Circuits rows print the Upper Right "
+				"Flipper on Up Rt. Power Q2 J902-6 Blk-Yel and Up Rt. Hold Q7 J902-4 Org-Vio, both fed from J907-4 "
+				"(Blu-Yel), and the Upper Left Flipper on Up Lt. Power Q1 J902-3 Blk-Blu and Up Lt. Hold Q5 J902-1 "
+				"Org-Gry from J907-1 (Gry-Yel); its retained known-working script binds SolCallback(sURFlipper), "
+				"core.vbs constant 34, to RightFlipper1 and SolCallback(sULFlipper), 36, to LeftFlipper1 "
+				"(machines/partial/bally/twilight-zone-1993.json, solenoids 33-36). The solenoid tables of Star Trek: "
+				"The Next Generation, Demolition Man, The Shadow, Theatre of Magic, World Cup Soccer, Corvette, "
+				"Indianapolis 500, Johnny Mnemonic, Jack*Bot, Dirty Harry, Doctor Who (its Handy Technician Chart) and "
+				"WHO dunnit print each of rows 33-36 they carry on the same pin: 33 on J902-6, 34 on J902-4, 35 on "
+				"J902-3 and 36 on J902-1, with transistors Q2, Q7, Q1 and Q5, except The Shadow's main table, which "
+				"prints Q2 beside J902-3 on its 35 row and Q7 beside J902-1 on its 36 row while its flipper rows print "
+				"Q1 and Q5 there (Corvette prints only 33/34, World Cup Soccer no 36 row). Pinned PinMAME's core.h "
+				"names (sURFlipPow/sURFlip 33/34, sULFlipPow/sULFlip 35/36) and the WPC-Fliptronic controller profile "
+				"give the same mapping. The excerpt quotes every row with the SHA-256 of the excerpt it comes from."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation",
+			"excerpts": [
+				{
+					"id": "excerpt.dracula.fliptronic-ii-upper-circuits",
+					"locator": "Rows 33-36 and the upper-flipper circuits as thirteen other machines' committed excerpts print them",
+					"path": f"{EXCERPT_BASE}/fliptronic-ii-upper-circuits.md",
+					"sha256": "1757a3af48d65cfeed71f68b1cd06fd678109bbee8d8f17669836a20c76a2de4",
+					"method": "mixed",
+					"transcribed_by": "curator; rows quoted verbatim by script from the repository's own excerpts",
+					"reviewed": True,
+				},
+			],
 		},
 	]
 
@@ -849,6 +1115,8 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += ' Printed "L. Ramp Diverted" and driver symbol swLRampDivMade; both describe the ramp diverter rollover.'
 			if address in SWITCH_PROJECTIONS:
 				notes += " " + SWITCH_PROJECTIONS[address]
+			if address in MAGNET_SWITCH_GEOMETRY:
+				notes += " " + MAGNET_SWITCH_GEOMETRY[address]
 			physical["notes"] = notes
 
 			extra: dict[str, Any] = {
@@ -873,20 +1141,35 @@ def input_devices() -> list[dict[str, Any]]:
 				if address in PULSED_SWITCHES:
 					extra["pulse"] = True
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
-				if address in {13, 14, 21, 22}:
+				if address in {13, 14, 21, 22, 34}:
 					role = {
 						13: "cabinet.start",
 						14: "cabinet.tilt",
 						21: "cabinet.slam-tilt",
 						22: "cabinet.coin-door",
+						34: "cabinet.launch",
 					}[address]
 					extra["roles"] = [role]
 					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-					physical["location"] = "cabinet" if address == 13 else "cabinet interior"
+					physical["location"] = "cabinet" if address in {13, 34} else "cabinet interior"
 					if address == 22:
 						extra["initial_active"] = True
+					if address == 34:
+						physical["notes"] += (
+							" The cabinet Launch Ball button: its part A-15896-1 is the Launch Ball button assembly the "
+							"Lamp Locations list gives lamp 87, the 2-46 switch drawing prints balloon 34 below the "
+							"playfield outline at the cabinet's right front corner, where the 2-44 lamp drawing prints "
+							"87, and pinned PinMAME's drac.c lists swLaunch (34) with swStart, swTilt, swSlamTilt and "
+							"swCoinDoor among its cabinet switches. The retained script asserts it from the plunger key. "
+							"It has no playfield position."
+						)
 				else:
-					coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in SWITCH_PROJECTIONS else (VPX_TABLE_SOURCE,)
+					if address in MAGNET_SWITCH_GEOMETRY:
+						coordinate_refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
+					elif address in SWITCH_PROJECTIONS:
+						coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE)
+					else:
+						coordinate_refs = (VPX_TABLE_SOURCE,)
 					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *coordinate_refs)
 			items.append(_device(identifier, label, kind, "pinmame.input.switch", address, availability, refs, **extra))
 
@@ -1006,29 +1289,51 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			printed_type = wiring_data.get("printed_type", "")
 			notes = f"Printed solenoid/flasher table entry {address:02d} ({printed_type})."
 			if kind == "flasher":
-				objects, bulb_note = FLASHER_OBJECTS[address]
-				physical["quantity"] = len(objects)
-				notes += f" {bulb_note}"
+				quantity, bulb_note = FLASHER_OBJECTS[address]
+				physical["quantity"] = quantity
+				notes += f" {bulb_note} The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed."
 			if address in SOLENOID_CALLBACKS:
 				notes += f" Retained script callback/driver: {SOLENOID_CALLBACKS[address]}."
-			if address in {33, 34, 35, 36}:
+			if address in UPPER_FLIPPER_CIRCUITS:
+				circuit = UPPER_FLIPPER_CIRCUITS[address]
 				notes += (
-					" Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair "
-					"(this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the "
-					"upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' "
-					"and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this "
-					"device and its public address, so the side label is a naming detail, not a conflict "
-					"(conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table."
+					f" Driven through the Fliptronic II board's {circuit} circuit, one of the upper-flipper driver "
+					"pairs this machine, which has no upper flippers, uses for other devices. This manual's 3-8 row "
+					f"for address {address} prints '{PRINTED_UPPER_FLIPPER_ROWS[address]}', the other side's circuit: "
+					"the controller profile, pinned PinMAME's core.h names, Twilight Zone's known-working script and "
+					"manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that number "
+					"these rows put public 33/34 on the upper-right pins (J902-6/J902-4) and 35/36 on the upper-left pins "
+					"(J902-3/J902-1), with transistors Q2/Q7 and Q1/Q5, except that The Shadow's main table prints Q2 and "
+					"Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those "
+					"pins. The structured wiring follows that board mapping, with this machine's own pin, "
+					"wire colour and voltage pin for the circuit from its 3-8 table and 3-18 flipper-circuit page. The "
+					"function column, PinMAME's drac.c and the retained script agree on this device and its public "
+					"address, so the printed pairing is a wiring detail, not a conflict "
+					"(conflict.upper-flipper-circuit-side-naming is ignored)."
+				)
+			if address in {27, 28}:
+				notes += (
+					" The coil magnet rides on the Mist Magnet carrier, which the motor drives along a reversing screw "
+					"below the playfield (A-16266 Coil Magnet & Screw Assembly, printed 2-27); the 2-45 drawing prints "
+					"balloons 27 and 28 mid-path, each on a double-headed arrow along the track, and draws neither "
+					"part at a fixed place. The placement is a projection onto the carrier's track: the area centroid "
+					"of the retained table's Trigger.Magnet zone along it. Lamp 53, the bulb on the same carrier, is "
+					"projected onto the row of inserts it lights instead."
 				)
 			if address in {45, 46, 47, 48}:
-				notes += " PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed)."
+				notes += (
+					" PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no "
+					"alias needed). The 3-8 Flipper Circuits row prints one merged drive cell for both windings of the "
+					"flipper; the drive pin of this winding is the one the 3-18 Fliptronic II Flipper Circuits page "
+					"draws with the same wire colour."
+				)
 			physical["notes"] = notes
 
-			wiring: dict[str, Any] = {"board": "WPC power driver board", "driver_transistor": wiring_data["driver_transistor"]}
-			if "control_connection" in wiring_data:
-				wiring["control_connection"] = wiring_data["control_connection"]
-			if "power_connection" in wiring_data:
-				wiring["power_connection"] = wiring_data["power_connection"]
+			board = "WPC Fliptronic II board" if address in FLIPTRONIC_ADDRESSES else "WPC power driver board"
+			wiring: dict[str, Any] = {"board": board, "driver_transistor": wiring_data["driver_transistor"]}
+			for key in ("control_connection", "control_wire", "power_connection"):
+				if key in wiring_data:
+					wiring[key] = wiring_data[key]
 			extra: dict[str, Any] = {
 				"aliases": [
 					{"namespace": "pinmame.solenoid", "value": str(address)},
@@ -1046,11 +1351,15 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				extra["roles"] = ["cabinet.knocker"]
 				physical["notes"] += " The Knocker is a cabinet-mounted device (behind the coin door / under the playfield front), not a playfield-visible effect."
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			elif address in {27, 28}:
+				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE)
 			else:
 				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			if address in UPPER_FLIPPER_CIRCUITS:
+				refs = (*refs, CONTROLLER_SOURCE, FLIPTRONIC_CIRCUITS_SOURCE)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
@@ -1123,7 +1432,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					' Internal manual disagreement: the Lamp Matrix wiring page (114, printed 3-2) prints this '
 					'address "R. Skill 100K", while the Lamp Locations parts list (page 107, printed 2-44) prints '
 					'the same address "R Skill 500K". Both are transcribed; neither is preferred, since this is a '
-					"backbox scoring-legend value with no bearing on wiring, polarity, or placement."
+					"back-panel scoring-legend value with no bearing on wiring, polarity, or placement."
 				)
 			physical["notes"] = notes
 
@@ -1153,23 +1462,41 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				availability = "used"
 				extra["roles"] = ["cabinet.launch" if address == 87 else "cabinet.start"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			elif address in BACKBOX_LAMPS:
+			elif address in BACK_PANEL_LAMPS:
 				availability = "used"
-				extra["roles"] = ["cabinet.insert-panel"]
+				light, position = BACK_PANEL_LAMPS[address]
+				physical["location"] = "playfield back panel"
+				part = "the 3-lamp PCB A-16337-1" if address != 58 else "the B-12224 single lamp assembly"
 				physical["notes"] += (
-					' Drawn only inside the manual\'s "A-16399 Back Panel Assy." box, above the main playfield '
-					"diagram; the retained table's own Light object normalizes to y < 0.011, sitting right at the "
-					"playfield's rear edge rather than a genuine mid-playfield position, independently corroborating "
-					"backbox mounting."
+					" On the playfield's back panel, the upright panel at the rear of the playfield behind the top "
+					"lanes: the A-16399 Back Panel & Decal Assembly (printed 2-39) carries "
+					f"{part} for this lamp, and the Lamp Locations drawing (printed 2-44) draws it only in that "
+					"assembly's inset box above the playfield. The placement is the retained table's script-bound "
+					f"Light {light} on the playfield's rear edge, the panel's plane; through the 2-44 page's control "
+					"fit the centres of the inset's four insert symbols fall within 0.023 normalized of their table lights along the panel, "
+					"in the same order, the inset box spanning the drawn playfield's width."
 				)
-				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_TABLE_SOURCE)
+				extra["spatial"] = located(identifier, "emitter", [position], VPX_TABLE_SOURCE, MANUAL_SOURCE)
 			elif address == 53:
 				availability = "used"
+				physical["location"] = "Mist Magnet carrier, below the playfield"
 				physical["notes"] += (
-					" No matching Light object exists anywhere in the retained extraction and script.vbs never "
-					"references it; the spatial key is omitted rather than a coordinate being invented."
+					" The bulb rides on the Mist Magnet carrier: the A-16266 Coil Magnet & Screw Assembly page "
+					"(printed 2-27) fits item 7, an A-16205 Light Socket & Bulb Assembly, on the carrier's bracket "
+					"beside the 20-9831 coil magnet (solenoid 27), and the manual's game story says a light moves in "
+					"unison with the magnet under the playfield's mist art. The Lamp Locations parts list prints lamp "
+					"assembly A-11905 for this lamp, the assembly page A-16205 for the socket; both are socket-and-bulb "
+					"assemblies for the one bulb. The Lamp Locations drawing (printed 2-44) prints balloon 53 with no "
+					"leader at the left end of the row of thirteen small round inserts the carrier runs under, beside "
+					"a free-standing arrow pointing along the row. The bulb lights those inserts from below as the "
+					"carrier moves, so it travels under the row, beside the coil. The retained table has no Light for "
+					"this lamp and script.vbs never reads it; instead MotorTimer_Timer steps thirteen fixed lights "
+					"ml1-ml13, one under each insert, from the carriage position whenever solenoid 28 runs, a "
+					"simplification of that table that ignores this lamp's state. With no fixed position, the lamp is "
+					"projected onto ml7, the middle of those thirteen, at the midpoint of its travel; solenoids 27 and "
+					"28 take the carriage track itself, the ball's line, which runs about 0.04 normalized above the row."
 				)
-				# spatial intentionally omitted -- see coverage.missing.
+				extra["spatial"] = located(identifier, "emitter", [MAGNET_LAMP_PROJECTION], VPX_TABLE_SOURCE, MANUAL_SOURCE)
 			else:
 				availability = "used"
 				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
@@ -1241,7 +1568,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"come from the retained table's GI emitter collection for this string (GIUpdate2 in the retained "
 				"script). GI address 0 drives collection GIBOT; GI address 1 drives GITOP; GI address 2 drives GIMID."
 			)
-			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE)
+			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, drawn=False)
 		else:
 			notes += (
 				" Backbox-only circuit with no playfield voltage or drive connection printed; the retained script's "
@@ -1346,8 +1673,8 @@ def mechanisms() -> list[dict[str, Any]]:
 			["switch.matrix-53", "switch.matrix-54", "switch.matrix-57"],
 			"A three-position lock lane behind the Left Ramp diverter queues balls on opto switches 57 (Castle "
 			"Lock 3, entry), 54 (Castle Lock 2), and 53 (Castle Lock 1, exit, nearest the release post). Solenoid "
-			"35 (Castle Release Post, printed 'Dis. Castle Release Pst', wired through the otherwise-unused "
-			"upper-flipper power driver transistor) retracts the post (clpost.isdropped=0) to release the queued "
+			"35 (Castle Release Post, printed 'Dis. Castle Release Pst', driven through the Fliptronic II board's "
+			"upper-left flipper power circuit, which this machine uses for it) retracts the post (clpost.isdropped=0) to release the queued "
 			"ball at position 53 toward the shooter lane; the retained script's clpost_Timer sub restores the post "
 			"280 ms later. All three lock switches are genuine opto interrupters (A-14315/A-14316) that pinned "
 			"PinMAME's inverted-switch mask normalizes (column 5 = 0x7f, rows 3/4/7).",
@@ -1373,7 +1700,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"normalizes only this one address in column 8 (0x02). Solenoid 27 (Magnet) is the electromagnet coil "
 			"itself, energized by SolMistMagnet to hold a captive ball on the carriage while it travels; the "
 			"driver's own stMagnet ball-state case requires the magnet to be both energized and at the correct "
-			"switch/position combination before releasing the ball toward the matching gate.",
+			"switch/position combination before releasing the ball toward the matching gate. The carriage rides "
+			"a reversing screw below the playfield and carries, beside the coil, a light socket and bulb on a "
+			"coiled cable (A-16266 Coil Magnet & Screw Assembly, printed 2-27): lamp 53 (Magnet), which lights the "
+			"row of thirteen small round inserts in the playfield's mist art from below as it travels, so the "
+			"light moves with the captive ball. In the retained script the carriage runs from raw (850, 864) at "
+			"MagnetPos 0 to (111, 1189.16) at 500 (SetMagnetPosition), and the beam line switch 82 tests runs "
+			"from (126, 1220) to (870, 885); the 2-46 switch drawing puts 83 at the right end of the path, 81 "
+			"beside its left end, and ends 82's leader at the beam's left end.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
 		),
 		mechanism(
@@ -1383,7 +1717,7 @@ def mechanisms() -> list[dict[str, Any]]:
 			[output_id("Left Gate Actuator"), output_id("Right Gate")],
 			["switch.matrix-52"],
 			"One-way gates admit a ball onto the Mist Magnet carriage from either side. Solenoid 34 (Right Gate, "
-			"printed 'Right Gate', wired through the otherwise-unused upper-flipper power driver transistor) opens "
+			"printed 'Right Gate', driven through the Fliptronic II board's upper-right flipper hold circuit) opens "
 			"a gate near the top-right loop (RGate.open, plus dropping RGateWall) so a ball can fall onto the "
 			"carriage from the right; solenoid 36 (Left Gate Actuator, printed 'Left Ball Gate Actuator') opens a "
 			"gate near the Magnet Left Pocket opto (switch 52, LGate.open, plus dropping Wall_LO) admitting a ball "
@@ -1421,8 +1755,8 @@ def mechanisms() -> list[dict[str, Any]]:
 			"diverter",
 			[output_id("Up/Down Post Diverter")],
 			["switch.matrix-73"],
-			"A spring-loaded post near the top of the playfield (printed 'Up/Dn Post Diverter', solenoid 33, wired "
-			"through the otherwise-unused upper-flipper power driver transistor) toggles the ball between two "
+			"A spring-loaded post near the top of the playfield (printed 'Up/Dn Post Diverter', solenoid 33, driven "
+			"through the Fliptronic II board's upper-right flipper power circuit) toggles the ball between two "
 			"orbit/ramp paths. Left Ramp Entry (opto switch 73) senses a ball entering the diverted path.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
 		),
@@ -1462,33 +1796,65 @@ def conflicts() -> list[dict[str, Any]]:
 			"id": "conflict.upper-flipper-circuit-side-naming",
 			"path": "outputs[binding.device=33,34,35,36]",
 			"description": (
-				"Solenoids 33-36 are wired through the Fliptronic board's otherwise-unused upper-flipper power/hold "
-				"driver-transistor pairs (this machine has no physical upper flippers). Pinned PinMAME's own "
-				"src/wpc/core.h macros name CORE_FIRSTUFLIPSOL(33)/34 as sURFlipPow/sURFlip -- the upper-RIGHT "
-				"circuit -- and 35/36 as sULFlipPow/sULFlip -- the upper-LEFT circuit. This manual's own printed "
-				"Solenoid/Flasher Table (page 120, printed 3-8) labels the identical two circuits the opposite way "
-				"round: 'Up Lt. F. Power/Hold' at 33/34 and 'Up Rt. F. Power/Hold' at 35/36. Neither the device "
+				"Solenoids 33-36 are wired through the Fliptronic II board's upper-flipper power/hold "
+				"driver-transistor pairs, which this machine, having no physical upper flippers, uses for other "
+				"devices. Pinned PinMAME's own src/wpc/core.h macros name CORE_FIRSTUFLIPSOL(33)/34 as "
+				"sURFlipPow/sURFlip -- the upper-RIGHT circuit -- and 35/36 as sULFlipPow/sULFlip -- the "
+				"upper-LEFT circuit. This manual's own printed Solenoid/Flasher Table (page 120, printed 3-8) "
+				"pairs the addresses with the circuits the opposite way round: 'Up Lt. F. Power/Hold' (J907-2/"
+				"J907-1, Q1/Q5, J902-3/J902-1) at 33/34 and 'Up Rt. F. Power/Hold' (J907-5/J907-4, Q2/Q7, "
+				"J902-6/J902-4) at 35/36. Its own Fliptronic II Flipper Circuits page (page 130, printed 3-18) "
+				"agrees with the table's side labels for those pins, J902-3/J902-1 driving the upper-left flipper "
+				"position and J902-6/J902-4 the upper-right, but names no solenoid number. Neither the device "
 				"functions (Up/Down Post Diverter, Right Gate, Castle Release Post, Left Gate Actuator) nor their "
-				"public addresses are in doubt on either source; only which now-repurposed flipper-side driver "
-				"transistor pair physically underlies each address disagrees. The device labels are taken directly "
-				"from the manual's function column, and the retained script's SolCallback(33..36) bindings agree. "
-				"Resolution path: this is a board fact rather than a game fact, so any Fliptronic II board "
-				"schematic that assigns each upper power/hold driver transistor to a side settles it -- read "
-				"it against the four printed rows here, Q1/Q5 on J907-2/J907-1 for 33/34 and Q2/Q7 on "
-				"J907-5/J907-4 for 35/36; this manual's own pages 3-17 through 3-21 do not, because they "
-				"print the Fliptronic II cabinet-switch and end-of-stroke circuits rather than the coil-driver "
-				"assignment. Failing that, a photograph of a Fliptronic II board showing the transistor "
-				"silkscreen beside each J907 pin, or corrected upstream naming in src/wpc/core.h."
+				"public addresses are in doubt on any source: the manual's function column, PinMAME's drac.c "
+				"(sTopDiverter 33, sRGate 34, sCastleRelease 35, sLGate 36) and the retained script's "
+				"SolCallback(33..36) bindings agree. Only which driver pair, pin and wire underlies each address "
+				"disagrees, and the board settles that: Twilight Zone's known-working script drives its "
+				"upper-right flipper from public 33/34 and its manual wires that flipper on Q2/Q7 (J902-6/"
+				"J902-4), and the solenoid tables of twelve other Fliptronic II and WPC-95 machines in this repository "
+				"put 33/34 on J902-6/J902-4 and 35/36 on J902-3/J902-1, as PinMAME's names do, with transistors "
+				"Q2/Q7 and Q1/Q5 except The Shadow's main table, which prints Q2 and Q7 beside J902-3 and J902-1 on "
+				"its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. This manual's 3-8 table is the "
+				"outlier. Resolution path: already settled by that cross-machine evidence; a photograph or "
+				"continuity check of a production Dracula harness at J902 would confirm the pin each device's "
+				"wire lands on."
 			),
 			"status": "ignored",
 			"rationale": (
 				"A naming and board-designator disagreement, not a conflict (runbook, What is not a conflict): "
-				"PinMAME's macro names and the manual's printed circuit-side labels differ only on which upper-flipper "
-				"side and driver transistor pair each address uses, while the manual's function column and the retained "
-				"script agree on every device and its public address, so nothing a recreation consumes is in doubt. "
-				"Structured wiring follows the manual's own table, and each device note states both readings."
+				"PinMAME's macro names and the manual's printed table differ only on which upper-flipper side, "
+				"driver transistor pair, pin and wire each address uses, while the manual's function column, "
+				"PinMAME's drac.c and the retained script agree on every device and its public address, so nothing "
+				"a recreation consumes is in doubt. Structured wiring follows the circuit agreeing independent "
+				"sources give each address, with this machine's own pin and wire colour for that circuit; the "
+				"excerpt keeps the printed rows literally and each device note states both readings."
 			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
+			"source_refs": [MANUAL_SOURCE, CORE_SOURCE, CONTROLLER_SOURCE, FLIPTRONIC_CIRCUITS_SOURCE],
+		},
+		{
+			"id": "conflict.flasher-19-playfield-bulb-count",
+			"path": "binding:pinmame.output.solenoid/19",
+			"description": (
+				"How many playfield bulbs solenoid 19 (3-Bank / House flasher) drives. The 3-8 Solenoid/Flasher "
+				"Table prints '(1) #89' for the playfield function and '(1) #906' for the backbox one, and the "
+				"Williams tech chart prints the same row ('19 3-BANK / HOUSE FLASHER ... #89(1) #906(1)'); the two "
+				"may share ancestry. The 2-45 Solenoid/Flasher Location drawing prints two callouts 19 on the "
+				"playfield, one beside the middle 3-bank below jet bumper 13 and one at the playfield's left edge "
+				"behind the left 3-bank, both legible, and the retained known-working script drives a light at "
+				"each (Flasher19 sets F19 and F19a). Every other flasher's playfield count on the 3-8 table matches "
+				"its callouts on the drawing. The 3-9 Flashlamp Wiring page names the playfield function "
+				"'3-Bank's' (J126-3) and the backbox one 'House' (J125-3) without a count, and the production-machine "
+				"photographs examined while curating (IPDB and Pinside galleries) cannot tell a flasher socket "
+				"behind either bank from a lamp socket or show what drives it. The record keeps both drawn "
+				"sockets, each validated against its callout, and counts three bulbs (two playfield, one "
+				"backbox); if the tables are right the quantity is two and one of the two playfield placements "
+				"is not fitted. Resolution path: run the flasher test (T.5) on a production machine and observe "
+				"whether the bulb behind the left 3-bank fires together with the one at the middle 3-bank when "
+				"solenoid 19 is selected, or photograph the wiring from J126-3 on an unrestored machine; any "
+				"Dracula owner can obtain either."
+			),
+			"source_refs": [MANUAL_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, CALLOUT_SOURCE, PHYSICAL_SOURCE],
 		},
 	]
 
@@ -1524,16 +1890,16 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement"],
+			"missing": ["unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "validated",
+				"physical_wiring": "conflicted",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1555,6 +1921,23 @@ def build() -> dict[str, Any]:
 	duplicates = sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1})
 	if duplicates:
 		raise RuntimeError(f"Dracula device identifiers are not unique: {duplicates}")
+	drawing_callouts.apply_to_definition(definition, _callout_seed(), CALLOUT_SOURCE)
+	unvalidated = sorted(
+		placement["id"]
+		for collection in ("inputs", "outputs", "displays")
+		for device in definition[collection]
+		for placement in (device.get("spatial") or {}).get("placements") or []
+		if placement["provenance"]["status"] != "validated"
+	)
+	if unvalidated:
+		raise RuntimeError(f"Dracula placements the factory drawings do not confirm: {unvalidated}")
+	# Both drawn sockets are where the drawing puts them; what is in doubt is how many bulbs solenoid 19 has.
+	(flasher_19,) = [
+		device
+		for device in definition["outputs"]
+		if device["binding"] == {"group": "pinmame.output.solenoid", "device": 19}
+	]
+	flasher_19["provenance"]["status"] = "conflicted"
 	return definition
 
 
@@ -1562,44 +1945,43 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	"""Summarize every spatial disposition so the promotion decision is auditable."""
 	located_inputs: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
-	unresolved_inputs: list[int] = []
 	for device in definition["inputs"]:
 		address = int(device["binding"]["device"])
-		spatial = device.get("spatial")
-		if spatial is None:
-			unresolved_inputs.append(address)
-		elif spatial["status"] == "not_applicable":
+		spatial = device["spatial"]
+		if spatial["status"] == "not_applicable":
 			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
 		else:
 			located_inputs.append(address)
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
-	unresolved_outputs: list[dict[str, Any]] = []
+	no_spatial_outputs: list[dict[str, Any]] = []
 	placement_count = 0
 	for device in definition["outputs"]:
 		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
 		spatial = device.get("spatial")
 		if spatial is None:
-			unresolved_outputs.append(binding)
+			no_spatial_outputs.append(binding)
 		elif spatial["status"] == "not_applicable":
 			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
 		else:
 			placement_count += len(spatial["placements"])
 			located_outputs.append(binding)
 	for device in definition["inputs"]:
-		spatial = device.get("spatial")
-		if spatial is not None and spatial["status"] != "not_applicable":
-			placement_count += len(spatial["placements"])
+		if device["spatial"]["status"] != "not_applicable":
+			placement_count += len(device["spatial"]["placements"])
+	seed = _callout_seed()
+	placements = drawing_callouts.placements_of(definition)
+	decisions = drawing_callouts.evaluate(seed, placements, seed.get("limit", drawing_callouts.LIMIT))
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
 		"blockers": [
-			"Lamp 53 (Magnet, #44) is a genuine bulb per the Lamp Locations parts list but has no matching Light "
-			"object anywhere in the retained extraction and is never referenced in script.vbs, so it has no "
-			"resolvable spatial evidence. Its `spatial` key is omitted rather than a coordinate being invented; "
-			"every other dimension this report audits is complete.",
+			"conflict.flasher-19-playfield-bulb-count: the solenoid drawing prints two callouts 19 on the playfield, "
+			"one at each 3-bank, and the known-working table lights both, while the 3-8 table and the Williams tech "
+			"chart count one #89 for flasher 19's playfield function. Every placement is validated; the record stays "
+			"partial until a production machine's flasher test or wiring settles the count."
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1618,8 +2000,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"vpxtool_version": "vpxtool git:v0.33.3",
 		},
 		"source_hashes": {
+			"callout_seed_sha256": _file_sha256(CALLOUT_SEED_PATH),
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"physical_photo_manifest_sha256": PHYSICAL_EVIDENCE_MANIFEST_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
 		"placement_count": placement_count,
@@ -1630,11 +2014,33 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"unresolved_inputs": sorted(unresolved_inputs),
-		"unresolved_outputs": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
+		"no_spatial_key_outputs": sorted(no_spatial_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
+		]
+		+ [
+			{"group": "pinmame.output.solenoid", "address": 27, "reason": "Projected onto the Mist Magnet carriage track: the area centroid of the retained table's Trigger.Magnet zone along it (the coil rides on the carrier)."},
+			{"group": "pinmame.output.solenoid", "address": 28, "reason": "Projected onto the Mist Magnet carriage track: the area centroid of the retained table's Trigger.Magnet zone along it (the motor drives the carrier along its screw)."},
+			{"group": "pinmame.output.lamp", "address": 53, "reason": "Projected onto ml7, the middle of the thirteen fixed lights the retained table places under the row of inserts the carrier's bulb lights."},
+		],
+		"mist_magnet_switches": [
+			{"group": "pinmame.input.switch", "address": address, "reason": reason}
+			for address, reason in sorted(MAGNET_SWITCH_GEOMETRY.items())
+		],
+		"drawing_callout_check": drawing_callouts.summary(seed, decisions, CALLOUT_SEED_RELATIVE, _file_sha256(CALLOUT_SEED_PATH)),
+		"excluded_checks": seed["excluded_checks"],
+		"drawing_measurements": [
+			{
+				"placement": placement_id,
+				"page": item["page"],
+				"label": item["label"],
+				"pixel": item["pixel"],
+				"point": item["point"],
+				"normalized": list(placements[placement_id]),
+				"corroboration": "photos",
+			}
+			for placement_id, item in sorted(seed["measurements"].items())
 		],
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/williams.bram-stoker-s-dracula.1993/",
@@ -1643,19 +2049,35 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 				"sha256": MANUAL_TRANSCRIPTION_SHA256,
 			},
 		},
-		"excluded_object_classes": [],
-		"unresolved": ["lamp.matrix-53"],
+		"excluded_object_classes": [
+			"Trigger.Magnet's stored centre, raw (390.29, 999.72), which lies outside the zone's own four-point band; "
+			"the carriage projections use the band's area centroid instead",
+			"Lights ml1-ml13, the table's stand-ins for the carrier's bulb, which the script steps from the carriage "
+			"position and never binds to lamp 53; ml7 gives lamp 53's projection only",
+		],
+		"unresolved": [
+			{
+				"conflict": "conflict.flasher-19-playfield-bulb-count",
+				"placements": ["device.3-bank-house-flasher.emitter.1", "device.3-bank-house-flasher.emitter.2"],
+				"reason": (
+					"Both sockets are placed where the solenoid drawing's two callouts 19 put them, and each agrees with "
+					"its callout; the 3-8 table and the tech chart count one playfield bulb, so one of them may not be "
+					"fitted or driven by solenoid 19."
+				),
+			}
+		],
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
+	check = report["drawing_callout_check"]
 	lines = [
 		"# Bram Stoker's Dracula (Williams, 1993) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete except one lamp with no "
-		"retained geometry, but the physical machine record itself remains `partial` at "
-		"`machines/partial/williams/bram-stoker-s-dracula-1993.json` because of that gap plus an unresolved "
-		"wiring-provenance conflict outside this audit's scope; see the promotion decision below.",
+		f"Status: {report['status']}. Every playfield switch, coil, flasher, lamp and GI address is placed, and "
+		"every placement is validated; every other address carries a controlled `not_applicable` record. The "
+		"machine record stays `partial` at `machines/partial/williams/bram-stoker-s-dracula-1993.json` on one "
+		"unresolved conflict, flasher 19's playfield bulb count.",
 		"",
 		"The matching source is the retained known-working `Bram Stokers Dracula (Williams 1993) VPW 1.0.vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at "
@@ -1666,36 +2088,108 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Evidence decisions",
 		"",
 		"- The embedded VPW script is the runtime address and causality authority; the Williams operations manual "
-		"is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller "
-		"topology; the retained table supplies geometry.",
-		"- This manual marks opto-construction switches by writing \"Opto\" directly into the printed switch-"
-		"matrix label rather than by shading. Columns 5 and 7 match pinned PinMAME's inverted-switch mask exactly; "
-		"column 8's single opto (switch 82) is resolvable only from the Switch Locations parts list, where 81 and "
-		"83 use the plain leaf part 5647-12693-14 -- zero polarity disagreement across the whole matrix.",
+		"is the physical inventory, quantity, polarity, wiring and location authority; pinned PinMAME owns controller "
+		"topology; the retained table supplies geometry where the factory drawings confirm it.",
+		"- Every table placement the factory location drawings can check was checked against them: the lamp "
+		"drawing (printed 2-44), the solenoid/flasher drawing (printed 2-45) and the switch drawing (printed 2-46), "
+		"with every callout transcribed by an independent reader working only from the page. A placement is "
+		"validated only when its own callout lands within 0.07 normalized of it under both the page's control fit "
+		"and its callout fit (tools/drawing_callouts.py). The curator refuses to build while any checked placement "
+		"disagrees.",
+		"- Each page's controls are the drawn playfield frame's top-left and top-right corners, which match the "
+		"table bounds, and crisp mechanism features: the three jet bumper caps and both flipper pivots on 2-45 and "
+		"2-46, and on 2-44, which draws only two jet-bumper rings and no flippers, those two rings and the four "
+		"drain and return lane rollover slots (switches the lamp page does not check).",
+		"- Lamp 53 (Magnet) is the bulb on the Mist Magnet carrier: the A-16266 Coil Magnet & Screw Assembly page "
+		"(printed 2-27) fits a light socket and bulb beside the coil on the carrier, and the manual's game story says "
+		"the light moves in unison with the magnet. It lights the row of thirteen small round inserts the carrier "
+		"runs under, so it is projected onto ml7, the middle of the thirteen fixed lights the retained table places "
+		"under those inserts. The retained table never reads lamp 53; it steps ml1-ml13 from the carriage position "
+		"instead.",
+		"- Solenoids 27 (Magnet) and 28 (Magnet's Motor) are projected onto the carriage track: the area centroid of "
+		"the retained table's Trigger.Magnet zone, a thin band along the track. That zone's stored centre lies "
+		"outside the band and is not used.",
+		"- Switches 81, 82 and 83 are placed where they act on the Mist Magnet path, from the retained script's "
+		"carriage track: 81 and 83 at the left and right ends of the carriage's travel, the ends the leaf switches "
+		"detect, and 82 at the left end of the ball-on-magnet beam line, where the switch drawing ends its leader "
+		"(0.002 normalized away). Earlier they shared one projected point between the two ends.",
+		"- Switch 34 (Launch Ball) is the cabinet launch button, part A-15896-1 like lamp 87, printed below the "
+		"playfield outline on the switch drawing and listed by PinMAME's drac.c among the cabinet switches; it takes "
+		"a controlled `cabinet_or_service` record instead of the plunger projection it had.",
+		"- Flasher 17 has three playfield bulbs on the 3-8 table and three callouts on the solenoid drawing: the "
+		"top-right corner dome, which the retained table models as F17_Dome, and two domes on the coffin's head "
+		"piece, which it does not model. Those two are drawing measurements: the drawing pixel is pinned in the "
+		"callout seed and normalized through that page's control fit, rounded to three places; each lies inside the "
+		"convex hull of the page's controls, and IPDB picture 12459 shows the two blue domes flanking a cross on "
+		"the coffin. Each flasher's quantity counts its playfield and backbox bulbs, and only the playfield "
+		"bulbs are placed. Flasher 19's playfield function is `3-Bank's` on the Flashlamp Wiring page (printed "
+		"3-9), the solenoid drawing prints two callouts 19, one at each 3-bank, and the retained script drives a "
+		"light at each; the 3-8 table and the Williams tech chart count one #89 for that function. Both drawn "
+		"sockets are placed and the quantity follows the drawing (two playfield bulbs and House in the backbox), "
+		"but `conflict.flasher-19-playfield-bulb-count` holds the count unresolved.",
 		"- Switches 61-65 (jets and slingshots) and 77 (Right Ramp Up) have no dedicated playfield trigger object; "
 		"the retained script pulses their public state directly from the Bumper/Wall objects' Hit events or from "
-		"solenoid commands, so they are documented projections onto the real mechanism object.",
-		"- Switches 81/82/83 (Mist Magnet) have no fixed sensor object: the motorized carriage's position is "
-		"tracked purely in software, so all three are projected onto the fixed Trigger.Magnet detection zone.",
-		"- Flasher addresses with two manual-printed functions per circuit (19, 20, 21) drive two distinct "
-		"retained Light objects and get two placements; addresses with one manual-printed function pair sharing a "
-		"single retained Light object (17, 18, 22, 23, 24) get one placement, disclosed in physical.notes.",
+		"solenoid commands, so they are documented projections onto the real mechanism object, and the switch "
+		"drawing confirms each.",
 		"- GI strings 0-2 use the retained table's GIBOT/GITOP/GIMID emitter collections, matching the retained "
-		"script's GIUpdate2 dispatch exactly with zero script-vs-manual disagreement. GI strings 3 and 4 are "
-		"backbox-only circuits and take a controlled `cabinet_or_service` record.",
-		"- Four lamps (58, 61, 62, 63) are drawn only inside the manual's separate \"Back Panel Assy.\" box; the "
-		"retained table corroborates this independently (all four normalize to y < 0.011). They take a controlled "
-		"`cabinet_or_service` record.",
-		"- Lamp 53 (Magnet) has no retained Light object and no script reference; its `spatial` key is omitted "
-		"entirely rather than a coordinate being invented, and it is the sole entry in `coverage.missing`'s "
-		"spatial gap.",
+		"script's GIUpdate2 dispatch exactly with zero script-vs-manual disagreement; the drawings print no GI "
+		"callouts. GI strings 3 and 4 are backbox-only circuits and take a controlled `cabinet_or_service` record.",
+		"- Lamps 58 and 61-63 are on the playfield's back panel, the upright panel at the playfield's rear edge: "
+		"the A-16399 Back Panel & Decal Assembly (printed 2-39) carries the 3-lamp PCB A-16337-1 (61-63) and the "
+		"B-12224 single lamp assembly (58), and the lamp drawing draws all four only in that assembly's inset box "
+		"above the playfield, which spans the drawn playfield's width. Each takes the retained table's script-bound "
+		"light on the playfield's rear edge, the panel's plane; through the page's control fit the centre of each "
+		"lamp's insert symbol in the inset lies within 0.023 in x of its light, in the same order. IPDB picture 12459 shows the panel's `SKILL S` "
+		"lettering behind the ramps.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both "
 		"PinMAME core and manual provenance.",
+		"",
+		"## Drawing callout check",
+		"",
+		f"Seed `{check['seed']}` (SHA-256 `{check['seed_sha256']}`); {check['checked']} placements checked, "
+		f"{check['validated']} validated.",
+		"",
+	]
+	for key, page in sorted(check["pages"].items()):
+		lines.append(
+			f"- {key}: {page['controls']} controls (RMS {page['control_rms']}, leave-one-out max "
+			f"{page['control_loo_max']}), {page['callout_pairs']} callout pairs, {page['callout_fit_pairs']} in the "
+			f"callout fit (leave-one-out max {page['callout_loo_max']})."
+		)
+	for placement_id, item in sorted(check["not_validated"].items()):
+		lines.append(f"- Not validated: `{placement_id}` ({item})")
+	lines += [
+		"",
+		"Excluded from the check, with the seed's reasons:",
+		"",
+	]
+	for placement_id, reason in sorted(report["excluded_checks"].items()):
+		lines.append(f"- `{placement_id}`: {reason}.")
+	lines += [
+		"",
+		"## Drawing measurements",
+		"",
+	]
+	for item in report["drawing_measurements"]:
+		x, y = item["normalized"]
+		lines.append(
+			f"- `{item['placement']}`: callout {item['label']} on {item['page']}, pixel {item['pixel']} "
+			f"({item['point']}), normalized ({x}, {y}); corroborated by the {item['corroboration']}."
+		)
+	lines += [
 		"",
 		"## Explicit projections",
 		"",
 	]
 	for entry in report["projections"]:
+		kind = {"pinmame.input.switch": "Switch", "pinmame.output.solenoid": "Solenoid", "pinmame.output.lamp": "Lamp"}[entry["group"]]
+		lines.append(f"- {kind} {entry['address']}: {entry['reason']}")
+	lines += [
+		"",
+		"## Mist Magnet switches",
+		"",
+	]
+	for entry in report["mist_magnet_switches"]:
 		lines.append(f"- Switch {entry['address']}: {entry['reason']}")
 	lines += [
 		"",
@@ -1704,8 +2198,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Unresolved inputs (no spatial key): {report['unresolved_inputs']}",
-		f"- Unresolved outputs (no spatial key): {report['unresolved_outputs']}",
+		f"- Outputs with no spatial key at all: {len(report['no_spatial_key_outputs'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
@@ -1715,15 +2208,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses "
-		"this audit covers except lamp 53, and the deterministic curator reproduces the canonical artifact and "
-		"its pinned seed byte-for-byte. Lamp 53 (Magnet, #44) is a genuine bulb per the manual with no resolvable "
-		"geometry in the retained extraction, so promotion to `author_ready` is refused; the record stays "
-		"`partial` with `coverage.missing = [\"spatial_placement\"]`. Solenoids 33-36 carry a disagreement between "
-		"pinned PinMAME's own macro naming and this manual's printed circuit-side label about which upper-flipper "
-		"driver pair underlies each address (`conflict.upper-flipper-circuit-side-naming`). The manual's function "
-		"column and the retained script agree on every device and its public address, so that naming difference "
-		"is recorded as an ignored conflict and does not block promotion.",
+		"Every placement is validated and the deterministic curator reproduces the canonical artifact and its "
+		"pinned seed byte-for-byte. The former blocker, lamp 53, is settled by the manual's magnet assembly page and "
+		"game story, which put the bulb on the moving Mist Magnet carrier, and it takes a documented projection onto "
+		"the row of inserts it lights. `conflict.upper-flipper-circuit-side-naming` stays recorded as ignored: it is "
+		"a wiring detail that cannot change a recreation. One authoring-relevant quantity is not settled: flasher "
+		"19's playfield bulb count, two on the solenoid drawing and in the known-working table, one on the 3-8 "
+		"table and the tech chart. `conflict.flasher-19-playfield-bulb-count` records it with its resolution path, "
+		"and the record stays `partial` until a production machine settles it.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1731,6 +2223,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
+		f"- Callout-check reads, controls, corrections, overlays and generators: "
+		f"`external:pinmame-review-artifacts/{check['retained_artifacts']['directory']}`, manifest SHA-256 "
+		f"`{check['retained_artifacts']['manifest_sha256']}`.",
+		f"- Physical photographs and an owner's page: `external:pinmame-review-artifacts/{PHYSICAL_EVIDENCE_DIRECTORY}`, manifest SHA-256 "
+		f"`{PHYSICAL_EVIDENCE_MANIFEST_SHA256}`.",
 		"",
 	]
 	return "\n".join(lines)
@@ -1743,12 +2240,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
+	stale = root / STALE_PATH.relative_to(ROOT)
+	if stale.exists():
+		stale.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
+	stale_path = root / STALE_PATH.relative_to(ROOT)
+	if stale_path.exists():
+		raise RuntimeError(f"Stale Dracula author-ready definition is still present: {stale_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Dracula definition is missing: {definition_path}")
 	if not seed_path.is_file():
@@ -1758,7 +2261,7 @@ def check(root: Path = ROOT) -> None:
 	if definition_path.read_bytes() != expected:
 		raise RuntimeError(f"Dracula definition drifted from its deterministic curator: {definition_path}")
 	if seed_path.read_bytes() != expected:
-		raise RuntimeError(f"Dracula seed is not byte-identical to the promoted definition: {seed_path}")
+		raise RuntimeError(f"Dracula seed is not byte-identical to the canonical definition: {seed_path}")
 	report = build_spatial_report(definition)
 	report_path = root / SPATIAL_REPORT_PATH.relative_to(ROOT)
 	markdown_path = root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT)

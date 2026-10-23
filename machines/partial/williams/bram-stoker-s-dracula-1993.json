@@ -1,15 +1,29 @@
 {
   "conflicts": [
     {
-      "description": "Solenoids 33-36 are wired through the Fliptronic board's otherwise-unused upper-flipper power/hold driver-transistor pairs (this machine has no physical upper flippers). Pinned PinMAME's own src/wpc/core.h macros name CORE_FIRSTUFLIPSOL(33)/34 as sURFlipPow/sURFlip -- the upper-RIGHT circuit -- and 35/36 as sULFlipPow/sULFlip -- the upper-LEFT circuit. This manual's own printed Solenoid/Flasher Table (page 120, printed 3-8) labels the identical two circuits the opposite way round: 'Up Lt. F. Power/Hold' at 33/34 and 'Up Rt. F. Power/Hold' at 35/36. Neither the device functions (Up/Down Post Diverter, Right Gate, Castle Release Post, Left Gate Actuator) nor their public addresses are in doubt on either source; only which now-repurposed flipper-side driver transistor pair physically underlies each address disagrees. The device labels are taken directly from the manual's function column, and the retained script's SolCallback(33..36) bindings agree. Resolution path: this is a board fact rather than a game fact, so any Fliptronic II board schematic that assigns each upper power/hold driver transistor to a side settles it -- read it against the four printed rows here, Q1/Q5 on J907-2/J907-1 for 33/34 and Q2/Q7 on J907-5/J907-4 for 35/36; this manual's own pages 3-17 through 3-21 do not, because they print the Fliptronic II cabinet-switch and end-of-stroke circuits rather than the coil-driver assignment. Failing that, a photograph of a Fliptronic II board showing the transistor silkscreen beside each J907 pin, or corrected upstream naming in src/wpc/core.h.",
+      "description": "Solenoids 33-36 are wired through the Fliptronic II board's upper-flipper power/hold driver-transistor pairs, which this machine, having no physical upper flippers, uses for other devices. Pinned PinMAME's own src/wpc/core.h macros name CORE_FIRSTUFLIPSOL(33)/34 as sURFlipPow/sURFlip -- the upper-RIGHT circuit -- and 35/36 as sULFlipPow/sULFlip -- the upper-LEFT circuit. This manual's own printed Solenoid/Flasher Table (page 120, printed 3-8) pairs the addresses with the circuits the opposite way round: 'Up Lt. F. Power/Hold' (J907-2/J907-1, Q1/Q5, J902-3/J902-1) at 33/34 and 'Up Rt. F. Power/Hold' (J907-5/J907-4, Q2/Q7, J902-6/J902-4) at 35/36. Its own Fliptronic II Flipper Circuits page (page 130, printed 3-18) agrees with the table's side labels for those pins, J902-3/J902-1 driving the upper-left flipper position and J902-6/J902-4 the upper-right, but names no solenoid number. Neither the device functions (Up/Down Post Diverter, Right Gate, Castle Release Post, Left Gate Actuator) nor their public addresses are in doubt on any source: the manual's function column, PinMAME's drac.c (sTopDiverter 33, sRGate 34, sCastleRelease 35, sLGate 36) and the retained script's SolCallback(33..36) bindings agree. Only which driver pair, pin and wire underlies each address disagrees, and the board settles that: Twilight Zone's known-working script drives its upper-right flipper from public 33/34 and its manual wires that flipper on Q2/Q7 (J902-6/J902-4), and the solenoid tables of twelve other Fliptronic II and WPC-95 machines in this repository put 33/34 on J902-6/J902-4 and 35/36 on J902-3/J902-1, as PinMAME's names do, with transistors Q2/Q7 and Q1/Q5 except The Shadow's main table, which prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. This manual's 3-8 table is the outlier. Resolution path: already settled by that cross-machine evidence; a photograph or continuity check of a production Dracula harness at J902 would confirm the pin each device's wire lands on.",
       "id": "conflict.upper-flipper-circuit-side-naming",
       "path": "outputs[binding.device=33,34,35,36]",
-      "rationale": "A naming and board-designator disagreement, not a conflict (runbook, What is not a conflict): PinMAME's macro names and the manual's printed circuit-side labels differ only on which upper-flipper side and driver transistor pair each address uses, while the manual's function column and the retained script agree on every device and its public address, so nothing a recreation consumes is in doubt. Structured wiring follows the manual's own table, and each device note states both readings.",
+      "rationale": "A naming and board-designator disagreement, not a conflict (runbook, What is not a conflict): PinMAME's macro names and the manual's printed table differ only on which upper-flipper side, driver transistor pair, pin and wire each address uses, while the manual's function column, PinMAME's drac.c and the retained script agree on every device and its public address, so nothing a recreation consumes is in doubt. Structured wiring follows the circuit agreeing independent sources give each address, with this machine's own pin and wire colour for that circuit; the excerpt keeps the printed rows literally and each device note states both readings.",
       "source_refs": [
         "manual.williams.bram-stoker-s-dracula.1993",
-        "pinmame.core.4ec52ff0ac13"
+        "pinmame.core.4ec52ff0ac13",
+        "controller-profile.pinmame-wpc-fliptronic",
+        "human-review.fliptronic-ii-upper-circuits"
       ],
       "status": "ignored"
+    },
+    {
+      "description": "How many playfield bulbs solenoid 19 (3-Bank / House flasher) drives. The 3-8 Solenoid/Flasher Table prints '(1) #89' for the playfield function and '(1) #906' for the backbox one, and the Williams tech chart prints the same row ('19 3-BANK / HOUSE FLASHER ... #89(1) #906(1)'); the two may share ancestry. The 2-45 Solenoid/Flasher Location drawing prints two callouts 19 on the playfield, one beside the middle 3-bank below jet bumper 13 and one at the playfield's left edge behind the left 3-bank, both legible, and the retained known-working script drives a light at each (Flasher19 sets F19 and F19a). Every other flasher's playfield count on the 3-8 table matches its callouts on the drawing. The 3-9 Flashlamp Wiring page names the playfield function '3-Bank's' (J126-3) and the backbox one 'House' (J125-3) without a count, and the production-machine photographs examined while curating (IPDB and Pinside galleries) cannot tell a flasher socket behind either bank from a lamp socket or show what drives it. The record keeps both drawn sockets, each validated against its callout, and counts three bulbs (two playfield, one backbox); if the tables are right the quantity is two and one of the two playfield placements is not fitted. Resolution path: run the flasher test (T.5) on a production machine and observe whether the bulb behind the left 3-bank fires together with the one at the middle 3-bank when solenoid 19 is selected, or photograph the wiring from J126-3 on an unrestored machine; any Dracula owner can obtain either.",
+      "id": "conflict.flasher-19-playfield-bulb-count",
+      "path": "binding:pinmame.output.solenoid/19",
+      "source_refs": [
+        "manual.williams.bram-stoker-s-dracula.1993",
+        "vpx-table.drac-vpw-1-0",
+        "vpx-script.drac-vpw-1-0",
+        "drawing-callouts.dracula.2026-10-23",
+        "human-review.dracula-physical-corroboration-2026-10-23"
+      ]
     }
   ],
   "controller": {
@@ -22,14 +36,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "validated",
+      "physical_wiring": "conflicted",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
     "missing": [
-      "spatial_placement"
+      "unresolved_conflicts"
     ],
     "status": "partial"
   },
@@ -757,7 +771,8 @@
             "id": "switch.matrix-15.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -813,7 +828,8 @@
             "id": "switch.matrix-16.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -869,7 +885,8 @@
             "id": "switch.matrix-17.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1167,7 +1184,8 @@
             "id": "switch.matrix-25.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1223,7 +1241,8 @@
             "id": "switch.matrix-26.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1279,7 +1298,8 @@
             "id": "switch.matrix-27.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1335,7 +1355,8 @@
             "id": "switch.matrix-28.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1392,7 +1413,8 @@
             "id": "switch.matrix-31.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1518,9 +1540,10 @@
       "label": "Launch Ball",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 3, return row 4. Projected onto the retained Plunger object (Plunger.Plunger): the Launch Ball switch is a mechanical switch on the plunger assembly itself, not a separate playfield sensor.",
+        "location": "cabinet",
+        "notes": "Printed switch-matrix drive column 3, return row 4. The cabinet Launch Ball button: its part A-15896-1 is the Launch Ball button assembly the Lamp Locations list gives lamp 87, the 2-46 switch drawing prints balloon 34 below the playfield outline at the cabinet's right front corner, where the 2-44 lamp drawing prints 87, and pinned PinMAME's drac.c lists swLaunch (34) with swStart, swTilt, swSlamTilt and swCoinDoor among its cabinet switches. The retained script asserts it from the plunger key. It has no playfield position.",
         "part_number": "A-15896-1",
-        "switch_type": "microswitch"
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -1530,24 +1553,18 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.launch"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "switch.matrix-34.sensor",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
-              ],
-              "status": "validated"
-            },
-            "role": "sensor",
-            "space": "playfield",
-            "x": 0.943714,
-            "y": 0.96167
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.williams.bram-stoker-s-dracula.1993"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC CPU board",
@@ -1593,7 +1610,8 @@
             "id": "switch.matrix-35.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1649,7 +1667,8 @@
             "id": "switch.matrix-36.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1705,7 +1724,8 @@
             "id": "switch.matrix-37.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1761,7 +1781,8 @@
             "id": "switch.matrix-38.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1817,7 +1838,8 @@
             "id": "switch.matrix-41.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1873,7 +1895,8 @@
             "id": "switch.matrix-42.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1929,7 +1952,8 @@
             "id": "switch.matrix-43.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -1985,7 +2009,8 @@
             "id": "switch.matrix-44.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2173,7 +2198,8 @@
             "id": "switch.matrix-48.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2229,7 +2255,8 @@
             "id": "switch.matrix-51.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2285,7 +2312,8 @@
             "id": "switch.matrix-52.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2341,7 +2369,8 @@
             "id": "switch.matrix-53.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2397,7 +2426,8 @@
             "id": "switch.matrix-54.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2453,7 +2483,8 @@
             "id": "switch.matrix-55.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2509,7 +2540,8 @@
             "id": "switch.matrix-56.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2565,7 +2597,8 @@
             "id": "switch.matrix-57.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2621,7 +2654,8 @@
             "id": "switch.matrix-58.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2678,7 +2712,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2735,7 +2770,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2792,7 +2828,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2849,7 +2886,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2906,7 +2944,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -2962,7 +3001,8 @@
             "id": "switch.matrix-66.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3018,7 +3058,8 @@
             "id": "switch.matrix-67.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3074,7 +3115,8 @@
             "id": "switch.matrix-68.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3130,7 +3172,8 @@
             "id": "switch.matrix-71.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3186,7 +3229,8 @@
             "id": "switch.matrix-72.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3242,7 +3286,8 @@
             "id": "switch.matrix-73.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3431,7 +3476,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3513,7 +3559,7 @@
       "label": "Magnet Left",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 1. Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the motorized magnet carriage has no single resting position (see the Mist Magnet mechanism), and switch 81 is set from the carriage's software-tracked position (MagnetPos > 490) rather than a discrete sensor object at a fixed location.",
+        "notes": "Printed switch-matrix drive column 8, return row 1. Placed at the left end of the Mist Magnet carriage's travel, raw (111, 1189.16): the retained script's SetMagnetPosition puts the carriage at x = 850 - 739 * MagnetPos / 500 on y = -0.44 x + 1238 and asserts switch 81 for MagnetPos > 490, the last 2 percent of travel towards that end. The 2-46 switch drawing prints balloon 81, tagged (Under Playfield), with no leader at the playfield's left edge beside that end of the path, so it marks the end without marking a part; the placement is the end of travel the leaf switch detects, not a drawn part.",
         "part_number": "5647-12693-14",
         "switch_type": "microswitch"
       },
@@ -3532,14 +3578,15 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
+                "vpx-script.drac-vpw-1-0",
                 "manual.williams.bram-stoker-s-dracula.1993"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.409565,
-            "y": 0.47209
+            "x": 0.116482,
+            "y": 0.561548
           }
         ],
         "status": "validated"
@@ -3571,7 +3618,7 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-14315 (LED) with A-14316 (Trans)",
-        "notes": "Printed switch-matrix drive column 8, return row 2. Printed \"Opto ___\" on the switch matrix (columns 5 and 7 rows 1-3) or, for switch 82 alone, proven opto by the Switch Locations parts list (A-14315 LED with A-14316 phototransistor) while its column-8 neighbors 81 and 83 use the plain leaf part 5647-12693-14. Pinned PinMAME's dracGameData inverted-switch mask ({0x00,0x00,0x00,0x00,0x00,0x7f,0x00,0x07,0x02,0x00,0x00,0x00}, column 5 = 0x7f rows 1-7, column 7 = 0x07 rows 1-3, column 8 = 0x02 row 2) normalizes every one of these addresses exactly, with zero disagreement anywhere in the matrix. Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the retained script's MistTimer_Timer sets switch 82 from a ball-crossing line test against this same zone rather than a Hit event on a separate object; see switch 81.",
+        "notes": "Printed switch-matrix drive column 8, return row 2. Printed \"Opto ___\" on the switch matrix (columns 5 and 7 rows 1-3) or, for switch 82 alone, proven opto by the Switch Locations parts list (A-14315 LED with A-14316 phototransistor) while its column-8 neighbors 81 and 83 use the plain leaf part 5647-12693-14. Pinned PinMAME's dracGameData inverted-switch mask ({0x00,0x00,0x00,0x00,0x00,0x7f,0x00,0x07,0x02,0x00,0x00,0x00}, column 5 = 0x7f rows 1-7, column 7 = 0x07 rows 1-3, column 8 = 0x02 row 2) normalizes every one of these addresses exactly, with zero disagreement anywhere in the matrix. Placed at the left end of the ball-on-magnet beam, raw (126, 1220): the retained script's MistTimer_Timer reads switch 82 from a line test along the whole mist path, the line its comment gives as running from (126, 1220) to (870, 885), and the 2-46 switch drawing runs callout 82's leader the length of the path to a dot at its left end, within 0.005 normalized of that point. The opto watches the whole path; the placement is the end the drawing marks.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3589,14 +3636,16 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "vpx-script.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.409565,
-            "y": 0.47209
+            "x": 0.132222,
+            "y": 0.576111
           }
         ],
         "status": "validated"
@@ -3627,7 +3676,7 @@
       "label": "Magnet Right",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 8, return row 3. Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): switch 83 is set from the carriage's software-tracked position (MagnetPos < 10); see switch 81.",
+        "notes": "Printed switch-matrix drive column 8, return row 3. Placed at the right end of the Mist Magnet carriage's travel, raw (850, 864): the retained script asserts switch 83 for MagnetPos < 10, the first 2 percent of travel from that end (see switch 81), and the 2-46 switch drawing ends callout 83's leader in a dot at the right end of the mist path.",
         "part_number": "5647-12693-14",
         "switch_type": "microswitch"
       },
@@ -3646,14 +3695,16 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.drac-vpw-1-0",
-                "manual.williams.bram-stoker-s-dracula.1993"
+                "vpx-script.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.409565,
-            "y": 0.47209
+            "x": 0.891975,
+            "y": 0.408
           }
         ],
         "status": "validated"
@@ -3702,7 +3753,8 @@
             "id": "switch.matrix-84.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3814,7 +3866,8 @@
             "id": "switch.matrix-86.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3870,7 +3923,8 @@
             "id": "switch.matrix-87.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -3926,7 +3980,8 @@
             "id": "switch.matrix-88.sensor",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -4749,7 +4804,7 @@
       "actuators": [
         "device.castle-release-post"
       ],
-      "behavior": "A three-position lock lane behind the Left Ramp diverter queues balls on opto switches 57 (Castle Lock 3, entry), 54 (Castle Lock 2), and 53 (Castle Lock 1, exit, nearest the release post). Solenoid 35 (Castle Release Post, printed 'Dis. Castle Release Pst', wired through the otherwise-unused upper-flipper power driver transistor) retracts the post (clpost.isdropped=0) to release the queued ball at position 53 toward the shooter lane; the retained script's clpost_Timer sub restores the post 280 ms later. All three lock switches are genuine opto interrupters (A-14315/A-14316) that pinned PinMAME's inverted-switch mask normalizes (column 5 = 0x7f, rows 3/4/7).",
+      "behavior": "A three-position lock lane behind the Left Ramp diverter queues balls on opto switches 57 (Castle Lock 3, entry), 54 (Castle Lock 2), and 53 (Castle Lock 1, exit, nearest the release post). Solenoid 35 (Castle Release Post, printed 'Dis. Castle Release Pst', driven through the Fliptronic II board's upper-left flipper power circuit, which this machine uses for it) retracts the post (clpost.isdropped=0) to release the queued ball at position 53 toward the shooter lane; the retained script's clpost_Timer sub restores the post 280 ms later. All three lock switches are genuine opto interrupters (A-14315/A-14316) that pinned PinMAME's inverted-switch mask normalizes (column 5 = 0x7f, rows 3/4/7).",
       "id": "mechanism.castle-lock",
       "kind": "gate",
       "label": "Castle Lock lane and release post",
@@ -4772,7 +4827,7 @@
         "device.magnet",
         "device.magnet-s-motor"
       ],
-      "behavior": "A single magnet is mounted on a motor-driven carriage (solenoid 28, 'Magnet's Motor') that travels diagonally beneath the playfield between a right-side entry near the Right Gate and a left-side exit near the Left Gate. The retained script tracks the carriage's position purely in software as a 0-500 counter (MagnetPos), incremented or decremented while solenoid 28 is energized and reversing direction at each endpoint; it has no single resting coordinate. Two plain leaf limit switches confirm the carriage has reached an end of travel: switch 81 (Magnet Left, part 5647-12693-14) asserts near MagnetPos=500 (the left/exit end, feeding the Left Gate) and switch 83 (Magnet Right, same part) asserts near MagnetPos=0 (the right/entry end, feeding the Right Gate) -- neither is a printed opto. Switch 82 (Ball On Magnet) is the only genuine opto of the three (A-14315/A-14316): the retained script's MistTimer_Timer tests every ball's position against a fixed diagonal line equation representing the physical beam, independent of carriage position, and PinMAME's inverted-switch mask normalizes only this one address in column 8 (0x02). Solenoid 27 (Magnet) is the electromagnet coil itself, energized by SolMistMagnet to hold a captive ball on the carriage while it travels; the driver's own stMagnet ball-state case requires the magnet to be both energized and at the correct switch/position combination before releasing the ball toward the matching gate.",
+      "behavior": "A single magnet is mounted on a motor-driven carriage (solenoid 28, 'Magnet's Motor') that travels diagonally beneath the playfield between a right-side entry near the Right Gate and a left-side exit near the Left Gate. The retained script tracks the carriage's position purely in software as a 0-500 counter (MagnetPos), incremented or decremented while solenoid 28 is energized and reversing direction at each endpoint; it has no single resting coordinate. Two plain leaf limit switches confirm the carriage has reached an end of travel: switch 81 (Magnet Left, part 5647-12693-14) asserts near MagnetPos=500 (the left/exit end, feeding the Left Gate) and switch 83 (Magnet Right, same part) asserts near MagnetPos=0 (the right/entry end, feeding the Right Gate) -- neither is a printed opto. Switch 82 (Ball On Magnet) is the only genuine opto of the three (A-14315/A-14316): the retained script's MistTimer_Timer tests every ball's position against a fixed diagonal line equation representing the physical beam, independent of carriage position, and PinMAME's inverted-switch mask normalizes only this one address in column 8 (0x02). Solenoid 27 (Magnet) is the electromagnet coil itself, energized by SolMistMagnet to hold a captive ball on the carriage while it travels; the driver's own stMagnet ball-state case requires the magnet to be both energized and at the correct switch/position combination before releasing the ball toward the matching gate. The carriage rides a reversing screw below the playfield and carries, beside the coil, a light socket and bulb on a coiled cable (A-16266 Coil Magnet & Screw Assembly, printed 2-27): lamp 53 (Magnet), which lights the row of thirteen small round inserts in the playfield's mist art from below as it travels, so the light moves with the captive ball. In the retained script the carriage runs from raw (850, 864) at MagnetPos 0 to (111, 1189.16) at 500 (SetMagnetPosition), and the beam line switch 82 tests runs from (126, 1220) to (870, 885); the 2-46 switch drawing puts 83 at the right end of the path, 81 beside its left end, and ends 82's leader at the beam's left end.",
       "id": "mechanism.mist-magnet",
       "kind": "other",
       "label": "Mist Magnet ball-levitation carriage",
@@ -4795,7 +4850,7 @@
         "device.left-gate-actuator",
         "device.right-gate"
       ],
-      "behavior": "One-way gates admit a ball onto the Mist Magnet carriage from either side. Solenoid 34 (Right Gate, printed 'Right Gate', wired through the otherwise-unused upper-flipper power driver transistor) opens a gate near the top-right loop (RGate.open, plus dropping RGateWall) so a ball can fall onto the carriage from the right; solenoid 36 (Left Gate Actuator, printed 'Left Ball Gate Actuator') opens a gate near the Magnet Left Pocket opto (switch 52, LGate.open, plus dropping Wall_LO) admitting a ball from the left. The driver's own ball-state chain confirms both paths lead to stMagnet.",
+      "behavior": "One-way gates admit a ball onto the Mist Magnet carriage from either side. Solenoid 34 (Right Gate, printed 'Right Gate', driven through the Fliptronic II board's upper-right flipper hold circuit) opens a gate near the top-right loop (RGate.open, plus dropping RGateWall) so a ball can fall onto the carriage from the right; solenoid 36 (Left Gate Actuator, printed 'Left Ball Gate Actuator') opens a gate near the Magnet Left Pocket opto (switch 52, LGate.open, plus dropping Wall_LO) admitting a ball from the left. The driver's own ball-state chain confirms both paths lead to stMagnet.",
       "id": "mechanism.mist-gates",
       "kind": "gate",
       "label": "Left and Right Mist Magnet entry gates",
@@ -4854,7 +4909,7 @@
       "actuators": [
         "device.up-down-post-diverter"
       ],
-      "behavior": "A spring-loaded post near the top of the playfield (printed 'Up/Dn Post Diverter', solenoid 33, wired through the otherwise-unused upper-flipper power driver transistor) toggles the ball between two orbit/ramp paths. Left Ramp Entry (opto switch 73) senses a ball entering the diverted path.",
+      "behavior": "A spring-loaded post near the top of the playfield (printed 'Up/Dn Post Diverter', solenoid 33, driven through the Fliptronic II board's upper-right flipper power circuit) toggles the ball between two orbit/ramp paths. Left Ramp Entry (opto switch 73) senses a ball entering the diverted path.",
       "id": "mechanism.top-diverter",
       "kind": "diverter",
       "label": "Up/Down Post Diverter",
@@ -4931,7 +4986,8 @@
             "id": "device.shooter.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -4946,6 +5002,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-1",
+        "control_wire": "Vio-Brn",
         "driver_transistor": "Q82",
         "power_connection": "J107-3"
       }
@@ -4988,7 +5045,8 @@
             "id": "device.coffin-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5003,6 +5061,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-2",
+        "control_wire": "Vio-Red",
         "driver_transistor": "Q80",
         "power_connection": "J107-3"
       }
@@ -5045,7 +5104,8 @@
             "id": "device.castle-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5060,6 +5120,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-4",
+        "control_wire": "Vio-Org",
         "driver_transistor": "Q78",
         "power_connection": "J107-3"
       }
@@ -5102,7 +5163,8 @@
             "id": "device.right-ramp-down.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5117,6 +5179,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-5",
+        "control_wire": "Vio-Yel",
         "driver_transistor": "Q76",
         "power_connection": "J107-3"
       }
@@ -5159,7 +5222,8 @@
             "id": "device.crypt-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5174,6 +5238,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-6",
+        "control_wire": "Vio-Grn",
         "driver_transistor": "Q64",
         "power_connection": "J107-3"
       }
@@ -5216,7 +5281,8 @@
             "id": "device.wire-ramp-ball-popper.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5231,6 +5297,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-7",
+        "control_wire": "Vio-Blu",
         "driver_transistor": "Q66",
         "power_connection": "J107-3"
       }
@@ -5283,6 +5350,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-8",
+        "control_wire": "Vio-Blk",
         "driver_transistor": "Q68",
         "power_connection": "J107-3"
       }
@@ -5340,6 +5408,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J130-9",
+        "control_wire": "Vio-Gry",
         "driver_transistor": "Q70",
         "power_connection": "J107-3"
       }
@@ -5381,7 +5450,8 @@
             "id": "device.left-sling.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5396,6 +5466,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-1",
+        "control_wire": "Brn-Blk",
         "driver_transistor": "Q58",
         "power_connection": "J107-2"
       }
@@ -5437,7 +5508,8 @@
             "id": "device.right-sling.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5452,6 +5524,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-3",
+        "control_wire": "Brn-Red",
         "driver_transistor": "Q56",
         "power_connection": "J107-2"
       }
@@ -5493,7 +5566,8 @@
             "id": "device.left-jet.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5508,6 +5582,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-4",
+        "control_wire": "Brn-Org",
         "driver_transistor": "Q54",
         "power_connection": "J107-2"
       }
@@ -5549,7 +5624,8 @@
             "id": "device.right-jet.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5564,6 +5640,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-5",
+        "control_wire": "Brn-Yel",
         "driver_transistor": "Q52",
         "power_connection": "J107-2"
       }
@@ -5605,7 +5682,8 @@
             "id": "device.bottom-jet.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5620,6 +5698,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-6",
+        "control_wire": "Brn-Grn",
         "driver_transistor": "Q50",
         "power_connection": "J107-2"
       }
@@ -5662,7 +5741,8 @@
             "id": "device.right-ramp-up.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5677,6 +5757,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-7",
+        "control_wire": "Brn-Blu",
         "driver_transistor": "Q48",
         "power_connection": "J107-2"
       }
@@ -5718,7 +5799,8 @@
             "id": "device.outhole.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5733,6 +5815,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-8",
+        "control_wire": "Brn-Vio",
         "driver_transistor": "Q46",
         "power_connection": "J107-2"
       }
@@ -5775,7 +5858,8 @@
             "id": "device.trough.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5790,6 +5874,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J127-9",
+        "control_wire": "Brn-Gry",
         "driver_transistor": "Q44",
         "power_connection": "J107-2"
       }
@@ -5815,8 +5900,8 @@
       "label": "T.R. Corner / Dracula Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 17 (Flasher). (3) #906 on the playfield and (1) #906 on the back panel; the retained script's Flasher17 sub drives one light object (F17_Dome) for both the printed 'T.R Corner' and 'Dracula' functions.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 17 (Flasher). (3) #906 on the playfield and (1) #906 in the backbox; the 3-9 Flashlamp Wiring page names the playfield flashlamps 'T.R. Corner' and the backbox one 'Dracula'. The retained script's Flasher17 sub drives one light object, F17_Dome in the top right corner. The 2-45 solenoid drawing prints three callouts 17 on the playfield: one in the top right corner, at F17_Dome, and two arrows ending on the two sockets on either side of the coffin, which IPDB picture 12459 shows as two blue domes flanking a cross on the coffin's head piece. No table object marks those two, so they are measured on the drawing. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 4
       },
       "provenance": {
         "source_refs": [
@@ -5828,10 +5913,11 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.t-r-corner-dracula-flasher.emitter",
+            "id": "device.t-r-corner-dracula-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5839,6 +5925,36 @@
             "space": "playfield",
             "x": 0.928339,
             "y": 0.006092
+          },
+          {
+            "id": "device.t-r-corner-dracula-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23",
+                "human-review.dracula-physical-corroboration-2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.639,
+            "y": 0.21
+          },
+          {
+            "id": "device.t-r-corner-dracula-flasher.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.bram-stoker-s-dracula.1993",
+                "drawing-callouts.dracula.2026-10-23",
+                "human-review.dracula-physical-corroboration-2026-10-23"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.721,
+            "y": 0.212
           }
         ],
         "status": "validated"
@@ -5846,6 +5962,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-1 (pf), J125-1 (bb)",
+        "control_wire": "Blk-Brn",
         "driver_transistor": "Q42",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -5871,8 +5988,8 @@
       "label": "Jackpot / Stoker Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 18 (Flasher). (1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F18) for both the printed 'Jackpot' and 'Stoker' functions.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 18 (Flasher). (1) #906 on the playfield ('Jackpot' on the 3-9 page) and (1) #906 in the backbox ('Stoker'); the retained script drives one playfield light object (F18), where the 2-45 drawing prints the one callout 18. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -5887,7 +6004,8 @@
             "id": "device.jackpot-stoker-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5902,6 +6020,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-2 (pf), J125-2 (bb)",
+        "control_wire": "Blk-Red",
         "driver_transistor": "Q40",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -5927,15 +6046,15 @@
       "label": "3-bank / House Flasher",
       "physical": {
         "assembly_part_number": "A-8798",
-        "notes": "Printed solenoid/flasher table entry 19 (Flasher). (1) #89 on the playfield and (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F19 near the left 3-bank, F19a near center), matching the printed '3-bank' and 'House' functions.",
-        "quantity": 2
+        "notes": "Printed solenoid/flasher table entry 19 (Flasher). The 3-8 table prints (1) #89 on the playfield and (1) #906 in the backbox, and the 3-9 Flashlamp Wiring page names the playfield flashlamp '3-Bank's' and lists 'House' among the backbox flashlamps. The 2-45 drawing prints two callouts 19 on the playfield, one beside the middle 3-bank and one at the playfield's left edge behind the left 3-bank, and the retained known-working script drives a playfield light at each (F19a and F19); both placements agree with their callouts under the drawing check. The drawing's two callouts and the script's two lights give two playfield bulbs, one at each 3-bank, against the one the 3-8 table and the Williams tech chart count; the 3-9 name '3-Bank's' (apostrophe as printed) names no single bank. conflict.flasher-19-playfield-bulb-count holds the disagreement unresolved. The quantity follows the drawing: those two and the House bulb in the backbox. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "pinmame.core.4ec52ff0ac13"
         ],
-        "status": "validated"
+        "status": "conflicted"
       },
       "spatial": {
         "placements": [
@@ -5943,7 +6062,8 @@
             "id": "device.3-bank-house-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5956,7 +6076,8 @@
             "id": "device.3-bank-house-flasher.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -5971,6 +6092,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-3 (pf), J125-3 (bb)",
+        "control_wire": "Blk-Org",
         "driver_transistor": "Q38",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -5996,8 +6118,8 @@
       "label": "T.L. Corner / Mina Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1, A-8798",
-        "notes": "Printed solenoid/flasher table entry 20 (Flasher). (1) #89 and (1) #906 on the playfield plus (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F20, F20_Dome), matching the printed 'T.L. Corner' and 'Mina' functions.",
-        "quantity": 2
+        "notes": "Printed solenoid/flasher table entry 20 (Flasher). (1) #89 and (1) #906 on the playfield ('T.L. Corner' on the 3-9 page) plus (1) #906 in the backbox ('Mina'); the retained script drives two playfield light objects (F20, F20_Dome), at the two callouts 20 of the 2-45 drawing. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6012,7 +6134,8 @@
             "id": "device.t-l-corner-mina-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6025,7 +6148,8 @@
             "id": "device.t-l-corner-mina-flasher.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6040,6 +6164,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-4 (pf), J125-5 (bb)",
+        "control_wire": "Blk-Yel",
         "driver_transistor": "Q36",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -6065,8 +6190,8 @@
       "label": "Castle / Helsing Flasher",
       "physical": {
         "assembly_part_number": "A-8798",
-        "notes": "Printed solenoid/flasher table entry 21 (Flasher). (2) #89 on the playfield and (1) #906 on the back panel; the retained script drives two distinct playfield light objects (F21, F21a) near the castle lock lane, matching the printed 'Castle' and 'Helsing' functions.",
-        "quantity": 2
+        "notes": "Printed solenoid/flasher table entry 21 (Flasher). (2) #89 on the playfield ('Castle' on the 3-9 page) and (1) #906 in the backbox ('Helsing'); the retained script drives two playfield light objects (F21, F21a) near the castle lock lane, at the two callouts 21 of the 2-45 drawing. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6081,7 +6206,8 @@
             "id": "device.castle-helsing-flasher.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6094,7 +6220,8 @@
             "id": "device.castle-helsing-flasher.emitter.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6109,6 +6236,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-5 (pf), J125-6 (bb)",
+        "control_wire": "Blu-Grn",
         "driver_transistor": "Q28",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -6134,8 +6262,8 @@
       "label": "L. Ramp / L. Logo Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 22 (Flasher). (1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F22) for both the printed 'L. Ramp' and 'L. Logo' functions.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 22 (Flasher). (1) #906 on the playfield ('L. Ramp' on the 3-9 page) and (1) #906 in the backbox ('L. Logo'); the retained script drives one playfield light object (F22). The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6150,7 +6278,8 @@
             "id": "device.l-ramp-l-logo-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6165,6 +6294,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-6 (pf), J125-7 (bb)",
+        "control_wire": "Blu-Blk",
         "driver_transistor": "Q30",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -6190,8 +6320,8 @@
       "label": "R. Ramp / R. Logo Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher table entry 23 (Flasher). (1) #906 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F23) for both the printed 'R. Ramp' and 'R. Logo' functions.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 23 (Flasher). (1) #906 on the playfield ('R. Ramp' on the 3-9 page) and (1) #906 in the backbox ('R. Logo'); the retained script drives one playfield light object (F23). The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6206,7 +6336,8 @@
             "id": "device.r-ramp-r-logo-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6221,6 +6352,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-7 (pf), J125-8 (bb)",
+        "control_wire": "Blu-Vio",
         "driver_transistor": "Q34",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -6246,8 +6378,8 @@
       "label": "Asylum / Renfield Flasher",
       "physical": {
         "assembly_part_number": "A-8798",
-        "notes": "Printed solenoid/flasher table entry 24 (Flasher). (1) #89 on the playfield and (1) #906 on the back panel; the retained script drives one light object (F24) for both the printed 'Asylum' and 'Renfield' functions.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 24 (Flasher). (1) #89 on the playfield ('Asylum' on the 3-9 page) and (1) #906 in the backbox ('Renfield'); the retained script drives one playfield light object (F24). The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6262,7 +6394,8 @@
             "id": "device.asylum-renfield-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6277,6 +6410,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J126-8 (pf), J125-9 (bb)",
+        "control_wire": "Blu-Gry",
         "driver_transistor": "Q32",
         "power_connection": "J107-6 (pf), J106-5 (bb)"
       }
@@ -6319,7 +6453,8 @@
             "id": "device.l-drop-target-reset.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6334,6 +6469,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "*J122-1",
+        "control_wire": "Blu-Brn",
         "driver_transistor": "Q26",
         "power_connection": "J107-1"
       }
@@ -6358,8 +6494,8 @@
       "kind": "flasher",
       "label": "Speaker Panel Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 26 (Flasher (Low Power)). (3) #906, all on the back panel (speaker panel); the retained table's F26 light object normalizes to a negative y (outside playfield bounds), independently corroborating the manual's backbox-only wiring.",
-        "quantity": 1
+        "notes": "Printed solenoid/flasher table entry 26 (Flasher (Low Power)). (3) #906, all in the backbox ('Speaker Panel' among the 3-9 page's backbox flashlamps); the retained table's F26 light object normalizes to a negative y (outside playfield bounds), independently corroborating the manual's backbox-only wiring. The quantity counts the playfield and backbox bulbs; only playfield bulbs are placed.",
+        "quantity": 3
       },
       "provenance": {
         "source_refs": [
@@ -6384,6 +6520,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J128-2 (bb)",
+        "control_wire": "Blu-Red",
         "driver_transistor": "Q24",
         "power_connection": "J106-5 (bb)"
       }
@@ -6409,7 +6546,7 @@
       "label": "Magnet",
       "physical": {
         "assembly_part_number": "A-16266",
-        "notes": "Printed solenoid/flasher table entry 27 (Low Power). Retained script callback/driver: SolMistMagnet (MagnetOn flag consumed by MistTimer).",
+        "notes": "Printed solenoid/flasher table entry 27 (Low Power). Retained script callback/driver: SolMistMagnet (MagnetOn flag consumed by MistTimer). The coil magnet rides on the Mist Magnet carrier, which the motor drives along a reversing screw below the playfield (A-16266 Coil Magnet & Screw Assembly, printed 2-27); the 2-45 drawing prints balloons 27 and 28 mid-path, each on a double-headed arrow along the track, and draws neither part at a fixed place. The placement is a projection onto the carrier's track: the area centroid of the retained table's Trigger.Magnet zone along it. Lamp 53, the bulb on the same carrier, is projected onto the row of inserts it lights instead.",
         "part_number": "20-9831"
       },
       "provenance": {
@@ -6426,14 +6563,15 @@
             "id": "device.magnet.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.409565,
-            "y": 0.47209
+            "x": 0.48705,
+            "y": 0.488832
           }
         ],
         "status": "validated"
@@ -6441,6 +6579,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "*J122-3",
+        "control_wire": "Blu-Org",
         "driver_transistor": "Q22",
         "power_connection": "J107-1"
       }
@@ -6466,7 +6605,7 @@
       "label": "Magnet's Motor",
       "physical": {
         "assembly_part_number": "A-16050",
-        "notes": "Printed solenoid/flasher table entry 28 (Low Power). Retained script callback/driver: MotorTimer_Timer reads Controller.Solenoid(28) directly -- no SolCallback.",
+        "notes": "Printed solenoid/flasher table entry 28 (Low Power). Retained script callback/driver: MotorTimer_Timer reads Controller.Solenoid(28) directly -- no SolCallback. The coil magnet rides on the Mist Magnet carrier, which the motor drives along a reversing screw below the playfield (A-16266 Coil Magnet & Screw Assembly, printed 2-27); the 2-45 drawing prints balloons 27 and 28 mid-path, each on a double-headed arrow along the track, and draws neither part at a fixed place. The placement is a projection onto the carrier's track: the area centroid of the retained table's Trigger.Magnet zone along it. Lamp 53, the bulb on the same carrier, is projected onto the row of inserts it lights instead.",
         "part_number": "14-7981"
       },
       "provenance": {
@@ -6483,14 +6622,15 @@
             "id": "device.magnet-s-motor.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.409565,
-            "y": 0.47209
+            "x": 0.48705,
+            "y": 0.488832
           }
         ],
         "status": "validated"
@@ -6498,6 +6638,7 @@
       "wiring": {
         "board": "WPC power driver board",
         "control_connection": "J122-4",
+        "control_wire": "Blu-Yel",
         "driver_transistor": "Q20",
         "power_connection": "J107-6"
       }
@@ -6679,14 +6820,16 @@
       "label": "Up/Down Post Diverter",
       "physical": {
         "assembly_part_number": "A-16265",
-        "notes": "Printed solenoid/flasher table entry 33 (Up Lt. F. Power). Retained script callback/driver: SolTopDiverter (wDivert.isdropped, FDivert.rotate). Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair (this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this device and its public address, so the side label is a naming detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table.",
+        "notes": "Printed solenoid/flasher table entry 33 (Up Lt. F. Power). Retained script callback/driver: SolTopDiverter (wDivert.isdropped, FDivert.rotate). Driven through the Fliptronic II board's upper-right power circuit, one of the upper-flipper driver pairs this machine, which has no upper flippers, uses for other devices. This manual's 3-8 row for address 33 prints 'Up Lt. F. Power, J907-2, Q1, J902-3, Blk-Blu', the other side's circuit: the controller profile, pinned PinMAME's core.h names, Twilight Zone's known-working script and manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that number these rows put public 33/34 on the upper-right pins (J902-6/J902-4) and 35/36 on the upper-left pins (J902-3/J902-1), with transistors Q2/Q7 and Q1/Q5, except that The Shadow's main table prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. The structured wiring follows that board mapping, with this machine's own pin, wire colour and voltage pin for the circuit from its 3-8 table and 3-18 flipper-circuit page. The function column, PinMAME's drac.c and the retained script agree on this device and its public address, so the printed pairing is a wiring detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored).",
         "part_number": "AE-26-1500"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "vpx-script.drac-vpw-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-fliptronic",
+          "human-review.fliptronic-ii-upper-circuits"
         ],
         "status": "validated"
       },
@@ -6696,7 +6839,8 @@
             "id": "device.up-down-post-diverter.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6709,10 +6853,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-3",
-        "driver_transistor": "Q1",
-        "power_connection": "J907-2"
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-6",
+        "control_wire": "Blk-Yel",
+        "driver_transistor": "Q2",
+        "power_connection": "J907-5"
       }
     },
     {
@@ -6736,14 +6881,16 @@
       "label": "Right Gate",
       "physical": {
         "assembly_part_number": "B-13935",
-        "notes": "Printed solenoid/flasher table entry 34 (Up Lt. F. Hold). Retained script callback/driver: SolRGate (RGate.open, RGateWall.IsDropped). Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair (this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this device and its public address, so the side label is a naming detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table.",
+        "notes": "Printed solenoid/flasher table entry 34 (Up Lt. F. Hold). Retained script callback/driver: SolRGate (RGate.open, RGateWall.IsDropped). Driven through the Fliptronic II board's upper-right hold circuit, one of the upper-flipper driver pairs this machine, which has no upper flippers, uses for other devices. This manual's 3-8 row for address 34 prints 'Up Lt. F. Hold, J907-1, Q5, J902-1, Org-Gry', the other side's circuit: the controller profile, pinned PinMAME's core.h names, Twilight Zone's known-working script and manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that number these rows put public 33/34 on the upper-right pins (J902-6/J902-4) and 35/36 on the upper-left pins (J902-3/J902-1), with transistors Q2/Q7 and Q1/Q5, except that The Shadow's main table prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. The structured wiring follows that board mapping, with this machine's own pin, wire colour and voltage pin for the circuit from its 3-8 table and 3-18 flipper-circuit page. The function column, PinMAME's drac.c and the retained script agree on this device and its public address, so the printed pairing is a wiring detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored).",
         "part_number": "AE-26-1500"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "vpx-script.drac-vpw-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-fliptronic",
+          "human-review.fliptronic-ii-upper-circuits"
         ],
         "status": "validated"
       },
@@ -6753,7 +6900,8 @@
             "id": "device.right-gate.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6766,10 +6914,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-1",
-        "driver_transistor": "Q5",
-        "power_connection": "J907-1"
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-4",
+        "control_wire": "Org-Vio",
+        "driver_transistor": "Q7",
+        "power_connection": "J907-4"
       }
     },
     {
@@ -6793,14 +6942,16 @@
       "label": "Castle Release Post",
       "physical": {
         "assembly_part_number": "A-16268",
-        "notes": "Printed solenoid/flasher table entry 35 (Up Rt. F. Power). Retained script callback/driver: CastleLockPost (clpost.isdropped). Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair (this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this device and its public address, so the side label is a naming detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table.",
+        "notes": "Printed solenoid/flasher table entry 35 (Up Rt. F. Power). Retained script callback/driver: CastleLockPost (clpost.isdropped). Driven through the Fliptronic II board's upper-left power circuit, one of the upper-flipper driver pairs this machine, which has no upper flippers, uses for other devices. This manual's 3-8 row for address 35 prints 'Up Rt. F. Power, J907-5, Q2, J902-6, Blk-Yel', the other side's circuit: the controller profile, pinned PinMAME's core.h names, Twilight Zone's known-working script and manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that number these rows put public 33/34 on the upper-right pins (J902-6/J902-4) and 35/36 on the upper-left pins (J902-3/J902-1), with transistors Q2/Q7 and Q1/Q5, except that The Shadow's main table prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. The structured wiring follows that board mapping, with this machine's own pin, wire colour and voltage pin for the circuit from its 3-8 table and 3-18 flipper-circuit page. The function column, PinMAME's drac.c and the retained script agree on this device and its public address, so the printed pairing is a wiring detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored).",
         "part_number": "AE-26-1500"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "vpx-script.drac-vpw-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-fliptronic",
+          "human-review.fliptronic-ii-upper-circuits"
         ],
         "status": "validated"
       },
@@ -6810,7 +6961,8 @@
             "id": "device.castle-release-post.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6823,10 +6975,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-6",
-        "driver_transistor": "Q2",
-        "power_connection": "J907-5"
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-3",
+        "control_wire": "Blk-Blu",
+        "driver_transistor": "Q1",
+        "power_connection": "J907-2"
       }
     },
     {
@@ -6850,14 +7003,16 @@
       "label": "Left Gate Actuator",
       "physical": {
         "assembly_part_number": "A-16246",
-        "notes": "Printed solenoid/flasher table entry 36 (Up Rt. F. Hold). Retained script callback/driver: SolLGate (LGate.open, Wall_LO.isdropped). Wired through the otherwise-unpopulated upper-flipper power/hold driver-transistor pair (this machine has no upper flippers). Pinned PinMAME's src/wpc/core.h macros name 33/34 the upper-right and 35/36 the upper-left circuit, the opposite of this manual's printed 'Up Lt. F.' and 'Up Rt. F.' labels. The manual's function column and the retained script agree on this device and its public address, so the side label is a naming detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored); structured wiring follows this manual's table.",
+        "notes": "Printed solenoid/flasher table entry 36 (Up Rt. F. Hold). Retained script callback/driver: SolLGate (LGate.open, Wall_LO.isdropped). Driven through the Fliptronic II board's upper-left hold circuit, one of the upper-flipper driver pairs this machine, which has no upper flippers, uses for other devices. This manual's 3-8 row for address 36 prints 'Up Rt. F. Hold, J907-4, Q7, J902-4, Org-Vio', the other side's circuit: the controller profile, pinned PinMAME's core.h names, Twilight Zone's known-working script and manual, and the twelve other Fliptronic II and WPC-95 solenoid tables in this repository that number these rows put public 33/34 on the upper-right pins (J902-6/J902-4) and 35/36 on the upper-left pins (J902-3/J902-1), with transistors Q2/Q7 and Q1/Q5, except that The Shadow's main table prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own flipper rows print Q1 and Q5 for those pins. The structured wiring follows that board mapping, with this machine's own pin, wire colour and voltage pin for the circuit from its 3-8 table and 3-18 flipper-circuit page. The function column, PinMAME's drac.c and the retained script agree on this device and its public address, so the printed pairing is a wiring detail, not a conflict (conflict.upper-flipper-circuit-side-naming is ignored).",
         "part_number": "A-14406"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "vpx-script.drac-vpw-1-0",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-fliptronic",
+          "human-review.fliptronic-ii-upper-circuits"
         ],
         "status": "validated"
       },
@@ -6867,7 +7022,8 @@
             "id": "device.left-gate-actuator.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -6880,10 +7036,11 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-4",
-        "driver_transistor": "Q7",
-        "power_connection": "J907-4"
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-1",
+        "control_wire": "Org-Gry",
+        "driver_transistor": "Q5",
+        "power_connection": "J907-1"
       }
     },
     {
@@ -7219,7 +7376,7 @@
       "label": "Lower Right Flipper Power",
       "physical": {
         "assembly_part_number": "A-15205-R-4",
-        "notes": "Printed solenoid/flasher table entry 45 (Fliptronic power). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed).",
+        "notes": "Printed solenoid/flasher table entry 45 (Fliptronic power). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed). The 3-8 Flipper Circuits row prints one merged drive cell for both windings of the flipper; the drive pin of this winding is the one the 3-18 Fliptronic II Flipper Circuits page draws with the same wire colour.",
         "part_number": "FL-15411"
       },
       "provenance": {
@@ -7248,8 +7405,9 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-11,13",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-13",
+        "control_wire": "Blu-Vio",
         "driver_transistor": "Q4",
         "power_connection": "J907-8,9"
       }
@@ -7275,7 +7433,7 @@
       "label": "Lower Right Flipper Hold",
       "physical": {
         "assembly_part_number": "A-15205-R-4",
-        "notes": "Printed solenoid/flasher table entry 46 (Fliptronic hold). Retained script callback/driver: SolRFlipper (core.vbs sLRFlipper). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed).",
+        "notes": "Printed solenoid/flasher table entry 46 (Fliptronic hold). Retained script callback/driver: SolRFlipper (core.vbs sLRFlipper). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed). The 3-8 Flipper Circuits row prints one merged drive cell for both windings of the flipper; the drive pin of this winding is the one the 3-18 Fliptronic II Flipper Circuits page draws with the same wire colour.",
         "part_number": "FL-15411"
       },
       "provenance": {
@@ -7305,8 +7463,9 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-11,13",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-11",
+        "control_wire": "Org-Grn",
         "driver_transistor": "Q11",
         "power_connection": "J907-8,9"
       }
@@ -7332,7 +7491,7 @@
       "label": "Lower Left Flipper Power",
       "physical": {
         "assembly_part_number": "A-15205-L-4",
-        "notes": "Printed solenoid/flasher table entry 47 (Fliptronic power). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed).",
+        "notes": "Printed solenoid/flasher table entry 47 (Fliptronic power). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed). The 3-8 Flipper Circuits row prints one merged drive cell for both windings of the flipper; the drive pin of this winding is the one the 3-18 Fliptronic II Flipper Circuits page draws with the same wire colour.",
         "part_number": "FL-15411"
       },
       "provenance": {
@@ -7361,8 +7520,9 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-7,9",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-9",
+        "control_wire": "Blu-Gry",
         "driver_transistor": "Q3",
         "power_connection": "J907-6,7"
       }
@@ -7388,7 +7548,7 @@
       "label": "Lower Left Flipper Hold",
       "physical": {
         "assembly_part_number": "A-15205-L-4",
-        "notes": "Printed solenoid/flasher table entry 48 (Fliptronic hold). Retained script callback/driver: SolLFlipper (core.vbs sLLFlipper). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed).",
+        "notes": "Printed solenoid/flasher table entry 48 (Fliptronic hold). Retained script callback/driver: SolLFlipper (core.vbs sLLFlipper). PinMAME's public lower-flipper addresses 45-48 are identically numbered on the printed table (no alias needed). The 3-8 Flipper Circuits row prints one merged drive cell for both windings of the flipper; the drive pin of this winding is the one the 3-18 Fliptronic II Flipper Circuits page draws with the same wire colour.",
         "part_number": "FL-15411"
       },
       "provenance": {
@@ -7418,8 +7578,9 @@
         "status": "validated"
       },
       "wiring": {
-        "board": "WPC power driver board",
-        "control_connection": "J902-7,9",
+        "board": "WPC Fliptronic II board",
+        "control_connection": "J902-7",
+        "control_wire": "Org-Blu",
         "driver_transistor": "Q9",
         "power_connection": "J907-6,7"
       }
@@ -7842,7 +8003,8 @@
             "id": "lamp.matrix-17.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -7900,7 +8062,8 @@
             "id": "lamp.matrix-18.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -7958,7 +8121,8 @@
             "id": "lamp.matrix-21.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8016,7 +8180,8 @@
             "id": "lamp.matrix-22.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8074,7 +8239,8 @@
             "id": "lamp.matrix-23.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8132,7 +8298,8 @@
             "id": "lamp.matrix-24.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8190,7 +8357,8 @@
             "id": "lamp.matrix-25.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8248,7 +8416,8 @@
             "id": "lamp.matrix-26.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8306,7 +8475,8 @@
             "id": "lamp.matrix-27.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8364,7 +8534,8 @@
             "id": "lamp.matrix-28.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8422,7 +8593,8 @@
             "id": "lamp.matrix-31.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8480,7 +8652,8 @@
             "id": "lamp.matrix-32.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8538,7 +8711,8 @@
             "id": "lamp.matrix-33.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8596,7 +8770,8 @@
             "id": "lamp.matrix-34.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8654,7 +8829,8 @@
             "id": "lamp.matrix-35.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -8712,7 +8888,8 @@
             "id": "lamp.matrix-36.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9002,7 +9179,8 @@
             "id": "lamp.matrix-43.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9060,7 +9238,8 @@
             "id": "lamp.matrix-44.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9118,7 +9297,8 @@
             "id": "lamp.matrix-45.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9176,7 +9356,8 @@
             "id": "lamp.matrix-46.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9234,7 +9415,8 @@
             "id": "lamp.matrix-47.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9292,7 +9474,8 @@
             "id": "lamp.matrix-48.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9350,7 +9533,8 @@
             "id": "lamp.matrix-51.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9408,7 +9592,8 @@
             "id": "lamp.matrix-52.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9450,13 +9635,33 @@
       "label": "Magnet",
       "physical": {
         "assembly_part_number": "A-11905",
-        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #44. No matching Light object exists anywhere in the retained extraction and script.vbs never references it; the spatial key is omitted rather than a coordinate being invented."
+        "location": "Mist Magnet carrier, below the playfield",
+        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb type #44. The bulb rides on the Mist Magnet carrier: the A-16266 Coil Magnet & Screw Assembly page (printed 2-27) fits item 7, an A-16205 Light Socket & Bulb Assembly, on the carrier's bracket beside the 20-9831 coil magnet (solenoid 27), and the manual's game story says a light moves in unison with the magnet under the playfield's mist art. The Lamp Locations parts list prints lamp assembly A-11905 for this lamp, the assembly page A-16205 for the socket; both are socket-and-bulb assemblies for the one bulb. The Lamp Locations drawing (printed 2-44) prints balloon 53 with no leader at the left end of the row of thirteen small round inserts the carrier runs under, beside a free-standing arrow pointing along the row. The bulb lights those inserts from below as the carrier moves, so it travels under the row, beside the coil. The retained table has no Light for this lamp and script.vbs never reads it; instead MotorTimer_Timer steps thirteen fixed lights ml1-ml13, one under each insert, from the carriage position whenever solenoid 28 runs, a simplification of that table that ignores this lamp's state. With no fixed position, the lamp is projected onto ml7, the middle of those thirteen, at the midpoint of its travel; solenoids 27 and 28 take the carriage track itself, the ball's line, which runs about 0.04 normalized above the row."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.bram-stoker-s-dracula.1993",
           "vpx-script.drac-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-53.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.487873,
+            "y": 0.528631
+          }
         ],
         "status": "validated"
       },
@@ -9506,7 +9711,8 @@
             "id": "lamp.matrix-54.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9564,7 +9770,8 @@
             "id": "lamp.matrix-55.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9622,7 +9829,8 @@
             "id": "lamp.matrix-56.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9680,7 +9888,8 @@
             "id": "lamp.matrix-57.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -9722,7 +9931,8 @@
       "label": "L. Ramp Diverted",
       "physical": {
         "assembly_part_number": "B-12224",
-        "notes": "Printed lamp-matrix drive column 5, return row 8. Printed bulb type #555. Drawn only inside the manual's \"A-16399 Back Panel Assy.\" box, above the main playfield diagram; the retained table's own Light object normalizes to y < 0.011, sitting right at the playfield's rear edge rather than a genuine mid-playfield position, independently corroborating backbox mounting."
+        "location": "playfield back panel",
+        "notes": "Printed lamp-matrix drive column 5, return row 8. Printed bulb type #555. On the playfield's back panel, the upright panel at the rear of the playfield behind the top lanes: the A-16399 Back Panel & Decal Assembly (printed 2-39) carries the B-12224 single lamp assembly for this lamp, and the Lamp Locations drawing (printed 2-44) draws it only in that assembly's inset box above the playfield. The placement is the retained table's script-bound Light l58 on the playfield's rear edge, the panel's plane; through the 2-44 page's control fit the centres of the inset's four insert symbols fall within 0.023 normalized of their table lights along the panel, in the same order, the inset box spanning the drawn playfield's width."
       },
       "provenance": {
         "source_refs": [
@@ -9732,19 +9942,24 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.bram-stoker-s-dracula.1993",
-            "vpx-table.drac-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-58.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.647155,
+            "y": 0.010767
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9776,7 +9991,8 @@
       "label": "L. Skill 100K",
       "physical": {
         "assembly_part_number": "A-16337",
-        "notes": "Printed lamp-matrix drive column 6, return row 1. Printed bulb type #555. Drawn only inside the manual's \"A-16399 Back Panel Assy.\" box, above the main playfield diagram; the retained table's own Light object normalizes to y < 0.011, sitting right at the playfield's rear edge rather than a genuine mid-playfield position, independently corroborating backbox mounting."
+        "location": "playfield back panel",
+        "notes": "Printed lamp-matrix drive column 6, return row 1. Printed bulb type #555. On the playfield's back panel, the upright panel at the rear of the playfield behind the top lanes: the A-16399 Back Panel & Decal Assembly (printed 2-39) carries the 3-lamp PCB A-16337-1 for this lamp, and the Lamp Locations drawing (printed 2-44) draws it only in that assembly's inset box above the playfield. The placement is the retained table's script-bound Light L61 on the playfield's rear edge, the panel's plane; through the 2-44 page's control fit the centres of the inset's four insert symbols fall within 0.023 normalized of their table lights along the panel, in the same order, the inset box spanning the drawn playfield's width."
       },
       "provenance": {
         "source_refs": [
@@ -9786,19 +10002,24 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.bram-stoker-s-dracula.1993",
-            "vpx-table.drac-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-61.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.46273,
+            "y": 0.010158
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9830,7 +10051,8 @@
       "label": "M. Skill 1 Million",
       "physical": {
         "assembly_part_number": "A-16337",
-        "notes": "Printed lamp-matrix drive column 6, return row 2. Printed bulb type #555. Drawn only inside the manual's \"A-16399 Back Panel Assy.\" box, above the main playfield diagram; the retained table's own Light object normalizes to y < 0.011, sitting right at the playfield's rear edge rather than a genuine mid-playfield position, independently corroborating backbox mounting."
+        "location": "playfield back panel",
+        "notes": "Printed lamp-matrix drive column 6, return row 2. Printed bulb type #555. On the playfield's back panel, the upright panel at the rear of the playfield behind the top lanes: the A-16399 Back Panel & Decal Assembly (printed 2-39) carries the 3-lamp PCB A-16337-1 for this lamp, and the Lamp Locations drawing (printed 2-44) draws it only in that assembly's inset box above the playfield. The placement is the retained table's script-bound Light L62 on the playfield's rear edge, the panel's plane; through the 2-44 page's control fit the centres of the inset's four insert symbols fall within 0.023 normalized of their table lights along the panel, in the same order, the inset box spanning the drawn playfield's width."
       },
       "provenance": {
         "source_refs": [
@@ -9840,19 +10062,24 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.bram-stoker-s-dracula.1993",
-            "vpx-table.drac-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-62.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.523968,
+            "y": 0.010017
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9884,7 +10111,8 @@
       "label": "R. Skill 100K",
       "physical": {
         "assembly_part_number": "A-16337",
-        "notes": "Printed lamp-matrix drive column 6, return row 3. Printed bulb type #555. Internal manual disagreement: the Lamp Matrix wiring page (114, printed 3-2) prints this address \"R. Skill 100K\", while the Lamp Locations parts list (page 107, printed 2-44) prints the same address \"R Skill 500K\". Both are transcribed; neither is preferred, since this is a backbox scoring-legend value with no bearing on wiring, polarity, or placement. Drawn only inside the manual's \"A-16399 Back Panel Assy.\" box, above the main playfield diagram; the retained table's own Light object normalizes to y < 0.011, sitting right at the playfield's rear edge rather than a genuine mid-playfield position, independently corroborating backbox mounting."
+        "location": "playfield back panel",
+        "notes": "Printed lamp-matrix drive column 6, return row 3. Printed bulb type #555. Internal manual disagreement: the Lamp Matrix wiring page (114, printed 3-2) prints this address \"R. Skill 100K\", while the Lamp Locations parts list (page 107, printed 2-44) prints the same address \"R Skill 500K\". Both are transcribed; neither is preferred, since this is a back-panel scoring-legend value with no bearing on wiring, polarity, or placement. On the playfield's back panel, the upright panel at the rear of the playfield behind the top lanes: the A-16399 Back Panel & Decal Assembly (printed 2-39) carries the 3-lamp PCB A-16337-1 for this lamp, and the Lamp Locations drawing (printed 2-44) draws it only in that assembly's inset box above the playfield. The placement is the retained table's script-bound Light L63 on the playfield's rear edge, the panel's plane; through the 2-44 page's control fit the centres of the inset's four insert symbols fall within 0.023 normalized of their table lights along the panel, in the same order, the inset box spanning the drawn playfield's width."
       },
       "provenance": {
         "source_refs": [
@@ -9894,19 +10122,24 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.bram-stoker-s-dracula.1993",
-            "vpx-table.drac-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-63.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.drac-vpw-1-0",
+                "manual.williams.bram-stoker-s-dracula.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.582613,
+            "y": 0.010599
+          }
+        ],
+        "status": "validated"
       },
       "wiring": {
         "board": "WPC power driver board",
@@ -9954,7 +10187,8 @@
             "id": "lamp.matrix-64.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10012,7 +10246,8 @@
             "id": "lamp.matrix-65.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10070,7 +10305,8 @@
             "id": "lamp.matrix-66.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10128,7 +10364,8 @@
             "id": "lamp.matrix-67.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10186,7 +10423,8 @@
             "id": "lamp.matrix-68.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10244,7 +10482,8 @@
             "id": "lamp.matrix-71.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10302,7 +10541,8 @@
             "id": "lamp.matrix-72.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10360,7 +10600,8 @@
             "id": "lamp.matrix-73.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10418,7 +10659,8 @@
             "id": "lamp.matrix-74.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10476,7 +10718,8 @@
             "id": "lamp.matrix-75.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10534,7 +10777,8 @@
             "id": "lamp.matrix-76.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10592,7 +10836,8 @@
             "id": "lamp.matrix-77.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10650,7 +10895,8 @@
             "id": "lamp.matrix-78.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10708,7 +10954,8 @@
             "id": "lamp.matrix-81.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10766,7 +11013,8 @@
             "id": "lamp.matrix-82.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10824,7 +11072,8 @@
             "id": "lamp.matrix-83.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10882,7 +11131,8 @@
             "id": "lamp.matrix-84.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10940,7 +11190,8 @@
             "id": "lamp.matrix-85.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -10998,7 +11249,8 @@
             "id": "lamp.matrix-86.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.drac-vpw-1-0"
+                "vpx-table.drac-vpw-1-0",
+                "drawing-callouts.dracula.2026-10-23"
               ],
               "status": "validated"
             },
@@ -11929,7 +12181,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/lamp-matrix-and-locations.md",
           "reviewed": true,
-          "sha256": "689739d03e65c1a8c4e11d4f2c2b283f7e0613dbec51a353b56e182ac12cc958",
+          "sha256": "b7e9d8c71b0e7f88025c49cc1695a6e5ed4f58b8b690f17cdeda12d966799d9c",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11953,7 +12205,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/solenoid-flasher-wiring.md",
           "reviewed": true,
-          "sha256": "e560110be4445935305c5a99a55d1b23b498ccd52d7c3eafd8478f8f99356d90",
+          "sha256": "6276e82c2cf58fd19fc12af618b1475f936db331b704890baa16d35f86e4dc4e",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11967,12 +12219,72 @@
           "reviewed": true,
           "sha256": "35c8c78bc4dcbf77b6b97539cad8bf6080794ae7891172a98884be07dba13dcb",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.dracula.lamp-locations-drawing",
+          "image": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/lamp-locations-drawing.webp",
+          "image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 107, crop box 0.49,0.105,0.905,0.93, scanned page rendered at its native resolution (embedded image xref 458, 1275px across 8.50in), rendered at 150 dpi, grayscale, 530x1362 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "155d3ab46db326dd350a3fa27439ae9d953e21daa28fa6466f8e532796a3cddc",
+          "locator": "PDF page 107, printed page 2-44, LAMPS LOCATIONS playfield drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/lamp-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "808eed8fb94576572605a3e9a7f7c95750c9e084b12a7bbc59e29b2bde412934",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.dracula.magnet-carrier-assembly",
+          "image": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/magnet-carrier-assembly.webp",
+          "image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 90, crop box 0.06,0.05,0.96,0.86, scanned page rendered at its native resolution (embedded image xref 382, 1275px across 8.50in), rendered at 150 dpi, grayscale, 1148x1337 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "739b4cfa26694e95eeaa948a993bf5e3a8994430e83aea2ed3a0c20b37e80ba3",
+          "locator": "PDF page 90, printed page 2-27, A-16266 Coil Magnet & Screw Assembly drawing and parts list; PDF page 4, Dracula Game Story",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/magnet-carrier-assembly.md",
+          "reviewed": true,
+          "sha256": "6e2db784e622fad0e67909c97a9c4791ea86678a5a755b0ca9ce0ba9f641f047",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.dracula.fliptronic-flipper-circuits",
+          "image": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/fliptronic-flipper-circuits.webp",
+          "image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 130, crop box 0.07,0.12,0.92,0.8, scanned page rendered at its native resolution (embedded image xref 570, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1403x867 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "2a542c79735b0fc451996c1099aee6a045ee2a5b7a548e025073b04042b77e09",
+          "locator": "PDF page 130, printed page 3-18, Fliptronic II Flipper Circuits",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/fliptronic-flipper-circuits.md",
+          "reviewed": true,
+          "sha256": "ec919e11ba1442bb6606042e396343ef5a68bf17bc29f036f2fd41f7b1da2ba3",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.dracula.back-panel-assembly",
+          "image": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/back-panel-assembly.webp",
+          "image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 102, crop box 0.08,0.08,0.96,0.85, scanned page rendered at its native resolution (embedded image xref 435, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1452x982 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "1d9f8c36f141e9b0665954c290a3121cbd2b75c4a2c4457e2e4aadd89a5247a1",
+          "locator": "PDF page 102, printed page 2-39, A-16399 Back Panel & Decal Assembly drawing and parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/back-panel-assembly.md",
+          "reviewed": true,
+          "sha256": "5ddd3c4be754dac8edb0cf49b66f5fd9e51cce76e3e5b21d01329dd5f6dc5f90",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.dracula.flashlamp-wiring",
+          "image": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/flashlamp-wiring.webp",
+          "image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 121, crop box 0.04,0.08,0.84,0.84, scanned page rendered at its native resolution (embedded image xref 525, 1650px across 11.00in), rendered at 150 dpi, grayscale, 1320x969 WebP quality 80; rendered with tools/render_excerpt_image.py on PyMuPDF 1.26.3 and Pillow 12.3.0 (Python 3.12.9)",
+          "image_sha256": "a2d40d0a364b0c50c5d149d071137d032897897b8fb4890a7dc4187f2da87c7a",
+          "locator": "PDF page 121, printed page 3-9, Flashlamp Wiring",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/flashlamp-wiring.md",
+          "reviewed": true,
+          "sha256": "460a80157b133f83d23370c5229eaff8a0182047d99de9cebaa2b922c7f2a33d",
+          "transcribed_by": "curator, read from the rendered page"
         }
       ],
       "id": "manual.williams.bram-stoker-s-dracula.1993",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "152-page scan of the Williams Bram Stoker's Dracula operations manual. Printed pages 2-44 through 2-46 carry the lamp/solenoid/switch location parts lists; printed pages 3-2 through 3-21 carry the lamp matrix, switch matrix, dedicated switches, solenoid/flasher table, general illumination circuit, and Fliptronic II flipper circuit diagrams.",
+      "locator": "152-page scan of the Williams Bram Stoker's Dracula operations manual. Printed page 2-27 draws the Mist Magnet carrier and 2-39 the playfield back panel; printed pages 2-44 through 2-46 carry the lamp/solenoid/switch location drawings and parts lists; printed pages 3-2 through 3-21 carry the lamp matrix, switch matrix, dedicated switches, solenoid/flasher table, flashlamp wiring, general illumination circuit, and Fliptronic II flipper circuit diagrams.",
       "original_filename": "Dracula_Bram_Stoker_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "de6840bb83a98333ef96a2781e3170103e5856380e9c46aad237974fc028498a",
@@ -12027,6 +12339,58 @@
       "locator": "IPDB machine number 3072 for Williams' Bram Stoker's Dracula (1993), model number 50001. The IPDB page itself returns HTTP 403 to unauthenticated fetches (Cloudflare-gated); this identity is corroborated by the search engine's own crawled page title (\"Internet Pinball Machine Database: Williams 'Bram Stoker's Dracula'\" at this exact gid) together with independently consistent Wikipedia and Pinside entries for the same title/manufacturer/year, rather than a rendered fetch of the gated page.",
       "revision": "2026-08-07",
       "uri": "https://www.ipdb.org/machine.cgi?gid=3072"
+    },
+    {
+      "attribution": "Williams Electronics Games drawings; pinmame-game-defs curation",
+      "id": "drawing-callouts.dracula.2026-10-23",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "2026-10-23 factory location-drawing callout check of the manual's lamp drawing 2-44, solenoid/flasher drawing 2-45 and switch drawing 2-46 (the committed excerpt crops): every callout transcribed by an independent reader working only from the page, per-page control fits from the drawn playfield frame's top-left and top-right corners, which match the table bounds, and the jet bumper caps and flipper pivots (the lamp drawing, which draws neither flippers nor the bottom jet, from its two jet-bumper rings and the four drain and return lane rollover slots), and the callout fit; a table placement whose own callout lands within 0.07 normalized under both fits is validated (tools/drawing_callouts.py). Its measurements section pins the drawing pixels, and the coordinates the page's control fit gives them, for the two coffin flasher sockets the table does not model; both lie inside the convex hull of their page's controls. Reads, controls, corrections, overlays and generators are retained under the working root's review-artifacts/dracula/callout-check with a pinned manifest.",
+      "sha256": "7161dc6ad16e105266bbf68c9e99e77b1859d8467c8129c630f09b70899bb9b6",
+      "uri": "internal:tools/seeds/williams/bram-stoker-s-dracula-1993-callouts.json"
+    },
+    {
+      "attribution": "IPDB contributors (photographs); WMS Industries (machine artwork); pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.dracula.physical-photo-corroboration",
+          "locator": "What each retained photograph shows of the coffin flasher domes and the mist art",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/physical-photo-corroboration.md",
+          "reviewed": true,
+          "sha256": "6fef9850fd003527a0cc0e036f481b6db846ba1eb4a64b2ee2c554790fa5bb4b",
+          "transcribed_by": "curator, from the retained photographs"
+        }
+      ],
+      "id": "human-review.dracula-physical-corroboration-2026-10-23",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained physical photographs of production Bram Stoker's Dracula machines from the IPDB machine-3072 gallery, an owner's description of the Mist Magnet and a reproduction of the Williams tech chart, pinned by the folder's canonical manifest. They corroborate the identity and count of the two coffin flasher domes this definition measures on the solenoid drawing, the skill-shot back panel standing at the rear edge of the playfield, the light riding on the magnet carrier, and that the playfield has no arrow insert at the left end of the Mist Magnet path; the chart repeats the 3-8 table's one-bulb count for flasher 19. They supply no coordinate.",
+      "revision": "2026-10-23",
+      "rights": "NOASSERTION",
+      "sha256": "7a262bfa8950e235574621c58d2cd725ee52a608644a31c5cd533aab60e6ed7a",
+      "uri": "external:pinmame-review-artifacts/dracula/physical-photos/manifest.json"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.dracula.fliptronic-ii-upper-circuits",
+          "locator": "Rows 33-36 and the upper-flipper circuits as thirteen other machines' committed excerpts print them",
+          "method": "mixed",
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/fliptronic-ii-upper-circuits.md",
+          "reviewed": true,
+          "sha256": "1757a3af48d65cfeed71f68b1cd06fd678109bbee8d8f17669836a20c76a2de4",
+          "transcribed_by": "curator; rows quoted verbatim by script from the repository's own excerpts"
+        }
+      ],
+      "id": "human-review.fliptronic-ii-upper-circuits",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Cross-machine reading of which Fliptronic II upper-flipper circuit each public solenoid 33-36 drives. Twilight Zone (same board generation): its manual's Flipper Circuits rows print the Upper Right Flipper on Up Rt. Power Q2 J902-6 Blk-Yel and Up Rt. Hold Q7 J902-4 Org-Vio, both fed from J907-4 (Blu-Yel), and the Upper Left Flipper on Up Lt. Power Q1 J902-3 Blk-Blu and Up Lt. Hold Q5 J902-1 Org-Gry from J907-1 (Gry-Yel); its retained known-working script binds SolCallback(sURFlipper), core.vbs constant 34, to RightFlipper1 and SolCallback(sULFlipper), 36, to LeftFlipper1 (machines/partial/bally/twilight-zone-1993.json, solenoids 33-36). The solenoid tables of Star Trek: The Next Generation, Demolition Man, The Shadow, Theatre of Magic, World Cup Soccer, Corvette, Indianapolis 500, Johnny Mnemonic, Jack*Bot, Dirty Harry, Doctor Who (its Handy Technician Chart) and WHO dunnit print each of rows 33-36 they carry on the same pin: 33 on J902-6, 34 on J902-4, 35 on J902-3 and 36 on J902-1, with transistors Q2, Q7, Q1 and Q5, except The Shadow's main table, which prints Q2 beside J902-3 on its 35 row and Q7 beside J902-1 on its 36 row while its flipper rows print Q1 and Q5 there (Corvette prints only 33/34, World Cup Soccer no 36 row). Pinned PinMAME's core.h names (sURFlipPow/sURFlip 33/34, sULFlipPow/sULFlip 35/36) and the WPC-Fliptronic controller profile give the same mapping. The excerpt quotes every row with the SHA-256 of the excerpt it comes from.",
+      "revision": "2026-10-23",
+      "sha256": "1757a3af48d65cfeed71f68b1cd06fd678109bbee8d8f17669836a20c76a2de4",
+      "uri": "internal:evidence/excerpts/williams.bram-stoker-s-dracula.1993/fliptronic-ii-upper-circuits.md"
     }
   ]
 }

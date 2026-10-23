@@ -497,8 +497,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# keeps the requirement listed, adding one.
 		# Centaur's 2026-10-22 author-ready promotion removes one, and Terminator 2's removes one more.
 		# World Cup Soccer's 2026-10-23 author-ready promotion removes one more, and the Lord of the Rings
-		# Limited Edition's another.
-		self.assertEqual(707, report["missing_requirement_counts"]["spatial_placement"])
+		# Limited Edition's another. Bram Stoker's Dracula's 2026-10-23 rework validates every placement,
+		# removing one more.
+		self.assertEqual(706, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -554,7 +555,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Terminator 2's ROM G.I. test and drop-target parts list settle both of its conflicts, removing one more.
 		# World Cup Soccer's location drawings and jet-bumper harness run settle its jet-bumper conflict, removing one more.
 		# Theatre of Magic's owner G.I. reports withdraw its insert-string conflict, removing one.
-		self.assertEqual(38, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Bram Stoker's Dracula's 2026-10-23 rework adds one: its 3-8 table and 2-45 drawing disagree on flasher 19's
+		# playfield bulb count.
+		self.assertEqual(39, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		self.assertEqual(809, len(catalog["machines"]))
 		self.assertEqual(795, catalog["summary"]["game_count"])

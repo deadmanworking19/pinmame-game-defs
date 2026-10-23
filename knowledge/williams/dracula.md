@@ -1,10 +1,12 @@
 # Bram Stoker's Dracula (Williams, 1993)
 
-Coverage: **partial** — every dimension is validated except one lamp with no resolvable
-spatial evidence (lamp 53, Magnet). One naming disagreement about solenoids 33-36 is
-recorded as an ignored conflict (`conflict.upper-flipper-circuit-side-naming`), because it
-cannot change a recreation. See `reports/spatial/williams/bram-stoker-s-dracula-1993.md`
-for the full audit.
+Coverage: **partial** on one count, an unresolved conflict over flasher 19's playfield bulb
+count (`conflict.flasher-19-playfield-bulb-count`, see Flashers). Every other dimension is
+validated, and every placement the manual's factory location drawings can check is checked
+against them (see Spatial checks for the exclusions and measurements). One
+wiring disagreement about solenoids 33-36 is recorded as an ignored conflict
+(`conflict.upper-flipper-circuit-side-naming`), because it cannot change a recreation. See
+`reports/spatial/williams/bram-stoker-s-dracula-1993.md` for the full audit.
 
 ## Overview
 
@@ -61,20 +63,40 @@ real upper-flipper hardware.
 
 ### Repurposed upper-flipper circuits
 
-Because there are no upper-flipper coils, solenoids 33-36 (the printed upper-flipper
-power/hold driver-transistor pairs) are repurposed for four unrelated devices: 33
-Up/Down Post Diverter, 34 Right Gate, 35 Castle Release Post, 36 Left Gate Actuator — the
+Because there are no upper-flipper coils, solenoids 33-36 (the Fliptronic II board's
+upper-flipper power/hold driver-transistor pairs) are repurposed for four unrelated devices:
+33 Up/Down Post Diverter, 34 Right Gate, 35 Castle Release Post, 36 Left Gate Actuator — the
 same pattern already established for Indiana Jones's printed circuits 33-36 (right-ramp
 diverter and Top Lockup post) and Monster Bash's repurposed Fliptronic switch position.
-Pinned PinMAME's own `src/wpc/core.h` macros (`sURFlipPow`/`sURFlip` = 33/34,
-`sULFlipPow`/`sULFlip` = 35/36) call 33/34 the upper-**right** circuit and 35/36 the
-upper-**left** circuit, while this manual's own Solenoid/Flasher Table prints the
-opposite ("Up Lt. F." at 33/34, "Up Rt. F." at 35/36), in the same family as Attack
-From Mars's afm.c loop-gate naming defect. It does not affect any device's function or
-address: both are taken from the manual's function column, and the retained script's
-`SolCallback(33)`-`(36)` bindings agree. The disagreement is therefore a naming and
-board-designator detail, recorded as the ignored `conflict.upper-flipper-circuit-side-naming`
-with both readings stated in each device note; structured wiring follows the manual's table.
+
+Which circuit each address drives is settled by the board, not by this manual. Pinned
+PinMAME's `src/wpc/core.h` (`sURFlipPow`/`sURFlip` = 33/34, `sULFlipPow`/`sULFlip` = 35/36)
+and the controller profile put 33/34 on the upper-**right** circuit and 35/36 on the
+upper-**left** one. Twilight Zone proves it at runtime on the same board generation: its
+known-working script drives the upper-right flipper from `SolCallback(sURFlipper)` (core.vbs
+constant 34) and its manual wires that flipper on Q2/Q7 (J902-6/J902-4). Twelve other
+Fliptronic II and WPC-95 solenoid tables in this repository that number these rows (Star Trek:
+The Next Generation, Demolition Man, The Shadow, Theatre of Magic, World Cup Soccer, Corvette,
+Indianapolis 500, Johnny Mnemonic, Jack*Bot, Dirty Harry, Doctor Who, WHO dunnit) put 33/34 on
+J902-6/J902-4 and 35/36 on J902-3/J902-1. Their transistor columns agree too, except The Shadow's
+main table, which prints Q2 and Q7 beside J902-3 and J902-1 on its 35/36 rows while its own
+flipper rows print Q1 and Q5 for those pins; `fliptronic-ii-upper-circuits.md` quotes every row.
+This manual's 3-8 table is the outlier: it pairs 33/34
+with "Up Lt. F." (Q1/Q5, J902-3/J902-1) and 35/36 with "Up Rt. F." (Q2/Q7, J902-6/J902-4),
+while its own 3-18 Fliptronic II Flipper Circuits page draws those pins on the sides the table's
+labels say. The function column, PinMAME's `drac.c` (`sTopDiverter` 33, `sRGate` 34,
+`sCastleRelease` 35, `sLGate` 36) and the retained script's `SolCallback(33)`-`(36)` agree on
+every device and address, so nothing a recreation consumes is in doubt. Under the runbook's
+wiring-detail rule the structured wiring follows the board mapping, with this machine's own
+pin, wire colour and voltage pin for that circuit: 33 Q2/J902-6/Blk-Yel, 34 Q7/J902-4/Org-Vio,
+35 Q1/J902-3/Blk-Blu, 36 Q5/J902-1/Org-Gry. The printed rows stay verbatim in the excerpt, and
+`conflict.upper-flipper-circuit-side-naming` stays recorded as ignored.
+
+The lower flippers' 3-8 rows print one merged drive cell per flipper (`J902-7,9`,
+`J902-11,13`) with a power and a hold wire colour; the 3-18 page gives each colour its pin, so
+the power windings are on J902-9 (Blue-Gray, 47) and J902-13 (Blue-Violet, 45) and the holding
+windings on J902-7 (Orange-Blue, 48) and J902-11 (Orange-Green, 46). All of 33-36 and 45-48 are
+Fliptronic II board circuits.
 
 ## Custom mechanisms
 
@@ -83,46 +105,72 @@ with both readings stated in each device note; structured wiring follows the man
 The headline mechanism. A single electromagnet (solenoid 27, "Magnet") is mounted on a
 motor-driven carriage (solenoid 28, "Magnet's Motor") that travels diagonally beneath
 the playfield between a right-side entry near the Right Gate and a left-side exit near
-the Left Gate. The retained script tracks the carriage's position purely in software: a
-0-500 counter (`MagnetPos`) increments or decrements by 0.4 per tick while solenoid 28 is
-energized, reversing direction at each endpoint (`MagnetDir`), and the carriage's visible
-(x, y) is recomputed every tick as a straight-line interpolation between two fixed
-endpoints (raw table coordinates (850, 885) and (126, 1220)). The carriage therefore has
-no single resting coordinate; it is a documented projection onto the fixed detection-zone
-`Trigger.Magnet` object (raw (390, 1000)) rather than either transient endpoint.
+the Left Gate. The manual's A-16266 Coil Magnet & Screw Assembly page (printed 2-27) shows
+the carrier riding a reversing screw, with the 20-9831 coil magnet on its bracket and, beside
+it, an A-16205 light socket and bulb, both reaching the machine through a coiled cable. The
+retained script tracks the carriage's position purely in software: a 0-500 counter
+(`MagnetPos`) increments or decrements by 0.4 per tick while solenoid 28 is energized,
+reversing direction at each endpoint (`MagnetDir`), and `SetMagnetPosition` puts the carriage
+at x = 850 - 739 * MagnetPos / 500 on y = -0.44 x + 1238, from raw (850, 864) to
+(111, 1189.16). The carriage therefore has no single resting coordinate. Solenoids 27 and 28
+are projected onto the area centroid of the table's `Trigger.Magnet` zone, a thin band along
+the track (raw (464.13, 1035.17)); the zone's stored centre, raw (390, 1000), lies outside that
+band and is not used.
+
+### The Magnet lamp rides on the carrier
+
+Lamp 53 (Magnet, #44) is the bulb on the carrier. The game story at the front of the manual
+says: "When certain shots are made a ball is transported across the playfield by means of a
+magnet under the board. A light also moves in unison with the magnet. The playfield art in
+that area is a 'mist' and when the light and ball move it seems that the ball is floating in
+the 'mist'." The Lamp Locations drawing (printed 2-44) prints balloon 53 with no leader at the
+left end of a diagonal row of thirteen small round inserts, beside a free-standing arrow that
+points along the row, the path the carrier runs under; production playfield photographs show
+the green mist art along that path and no arrow insert. The Lamp Locations list prints lamp
+assembly A-11905 for this lamp and the magnet assembly page A-16205 for the socket, two
+socket-and-bulb part numbers for the one bulb.
+
+The bulb lights the inserts from below as the carrier moves, so a recreation should move a
+light along the row with the carriage and switch it from lamp 53. The retained VPW table does
+something simpler: it never reads lamp 53, and `MotorTimer_Timer` steps thirteen fixed lights
+(`ml1`-`ml13`, one under each insert) from `MagnetPos \ 33` whenever solenoid 28 runs. The
+placement projects the lamp onto `ml7`, the middle of that row, raw (464.91, 1119.45); the
+row runs about 0.04 normalized below the carriage line, beside the ball's path.
 
 Three switches report the mechanism's state, and only one of them is a true opto:
 
 - **Switch 82 (Ball On Magnet, opto)**: the retained script's `MistTimer_Timer` tests
   every ball in the trigger's collision region against a fixed diagonal line equation
-  representing the physical light beam, independent of carriage position. This is the
-  only genuinely opto-constructed magnet-area switch (A-14315/A-14316), and it is the
-  only one PinMAME's inverted-switch mask normalizes.
+  representing the physical light beam, independent of carriage position; its comment gives
+  the line's ends as (126, 1220) and (870, 885). This is the only genuinely opto-constructed
+  magnet-area switch (A-14315/A-14316), and it is the only one PinMAME's inverted-switch mask
+  normalizes. The switch drawing (printed 2-46) runs callout 82's leader the length of the
+  path to a dot at its left end, 0.002 normalized from the beam line's left end, where the
+  switch is placed.
 - **Switch 81 (Magnet Left, plain leaf, part 5647-12693-14)**: asserts when
-  `MagnetPos > 490`, i.e. the carriage is near its left/exit end (raw x ≈ 126), which
-  feeds the Left Gate.
+  `MagnetPos > 490`, i.e. the carriage is near its left/exit end, which feeds the Left
+  Gate. It is placed at that end of travel, raw (111, 1189.16); the switch drawing prints
+  balloon 81, tagged (Under Playfield), beside the left end of the path with no leader.
 - **Switch 83 (Magnet Right, plain leaf, same part)**: asserts when `MagnetPos < 10`,
-  i.e. the carriage is near its right/entry end (raw x ≈ 850), which feeds the Right
-  Gate.
+  i.e. the carriage is near its right/entry end, which feeds the Right Gate. It is placed at
+  that end of travel, raw (850, 864), where the switch drawing ends callout 83's leader.
 
 The driver's own `stMagnet` ball-state case requires the magnet to be both energized
 (`core_getSol(sMagnet)`) and at the matching endpoint switch/position before releasing
 the ball toward the corresponding gate — an explicit causal link between the magnet coil,
 the motor position, and the two endpoint limit switches, not merely proximity.
 
-Thirteen "mist lights" (`ml1`-`ml13`) are script-only position-indicator lamps driven
-directly from `MagnetPos \ 33` in `MotorTimer_Timer`. They have no PinMAME public
-address and are not modeled as controller-facing lamp devices; they are pure VPX visual
-convenience, the same caveat this project's evidence-authority rules ask for when a
-retained table adds effects the ROM never drives.
+The thirteen "mist lights" (`ml1`-`ml13`) have no PinMAME public address of their own and
+are not modeled as controller-facing lamp devices; they are the table's stand-in for lamp
+53's moving bulb (see above).
 
 ### Castle Lock lane and release post
 
 A three-position lock lane behind the Left Ramp diverter queues balls on three genuine
 opto switches: 57 (Castle Lock 3, entry, nearest the diverter), 54 (Castle Lock 2), and
 53 (Castle Lock 1, exit, nearest the release post). Solenoid 35 (Castle Release Post,
-printed "Dis. Castle Release Pst", wired through the otherwise-unused upper-flipper power
-driver transistor) retracts the post (`clpost.isdropped = 0`) to release the ball queued
+printed "Dis. Castle Release Pst", driven through the Fliptronic II board's upper-left
+flipper power circuit) retracts the post (`clpost.isdropped = 0`) to release the ball queued
 at position 53 toward the shooter lane; the retained script's `clpost_Timer` sub restores
 the post 280 ms later. The driver's own ball-state chain (`L. Ramp Div.` → `Castle Lock 3`
 → `Castle Lock 2` → `Castle Lock 1`, exit output `sCastleRelease`) confirms balls queue in
@@ -131,8 +179,8 @@ that order and release one at a time from the position nearest the post.
 ### Left and Right Mist Magnet entry gates
 
 One-way gates admit a ball onto the Mist Magnet carriage from either side. Solenoid 34
-(Right Gate, wired through the other otherwise-unused upper-flipper power driver
-transistor) opens a gate near the top-right loop (`RGate.open = 1`, plus dropping
+(Right Gate, driven through the Fliptronic II board's upper-right flipper hold circuit)
+opens a gate near the top-right loop (`RGate.open = 1`, plus dropping
 `RGateWall`) so a ball can fall onto the carriage from the right; solenoid 36 (Left Gate
 Actuator) opens a gate near the Magnet Left Pocket opto (switch 52) admitting a ball from
 the left (`LGate.open = 1`, plus dropping `Wall_LO`). The driver's own ball-state chain
@@ -162,7 +210,7 @@ purely from the current solenoid state.
 ### Up/Down Post Diverter
 
 A spring-loaded post near the top of the playfield (solenoid 33, printed "Up/Dn Post
-Diverter", wired through the otherwise-unused upper-flipper power driver transistor)
+Diverter", driven through the Fliptronic II board's upper-right flipper power circuit)
 toggles the ball between two orbit/ramp paths (`wDivert.isdropped`, `FDivert.rotate`).
 Left Ramp Entry (opto switch 73) senses a ball entering the diverted path.
 
@@ -186,16 +234,63 @@ Seven lamps spell the machine's own name letter by letter: 48(D), 36(R), 23(A), 
 (31-35) spell VIDEO in already-ascending address order, illuminating the "R. Lane" video
 mode qualifier lamps in sequence.
 
+## Flashers
+
+Each flasher drives a playfield function and a backbox function, which the Flashlamp Wiring page
+(printed 3-9) names separately: the first name in each 3-8 Solenoid/Flasher Table row (T.R. Corner,
+Jackpot, 3-Bank's, T.L. Corner, Castle, L. Ramp, R. Ramp, Asylum) is the playfield flashlamp, on
+J126 from supply J107-6, and the second (Dracula, Stoker, House, Mina, Helsing, L. Logo, R. Logo,
+Renfield) is the backbox flashlamp, on J125 from supply J106-5. Flasher 26 (Speaker Panel) is
+backbox only. Each quantity counts the playfield and backbox bulbs, and only the playfield bulbs
+are placed.
+
+Flasher 17 (T.R. Corner / Dracula) has three playfield bulbs and the solenoid drawing (printed
+2-45) prints three callouts 17: one in the top right corner, at the retained table's `F17_Dome`,
+and two arrows ending on either side of the coffin, where IPDB picture 12459 shows two blue domes
+flanking a cross on the coffin's head piece. The table models only `F17_Dome` and drives it for
+every bulb, so the two coffin domes are measured on the drawing.
+
+Flasher 19 (3-Bank's / House) is the record's one open question. Its House bulb is in the
+backbox. The solenoid drawing prints two callouts 19 on the playfield, one beside the middle
+3-bank and one at the left edge behind the left 3-bank, and the retained known-working script
+drives a light at each (`F19a`, `F19`); every other flasher's callouts match its 3-8 count. But
+the 3-8 table prints `(1) #89` for the playfield function, and the Williams tech chart repeats it
+(`#89(1)`). The record places both drawn sockets and counts three bulbs, and
+`conflict.flasher-19-playfield-bulb-count` keeps the count unresolved. A table author should treat
+the left 3-bank flash as possibly absent on a production machine. Settling it needs a production
+machine: in the flasher test (T.5), watch whether the bulb behind the left 3-bank fires with the
+one at the middle 3-bank when solenoid 19 is selected.
+
 ## Backbox and cabinet devices
 
-Four lamps (58 L. Ramp Diverted, 61 L. Skill 100K, 62 M. Skill 1 Million, 63 R. Skill)
-are drawn only inside the manual's separate "A-16399 Back Panel Assy." box, above the
-main playfield diagram — the retained table corroborates this independently (all four
-normalize to y < 0.011, sitting right at the playfield's rear edge rather than a genuine
-mid-playfield position). Lamp 63 additionally carries an internal manual disagreement:
-the Lamp Matrix wiring page prints "R. Skill 100K" while the Lamp Locations parts list
-prints "R Skill 500K" for the same address — a cosmetic scoring-legend discrepancy with
-no bearing on wiring, polarity, or placement, transcribed verbatim from both pages.
+Switch 34 (Launch Ball) is the cabinet launch button, not a plunger switch: its part
+A-15896-1 is the Launch Ball button assembly that also carries lamp 87, the switch drawing
+prints it below the playfield outline at the cabinet's right front corner, and PinMAME's
+`drac.c` lists `swLaunch` among its cabinet switches. The retained script asserts it from the
+plunger key.
+
+## Playfield back panel
+
+Four lamps (58 L. Ramp Diverted, 61 L. Skill 100K, 62 M. Skill 1 Million, 63 R. Skill) are on
+the playfield's back panel, the upright panel standing at the rear edge of the playfield behind
+the top lanes and ramps. The A-16399 Back Panel & Decal Assembly (printed 2-39) carries a
+playfield plastic, the 3-lamp PCB A-16337-1 that holds the three skill-shot lamps 61-63, the
+B-12224 single lamp assembly that holds lamp 58, and a single flashlamp assembly near each end.
+The Lamp Locations drawing (printed 2-44) draws the four lamps only in an inset box of that
+assembly above the playfield, spanning the drawn playfield's width: 61, 62 and 63 on three inserts
+in a row, 58 on a round insert above and to their right. IPDB picture 12459 shows the panel's
+plastic, lettered `SKILL S…`, behind the ramps. Each lamp takes the retained table's script-bound
+light (`L61`, `L62`, `L63`, `l58`) on the playfield's rear edge, the panel's plane; through the
+lamp drawing's control fit the centre of each lamp's insert symbol in the inset lies within 0.023
+in x of its light, in the same
+order.
+
+Lamp 63 carries an internal manual disagreement: the Lamp Matrix wiring page prints "R. Skill
+100K" while the Lamp Locations parts list prints "R Skill 500K" for the same address, a
+scoring-legend discrepancy with no bearing on wiring, polarity, or placement, transcribed
+verbatim from both pages.
+
+## General illumination
 
 GI strings 3 and 4 are backbox-only circuits (string 4 additionally reaches a cabinet
 bulb through J119) with no playfield voltage or drive connection printed anywhere,
@@ -206,18 +301,28 @@ exactly, with zero script-vs-manual disagreement — unlike Williams Tales of th
 Nights or Bally Theatre of Magic, both of which found a genuine GI script-vs-manual
 conflict.
 
+## Spatial checks
+
+Every table placement the factory location drawings can check was checked against them with
+`tools/drawing_callouts.py` (seed `tools/seeds/williams/bram-stoker-s-dracula-1993-callouts.json`):
+120 placements, all within 0.07 normalized of their own callout under both fits. The drawings
+leave a few placements unchecked, each with its reason in the seed: lamps 16, 37, 38, 41 and 42
+have no callout (the lane inserts are drawn unnumbered), switch 85 has none (the drawing prints
+a second 25 instead), switch 81 and solenoid 8 have only a leaderless balloon beside the part,
+the four flipper coils are marked Not Shown, solenoids 27/28 and lamp 53 are projections of
+the moving carrier, and the back-panel lamps 58 and 61-63 are drawn only in the back panel's
+inset elevation, not on the playfield plan. Two placements are drawing measurements: flasher 17's
+coffin domes.
+
 ## Unresolved questions
 
-- Lamp 53 (Magnet, #44) is a genuine bulb per the Lamp Locations parts list, but has no
-  matching `Light` object in the retained extraction and no reference anywhere in
-  `script.vbs`. Resolving its position needs either a different retained table that does
-  model it, or a playfield photograph/insert map.
-- `conflict.upper-flipper-circuit-side-naming` (ignored, not blocking): pinned PinMAME's
-  own macro naming and this manual's printed circuit-side label disagree about which
-  upper-flipper driver-transistor pair (33/34 vs 35/36) is nominally "right" versus
-  "left." The naming cannot reach a recreation, because the device functions and public
-  addresses agree; a WPC-Fliptronic schematic sheet that traces the physical driver-board
-  silkscreen would still settle which label is right.
+- Flasher 19's playfield bulb count, one or two (`conflict.flasher-19-playfield-bulb-count`, see
+  Flashers). It keeps the record partial. The flasher test on a production machine, or a
+  photograph of the wiring from J126-3, settles it.
+- `conflict.upper-flipper-circuit-side-naming` stays recorded as ignored (see Repurposed
+  upper-flipper circuits): the cross-machine evidence settles which circuit each address drives,
+  and a photograph or continuity check of a production Dracula harness at J902 would confirm the
+  pin each device's wire lands on. It does not block a recreation.
 
 ## Sources
 
@@ -233,3 +338,19 @@ conflict.
 - `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/drac.c` at the pinned PinMAME
   revision `4ec52ff0ac133ac251681518aed2249e19fe26eb`.
 - `ipdb.williams.bram-stoker-s-dracula.1993`: IPDB machine number 3072.
+- `drawing-callouts.dracula.2026-10-23`: the factory location-drawing callout check, with its
+  reads, controls, corrections, overlays and generators retained under the working root's
+  `review-artifacts/dracula/callout-check/`.
+- `human-review.dracula-physical-corroboration-2026-10-23`: IPDB pictures 12458, 12459 and
+  35879, David Houchin's owner's page on the machine (2020) and Inkochnito's reproduction of
+  the Williams tech chart, retained under
+  `review-artifacts/dracula/physical-photos/`; what they show is in
+  `evidence/excerpts/williams.bram-stoker-s-dracula.1993/physical-photo-corroboration.md`.
+- `human-review.fliptronic-ii-upper-circuits`: the cross-machine reading of which Fliptronic II
+  circuit drives each of solenoids 33-36, quoting each other machine's rows verbatim with the
+  SHA-256 of the excerpt they come from in
+  `evidence/excerpts/williams.bram-stoker-s-dracula.1993/fliptronic-ii-upper-circuits.md`.
+- Manual excerpts added on 2026-10-23: the Lamp Locations drawing (2-44), the A-16266
+  Coil Magnet & Screw Assembly page (2-27) with the game story, the A-16399 Back Panel & Decal
+  Assembly (2-39), the Flashlamp Wiring page (3-9) and the Fliptronic II Flipper Circuits page
+  (3-18).

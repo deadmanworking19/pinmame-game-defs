@@ -1,6 +1,6 @@
 {
   "blockers": [
-    "Lamp 53 (Magnet, #44) is a genuine bulb per the Lamp Locations parts list but has no matching Light object anywhere in the retained extraction and is never referenced in script.vbs, so it has no resolvable spatial evidence. Its `spatial` key is omitted rather than a coordinate being invented; every other dimension this report audits is complete."
+    "conflict.flasher-19-playfield-bulb-count: the solenoid drawing prints two callouts 19 on the playfield, one at each 3-bank, and the known-working table lights both, while the 3-8 table and the Williams tech chart count one #89 for flasher 19's playfield function. Every placement is validated; the record stays partial until a production machine's flasher test or wiring settles the count."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -13,7 +13,137 @@
     "x": "x/952.941; 0=left, 1=right",
     "y": "y/2117.647; 0=rear/backglass, 1=apron/player"
   },
-  "excluded_object_classes": [],
+  "drawing_callout_check": {
+    "checked": 120,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "2-44": {
+        "callout_fit_pairs": 47,
+        "callout_loo_max": 0.0452,
+        "callout_pairs": 47,
+        "control_loo_max": 0.01,
+        "control_rms": 0.0034,
+        "controls": 8,
+        "image": {
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/lamp-locations-drawing.webp",
+          "pixels": [
+            530,
+            1362
+          ],
+          "root": "repository",
+          "sha256": "155d3ab46db326dd350a3fa27439ae9d953e21daa28fa6466f8e532796a3cddc"
+        },
+        "locator": "Dracula_Bram_Stoker_OPS.pdf PDF 107, printed 2-44: Lamps Locations drawing (committed excerpt crop lamp-locations-drawing.webp)"
+      },
+      "2-45": {
+        "callout_fit_pairs": 30,
+        "callout_loo_max": 0.0603,
+        "callout_pairs": 30,
+        "control_loo_max": 0.0083,
+        "control_rms": 0.0036,
+        "controls": 7,
+        "image": {
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/solenoid-flasher-locations.webp",
+          "pixels": [
+            1174,
+            1577
+          ],
+          "root": "repository",
+          "sha256": "8325d2d54af0e2617e216068c18f5e32ddf6cb2f7293fc7704628bc7ad1c4dd3"
+        },
+        "locator": "Dracula_Bram_Stoker_OPS.pdf PDF 108, printed 2-45: Solenoid/Flasher Location drawing (committed excerpt crop solenoid-flasher-locations.webp)"
+      },
+      "2-46": {
+        "callout_fit_pairs": 43,
+        "callout_loo_max": 0.0621,
+        "callout_pairs": 43,
+        "control_loo_max": 0.0111,
+        "control_rms": 0.0042,
+        "controls": 7,
+        "image": {
+          "path": "evidence/excerpts/williams.bram-stoker-s-dracula.1993/switch-locations.webp",
+          "pixels": [
+            1148,
+            1568
+          ],
+          "root": "repository",
+          "sha256": "3988baf63759a1c9c38a349d8515227ef53ad6aeba5de04b0f78da88dcf498c1"
+        },
+        "locator": "Dracula_Bram_Stoker_OPS.pdf PDF 109, printed 2-46: Switch Locations drawing (committed excerpt crop switch-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-23",
+      "transcription": "independent readers working only from gridded 3x tiles of the committed native-resolution excerpt crops, without table data (reader-brief.md)",
+      "verification": "the curator overlaid every page (reads, controls and the table placements mapped through each page's control fit, verify/overlay.py), replaced the readers' controls with features checked on zoomed crops: on every page the drawn frame's top-left and top-right outer corners, which match the table bounds within 0.011 leave-one-out; the jet bumper caps (rings on 2-44, where the third bumper is not drawn); the flipper pivots on 2-45 and 2-46; and on 2-44, where the flippers are only faint dashed shapes, the four drain and return lane rollover slots, whose switches are not checked on that page; corrected three reads (corrections in each read's verifier_note: 57 and 73 on 2-46, 53 on 2-44); and excluded the placements excluded_checks names"
+    },
+    "retained_artifacts": {
+      "directory": "dracula/callout-check",
+      "manifest_sha256": "3da3b0cbc5aebe7b813c0e579a93517013cd739dd3050d3a29af03de7109df1f"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/williams/bram-stoker-s-dracula-1993-callouts.json",
+    "seed_sha256": "7161dc6ad16e105266bbf68c9e99e77b1859d8467c8129c630f09b70899bb9b6",
+    "validated": 120
+  },
+  "drawing_measurements": [
+    {
+      "corroboration": "photos",
+      "label": "17",
+      "normalized": [
+        0.639,
+        0.21
+      ],
+      "page": "2-45",
+      "pixel": [
+        911.3,
+        386.3
+      ],
+      "placement": "device.t-r-corner-dracula-flasher.emitter.2",
+      "point": "arrow_tip"
+    },
+    {
+      "corroboration": "photos",
+      "label": "17",
+      "normalized": [
+        0.721,
+        0.212
+      ],
+      "page": "2-45",
+      "pixel": [
+        951.9,
+        388.1
+      ],
+      "placement": "device.t-r-corner-dracula-flasher.emitter.3",
+      "point": "arrow_tip"
+    }
+  ],
+  "excluded_checks": {
+    "device.lower-left-flipper-hold.effect": "the solenoid drawing prints no callout for the flipper coils (its Flippers list is marked '*Not Shown')",
+    "device.lower-left-flipper-power.effect": "the solenoid drawing prints no callout for the flipper coils (its Flippers list is marked '*Not Shown')",
+    "device.lower-right-flipper-hold.effect": "the solenoid drawing prints no callout for the flipper coils (its Flippers list is marked '*Not Shown')",
+    "device.lower-right-flipper-power.effect": "the solenoid drawing prints no callout for the flipper coils (its Flippers list is marked '*Not Shown')",
+    "device.magnet-s-motor.effect": "the motor drives the Mist Magnet carrier along its screw; the solenoid drawing prints balloon 28 mid-path on a double-headed arrow along the track, not at a part, and the placement is a projection onto the track",
+    "device.magnet.effect": "the coil magnet rides on the Mist Magnet carrier; the solenoid drawing prints balloon 27 mid-path on a double-headed arrow along the track, not at a part, and the placement is a projection onto the track",
+    "device.shooter-ramp-entry.effect": "the solenoid drawing prints balloon 8 with no leader on the shooter lane at about 0.666 normalized, over the upper end of the table's sramp2 incline (the shooter-lane ramp the script's SolShooterRamp makes collidable, spanning 0.650-0.825 of the playfield height along the lane); the drawing is consistent with that object, but a balloon centre is not a part and the placement, the incline's centre, is 0.077 from it",
+    "lamp.matrix-16.emitter": "the lamp drawing prints no callout 16 and draws no insert for the right ramp lock lamp; the placement keeps the table's script-bound Light l16",
+    "lamp.matrix-37.emitter": "the lamp drawing draws the left outlane insert as an unnumbered clear diamond and prints no callout 37 anywhere; the table's script-bound Light l37 lies on that drawn insert, so the placement keeps its table status",
+    "lamp.matrix-38.emitter": "the lamp drawing draws the left inlane insert as an unnumbered clear diamond and prints no callout 38 anywhere; the table's script-bound Light l38 lies on that drawn insert, so the placement keeps its table status",
+    "lamp.matrix-41.emitter": "the lamp drawing draws the right inlane insert as an unnumbered dashed oval under the right inlane wireform and prints no callout 41 anywhere; the table's script-bound Light l41 lies on that drawn insert, so the placement keeps its table status",
+    "lamp.matrix-42.emitter": "the lamp drawing draws the right outlane insert as an unnumbered clear diamond and prints no callout 42 anywhere; the table's script-bound Light l42 lies on that drawn insert, so the placement keeps its table status",
+    "lamp.matrix-53.emitter": "the bulb rides on the Mist Magnet carrier; the lamp drawing prints balloon 53 with no leader at the left end of the row of inserts the carrier runs under, beside a free-standing arrow along it, and the placement is a projection onto the middle of that row",
+    "lamp.matrix-58.emitter": "the lamp drawing draws lamp 58 only in its inset box 'A-16399 Back Panel Assy.' above the playfield, an elevation of the upright back panel at the playfield's rear edge (printed 2-39), not on the playfield plan; the inset box spans the drawn playfield's width (its edges at 16.5 and 509.5 px against the frame's 15 and 515.5), and through the page's control fit the centre of its insert symbol (the read's recorded point, pixel [341, 68]) lies 0.006 in x from the table's script-bound light, the four inset lamps in the same order as the table's; the placement keeps that light on the panel's plane",
+    "lamp.matrix-61.emitter": "the lamp drawing draws lamp 61 only in its inset box 'A-16399 Back Panel Assy.' above the playfield, an elevation of the upright back panel at the playfield's rear edge (printed 2-39), not on the playfield plan; the inset box spans the drawn playfield's width (its edges at 16.5 and 509.5 px against the frame's 15 and 515.5), and through the page's control fit the centre of its insert symbol (the read's recorded point, pixel [253, 152]) lies 0.014 in x from the table's script-bound light, the four inset lamps in the same order as the table's; the placement keeps that light on the panel's plane",
+    "lamp.matrix-62.emitter": "the lamp drawing draws lamp 62 only in its inset box 'A-16399 Back Panel Assy.' above the playfield, an elevation of the upright back panel at the playfield's rear edge (printed 2-39), not on the playfield plan; the inset box spans the drawn playfield's width (its edges at 16.5 and 509.5 px against the frame's 15 and 515.5), and through the page's control fit the centre of its insert symbol (the read's recorded point, pixel [287, 162]) lies 0.021 in x from the table's script-bound light, the four inset lamps in the same order as the table's; the placement keeps that light on the panel's plane",
+    "lamp.matrix-63.emitter": "the lamp drawing draws lamp 63 only in its inset box 'A-16399 Back Panel Assy.' above the playfield, an elevation of the upright back panel at the playfield's rear edge (printed 2-39), not on the playfield plan; the inset box spans the drawn playfield's width (its edges at 16.5 and 509.5 px against the frame's 15 and 515.5), and through the page's control fit the centre of its insert symbol (the read's recorded point, pixel [317, 153]) lies 0.023 in x from the table's script-bound light, the four inset lamps in the same order as the table's; the placement keeps that light on the panel's plane",
+    "switch.matrix-81.sensor": "the switch drawing prints balloon 81, tagged (Under Playfield), with no leader at the playfield's left edge beside the left end of the mist path; its centre marks the end of the path, not a part, and lies 0.072 from the placement, the end of the carriage travel where the script asserts switch 81",
+    "switch.matrix-85.sensor": "the switch drawing prints no callout 85 but two balloons 25: the left one's leader ends on the left top-lane rollover, 0.019 from the table's sw25; the right one's leader crosses the left ramp's wireform and ends at the top of the right top-lane slot, which callout 27 marks from below, 0.015 from the table's sw27 and 0.047 from its sw85. A printed label is not relabelled, and neither balloon can be taken for 85, so the placement keeps its script-bound table trigger sw85"
+  },
+  "excluded_object_classes": [
+    "Trigger.Magnet's stored centre, raw (390.29, 999.72), which lies outside the zone's own four-point band; the carriage projections use the band's area centroid instead",
+    "Lights ml1-ml13, the table's stand-ins for the carrier's bulb, which the script steps from the carriage position and never binds to lamp 53; ml7 gives lamp 53's projection only"
+  ],
   "extraction": {
     "fail_closed": true,
     "file_count": 2484,
@@ -26,6 +156,24 @@
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "williams.bram-stoker-s-dracula.1993",
+  "mist_magnet_switches": [
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the left end of the Mist Magnet carriage's travel, raw (111, 1189.16): the retained script's SetMagnetPosition puts the carriage at x = 850 - 739 * MagnetPos / 500 on y = -0.44 x + 1238 and asserts switch 81 for MagnetPos > 490, the last 2 percent of travel towards that end. The 2-46 switch drawing prints balloon 81, tagged (Under Playfield), with no leader at the playfield's left edge beside that end of the path, so it marks the end without marking a part; the placement is the end of travel the leaf switch detects, not a drawn part."
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the left end of the ball-on-magnet beam, raw (126, 1220): the retained script's MistTimer_Timer reads switch 82 from a line test along the whole mist path, the line its comment gives as running from (126, 1220) to (870, 885), and the 2-46 switch drawing runs callout 82's leader the length of the path to a dot at its left end, within 0.005 normalized of that point. The opto watches the whole path; the placement is the end the drawing marks."
+    },
+    {
+      "address": 83,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the right end of the Mist Magnet carriage's travel, raw (850, 864): the retained script asserts switch 83 for MagnetPos < 10, the first 2 percent of travel from that end (see switch 81), and the 2-46 switch drawing ends callout 83's leader in a dot at the right end of the mist path."
+    }
+  ],
+  "no_spatial_key_outputs": [],
   "not_applicable_inputs": {
     "cabinet_or_service": [
       1,
@@ -40,6 +188,7 @@
       14,
       21,
       22,
+      34,
       112,
       114
     ],
@@ -89,22 +238,6 @@
       {
         "address": 4,
         "group": "pinmame.output.gi"
-      },
-      {
-        "address": 58,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 61,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 62,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 63,
-        "group": "pinmame.output.lamp"
       },
       {
         "address": 87,
@@ -204,13 +337,8 @@
       }
     ]
   },
-  "placement_count": 173,
+  "placement_count": 179,
   "projections": [
-    {
-      "address": 34,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the retained Plunger object (Plunger.Plunger): the Launch Ball switch is a mechanical switch on the plunger assembly itself, not a separate playfield sensor."
-    },
     {
       "address": 61,
       "group": "pinmame.input.switch",
@@ -242,19 +370,19 @@
       "reason": "Projected onto the Right Ramp mechanism (Ramp.RightRamp): the retained script sets public switch 77 directly from the SolRRampUp/SolRRampDown solenoid commands (Controller.Switch(77) = True/False) rather than from a discrete sensor object, even though the Switch Locations parts list prints a real part number (5647-12693-36) for it."
     },
     {
-      "address": 81,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the motorized magnet carriage has no single resting position (see the Mist Magnet mechanism), and switch 81 is set from the carriage's software-tracked position (MagnetPos > 490) rather than a discrete sensor object at a fixed location."
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Mist Magnet carriage track: the area centroid of the retained table's Trigger.Magnet zone along it (the coil rides on the carrier)."
     },
     {
-      "address": 82,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): the retained script's MistTimer_Timer sets switch 82 from a ball-crossing line test against this same zone rather than a Hit event on a separate object; see switch 81."
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Mist Magnet carriage track: the area centroid of the retained table's Trigger.Magnet zone along it (the motor drives the carrier along its screw)."
     },
     {
-      "address": 83,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the fixed Mist Magnet detection-zone trigger (Trigger.Magnet): switch 83 is set from the carriage's software-tracked position (MagnetPos < 10); see switch 81."
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto ml7, the middle of the thirteen fixed lights the retained table places under the row of inserts the carrier's bulb lights."
     }
   ],
   "resolved_input_addresses": [
@@ -266,7 +394,6 @@
     27,
     28,
     31,
-    34,
     35,
     36,
     37,
@@ -435,6 +562,10 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 54,
       "group": "pinmame.output.lamp"
     },
@@ -448,6 +579,22 @@
     },
     {
       "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
       "group": "pinmame.output.lamp"
     },
     {
@@ -664,19 +811,21 @@
     }
   ],
   "source_hashes": {
+    "callout_seed_sha256": "7161dc6ad16e105266bbf68c9e99e77b1859d8467c8129c630f09b70899bb9b6",
     "embedded_script_sha256": "32f4f0ed85702cc015563eb262ea6c5b7cb7c90f6d30fa6b73c36f3c37c42c5f",
     "manual_sha256": "de6840bb83a98333ef96a2781e3170103e5856380e9c46aad237974fc028498a",
+    "physical_photo_manifest_sha256": "7a262bfa8950e235574621c58d2cd725ee52a608644a31c5cd533aab60e6ed7a",
     "table_sha256": "e291eb0ab61eb8940aba6f54d16efd512d4565cbb6af29fcae5530035de7575e"
   },
   "status": "validated",
   "unresolved": [
-    "lamp.matrix-53"
-  ],
-  "unresolved_inputs": [],
-  "unresolved_outputs": [
     {
-      "address": 53,
-      "group": "pinmame.output.lamp"
+      "conflict": "conflict.flasher-19-playfield-bulb-count",
+      "placements": [
+        "device.3-bank-house-flasher.emitter.1",
+        "device.3-bank-house-flasher.emitter.2"
+      ],
+      "reason": "Both sockets are placed where the solenoid drawing's two callouts 19 put them, and each agrees with its callout; the 3-8 table and the tech chart count one playfield bulb, so one of them may not be fitted or driven by solenoid 19."
     }
   ],
   "version": 1,

@@ -111,6 +111,7 @@ PAGE_SCALE_DRAWINGS = {
 	"excerpt.creature.solenoid-flasher-wiring",
 	"excerpt.creature.switch-drawing",
 	"excerpt.creature.switch-locations",
+	"excerpt.dracula.lamp-locations-drawing",
 	"excerpt.dracula.lamp-matrix-and-locations",
 	"excerpt.dracula.solenoid-flasher-locations",
 	"excerpt.dracula.solenoid-flasher-wiring",
