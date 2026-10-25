@@ -13,70 +13,70 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | Collection | Device | Binding | Provenance | Spatial presence |
 | --- | --- | --- | --- | --- |
 | inputs | switch.0-unresolved-public-switch-slot-0 | pinmame.input.switch:0 | observed | not_applicable (not_applicable) |
-| inputs | switch.1-left-outlane | pinmame.input.switch:1 | observed | absent |
-| inputs | switch.2-left-return-outer | pinmame.input.switch:2 | observed | absent |
-| inputs | switch.3-left-return-inner | pinmame.input.switch:3 | observed | absent |
-| inputs | switch.4-right-return-inner | pinmame.input.switch:4 | observed | absent |
-| inputs | switch.5-right-return-outer | pinmame.input.switch:5 | observed | absent |
-| inputs | switch.6-right-outlane | pinmame.input.switch:6 | observed | absent |
-| inputs | switch.7-left-slingshot | pinmame.input.switch:7 | observed | absent |
-| inputs | switch.8-right-slingshot | pinmame.input.switch:8 | observed | absent |
+| inputs | switch.1-left-outlane | pinmame.input.switch:1 | observed | declared (observed) |
+| inputs | switch.2-left-return-outer | pinmame.input.switch:2 | observed | declared (observed) |
+| inputs | switch.3-left-return-inner | pinmame.input.switch:3 | observed | declared (observed) |
+| inputs | switch.4-right-return-inner | pinmame.input.switch:4 | observed | declared (observed) |
+| inputs | switch.5-right-return-outer | pinmame.input.switch:5 | observed | declared (observed) |
+| inputs | switch.6-right-outlane | pinmame.input.switch:6 | observed | declared (observed) |
+| inputs | switch.7-left-slingshot | pinmame.input.switch:7 | observed | declared (observed) |
+| inputs | switch.8-right-slingshot | pinmame.input.switch:8 | observed | declared (observed) |
 | inputs | switch.9-l-flipper-button | pinmame.input.switch:9 | observed | not_applicable (not_applicable) |
 | inputs | switch.10-r-flipper-button | pinmame.input.switch:10 | observed | not_applicable (not_applicable) |
 | inputs | switch.11-left-flipper-eos | pinmame.input.switch:11 | observed | not_applicable (not_applicable) |
 | inputs | switch.12-right-flipper-eos | pinmame.input.switch:12 | observed | not_applicable (not_applicable) |
 | inputs | switch.13-unresolved-public-switch-slot-13 | pinmame.input.switch:13 | observed | not_applicable (not_applicable) |
 | inputs | switch.14-unresolved-public-switch-slot-14 | pinmame.input.switch:14 | observed | not_applicable (not_applicable) |
-| inputs | switch.15-trough-6 | pinmame.input.switch:15 | observed | absent |
-| inputs | switch.16-trough-5 | pinmame.input.switch:16 | observed | absent |
-| inputs | switch.17-trough-4 | pinmame.input.switch:17 | observed | absent |
-| inputs | switch.18-trough-3 | pinmame.input.switch:18 | observed | absent |
-| inputs | switch.19-trough-2 | pinmame.input.switch:19 | observed | absent |
-| inputs | switch.20-trough-1 | pinmame.input.switch:20 | observed | absent |
+| inputs | switch.15-trough-6 | pinmame.input.switch:15 | observed | declared (observed) |
+| inputs | switch.16-trough-5 | pinmame.input.switch:16 | observed | declared (observed) |
+| inputs | switch.17-trough-4 | pinmame.input.switch:17 | observed | declared (observed) |
+| inputs | switch.18-trough-3 | pinmame.input.switch:18 | observed | declared (observed) |
+| inputs | switch.19-trough-2 | pinmame.input.switch:19 | observed | declared (observed) |
+| inputs | switch.20-trough-1 | pinmame.input.switch:20 | observed | declared (observed) |
 | inputs | switch.21-trough-jam | pinmame.input.switch:21 | observed | absent |
-| inputs | switch.22-shooter-lane | pinmame.input.switch:22 | observed | absent |
+| inputs | switch.22-shooter-lane | pinmame.input.switch:22 | observed | declared (observed) |
 | inputs | switch.23-unresolved-public-switch-slot-23 | pinmame.input.switch:23 | observed | not_applicable (not_applicable) |
-| inputs | switch.24-left-3-bank-top | pinmame.input.switch:24 | observed | absent |
-| inputs | switch.25-left-3-bank-mid | pinmame.input.switch:25 | observed | absent |
-| inputs | switch.26-left-3-bank-bot | pinmame.input.switch:26 | observed | absent |
+| inputs | switch.24-left-3-bank-top | pinmame.input.switch:24 | observed | declared (observed) |
+| inputs | switch.25-left-3-bank-mid | pinmame.input.switch:25 | observed | declared (observed) |
+| inputs | switch.26-left-3-bank-bot | pinmame.input.switch:26 | observed | declared (observed) |
 | inputs | switch.27-unresolved-public-switch-slot-27 | pinmame.input.switch:27 | observed | not_applicable (not_applicable) |
-| inputs | switch.28-lock-stage-1 | pinmame.input.switch:28 | observed | absent |
-| inputs | switch.29-lock-stage-2 | pinmame.input.switch:29 | observed | absent |
-| inputs | switch.30-lock-stage-3 | pinmame.input.switch:30 | observed | absent |
-| inputs | switch.31-lock-1 | pinmame.input.switch:31 | observed | absent |
-| inputs | switch.32-lock-2 | pinmame.input.switch:32 | observed | absent |
-| inputs | switch.33-lock-3 | pinmame.input.switch:33 | observed | absent |
-| inputs | switch.34-left-scoop | pinmame.input.switch:34 | observed | absent |
-| inputs | switch.35-spinner | pinmame.input.switch:35 | observed | absent |
-| inputs | switch.36-up-post-opto | pinmame.input.switch:36 | observed | absent |
-| inputs | switch.37-left-ramp-left-target | pinmame.input.switch:37 | observed | absent |
-| inputs | switch.38-left-ramp-right-target | pinmame.input.switch:38 | observed | absent |
+| inputs | switch.28-lock-stage-1 | pinmame.input.switch:28 | observed | declared (observed) |
+| inputs | switch.29-lock-stage-2 | pinmame.input.switch:29 | observed | declared (observed) |
+| inputs | switch.30-lock-stage-3 | pinmame.input.switch:30 | observed | declared (observed) |
+| inputs | switch.31-lock-1 | pinmame.input.switch:31 | observed | declared (observed) |
+| inputs | switch.32-lock-2 | pinmame.input.switch:32 | observed | declared (observed) |
+| inputs | switch.33-lock-3 | pinmame.input.switch:33 | observed | declared (observed) |
+| inputs | switch.34-left-scoop | pinmame.input.switch:34 | observed | declared (observed) |
+| inputs | switch.35-spinner | pinmame.input.switch:35 | observed | declared (observed) |
+| inputs | switch.36-up-post-opto | pinmame.input.switch:36 | observed | declared (observed) |
+| inputs | switch.37-left-ramp-left-target | pinmame.input.switch:37 | observed | declared (observed) |
+| inputs | switch.38-left-ramp-right-target | pinmame.input.switch:38 | observed | declared (observed) |
 | inputs | switch.39-unresolved-public-switch-slot-39 | pinmame.input.switch:39 | observed | not_applicable (not_applicable) |
-| inputs | switch.40-left-ramp-1 | pinmame.input.switch:40 | observed | absent |
+| inputs | switch.40-left-ramp-1 | pinmame.input.switch:40 | observed | declared (observed) |
 | inputs | switch.41-unresolved-public-switch-slot-41 | pinmame.input.switch:41 | observed | not_applicable (not_applicable) |
 | inputs | switch.42-unresolved-public-switch-slot-42 | pinmame.input.switch:42 | observed | not_applicable (not_applicable) |
 | inputs | switch.43-left-ramp-exit | pinmame.input.switch:43 | conflicted | absent |
 | inputs | switch.44-unresolved-public-switch-slot-44 | pinmame.input.switch:44 | observed | not_applicable (not_applicable) |
-| inputs | switch.45-ghost-target | pinmame.input.switch:45 | observed | absent |
-| inputs | switch.46-captive-ball-target | pinmame.input.switch:46 | observed | absent |
+| inputs | switch.45-ghost-target | pinmame.input.switch:45 | observed | declared (observed) |
+| inputs | switch.46-captive-ball-target | pinmame.input.switch:46 | observed | declared (observed) |
 | inputs | switch.47-unresolved-public-switch-slot-47 | pinmame.input.switch:47 | observed | not_applicable (not_applicable) |
-| inputs | switch.48-gozer-target | pinmame.input.switch:48 | observed | absent |
-| inputs | switch.49-left-pop-bumper | pinmame.input.switch:49 | observed | absent |
-| inputs | switch.50-right-pop-bumper | pinmame.input.switch:50 | observed | absent |
-| inputs | switch.51-bottom-pop-bumper | pinmame.input.switch:51 | observed | absent |
-| inputs | switch.52-pop-bumper-exit | pinmame.input.switch:52 | observed | absent |
+| inputs | switch.48-gozer-target | pinmame.input.switch:48 | observed | declared (observed) |
+| inputs | switch.49-left-pop-bumper | pinmame.input.switch:49 | observed | declared (observed) |
+| inputs | switch.50-right-pop-bumper | pinmame.input.switch:50 | observed | declared (observed) |
+| inputs | switch.51-bottom-pop-bumper | pinmame.input.switch:51 | observed | declared (observed) |
+| inputs | switch.52-pop-bumper-exit | pinmame.input.switch:52 | observed | declared (observed) |
 | inputs | switch.53-unresolved-public-switch-slot-53 | pinmame.input.switch:53 | observed | not_applicable (not_applicable) |
-| inputs | switch.54-left-orbit | pinmame.input.switch:54 | observed | absent |
-| inputs | switch.55-right-orbit | pinmame.input.switch:55 | observed | absent |
-| inputs | switch.56-p-ke | pinmame.input.switch:56 | observed | absent |
-| inputs | switch.57-p-k-e | pinmame.input.switch:57 | observed | absent |
-| inputs | switch.58-pk-e | pinmame.input.switch:58 | observed | absent |
-| inputs | switch.59-ecto-goggles | pinmame.input.switch:59 | observed | absent |
-| inputs | switch.60-subway-lock-1 | pinmame.input.switch:60 | observed | absent |
-| inputs | switch.61-subway-lock-2 | pinmame.input.switch:61 | observed | absent |
-| inputs | switch.62-subway-lock-3 | pinmame.input.switch:62 | observed | absent |
-| inputs | switch.63-subway-eject | pinmame.input.switch:63 | observed | absent |
-| inputs | switch.64-terror-dog-target | pinmame.input.switch:64 | observed | absent |
+| inputs | switch.54-left-orbit | pinmame.input.switch:54 | observed | declared (observed) |
+| inputs | switch.55-right-orbit | pinmame.input.switch:55 | observed | declared (observed) |
+| inputs | switch.56-p-ke | pinmame.input.switch:56 | observed | declared (observed) |
+| inputs | switch.57-p-k-e | pinmame.input.switch:57 | observed | declared (observed) |
+| inputs | switch.58-pk-e | pinmame.input.switch:58 | observed | declared (observed) |
+| inputs | switch.59-ecto-goggles | pinmame.input.switch:59 | observed | declared (observed) |
+| inputs | switch.60-subway-lock-1 | pinmame.input.switch:60 | observed | declared (observed) |
+| inputs | switch.61-subway-lock-2 | pinmame.input.switch:61 | observed | declared (observed) |
+| inputs | switch.62-subway-lock-3 | pinmame.input.switch:62 | observed | declared (observed) |
+| inputs | switch.63-subway-eject | pinmame.input.switch:63 | observed | declared (observed) |
+| inputs | switch.64-terror-dog-target | pinmame.input.switch:64 | observed | declared (observed) |
 | inputs | switch.65-left-1-bank-drop-opto | pinmame.input.switch:65 | observed | absent |
 | inputs | switch.66-right-1-bank-drop-opto | pinmame.input.switch:66 | observed | absent |
 | inputs | switch.67-unresolved-public-switch-slot-67 | pinmame.input.switch:67 | observed | not_applicable (not_applicable) |
@@ -149,27 +149,27 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | inputs | dip.cpu-7 | pinmame.input.dip:7 | observed | not_applicable (not_applicable) |
 | inputs | dip.cpu-8 | pinmame.input.dip:8 | observed | not_applicable (not_applicable) |
 | outputs | coil.1-trough | pinmame.output.solenoid:1 | observed | absent |
-| outputs | coil.2-auto-plunger | pinmame.output.solenoid:2 | observed | absent |
-| outputs | coil.3-left-flipper | pinmame.output.solenoid:3 | observed | absent |
-| outputs | coil.4-right-flipper | pinmame.output.solenoid:4 | observed | absent |
+| outputs | coil.2-auto-plunger | pinmame.output.solenoid:2 | observed | declared (observed) |
+| outputs | coil.3-left-flipper | pinmame.output.solenoid:3 | observed | declared (observed) |
+| outputs | coil.4-right-flipper | pinmame.output.solenoid:4 | observed | declared (observed) |
 | outputs | coil.5-left-sling-magnet | pinmame.output.solenoid:5 | observed | absent |
 | outputs | coil.6-right-sling-magnet | pinmame.output.solenoid:6 | observed | absent |
 | outputs | coil.7-shaker-motor | pinmame.output.solenoid:7 | observed | not_applicable (not_applicable) |
 | outputs | coil.8-unmapped-solenoid-slot-8 | pinmame.output.solenoid:8 | observed | not_applicable (not_applicable) |
 | outputs | coil.9-unmapped-solenoid-slot-9 | pinmame.output.solenoid:9 | observed | not_applicable (not_applicable) |
-| outputs | coil.10-left-scoop | pinmame.output.solenoid:10 | observed | absent |
+| outputs | coil.10-left-scoop | pinmame.output.solenoid:10 | observed | declared (observed) |
 | outputs | coil.11-lock-post | pinmame.output.solenoid:11 | observed | absent |
 | outputs | coil.12-up-post-spinner | pinmame.output.solenoid:12 | observed | absent |
 | outputs | coil.13-unmapped-solenoid-slot-13 | pinmame.output.solenoid:13 | observed | not_applicable (not_applicable) |
-| outputs | coil.14-left-pop-bumper | pinmame.output.solenoid:14 | observed | absent |
-| outputs | coil.15-right-pop-bumper | pinmame.output.solenoid:15 | observed | absent |
-| outputs | coil.16-bottom-pop-bumper | pinmame.output.solenoid:16 | observed | absent |
+| outputs | coil.14-left-pop-bumper | pinmame.output.solenoid:14 | observed | declared (observed) |
+| outputs | coil.15-right-pop-bumper | pinmame.output.solenoid:15 | observed | declared (observed) |
+| outputs | coil.16-bottom-pop-bumper | pinmame.output.solenoid:16 | observed | declared (observed) |
 | outputs | coil.17-unmapped-solenoid-slot-17 | pinmame.output.solenoid:17 | observed | not_applicable (not_applicable) |
 | outputs | coil.18-electric-gate | pinmame.output.solenoid:18 | observed | absent |
 | outputs | coil.19-unmapped-solenoid-slot-19 | pinmame.output.solenoid:19 | observed | not_applicable (not_applicable) |
 | outputs | coil.20-subway-diverter | pinmame.output.solenoid:20 | observed | absent |
 | outputs | coil.21-subway-lock | pinmame.output.solenoid:21 | observed | absent |
-| outputs | coil.22-subway-eject | pinmame.output.solenoid:22 | observed | absent |
+| outputs | coil.22-subway-eject | pinmame.output.solenoid:22 | observed | declared (observed) |
 | outputs | coil.23-unmapped-solenoid-slot-23 | pinmame.output.solenoid:23 | observed | not_applicable (not_applicable) |
 | outputs | coil.24-l-1-bank-drop-up | pinmame.output.solenoid:24 | observed | absent |
 | outputs | coil.25-l-1-bank-drop-down | pinmame.output.solenoid:25 | observed | absent |
@@ -388,6 +388,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `pinmame.spike1.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `rom.ghostbusters-le.gbust-117h` (rom_static_analysis): `164cea6e6fcbd7786007854c489cb0452eef34a5de7ebf30b341961f2d0c3725`
 - `runtime.ghostbusters-le.gbust-117h` (runtime_scenario): `a594076e5e676c140547578fa1486e5669984a22f75f35e7665b455b1fd004bf`
+- `vpx.supplied-pinmame-script.2026-10-25` (vpx_script): `bd138d247d55836b50b2d8a9234bee1df36c4c66a393a4573448e75cc50b81e8`
+- `vpx.supplied-pinmame-table.2026-10-25` (vpx_table): `717cba9783713791b457a110e8a68dc2328934b9f4a9b0a151ccaa3f98dc5d52`
 
 ## Projection classes
 

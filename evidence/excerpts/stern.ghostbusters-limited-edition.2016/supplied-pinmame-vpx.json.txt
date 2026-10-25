@@ -1,0 +1,3444 @@
+{
+  "acquired_at": "2026-10-25T22:54:36Z",
+  "bound_driver": "gbust_117h",
+  "bounds": {
+    "bottom": 2115.0,
+    "left": 0.0,
+    "right": 952.0,
+    "top": 0.0
+  },
+  "embedded_metadata": {
+    "author_email": null,
+    "author_name": "VPW",
+    "author_website": null,
+    "properties": {},
+    "properties_order": [],
+    "release_date": null,
+    "table_blurb": null,
+    "table_description": null,
+    "table_name": "Ghostbusters - Limited Edition (Stern 2016)",
+    "table_rules": null,
+    "table_save_date": "Mon Oct 12 12:31:03 2026",
+    "table_save_rev": "576",
+    "table_version": null
+  },
+  "excluded_or_unresolved": [
+    "Switch 43 is directly bound by the table but retains a physical left/right ramp identity conflict; its proxy is not promoted to a placement.",
+    "Trough jam 21 is a script pulse without a separately located sensor object.",
+    "Drop optos 65/66, Slimer hit/home/encoder sensors and internal mechanism feedback have no independently established fixed sensor center.",
+    "No lamp, RGB channel, flasher or GI emitter is placed from this baked-light-map table; render primitives, glow sprites and light maps do not prove physical socket identity or count.",
+    "Ecto display geometry is not inferred from Ectomovie projection or a primitive origin."
+  ],
+  "extraction_manifest": {
+    "algorithm": "tools/build_external_evidence_manifest.py: every relative POSIX path except manifest.json and manifest.sha256, case-sensitive sorted; size and SHA-256; UTF-8 JSON ensure_ascii=False, separators=(comma,colon), sort_keys=True, one trailing LF; SHA-256 of those bytes.",
+    "byte_count": 1055747483,
+    "file_count": 2920,
+    "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/manifest.json",
+    "sha256": "182b7fdb3cd9679a9d9a29b652c313a699cc08b5f9069ceed7f04130c4355f23",
+    "size": 430151
+  },
+  "format": "pinmame-supplied-vpx-evidence",
+  "limits": "The supplied source was not independently launched in this pass. Script assignments prove table implementation, not an executed ROM response, factory geometry, contact rest state or emitter fitment. The same table/script may share ancestry with the manual. All coordinates remain observed and coverage remains partial.",
+  "machine_id": "stern.ghostbusters-limited-edition.2016",
+  "mechanism_observations": [
+    "Six balls are created at separately bound trough slots 15–20. UpdateTroughTimer moves a ball toward the next empty slot every scheduled 100 ms; the drain waits 400 ms before feeding that chain. These are VPX scheduling choices, not physical travel measurements.",
+    "Output 1 releases the ball at slot 20 and pulses jam switch 21. Output 2 fires the impulse plunger bound to shooter switch 22. Outputs 10 and 22 impart vertical ball velocity only to balls captured by switches 34 and 63 respectively.",
+    "Outputs 24/25 raise/drop the left single target and 26/27 the right one; the drop target framework asserts 65/66 after its drop animation and clears on reset. The hidden sensor is not located from the target collider.",
+    "GetMech(0) drives the Slimer boom. SetSlimerPosition clamps the controller position to 0–92 and linearly maps it to table angles -110 through +60 degrees. The first sample parks the animation immediately; subsequent samples are followed in 0.33-degree table-animation increments. This table conversion is not a calibrated physical angle or motor speed.",
+    "Slimer hit input 68 is pulsed from the moving SlTrigs collection only above the script impact threshold; home and encoder feedback are left to the emulator mechanism model. Moving collision triggers do not identify the fixed encoder sensor positions."
+  ],
+  "method": "Exact byte retention; vpxtool git:v0.33.3 extraction; curator-inspected script routines and explicit object selection; repository extract_spatial_candidates normalization. No nearest-object search.",
+  "placements": [
+    {
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.1-left-outlane",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw1.json",
+          "sha256": "a4bc7e041920b37168f34f7df8952242414649799433b3de970d2e8e44ce50de",
+          "size": 1721
+        },
+        "center": {
+          "x": 39.864372,
+          "y": 1529.2727
+        },
+        "drag_points": null,
+        "name": "sw1",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2111,
+          "text": "Sub sw1_hit: Controller.Switch(1) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.041874,
+      "y": 0.72306
+    },
+    {
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.2-left-return-outer",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw2.json",
+          "sha256": "dfe75216b92fa71c4838f03d2f446f228cc50a9626a84fc39dc5e86416d50612",
+          "size": 1721
+        },
+        "center": {
+          "x": 107.56689,
+          "y": 1512.5863
+        },
+        "drag_points": null,
+        "name": "sw2",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2114,
+          "text": "Sub sw2_hit: Controller.Switch(2) = 1 : leftInlaneSpeedLimit: End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.11299,
+      "y": 0.715171
+    },
+    {
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.3-left-return-inner",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw3.json",
+          "sha256": "f907638b01c9576716302a5462acb01ae9b98a260e366ccb9c3d60c1f8050d79",
+          "size": 1723
+        },
+        "center": {
+          "x": 171.80803,
+          "y": 1511.0125
+        },
+        "drag_points": null,
+        "name": "sw3",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2117,
+          "text": "Sub sw3_hit: Controller.Switch(3) = 1 : leftInlaneSpeedLimit: End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.180471,
+      "y": 0.714427
+    },
+    {
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.4-right-return-inner",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw4.json",
+          "sha256": "4ce3a1767e79f7903cd78f2d5c008062cf8d46777f427b43a73ab7103b2aaa07",
+          "size": 1720
+        },
+        "center": {
+          "x": 697.92993,
+          "y": 1515.4047
+        },
+        "drag_points": null,
+        "name": "sw4",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2120,
+          "text": "Sub sw4_hit: Controller.Switch(4) = 1 : rightInlaneSpeedLimit: End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.73312,
+      "y": 0.716503
+    },
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.5-right-return-outer",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw5.json",
+          "sha256": "66652f9da8f44a4a99d4353790310a6d5b2a7c77f2f6b36774d64c5e4a2052f5",
+          "size": 1722
+        },
+        "center": {
+          "x": 761.81384,
+          "y": 1515.1056
+        },
+        "drag_points": null,
+        "name": "sw5",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2123,
+          "text": "Sub sw5_hit: Controller.Switch(5) = 1 : rightInlaneSpeedLimit: End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.800225,
+      "y": 0.716362
+    },
+    {
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.6-right-outlane",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw6.json",
+          "sha256": "cae27f9190f2e764166f05148b6f4a3f34827d7f249cd9aba571123b5b3609cb",
+          "size": 1721
+        },
+        "center": {
+          "x": 829.96796,
+          "y": 1527.8822
+        },
+        "drag_points": null,
+        "name": "sw6",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2126,
+          "text": "Sub sw6_hit: Controller.Switch(6) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.871815,
+      "y": 0.722403
+    },
+    {
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.22-shooter-lane",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw22.json",
+          "sha256": "ef7500225fa4fb57377f6ddd1c390bcf3651dacac4086d59cdc039090b390726",
+          "size": 1718
+        },
+        "center": {
+          "x": 902.8239,
+          "y": 1894.3406
+        },
+        "drag_points": null,
+        "name": "sw22",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 532,
+          "text": ".InitImpulseP sw22, 55, 0.5"
+        },
+        {
+          "line": 533,
+          "text": ".Switch 22"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.948344,
+      "y": 0.895669
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.28-lock-stage-1",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw28.json",
+          "sha256": "5c509a6fc19c4adfa570af8cb927756f6e94ba1334d9751f742b70a0d7940ea9",
+          "size": 1723
+        },
+        "center": {
+          "x": 119.5306,
+          "y": 959.71594
+        },
+        "drag_points": null,
+        "name": "sw28",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2148,
+          "text": "Sub sw28_hit: Controller.Switch(28) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.125557,
+      "y": 0.453766
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.29-lock-stage-2",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw29.json",
+          "sha256": "972b6f8c0e03a54a41d9d90917e123d1eddd628ee4bde729156c9c10b7af3c07",
+          "size": 1720
+        },
+        "center": {
+          "x": 100.94598,
+          "y": 916.4966
+        },
+        "drag_points": null,
+        "name": "sw29",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2151,
+          "text": "Sub sw29_hit: Controller.Switch(29) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.106036,
+      "y": 0.433332
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.30-lock-stage-3",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw30.json",
+          "sha256": "efc9ca39f6e84398c7e8c84d31ec804bf9d9161977e286fb558dad32ecc2de5a",
+          "size": 1721
+        },
+        "center": {
+          "x": 79.69708,
+          "y": 868.41064
+        },
+        "drag_points": null,
+        "name": "sw30",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2154,
+          "text": "Sub sw30_hit: Controller.Switch(30) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.083715,
+      "y": 0.410596
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.31-lock-1",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw31.json",
+          "sha256": "f741fc64a7466e51e59417ead01ec948fe72e3cbffd3aee5b0a54451102d702f",
+          "size": 1713
+        },
+        "center": {
+          "x": 100.14534,
+          "y": 743.55853
+        },
+        "drag_points": null,
+        "name": "sw31",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2157,
+          "text": "Sub sw31_hit: Controller.Switch(31) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.105195,
+      "y": 0.351564
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.32-lock-2",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw32.json",
+          "sha256": "00ec56b9f6b7d37d261ad7175e01fccb57ae8fdb177ec23603e4fb06d45a9558",
+          "size": 1706
+        },
+        "center": {
+          "x": 99.7562,
+          "y": 695.0723
+        },
+        "drag_points": null,
+        "name": "sw32",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2160,
+          "text": "Sub sw32_hit: Controller.Switch(32) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.104786,
+      "y": 0.328639
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.33-lock-3",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw33.json",
+          "sha256": "5e3aa5f370690668e0c48434198626b3f7337203b44a94f4e11eec37efffc23f",
+          "size": 1707
+        },
+        "center": {
+          "x": 99.59583,
+          "y": 646.4701
+        },
+        "drag_points": null,
+        "name": "sw33",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2163,
+          "text": "Sub sw33_hit: Controller.Switch(33) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.104617,
+      "y": 0.30566
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.34-left-scoop",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw34.json",
+          "sha256": "f1008179529eb83f55023867de66324ecf3c4a2e4521645092bbd904758049be",
+          "size": 1719
+        },
+        "center": {
+          "x": 149.46349,
+          "y": 832.7358
+        },
+        "drag_points": null,
+        "name": "sw34",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 1505,
+          "text": "Sub sw34_Hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.156999,
+      "y": 0.393729
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.36-up-post-opto",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw36.json",
+          "sha256": "c4e938082acf324212f11c12972a484f02ea583f498db93d8b11a6ad6fd1f609",
+          "size": 1713
+        },
+        "center": {
+          "x": 134.3462,
+          "y": 396.83105
+        },
+        "drag_points": null,
+        "name": "sw36",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2167,
+          "text": "Sub sw36_hit:Controller.Switch(36) = 1 :  End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.14112,
+      "y": 0.187627
+    },
+    {
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.40-left-ramp-1",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw40.json",
+          "sha256": "e162931eb94bfc25f3c43c78f018160bdb49aff0475df6b6efcafe8d8c7ccaf7",
+          "size": 1711
+        },
+        "center": {
+          "x": 418.9332,
+          "y": 141.73839
+        },
+        "drag_points": null,
+        "name": "sw40",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2175,
+          "text": "Sub sw40_hit: Controller.Switch(40) = 1 : WireRampOff: DOFALT 118, DOFPulse: End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.440056,
+      "y": 0.067016
+    },
+    {
+      "binding": {
+        "device": 52,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.52-pop-bumper-exit",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw52.json",
+          "sha256": "8445cf75dd0a5ce38a2d4b7f785f074e282515017d65782e69b0574711562ff8",
+          "size": 1718
+        },
+        "center": {
+          "x": 590.4781,
+          "y": 593.2459
+        },
+        "drag_points": null,
+        "name": "sw52",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2129,
+          "text": "Sub sw52_hit: Controller.Switch(52) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.62025,
+      "y": 0.280495
+    },
+    {
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.54-left-orbit",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw54.json",
+          "sha256": "4f0d57191f75faee1c79e2459cf1fa825d002745b423dda4720facf2b25aeee3",
+          "size": 1718
+        },
+        "center": {
+          "x": 323.25516,
+          "y": 101.58083
+        },
+        "drag_points": null,
+        "name": "sw54",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2132,
+          "text": "Sub sw54_hit:Controller.Switch(54) = 1 :DOFALT 134, DOFPulse:End Sub\t\t'use pulsesw to trigger events"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.339554,
+      "y": 0.048029
+    },
+    {
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.55-right-orbit",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw55.json",
+          "sha256": "38a94bd63ef2eb703d9d39650055abcab00208a09265c8a87474a4c79480fe5d",
+          "size": 2016
+        },
+        "center": {
+          "x": 851.8657,
+          "y": 102.20974
+        },
+        "drag_points": null,
+        "name": "sw55",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2135,
+          "text": "Sub sw55_hit: Controller.Switch(55) = 1 :DOFALT 135, DOFPulse:End Sub\t\t'use pulsesw to trigger events"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.894817,
+      "y": 0.048326
+    },
+    {
+      "binding": {
+        "device": 56,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.56-p-ke",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw56.json",
+          "sha256": "1aa050bfddcbbab5d44e34c4bbd4d8a812c6c7cea7969e4ce5dbf6b5e9a5c74a",
+          "size": 1721
+        },
+        "center": {
+          "x": 544.9953,
+          "y": 162.23222
+        },
+        "drag_points": null,
+        "name": "sw56",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2138,
+          "text": "Sub sw56_hit: Controller.Switch(56) = 1 : DOFALT 131, DOFOn:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.572474,
+      "y": 0.076706
+    },
+    {
+      "binding": {
+        "device": 57,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.57-p-k-e",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw57.json",
+          "sha256": "d82aa7ec197126ce3365a2391a7ad3b6fd13042a5162690ed4c8ddb6805da990",
+          "size": 1720
+        },
+        "center": {
+          "x": 628.6436,
+          "y": 158.58247
+        },
+        "drag_points": null,
+        "name": "sw57",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2141,
+          "text": "Sub sw57_hit: Controller.Switch(57) = 1 : DOFALT 132, DOFOn:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.66034,
+      "y": 0.07498
+    },
+    {
+      "binding": {
+        "device": 58,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.58-pk-e",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Sw58.json",
+          "sha256": "c4a2fa53fd3f4f2c03ca6ec17bb58be7e72049d11ad0dc995075cf64ae075293",
+          "size": 1723
+        },
+        "center": {
+          "x": 711.6252,
+          "y": 155.41937
+        },
+        "drag_points": null,
+        "name": "sw58",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2144,
+          "text": "Sub sw58_hit: Controller.Switch(58) = 1 : DOFALT 133, DOFOn:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.747505,
+      "y": 0.073484
+    },
+    {
+      "binding": {
+        "device": 59,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.59-ecto-goggles",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw59.json",
+          "sha256": "d3028bdcae9c29a64d35e799feef2143f94073ad5e60c50178b222008dfb866a",
+          "size": 1712
+        },
+        "center": {
+          "x": 716.9815,
+          "y": 547.6539
+        },
+        "drag_points": null,
+        "name": "sw59",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2183,
+          "text": "Sub sw59_hit:Controller.Switch(59) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.753132,
+      "y": 0.258938
+    },
+    {
+      "binding": {
+        "device": 60,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.60-subway-lock-1",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw60.json",
+          "sha256": "ceab606d5af6a3b1a2ee4faae57251aa9f979553451f7307734af7073c3c5b2a",
+          "size": 1717
+        },
+        "center": {
+          "x": 697.74365,
+          "y": 1133.2761
+        },
+        "drag_points": null,
+        "name": "sw60",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2188,
+          "text": "Sub sw60_hit: Controller.Switch(60) = 1 :  End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.732924,
+      "y": 0.535828
+    },
+    {
+      "binding": {
+        "device": 61,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.61-subway-lock-2",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw61.json",
+          "sha256": "9e95b06d176d8ef04236d8751cf0162b42d3a109de64f2a3e03ca8c2e9f8128d",
+          "size": 1712
+        },
+        "center": {
+          "x": 724.2669,
+          "y": 1088.8878
+        },
+        "drag_points": null,
+        "name": "sw61",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2191,
+          "text": "Sub sw61_hit: Controller.Switch(61) = 1 :  End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.760785,
+      "y": 0.514841
+    },
+    {
+      "binding": {
+        "device": 62,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.62-subway-lock-3",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw62.json",
+          "sha256": "0f35131c3d317f03ae1870269804c3403de63551bdfd955a9cd883369a93022a",
+          "size": 1716
+        },
+        "center": {
+          "x": 749.68964,
+          "y": 1044.581
+        },
+        "drag_points": null,
+        "name": "sw62",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 2194,
+          "text": "Sub sw62_hit: Controller.Switch(62) = 1 :  End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.787489,
+      "y": 0.493892
+    },
+    {
+      "binding": {
+        "device": 63,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.63-subway-eject",
+      "method": "direct script-bound contact object center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw63.json",
+          "sha256": "eaa31bb0791ba47ff9cacb79f50b7af2dfc228e65ee1c60bcbb24829fa01c9c2",
+          "size": 1716
+        },
+        "center": {
+          "x": 718.9626,
+          "y": 1238.9994
+        },
+        "drag_points": null,
+        "name": "sw63",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 1472,
+          "text": "Sub sw63_Hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.755213,
+      "y": 0.585815
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.15-trough-6",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw15.json",
+          "sha256": "99beebc2c975b78bd82bb481763c2716ad696910d52161c9e287f1fbab811493",
+          "size": 461
+        },
+        "center": {
+          "x": 510.46576,
+          "y": 2004.7236
+        },
+        "drag_points": null,
+        "name": "sw15",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1228,
+          "text": "Sub sw15_Hit    : Controller.Switch(15)  = 1 : UpdateTrough :  End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.536204,
+      "y": 0.94786
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.16-trough-5",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw16.json",
+          "sha256": "1960ed6d093c1246527537bac64cd578763f89f0b861b90f52e7a662eabe507f",
+          "size": 460
+        },
+        "center": {
+          "x": 570.9088,
+          "y": 1970.8755
+        },
+        "drag_points": null,
+        "name": "sw16",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1226,
+          "text": "Sub sw16_Hit   : Controller.Switch(16) = 1 : UpdateTrough : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.599694,
+      "y": 0.931856
+    },
+    {
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.17-trough-4",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw17.json",
+          "sha256": "c826633375647418ffc303526b268c566d4eb4f843bddf336adaa8b33540274c",
+          "size": 461
+        },
+        "center": {
+          "x": 635.38116,
+          "y": 1932.9978
+        },
+        "drag_points": null,
+        "name": "sw17",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1224,
+          "text": "Sub sw17_Hit   : Controller.Switch(17) = 1 : UpdateTrough : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.667417,
+      "y": 0.913947
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.18-trough-3",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw18.json",
+          "sha256": "c5a4cce25bd8f12212221eaea7822fc2e407defe3f86805e46861e002ee32f99",
+          "size": 460
+        },
+        "center": {
+          "x": 697.0226,
+          "y": 1895.4103
+        },
+        "drag_points": null,
+        "name": "sw18",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1222,
+          "text": "Sub sw18_Hit   : Controller.Switch(18) = 1 : UpdateTrough : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.732167,
+      "y": 0.896175
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.19-trough-2",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw19.json",
+          "sha256": "4766bc04e327bbde78f8f20aa2a1923ac8cb4d74d35d3c2b34d818d095f24e8b",
+          "size": 461
+        },
+        "center": {
+          "x": 754.63446,
+          "y": 1858.2899
+        },
+        "drag_points": null,
+        "name": "sw19",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1220,
+          "text": "Sub sw19_Hit   : Controller.Switch(19) = 1 : UpdateTrough : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.792683,
+      "y": 0.878624
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.20-trough-1",
+      "method": "trough sensor projected onto its separately bound ball slot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw20.json",
+          "sha256": "6da5f6c0abd58d2b0f2f0637dcf331aa3ac341eb02ce633b60e26a0f1588123e",
+          "size": 458
+        },
+        "center": {
+          "x": 815.625,
+          "y": 1827.875
+        },
+        "drag_points": null,
+        "name": "sw20",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 1218,
+          "text": "Sub sw20_Hit   : Controller.Switch(20) = 1 : UpdateTrough : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.856749,
+      "y": 0.864243
+    },
+    {
+      "binding": {
+        "device": 49,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.49-left-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw49.json",
+          "sha256": "3f1a44fd05c432d31caf027a3675a32a94704b209f43847c39729f93def36f4c",
+          "size": 718
+        },
+        "center": {
+          "x": 413.58524,
+          "y": 304.6469
+        },
+        "drag_points": null,
+        "name": "sw49",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2243,
+          "text": "Sub sw49_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.434438,
+      "y": 0.144041
+    },
+    {
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.50-right-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw50.json",
+          "sha256": "89fa6ee3298a0350de14c80c8958670714d58fb65478ff5be41689564ff3a98a",
+          "size": 718
+        },
+        "center": {
+          "x": 607.4403,
+          "y": 349.85156
+        },
+        "drag_points": null,
+        "name": "sw50",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2250,
+          "text": "Sub sw50_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.638068,
+      "y": 0.165414
+    },
+    {
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.51-bottom-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw51.json",
+          "sha256": "7289553640ea9a364ff99c88caccf3bba26aa5aed6a9c76ef5138fc9700d8954",
+          "size": 718
+        },
+        "center": {
+          "x": 471.92563,
+          "y": 494.2039
+        },
+        "drag_points": null,
+        "name": "sw51",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2257,
+          "text": "Sub sw51_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.49572,
+      "y": 0.233666
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.35-spinner",
+      "method": "direct script-bound spinner center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Spinner.sw35.json",
+          "sha256": "651d02fe573698a72aec07f14b3da7d6d247f20e42cfc097fd06561c36a8a457",
+          "size": 498
+        },
+        "center": {
+          "x": 150.51135,
+          "y": 475.70038
+        },
+        "drag_points": null,
+        "name": "sw35",
+        "position": null,
+        "type": "Spinner"
+      },
+      "script_locators": [
+        {
+          "line": 2172,
+          "text": "Sub sw35_spin:vpmTimer.PulseSw 35: PlaySoundAt \"Spinner\", sw35:DOFALT 117, DOFPulse:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.1581,
+      "y": 0.224917
+    },
+    {
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.24-left-3-bank-top",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw24.json",
+          "sha256": "bf0cc5895b2561946a680acd8987727c874171640903a090c15415fa38bd8121",
+          "size": 944
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw24",
+        "position": {
+          "x": 116.20838,
+          "y": 1064.6907,
+          "z": -7.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1905,
+          "text": "Sub sw24_hit: STHit 24: End Sub"
+        },
+        {
+          "line": 1996,
+          "text": "Set ST3 = (new StandupTarget)(sw24, BM_sw24,24, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.122068,
+      "y": 0.5034
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.25-left-3-bank-mid",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw25.json",
+          "sha256": "93848e2d5d443c4a84de88e225a63a769f3824422f095e23f080ce2a82aed5ea",
+          "size": 944
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw25",
+        "position": {
+          "x": 106.94793,
+          "y": 1120.5045,
+          "z": -7.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1906,
+          "text": "Sub sw25_hit: STHit 25: End Sub"
+        },
+        {
+          "line": 1995,
+          "text": "Set ST2 = (new StandupTarget)(sw25, BM_sw25,25, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.11234,
+      "y": 0.529789
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.26-left-3-bank-bot",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw26.json",
+          "sha256": "38449e12129724afac9c3f27d7e7fab534c5d7a3dcc8f7db28519e77a276e004",
+          "size": 944
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw26",
+        "position": {
+          "x": 96.192955,
+          "y": 1177.9572,
+          "z": -7.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1907,
+          "text": "Sub sw26_hit: STHit 26: End Sub"
+        },
+        {
+          "line": 1994,
+          "text": "Set ST1 = (new StandupTarget)(sw26, BM_sw26,26, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.101043,
+      "y": 0.556954
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.37-left-ramp-left-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw37.json",
+          "sha256": "6d9a947bf7074527c9f32d07e8c20c61da541b6024c0d9928fba5d81d6eaa0a0",
+          "size": 938
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw37",
+        "position": {
+          "x": 217.79051,
+          "y": 591.1879,
+          "z": -14.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1909,
+          "text": "Sub sw37_hit: STHit 37: End Sub"
+        },
+        {
+          "line": 1997,
+          "text": "Set ST4 = (new StandupTarget)(sw37, BM_sw37,37, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.228772,
+      "y": 0.279521
+    },
+    {
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.38-left-ramp-right-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw38.json",
+          "sha256": "d2dfb4eee3d3b45c510e3b35b515652cb3ea85cac3aabe7ed38f2d2febb67766",
+          "size": 939
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw38",
+        "position": {
+          "x": 326.74838,
+          "y": 538.1267,
+          "z": -14.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1910,
+          "text": "Sub sw38_hit: STHit 38: End Sub"
+        },
+        {
+          "line": 1998,
+          "text": "Set ST5 = (new StandupTarget)(sw38, BM_sw38,38, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.343223,
+      "y": 0.254433
+    },
+    {
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.45-ghost-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw45.json",
+          "sha256": "0907b520c13c3a7a1e4af60517129176c3902d9f0e0837b18b1adc0c5c7575ee",
+          "size": 943
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw45",
+        "position": {
+          "x": 476.35593,
+          "y": 581.83594,
+          "z": -7.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1912,
+          "text": "Sub sw45_hit: STHit 45: End Sub"
+        },
+        {
+          "line": 1999,
+          "text": "Set ST6 = (new StandupTarget)(sw45, BM_sw45,45, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.500374,
+      "y": 0.2751
+    },
+    {
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.46-captive-ball-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw46.json",
+          "sha256": "e308cd9421fbe884ca5e6b4fbe36212e705f38b967cddbc62a6a2dee65fbe8e8",
+          "size": 937
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw46",
+        "position": {
+          "x": 548.88446,
+          "y": 626.9825,
+          "z": -14.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1913,
+          "text": "Sub sw46_hit: STHit 46: End Sub"
+        },
+        {
+          "line": 2000,
+          "text": "Set ST7 = (new StandupTarget)(sw46, BM_sw46,46, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.576559,
+      "y": 0.296446
+    },
+    {
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.48-gozer-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw48.json",
+          "sha256": "a6db8b90a6b42ff7ebbaaec30cf622263c220f2128afafec7e1666937642cb98",
+          "size": 944
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw48",
+        "position": {
+          "x": 319.1836,
+          "y": 185.37083,
+          "z": -15.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1914,
+          "text": "Sub sw48_hit: STHit 48: End Sub"
+        },
+        {
+          "line": 2001,
+          "text": "Set ST8 = (new StandupTarget)(sw48, BM_sw48,48, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.335277,
+      "y": 0.087646
+    },
+    {
+      "binding": {
+        "device": 64,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.64-terror-dog-target",
+      "method": "standup contact projected onto its bound target collider position",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/HitTarget.sw64.json",
+          "sha256": "5b034735c94ec24c99d65c33497fc552ff28a0695c5a56f22cf66bf41db68227",
+          "size": 943
+        },
+        "center": null,
+        "drag_points": null,
+        "name": "sw64",
+        "position": {
+          "x": 741.6362,
+          "y": 1038.5798,
+          "z": -10.0
+        },
+        "type": "HitTarget"
+      },
+      "script_locators": [
+        {
+          "line": 1916,
+          "text": "Sub sw64_hit: STHit 64: End Sub"
+        },
+        {
+          "line": 2002,
+          "text": "Set ST9 = (new StandupTarget)(sw64, BM_sw64,64, 0)"
+        },
+        {
+          "line": 2088,
+          "text": "vpmTimer.PulseSw switch"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.77903,
+      "y": 0.491054
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.7-left-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw7.json",
+          "sha256": "5f92960314eb4df007b059b196cfa6650a4883fc34e2155b46cae3b0dd88f3f3",
+          "size": 2168
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 231.49446,
+            "y": 1469.5593,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 218.16571,
+            "y": 1481.3242,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 234.45866,
+            "y": 1596.5605,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 254.5304,
+            "y": 1602.4119,
+            "z": 0.0
+          }
+        ],
+        "name": "sw7",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 1363,
+          "text": "Sub sw7_Hit:vpmTimer.PulseSw 7:DOFALT 105, DOFPulse:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.246494,
+      "y": 0.726933
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.8-right-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw8.json",
+          "sha256": "52463a5162c3ea5612eb256cf55e6a34d315dd85663d16c59d3ae3d5602b3eed",
+          "size": 2164
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 615.7597,
+            "y": 1606.3546,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 632.0155,
+            "y": 1596.0515,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 648.3085,
+            "y": 1480.8152,
+            "z": 0.0
+          },
+          {
+            "editor_layer": null,
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 639.267,
+            "y": 1470.0059,
+            "z": 0.0
+          }
+        ],
+        "name": "sw8",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 1364,
+          "text": "Sub sw8_Hit:vpmTimer.PulseSw 8:DOFALT 106, DOFPulse:End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.665796,
+      "y": 0.727332
+    },
+    {
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.3-left-flipper",
+      "method": "flipper actuator projected onto its driven flipper pivot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Flipper.LeftFlipper.json",
+          "sha256": "d2cf05c769edea280d91fd6a30ceaece50d0d3308f15aace32a11e0828f1dbee",
+          "size": 1006
+        },
+        "center": {
+          "x": 268.28928,
+          "y": 1769.0
+        },
+        "drag_points": null,
+        "name": "LeftFlipper",
+        "position": null,
+        "type": "Flipper"
+      },
+      "script_locators": [
+        {
+          "line": 1167,
+          "text": "SolCallback(3) = \"SolLFlipper\"\t\t\t\t\t\t'manual 3 Left Flipper (was the VPM sLLFlipper alias)"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.281816,
+      "y": 0.836407
+    },
+    {
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.4-right-flipper",
+      "method": "flipper actuator projected onto its driven flipper pivot",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Flipper.RightFlipper.json",
+          "sha256": "6c061021ff8100241b997a9703af6e04d8437ee1653317c0f7f6fc98be7a9b4f",
+          "size": 1010
+        },
+        "center": {
+          "x": 601.6655,
+          "y": 1769.793
+        },
+        "drag_points": null,
+        "name": "RightFlipper",
+        "position": null,
+        "type": "Flipper"
+      },
+      "script_locators": [
+        {
+          "line": 1168,
+          "text": "SolCallback(4) = \"SolRFlipper\"\t\t\t\t\t\t'manual 4 Right Flipper (was the VPM sLRFlipper alias)"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.632002,
+      "y": 0.836782
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.14-left-pop-bumper",
+      "method": "own manual bumper coil projected onto its corresponding switch-bound bumper center; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw49.json",
+          "sha256": "3f1a44fd05c432d31caf027a3675a32a94704b209f43847c39729f93def36f4c",
+          "size": 718
+        },
+        "center": {
+          "x": 413.58524,
+          "y": 304.6469
+        },
+        "drag_points": null,
+        "name": "sw49",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2243,
+          "text": "Sub sw49_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.434438,
+      "y": 0.144041
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.15-right-pop-bumper",
+      "method": "own manual bumper coil projected onto its corresponding switch-bound bumper center; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw50.json",
+          "sha256": "89fa6ee3298a0350de14c80c8958670714d58fb65478ff5be41689564ff3a98a",
+          "size": 718
+        },
+        "center": {
+          "x": 607.4403,
+          "y": 349.85156
+        },
+        "drag_points": null,
+        "name": "sw50",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2250,
+          "text": "Sub sw50_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.638068,
+      "y": 0.165414
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.16-bottom-pop-bumper",
+      "method": "own manual bumper coil projected onto its corresponding switch-bound bumper center; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.sw51.json",
+          "sha256": "7289553640ea9a364ff99c88caccf3bba26aa5aed6a9c76ef5138fc9700d8954",
+          "size": 718
+        },
+        "center": {
+          "x": 471.92563,
+          "y": 494.2039
+        },
+        "drag_points": null,
+        "name": "sw51",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 2257,
+          "text": "Sub sw51_hit"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.49572,
+      "y": 0.233666
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.10-left-scoop",
+      "method": "VUK actuator projected onto the captured-ball trigger used by its exact coil routine",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw34.json",
+          "sha256": "f1008179529eb83f55023867de66324ecf3c4a2e4521645092bbd904758049be",
+          "size": 1719
+        },
+        "center": {
+          "x": 149.46349,
+          "y": 832.7358
+        },
+        "drag_points": null,
+        "name": "sw34",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 1172,
+          "text": "SolCallback(10)= \"SolLeftEject\"\t\t\t\t\t\t'Left Scoop"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.156999,
+      "y": 0.393729
+    },
+    {
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.22-subway-eject",
+      "method": "VUK actuator projected onto the captured-ball trigger used by its exact coil routine",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw63.json",
+          "sha256": "eaa31bb0791ba47ff9cacb79f50b7af2dfc228e65ee1c60bcbb24829fa01c9c2",
+          "size": 1716
+        },
+        "center": {
+          "x": 718.9626,
+          "y": 1238.9994
+        },
+        "drag_points": null,
+        "name": "sw63",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 1181,
+          "text": "SolCallback(22)= \"SolSubwayEject\"\t\t\t\t\t'Subway Eject"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.755213,
+      "y": 0.585815
+    },
+    {
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.2-auto-plunger",
+      "method": "auto-launch actuator projected onto the impulse-plunger shooter trigger",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw22.json",
+          "sha256": "ef7500225fa4fb57377f6ddd1c390bcf3651dacac4086d59cdc039090b390726",
+          "size": 1718
+        },
+        "center": {
+          "x": 902.8239,
+          "y": 1894.3406
+        },
+        "drag_points": null,
+        "name": "sw22",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 532,
+          "text": ".InitImpulseP sw22, 55, 0.5"
+        },
+        {
+          "line": 1166,
+          "text": "SolCallBack(2) = \"SolAutoPlungerIM\"\t\t\t\t\t'AutoPlunger"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.ghostbusters-le-premium.2016"
+      ],
+      "x": 0.948344,
+      "y": 0.895669
+    }
+  ],
+  "reviewed": false,
+  "script": {
+    "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/script.vbs",
+    "sha256": "bd138d247d55836b50b2d8a9234bee1df36c4c66a393a4573448e75cc50b81e8",
+    "size": 249313
+  },
+  "script_light_lines": [
+    {
+      "line": 2509,
+      "text": "Sub UpdateLamp(id)"
+    },
+    {
+      "line": 2510,
+      "text": "Select Case id"
+    },
+    {
+      "line": 2513,
+      "text": "Case 2"
+    },
+    {
+      "line": 2514,
+      "text": "SingleLamp l2, 2"
+    },
+    {
+      "line": 2515,
+      "text": "VRStartButtonGlow 2"
+    },
+    {
+      "line": 2516,
+      "text": "Case 3"
+    },
+    {
+      "line": 2517,
+      "text": "SingleLamp l3, 3"
+    },
+    {
+      "line": 2518,
+      "text": "VRTButtonGlow 3"
+    },
+    {
+      "line": 2519,
+      "text": "Case 10: SingleLamp l10, 10"
+    },
+    {
+      "line": 2520,
+      "text": "Case 11: SingleLamp l11, 11"
+    },
+    {
+      "line": 2521,
+      "text": "Case 13: SingleLamp l13, 13"
+    },
+    {
+      "line": 2522,
+      "text": "Case 14: SingleLamp l14, 14"
+    },
+    {
+      "line": 2523,
+      "text": "Case 15: SingleLamp l15, 15"
+    },
+    {
+      "line": 2524,
+      "text": "Case 16: SingleLamp l16, 16"
+    },
+    {
+      "line": 2525,
+      "text": "Case 17: SingleLamp l17, 17"
+    },
+    {
+      "line": 2526,
+      "text": "Case 18: SingleLamp l18, 18"
+    },
+    {
+      "line": 2527,
+      "text": "Case 19: SingleLamp l19, 19"
+    },
+    {
+      "line": 2528,
+      "text": "Case 20: SingleLamp l20, 20"
+    },
+    {
+      "line": 2529,
+      "text": "Case 21: SingleLamp l21, 21"
+    },
+    {
+      "line": 2530,
+      "text": "Case 22: SingleLamp l22, 22"
+    },
+    {
+      "line": 2531,
+      "text": "Case 23: SingleLamp l23, 23"
+    },
+    {
+      "line": 2532,
+      "text": "Case 24: SingleLamp l24, 24"
+    },
+    {
+      "line": 2533,
+      "text": "Case 25: SingleLamp l25, 25"
+    },
+    {
+      "line": 2534,
+      "text": "Case 30: SingleLamp l30, 30"
+    },
+    {
+      "line": 2535,
+      "text": "Case 31: SingleLamp l31, 31"
+    },
+    {
+      "line": 2536,
+      "text": "Case 32: SingleLamp l32, 32"
+    },
+    {
+      "line": 2537,
+      "text": "Case 33: SingleLamp l33, 33"
+    },
+    {
+      "line": 2538,
+      "text": "Case 35: SingleLamp l35, 35"
+    },
+    {
+      "line": 2539,
+      "text": "Case 36: SingleLamp l36, 36"
+    },
+    {
+      "line": 2540,
+      "text": "Case 37: SingleLamp l37, 37"
+    },
+    {
+      "line": 2541,
+      "text": "Case 38: SingleLamp l38, 38"
+    },
+    {
+      "line": 2542,
+      "text": "Case 39: SingleLamp l39, 39"
+    },
+    {
+      "line": 2543,
+      "text": "Case 40: SingleLamp l40, 40"
+    },
+    {
+      "line": 2544,
+      "text": "Case 49"
+    },
+    {
+      "line": 2545,
+      "text": "SingleLamp l49, 49"
+    },
+    {
+      "line": 2546,
+      "text": "TopperUpdate 49"
+    },
+    {
+      "line": 2547,
+      "text": "Case 54: SingleLamp l54, 54"
+    },
+    {
+      "line": 2548,
+      "text": "Case 56: SingleLamp l56, 56"
+    },
+    {
+      "line": 2549,
+      "text": "Case 57: SingleLamp l57, 57"
+    },
+    {
+      "line": 2550,
+      "text": "Case 58: SingleLamp l58, 58"
+    },
+    {
+      "line": 2551,
+      "text": "Case 59: SingleLamp l59, 59"
+    },
+    {
+      "line": 2552,
+      "text": "Case 60: SingleLamp l60, 60"
+    },
+    {
+      "line": 2553,
+      "text": "Case 61: SingleLamp l61, 61"
+    },
+    {
+      "line": 2554,
+      "text": "Case 65: SingleLamp l65, 65"
+    },
+    {
+      "line": 2555,
+      "text": "Case 66: SingleLamp l66, 66"
+    },
+    {
+      "line": 2556,
+      "text": "Case 68: SingleLamp l68, 68"
+    },
+    {
+      "line": 2557,
+      "text": "Case 69: SingleLamp l69, 69"
+    },
+    {
+      "line": 2558,
+      "text": "Case 70: SingleLamp l70, 70"
+    },
+    {
+      "line": 2559,
+      "text": "Case 71: SingleLamp l71, 71"
+    },
+    {
+      "line": 2560,
+      "text": "Case 72: SingleLamp l72, 72"
+    },
+    {
+      "line": 2561,
+      "text": "Case 73: SingleLamp l73, 73"
+    },
+    {
+      "line": 2562,
+      "text": "Case 75: SingleLamp l75, 75"
+    },
+    {
+      "line": 2563,
+      "text": "Case 76: SingleLamp l76, 76"
+    },
+    {
+      "line": 2564,
+      "text": "Case 77: SingleLamp l77, 77"
+    },
+    {
+      "line": 2565,
+      "text": "Case 78: SingleLamp l78, 78"
+    },
+    {
+      "line": 2566,
+      "text": "Case 79: SingleLamp l79, 79"
+    },
+    {
+      "line": 2567,
+      "text": "Case 84: SingleLamp l84, 84"
+    },
+    {
+      "line": 2568,
+      "text": "Case 85: SingleLamp l85, 85"
+    },
+    {
+      "line": 2569,
+      "text": "Case 89: SingleLamp l89, 89"
+    },
+    {
+      "line": 2570,
+      "text": "Case 91: SingleLamp l91, 91"
+    },
+    {
+      "line": 2571,
+      "text": "Case 92: SingleLamp l92, 92"
+    },
+    {
+      "line": 2572,
+      "text": "Case 94: SingleLamp l94, 94"
+    },
+    {
+      "line": 2573,
+      "text": "Case 95: SingleLamp l95, 95"
+    },
+    {
+      "line": 2574,
+      "text": "Case 100: SingleLamp l100, 100"
+    },
+    {
+      "line": 2575,
+      "text": "Case 101: SingleLamp l101, 101"
+    },
+    {
+      "line": 2576,
+      "text": "Case 102: SingleLamp l102, 102"
+    },
+    {
+      "line": 2577,
+      "text": "Case 103: SingleLamp l103, 103"
+    },
+    {
+      "line": 2578,
+      "text": "Case 104: SingleLamp l104, 104"
+    },
+    {
+      "line": 2579,
+      "text": "Case 105: SingleLamp l105, 105"
+    },
+    {
+      "line": 2580,
+      "text": "Case 106: SingleLamp l106, 106"
+    },
+    {
+      "line": 2581,
+      "text": "Case 112: SingleLamp l112, 112"
+    },
+    {
+      "line": 2582,
+      "text": "Case 113: SingleLamp l113, 113"
+    },
+    {
+      "line": 2585,
+      "text": "Case 26, 27, 28"
+    },
+    {
+      "line": 2586,
+      "text": "RGBLamp l26, 28, 27, 26"
+    },
+    {
+      "line": 2587,
+      "text": "Case 41, 42, 43"
+    },
+    {
+      "line": 2588,
+      "text": "RGBLamp l41, 43, 42, 41"
+    },
+    {
+      "line": 2589,
+      "text": "Case 45, 46, 47"
+    },
+    {
+      "line": 2590,
+      "text": "RGBLamp l45, 45, 46, 47"
+    },
+    {
+      "line": 2591,
+      "text": "Case 50, 51, 52"
+    },
+    {
+      "line": 2592,
+      "text": "RGBLamp l50, 52, 51, 50"
+    },
+    {
+      "line": 2593,
+      "text": "TopperUpdate id"
+    },
+    {
+      "line": 2594,
+      "text": "Case 62, 63, 64"
+    },
+    {
+      "line": 2595,
+      "text": "RGBLamp l62, 64, 63, 62"
+    },
+    {
+      "line": 2596,
+      "text": "Case 80, 81, 82"
+    },
+    {
+      "line": 2597,
+      "text": "RGBLamp l80, 82, 81, 80"
+    },
+    {
+      "line": 2598,
+      "text": "Case 86, 87, 88"
+    },
+    {
+      "line": 2599,
+      "text": "RGBLamp l86, 88, 87, 86"
+    },
+    {
+      "line": 2600,
+      "text": "Case 96, 97, 98"
+    },
+    {
+      "line": 2601,
+      "text": "RGBLamp l96, 96, 97, 98"
+    },
+    {
+      "line": 2602,
+      "text": "Case 107, 108, 109"
+    },
+    {
+      "line": 2603,
+      "text": "RGBLamp l107, 107, 108, 109"
+    },
+    {
+      "line": 2606,
+      "text": "Case 117: GIString GILeftSling, 117"
+    },
+    {
+      "line": 2607,
+      "text": "Case 118: GIString GIPlayfield2, 118"
+    },
+    {
+      "line": 2608,
+      "text": "Case 119: GIString GIPlayfield3, 119"
+    },
+    {
+      "line": 2609,
+      "text": "Case 120: GIString GIBackwall, 120"
+    },
+    {
+      "line": 2610,
+      "text": "Case 121: GIString GIRightSling, 121"
+    },
+    {
+      "line": 2611,
+      "text": "Case 123: GIString GIEcto, 123"
+    },
+    {
+      "line": 2614,
+      "text": "Case 122: SingleLamp f122, 122  ' Slimer"
+    },
+    {
+      "line": 2615,
+      "text": "Case 125: SingleLamp f125, 125"
+    },
+    {
+      "line": 2616,
+      "text": "Case 126: SingleLamp f126, 126"
+    },
+    {
+      "line": 2617,
+      "text": "Case 127: SingleLamp f127, 127"
+    },
+    {
+      "line": 2618,
+      "text": "Case 128: SingleLamp f128, 128"
+    },
+    {
+      "line": 2619,
+      "text": "Case 129: SingleLamp f129, 129"
+    },
+    {
+      "line": 2620,
+      "text": "Case 130: SingleLamp f130, 130"
+    },
+    {
+      "line": 2621,
+      "text": "Case 131"
+    },
+    {
+      "line": 2622,
+      "text": "SingleLamp f131, 131"
+    },
+    {
+      "line": 2623,
+      "text": "TopperUpdate 131"
+    },
+    {
+      "line": 2624,
+      "text": "Case 132: SingleLamp f132, 132"
+    },
+    {
+      "line": 2625,
+      "text": "Case 133: SingleLamp f133, 133"
+    },
+    {
+      "line": 2626,
+      "text": "Case 134: SingleLamp f134, 134"
+    },
+    {
+      "line": 2627,
+      "text": "Case 136: SingleLamp f136, 136"
+    },
+    {
+      "line": 2628,
+      "text": "Case 137: SingleLamp f137, 137"
+    },
+    {
+      "line": 2629,
+      "text": "Case 138: SingleLamp f138, 138"
+    },
+    {
+      "line": 2630,
+      "text": "Case 139: SingleLamp f139, 139"
+    },
+    {
+      "line": 2631,
+      "text": "Case 140"
+    },
+    {
+      "line": 2632,
+      "text": "SingleLamp f140, 140"
+    },
+    {
+      "line": 2633,
+      "text": "SingleLamp f140a, 140"
+    },
+    {
+      "line": 2634,
+      "text": "Case 141"
+    },
+    {
+      "line": 2635,
+      "text": "SingleLamp f141, 141"
+    },
+    {
+      "line": 2636,
+      "text": "SingleLamp f141a,141"
+    },
+    {
+      "line": 2637,
+      "text": "Case 142: SingleLamp f142, 142"
+    },
+    {
+      "line": 2639,
+      "text": "End Select"
+    },
+    {
+      "line": 2640,
+      "text": "End Sub"
+    }
+  ],
+  "script_runtime_lines": [
+    {
+      "line": 375,
+      "text": "Const cGameName = \"gbust_117h\"\t\t'Ghostbusters LE 1.17.0"
+    },
+    {
+      "line": 383,
+      "text": "Const B2ScGameName = \"spagb_100b2s\""
+    },
+    {
+      "line": 448,
+      "text": ".GameName = cGameName"
+    },
+    {
+      "line": 449,
+      "text": "If Err Then MsgBox \"Can't start Game \" & cGameName & vbNewLine & Err.Description : Exit Sub"
+    },
+    {
+      "line": 482,
+      "text": "Set VPWBall1 = sw20.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 483,
+      "text": "Set VPWBall2 = sw19.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 484,
+      "text": "Set VPWBall3 = sw18.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 485,
+      "text": "Set VPWBall4 = sw17.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 486,
+      "text": "Set VPWBall5 = sw16.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 487,
+      "text": "Set VPWBall6 = sw15.CreateSizedballWithMass(Ballsize/2,Ballmass)"
+    },
+    {
+      "line": 489,
+      "text": "Controller.Switch(20) = 1"
+    },
+    {
+      "line": 490,
+      "text": "Controller.Switch(19) = 1"
+    },
+    {
+      "line": 491,
+      "text": "Controller.Switch(18) = 1"
+    },
+    {
+      "line": 492,
+      "text": "Controller.Switch(17) = 1"
+    },
+    {
+      "line": 493,
+      "text": "Controller.Switch(16) = 1"
+    },
+    {
+      "line": 494,
+      "text": "Controller.Switch(15) = 1"
+    },
+    {
+      "line": 497,
+      "text": "Set CapBall0 = kickerinit.CreateSizedballWithMass(Ballsize/2, BallMass)  'Newton ball"
+    },
+    {
+      "line": 498,
+      "text": "Set CapBall1 = kickerinit1.CreateSizedballWithMass(Ballsize/2, BallMass)"
+    },
+    {
+      "line": 500,
+      "text": "Set CapBall2 = kickerinit2.CreateSizedballWithMass(Ballsize/2, BallMass)"
+    },
+    {
+      "line": 502,
+      "text": "Set CapBall3 = kickerinit3.CreateSizedballWithMass(Ballsize/2, BallMass)"
+    },
+    {
+      "line": 504,
+      "text": "Set CapBall4 = kickerinit4.CreateSizedballWithMass(Ballsize/2, BallMass) 'Newton ball"
+    },
+    {
+      "line": 505,
+      "text": "Set CapBall5 = kickerinit5.CreateSizedballWithMass(Ballsize/2, BallMass)"
+    },
+    {
+      "line": 507,
+      "text": "Controller.Switch(28) = 1"
+    },
+    {
+      "line": 508,
+      "text": "Controller.Switch(29) = 1"
+    },
+    {
+      "line": 509,
+      "text": "Controller.Switch(30) = 1"
+    },
+    {
+      "line": 532,
+      "text": ".InitImpulseP sw22, 55, 0.5"
+    },
+    {
+      "line": 533,
+      "text": ".Switch 22"
+    },
+    {
+      "line": 558,
+      "text": "slimerStart = Controller.GetMech(SlimerMech)"
+    },
+    {
+      "line": 1165,
+      "text": "SolCallBack(1) = \"SolTrough\"\t\t\t\t\t\t'Trough"
+    },
+    {
+      "line": 1166,
+      "text": "SolCallBack(2) = \"SolAutoPlungerIM\"\t\t\t\t\t'AutoPlunger"
+    },
+    {
+      "line": 1167,
+      "text": "SolCallback(3) = \"SolLFlipper\"\t\t\t\t\t\t'manual 3 Left Flipper (was the VPM sLLFlipper alias)"
+    },
+    {
+      "line": 1168,
+      "text": "SolCallback(4) = \"SolRFlipper\"\t\t\t\t\t\t'manual 4 Right Flipper (was the VPM sLRFlipper alias)"
+    },
+    {
+      "line": 1169,
+      "text": "SolCallback(5)=  \"SolLeftSlingDOF\"\t\t\t\t\t'Left Sling Magnet"
+    },
+    {
+      "line": 1170,
+      "text": "SolCallback(6)=  \"SolRightSlingDOF\"\t\t\t\t\t'Right Sling Magnet"
+    },
+    {
+      "line": 1171,
+      "text": "SolCallback(7)=  \"SolShaker\"\t\t\t\t\t\t'Shaker Motor"
+    },
+    {
+      "line": 1172,
+      "text": "SolCallback(10)= \"SolLeftEject\"\t\t\t\t\t\t'Left Scoop"
+    },
+    {
+      "line": 1173,
+      "text": "SolCallback(11)= \"SolLockPost\"\t\t\t\t\t\t'Lock Post (Captive Ball)"
+    },
+    {
+      "line": 1174,
+      "text": "SolCallback(12)= \"SolUpPost\"\t\t\t\t\t\t'Up Post (Spinner)"
+    },
+    {
+      "line": 1178,
+      "text": "SolCallback(18)= \"SolElectricGateDOF\"\t\t\t\t'Electric Gate"
+    },
+    {
+      "line": 1179,
+      "text": "SolCallback(20)= \"SolSubwayDiverter\"\t\t\t\t'Subway Diverter"
+    },
+    {
+      "line": 1180,
+      "text": "SolCallback(21)= \"SolSubwayLock\"\t\t\t\t\t'Subway Lock"
+    },
+    {
+      "line": 1181,
+      "text": "SolCallback(22)= \"SolSubwayEject\"\t\t\t\t\t'Subway Eject"
+    },
+    {
+      "line": 1182,
+      "text": "SolCallback(24)= \"SolRaiseLDrop\"\t\t\t\t\t'Left Drop Target Up"
+    },
+    {
+      "line": 1183,
+      "text": "SolCallback(25)= \"SolLowerLDrop\"\t\t\t\t\t'Left Drop Target Down"
+    },
+    {
+      "line": 1184,
+      "text": "SolCallback(26)= \"SolRaiseRDrop\"\t\t\t\t\t'Right Drop Target Up"
+    },
+    {
+      "line": 1185,
+      "text": "SolCallback(27)= \"SolLowerRDrop\"\t\t\t\t\t'Right Drop Target Down"
+    },
+    {
+      "line": 1218,
+      "text": "Sub sw20_Hit   : Controller.Switch(20) = 1 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1219,
+      "text": "Sub sw20_UnHit : Controller.Switch(20) = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1220,
+      "text": "Sub sw19_Hit   : Controller.Switch(19) = 1 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1221,
+      "text": "Sub sw19_UnHit : Controller.Switch(19) = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1222,
+      "text": "Sub sw18_Hit   : Controller.Switch(18) = 1 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1223,
+      "text": "Sub sw18_UnHit : Controller.Switch(18) = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1224,
+      "text": "Sub sw17_Hit   : Controller.Switch(17) = 1 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1225,
+      "text": "Sub sw17_UnHit : Controller.Switch(17) = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1226,
+      "text": "Sub sw16_Hit   : Controller.Switch(16) = 1 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1227,
+      "text": "Sub sw16_UnHit : Controller.Switch(16) = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1228,
+      "text": "Sub sw15_Hit    : Controller.Switch(15)  = 1 : UpdateTrough :  End Sub"
+    },
+    {
+      "line": 1229,
+      "text": "Sub sw15_UnHit  : Controller.Switch(15)  = 0 : UpdateTrough : End Sub"
+    },
+    {
+      "line": 1230,
+      "text": "Sub Drain_Hit : vpmTimer.AddTimer 400,\"Drain.kick 57, 10'\" : RandomSoundDrain Drain: End Sub"
+    },
+    {
+      "line": 1233,
+      "text": "UpdateTroughTimer.Interval = 100"
+    },
+    {
+      "line": 1254,
+      "text": "vpmTimer.PulseSw 21"
+    },
+    {
+      "line": 1363,
+      "text": "Sub sw7_Hit:vpmTimer.PulseSw 7:DOFALT 105, DOFPulse:End Sub"
+    },
+    {
+      "line": 1364,
+      "text": "Sub sw8_Hit:vpmTimer.PulseSw 8:DOFALT 106, DOFPulse:End Sub"
+    },
+    {
+      "line": 1474,
+      "text": "Controller.Switch(63) = 1"
+    },
+    {
+      "line": 1480,
+      "text": "Controller.Switch(63) = 0"
+    },
+    {
+      "line": 1507,
+      "text": "Controller.Switch(34) = 1"
+    },
+    {
+      "line": 1513,
+      "text": "Controller.Switch(34) = 0"
+    },
+    {
+      "line": 1649,
+      "text": "Set DT65 = (new DropTarget)(sw65, sw65a, BM_sw65, 65, 0, false)"
+    },
+    {
+      "line": 1650,
+      "text": "Set DT66 = (new DropTarget)(sw66, sw66a, BM_sw66, 66, 0, false)"
+    },
+    {
+      "line": 1819,
+      "text": "controller.Switch(Switchid mod 100) = 1"
+    },
+    {
+      "line": 1872,
+      "text": "controller.Switch(Switchid mod 100) = 0"
+    },
+    {
+      "line": 1905,
+      "text": "Sub sw24_hit: STHit 24: End Sub"
+    },
+    {
+      "line": 1906,
+      "text": "Sub sw25_hit: STHit 25: End Sub"
+    },
+    {
+      "line": 1907,
+      "text": "Sub sw26_hit: STHit 26: End Sub"
+    },
+    {
+      "line": 1909,
+      "text": "Sub sw37_hit: STHit 37: End Sub"
+    },
+    {
+      "line": 1910,
+      "text": "Sub sw38_hit: STHit 38: End Sub"
+    },
+    {
+      "line": 1912,
+      "text": "Sub sw45_hit: STHit 45: End Sub"
+    },
+    {
+      "line": 1913,
+      "text": "Sub sw46_hit: STHit 46: End Sub"
+    },
+    {
+      "line": 1914,
+      "text": "Sub sw48_hit: STHit 48: End Sub"
+    },
+    {
+      "line": 1916,
+      "text": "Sub sw64_hit: STHit 64: End Sub"
+    },
+    {
+      "line": 1994,
+      "text": "Set ST1 = (new StandupTarget)(sw26, BM_sw26,26, 0)"
+    },
+    {
+      "line": 1995,
+      "text": "Set ST2 = (new StandupTarget)(sw25, BM_sw25,25, 0)"
+    },
+    {
+      "line": 1996,
+      "text": "Set ST3 = (new StandupTarget)(sw24, BM_sw24,24, 0)"
+    },
+    {
+      "line": 1997,
+      "text": "Set ST4 = (new StandupTarget)(sw37, BM_sw37,37, 0)"
+    },
+    {
+      "line": 1998,
+      "text": "Set ST5 = (new StandupTarget)(sw38, BM_sw38,38, 0)"
+    },
+    {
+      "line": 1999,
+      "text": "Set ST6 = (new StandupTarget)(sw45, BM_sw45,45, 0)"
+    },
+    {
+      "line": 2000,
+      "text": "Set ST7 = (new StandupTarget)(sw46, BM_sw46,46, 0)"
+    },
+    {
+      "line": 2001,
+      "text": "Set ST8 = (new StandupTarget)(sw48, BM_sw48,48, 0)"
+    },
+    {
+      "line": 2002,
+      "text": "Set ST9 = (new StandupTarget)(sw64, BM_sw64,64, 0)"
+    },
+    {
+      "line": 2088,
+      "text": "vpmTimer.PulseSw switch"
+    },
+    {
+      "line": 2111,
+      "text": "Sub sw1_hit: Controller.Switch(1) = 1 : End Sub"
+    },
+    {
+      "line": 2112,
+      "text": "Sub sw1_unhit:Controller.Switch(1) = 0: End Sub"
+    },
+    {
+      "line": 2114,
+      "text": "Sub sw2_hit: Controller.Switch(2) = 1 : leftInlaneSpeedLimit: End Sub"
+    },
+    {
+      "line": 2115,
+      "text": "Sub sw2_unhit:Controller.Switch(2) = 0: End Sub"
+    },
+    {
+      "line": 2117,
+      "text": "Sub sw3_hit: Controller.Switch(3) = 1 : leftInlaneSpeedLimit: End Sub"
+    },
+    {
+      "line": 2118,
+      "text": "Sub sw3_unhit:Controller.Switch(3) = 0: End Sub"
+    },
+    {
+      "line": 2120,
+      "text": "Sub sw4_hit: Controller.Switch(4) = 1 : rightInlaneSpeedLimit: End Sub"
+    },
+    {
+      "line": 2121,
+      "text": "Sub sw4_unhit:Controller.Switch(4) = 0: End Sub"
+    },
+    {
+      "line": 2123,
+      "text": "Sub sw5_hit: Controller.Switch(5) = 1 : rightInlaneSpeedLimit: End Sub"
+    },
+    {
+      "line": 2124,
+      "text": "Sub sw5_unhit:Controller.Switch(5) = 0: End Sub"
+    },
+    {
+      "line": 2126,
+      "text": "Sub sw6_hit: Controller.Switch(6) = 1 : End Sub"
+    },
+    {
+      "line": 2127,
+      "text": "Sub sw6_unhit:Controller.Switch(6) = 0: End Sub"
+    },
+    {
+      "line": 2129,
+      "text": "Sub sw52_hit: Controller.Switch(52) = 1 : End Sub"
+    },
+    {
+      "line": 2130,
+      "text": "Sub sw52_unhit:Controller.Switch(52) = 0: End Sub"
+    },
+    {
+      "line": 2132,
+      "text": "Sub sw54_hit:Controller.Switch(54) = 1 :DOFALT 134, DOFPulse:End Sub\t\t'use pulsesw to trigger events"
+    },
+    {
+      "line": 2133,
+      "text": "Sub sw54_unhit:Controller.Switch(54) = 0 : End Sub\t\t'use pulsesw to trigger events"
+    },
+    {
+      "line": 2135,
+      "text": "Sub sw55_hit: Controller.Switch(55) = 1 :DOFALT 135, DOFPulse:End Sub\t\t'use pulsesw to trigger events"
+    },
+    {
+      "line": 2136,
+      "text": "Sub sw55_unhit: Controller.Switch(55) = 0:End Sub\t\t'use pulsesw to trigger events"
+    },
+    {
+      "line": 2138,
+      "text": "Sub sw56_hit: Controller.Switch(56) = 1 : DOFALT 131, DOFOn:End Sub"
+    },
+    {
+      "line": 2139,
+      "text": "Sub sw56_unhit:Controller.Switch(56) = 0: DOFALT 131, DOFOff : End Sub"
+    },
+    {
+      "line": 2141,
+      "text": "Sub sw57_hit: Controller.Switch(57) = 1 : DOFALT 132, DOFOn:End Sub"
+    },
+    {
+      "line": 2142,
+      "text": "Sub sw57_unhit:Controller.Switch(57) = 0: DOFALT 132, DOFOff : End Sub"
+    },
+    {
+      "line": 2144,
+      "text": "Sub sw58_hit: Controller.Switch(58) = 1 : DOFALT 133, DOFOn:End Sub"
+    },
+    {
+      "line": 2145,
+      "text": "Sub sw58_unhit:Controller.Switch(58) = 0: DOFALT 133, DOFOff : End Sub"
+    },
+    {
+      "line": 2148,
+      "text": "Sub sw28_hit: Controller.Switch(28) = 1 : End Sub"
+    },
+    {
+      "line": 2149,
+      "text": "Sub sw28_unhit:Controller.Switch(28) = 0: End Sub"
+    },
+    {
+      "line": 2151,
+      "text": "Sub sw29_hit: Controller.Switch(29) = 1 : End Sub"
+    },
+    {
+      "line": 2152,
+      "text": "Sub sw29_unhit:Controller.Switch(29) = 0: End Sub"
+    },
+    {
+      "line": 2154,
+      "text": "Sub sw30_hit: Controller.Switch(30) = 1 : End Sub"
+    },
+    {
+      "line": 2155,
+      "text": "Sub sw30_unhit:Controller.Switch(30) = 0: End Sub"
+    },
+    {
+      "line": 2157,
+      "text": "Sub sw31_hit: Controller.Switch(31) = 1 : End Sub"
+    },
+    {
+      "line": 2158,
+      "text": "Sub sw31_unhit:Controller.Switch(31) = 0: End Sub"
+    },
+    {
+      "line": 2160,
+      "text": "Sub sw32_hit: Controller.Switch(32) = 1 : End Sub"
+    },
+    {
+      "line": 2161,
+      "text": "Sub sw32_unhit:Controller.Switch(32) = 0: End Sub"
+    },
+    {
+      "line": 2163,
+      "text": "Sub sw33_hit: Controller.Switch(33) = 1 : End Sub"
+    },
+    {
+      "line": 2164,
+      "text": "Sub sw33_unhit:Controller.Switch(33) = 0: End Sub"
+    },
+    {
+      "line": 2167,
+      "text": "Sub sw36_hit:Controller.Switch(36) = 1 :  End Sub"
+    },
+    {
+      "line": 2168,
+      "text": "Sub sw36_unhit:Controller.Switch(36) = 0  : End Sub"
+    },
+    {
+      "line": 2172,
+      "text": "Sub sw35_spin:vpmTimer.PulseSw 35: PlaySoundAt \"Spinner\", sw35:DOFALT 117, DOFPulse:End Sub"
+    },
+    {
+      "line": 2175,
+      "text": "Sub sw40_hit: Controller.Switch(40) = 1 : WireRampOff: DOFALT 118, DOFPulse: End Sub"
+    },
+    {
+      "line": 2176,
+      "text": "Sub sw40_unhit: Controller.Switch(40) = 0: WireRampOn False: End Sub"
+    },
+    {
+      "line": 2178,
+      "text": "Sub sw43_hit: Controller.Switch(43) = 1 : WireRampOff: DOFALT 118, DOFPulse: End Sub"
+    },
+    {
+      "line": 2179,
+      "text": "Sub sw43_unhit: Controller.Switch(43) = 0: WireRampOn False: End Sub"
+    },
+    {
+      "line": 2183,
+      "text": "Sub sw59_hit:Controller.Switch(59) = 1 : End Sub"
+    },
+    {
+      "line": 2184,
+      "text": "Sub sw59_unhit:Controller.Switch(59) = 0 :End Sub"
+    },
+    {
+      "line": 2188,
+      "text": "Sub sw60_hit: Controller.Switch(60) = 1 :  End Sub"
+    },
+    {
+      "line": 2189,
+      "text": "Sub sw60_unhit: Controller.Switch(60) = 0:End Sub"
+    },
+    {
+      "line": 2191,
+      "text": "Sub sw61_hit: Controller.Switch(61) = 1 :  End Sub"
+    },
+    {
+      "line": 2192,
+      "text": "Sub sw61_unhit: Controller.Switch(61) = 0:End Sub"
+    },
+    {
+      "line": 2194,
+      "text": "Sub sw62_hit: Controller.Switch(62) = 1 :  End Sub"
+    },
+    {
+      "line": 2195,
+      "text": "Sub sw62_unhit: Controller.Switch(62) = 0:End Sub"
+    },
+    {
+      "line": 2246,
+      "text": "vpmTimer.PulseSw 49"
+    },
+    {
+      "line": 2253,
+      "text": "vpmTimer.PulseSw 50"
+    },
+    {
+      "line": 2260,
+      "text": "vpmTimer.PulseSw 51"
+    },
+    {
+      "line": 2487,
+      "text": "SetSlimerPosition Controller.GetMech(SlimerMech)"
+    },
+    {
+      "line": 5085,
+      "text": "Const SlimerMech = 0\t\t\t\t'PinMAME mech 0: the boom's motor (manual section 3.5 Motor Reference ID 1)"
+    },
+    {
+      "line": 5086,
+      "text": "Const SlimerPosMin = -110\t\t\t'table degrees at game position 0 (home)"
+    },
+    {
+      "line": 5087,
+      "text": "Const SlimerPosMax = 60\t\t\t\t'table degrees at SlimerPosSpan"
+    },
+    {
+      "line": 5088,
+      "text": "Const SlimerPosSpan = 92\t\t\t'game position at the far end of travel"
+    },
+    {
+      "line": 5112,
+      "text": "If clamped > SlimerPosSpan Then clamped = SlimerPosSpan"
+    },
+    {
+      "line": 5113,
+      "text": "SlimerTargetPos = SlimerPosMin + _"
+    },
+    {
+      "line": 5114,
+      "text": "(clamped / SlimerPosSpan) * (SlimerPosMax - SlimerPosMin)"
+    },
+    {
+      "line": 5122,
+      "text": "Const SlimerSpeed = 0.33"
+    },
+    {
+      "line": 5129,
+      "text": "if CurSlimerPos < SlimerTargetPos-SlimerSpeed then"
+    },
+    {
+      "line": 5130,
+      "text": "CurSlimerPos = CurSlimerPos + SlimerSpeed"
+    },
+    {
+      "line": 5136,
+      "text": "CurSlimerPos = CurSlimerPos - SlimerSpeed"
+    },
+    {
+      "line": 5217,
+      "text": "vpmTimer.PulseSw 68"
+    }
+  ],
+  "source_vpx": {
+    "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/Ghostbusters LE (Stern 2016) v0.041 PinMAME.vpx",
+    "sha256": "717cba9783713791b457a110e8a68dc2328934b9f4a9b0a151ccaa3f98dc5d52",
+    "size": 301506560
+  },
+  "transcribed_by": "GPT-6.1 Sol xhigh",
+  "transform": "x=round((raw_x-left)/(right-left),6); y=round((raw_y-top)/(bottom-top),6). x0left, x1right, y0rear, y1apron. Wall coordinates are the arithmetic centroid of all stored drag points, a mechanism projection rather than a measured leaf.",
+  "version": 1
+}
