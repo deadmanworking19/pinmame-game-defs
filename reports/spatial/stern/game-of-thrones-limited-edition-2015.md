@@ -478,12 +478,13 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.270 | pinmame.output.lamp:270 | observed | not_applicable (not_applicable) |
 | outputs | lamp.271 | pinmame.output.lamp:271 | observed | not_applicable (not_applicable) |
 | outputs | lamp.272 | pinmame.output.lamp:272 | observed | not_applicable (not_applicable) |
+| outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
 | displays | display.dmd |  | observed | not_applicable (not_applicable) |
 
 ## Sources
 
 - `catalog.driver` (pinmame_catalog): `d0fd2e4fb48b00da9f89f3595dde8579fbae258c301676af828a51781a0359c9`
-- `controller.profile` (human_review): `5d5e20b821aa2a01df271a8ec460f9d66915a255940432d40e540833f9843e63`
+- `controller.profile` (human_review): `79afdb62eb4c29899b7997e097d3f08fe85e786e598d9ef4bda8cb260eece0c1`
 - `identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
 - `manual.assembly` (manual): `e559316b46e768099cd7165540c5cabf0d0f78a9eebd4e30051453ad6637c415`
 - `manual.cpu` (manual): `e559316b46e768099cd7165540c5cabf0d0f78a9eebd4e30051453ad6637c415`
@@ -492,6 +493,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `manual.flipper` (manual): `e559316b46e768099cd7165540c5cabf0d0f78a9eebd4e30051453ad6637c415`
 - `manual.light` (manual): `e559316b46e768099cd7165540c5cabf0d0f78a9eebd4e30051453ad6637c415`
 - `manual.switch` (manual): `e559316b46e768099cd7165540c5cabf0d0f78a9eebd4e30051453ad6637c415`
+- `pinmame.adapter.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
+- `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `pinmame.core` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `pinmame.devices` (pinmame_core): `4435f0bd0576a14fa42bf5a32b85bbc2162f59e5c31e263831219f8811496a91`
 - `rom.routing` (rom_static_analysis): `f9e868568d7bc130a61e5f7e35f368f1ee61a34d89f26ca38a1ec97d97315889`

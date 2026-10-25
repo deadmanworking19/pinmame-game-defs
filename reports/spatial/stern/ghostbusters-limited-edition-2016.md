@@ -374,6 +374,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.166-unmapped-lamp-slot-166 | pinmame.output.lamp:166 | observed | not_applicable (not_applicable) |
 | outputs | lamp.167-unmapped-lamp-slot-167 | pinmame.output.lamp:167 | observed | not_applicable (not_applicable) |
 | outputs | lamp.168-unmapped-lamp-slot-168 | pinmame.output.lamp:168 | observed | not_applicable (not_applicable) |
+| outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
 | displays | display.dmd |  | observed | not_applicable (not_applicable) |
 | displays | display.ecto-goggles |  | observed | absent |
 
@@ -382,6 +383,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `identity.opdb.ghostbusters-le.2016` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
 - `manual.ghostbusters-le-premium.2016` (manual): `f793c2a029ff72ccb555f0d15dee90afd6fc82567be353792de92965d4b57025`
 - `manual.ghostbusters-le-premium.assemblies.2016` (manual): `f793c2a029ff72ccb555f0d15dee90afd6fc82567be353792de92965d4b57025`
+- `pinmame.adapter.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
+- `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `pinmame.spike1.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `rom.ghostbusters-le.gbust-117h` (rom_static_analysis): `164cea6e6fcbd7786007854c489cb0452eef34a5de7ebf30b341961f2d0c3725`
 - `runtime.ghostbusters-le.gbust-117h` (runtime_scenario): `a594076e5e676c140547578fa1486e5669984a22f75f35e7665b455b1fd004bf`

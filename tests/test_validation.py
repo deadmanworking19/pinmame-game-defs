@@ -372,6 +372,8 @@ class RepositoryValidationTests(unittest.TestCase):
 			for group_id, expected_group_id in expected.items():
 				plugin = groups.get(group_id, {}).get("transports", {}).get("controller_plugin")
 				if plugin is not None:
+					if plugin.get("contract_revision") in {"8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53", "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}:
+						expected_group_id = {"pinmame.input.switch": 5, "pinmame.output.solenoid": 1, "pinmame.output.gi": 2, "pinmame.output.lamp": 3}[group_id]
 					self.assertEqual(expected_group_id, plugin["group_id"], f"{path.name}:{group_id}")
 			if path.name == "sam.json":
 				self.assertEqual({}, groups["physical.output.ticket"]["transports"])

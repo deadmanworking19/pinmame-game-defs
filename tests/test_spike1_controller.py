@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import copy
 import unittest
 from pathlib import Path
 
@@ -9,7 +10,7 @@ from pinmame_game_defs.validation import validate_against_schema, validate_contr
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "spike1.json"
-PINMAME_REVISION = "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53"
+PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
 
 
 def addresses(group: dict) -> set[int]:
@@ -31,7 +32,7 @@ class Spike1ControllerTests(unittest.TestCase):
 		self.assertEqual([], validate_against_schema(self.profile, ROOT / "schemas" / "controller.schema.json", PROFILE_PATH.name))
 		self.assertEqual([], validate_controller_profile(self.profile))
 
-	def test_plugin_routes_are_from_the_exact_pr_contract(self) -> None:
+	def test_plugin_routes_are_from_the_current_pinned_contract(self) -> None:
 		self.assertEqual("pinmame.spike1", self.profile["id"])
 		self.assertTrue(self.profile["inversion_applied_by_emulator"])
 		self.assertEqual(
@@ -41,6 +42,7 @@ class Spike1ControllerTests(unittest.TestCase):
 		# PinMAMEPlugin.h:56-66 replaces the older switch 1 / lamp 0x200 IDs.
 		for group_id, plugin_id in (
 			("pinmame.input.switch", 5),
+			("pinmame.input.dip", 6),
 			("pinmame.output.solenoid", 1),
 			("pinmame.output.lamp", 3),
 		):
@@ -58,20 +60,36 @@ class Spike1ControllerTests(unittest.TestCase):
 			addresses(self.groups["pinmame.input.switch"]),
 		)
 
+	def test_unknown_revision_cannot_reuse_the_current_plugin_ids(self) -> None:
+		profile = copy.deepcopy(self.profile)
+		for group in profile['groups']:
+			group['transports']['controller_plugin']['contract_revision'] = 'f' * 40
+		self.assertTrue(validate_controller_profile(profile))
+
 	def test_solenoid_rules_exclude_unrouted_holes(self) -> None:
-		# Driver references, four binary lower-flipper copies and custom coils.
+		# Driver references, GAME ON, four binary lower-flipper copies and custom coils.
 		self.assertEqual(
-			set(range(1, 33)) | set(range(45, 49)) | set(range(51, 73)),
+			set(range(1, 34)) | set(range(45, 49)) | set(range(51, 73)),
 			addresses(self.groups["pinmame.output.solenoid"]),
 		)
 
-	def test_dip_ordinals_do_not_claim_the_shifted_plugin_route(self) -> None:
+	def test_dip_ordinals_use_the_corrected_plugin_route(self) -> None:
 		group = self.groups["pinmame.input.dip"]
 		self.assertEqual(set(range(1, 9)), addresses(group))
-		self.assertEqual({"libpinmame": {"channel": "dip"}}, group["transports"])
-		# libpinmame.cpp:2074-2091 uses srcId without subtracting one.
+		self.assertEqual(
+			{"libpinmame": {"channel": "dip"}, "controller_plugin": {"group_id": 6, "contract_revision": PINMAME_REVISION}},
+			group["transports"],
+		)
+		# libpinmame.cpp:2624 passes zero-based i separately from public i+1.
 		self.assertIn("bank 0", group["notes"])
-		self.assertIn("bank 1 bit 0", group["notes"])
+		self.assertIn("zero-based source bit i", group["notes"])
+
+	def test_virtual_game_on_and_current_polling_are_explicit(self) -> None:
+		notes = self.groups["pinmame.output.solenoid"]["notes"]
+		self.assertIn("Public 33 is the virtual GAME ON state", notes)
+		self.assertIn("nSolenoids is at least 48", notes)
+		self.assertIn("1 kHz", notes)
+		self.assertNotIn("nSolenoids is 32", notes)
 
 	def test_lamp_namespace_keeps_gi_and_rgb_in_the_lamp_channel(self) -> None:
 		group = self.groups["pinmame.output.lamp"]

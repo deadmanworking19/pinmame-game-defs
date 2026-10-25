@@ -117,7 +117,7 @@
   ],
   "drivers": [
     {
-      "description": "Game of Thrones (Limited Edition 1.37.0)",
+      "description": "Game of Thrones Limited Edition (1.37.0)",
       "flags": 0,
       "id": "got_137h",
       "manufacturer": "Stern",
@@ -8440,12 +8440,13 @@
       "kind": "virtual",
       "label": "Right lower flipper binary mirror 45",
       "physical": {
-        "notes": "Virtual binary OR mirror of right lower flipper actual public coil(s) 8. Either named winding asserts both mirrors [45, 46]; no additional winding or independent modulation is represented. "
+        "notes": "Virtual binary OR mirror of right lower flipper actual public coil(s) 8. Either named winding asserts both mirrors [45, 46]; no additional winding or independent modulation is represented.  Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "rom.routing",
-          "pinmame.core"
+          "pinmame.core",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8477,12 +8478,13 @@
       "kind": "virtual",
       "label": "Right lower flipper binary mirror 46",
       "physical": {
-        "notes": "Virtual binary OR mirror of right lower flipper actual public coil(s) 8. Either named winding asserts both mirrors [45, 46]; no additional winding or independent modulation is represented. "
+        "notes": "Virtual binary OR mirror of right lower flipper actual public coil(s) 8. Either named winding asserts both mirrors [45, 46]; no additional winding or independent modulation is represented.  Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "rom.routing",
-          "pinmame.core"
+          "pinmame.core",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8514,12 +8516,13 @@
       "kind": "virtual",
       "label": "Left lower flipper binary mirror 47",
       "physical": {
-        "notes": "Virtual binary OR mirror of left lower flipper actual public coil(s) 3. Either named winding asserts both mirrors [47, 48]; no additional winding or independent modulation is represented. "
+        "notes": "Virtual binary OR mirror of left lower flipper actual public coil(s) 3. Either named winding asserts both mirrors [47, 48]; no additional winding or independent modulation is represented.  Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "rom.routing",
-          "pinmame.core"
+          "pinmame.core",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8551,12 +8554,13 @@
       "kind": "virtual",
       "label": "Left lower flipper binary mirror 48",
       "physical": {
-        "notes": "Virtual binary OR mirror of left lower flipper actual public coil(s) 3. Either named winding asserts both mirrors [47, 48]; no additional winding or independent modulation is represented. "
+        "notes": "Virtual binary OR mirror of left lower flipper actual public coil(s) 3. Either named winding asserts both mirrors [47, 48]; no additional winding or independent modulation is represented.  Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "rom.routing",
-          "pinmame.core"
+          "pinmame.core",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -24156,6 +24160,41 @@
         "reason": "unused",
         "status": "not_applicable"
       }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.game-on",
+      "kind": "virtual",
+      "label": "GAME ON",
+      "physical": {
+        "notes": "Virtual emulator state: at least one mapped lower-flipper reflex is armed. This is not a fitted relay or an additional physical winding. Legacy direct addresses 34-36 alias this state and are not independent outputs."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.adapter.current"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.adapter.current"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
     }
   ],
   "relationships": [],
@@ -24378,9 +24417,9 @@
       "id": "controller.profile",
       "kind": "human_review",
       "license": "Repository license applies",
-      "locator": "pinmame.spike1 complete public address rules and documented transport restrictions; current working-tree profile, proposed integration dependency",
-      "revision": "8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53",
-      "sha256": "5d5e20b821aa2a01df271a8ec460f9d66915a255940432d40e540833f9843e63",
+      "locator": "Current pinmame.spike1 adapter profile; historical ROM and runtime evidence retains its own source revision.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "79afdb62eb4c29899b7997e097d3f08fe85e786e598d9ef4bda8cb260eece0c1",
       "uri": "controllers/pinmame/spike1.json"
     },
     {
@@ -24446,6 +24485,57 @@
       "rights": "Derived factual observations only; ROM/software and display-frame pixels retained externally.",
       "sha256": "20acb59699ce13064aecee9b34c9362885148df7161afb91b1dd939b9a12f553",
       "uri": "working-root:review-artifacts/spike1-2026-10-10/runtime/got_137h-api-r2/run.json"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "current-adapter",
+          "locator": "Complete current adapter facts and exact code excerpts, including GAME ON, DIP routing, pulse retention and mechanism APIs.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-adapter.json.txt",
+          "reviewed": false,
+          "sha256": "24afd5e940b454d1d9dfa855c42a0286980a0b43d1f17f83a2a83c760c914f8e",
+          "transcribed_by": "Codex source audit, independently hash-checked against pinned source"
+        },
+        {
+          "id": "current-switch-routes",
+          "locator": "Exact changed active emulator switch routes; historical ROM and physical aliases remain intact.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-switch-routes.json.txt",
+          "reviewed": false,
+          "sha256": "e7921cb447a7958c8f2f63150558031185e20da6f5e30dae2c19c8ab6f7806ec",
+          "transcribed_by": "Codex compiled switch-map audit"
+        }
+      ],
+      "id": "pinmame.adapter.current",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "SPIKE1_GAMEONSOL, spike1_sync_io, spike1_map_devices, SPIKE1_INIT_ENCODER; exact source regions and transport authority limits retained in excerpt.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486",
+      "uri": "https://github.com/vpinball/pinmame/blob/46e1a01a0f73dc5ce163d98db1ae435883ecc450/src/wpc/spike1.c"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "current-catalog",
+          "locator": "Current public API driver row got_137h.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-catalog.json.txt",
+          "reviewed": false,
+          "sha256": "bdb7895c21564311ec41b733dc4b585d52c64d502d20da069b8256912b257d67",
+          "transcribed_by": "LibPinMAME PinmameGetGames"
+        }
+      ],
+      "id": "pinmame.catalog.current",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames exact driver got_137h; earlier metadata is preserved in historical source records.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd",
+      "uri": "working-root:review-artifacts/spike1-refresh-2026-10-25/source-refresh/current-api-catalog.json"
     }
   ]
 }

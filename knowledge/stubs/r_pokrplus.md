@@ -47,4 +47,4 @@ Do not use this stub as an authoring definition.
 
 ## Sources
 
-- PinMAME `8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53`, public `PinmameGetGames` catalog entry for `r_pokrplus`.
+- PinMAME `46e1a01a0f73dc5ce163d98db1ae435883ecc450`, public `PinmameGetGames` catalog entry for `r_pokrplus`.

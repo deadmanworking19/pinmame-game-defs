@@ -24,7 +24,7 @@ The ledger as it stood before this compaction, with every per-game section and r
 
 | Input | Required revision | Baseline role |
 | --- | --- | --- |
-| `vpinball/pinmame` | `8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53` | Authoritative LibPinMAME build and driver catalog from PR #728; managed source checkout `pinmame-spike1-pr728` preserves the previous clean checkout. Source and catalog changes are recorded in `reports/source-updates/spike1-pr728.json`; records keep citing earlier revisions where they were read there |
+| `vpinball/pinmame` | `46e1a01a0f73dc5ce163d98db1ae435883ecc450` | Authoritative LibPinMAME build and driver catalog from current upstream master; managed source checkout and build `pinmame-46e1a01a`. The reviewed source/catalog delta is retained in `reports/source-updates/spike1-current.json`; earlier evidence stays pinned to the revision on which it was observed |
 | `sverrewl/vpxtable_scripts` | `0c036bb61b4b4e8c778c37559f6795df8cd1521e` | First pinned known-working VPX script corpus |
 | `jsm174/vpx-standalone-scripts` | `15d112648a1b94b9f59eb8b3c335d57283653c50` | Second pinned known-working VPX script corpus |
 | `vpinball/pinmame-dotnet` | `e3e31eea6cd8eb046b4a8ea3110a31bb19c32b45` | Historical: managed interop reference for the migrated compatibility fixtures; no local checkout needed |
@@ -48,7 +48,7 @@ model review and maintainer PR review.
   worked highest rank first: `docs/pinside-top100.md` lists every ranked title that has a PinMAME
   record, with its current completion score. Keep that file current: regeneration refreshes the
   scores and a test fails when they are stale, but a split, merged or renamed record needs its row
-  updated by hand. Titles on hardware pinned PinMAME has no driver for (later Stern hardware beyond the ten Spike 1 drivers, JJP, Spooky after its four pinHeck games, CGC
+  updated by hand. Titles on hardware pinned PinMAME has no driver for (later Stern hardware beyond the supported Spike 1 drivers, JJP, Spooky after its four pinHeck games, CGC
   remakes, Barrels of Fun, Dutch Pinball, American Pinball, Pinball Brothers, Heighway, DPX) are out
   of scope. A title's open requirements are its `coverage.missing`.
 - Otherwise follow the runbook's default order.

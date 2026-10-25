@@ -1,5 +1,11 @@
 # Ghostbusters (Limited Edition) (2016)
 
+## Current PinMAME adapter
+
+The active adapter is PinMAME `46e1a01a0f73dc5ce163d98db1ae435883ecc450`. Virtual GAME ON is public solenoid 33; it represents an armed lower-flipper reflex, not a physical relay. Direct reads at 34-36 are aliases; the canonical plugin and aggregate address is 33. The current driver samples I/O at 1 kHz, retains short host switch edges, and keeps newly observed coil pulses for at least one frame. The modulated poll includes lower binary mirrors 45-48 because nSolenoids is at least 48. Plugin DIP group 6 now maps ordinals 1-8 to bank 0 bits 0-7 correctly. Lower EOS synthesis is unchanged. Historical runtime traces and ROM-table excerpts remain scoped to their original revision; this source audit adds no new gameplay observation or physical fitment evidence.
+
+Source records: `pinmame.adapter.current` provides the pinned code and active-route excerpts; `pinmame.catalog.current` provides the current public driver descriptor. Both supplement the historical sources below.
+
 ## Identity
 
 This partial definition describes Stern's physical 2016 Ghostbusters Limited Edition and the exact catalog driver `gbust_117h`, “Ghostbusters (Limited Edition 1.17.0)”. The retained OPDB record `GR9Nr-MVKol` is “Ghostbusters (LE)”, manufacture date `2016-01-01`, physicalMachine1, Stern Pinball Inc., IPDB6334 and Limited edition. OPDB supports identity only; secondary database features do not establish wiring, physical component quantities or mechanism construction. The [exact source catalog initializer](https://github.com/vpinball/pinmame/blob/8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53/src/wpc/spike1.c#L717) and the source-matching LE ROM independently retain the firmware/title designation. The year is the physical title's year, not a software revision date.

@@ -1,0 +1,406 @@
+{
+  "attribution": "PinMAME contributors",
+  "authority_limits": [
+    "Emulator transport only; no physical fitment, contact polarity, quantities, geometry, measured motor timing, or refreshed gameplay observation.",
+    "Historical ROM-table aliases and physical manual wiring remain separate from active compiled emulator routing."
+  ],
+  "code_excerpts": [
+    {
+      "code": "#define SPIKE1_FIRSTCUSTSOL CORE_FIRSTCUSTSOL /* solenoid 51 */\n#define SPIKE1_NCUSTSOLS  (CORE_MODOUT_SOL_MAX - SPIKE1_FIRSTCUSTSOL + 1)\n#define SPIKE1_GAMEONSOL  33           /* GAME ON, as SAM's: the flippers enabled - their reflexes armed */\n#define SPIKE1_GAMEONBIT  0x10         /* its bit in solenoids2, where the core takes SAM's */\n#define SPIKE1_IOFREQ     1000         /* the I/O exchange: the node boards scan their switches far faster than a frame */\n\n/* The numbers a title's manual gives the switches PinMAME's keys reach; they differ between titles */\ntypedef struct {\n  int flip[8]; /* left button, right button, left EOS, right EOS, then the same for the upper flippers (0: none) */\n  int coin[4]; /* left, right, center, fourth */\n  int tilt, slam;\n} spike1_tSwitches;\n#define SPIKE1_SWITCHES(lbutton, rbutton, leos, reos, coin1, coin2, coin3, coin4, tilt, slam) \\\n  { { lbutton, rbutton, leos, reos }, { coin1, coin2, coin3, coin4 }, tilt, slam }\n/* a title with upper flippers, worked by their own leaf on each flipper button (Game of Thrones) */\n#define SPIKE1_SWITCHES_UPPER(lbutton, rbutton, leos, reos, ulbutton, urbutton, coin1, coin2, coin3, coin4, tilt, slam) \\\n",
+      "id": "src/wpc/spike1.c:68-83",
+      "line_end": 83,
+      "line_start": 68,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "/* A table sets switches from its own thread, and VPX runs a frame's physics in a burst: a fast ball\n   through a trigger closes and opens it within a fraction of a millisecond, between two looks here.\n   The core counts each change it makes (core_swChangedHook), so such a closure still reaches the\n   machine - closed, then open */\nstatic volatile UINT32 spike1_swChanges[128];\n\nstatic void spike1_swChanged(int m)\n{\n  if (m >= 0 && m < 128) spike1_swChanges[m]++;\n}\n\nstatic void spike1_sync_io(void)\n{\n  int i, gameOn = 0;\n  UINT32 sols = 0, sols2 = coreGlobals.solenoids2 & ~(UINT32)(CORE_LLFLIPSOLBITS | CORE_LRFLIPSOLBITS | SPIKE1_GAMEONBIT);\n  UINT8 lamps[CORE_MAXLAMPCOL];\n  const double now = timer_get_time(), frame = 1.0 / Machine->drv->frames_per_second;\n  /* switches that changed, the DIP switches from the DIP settings */\n  const int dips = core_getDip(0);\n  for (i = 0; i < 8; i++) core_setSw(SPIKE1_SW_DIP1 + i, (dips >> i) & 1);\n  for (i = 0; i < locals.nsw; i++) {\n    /* the count, then the level. core_setSw sets the level (clearing the bit first) and then counts,\n       so a level that disagrees with the count's parity is a change half made, taken at the next\n       look - as is a change made without core_setSw (the core's flipper keys), taken then anyway */\n    const UINT32 changes = spike1_swChanges[locals.swM[i]];\n    const UINT8 closed = core_getSw(locals.sw[i]) ? 1 : 0;\n    const int moved = closed != locals.swState[i];\n    if (moved != (int)((changes - locals.swSeen[i]) & 1) && !locals.swAgain[i]) {\n      locals.swAgain[i] = 1;\n      continue;\n    }\n    locals.swAgain[i] = 0;\n    if (moved) {\n      locals.swState[i] = closed;\n      spike1_pinmame_set_switch(locals.sw[i], closed);\n      SPIKE1_DEBUG_ONLY(diag.switches++;\n      if (diag.on) fprintf(stderr, \"[spike1 driver] switch %d %s\\n\", locals.sw[i], closed ? \"closed\" : \"opened\");)\n    } else if (changes != locals.swSeen[i]) { /* changed and changed back since the last look */\n      spike1_pinmame_set_switch(locals.sw[i], !closed);\n      spike1_pinmame_set_switch(locals.sw[i], closed);\n      SPIKE1_DEBUG_ONLY(diag.switches += 2;\n      if (diag.on) fprintf(stderr, \"[spike1 driver] switch %d %s and back\\n\", locals.sw[i], closed ? \"opened\" : \"closed\");)\n    }\n    locals.swSeen[i] = changes;\n  }\n  /* coils */\n  for (i = 0; i < SPIKE1_MAXCOILS; i++) {\n    const int sol = locals.coilSol[i];\n    if (sol) {\n      unsigned level = spike1_pinmame_coil_output(i);\n      if (level && !locals.coilLevel[i]) locals.coilOnAt[i] = now;\n      else if (!level && now - locals.coilOnAt[i] <= frame) level = locals.coilLevel[i];\n      locals.coilLevel[i] = (UINT8)level;\n      coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + sol - 1].value = level / 255.0f;\n      if (level && sol <= 32) sols |= CORE_SOLBIT(sol);\n    }\n  }\n  /* the flipper outputs, and GAME ON: the flippers enabled. The game arms the flippers' reflexes on\n     the boards - with the slings' and pops' - while a ball is in play, and disarms them when it\n     tilts and when a ball or the game ends, so a table switches its own slings and pops with it */\n  for (i = 0; i < 4; i++) {\n    const int coil = locals.flipCoil[i >> 1][i & 1]; /* a flipper coil always has a solenoid, so its level is taken above */\n    if (coil >= 0 && locals.coilLevel[coil]) sols2 |= (i >> 1) ? CORE_LRFLIPSOLBITS : CORE_LLFLIPSOLBITS;\n    if (coil >= 0 && spike1_pinmame_coil_reflex_armed(coil)) gameOn = 1;\n  }\n  if (gameOn) sols2 |= SPIKE1_GAMEONBIT;\n  coreGlobals.solenoids = coreGlobals.pulsedSolState = sols;\n  coreGlobals.solenoids2 = sols2;\n  coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + SPIKE1_GAMEONSOL - 1].value = gameOn ? 1.0f : 0.0f;\n  /* LEDs */\n  memset(lamps, 0, sizeof(lamps));\n  for (i = 0; i < (int)locals.nLeds; i++) {\n    const int lamp = locals.ledLamp[i] - 1;\n    if (lamp >= 0) {\n      const unsigned level = spike1_pinmame_led_level(i);\n      coreGlobals.physicOutputState[CORE_MODOUT_LAMP0 + lamp].value = level / 255.0f;\n      if (level) lamps[lamp / 8] |= 1 << (lamp % 8);\n    }\n  }\n  for (i = 0; i < CORE_MAXLAMPCOL; i++) coreGlobals.lampMatrix[i] = lamps[i];\n  /* the mechs, for GetMech */\n  for (i = 0; i < SPIKE1_MAXMECHS; i++) {\n    int position = 0;\n    locals.mech[i] = spike1_pinmame_motor((unsigned)i, &position, NULL) ? position : 0;\n  }\n  /* the DMD: a new frame when the game has sent one (a title with the RGB matrix instead draws it as video, spike1_rgb_video) */\n",
+      "id": "src/wpc/spike1.c:315-400",
+      "line_end": 400,
+      "line_start": 315,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "/* mech n: the n-th motor's position, as the last I/O exchange took it (spike1_sync_io): a host asks\n   from its own thread, and the machine's motors run on the machine's */\nstatic int spike1_getMech(int mechNo)\n{\n  return mechNo >= 0 && mechNo < SPIKE1_MAXMECHS ? locals.mech[mechNo] : 0;\n}\n",
+      "id": "src/wpc/spike1.c:462-467",
+      "line_end": 467,
+      "line_start": 462,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "  coreGlobals.nLamps = 8 * (CORE_CUSTLAMPCOL + core_gameData->hw.lampCol);\n  locals.nLeds = 0;\n  for (i = 0; i < SPIKE1_MAXLEDS && spike1_pinmame_led(i, &number, &kind, &name); i++) {\n    locals.ledLamp[i] = number >= 1 && number <= coreGlobals.nLamps && !(kind & SPIKE1_LED_MOTOR) ? number : 0;\n    locals.nLeds = i + 1;\n  }\n  /* through the lower flippers (45-48) at least, so GAME ON (33) and they are physical outputs too */\n  coreGlobals.nSolenoids = cust ? SPIKE1_FIRSTCUSTSOL - 1 + cust : CORE_FIRSTLFLIPSOL + 3;\n  coreGlobals.nGI = 0;\n  /* the alphanumeric display's segments are modulated outputs too (spike1_sync_io) */\n  coreGlobals.nAlphaSegs = (core_gameData->lcdLayout->type & CORE_SEGALL) == CORE_SEG16S ? SPIKE1_ALNUM_DIGITS * 16 : 0;\n  core_set_pwm_output_type(CORE_MODOUT_LAMP0, coreGlobals.nLamps, CORE_MODOUT_NONE);\n  core_set_pwm_output_type(CORE_MODOUT_SOL0, coreGlobals.nSolenoids, CORE_MODOUT_NONE);\n}\n\nstatic void spike1_map_switches(void)\n",
+      "id": "src/wpc/spike1.c:724-739",
+      "line_end": 739,
+      "line_start": 724,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "    locals.swM[i] = spike1_sw2m(locals.sw[i]);\n    locals.swSeen[i] = spike1_swChanges[locals.swM[i]];\n  }\n  core_swChangedHook = spike1_swChanged;\n  locals.startSw = spike1_pinmame_find_switch(\"START BUTTON\");\n",
+      "id": "src/wpc/spike1.c:752-756",
+      "line_end": 756,
+      "line_start": 752,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "  MDRV_CPU_ADD_TAG(\"mcpu\", SPIKE1, SPIKE1_CPU_HZ)\n  MDRV_CPU_MEMORY(spike1_readmem, spike1_writemem)\n  MDRV_CPU_VBLANK_INT(spike1_vblank, 1)\n  MDRV_TIMER_ADD(spike1_io, SPIKE1_IOFREQ)\n  MDRV_NVRAM_HANDLER(spike1)\n  MDRV_SWITCH_UPDATE(spike1)\n  MDRV_SWITCH_CONV(spike1_sw2m, spike1_m2sw)\n  MDRV_LAMP_CONV(spike1_lamp2m, spike1_m2lamp)\n  MDRV_SOUND_ADD(CUSTOM, spike1_sndInt)\n",
+      "id": "src/wpc/spike1.c:871-879",
+      "line_end": 879,
+      "line_start": 871,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "   switches: SPIKE1_SWITCHES(...) with the manual's numbers. The flipper switches need no FLIP_SWNO:\n   spike1_sw2m() puts them in the flipper column */\n#define SPIKE1_LAMPCOLS(lamps) (((lamps) + 7) / 8 > CORE_CUSTLAMPCOL ? ((lamps) + 7) / 8 - CORE_CUSTLAMPCOL : 0)\n#define SPIKE1_CORE(layout, lamps, flippers) \\\n  { GEN_SPIKE1, layout, \\\n",
+      "id": "src/wpc/spike1.c:904-908",
+      "line_end": 908,
+      "line_start": 904,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "/ Ghostbusters\n/-------------------------------------------------------------------*/\n/* Slimer: node 8 motor 0. The game's own Slimer calibration drives him to -25 and to 125 and passes\n   only when he stopped at -6 (+/-4) and 102 (+/-5) counts further on, so his end stops are at -6\n   and 96. His speed is not in the game or the firmware, which sets a PWM duty: 50 counts a second\n   at full drive is an estimate from the manual's 10 RPM gearhead (041-5132-01), not a measurement */\nSPIKE1_INIT_ENCODER(gbust, \"ghostbusters_le\", spike1_dmd_insert, 165, SPIKE1_SWITCHES(9, 10, 11, 12, 81, 82, 83, 84, 86, 89),\n                    SPIKE1_ENCODER_MOTOR(8, 0, -6, 96, 50))\nROM_START(gbust_117h)\n",
+      "id": "src/wpc/spike1.c:1820-1828",
+      "line_end": 1828,
+      "line_start": 1820,
+      "path": "src/wpc/spike1.c"
+    },
+    {
+      "code": "#define FLIP_LR        (0x1)\n#define FLIP_LL        (0x2)\n#define FLIP_UR        (0x4)\n#define FLIP_UL        (0x8)\n#define FLIP_L         (FLIP_LL | FLIP_LR)\n#define FLIP_U         (FLIP_UL | FLIP_UR)\n\n/*-- definition macros --*/\n#define FLIP_BUT(x)    ((x)<<16)\n#define FLIP_SW(x)     ((x)<<20)\n#define FLIP_SWNO(l,r) (((l)<<8)|(r)|FLIP_SW(FLIP_L))\n#define FLIP_EOS(x)    ((x)<<28)\n#define FLIP_SOL(x)    (((x)<<24)|FLIP_EOS(x))\n\n#define FLIP_SWL(x)    (((x)>>8)&0xff)\n#define FLIP_SWR(x)    ((x)&0xff)\n\n/*---------------------\n/  Exported variables\n/----------------------*/\n#define CORE_FLIPSTROKETIME 2 /* Timer for flipper to reach top VBLANKs */\n",
+      "id": "src/wpc/core.h:149-169",
+      "line_end": 169,
+      "line_start": 149,
+      "path": "src/wpc/core.h"
+    },
+    {
+      "code": "\n    /*-- buttons --*/\n    swFlip = 0;\n    if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWLLFLIPBUTBIT;\n    if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWLRFLIPBUTBIT;\n    if (locals.flipMask & CORE_SWULFLIPBUTBIT) {    /* have UL switch */\n      if (flip & FLIP_BUT(FLIP_UL))\n        { if (inports[CORE_FLIPINPORT] & CORE_ULFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }\n      else\n        { if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }\n    }\n    if (locals.flipMask & CORE_SWURFLIPBUTBIT) {    /* have UR switch */\n      if (flip & FLIP_BUT(FLIP_UR))\n        { if (inports[CORE_FLIPINPORT] & CORE_URFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }\n      else\n        { if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }\n    }\n  }\n  else\n    swFlip = (coreGlobals.swMatrix[flipSwCol] ^ coreGlobals.invSw[flipSwCol]) & (CORE_SWULFLIPBUTBIT|CORE_SWURFLIPBUTBIT|CORE_SWLLFLIPBUTBIT|CORE_SWLRFLIPBUTBIT);\n\n#ifdef PROC_SUPPORT\n  /*-- Only handle flipper switches if we're not in a real game, otherwise they --*/\n  /*-- will get physically activated anyway */\n  if (!coreGlobals.p_rocEn) {\n#endif\n\n    /*-- set switches in matrix for non-fliptronic games --*/\n    if (FLIP_SWL(flip)) core_setSw(FLIP_SWL(flip), swFlip & CORE_SWLLFLIPBUTBIT);\n    if (FLIP_SWR(flip)) core_setSw(FLIP_SWR(flip), swFlip & CORE_SWLRFLIPBUTBIT);\n#ifdef PROC_SUPPORT\n  }\n#endif\n\n  /*-- fake solenoids if not CPU controlled --*/\n  if ((flip & FLIP_SOL(FLIP_L)) == 0) {\n    coreGlobals.solenoids2 &= 0xffffff00;\n    if (flipEn) {\n      if (swFlip & CORE_SWLLFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LLFLIPSOLBITS;\n      if (swFlip & CORE_SWLRFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LRFLIPSOLBITS;\n    }\n  }\n\n  /*-- EOS switches --*/\n  if (locals.flipMask & CORE_SWULFLIPEOSBIT) {\n    if (core_getSol(sULFlip)) locals.flipTimer[0] += 1;\n    else                      locals.flipTimer[0] = 0;\n    if (locals.flipTimer[0] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWULFLIPEOSBIT;\n  }\n  if (locals.flipMask & CORE_SWURFLIPEOSBIT) {\n    if (core_getSol(sURFlip)) locals.flipTimer[1] += 1;\n    else                      locals.flipTimer[1] = 0;\n    if (locals.flipTimer[1] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWURFLIPEOSBIT;\n  }\n  if (locals.flipMask & CORE_SWLLFLIPEOSBIT) {\n    if (core_getSol(sLLFlip)) locals.flipTimer[2] += 1;\n    else                      locals.flipTimer[2] = 0;\n    if (locals.flipTimer[2] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLLFLIPEOSBIT;\n  }\n  if (locals.flipMask & CORE_SWLRFLIPEOSBIT) {\n    if (core_getSol(sLRFlip)) locals.flipTimer[3] += 1;\n    else                      locals.flipTimer[3] = 0;\n    if (locals.flipTimer[3] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLRFLIPEOSBIT;\n  }\n  coreGlobals.swMatrix[flipSwCol] = (coreGlobals.swMatrix[flipSwCol]         & ~locals.flipMask) |\n                                    ((swFlip ^ coreGlobals.invSw[flipSwCol]) &  locals.flipMask);\n\n  /*-- update core dependent switches --*/\n  if (coreData->updSw)  coreData->updSw(g_fHandleKeyboard ? inports : NULL);\n\n",
+      "id": "src/wpc/core.c:1805-1874",
+      "line_end": 1874,
+      "line_start": 1805,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "int core_getSol(int solNo) {\n  // No solenoid 0, but VPM's Solenoids/SolenoidsState arrays start at index 0\n  if (solNo < 1)\n    return 0;\n  // Binary states are returned as 0/1, like the changed solenoid list. The integrated value is only returned with physical solenoid outputs\n  // or modulated solenoids: with CORE_MODOUT_FORCE_ON alone (SAM, Capcom, pinHeck), a blinking flasher would read on for the whole sequence\n  // 1-32: driver board outputs, like core_getAllSol / core_getAllPhysicSols\n  if (solNo <= 28 || (solNo <= 32 && !(core_gameData->gen & GEN_ALLWPC)))\n    return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value) : ((coreGlobals.solenoids & CORE_SOLBIT(solNo)) != 0);\n  else if (solNo <= 32) // 29-32 WPC: remap GameOn/J111 GPIO (hacky)\n    // Binary state even with physical outputs, while core_getAllPhysicSols reports slots 28-30 (CORE_MODOUT_PULSE, same states) as 0/255\n    return (coreGlobals.solenoids2 & (1<<(solNo-29+8))) != 0;\n  else if (solNo <= 36) { // 33-36 driver specific sols\n    if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))\n      return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value); // Fliptronics are implemented through PWM (needed as these are used to drive flashers on some games)\n    if (coreGlobals.hasModulatedFlippers && (options.usemodsol & CORE_MODOUT_FORCE_ON)) // Binary state of the flipper outputs, like core_getFlipSolBits\n      return coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value > 0.f;\n    if (core_gameData->gen & GEN_ALLWPC) { // WPC only: Upper flipper (note that other systems also have upper flippers, they just don't implement the legacy PinMAME flipper output mapping)\n      int mask;\n      /*-- flipper coils --*/\n      if      ((solNo == sURFlip) && (core_gameData->hw.flippers & FLIP_SOL(FLIP_UR)))\n        mask = CORE_URFLIPSOLBITS;\n      else if ((solNo == sULFlip) && (core_gameData->hw.flippers & FLIP_SOL(FLIP_UL)))\n        mask = CORE_ULFLIPSOLBITS;\n      else\n        mask = 1<<(solNo - 33 + 4);\n      return (coreGlobals.solenoids2 & mask) != 0;\n    }\n    else if (core_gameData->gen & (GEN_SAM | GEN_SPIKE1)) // SAM, SPIKE 1: fake GameOn solenoid for fast flips\n       return (coreGlobals.solenoids2 & 0x10) != 0;\n    else if (core_gameData->gen & GEN_ALLWS) // Whitestar: aux board outputs (magnets, ...), like core_getAllSol\n       return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value) : ((coreGlobals.solenoids2 & (1<<(solNo - 33 + 4))) != 0);\n  }\n  else if (solNo <= 44) { // 37-44 WPC95 & S11 extra\n    if (core_gameData->gen & (GEN_WPC95|GEN_WPC95DCS)) { // Duplicated in 37..40 / 41..44, so always read from 41..44 (hence the |4 in the index/mask) for solenoids, and 37..40 for PWM outputs\n      if (coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))\n        return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + (solNo <= 40 ? solNo : (solNo - 4))-1].value);\n      else\n        return (coreGlobals.solenoids & (1<<((solNo - 13)|4))) != 0;\n    }\n    if (core_gameData->gen & (GEN_ALLS11 | GEN_PINHECK)) // S11 outputs in slots 40-47; pinHeck's GI 8-15 in 36-43, its lower flippers using 44-47\n      return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + ((core_gameData->gen & GEN_PINHECK) ? solNo - 1 : 32 + solNo - 37 + 8)].value) : ((coreGlobals.solenoids2 & (1<<(solNo - 37 + 8))) != 0);\n  }\n  else if (solNo <= 48) { // 45-48 Lower flippers\n    if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))\n      return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value); // Fliptronics are implemented through PWM\n    if (coreGlobals.hasModulatedFlippers && (options.usemodsol & CORE_MODOUT_FORCE_ON)) // Binary state of the flipper outputs, like core_getFlipSolBits\n      return coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value > 0.f;\n    int mask = 1<<(solNo - 45);\n    /*-- Game must have lower flippers but for symmetry we check anyway --*/\n    if      /*(*/(solNo == sLRFlip) //&& (core_gameData->hw.flippers & FLIP_SOL(FLIP_LR)))\n      mask = CORE_LRFLIPSOLBITS;\n    else if /*(*/(solNo == sLLFlip) //&& (core_gameData->hw.flippers & FLIP_SOL(FLIP_LL)))\n      mask = CORE_LLFLIPSOLBITS;\n    return (coreGlobals.solenoids2 & mask) != 0;\n  }\n  else if (solNo <= 50) // 49-50 simulated\n    return sim_getSol(solNo);\n",
+      "id": "src/wpc/core.c:2456-2513",
+      "line_end": 2513,
+      "line_start": 2456,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "      uFlip |= (uFlip & 0x40)<<1;\n    sol |= (((UINT64)uFlip)<<28);\n  }\n  else if (core_gameData->gen & (GEN_SAM | GEN_SPIKE1)) // 33 SAM, SPIKE 1 fake GameOn sol for fast flips\n     sol |= (((UINT64)(coreGlobals.solenoids2 & 0x10)) << 28);\n  else if (core_gameData->gen & GEN_ALLWS) // 33..36 various aux board outputs\n",
+      "id": "src/wpc/core.c:2562-2567",
+      "line_end": 2567,
+      "line_start": 2562,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "  for (int i = 0; i < 32; i++)\n    state[i] = coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + i].value;\n  /*-- 33..36 upper flipper solenoids (integrated for WPC Fliptronics, pinHeck, Capcom) --*/\n  if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL | CORE_MODOUT_FORCE_ON)))\n    for (int i = 32; i < 36; i++)\n      state[i] = coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + i].value;\n  else {\n    UINT8 uFlip = (coreGlobals.solenoids2 & (CORE_URFLIPSOLBITS | CORE_ULFLIPSOLBITS));\n    if (core_gameData->hw.flippers & FLIP_SOL(FLIP_UR))\n      uFlip |= ((uFlip & 0x10)<<1);\n    if (core_gameData->hw.flippers & FLIP_SOL(FLIP_UL))\n      uFlip |= ((uFlip & 0x40)<<1);\n    state[32] = uFlip & 0x10 ? 1.0f : 0.0f;\n    state[33] = uFlip & 0x20 ? 1.0f : 0.0f;\n    state[34] = uFlip & 0x40 ? 1.0f : 0.0f;\n    state[35] = uFlip & 0x80 ? 1.0f : 0.0f;\n  }\n  /*-- 33 [SAM, SPIKE 1] fake GameOn solenoid for fast flips --*/\n  if (core_gameData->gen & (GEN_SAM | GEN_SPIKE1))\n    state[32] = coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + 33 - 1].value;\n  /*-- 33..36 Whitestar various aux board outputs --*/\n  else if (core_gameData->gen & GEN_ALLWS)\n",
+      "id": "src/wpc/core.c:2603-2624",
+      "line_end": 2624,
+      "line_start": 2603,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "  if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL | CORE_MODOUT_FORCE_ON)))\n    for (int i = 44; i < 48; i++)\n      state[i] = coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + i].value;\n  else {\n    UINT8 lFlip = (coreGlobals.solenoids2 & (CORE_LRFLIPSOLBITS|CORE_LLFLIPSOLBITS));\n    lFlip |= (lFlip & 0x05)<<1; // hold coil is set if either coil is set\n    state[44] = lFlip & 0x01 ? 1.0f : 0.0f;\n    state[45] = lFlip & 0x02 ? 1.0f : 0.0f;\n    state[46] = lFlip & 0x04 ? 1.0f : 0.0f;\n    state[47] = lFlip & 0x08 ? 1.0f : 0.0f;\n  }\n  /*-- 49..50 simulated --*/\n  state[48] = sim_getSol(49) ? 1.0f : 0.0f;\n  //state[49] = 0.0f; // unused reserved simulated solenoid\n  /*-- 51..66 custom --*/\n",
+      "id": "src/wpc/core.c:2640-2654",
+      "line_end": 2654,
+      "line_start": 2640,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "#endif\n\n  if (!coreData) { // first time\n    /*-- init variables --*/\n    memset(&coreGlobals, 0, sizeof(coreGlobals));\n    memset(&locals, 0, sizeof(locals));\n    coreData = (struct pinMachine *)&Machine->drv->pinmame;\n    /*-- CORE_MODOUT_FORCE_ON is per driver: the game run before may have set it (SAM, Capcom, pinHeck) --*/\n",
+      "id": "src/wpc/core.c:2748-2755",
+      "line_end": 2755,
+      "line_start": 2748,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "    {\n      const UINT32 flip = core_gameData->hw.flippers;\n      locals.flipMask = CORE_SWLRFLIPBUTBIT | CORE_SWLLFLIPBUTBIT |\n         ((flip & FLIP_SW(FLIP_UL)) ? CORE_SWULFLIPBUTBIT : 0) |\n         ((flip & FLIP_SW(FLIP_UR)) ? CORE_SWURFLIPBUTBIT : 0) |\n         ((flip & FLIP_EOS(FLIP_UL))? CORE_SWULFLIPEOSBIT : 0) |\n         ((flip & FLIP_EOS(FLIP_UR))? CORE_SWURFLIPEOSBIT : 0) |\n         ((flip & FLIP_EOS(FLIP_LL))? CORE_SWLLFLIPEOSBIT : 0) |\n         ((flip & FLIP_EOS(FLIP_LR))? CORE_SWLRFLIPEOSBIT : 0);\n    }\n",
+      "id": "src/wpc/core.c:2830-2839",
+      "line_end": 2839,
+      "line_start": 2830,
+      "path": "src/wpc/core.c"
+    },
+    {
+      "code": "/  get status of a solenoid (0=off, !0=on)\n/-------------------------------------*/\nint vp_getSolenoid(int solNo)\n{\n  return core_getSol(solNo);\n}\n\n",
+      "id": "src/wpc/vpintf.c:48-54",
+      "line_end": 54,
+      "line_start": 48,
+      "path": "src/wpc/vpintf.c"
+    },
+    {
+      "code": "/  returns number of changed solenoids\n/-------------------------------------*/\nint vp_getChangedSolenoids(vp_tChgSols chgStat) \n{\n  int ii, idx = 0;\n  // The backward compatibility is not perfect here: mod sol was only available for a bunch of generations, and would limit modulation to the first 32 solenoids\n  if (coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))\n  {\n    float state[CORE_MODOUT_SOL_MAX];\n    core_getAllPhysicSols(state);\n    for (ii = 0; ii < coreGlobals.nSolenoids; ii++) {\n      if ((options.usemodsol & CORE_MODOUT_ENABLE_MODSOL) && (coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + ii].type == CORE_MODOUT_BULB_44_6_3V_AC_REV))\n        state[ii] = 1.0f - state[ii];\n      UINT8 v = saturatedByte(state[ii]);\n      if (v != locals.lastPhysicsOutput[CORE_MODOUT_SOL0 + ii]) {\n        chgStat[idx].solNo = ii + 1;\n        chgStat[idx].currStat = v;\n        idx++;\n        locals.lastPhysicsOutput[CORE_MODOUT_SOL0 + ii] = v;\n      }\n    }\n  }\n  else {\n\t UINT64 allSol = core_getAllSol();\n\t UINT64 chgSol = (allSol ^ locals.lastSol) & vp_getSolMask64();\n\t locals.lastSol = allSol;\n\t for (ii = 0; ii < CORE_FIRSTCUSTSOL + core_gameData->hw.custSol - 1; ii++)\n\t {\n",
+      "id": "src/wpc/vpintf.c:130-157",
+      "line_end": 157,
+      "line_start": 130,
+      "path": "src/wpc/vpintf.c"
+    },
+    {
+      "code": "int vp_getMech(int mechNo) {\n#if defined(VPINMAME) || defined(LIBPINMAME)\n  extern int g_fHandleMechanics;\n  if (g_fHandleMechanics == 0)\n    return (mechNo < 0) ? mech_getSpeed(MECH_MAXMECH/2-1-mechNo) : mech_getPos(MECH_MAXMECH/2-1+mechNo);\n  else\n#endif\n    return core_gameData->hw.getMech ? core_gameData->hw.getMech(mechNo) : 0;\n",
+      "id": "src/wpc/vpintf.c:323-330",
+      "line_end": 330,
+      "line_start": 323,
+      "path": "src/wpc/vpintf.c"
+    },
+    {
+      "code": "PINMAMEAPI int PinmameGetSolenoid(const int solNo)\n{\n\tconst std::shared_lock lock(_stateMutex);\n\tif (!IsEmulationRunning() || solNo < 1 || solNo > CORE_MODOUT_SOL_MAX)\n\t\treturn 0;\n\n\t// Like VPM: core_getSol may read other outputs than solNo - 1 (29-48, driver getSol like Tommy's blinder motor)\n\tcore_update_pwm_solenoids();\n\n\treturn vp_getSolenoid(solNo);\n}\n",
+      "id": "src/libpinmame/libpinmame.cpp:1537-1547",
+      "line_end": 1547,
+      "line_start": 1537,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "PINMAMEAPI int PinmameGetMech(const int mechNo)\n{\n\tconst std::shared_lock lock(_stateMutex);\n\treturn IsEmulationRunning() ? vp_getMech(mechNo) : 0;\n}\n",
+      "id": "src/libpinmame/libpinmame.cpp:1695-1699",
+      "line_end": 1699,
+      "line_start": 1695,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "static void GetDIPSwitchState(void* callContext, void* pResult)\n{\n   assert(_isRunning == 1);\n   const int srcId = static_cast<StateMapping*>(callContext)->srcId;\n   const int bank = srcId / 8;\n   const int mask = 1 << (srcId & 7);\n   *static_cast<uint8_t*>(pResult) = (vp_getDIP(bank) & mask) != 0 ? 0xFF : 0;\n}\nstatic void SetDIPSwitchState(void* callContext, const void* pResult)\n{\n   assert(_isRunning == 1);\n   const int srcId = static_cast<StateMapping*>(callContext)->srcId;\n   const int bank = srcId / 8;\n   const int mask = 1 << (srcId & 7);\n   if (*static_cast<const uint8_t*>(pResult) != 0)\n      vp_setDIP(bank, vp_getDIP(bank) | mask);\n   else\n      vp_setDIP(bank, vp_getDIP(bank) & ~mask);\n}\nstatic void GetMemMapState(void* callContext, void* pResult)\n",
+      "id": "src/libpinmame/libpinmame.cpp:2277-2296",
+      "line_end": 2296,
+      "line_start": 2277,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "   msgLocals.memMapStates[srcId].getState(srcId, pResult);\n}\nstatic void GetCoreMechState(void* callContext, void* pResult)\n{\n   assert(_isRunning == 1);\n   const int srcId = static_cast<StateMapping*>(callContext)->srcId;\n   *static_cast<int32_t*>(pResult) = core_gameData->hw.getMech ? core_gameData->hw.getMech(srcId) : 0;\n}\n",
+      "id": "src/libpinmame/libpinmame.cpp:2300-2307",
+      "line_end": 2307,
+      "line_start": 2300,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "      // 33..36\n      {\n         // 33, SAM, SPIKE 1: fake GameOn solenoid for fast flip (SPIKE 1: the flippers' reflexes armed on the node boards)\n         // Note: core_getSol returns it replicated 4 times for 33..36 while core_getAllSol only returns it as 33 (34..36 are unused)\n         if (core_gameData->gen & (GEN_SAM | GEN_SPIKE1))\n            addPhysSol(fmtString(\"%s Fake GameOn\", (core_gameData->gen & GEN_SAM) ? \"SAM\" : \"SPIKE 1\"), nullptr, nullptr, 33, GetSolenoid2State, GetSolenoid2VPMState, 0x00000010, 32);\n         // 33..36: Whitestar various extension boards (stored in 0x00F0 of solenoids2, which is upper flipper for other hardwares)\n         else if (core_gameData->gen & GEN_ALLWS)\n",
+      "id": "src/libpinmame/libpinmame.cpp:2425-2432",
+      "line_end": 2432,
+      "line_start": 2425,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "   // Emulated mechanical devices (we don't know which ones are available so always declare all of them)\n   // This is somewhat hacky as the definition depends on g_fHandleMechanics and we do not update if it changes (it must be defined before)\n   for (uint16_t i = 0; i < MECH_MAXMECH; i++)\n   {\n      if (g_fHandleMechanics == 0)\n      {\n         if (i < MECH_MAXMECH / 2)\n         {\n            addDevice(PMPI_GROUP_MECH, fmtString(\"User Mech Pos #%02d\", i), nullptr, i + 1, CTLPI_STATE_FORMAT_FLOAT, CTLPI_STATE_TYPE_CUSTOM, GetCustomMechPosState, nullptr, MECH_MAXMECH / 2 + i);\n            addDevice(PMPI_GROUP_VPM_MECH, fmtString(\"User Mech Pos #%02d\", i), nullptr, i + 1, CTLPI_STATE_FORMAT_INT32, CTLPI_STATE_TYPE_CUSTOM, GetCustomMechPosVPMState, nullptr, MECH_MAXMECH / 2 + i);\n         }\n         else\n         {\n            uint16_t j = i - MECH_MAXMECH / 2;\n            addDevice(PMPI_GROUP_MECH, fmtString(\"User Mech Speed #%02d\", j), nullptr, -(j + 1), CTLPI_STATE_FORMAT_FLOAT, CTLPI_STATE_TYPE_CUSTOM, GetCustomMechSpeedState, nullptr, MECH_MAXMECH / 2 + j);\n            addDevice(PMPI_GROUP_VPM_MECH, fmtString(\"User Mech Speed #%02d\", j), nullptr, -(j + 1), CTLPI_STATE_FORMAT_INT32, CTLPI_STATE_TYPE_CUSTOM, GetCustomMechSpeedVPMState, nullptr, MECH_MAXMECH / 2 + j);\n         }\n      }\n      else\n      {\n         addDevice(PMPI_GROUP_MECH, fmtString(\"PinMame Mech #%02d\", i), nullptr, i, CTLPI_STATE_FORMAT_INT32, CTLPI_STATE_TYPE_CUSTOM, GetCoreMechState, nullptr, i);\n      }\n   }\n   setupGroup(PMPI_GROUP_MECH, \"Mechs\", \"Emulated mechanical parts (driver or user defined)\");\n   setupGroup(PMPI_GROUP_VPM_MECH, \"VPinMAME Mechs\", \"Backward compatible VPinMAME states (less precise data format)\");\n\n   // Playfield & cabinet switches\n   for (uint16_t i = 0; i < (CORE_STDSWCOLS + core_gameData->hw.swCol) * 8; i++)\n   {\n      const int swNo = coreData->m2sw ? coreData->m2sw(i / 8, i & 7) : i; // Note that some hardware use negative switch indices to identify cabinet switches (for example Whitestar)\n      assert(i == (coreData->sw2m ? coreData->sw2m(swNo) : ((swNo / 10) * 8 + (swNo % 10 - 1))));\n      addDevice(PMPI_GROUP_SWITCH, swNo < 0 ? fmtString(\"Cabinet #%02x\", 16 + swNo) : fmtString(\"Playfield #%02x\", swNo), nullptr, static_cast<uint16_t>(swNo), CTLPI_STATE_FORMAT_UINT8, CTLPI_STATE_TYPE_SWITCH, GetSwitchState, SetSwitchState, swNo);\n   }\n   setupGroup(PMPI_GROUP_SWITCH, \"Switches\", \"Playfield & cabinet switches\");\n\n   // DIP switches\n   for (uint16_t i = 0; i < coreData->coreDips; i++)\n   {\n      addDevice(PMPI_GROUP_DIPSWITCH, fmtString(\"DIP #%02d\", i + 1), nullptr, i + 1, CTLPI_STATE_FORMAT_UINT8, CTLPI_STATE_TYPE_SWITCH, GetDIPSwitchState, SetDIPSwitchState, i);\n   }\n   setupGroup(PMPI_GROUP_DIPSWITCH, \"DIP Switches\", \"Hardware onboard DIP switches\");\n",
+      "id": "src/libpinmame/libpinmame.cpp:2586-2626",
+      "line_end": 2626,
+      "line_start": 2586,
+      "path": "src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "code": "#define PMPI_GROUP_SOLENOID        1 // 'Solenoids', index is 1 based\n#define PMPI_GROUP_GI              2 // 'Global Illumination', index is 0 based\n#define PMPI_GROUP_LAMP            3 // 'Lamps', indexing depends on each driver\n#define PMPI_GROUP_MECH            4 // Position & speed of each mech (core or user defined)\n#define PMPI_GROUP_SWITCH          5 // Playfield and cabinet switches, index depends on each driver and can be negative (for cabinet switches)\n#define PMPI_GROUP_DIPSWITCH       6 // DIP switches\n#define PMPI_GROUP_GAMESTATE       7 // Game states derived from live memory\n#define PMPI_GROUP_VPM_SOLENOID    8 // VPinMAME compatible solenoids (the result used to depend on the request path, also exposing internal storage layout)\n",
+      "id": "src/libpinmame/PinMAMEPlugin.h:76-83",
+      "line_end": 83,
+      "line_start": 76,
+      "path": "src/libpinmame/PinMAMEPlugin.h"
+    },
+    {
+      "code": "\tfor (uint32_t i = 0; i < boards[1]; i++) { guest_read(boards[0] + i * boards[2] + 12, &raw[i], 4); if (raw[i] >= 0x10000) upper = true; }\n\tfor (uint32_t i = 0; i < boards[1]; i++) node_of[i] = uint8_t((upper ? raw[i] >> 16 : raw[i]) & 0x7f);\n\n\t// The device table is what the switch test names a board's inputs from; the switch code reads\n\t// them through the program's compiled maps (compiled_switch_inputs()), which place a few\n\t// switches elsewhere: Supreme, Primus, Whoa Nellie and Pabst read SLAM TILT at cabinet input\n\t// 21 where their tables have 22, KISS the reverse, and WWE's SDK the CPU board's DIP switches\n\t// 2-8 and service buttons an input lower than its table (DIP 2 at 1, SERVICE SELECT at 8, BACK\n\t// at 11, as the later titles' tables have them). A switch the maps read at none of its table\n\t// positions is wired where they read it - on its own board when they read it there\n\tconst std::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> compiled = compiled_switch_inputs();\n",
+      "id": "src/spike1/spike1_devices.cpp:1243-1253",
+      "line_end": 1253,
+      "line_start": 1243,
+      "path": "src/spike1/spike1_devices.cpp"
+    },
+    {
+      "code": "\t\ts.node = node;\n\t\ts.position = position;\n\t\ts.name = name;\n\t\tconst auto read_at = compiled.find(s.number);\n\t\tif (read_at != compiled.end() &&\n\t\t    std::find(read_at->second.begin(), read_at->second.end(), std::make_pair(s.node, s.position)) == read_at->second.end()) {\n\t\t\tauto input = std::find_if(read_at->second.begin(), read_at->second.end(),\n\t\t\t\t[&](const std::pair<uint8_t, uint8_t> &i) { return i.first == s.node; });\n\t\t\tif (input == read_at->second.end()) input = read_at->second.begin();\n\t\t\tmoved += ' ' + name + ' ' + std::to_string(input->first) + '-' + std::to_string(input->second) +\n\t\t\t\t\" (\" + std::to_string(s.node) + '-' + std::to_string(s.position) + \"),\";\n\t\t\ts.node = input->first;\n\t\t\ts.position = input->second;\n\t\t}\n\t\tuint16_t flags = 0;\n\t\tif (have_table && s.number < table[1]) guest_read(table[0] + s.number * table[2] + 0x10, &flags, 2);\n\t\telse if (have_dedicated && s.number >= 129 && s.number - 129u < dedicated[1]) guest_read(dedicated[0] + (s.number - 129u) * dedicated[2] + 0x10, &flags, 2);\n\t\ts.active_high = (flags & 4) != 0;\n\t\tif (s.active_high) m_sw_active_high[s.node][(s.position >> 3) & 7] |= uint8_t(1 << (s.position & 7));\n\t\tdevice[i] = { 7, found.size() };\n\t\tfound.push_back({ s, flags });\n\t}\n\n\t// What is closed while the machine stands idle with its coin door shut: a trough opto for every\n\t// installed ball, the firmware's own closed-at-rest marks on other switches, and the door's power sense (DC present)\n",
+      "id": "src/spike1/spike1_devices.cpp:1292-1316",
+      "line_end": 1316,
+      "line_start": 1292,
+      "path": "src/spike1/spike1_devices.cpp"
+    },
+    {
+      "code": "// inputs, the first word the switch's word in the game's switch bits (0xf0 | word for the\n// dedicated switches, numbered from 129) and the u16 after it its bit, then the map's own state,\n// 0x54 bytes. The entries are 8 bytes from Supreme on and 56 in WWE's and Spider-Man's SDKs. A\n// program without the records has none here: Heavy Metal's SDK builds its maps from the device\n// table as it starts, and a map the program fills in itself (Game of Thrones' topper) is empty\nstd::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> spike1_devices::compiled_switch_inputs()\n{\n\tconstexpr uint32_t MAP_INPUTS = 64, MAP_STATE_BYTES = 0x54;\n\tstd::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> inputs;\n\tconst uint32_t records = m_cfg.symbol(\"g_node_data\"), records_size = m_cfg.symbol_size ? m_cfg.symbol_size(\"g_node_data\") : 0;\n\tif (!records || records_size < 8 || !m_cfg.symbols_with_prefix) return inputs;\n\tstd::vector<uint32_t> words(records_size / 4);\n\tif (!guest_read(records, words.data(), uint32_t(words.size() * 4))) return inputs;\n\tfor (const auto &name : m_cfg.symbols_with_prefix(\"g_smap_\")) {\n\t\tconst uint32_t map = m_cfg.symbol(name), size = m_cfg.symbol_size(name);\n\t\tif (!map || size <= MAP_STATE_BYTES || (size - MAP_STATE_BYTES) % MAP_INPUTS) continue;\n\t\tconst uint32_t entry = (size - MAP_STATE_BYTES) / MAP_INPUTS;\n\t\tconst auto ref = std::find(words.begin() + 1, words.end(), map); // the record's map, after its node address\n\t\tif (entry < 8 || ref == words.end() || (*(ref - 1) & 0xff) > 127) continue;\n\t\tconst uint8_t node = uint8_t(*(ref - 1));\n\t\tfor (uint32_t position = 0; position < MAP_INPUTS; position++) {\n\t\t\tuint32_t e[2];\n\t\t\tif (!guest_read(map + position * entry, e, 8)) break;\n\t\t\tconst uint32_t word = e[0], mask = e[1] & 0xffff;\n\t\t\tif (!mask || (mask & (mask - 1)) || word > 0xff) continue;\n\t\t\tunsigned bit = 0;\n\t\t\twhile (!((mask >> bit) & 1)) bit++;\n\t\t\tconst uint16_t number = uint16_t(word & 0xf0 ? 129 + (word & 0xf) * 16 + bit : 1 + word * 16 + bit);\n\t\t\tinputs[number].push_back({ node, uint8_t(position) });\n\t\t}\n\t}\n\treturn inputs;\n}\n\nconst spike1_devices::switch_info *spike1_devices::find_switch(const std::string &name) const\n{\n\tauto upper = [](std::string n) { for (auto &c : n) c = char(std::toupper(uint8_t(c))); return n; };\n\tconst std::string want = upper(name);\n\tfor (const auto &s : m_switches) if (upper(s.name) == want) return &s;\n\treturn nullptr;\n",
+      "id": "src/spike1/spike1_devices.cpp:1349-1388",
+      "line_end": 1388,
+      "line_start": 1349,
+      "path": "src/spike1/spike1_devices.cpp"
+    },
+    {
+      "code": "void spike1_devices::link_encoder_motor(uint8_t node, uint8_t motor_index, int16_t low_stop, int16_t high_stop, uint16_t counts_per_s)\n{\n\tmotor &m = m_mechanics[(uint32_t(node) << 8) | motor_index];\n\tm.low = low_stop;\n\tm.high = high_stop;\n\tm.counts_per_s = std::min<double>(std::max<uint16_t>(counts_per_s, 1), 1000.0); // under a count a tick\n\tm.x = std::max(m.low, -0.5);\n}\n\n// An input the firmware names by id: false when the id is unused (bit 6 clear). The board reads its\n// own pin, not what the game was last shown (wire_bytes())\nbool spike1_devices::motor_input(uint8_t node, uint8_t id, bool &active) const\n{\n\tif (!(id & 0x40)) return false;\n\tconst uint8_t in = id & 0x3f, n = node & 127;\n\tconst bool high = ((~(m_sw_closed[n][in >> 3] ^ m_sw_active_high[n][in >> 3])) >> (in & 7)) & 1;\n\tactive = (id & 0x80) ? high : !high;\n\treturn true;\n}\n\nuint8_t spike1_devices::motor_pins(uint8_t node, const motor &m) const\n{\n\tconst uint8_t ids[3] = { m.home_in, m.away_in, m.watch_in };\n\tuint8_t pins = 0;\n\tfor (int k = 0; k < 3; k++) {\n\t\tbool active = false;\n\t\tif (motor_input(node, ids[k], active) && active == ((ids[k] & 0x80) != 0)) pins |= uint8_t(1 << k);\n\t}\n\treturn pins;\n",
+      "id": "src/spike1/spike1_devices.cpp:1452-1480",
+      "line_end": 1480,
+      "line_start": 1452,
+      "path": "src/spike1/spike1_devices.cpp"
+    },
+    {
+      "code": "bool spike1_devices::reflex_armed(uint8_t node, uint8_t position) const\n{\n\tif (node > 127 || position >= COILS_PER_NODE) return false;\n\tconst coil &c = m_coil[node][position];\n\treturn c.reflex && (c.reflex_power1 || c.reflex_power2) && !((m_coil_mask[node] >> position) & 1);\n}\n\n",
+      "id": "src/spike1/spike1_devices.cpp:1905-1911",
+      "line_end": 1911,
+      "line_start": 1905,
+      "path": "src/spike1/spike1_devices.cpp"
+    },
+    {
+      "code": "bool spike1_devices::motor_at(size_t i, int16_t &position, bool &moving, uint64_t now_ns)\n{\n\tif (i < m_motors.size()) {\n\t\tmotors_run(now_ns);\n\t\tauto it = m_motors.begin();\n\t\tstd::advance(it, i);\n\t\tposition = it->second.position;\n\t\tmoving = it->second.status & 0x01;\n\t\treturn true;\n\t}\n\ti -= m_motors.size();\n\tif (i < m_steppers.size()) {\n\t\tauto it = m_steppers.begin();\n\t\tstd::advance(it, i);\n\t\tposition = int16_t(stepper_position(it->second, now_ns));\n\t\tmoving = it->second.end_ns > now_ns;\n\t\treturn true;\n\t}\n\ti -= m_steppers.size();\n\tif (i >= m_limit_motors.size()) return false;\n\tconst limit_motor &m = m_limit_motors[i];\n\tconst int64_t at = limit_motor_position(m, now_ns);\n\tposition = int16_t(at * 100 / m.travel_ns);\n\tmoving = (m.drive > 0 && at < m.travel_ns) || (m.drive < 0 && at > 0);\n\treturn true;\n}\n",
+      "id": "src/spike1/spike1_devices.cpp:2428-2455",
+      "line_end": 2455,
+      "line_start": 2428,
+      "path": "src/spike1/spike1_devices.cpp"
+    }
+  ],
+  "facts": [
+    {
+      "evidence": [
+        "src/wpc/spike1.c:68-83",
+        "src/wpc/spike1.c:315-400",
+        "src/wpc/core.c:2456-2513",
+        "src/wpc/core.c:2562-2567",
+        "src/wpc/core.c:2603-2624",
+        "src/libpinmame/libpinmame.cpp:2425-2432",
+        "src/spike1/spike1_devices.cpp:1905-1911"
+      ],
+      "id": "game-on",
+      "text": "SPIKE1_GAMEONSOL is33; sync_io sets it when a named lower flipper coil has an armed nonzero unmasked board reflex. It is a virtual game-enable state. core_getSol returns this state at33-36 when hasModulatedFlippers is false; that is the ordinary SPIKE1 path. Output mode does not change that branch. core_getAllSol and the plugin publish33 only; core_getAllPhysicSols writes the dedicated state to index32, and its34-36 values are not aliases. Do not present direct API aliases34-36 as extra physical loads."
+    },
+    {
+      "evidence": [
+        "src/wpc/spike1.c:315-400",
+        "src/wpc/spike1.c:724-739",
+        "src/wpc/core.c:2456-2513",
+        "src/wpc/core.c:2640-2654",
+        "src/wpc/vpintf.c:130-157"
+      ],
+      "id": "lower-flipper-mirrors",
+      "text": "Lower mirrors45/46 (right) and47/48 (left) remain binary OR pairs driven by named actual coil activity. No separate winding or independent modulation is implied. nSolenoids is50+custom_count when any custom coil exists, otherwise48. This adds45-48 to changed-solenoid physical/modulated polling for old nSolenoids32 titles. Their direct core_getSol reads remain binary in ordinary SPIKE1."
+    },
+    {
+      "evidence": [
+        "src/wpc/spike1.c:68-83",
+        "src/wpc/spike1.c:315-400",
+        "src/wpc/spike1.c:752-756",
+        "src/wpc/spike1.c:871-879"
+      ],
+      "id": "io-poll-and-short-pulses",
+      "text": "SPIKE1_IOFREQ is1000Hz. Every1ms sync_io copies DIP bank0 bits to101-108, retains host switch transitions that return before the sample, publishes output levels, and caches mechanism positions. A coil pulse is retained for at least one video frame. Source code establishes emulator policy, not measured host timing."
+    },
+    {
+      "evidence": [
+        "src/libpinmame/PinMAMEPlugin.h:76-83",
+        "src/libpinmame/libpinmame.cpp:2277-2296",
+        "src/libpinmame/libpinmame.cpp:2586-2626",
+        "src/wpc/spike1.c:315-400"
+      ],
+      "id": "dip-plugin",
+      "text": "Controller plugin DIP group6 exposes public mapping IDs1-8; addDevice receives source index i (0-7), so physical ordinal n maps bank0 bit n-1. Get returns UINT8 0xFF or0 and Set accepts nonzero orzero. This fixes the old PR728 off-by-one route. LibPinMAME DIP remains a bank-byte API; public switch101-108 are refreshed mirrors."
+    },
+    {
+      "evidence": [
+        "src/spike1/spike1_devices.cpp:1243-1253",
+        "src/spike1/spike1_devices.cpp:1292-1316",
+        "src/spike1/spike1_devices.cpp:1349-1388"
+      ],
+      "id": "compiled-switch-positions",
+      "text": "The loader now prefers each original switch number's compiled g_node_data/g_smap_* input when no compiled read matches the device-table position, favoring the same board. This changes emulator node/position routing, not public reference numbers or physical manual wiring. Exact retained ELF results are separately recorded in compiled-switch-position-audit.json."
+    },
+    {
+      "evidence": [
+        "src/wpc/spike1.c:1820-1828",
+        "src/wpc/spike1.c:315-400",
+        "src/wpc/spike1.c:462-467",
+        "src/spike1/spike1_devices.cpp:1452-1480",
+        "src/spike1/spike1_devices.cpp:2428-2455",
+        "src/wpc/vpintf.c:323-330",
+        "src/libpinmame/libpinmame.cpp:1695-1699",
+        "src/libpinmame/libpinmame.cpp:2300-2307",
+        "src/libpinmame/libpinmame.cpp:2586-2626"
+      ],
+      "id": "ghostbusters-encoder",
+      "text": "The driver links node8 motor0 to stops-6 and96 encoder counts, with an estimated50counts/s at full drive. The source explicitly labels speed an estimate. Slimer is driver mechanism0, position in encoder counts from the home-zone edge, cached at the last1ms exchange. For LibPinMAME PinmameGetMech(0), HandleMechanics must be nonzero to select driver mechanics; at0 vp_getMech selects custom host mechanics instead. Plugin group4 mappingID0 (INT32) is driver mechanism0 only with HandleMechanics nonzero; with0 group4 instead exposes user position IDs1+ and speed negative IDs. Set HandleMechanics before plugin setup; its declared groups do not refresh when this setting changes. No new public motor actuator binding is created."
+    },
+    {
+      "evidence": [
+        "src/wpc/core.h:149-169",
+        "src/wpc/spike1.c:904-908",
+        "src/wpc/core.c:1805-1874",
+        "src/wpc/core.c:2830-2839"
+      ],
+      "id": "eos-unchanged",
+      "text": "FLIP_SOL(FLIP_L) includes lower FLIP_EOS bits. Initialization adds those bits to flipMask; core_updateSw synthesizes lower EOS after CORE_FLIPSTROKETIME=2 VBLANKs and overwrites those public bits. The fake-solenoid guard ends before EOS processing. This behavior is unchanged from8e0f721e and is not a new revision delta. Upper button leaves can exist without synthesized upper EOS because SPIKE1_CORE declares only lower FLIP_SOL."
+    }
+  ],
+  "format": "pinmame-spike1-current-adapter-source-excerpt",
+  "generated_at": "2026-10-25T23:01:40.173297+00:00",
+  "license": "BSD-3-Clause",
+  "method": "Exact UTF-8 source lines extracted from the clean pinned checkout and statically inspected; derived ELF corrections retained separately.",
+  "review_status": "Candidate for parent inspection and mandatory independent contribution review.",
+  "reviewed": false,
+  "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+  "source_files": [
+    {
+      "byte_size": 166393,
+      "locators": [
+        "68-83",
+        "315-400",
+        "462-467",
+        "724-739",
+        "752-756",
+        "871-879",
+        "904-908",
+        "1820-1828"
+      ],
+      "path": "src/wpc/spike1.c",
+      "sha256": "0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486"
+    },
+    {
+      "byte_size": 38094,
+      "locators": [
+        "149-169"
+      ],
+      "path": "src/wpc/core.h",
+      "sha256": "b6c03b20a09fbadff1ce16f9f1cfc9e5bace08857cb998b92d8f304695ec97c0"
+    },
+    {
+      "byte_size": 258884,
+      "locators": [
+        "1805-1874",
+        "2456-2513",
+        "2562-2567",
+        "2603-2624",
+        "2640-2654",
+        "2748-2755",
+        "2830-2839"
+      ],
+      "path": "src/wpc/core.c",
+      "sha256": "38a4418adba7f2ef408e8f92bfcf3e5ab950c45164cb69461460af3747386c00"
+    },
+    {
+      "byte_size": 13621,
+      "locators": [
+        "48-54",
+        "130-157",
+        "323-330"
+      ],
+      "path": "src/wpc/vpintf.c",
+      "sha256": "c62312cad37fdc228819058b086c94ca4beec056bdfb4f08f826ee89022fbd37"
+    },
+    {
+      "byte_size": 150605,
+      "locators": [
+        "1537-1547",
+        "1695-1699",
+        "2277-2296",
+        "2300-2307",
+        "2425-2432",
+        "2586-2626"
+      ],
+      "path": "src/libpinmame/libpinmame.cpp",
+      "sha256": "956ea00d6b1f5b3b8533534ca2319fb931618f8fac3aa3792340a106a15ad76e"
+    },
+    {
+      "byte_size": 4849,
+      "locators": [
+        "76-83"
+      ],
+      "path": "src/libpinmame/PinMAMEPlugin.h",
+      "sha256": "69a0b80b421bcddabbaa20521b4b70e25e22ddeff1611fa18828f8e2b9b4bcf5"
+    },
+    {
+      "byte_size": 117608,
+      "locators": [
+        "1243-1253",
+        "1292-1316",
+        "1349-1388",
+        "1452-1480",
+        "1905-1911",
+        "2428-2455"
+      ],
+      "path": "src/spike1/spike1_devices.cpp",
+      "sha256": "234d5e4eda63724ff85df0ff4499cd05971195d46fff7a567cbfe434c039074e"
+    }
+  ],
+  "source_uri": "https://github.com/vpinball/pinmame",
+  "transcribed_by": "Codex source-refresh worker",
+  "version": 1
+}

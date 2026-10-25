@@ -144,7 +144,7 @@ if ($abandonedIncoming.Count -gt 0) {
 }
 
 $checkouts = @(
-	@{ Name = 'pinmame-spike1-pr728'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53' },
+	@{ Name = 'pinmame-46e1a01a'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '46e1a01a0f73dc5ce163d98db1ae435883ecc450' },
 	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
 	@{ Name = 'vpx-standalone-scripts'; Url = 'https://github.com/jsm174/vpx-standalone-scripts.git'; Revision = '15d112648a1b94b9f59eb8b3c335d57283653c50' }
 )
@@ -198,8 +198,8 @@ foreach ($checkout in $checkouts) {
 Build PinMAME under `<working-root>/builds/pinmame` when a compatible native library is not already present. The pinned revision keeps the libpinmame project at `cmake/libpinmame/CMakeLists.txt` and its official workflow copies that file to the checkout root before configuration because its source paths are root-relative. Make the same copy; `/CMakeLists.txt` is gitignored at the pinned revision, so this preparation keeps `git status --porcelain` clean while all generated build output remains outside the checkout. For Windows x64, use the following concrete invocation and adjust `PLATFORM`, `ARCH`, generator, and configuration for the contributor's target platform:
 
 ```powershell
-$pinmameCheckout = Join-Path $workingFolders.SourceCheckouts 'pinmame-spike1-pr728'
-$pinmameBuild = Join-Path $workingFolders.Builds 'pinmame-spike1-pr728'
+$pinmameCheckout = Join-Path $workingFolders.SourceCheckouts 'pinmame-46e1a01a'
+$pinmameBuild = Join-Path $workingFolders.Builds 'pinmame-46e1a01a'
 $libPinmameProject = Join-Path $pinmameCheckout 'cmake\libpinmame\CMakeLists.txt'
 $rootProject = Join-Path $pinmameCheckout 'CMakeLists.txt'
 if (-not (Test-Path -LiteralPath $libPinmameProject -PathType Leaf)) { throw "Missing pinned libpinmame CMake project: $libPinmameProject" }

@@ -286,6 +286,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.unused-78 | pinmame.output.lamp:78 | observed | not_applicable (not_applicable) |
 | outputs | lamp.unused-79 | pinmame.output.lamp:79 | observed | not_applicable (not_applicable) |
 | outputs | lamp.unused-80 | pinmame.output.lamp:80 | observed | not_applicable (not_applicable) |
+| outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
 | displays | display.mini-lcd |  | observed | absent |
 
 ## Sources
@@ -297,7 +298,9 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `manual.light` (manual): `aaeedb049d621e5d6d66f680aa07fd19d07824dd277cf4ed9f0684f570be61c2`
 - `manual.reel-controller` (manual): `aaeedb049d621e5d6d66f680aa07fd19d07824dd277cf4ed9f0684f570be61c2`
 - `manual.switch` (manual): `aaeedb049d621e5d6d66f680aa07fd19d07824dd277cf4ed9f0684f570be61c2`
+- `pinmame.adapter.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
 - `pinmame.catalog.8e0f721e3df7` (pinmame_catalog): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
+- `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `rom.routing` (rom_static_analysis): `e6e96994d56fa5ba140175a7540ca96d3dd7182d9a1ccad87b071e6e94e978e9`
 - `runtime.api-r2` (runtime_scenario): `e86ab4da24067ba4eabc592c8551bbeb3d4c68b59784a12f095a1d024c49062b`
 

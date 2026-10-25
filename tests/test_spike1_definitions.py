@@ -54,13 +54,19 @@ class Spike1DefinitionTests(unittest.TestCase):
 					self.assertEqual(len(addresses), len(set(addresses)))
 				self.assertEqual(set(range(96)) | set(range(101, 133)), set(groups['pinmame.input.switch']))
 				self.assertEqual(set(range(1, 9)), set(groups['pinmame.input.dip']))
-				self.assertEqual(set(range(1, 33)) | set(range(45, 49)) | set(range(51, 73)), set(groups['pinmame.output.solenoid']))
-				rom = load_json(ROOT / 'evidence/excerpts' / definition['machine']['id'] / 'rom-routing.json.txt')
-				self.assertEqual(set(range(1, rom['controller']['padded_lamp_limit'] + 1)), set(groups['pinmame.output.lamp']))
+				self.assertEqual(set(range(1, 34)) | set(range(45, 49)) | set(range(51, 73)), set(groups['pinmame.output.solenoid']))
+				rom_path = ROOT / 'evidence/excerpts' / definition['machine']['id'] / 'rom-routing.json.txt'
+				if any(source['kind'] == 'rom_static_analysis' for source in definition['sources']):
+					self.assertTrue(rom_path.is_file())
+					rom = load_json(rom_path)
+					self.assertEqual(set(range(1, rom['controller']['padded_lamp_limit'] + 1)), set(groups['pinmame.output.lamp']))
 
 	def test_every_exported_firmware_row_preserves_its_name_and_binding(self):
 		for game, definition in definitions():
 			with self.subTest(game=game):
+				rom_sources = [source for source in definition['sources'] if source['kind'] == 'rom_static_analysis']
+				if not rom_sources:
+					continue
 				rom = load_json(ROOT / 'evidence/excerpts' / definition['machine']['id'] / 'rom-routing.json.txt')
 				devices = {(d['binding']['group'], d['binding']['device']): d for d in definition['inputs'] + definition['outputs']}
 				for section, group in [('switches', 'pinmame.input.switch'), ('coils', 'pinmame.output.solenoid'), ('leds', 'pinmame.output.lamp')]:

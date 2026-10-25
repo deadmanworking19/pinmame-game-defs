@@ -115,7 +115,7 @@
   ],
   "drivers": [
     {
-      "description": "Ghostbusters (Limited Edition 1.17.0)",
+      "description": "Ghostbusters Limited Edition (1.17.0)",
       "flags": 0,
       "id": "gbust_117h",
       "manufacturer": "Stern",
@@ -6801,7 +6801,7 @@
     {
       "actuators": [],
       "assembly_part_number": "500-9982-01",
-      "behavior": "Factory motor041-5132-01 is24VDC10RPM; assembly500-9982-01 combines timingbelt/pulleys, translational cam, shaft, clutch/Belleville springs, encoder wheel550-7377-00, limit wheel535-1361-00 and opto board520-6999-03. Separate boom500-9983-00 carries hitPCB520-6987-00 and pendulum515-9877-01. MotorReference1/2 are node8LP3/4 and marked motor class in exactROM, so public lamps1/2 must not be bound to them. No legal independent public motor actuator binding exists at this pin. Encoder causality, full travel/default/home marks, stop/interruption behavior and measured timing remain authoring blockers. Exact public feedback references are SLIMER HIT68, SLIMER HOME69 and ENCODER WHEEL1/2 at71/72. The manual's Encoder Wheel3 reference73 has the same node8/position5 circuit that the ROM names SLIMER HOME and remaps to69; public73 is not a Slimer sensor. The source exposes subsystem motor position via GetMech(0) when configured; all retained checkpoint reads were0, so travel/encoder behavior was not exercised. Public switch readback is seeded at initial mapping and does not establish later internal motor-generated feedback.",
+      "behavior": "Factory motor041-5132-01 is24VDC10RPM; assembly500-9982-01 combines timingbelt/pulleys, translational cam, shaft, clutch/Belleville springs, encoder wheel550-7377-00, limit wheel535-1361-00 and opto board520-6999-03. Separate boom500-9983-00 carries hitPCB520-6987-00 and pendulum515-9877-01. MotorReference1/2 are node8LP3/4 and marked motor class in exactROM, so public lamps1/2 must not be bound to them. No legal independent public motor actuator binding exists at this pin. Encoder causality, full travel/default/home marks, stop/interruption behavior and measured timing remain authoring blockers. Exact public feedback references are SLIMER HIT68, SLIMER HOME69 and ENCODER WHEEL1/2 at71/72. The manual's Encoder Wheel3 reference73 has the same node8/position5 circuit that the ROM names SLIMER HOME and remaps to69; public73 is not a Slimer sensor. The source exposes subsystem motor position via GetMech(0) when configured; all retained checkpoint reads were0, so travel/encoder behavior was not exercised. Public switch readback is seeded at initial mapping and does not establish later internal motor-generated feedback. Current adapter: encoder motor node 8, index 0 supplies driver GetMech 0 in encoder counts from the home-zone edge, with modeled stops -6/96 and source-estimated 50 counts/s. HandleMechanics must be nonzero; zero selects host custom mechanics. Plugin group 4 mapping 0 is the INT32 driver position when HandleMechanics is enabled before plugin setup. These are source-model parameters, not measured physical travel or timing; no additional public actuator binding is inferred.",
       "id": "mechanism.slimer",
       "kind": "motorized",
       "label": "Slimer boom, pendulum and translating/rotating motor",
@@ -6810,7 +6810,8 @@
           "manual.ghostbusters-le-premium.2016",
           "manual.ghostbusters-le-premium.assemblies.2016",
           "pinmame.spike1.8e0f721e3df7",
-          "rom.ghostbusters-le.gbust-117h"
+          "rom.ghostbusters-le.gbust-117h",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8612,12 +8613,13 @@
       "kind": "virtual",
       "label": "Right lower flipper binary mirror 45",
       "physical": {
-        "notes": "Virtual binary copy of right lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state."
+        "notes": "Historical adapter observation (8e0f721e): Virtual binary copy of right lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state. Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "pinmame.spike1.8e0f721e3df7",
-          "rom.ghostbusters-le.gbust-117h"
+          "rom.ghostbusters-le.gbust-117h",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8648,12 +8650,13 @@
       "kind": "virtual",
       "label": "Right lower flipper binary mirror 46",
       "physical": {
-        "notes": "Virtual binary copy of right lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state."
+        "notes": "Historical adapter observation (8e0f721e): Virtual binary copy of right lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state. Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "pinmame.spike1.8e0f721e3df7",
-          "rom.ghostbusters-le.gbust-117h"
+          "rom.ghostbusters-le.gbust-117h",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8684,12 +8687,13 @@
       "kind": "virtual",
       "label": "Left lower flipper binary mirror 47",
       "physical": {
-        "notes": "Virtual binary copy of left lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state."
+        "notes": "Historical adapter observation (8e0f721e): Virtual binary copy of left lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state. Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "pinmame.spike1.8e0f721e3df7",
-          "rom.ghostbusters-le.gbust-117h"
+          "rom.ghostbusters-le.gbust-117h",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -8720,12 +8724,13 @@
       "kind": "virtual",
       "label": "Left lower flipper binary mirror 48",
       "physical": {
-        "notes": "Virtual binary copy of left lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state."
+        "notes": "Historical adapter observation (8e0f721e): Virtual binary copy of left lower flipper actual coil activity; both side mirrors are asserted together. Not an independently driven power/hold winding. Physical modulated callbacks omit45–48 for this nSolenoids32 title; direct binary reads use nonzero bitmask state. Current adapter: the same paired binary mirror is included in physical/modulated changed-solenoid polling; nSolenoids is at least 48. This adds no physical winding."
       },
       "provenance": {
         "source_refs": [
           "pinmame.spike1.8e0f721e3df7",
-          "rom.ghostbusters-le.gbust-117h"
+          "rom.ghostbusters-le.gbust-117h",
+          "pinmame.adapter.current"
         ],
         "status": "observed"
       },
@@ -17391,6 +17396,41 @@
         "reason": "unused",
         "status": "not_applicable"
       }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "solenoid.game-on",
+      "kind": "virtual",
+      "label": "GAME ON",
+      "physical": {
+        "notes": "Virtual emulator state: at least one mapped lower-flipper reflex is armed. This is not a fitted relay or an additional physical winding. Legacy direct addresses 34-36 alias this state and are not independent outputs."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.adapter.current"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.adapter.current"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
     }
   ],
   "relationships": [],
@@ -17511,6 +17551,57 @@
       "rights": "Derived factual public API traces; game frames/ROM files retained externally.",
       "sha256": "a594076e5e676c140547578fa1486e5669984a22f75f35e7665b455b1fd004bf",
       "uri": "working-root:review-artifacts/spike1-2026-10-10/runtime/gbust_117h-api-r2/run.json"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "current-adapter",
+          "locator": "Complete current adapter facts and exact code excerpts, including GAME ON, DIP routing, pulse retention and mechanism APIs.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-adapter.json.txt",
+          "reviewed": false,
+          "sha256": "24afd5e940b454d1d9dfa855c42a0286980a0b43d1f17f83a2a83c760c914f8e",
+          "transcribed_by": "Codex source audit, independently hash-checked against pinned source"
+        },
+        {
+          "id": "current-switch-routes",
+          "locator": "Exact changed active emulator switch routes; historical ROM and physical aliases remain intact.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-switch-routes.json.txt",
+          "reviewed": false,
+          "sha256": "e7921cb447a7958c8f2f63150558031185e20da6f5e30dae2c19c8ab6f7806ec",
+          "transcribed_by": "Codex compiled switch-map audit"
+        }
+      ],
+      "id": "pinmame.adapter.current",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "SPIKE1_GAMEONSOL, spike1_sync_io, spike1_map_devices, SPIKE1_INIT_ENCODER; exact source regions and transport authority limits retained in excerpt.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486",
+      "uri": "https://github.com/vpinball/pinmame/blob/46e1a01a0f73dc5ce163d98db1ae435883ecc450/src/wpc/spike1.c"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "excerpts": [
+        {
+          "id": "current-catalog",
+          "locator": "Current public API driver row gbust_117h.",
+          "method": "mixed",
+          "path": "evidence/excerpts/pinmame.spike1/current-catalog.json.txt",
+          "reviewed": false,
+          "sha256": "bdb7895c21564311ec41b733dc4b585d52c64d502d20da069b8256912b257d67",
+          "transcribed_by": "LibPinMAME PinmameGetGames"
+        }
+      ],
+      "id": "pinmame.catalog.current",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames exact driver gbust_117h; earlier metadata is preserved in historical source records.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd",
+      "uri": "working-root:review-artifacts/spike1-refresh-2026-10-25/source-refresh/current-api-catalog.json"
     }
   ]
 }

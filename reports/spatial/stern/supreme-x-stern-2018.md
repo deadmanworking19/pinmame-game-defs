@@ -342,11 +342,14 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.134 | pinmame.output.lamp:134 | observed | not_applicable (not_applicable) |
 | outputs | lamp.135 | pinmame.output.lamp:135 | observed | not_applicable (not_applicable) |
 | outputs | lamp.136 | pinmame.output.lamp:136 | observed | not_applicable (not_applicable) |
+| outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
 | displays | display.dmd |  | observed | absent |
 
 ## Sources
 
+- `pinmame.adapter.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
 - `pinmame.catalog.8e0f721e3df7` (pinmame_catalog): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
+- `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `spike1.core.8e0f721e3df7` (pinmame_core): `9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a`
 - `spike1.driver.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `spike1.libpinmame.8e0f721e3df7` (pinmame_core): `96739dc787262e9d6379c8c7eb311209e061c389b5b63d0c9997116d910e0777`

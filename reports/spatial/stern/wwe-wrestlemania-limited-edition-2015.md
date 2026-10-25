@@ -310,13 +310,14 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.102 | pinmame.output.lamp:102 | observed | absent |
 | outputs | lamp.103 | pinmame.output.lamp:103 | observed | not_applicable (not_applicable) |
 | outputs | lamp.104 | pinmame.output.lamp:104 | observed | not_applicable (not_applicable) |
+| outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
 | displays | display.dmd |  | observed | absent |
 | displays | display.le-lcd |  | observed | absent |
 
 ## Sources
 
 - `catalog.driver` (pinmame_catalog): `4a5a79f19498b2ef9fd837a07a5e22fbc5cbe3ad58be0fcd6aa243a580564b27`
-- `controller.profile` (human_review): `5d5e20b821aa2a01df271a8ec460f9d66915a255940432d40e540833f9843e63`
+- `controller.profile` (human_review): `79afdb62eb4c29899b7997e097d3f08fe85e786e598d9ef4bda8cb260eece0c1`
 - `identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
 - `manual.assembly` (manual): `74c482af5b0e3e1d9ba18532ce717ee1858a606adfc4a2ca2f2d6f69624cfbfb`
 - `manual.cpu` (manual): `74c482af5b0e3e1d9ba18532ce717ee1858a606adfc4a2ca2f2d6f69624cfbfb`
@@ -325,6 +326,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `manual.flipper` (manual): `74c482af5b0e3e1d9ba18532ce717ee1858a606adfc4a2ca2f2d6f69624cfbfb`
 - `manual.light` (manual): `74c482af5b0e3e1d9ba18532ce717ee1858a606adfc4a2ca2f2d6f69624cfbfb`
 - `manual.switch` (manual): `74c482af5b0e3e1d9ba18532ce717ee1858a606adfc4a2ca2f2d6f69624cfbfb`
+- `pinmame.adapter.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
+- `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `pinmame.core` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `pinmame.devices` (pinmame_core): `4435f0bd0576a14fa42bf5a32b85bbc2162f59e5c31e263831219f8811496a91`
 - `rom.routing` (rom_static_analysis): `1d3766394a4dbbc71cd447513246e4649e6814668b8faf69cb56cf6cde6aa9c1`
