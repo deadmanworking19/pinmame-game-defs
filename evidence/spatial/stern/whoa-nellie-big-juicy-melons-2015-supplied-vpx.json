@@ -1,0 +1,1496 @@
+{
+  "bounds": {
+    "bottom": 2000.0,
+    "left": 0.0,
+    "right": 1000.0,
+    "top": 0.0
+  },
+  "coverage_missing": [
+    "input_semantics",
+    "output_semantics",
+    "mechanism_behavior",
+    "polarity",
+    "variant_differences",
+    "provenance",
+    "spatial_placement",
+    "unresolved_conflicts"
+  ],
+  "decision": {
+    "reason": "The supplied source was not independently launched in this pass. Script assignments prove table implementation, not an executed ROM response, factory geometry, contact rest state or emitter fitment. The same table/script may share ancestry with the manual. All coordinates remain observed and coverage remains partial.",
+    "status": "partial"
+  },
+  "evidence_excerpt": {
+    "id": "excerpt.supplied-pinmame-vpx.2026-10-25",
+    "locator": "Exact source identity, canonical full-file manifest, source-line-bound I/O, inspected mechanism routines and selected raw gameitems; limits explicit.",
+    "method": "mixed",
+    "path": "evidence/excerpts/stern.whoa-nellie-big-juicy-melons.2015/supplied-pinmame-vpx.json.txt",
+    "reviewed": false,
+    "sha256": "1809024514094a843a3c836322d5a9c5c76d493d022d74d75ae5e423f23dca4d",
+    "transcribed_by": "GPT-6.1 Sol xhigh; deterministic Python extraction with manual script inspection"
+  },
+  "excluded_or_unresolved": [
+    "Trough opto 17 uses a shared Drain surrogate rather than independent opto geometry and remains unplaced; output 6 is not placed from Ballrelease, a ball-spawn proxy.",
+    "Dual-target inner/outer contacts and rubber-backed one-point leaves are not placed at render or broad rubber proxies.",
+    "Backbox score/credit reel geometry does not establish a playfield coordinate; the physical LCD mount remains unresolved because the table only displays its emulator window.",
+    "No Light array member is treated as a physical bulb merely because the script drives it. GI arrays include duplicate glows/insert overlays; emitter identity, quantity and factory string membership remain unresolved."
+  ],
+  "extraction_manifest": {
+    "algorithm": "tools/build_external_evidence_manifest.py: every relative POSIX path except manifest.json and manifest.sha256, case-sensitive sorted; size and SHA-256; UTF-8 JSON ensure_ascii=False, separators=(comma,colon), sort_keys=True, one trailing LF; SHA-256 of those bytes.",
+    "byte_count": 159869683,
+    "file_count": 1219,
+    "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/manifest.json",
+    "sha256": "28b2f50b9353a2a1b790a7003cb796514ba21e70fbfe4d69c306da471fc311e5",
+    "size": 169306
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "stern.whoa-nellie-big-juicy-melons.2015",
+  "placements": [
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.shooter-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LampSplashOn.json",
+          "sha256": "985f8eabf4a40cf5638d3b3e0e4492adb421b163f2724918fbe261d4853676a8",
+          "size": 1510
+        },
+        "center": {
+          "x": 946.75,
+          "y": 1771.7769
+        },
+        "drag_points": null,
+        "name": "LampSplashOn",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 289,
+          "text": "Sub LampSplashOn_Hit()   : Controller.Switch(5) = 1 : PlaySoundAt \"rollover\", LampSplashOn : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.94675,
+      "y": 0.885888
+    },
+    {
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-return-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.RightInLaneTrigger.json",
+          "sha256": "fff1c9e97cc61ce4d5f7107fd841906d373b56ec3cf35bdcb0a48174d9b52108",
+          "size": 1525
+        },
+        "center": {
+          "x": 776.8244,
+          "y": 1370.1714
+        },
+        "drag_points": null,
+        "name": "RightInLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 281,
+          "text": "Sub RightInLaneTrigger_Hit()    : Controller.Switch(6) = 1 : PlaySoundAt \"rollover\", RightInLaneTrigger : DOFALT 117, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.776824,
+      "y": 0.685086
+    },
+    {
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-2",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T10.json",
+          "sha256": "b9549d462a6bc5c0e6035f5113d8c0a12684d6c1842cfd62f5d118a82df257be",
+          "size": 1497
+        },
+        "center": {
+          "x": 160.0,
+          "y": 315.58032
+        },
+        "drag_points": null,
+        "name": "T10",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 249,
+          "text": "Sub T10_Hit()   : Controller.Switch(13) = 1 : PlaySoundAt \"rollover\", T10 : DOFALT 111, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.16,
+      "y": 0.15779
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-1-left",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T9.json",
+          "sha256": "3bd018f5ce0b977d661fa60b90b00d682b87abef5af846ab4dc895f9135c1edf",
+          "size": 1513
+        },
+        "center": {
+          "x": 57.70233,
+          "y": 316.48505
+        },
+        "drag_points": null,
+        "name": "T9",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 247,
+          "text": "Sub T9_Hit()    : Controller.Switch(14) = 1 : PlaySoundAt \"rollover\", T9 : DOFALT 110, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.057702,
+      "y": 0.158243
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.center-drain",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger8.json",
+          "sha256": "90ad7e8a1fc558ee6eb8f6577d09e50ea3c378f1ec84a3cd988f839800abc2a0",
+          "size": 1514
+        },
+        "center": {
+          "x": 458.122,
+          "y": 1737.5266
+        },
+        "drag_points": null,
+        "name": "Trigger8",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 285,
+          "text": "Sub Trigger8_Hit()              : Controller.Switch(16) = 1 : PlaySoundAt \"rollover\", Trigger8 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.458122,
+      "y": 0.868763
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-return-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LeftInLaneTrigger.json",
+          "sha256": "5fcf3657d8d35b4a2930b755d46b1878c6efd4d3abed1722666221a35591ef25",
+          "size": 1531
+        },
+        "center": {
+          "x": 137.97325,
+          "y": 1370.1866
+        },
+        "drag_points": null,
+        "name": "LeftInLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 279,
+          "text": "Sub LeftInLaneTrigger_Hit()     : Controller.Switch(18) = 1 : PlaySoundAt \"rollover\", LeftInLaneTrigger : DOFALT 116, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.137973,
+      "y": 0.685093
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-outlane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.RightOutLaneTrigger.json",
+          "sha256": "b1b8363f3414c6c2b1874f42a221cd96a6edd4f900d79700b9d66c7b209613a1",
+          "size": 1524
+        },
+        "center": {
+          "x": 857.622,
+          "y": 1322.7404
+        },
+        "drag_points": null,
+        "name": "RightOutLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 283,
+          "text": "Sub RightOutLaneTrigger_Hit()   : Controller.Switch(19) = 1 : PlaySoundAt \"rollover\", RightOutLaneTrigger : DOFALT 118, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.857622,
+      "y": 0.66137
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.skill-shot",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T13.json",
+          "sha256": "01c8de5390e60485621cdc2daef2c9b0bec2ad4cfec55d03ba14df2198da02cc",
+          "size": 1512
+        },
+        "center": {
+          "x": 726.1756,
+          "y": 302.33618
+        },
+        "drag_points": null,
+        "name": "T13",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 255,
+          "text": "Sub T13_Hit()   : Controller.Switch(25) = 1 : PlaySoundAt \"rollover\", T13 : DOFALT 114, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.726176,
+      "y": 0.151168
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-4",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T12.json",
+          "sha256": "7a21ef9cb30c6306fa86a19c61c065bcb436c76e4522de838e15c7eb9b203eb6",
+          "size": 1512
+        },
+        "center": {
+          "x": 366.1756,
+          "y": 315.21414
+        },
+        "drag_points": null,
+        "name": "T12",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 253,
+          "text": "Sub T12_Hit()   : Controller.Switch(27) = 1 : PlaySoundAt \"rollover\", T12 : DOFALT 113, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.366176,
+      "y": 0.157607
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-3",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T11.json",
+          "sha256": "8fdf984f2f60d84a13af864591cfa916559a9c7f5a3af764165c2651b346f18b",
+          "size": 1509
+        },
+        "center": {
+          "x": 263.1488,
+          "y": 314.1756
+        },
+        "drag_points": null,
+        "name": "T11",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 251,
+          "text": "Sub T11_Hit()   : Controller.Switch(28) = 1 : PlaySoundAt \"rollover\", T11 : DOFALT 112, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.263149,
+      "y": 0.157088
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-1-lt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger1.json",
+          "sha256": "24c961daa222898b3c998cefc535ed913039b88b75299e274595feffbb640045",
+          "size": 1520
+        },
+        "center": {
+          "x": 301.14438,
+          "y": 1275.272
+        },
+        "drag_points": null,
+        "name": "Trigger1",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 259,
+          "text": "Sub Trigger1_Hit()    : Controller.Switch(29) = 1 : PlaySoundAt \"trigger\", Trigger1 : DOFALT 127, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.301144,
+      "y": 0.637636
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-2",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger2.json",
+          "sha256": "98f78fdeb2313aa314f0602506385529a3fed55ca012ad31199ccdc01c6c42d5",
+          "size": 1520
+        },
+        "center": {
+          "x": 403.41614,
+          "y": 1242.272
+        },
+        "drag_points": null,
+        "name": "Trigger2",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 261,
+          "text": "Sub Trigger2_Hit()    : Controller.Switch(30) = 1 : PlaySoundAt \"trigger\", Trigger2 : DOFALT 128, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.403416,
+      "y": 0.621136
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-3",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger3.json",
+          "sha256": "b39e7d89ab8fb0e3aa714da8f485d2999e50fc4d810466df0c6d84da4866fb70",
+          "size": 1523
+        },
+        "center": {
+          "x": 511.79193,
+          "y": 1242.3359
+        },
+        "drag_points": null,
+        "name": "Trigger3",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 263,
+          "text": "Sub Trigger3_Hit()    : Controller.Switch(31) = 1 : PlaySoundAt \"trigger\", Trigger3 : DOFALT 129, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.511792,
+      "y": 0.621168
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-4-rt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger4.json",
+          "sha256": "068d718eae2625c338db4b75984d48d1e309e425a755e89fe701ab1a52725c75",
+          "size": 1515
+        },
+        "center": {
+          "x": 614.7919,
+          "y": 1275.728
+        },
+        "drag_points": null,
+        "name": "Trigger4",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 265,
+          "text": "Sub Trigger4_Hit()    : Controller.Switch(32) = 1 : PlaySoundAt \"trigger\", Trigger4 : DOFALT 130, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.614792,
+      "y": 0.637864
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-left",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger7.json",
+          "sha256": "62b3636434340b0d69f5b32b2fba79500b9f2b4de7ae451204181fc0d6945f28",
+          "size": 1518
+        },
+        "center": {
+          "x": 117.27165,
+          "y": 931.8553
+        },
+        "drag_points": null,
+        "name": "Trigger7",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 267,
+          "text": "Sub Trigger7_Hit()    : Controller.Switch(33) = 1 : PlaySoundAt \"trigger\", Trigger7 : DOFALT 131, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.117272,
+      "y": 0.465928
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-pops",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger6.json",
+          "sha256": "181c226ec1585488dd9a2dc9416d2ff7637225a380d46c4fe4317279b93d2643",
+          "size": 1505
+        },
+        "center": {
+          "x": 332.0,
+          "y": 696.61035
+        },
+        "drag_points": null,
+        "name": "Trigger6",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 269,
+          "text": "Sub Trigger6_Hit()    : Controller.Switch(34) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.332,
+      "y": 0.348305
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-rtn",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger14.json",
+          "sha256": "fedadae36fe26279703946f87dbdc12dbd5858efa256e1360cda7515e74917ad",
+          "size": 1516
+        },
+        "center": {
+          "x": 870.5845,
+          "y": 691.1233
+        },
+        "drag_points": null,
+        "name": "Trigger14",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 271,
+          "text": "Sub Trigger14_Hit()   : Controller.Switch(35) = 1 : DOFALT 134, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.870585,
+      "y": 0.345562
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollovr-top-rt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger5.json",
+          "sha256": "cbf53fa40e6d4038ff7c2a449a88607bd2f99c0c46cf9a839dfd38bb9de89e74",
+          "size": 1520
+        },
+        "center": {
+          "x": 849.3181,
+          "y": 340.29233
+        },
+        "drag_points": null,
+        "name": "Trigger5",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 273,
+          "text": "Sub Trigger5_Hit()    : Controller.Switch(36) = 1 : PlaySoundAt \"trigger\", Trigger5 : DOFALT 126, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.849318,
+      "y": 0.170146
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-outlane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LeftOutLaneTrigger.json",
+          "sha256": "6bae25c2b542455b2266132ca80b94a2de4d2f31ada626b5f1463f6155a3ff0d",
+          "size": 1532
+        },
+        "center": {
+          "x": 57.148834,
+          "y": 1322.7137
+        },
+        "drag_points": null,
+        "name": "LeftOutLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 277,
+          "text": "Sub LeftOutLaneTrigger_Hit()    : Controller.Switch(37) = 1 : PlaySoundAt \"rollover\", LeftOutLaneTrigger : DOFALT 115, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.057149,
+      "y": 0.661357
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.bot-rt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper4.json",
+          "sha256": "3f884b8e784888cd77e102801b923fdaa137a9eeba14a6dcd488ac2de3ca5968",
+          "size": 705
+        },
+        "center": {
+          "x": 443.5,
+          "y": 807.5
+        },
+        "drag_points": null,
+        "name": "Bumper4",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 297,
+          "text": "Sub Bumper4_Hit() : vpmTimer.PulseSw 9  : PlaySoundAtVol SoundFX(\"fx_bumper4\", DOFContactors), Bumper4, 4 : DOFALT 108, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.4435,
+      "y": 0.40375
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-rt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper3.json",
+          "sha256": "de18fa1579b111f0db066bc7117f12e45e5a3fd65b7a385cd0ed56176d514f1d",
+          "size": 707
+        },
+        "center": {
+          "x": 444.5,
+          "y": 587.5
+        },
+        "drag_points": null,
+        "name": "Bumper3",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 295,
+          "text": "Sub Bumper3_Hit() : vpmTimer.PulseSw 10 : PlaySoundAtVol SoundFX(\"fx_bumper3\", DOFContactors), Bumper3, 4 : DOFALT 106, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.4445,
+      "y": 0.29375
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.bot-lt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper2.json",
+          "sha256": "a566c7ad66ded64cc32fdb78d42167c3834cb4ef006109ef5b5b1803798c7d6e",
+          "size": 709
+        },
+        "center": {
+          "x": 219.25,
+          "y": 804.75
+        },
+        "drag_points": null,
+        "name": "Bumper2",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 296,
+          "text": "Sub Bumper2_Hit() : vpmTimer.PulseSw 11 : PlaySoundAtVol SoundFX(\"fx_bumper2\", DOFContactors), Bumper2, 4 : DOFALT 107, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.21925,
+      "y": 0.402375
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper1.json",
+          "sha256": "349dee2a1f4187dccde032eb80d5b62d30b90e7498fd190dad8cca9faf314819",
+          "size": 707
+        },
+        "center": {
+          "x": 220.25,
+          "y": 584.75
+        },
+        "drag_points": null,
+        "name": "Bumper1",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 294,
+          "text": "Sub Bumper1_Hit() : vpmTimer.PulseSw 12 : PlaySoundAtVol SoundFX(\"fx_bumper1\", DOFContactors), Bumper1, 4 : DOFALT 105, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.22025,
+      "y": 0.292375
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-pop-single",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper5.json",
+          "sha256": "b1930eb85131755ef12ed08cc85f0f35f9f3193ad8874d93a22cac824bd0f3bc",
+          "size": 700
+        },
+        "center": {
+          "x": 543.5,
+          "y": 308.5
+        },
+        "drag_points": null,
+        "name": "Bumper5",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 298,
+          "text": "Sub Bumper5_Hit() : vpmTimer.PulseSw 26 : PlaySoundAtVol SoundFX(\"fx_bumper1\", DOFContactors), Bumper5, 4 : DOFALT 109, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.5435,
+      "y": 0.15425
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-eject",
+      "method": "eject contact projected onto its directly bound eject bowl center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.Kicker1.json",
+          "sha256": "11b5d12e6c3397913b2f114e0c6ea8cfc491cad36282beec5939555ffcec25fe",
+          "size": 439
+        },
+        "center": {
+          "x": 602.0295,
+          "y": 696.5562
+        },
+        "drag_points": null,
+        "name": "Kicker1",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 202,
+          "text": "Sub Kicker1_Hit()"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.602029,
+      "y": 0.348278
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.RightSlingShot.json",
+          "sha256": "d5e7d13e94788958ec23a1dfd44cd8f83390922a63896cbf62ed13ab704f2017",
+          "size": 2169
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 701.9807,
+            "y": 1272.6765,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 621.2637,
+            "y": 1464.4735,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 631.3855,
+            "y": 1457.0195,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 705.95703,
+            "y": 1285.6091,
+            "z": 0.0
+          }
+        ],
+        "name": "RightSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 301,
+          "text": "Sub RightSlingShot_Slingshot() : vpmTimer.PulseSw 7 : PlaySoundAt SoundFX(\"sling\", DOFContactors), SLING9 : DOFALT 104, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.665147,
+      "y": 0.684972
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.LeftSlingShot.json",
+          "sha256": "61d92099c6e55313d85fd09d870492ec829b411b082bd5dc41162bfd93839792",
+          "size": 2169
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 205.85547,
+            "y": 1280.8591,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 280.677,
+            "y": 1454.5195,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 287.79883,
+            "y": 1456.9735,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 210.83179,
+            "y": 1271.6765,
+            "z": 0.0
+          }
+        ],
+        "name": "LeftSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 302,
+          "text": "Sub LeftSlingShot_Slingshot()  : vpmTimer.PulseSw 8 : PlaySoundAt SoundFX(\"sling\", DOFContactors), SLING8 : DOFALT 103, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.246291,
+      "y": 0.683004
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.bot-rt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper4.json",
+          "sha256": "3f884b8e784888cd77e102801b923fdaa137a9eeba14a6dcd488ac2de3ca5968",
+          "size": 705
+        },
+        "center": {
+          "x": 443.5,
+          "y": 807.5
+        },
+        "drag_points": null,
+        "name": "Bumper4",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 297,
+          "text": "Sub Bumper4_Hit() : vpmTimer.PulseSw 9  : PlaySoundAtVol SoundFX(\"fx_bumper4\", DOFContactors), Bumper4, 4 : DOFALT 108, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.4435,
+      "y": 0.40375
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-rt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper3.json",
+          "sha256": "de18fa1579b111f0db066bc7117f12e45e5a3fd65b7a385cd0ed56176d514f1d",
+          "size": 707
+        },
+        "center": {
+          "x": 444.5,
+          "y": 587.5
+        },
+        "drag_points": null,
+        "name": "Bumper3",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 295,
+          "text": "Sub Bumper3_Hit() : vpmTimer.PulseSw 10 : PlaySoundAtVol SoundFX(\"fx_bumper3\", DOFContactors), Bumper3, 4 : DOFALT 106, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.4445,
+      "y": 0.29375
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.bot-lt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper2.json",
+          "sha256": "a566c7ad66ded64cc32fdb78d42167c3834cb4ef006109ef5b5b1803798c7d6e",
+          "size": 709
+        },
+        "center": {
+          "x": 219.25,
+          "y": 804.75
+        },
+        "drag_points": null,
+        "name": "Bumper2",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 296,
+          "text": "Sub Bumper2_Hit() : vpmTimer.PulseSw 11 : PlaySoundAtVol SoundFX(\"fx_bumper2\", DOFContactors), Bumper2, 4 : DOFALT 107, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.21925,
+      "y": 0.402375
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-lt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper1.json",
+          "sha256": "349dee2a1f4187dccde032eb80d5b62d30b90e7498fd190dad8cca9faf314819",
+          "size": 707
+        },
+        "center": {
+          "x": 220.25,
+          "y": 584.75
+        },
+        "drag_points": null,
+        "name": "Bumper1",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 294,
+          "text": "Sub Bumper1_Hit() : vpmTimer.PulseSw 12 : PlaySoundAtVol SoundFX(\"fx_bumper1\", DOFContactors), Bumper1, 4 : DOFALT 105, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.22025,
+      "y": 0.292375
+    },
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-eject",
+      "method": "top eject actuator projected onto the bowl its exact callback kicks",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.Kicker1.json",
+          "sha256": "11b5d12e6c3397913b2f114e0c6ea8cfc491cad36282beec5939555ffcec25fe",
+          "size": 439
+        },
+        "center": {
+          "x": 602.0295,
+          "y": 696.5562
+        },
+        "drag_points": null,
+        "name": "Kicker1",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 145,
+          "text": "SolCallback(5) = \"SolTopEject\"\t\t\t' Top Eject"
+        },
+        {
+          "line": 213,
+          "text": "Sub SolTopEject(Enabled)"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.602029,
+      "y": 0.348278
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.right-slingshot",
+      "method": "own manual sling coil projected onto its switch-bound sling polygon centroid; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.RightSlingShot.json",
+          "sha256": "d5e7d13e94788958ec23a1dfd44cd8f83390922a63896cbf62ed13ab704f2017",
+          "size": 2169
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 701.9807,
+            "y": 1272.6765,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 621.2637,
+            "y": 1464.4735,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 631.3855,
+            "y": 1457.0195,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 705.95703,
+            "y": 1285.6091,
+            "z": 0.0
+          }
+        ],
+        "name": "RightSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 301,
+          "text": "Sub RightSlingShot_Slingshot() : vpmTimer.PulseSw 7 : PlaySoundAt SoundFX(\"sling\", DOFContactors), SLING9 : DOFALT 104, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.665147,
+      "y": 0.684972
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.left-slingshot",
+      "method": "own manual sling coil projected onto its switch-bound sling polygon centroid; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/whoa-nellie-big-juicy-melons-2015/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.LeftSlingShot.json",
+          "sha256": "61d92099c6e55313d85fd09d870492ec829b411b082bd5dc41162bfd93839792",
+          "size": 2169
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 205.85547,
+            "y": 1280.8591,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 280.677,
+            "y": 1454.5195,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 287.79883,
+            "y": 1456.9735,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 210.83179,
+            "y": 1271.6765,
+            "z": 0.0
+          }
+        ],
+        "name": "LeftSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 302,
+          "text": "Sub LeftSlingShot_Slingshot()  : vpmTimer.PulseSw 8 : PlaySoundAt SoundFX(\"sling\", DOFContactors), SLING8 : DOFALT 103, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.246291,
+      "y": 0.683004
+    }
+  ],
+  "projection_classes": [
+    "bumper switch projected onto its bound bumper center",
+    "direct script-bound rollover trigger center",
+    "eject contact projected onto its directly bound eject bowl center",
+    "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+    "own manual sling coil projected onto its switch-bound sling polygon centroid; native VPX kick bypasses coil callback",
+    "slingshot contact projected onto the bound sling polygon drag-point centroid",
+    "top eject actuator projected onto the bowl its exact callback kicks"
+  ],
+  "source_refs": [
+    "vpx.supplied-pinmame-script.2026-10-25",
+    "vpx.supplied-pinmame-table.2026-10-25",
+    "manual.switch",
+    "manual.driver"
+  ],
+  "transform": "x=round((raw_x-left)/(right-left),6); y=round((raw_y-top)/(bottom-top),6). x0left, x1right, y0rear, y1apron. Wall coordinates are the arithmetic centroid of all stored drag points, a mechanism projection rather than a measured leaf.",
+  "version": 1
+}

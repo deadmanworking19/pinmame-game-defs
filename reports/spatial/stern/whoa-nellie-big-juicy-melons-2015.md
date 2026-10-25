@@ -17,39 +17,39 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | inputs | switch.right-flipper-eos | pinmame.input.switch:2 | observed | absent |
 | inputs | switch.left-flipper | pinmame.input.switch:3 | observed | not_applicable (not_applicable) |
 | inputs | switch.right-flipper | pinmame.input.switch:4 | observed | not_applicable (not_applicable) |
-| inputs | switch.shooter-lane | pinmame.input.switch:5 | observed | absent |
-| inputs | switch.right-return-lane | pinmame.input.switch:6 | observed | absent |
-| inputs | switch.right-slingshot | pinmame.input.switch:7 | observed | absent |
-| inputs | switch.left-slingshot | pinmame.input.switch:8 | observed | absent |
-| inputs | switch.bot-rt-pop-bumper | pinmame.input.switch:9 | observed | absent |
-| inputs | switch.top-rt-pop-bumper | pinmame.input.switch:10 | observed | absent |
-| inputs | switch.bot-lt-pop-bumper | pinmame.input.switch:11 | observed | absent |
-| inputs | switch.top-lt-pop-bumper | pinmame.input.switch:12 | observed | absent |
-| inputs | switch.top-lane-2 | pinmame.input.switch:13 | observed | absent |
-| inputs | switch.top-lane-1-left | pinmame.input.switch:14 | observed | absent |
+| inputs | switch.shooter-lane | pinmame.input.switch:5 | observed | declared (observed) |
+| inputs | switch.right-return-lane | pinmame.input.switch:6 | observed | declared (observed) |
+| inputs | switch.right-slingshot | pinmame.input.switch:7 | observed | declared (observed) |
+| inputs | switch.left-slingshot | pinmame.input.switch:8 | observed | declared (observed) |
+| inputs | switch.bot-rt-pop-bumper | pinmame.input.switch:9 | observed | declared (observed) |
+| inputs | switch.top-rt-pop-bumper | pinmame.input.switch:10 | observed | declared (observed) |
+| inputs | switch.bot-lt-pop-bumper | pinmame.input.switch:11 | observed | declared (observed) |
+| inputs | switch.top-lt-pop-bumper | pinmame.input.switch:12 | observed | declared (observed) |
+| inputs | switch.top-lane-2 | pinmame.input.switch:13 | observed | declared (observed) |
+| inputs | switch.top-lane-1-left | pinmame.input.switch:14 | observed | declared (observed) |
 | inputs | switch.unresolved-15 | pinmame.input.switch:15 | candidate | absent |
-| inputs | switch.center-drain | pinmame.input.switch:16 | observed | absent |
+| inputs | switch.center-drain | pinmame.input.switch:16 | observed | declared (observed) |
 | inputs | switch.trough-opto | pinmame.input.switch:17 | conflicted | absent |
-| inputs | switch.left-return-lane | pinmame.input.switch:18 | observed | absent |
-| inputs | switch.right-outlane | pinmame.input.switch:19 | observed | absent |
-| inputs | switch.top-eject | pinmame.input.switch:20 | observed | absent |
+| inputs | switch.left-return-lane | pinmame.input.switch:18 | observed | declared (observed) |
+| inputs | switch.right-outlane | pinmame.input.switch:19 | observed | declared (observed) |
+| inputs | switch.top-eject | pinmame.input.switch:20 | observed | declared (observed) |
 | inputs | switch.bot-rt-standup-1pt | pinmame.input.switch:21 | observed | absent |
 | inputs | switch.right-target-outer | pinmame.input.switch:22 | observed | absent |
 | inputs | switch.right-target-inner | pinmame.input.switch:23 | observed | absent |
 | inputs | switch.top-rt-standup-1pt | pinmame.input.switch:24 | observed | absent |
-| inputs | switch.skill-shot | pinmame.input.switch:25 | observed | absent |
-| inputs | switch.top-pop-single | pinmame.input.switch:26 | observed | absent |
-| inputs | switch.top-lane-4 | pinmame.input.switch:27 | observed | absent |
-| inputs | switch.top-lane-3 | pinmame.input.switch:28 | observed | absent |
-| inputs | switch.star-rollover-1-lt | pinmame.input.switch:29 | observed | absent |
-| inputs | switch.star-rollover-2 | pinmame.input.switch:30 | observed | absent |
-| inputs | switch.star-rollover-3 | pinmame.input.switch:31 | observed | absent |
-| inputs | switch.star-rollover-4-rt | pinmame.input.switch:32 | observed | absent |
-| inputs | switch.star-rollover-left | pinmame.input.switch:33 | observed | absent |
-| inputs | switch.star-rollover-pops | pinmame.input.switch:34 | observed | absent |
-| inputs | switch.star-rollover-rtn | pinmame.input.switch:35 | observed | absent |
-| inputs | switch.star-rollovr-top-rt | pinmame.input.switch:36 | observed | absent |
-| inputs | switch.left-outlane | pinmame.input.switch:37 | observed | absent |
+| inputs | switch.skill-shot | pinmame.input.switch:25 | observed | declared (observed) |
+| inputs | switch.top-pop-single | pinmame.input.switch:26 | observed | declared (observed) |
+| inputs | switch.top-lane-4 | pinmame.input.switch:27 | observed | declared (observed) |
+| inputs | switch.top-lane-3 | pinmame.input.switch:28 | observed | declared (observed) |
+| inputs | switch.star-rollover-1-lt | pinmame.input.switch:29 | observed | declared (observed) |
+| inputs | switch.star-rollover-2 | pinmame.input.switch:30 | observed | declared (observed) |
+| inputs | switch.star-rollover-3 | pinmame.input.switch:31 | observed | declared (observed) |
+| inputs | switch.star-rollover-4-rt | pinmame.input.switch:32 | observed | declared (observed) |
+| inputs | switch.star-rollover-left | pinmame.input.switch:33 | observed | declared (observed) |
+| inputs | switch.star-rollover-pops | pinmame.input.switch:34 | observed | declared (observed) |
+| inputs | switch.star-rollover-rtn | pinmame.input.switch:35 | observed | declared (observed) |
+| inputs | switch.star-rollovr-top-rt | pinmame.input.switch:36 | observed | declared (observed) |
+| inputs | switch.left-outlane | pinmame.input.switch:37 | observed | declared (observed) |
 | inputs | switch.lt-standup-1pt-1 | pinmame.input.switch:38 | observed | absent |
 | inputs | switch.lt-standup-1pt-5 | pinmame.input.switch:39 | observed | absent |
 | inputs | switch.left-target-outer | pinmame.input.switch:40 | observed | absent |
@@ -152,14 +152,14 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | coil.right-flipper | pinmame.output.solenoid:2 | observed | absent |
 | outputs | coil.left-flipper-hold | pinmame.output.solenoid:3 | observed | absent |
 | outputs | coil.right-flipper-hold | pinmame.output.solenoid:4 | observed | absent |
-| outputs | coil.top-eject | pinmame.output.solenoid:5 | observed | absent |
+| outputs | coil.top-eject | pinmame.output.solenoid:5 | observed | declared (observed) |
 | outputs | coil.trough | pinmame.output.solenoid:6 | observed | absent |
-| outputs | coil.right-slingshot | pinmame.output.solenoid:7 | observed | absent |
-| outputs | coil.left-slingshot | pinmame.output.solenoid:8 | observed | absent |
-| outputs | coil.bot-rt-pop-bumper | pinmame.output.solenoid:9 | observed | absent |
-| outputs | coil.top-rt-pop-bumper | pinmame.output.solenoid:10 | observed | absent |
-| outputs | coil.bot-lt-pop-bumper | pinmame.output.solenoid:11 | observed | absent |
-| outputs | coil.top-lt-pop-bumper | pinmame.output.solenoid:12 | observed | absent |
+| outputs | coil.right-slingshot | pinmame.output.solenoid:7 | observed | declared (observed) |
+| outputs | coil.left-slingshot | pinmame.output.solenoid:8 | observed | declared (observed) |
+| outputs | coil.bot-rt-pop-bumper | pinmame.output.solenoid:9 | observed | declared (observed) |
+| outputs | coil.top-rt-pop-bumper | pinmame.output.solenoid:10 | observed | declared (observed) |
+| outputs | coil.bot-lt-pop-bumper | pinmame.output.solenoid:11 | observed | declared (observed) |
+| outputs | coil.top-lt-pop-bumper | pinmame.output.solenoid:12 | observed | declared (observed) |
 | outputs | coil.bell-1-point-opt | pinmame.output.solenoid:13 | observed | not_applicable (not_applicable) |
 | outputs | coil.bell-10-point-opt | pinmame.output.solenoid:14 | observed | not_applicable (not_applicable) |
 | outputs | coil.bell-100-point-opt | pinmame.output.solenoid:15 | observed | not_applicable (not_applicable) |
@@ -303,6 +303,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `pinmame.catalog.current` (pinmame_catalog): `c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd`
 - `rom.routing` (rom_static_analysis): `e6e96994d56fa5ba140175a7540ca96d3dd7182d9a1ccad87b071e6e94e978e9`
 - `runtime.api-r2` (runtime_scenario): `e86ab4da24067ba4eabc592c8551bbeb3d4c68b59784a12f095a1d024c49062b`
+- `vpx.supplied-pinmame-script.2026-10-25` (vpx_script): `79eb5dd0f1c66d0ae262bff90182b86be025f5c33bb46d7433ba898c19a916ce`
+- `vpx.supplied-pinmame-table.2026-10-25` (vpx_table): `277fff2d00c349ef1c15b4ff4a97df05d38b7b0bc892949ea180305cd8ccc753`
 
 ## Projection classes
 
