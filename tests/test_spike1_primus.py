@@ -31,7 +31,7 @@ class PrimusFactsTests(unittest.TestCase):
 class SuppliedTableEvidenceTests(unittest.TestCase):
 	def _artifacts(self):
 		definition = load_json(ROOT / 'machines/partial/stern/primus-2018.json')
-		report = load_json(ROOT / 'evidence/spatial/stern/primus-2018-supplied-vpx.json')
+		report = load_json(ROOT / 'evidence/excerpts/stern.primus.2018/supplied-spatial-audit.json.txt')
 		excerpt = load_json(ROOT / report['evidence_excerpt']['path'])
 		return definition, report, excerpt
 

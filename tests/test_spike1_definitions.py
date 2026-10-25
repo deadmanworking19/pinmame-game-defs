@@ -77,7 +77,12 @@ class Spike1DefinitionTests(unittest.TestCase):
 						if address is None:
 							continue
 						device = devices[group, address]
-						self.assertIn(row['name'], [alias['value'] for alias in device['aliases']], (game, section, address, row['name']))
+						aliases = device['aliases']
+						if 'name_origin' in row:
+							self.assertIn(row['name_origin'], {'firmware_string', 'pinmame_source_synthesized'})
+							namespace = 'pinmame.label' if row['name_origin'] == 'pinmame_source_synthesized' else 'rom.label'
+							aliases = [alias for alias in aliases if alias['namespace'] == namespace]
+						self.assertIn(row['name'], [alias['value'] for alias in aliases], (game, section, address, row['name']))
 
 	def test_reproduction_catalog_ownership_and_all_excerpt_digests(self):
 		catalog = load_json(ROOT / 'catalog/pinmame.json')

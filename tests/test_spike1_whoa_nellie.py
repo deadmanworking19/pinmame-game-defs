@@ -33,7 +33,7 @@ class WhoaNellieFactsTests(unittest.TestCase):
 class SuppliedTableEvidenceTests(unittest.TestCase):
 	def _artifacts(self):
 		definition = load_json(ROOT / 'machines/partial/stern/whoa-nellie-big-juicy-melons-2015.json')
-		report = load_json(ROOT / 'evidence/spatial/stern/whoa-nellie-big-juicy-melons-2015-supplied-vpx.json')
+		report = load_json(ROOT / 'evidence/excerpts/stern.whoa-nellie-big-juicy-melons.2015/supplied-spatial-audit.json.txt')
 		excerpt = load_json(ROOT / report['evidence_excerpt']['path'])
 		return definition, report, excerpt
 

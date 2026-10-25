@@ -48,8 +48,12 @@ class WorkingRootTests(unittest.TestCase):
 		with tempfile.TemporaryDirectory() as temporary_directory, patch.dict(os.environ, {}, clear=True):
 			repository = Path(temporary_directory) / "checkout"
 			repository.mkdir()
-			with self.assertRaisesRegex(DefinitionError, "Shared working root is missing"):
-				resolve_working_root(repository, required=True)
+			# The test temp directory may itself live inside the real shared root.
+			# Select a genuinely missing root explicitly so ancestor discovery cannot
+			# turn the negative fixture into a valid production workspace.
+			with patch.dict(os.environ, {"PINMAME_WORKING_ROOT": str(Path(temporary_directory) / "absent-evidence")}):
+				with self.assertRaisesRegex(DefinitionError, "Shared working root is missing"):
+					resolve_working_root(repository, required=True)
 
 
 if __name__ == "__main__":

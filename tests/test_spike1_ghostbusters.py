@@ -37,7 +37,7 @@ class GhostbustersFactsTests(unittest.TestCase):
 class SuppliedTableEvidenceTests(unittest.TestCase):
 	def _artifacts(self):
 		definition = load_json(ROOT / 'machines/partial/stern/ghostbusters-limited-edition-2016.json')
-		report = load_json(ROOT / 'evidence/spatial/stern/ghostbusters-limited-edition-2016-supplied-vpx.json')
+		report = load_json(ROOT / 'evidence/excerpts/stern.ghostbusters-limited-edition.2016/supplied-spatial-audit.json.txt')
 		excerpt = load_json(ROOT / report['evidence_excerpt']['path'])
 		return definition, report, excerpt
 
