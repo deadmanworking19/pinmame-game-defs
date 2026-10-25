@@ -13,8 +13,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 7 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
 | 8 | 2016 | Ghostbusters (Limited Edition) | Stern | partial | 50% |
 | 9 | 2016 | Pabst Can Crusher | Stern | partial | 50% |
-| 10 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
-| 11 | 2016 | STUB - Spider-Man The Pin (1.01) | Stern | stub | 0% |
+| 10 | 2016 | Spider-Man The Pin | Stern | partial | 38% |
+| 11 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
 | 12 | 2015 | Game of Thrones (Limited Edition) | Stern | partial | 44% |
 | 13 | 2015 | Game of Thrones (Pro) | Stern | partial | 50% |
 | 14 | 2015 | KISS (Limited Edition) | Stern | partial | 50% |
@@ -27,16 +27,16 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 21 | 2014 | Mustang Pro | Stern | author_ready | 100% |
 | 22 | 2014 | The Walking Dead Premium / Limited Edition | Stern | author_ready | 100% |
 | 23 | 2014 | The Walking Dead Pro | Stern | author_ready | 100% |
-| 24 | 2013 | Metallica Premium / Limited Edition | Stern | author_ready | 100% |
-| 25 | 2013 | Metallica Pro | Stern | author_ready | 100% |
-| 26 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready | 100% |
-| 27 | 2013 | Star Trek Pro | Stern | author_ready | 100% |
-| 28 | 2013 | STUB - Avengers The Pin (1.0.3) | Stern | stub | 0% |
+| 24 | 2013 | Avengers The Pin | Stern | partial | 38% |
+| 25 | 2013 | Metallica Premium / Limited Edition | Stern | author_ready | 100% |
+| 26 | 2013 | Metallica Pro | Stern | author_ready | 100% |
+| 27 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready | 100% |
+| 28 | 2013 | Star Trek Pro | Stern | author_ready | 100% |
 | 29 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready | 100% |
 | 30 | 2012 | AC/DC Pro (original) | Stern | author_ready | 100% |
-| 31 | 2012 | STUB - Transformers The Pin (1.0.18) | Stern | stub | 0% |
-| 32 | 2012 | The Avengers Limited Edition | Stern | partial | 94% |
-| 33 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
+| 31 | 2012 | The Avengers Limited Edition | Stern | partial | 94% |
+| 32 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
+| 33 | 2012 | Transformers The Pin | Stern | partial | 38% |
 | 34 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | author_ready | 100% |
 | 35 | 2012 | X-Men Pro | Stern | partial | 88% |
 | 36 | 2011 | The Rolling Stones (Standard) | Stern | author_ready | 100% |

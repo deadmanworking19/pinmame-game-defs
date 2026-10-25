@@ -69,16 +69,18 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# does the same and splits the 2009 Limited Edition's lotr_le into a record of its own, and
 		# the Terminator 2, 2026-10-23 World Cup Soccer and Lord of the Rings Limited Edition promotions each
 		# move one more partial to author_ready.
+		# The current SPIKE baseline adds thirteen partial definitions and nine system parents;
+		# the unrelated new roots and unclaimed conversion variants remain explicit residual stubs.
 		self.assertEqual(
 			{
 				"author_ready_count": 40,
-				"driver_count": 2955,
-				"game_count": 795,
-				"machine_count": 809,
-				"non_game_count": 14,
-				"partial_count": 754,
-				"root_driver_count": 797,
-				"stub_count": 15,
+				"driver_count": 2981,
+				"game_count": 810,
+				"machine_count": 833,
+				"non_game_count": 23,
+				"partial_count": 767,
+				"root_driver_count": 819,
+				"stub_count": 26,
 			},
 			self.catalog["summary"],
 		)
