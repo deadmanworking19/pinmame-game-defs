@@ -1,0 +1,2164 @@
+{
+  "acquired_at": "2026-10-25T22:54:36Z",
+  "bound_driver": "primus_103",
+  "bounds": {
+    "bottom": 2000.0,
+    "left": 0.0,
+    "right": 1000.0,
+    "top": 0.0
+  },
+  "embedded_metadata": {
+    "author_email": null,
+    "author_name": "Drummer72",
+    "author_website": null,
+    "properties": {},
+    "properties_order": [],
+    "release_date": "01/15/2024",
+    "table_blurb": "Thx HauntFreaks, AllKnowing for  Whoa Nellie! Thanks Iaakki for the killer graphics cleanup!\r\n",
+    "table_description": "1.0 Release 04/21/20 Drummer72\r\n1.2 Release 01/15/24 MachWon",
+    "table_name": "Primus (Stern 2018)",
+    "table_rules": "# Primus\r\n\r\n**INSTRUCTIONS - HOW TO SCORE**\r\nTop Lanes Light Corresponding Colored Pop-Bumpers and Star Roll-overs.\r\nSkill Shot Scores 50 Points, 200 When Lit.\r\nPop-Bumpers and Roll-Overs Score 10 Points When Lit.\r\nBulls-Eye Targets Score 5 Points For Side Hits, 50 Points When Lit\r\nBulls-Eye Targets Score 200 Points For Center Hits When Lit.\r\nAny 5 or 50 Points Score Rotates Lit 200 Point Shot.\r\nHole Shot Scores 50 Points 200 Points When Lit... Plus...\r\nHole Shot Collects Lit Bumper Values, Start Pudding Time When All 4 Bumpers Are Lit.",
+    "table_save_date": "Mon Jan 27 21:25:24 2025",
+    "table_save_rev": "2329",
+    "table_version": "1.21"
+  },
+  "excluded_or_unresolved": [
+    "Trough opto 17 uses a shared Drain surrogate rather than independent opto geometry and remains unplaced; output 6 is not placed from Ballrelease, a ball-spawn proxy.",
+    "Dual-target inner/outer contacts and rubber-backed one-point leaves are not placed at render or broad rubber proxies.",
+    "Backbox score/credit reel geometry does not establish a playfield coordinate; the physical LCD mount remains unresolved because the table only displays its emulator window.",
+    "No Light array member is treated as a physical bulb merely because the script drives it. GI arrays include duplicate glows/insert overlays; emitter identity, quantity and factory string membership remain unresolved."
+  ],
+  "extraction_manifest": {
+    "algorithm": "tools/build_external_evidence_manifest.py: every relative POSIX path except manifest.json and manifest.sha256, case-sensitive sorted; size and SHA-256; UTF-8 JSON ensure_ascii=False, separators=(comma,colon), sort_keys=True, one trailing LF; SHA-256 of those bytes.",
+    "byte_count": 189425966,
+    "file_count": 1123,
+    "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/manifest.json",
+    "sha256": "47d49bc9b28073fd110f463042fb9aed8e1741e02c83a47558dc8b9419bd93b2",
+    "size": 158234
+  },
+  "format": "pinmame-supplied-vpx-evidence",
+  "limits": "The supplied source was not independently launched in this pass. Script assignments prove table implementation, not an executed ROM response, factory geometry, contact rest state or emitter fitment. The same table/script may share ancestry with the manual. All coordinates remain observed and coverage remains partial.",
+  "machine_id": "stern.primus.2018",
+  "mechanism_observations": [
+    "The script creates one ball in Drain, sets trough opto 17 active and tracks it in TroughHasBall. Output 6 clears that flag/contact, destroys the drain ball and creates/kicks a ball from Ballrelease. This is a simplified trough representation, not evidence for opto geometry or physical trough capacity.",
+    "Output 5 kicks a captured Kicker1 ball and clears top eject contact 20; the switch is driven by Kicker1 Hit/UnHit. Coil kick velocity and rod animation timer are table tuning, not measured physical behavior.",
+    "GetMech indices 0,1,2,3 supply the thousands, hundreds, tens and units score reels; index 4 supplies credits. ReelDigit rounds the position using 20 steps per score digit and 10 per credit, modulo 10. This is the exact script conversion; physical phase direction, service calibration, homing, stalls and jam recovery remain unverified.",
+    "Lower EOS writes at 1/2 are derived from virtual flipper angle within three degrees of EndAngle. The public core synthesizes EOS, so these host writes are not independent physical contact feedback and do not establish contact construction.",
+    "Dual target edge/center handlers pulse 22/23 on the right and 40/41 on the left. Rubber-backed one-point contacts use their own handlers; shared rubber regions are not treated as distinct measured leaf positions."
+  ],
+  "method": "Exact byte retention; vpxtool git:v0.33.3 extraction; curator-inspected script routines and explicit object selection; repository extract_spatial_candidates normalization. No nearest-object search.",
+  "placements": [
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.shooter-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LampSplashOn.json",
+          "sha256": "366558d90f7691d6cf2c0dae2d62cd6b548c7da58c9b5a63f30b79b4f9f009db",
+          "size": 1816
+        },
+        "center": {
+          "x": 949.5235,
+          "y": 1773.5188
+        },
+        "drag_points": null,
+        "name": "LampSplashOn",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 325,
+          "text": "Sub LampSplashOn_Hit()   : Controller.Switch(5) = 1 : PlaySoundAt \"rollover\", LampSplashOn : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.949523,
+      "y": 0.886759
+    },
+    {
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-return-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.RightInLaneTrigger.json",
+          "sha256": "09bb4dd8e24e7f410306a9b9b5b02ac10eee57e202dc601405ab24a7dfe8fe2e",
+          "size": 1827
+        },
+        "center": {
+          "x": 775.05457,
+          "y": 1372.4072
+        },
+        "drag_points": null,
+        "name": "RightInLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 317,
+          "text": "Sub RightInLaneTrigger_Hit()    : Controller.Switch(6) = 1 : PlaySoundAtVol \"rollover\", RightInLaneTrigger, VolRol : DOFALT 117, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.775055,
+      "y": 0.686204
+    },
+    {
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-2",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T10.json",
+          "sha256": "556b961c4176000f994d6ad94f48f26ce0b81602ee8e59756230321a5d8683bc",
+          "size": 1812
+        },
+        "center": {
+          "x": 161.32402,
+          "y": 319.87585
+        },
+        "drag_points": null,
+        "name": "T10",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 285,
+          "text": "Sub T10_Hit()   : Controller.Switch(13) = 1 : PlaySoundAt \"rollover\", T10 : DOFALT 111, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.161324,
+      "y": 0.159938
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-1-left",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T9.json",
+          "sha256": "aeea1fad504a1784acc9041aa901ac1762096020734763c03ac3526815cfb8d4",
+          "size": 1809
+        },
+        "center": {
+          "x": 57.63892,
+          "y": 318.55826
+        },
+        "drag_points": null,
+        "name": "T9",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 283,
+          "text": "Sub T9_Hit()    : Controller.Switch(14) = 1 : PlaySoundAt \"rollover\", T9 : DOFALT 110, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.057639,
+      "y": 0.159279
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.center-drain",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger8.json",
+          "sha256": "03739b8272af34ac44a6b219d0af0fa6a654d5549976354195f01f6c79911766",
+          "size": 1820
+        },
+        "center": {
+          "x": 457.93124,
+          "y": 1738.2812
+        },
+        "drag_points": null,
+        "name": "Trigger8",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 321,
+          "text": "Sub Trigger8_Hit()              : Controller.Switch(16) = 1 : PlaySoundAtVol \"rollover\", Trigger8, VolTrig : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.457931,
+      "y": 0.869141
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-return-lane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LeftInLaneTrigger.json",
+          "sha256": "ee1b42ec3d212f20c64c060ad96391c0f5165965904c2d0393759ab018e94b95",
+          "size": 1827
+        },
+        "center": {
+          "x": 138.25359,
+          "y": 1370.9426
+        },
+        "drag_points": null,
+        "name": "LeftInLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 315,
+          "text": "Sub LeftInLaneTrigger_Hit()     : Controller.Switch(18) = 1 : PlaySoundAtVol \"rollover\", LeftInLaneTrigger, VolRol : DOFALT 116, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.138254,
+      "y": 0.685471
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-outlane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.RightOutLaneTrigger.json",
+          "sha256": "e095b6c4f739a34462a89c03a8329c3b6600b37b58dc3944e4f890c95459074c",
+          "size": 1828
+        },
+        "center": {
+          "x": 856.54175,
+          "y": 1325.3712
+        },
+        "drag_points": null,
+        "name": "RightOutLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 319,
+          "text": "Sub RightOutLaneTrigger_Hit()   : Controller.Switch(19) = 1 : PlaySoundAtVol \"rollover\", RightOutLaneTrigger, VolRol : DOFALT 118, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.856542,
+      "y": 0.662686
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.skill-shot",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T13.json",
+          "sha256": "f46ffbf211c39aeadbe5a9f7c1b42a0ef1a6cb0e0d4ea10505e1c94e2e9efe52",
+          "size": 1808
+        },
+        "center": {
+          "x": 723.6156,
+          "y": 304.96692
+        },
+        "drag_points": null,
+        "name": "T13",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 291,
+          "text": "Sub T13_Hit()   : Controller.Switch(25) = 1 : PlaySoundAt \"rollover\", T13 : DOFALT 114, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.723616,
+      "y": 0.152483
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-4",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T12.json",
+          "sha256": "a10b029ac3d27bca49ab2d7cc637286b69ed24dc0de83bcb2491b0597458758a",
+          "size": 1813
+        },
+        "center": {
+          "x": 366.11166,
+          "y": 319.09348
+        },
+        "drag_points": null,
+        "name": "T12",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 289,
+          "text": "Sub T12_Hit()   : Controller.Switch(27) = 1 : PlaySoundAt \"rollover\", T12 : DOFALT 113, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.366112,
+      "y": 0.159547
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lane-3",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.T11.json",
+          "sha256": "65b9e379d3e0fe80d5c1e54a0042581c6838e6befb439b1ce0c75eb3a0ea9de4",
+          "size": 1812
+        },
+        "center": {
+          "x": 262.3587,
+          "y": 317.65988
+        },
+        "drag_points": null,
+        "name": "T11",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 287,
+          "text": "Sub T11_Hit()   : Controller.Switch(28) = 1 : PlaySoundAt \"rollover\", T11 : DOFALT 112, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.262359,
+      "y": 0.15883
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-1-lt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger1.json",
+          "sha256": "2c20523229f5590107eb96e7dfa0c4b9d46a9f62acf570fe68b01eeced40902d",
+          "size": 1820
+        },
+        "center": {
+          "x": 298.76956,
+          "y": 1276.8519
+        },
+        "drag_points": null,
+        "name": "Trigger1",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 295,
+          "text": "Sub Trigger1_Hit()    : Controller.Switch(29) = 1 : DOFALT 127, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.29877,
+      "y": 0.638426
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-2",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger2.json",
+          "sha256": "b4a72ec11694d6c206ab73734fc82de0095423ffe79c380e03807683e5d75242",
+          "size": 1820
+        },
+        "center": {
+          "x": 401.77185,
+          "y": 1243.5688
+        },
+        "drag_points": null,
+        "name": "Trigger2",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 297,
+          "text": "Sub Trigger2_Hit()    : Controller.Switch(30) = 1 : DOFALT 128, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.401772,
+      "y": 0.621784
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-3",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger3.json",
+          "sha256": "a6ddde6863697ccb2253be52149a6eaf35d3b15924d21982c954bedf33e255c4",
+          "size": 1820
+        },
+        "center": {
+          "x": 509.77448,
+          "y": 1243.3213
+        },
+        "drag_points": null,
+        "name": "Trigger3",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 299,
+          "text": "Sub Trigger3_Hit()    : Controller.Switch(31) = 1 : DOFALT 129, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.509774,
+      "y": 0.621661
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-4-rt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger4.json",
+          "sha256": "6063d12594d3f16a29ed8e0c2830767cd217ac77ae57da25b8fb39900cf29a5f",
+          "size": 1820
+        },
+        "center": {
+          "x": 613.00165,
+          "y": 1276.9172
+        },
+        "drag_points": null,
+        "name": "Trigger4",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 301,
+          "text": "Sub Trigger4_Hit()    : Controller.Switch(32) = 1 : DOFALT 130, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.613002,
+      "y": 0.638459
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-left",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger7.json",
+          "sha256": "c485c6be104caeaa223148398f4d7dbc06f768c329e6bedd7fdf288edc59ed29",
+          "size": 1819
+        },
+        "center": {
+          "x": 118.38922,
+          "y": 931.03046
+        },
+        "drag_points": null,
+        "name": "Trigger7",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 303,
+          "text": "Sub Trigger7_Hit()    : Controller.Switch(33) = 1 : DOFALT 131, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.118389,
+      "y": 0.465515
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-pops",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger6.json",
+          "sha256": "1658d1a0ec3b08f3b6402becd2668fef21ca2742c6e313d7e80a27c93f5f6d24",
+          "size": 1810
+        },
+        "center": {
+          "x": 331.9499,
+          "y": 693.5504
+        },
+        "drag_points": null,
+        "name": "Trigger6",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 305,
+          "text": "Sub Trigger6_Hit()    : Controller.Switch(34) = 1 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.33195,
+      "y": 0.346775
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollover-rtn",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger14.json",
+          "sha256": "3684c31976b29d52ed783979c8fbb41144f04774576baf556c9a9a6049b6b235",
+          "size": 1816
+        },
+        "center": {
+          "x": 870.5845,
+          "y": 689.94257
+        },
+        "drag_points": null,
+        "name": "Trigger14",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 307,
+          "text": "Sub Trigger14_Hit()   : Controller.Switch(35) = 1 : DOFALT 134, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.870585,
+      "y": 0.344971
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.star-rollovr-top-rt",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.Trigger5.json",
+          "sha256": "a45e11789b6a5abfcd12a08e4489ae141e516c56160694a710fb8a92da9485ce",
+          "size": 1820
+        },
+        "center": {
+          "x": 846.76324,
+          "y": 337.94522
+        },
+        "drag_points": null,
+        "name": "Trigger5",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 309,
+          "text": "Sub Trigger5_Hit()    : Controller.Switch(36) = 1 : DOFALT 126, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.846763,
+      "y": 0.168973
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-outlane",
+      "method": "direct script-bound rollover trigger center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LeftOutLaneTrigger.json",
+          "sha256": "ce011aad7c94d9f7e13bc2331668dc6759e1d3676dac8ff7187312bd841b221c",
+          "size": 1826
+        },
+        "center": {
+          "x": 58.021595,
+          "y": 1324.8522
+        },
+        "drag_points": null,
+        "name": "LeftOutLaneTrigger",
+        "position": null,
+        "type": "Trigger"
+      },
+      "script_locators": [
+        {
+          "line": 313,
+          "text": "Sub LeftOutLaneTrigger_Hit()    : Controller.Switch(37) = 1 : PlaySoundAtVol \"rollover\", LeftOutLaneTrigger, VolRol : DOFALT 115, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.058022,
+      "y": 0.662426
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.bot-rt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper4.json",
+          "sha256": "faaf3d7f3abf1ee7a8d3296f5491e796d3cfc29a5bcdfe45e9d9aef39d86bdc0",
+          "size": 700
+        },
+        "center": {
+          "x": 444.88876,
+          "y": 807.44476
+        },
+        "drag_points": null,
+        "name": "Bumper4",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 333,
+          "text": "Sub Bumper4_Hit() : vpmTimer.PulseSw 9  : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper4, VolBump : DOFALT 108, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.444889,
+      "y": 0.403722
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-rt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper3.json",
+          "sha256": "242cb9726a363528358bc7554c136e3c178b2cc9d5ed2ab4951c7e59ec1f4637",
+          "size": 702
+        },
+        "center": {
+          "x": 441.33328,
+          "y": 582.55493
+        },
+        "drag_points": null,
+        "name": "Bumper3",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 331,
+          "text": "Sub Bumper3_Hit() : vpmTimer.PulseSw 10 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper3, VolBump : DOFALT 106, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.441333,
+      "y": 0.291277
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.bot-lt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper2.json",
+          "sha256": "9ef3cc26556e96070cbd21d15acdada63f8c562871794935e2f1470069ee4a5b",
+          "size": 701
+        },
+        "center": {
+          "x": 219.11124,
+          "y": 803.8891
+        },
+        "drag_points": null,
+        "name": "Bumper2",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 332,
+          "text": "Sub Bumper2_Hit() : vpmTimer.PulseSw 11 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper2, VolBump : DOFALT 107, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.219111,
+      "y": 0.401945
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-lt-pop-bumper",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper1.json",
+          "sha256": "fe66716e71be26525dcf0b1bfc7d5cd8ef3d8b603c6ff8cb6156ab35e495d0c8",
+          "size": 699
+        },
+        "center": {
+          "x": 220.8889,
+          "y": 585.22266
+        },
+        "drag_points": null,
+        "name": "Bumper1",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 330,
+          "text": "Sub Bumper1_Hit() : vpmTimer.PulseSw 12 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper1, VolBump : DOFALT 105, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.220889,
+      "y": 0.292611
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-pop-single",
+      "method": "bumper switch projected onto its bound bumper center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper5.json",
+          "sha256": "3605d21e2345ef801831cd7736f5622c21426a07772b2ec58b784ada064b111c",
+          "size": 691
+        },
+        "center": {
+          "x": 541.7774,
+          "y": 309.6668
+        },
+        "drag_points": null,
+        "name": "Bumper5",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 334,
+          "text": "Sub Bumper5_Hit() : vpmTimer.PulseSw 26 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper5, VolBump : DOFALT 109, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.541777,
+      "y": 0.154833
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.top-eject",
+      "method": "eject contact projected onto its directly bound eject bowl center",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.Kicker1.json",
+          "sha256": "248ab0fe3d5c8a677c4d324026dcbd7e415a9cb67e1768b6fd8e5369cc5a993f",
+          "size": 439
+        },
+        "center": {
+          "x": 601.5237,
+          "y": 699.3207
+        },
+        "drag_points": null,
+        "name": "Kicker1",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 238,
+          "text": "Sub Kicker1_Hit()"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.601524,
+      "y": 0.34966
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.right-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.RightSlingShot.json",
+          "sha256": "dfa8c6c21983446329314a0c6b0775248a58c7243069ba217046200877f8b7ac",
+          "size": 2911
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 700.2268,
+            "y": 1277.6094,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 627.55304,
+            "y": 1455.5953,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 620.38885,
+            "y": 1474.3223,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 636.0013,
+            "y": 1460.6666,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 708.8151,
+            "y": 1278.0734,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 706.4455,
+            "y": 1262.5885,
+            "z": 0.0
+          }
+        ],
+        "name": "RightSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 772,
+          "text": "Sub RightSlingShot_Slingshot"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.666572,
+      "y": 0.684071
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "collection": "inputs",
+      "device_id": "switch.left-slingshot",
+      "method": "slingshot contact projected onto the bound sling polygon drag-point centroid",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.LeftSlingShot.json",
+          "sha256": "3e2b176e9cd6367fc7e751c9f3c85c1dbe4130397527282af9b34da6aba4bab4",
+          "size": 2914
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 203.91321,
+            "y": 1258.7544,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 199.45425,
+            "y": 1271.5116,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 278.64233,
+            "y": 1459.3282,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 291.36627,
+            "y": 1469.5696,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 283.54456,
+            "y": 1451.6096,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 210.83179,
+            "y": 1275.2832,
+            "z": 0.0
+          }
+        ],
+        "name": "LeftSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 799,
+          "text": "Sub LeftSlingShot_Slingshot"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.switch"
+      ],
+      "x": 0.244625,
+      "y": 0.682171
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.bot-rt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper4.json",
+          "sha256": "faaf3d7f3abf1ee7a8d3296f5491e796d3cfc29a5bcdfe45e9d9aef39d86bdc0",
+          "size": 700
+        },
+        "center": {
+          "x": 444.88876,
+          "y": 807.44476
+        },
+        "drag_points": null,
+        "name": "Bumper4",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 333,
+          "text": "Sub Bumper4_Hit() : vpmTimer.PulseSw 9  : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper4, VolBump : DOFALT 108, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.444889,
+      "y": 0.403722
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-rt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper3.json",
+          "sha256": "242cb9726a363528358bc7554c136e3c178b2cc9d5ed2ab4951c7e59ec1f4637",
+          "size": 702
+        },
+        "center": {
+          "x": 441.33328,
+          "y": 582.55493
+        },
+        "drag_points": null,
+        "name": "Bumper3",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 331,
+          "text": "Sub Bumper3_Hit() : vpmTimer.PulseSw 10 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper3, VolBump : DOFALT 106, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.441333,
+      "y": 0.291277
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.bot-lt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper2.json",
+          "sha256": "9ef3cc26556e96070cbd21d15acdada63f8c562871794935e2f1470069ee4a5b",
+          "size": 701
+        },
+        "center": {
+          "x": 219.11124,
+          "y": 803.8891
+        },
+        "drag_points": null,
+        "name": "Bumper2",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 332,
+          "text": "Sub Bumper2_Hit() : vpmTimer.PulseSw 11 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper2, VolBump : DOFALT 107, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.219111,
+      "y": 0.401945
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-lt-pop-bumper",
+      "method": "own manual bumper coil projected onto the same switch-bound bumper; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Bumper.Bumper1.json",
+          "sha256": "fe66716e71be26525dcf0b1bfc7d5cd8ef3d8b603c6ff8cb6156ab35e495d0c8",
+          "size": 699
+        },
+        "center": {
+          "x": 220.8889,
+          "y": 585.22266
+        },
+        "drag_points": null,
+        "name": "Bumper1",
+        "position": null,
+        "type": "Bumper"
+      },
+      "script_locators": [
+        {
+          "line": 330,
+          "text": "Sub Bumper1_Hit() : vpmTimer.PulseSw 12 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper1, VolBump : DOFALT 105, 2 : End Sub"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.220889,
+      "y": 0.292611
+    },
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.top-eject",
+      "method": "top eject actuator projected onto the bowl its exact callback kicks",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.Kicker1.json",
+          "sha256": "248ab0fe3d5c8a677c4d324026dcbd7e415a9cb67e1768b6fd8e5369cc5a993f",
+          "size": 439
+        },
+        "center": {
+          "x": 601.5237,
+          "y": 699.3207
+        },
+        "drag_points": null,
+        "name": "Kicker1",
+        "position": null,
+        "type": "Kicker"
+      },
+      "script_locators": [
+        {
+          "line": 207,
+          "text": "SolCallback(5) = \"SolTopEject\"\t\t\t' Top Eject"
+        },
+        {
+          "line": 249,
+          "text": "Sub SolTopEject(Enabled)"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.601524,
+      "y": 0.34966
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.right-slingshot",
+      "method": "own manual sling coil projected onto its switch-bound sling polygon centroid; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.RightSlingShot.json",
+          "sha256": "dfa8c6c21983446329314a0c6b0775248a58c7243069ba217046200877f8b7ac",
+          "size": 2911
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 700.2268,
+            "y": 1277.6094,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 627.55304,
+            "y": 1455.5953,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 620.38885,
+            "y": 1474.3223,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 636.0013,
+            "y": 1460.6666,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 708.8151,
+            "y": 1278.0734,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 706.4455,
+            "y": 1262.5885,
+            "z": 0.0
+          }
+        ],
+        "name": "RightSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 772,
+          "text": "Sub RightSlingShot_Slingshot"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.666572,
+      "y": 0.684071
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "collection": "outputs",
+      "device_id": "coil.left-slingshot",
+      "method": "own manual sling coil projected onto its switch-bound sling polygon centroid; native VPX kick bypasses coil callback",
+      "object": {
+        "artifact": {
+          "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.LeftSlingShot.json",
+          "sha256": "3e2b176e9cd6367fc7e751c9f3c85c1dbe4130397527282af9b34da6aba4bab4",
+          "size": 2914
+        },
+        "center": null,
+        "drag_points": [
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 203.91321,
+            "y": 1258.7544,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 199.45425,
+            "y": 1271.5116,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 278.64233,
+            "y": 1459.3282,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 291.36627,
+            "y": 1469.5696,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": true,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 283.54456,
+            "y": 1451.6096,
+            "z": 0.0
+          },
+          {
+            "editor_layer": 0,
+            "editor_layer_name": "",
+            "editor_layer_visibility": true,
+            "has_auto_texture": true,
+            "is_locked": false,
+            "is_slingshot": false,
+            "smooth": false,
+            "tex_coord": 0.0,
+            "x": 210.83179,
+            "y": 1275.2832,
+            "z": 0.0
+          }
+        ],
+        "name": "LeftSlingShot",
+        "position": null,
+        "type": "Wall"
+      },
+      "script_locators": [
+        {
+          "line": 799,
+          "text": "Sub LeftSlingShot_Slingshot"
+        }
+      ],
+      "source_refs": [
+        "vpx.supplied-pinmame-script.2026-10-25",
+        "vpx.supplied-pinmame-table.2026-10-25",
+        "manual.driver"
+      ],
+      "x": 0.244625,
+      "y": 0.682171
+    }
+  ],
+  "reviewed": false,
+  "script": {
+    "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/extracted/script.vbs",
+    "sha256": "917653ad54ddd9f58e80e9588f1021716656e24144bb1e41bf5428b7b13fa913",
+    "size": 76640
+  },
+  "script_light_lines": [
+    {
+      "line": 151,
+      "text": ".SolMask(2) = 2"
+    },
+    {
+      "line": 403,
+      "text": "LampLights(2)  = Array(Light17, Light13, Light37, Light14, Light29)\t' Lt Flipper GI (x2)"
+    },
+    {
+      "line": 404,
+      "text": "LampLights(3)  = Array(Light9, Light38, Light32, Light39)\t\t\t' Rt Flipper GI (x2)"
+    },
+    {
+      "line": 405,
+      "text": "LampLights(4)  = Array(Light16, Light33)\t\t\t\t\t\t\t' Rt Slingshot (Bot)"
+    },
+    {
+      "line": 406,
+      "text": "LampLights(5)  = Array(Light34, Light8)\t\t\t\t\t\t\t\t' Lt Slingshot (Bot)"
+    },
+    {
+      "line": 407,
+      "text": "LampLights(6)  = Array(Light42, Light35)\t\t\t\t\t\t\t' Lt Slingshot (Top)"
+    },
+    {
+      "line": 408,
+      "text": "LampLights(7)  = Array(Light43, Light18)\t\t\t\t\t\t\t' Rt Slingshot (Top)"
+    },
+    {
+      "line": 409,
+      "text": "LampLights(8)  = Array(Light36, Light007)\t\t\t\t\t\t\t' Right GI #1"
+    },
+    {
+      "line": 410,
+      "text": "LampLights(9)  = Array(Light46)\t\t\t\t\t\t\t\t\t\t' Right GI #2"
+    },
+    {
+      "line": 411,
+      "text": "LampLights(11) = Array(Light47, Light12)\t\t\t\t\t\t\t' Right GI #4"
+    },
+    {
+      "line": 412,
+      "text": "LampLights(13) = Array(Light28, Light006, Light48)\t\t\t\t\t' Right GI #6"
+    },
+    {
+      "line": 413,
+      "text": "LampLights(14) = Array(Light49, light10)\t\t\t\t\t\t\t' Right GI #7"
+    },
+    {
+      "line": 414,
+      "text": "LampLights(15) = Array(b1l9)\t\t\t\t\t\t\t\t\t\t' Right GI #8"
+    },
+    {
+      "line": 415,
+      "text": "LampLights(16) = Array(Light20)\t\t\t\t\t\t\t\t\t\t' Right GI #9"
+    },
+    {
+      "line": 416,
+      "text": "LampLights(17) = Array(Light21)\t\t\t\t\t\t\t\t\t\t' Right GI #10"
+    },
+    {
+      "line": 417,
+      "text": "LampLights(18) = Array(b1l8, Light22)\t\t\t\t\t\t\t\t' Right GI #11"
+    },
+    {
+      "line": 418,
+      "text": "LampLights(19) = Array(Light40, Light41)\t\t\t\t\t\t\t' Right GI #12"
+    },
+    {
+      "line": 419,
+      "text": "LampLights(20) = Array(Light7, Light27)\t\t\t\t\t\t\t\t' Skillshot GI 2"
+    },
+    {
+      "line": 420,
+      "text": "LampLights(21) = Array(L1, L001)\t\t\t\t\t\t\t\t\t' Star Rollover 1"
+    },
+    {
+      "line": 421,
+      "text": "LampLights(22) = Array(L2, L002)\t\t\t\t\t\t\t\t\t' Star Rollover 2"
+    },
+    {
+      "line": 422,
+      "text": "LampLights(23) = Array(L3, L003)\t\t\t\t\t\t\t\t\t' Star Rollover 3"
+    },
+    {
+      "line": 423,
+      "text": "LampLights(24) = Array(L4, L004)\t\t\t\t\t\t\t\t\t' Star Rollover 4"
+    },
+    {
+      "line": 424,
+      "text": "LampLights(25) = Array(L10, L010)\t\t\t\t\t\t\t\t\t' Left Star"
+    },
+    {
+      "line": 425,
+      "text": "LampLights(26) = Array(L9, L009)\t\t\t\t\t\t\t\t\t' Pop Bumper Star"
+    },
+    {
+      "line": 426,
+      "text": "LampLights(27) = Array(L15, L015)\t\t\t\t\t\t\t\t\t' Shooter Ret. Star"
+    },
+    {
+      "line": 427,
+      "text": "LampLights(28) = Array(L8, L08)\t\t\t\t\t\t\t\t\t\t' Top Right Star"
+    },
+    {
+      "line": 428,
+      "text": "LampLights(29) = Array(Light1)\t\t\t\t\t\t\t\t\t\t' Left GI #1"
+    },
+    {
+      "line": 429,
+      "text": "LampLights(30) = Array(Light001, Light44, Light005)\t\t\t\t\t' Left GI #2"
+    },
+    {
+      "line": 430,
+      "text": "LampLights(31) = Array(Light11, b1l7)\t\t\t\t\t\t\t\t' Left GI #3"
+    },
+    {
+      "line": 431,
+      "text": "LampLights(32) = Array(Light004, gi55)\t\t\t\t\t\t\t\t' Left GI #4"
+    },
+    {
+      "line": 432,
+      "text": "LampLights(33) = Array(Light51, Light003, Light45)\t\t\t\t\t' Left GI #5"
+    },
+    {
+      "line": 433,
+      "text": "LampLights(34) = Array(Light6, Light26)\t\t\t\t\t\t\t\t' Skillshot GI 1"
+    },
+    {
+      "line": 434,
+      "text": "LampLights(35) = Array(Light31, Light50)\t\t\t\t\t\t\t' Left GI #6"
+    },
+    {
+      "line": 435,
+      "text": "LampLights(36) = Array(L11)\t\t\t\t\t\t\t\t\t\t\t' Top lane #4"
+    },
+    {
+      "line": 436,
+      "text": "LampLights(37) = Array(L12)\t\t\t\t\t\t\t\t\t\t\t' Top lane #3"
+    },
+    {
+      "line": 437,
+      "text": "LampLights(38) = Array(L13)\t\t\t\t\t\t\t\t\t\t\t' Top lane #2"
+    },
+    {
+      "line": 438,
+      "text": "LampLights(39) = Array(L14)\t\t\t\t\t\t\t\t\t\t\t' Top lane #1 (Left)"
+    },
+    {
+      "line": 439,
+      "text": "LampLights(40) = Array(b5l1, b5l2, b5l3)\t\t\t\t\t\t\t' 5 Point Bumper"
+    },
+    {
+      "line": 440,
+      "text": "LampLights(41) = Array(L7)\t\t\t\t\t\t\t\t\t\t\t' Eject Lamp"
+    },
+    {
+      "line": 441,
+      "text": "LampLights(42) = Array(L6)\t\t\t\t\t\t\t\t\t\t\t' Right Target"
+    },
+    {
+      "line": 442,
+      "text": "LampLights(43) = Array(L5)\t\t\t\t\t\t\t\t\t\t\t' Left Target"
+    },
+    {
+      "line": 443,
+      "text": "LampLights(44) = Array(b2l1, b2l2, b2l3, b1l004)\t\t\t\t\t' Bot Lt Pop Bumper"
+    },
+    {
+      "line": 444,
+      "text": "LampLights(45) = Array(b4l1, b4l2, b4l3, b1l003)\t\t\t\t\t' Bot Rt Pop Bumper"
+    },
+    {
+      "line": 445,
+      "text": "LampLights(46) = Array(b1l1, b1l2, b1l3, b1l001)\t\t\t\t\t' Top Lt Pop Bumper"
+    },
+    {
+      "line": 446,
+      "text": "LampLights(47) = Array(b3l1, b3l2, b3l3, b1l002)\t\t\t\t\t' Top Rt Pop Bumper"
+    },
+    {
+      "line": 447,
+      "text": "LampLights(48) = Array(Light2, Light19)\t\t\t\t\t\t\t\t' Top Lane GI 1 (LT)"
+    },
+    {
+      "line": 448,
+      "text": "LampLights(49) = Array(Light4, Light23)\t\t\t\t\t\t\t\t' Top Lane GI 2"
+    },
+    {
+      "line": 449,
+      "text": "LampLights(50) = Array(Light3, Light24)\t\t\t\t\t\t\t\t' Top Lane GI 3"
+    },
+    {
+      "line": 450,
+      "text": "LampLights(51) = Array(Light5, Light25)\t\t\t\t\t\t\t\t' Top Lane GI 4"
+    },
+    {
+      "line": 467,
+      "text": "chg = Controller.ChangedLamps"
+    },
+    {
+      "line": 482,
+      "text": "Function LampOn(n)"
+    },
+    {
+      "line": 525,
+      "text": "If LampOn(53 + n) Then ball = n\t\t' Ball in Play 1-5: lamps 54-58"
+    },
+    {
+      "line": 537,
+      "text": "If LampOn(61) Then tilt = 1 Else tilt = 0\t' Tilt Light"
+    },
+    {
+      "line": 544,
+      "text": "If LampOn(59) Or LampOn(60) Then gameOver = 1 Else gameOver = 0\t' Game Over 1 and 2"
+    },
+    {
+      "line": 551,
+      "text": "If LampOn(62) Then match = 10\t\t\t' Match 0 Left"
+    },
+    {
+      "line": 553,
+      "text": "If LampOn(62 + n) Then match = n\t' Match 1-9: lamps 63-71"
+    }
+  ],
+  "script_runtime_lines": [
+    {
+      "line": 69,
+      "text": "Const cGameName = \"primus_103\"\t'Primus 1.03.0"
+    },
+    {
+      "line": 70,
+      "text": "Const B2ScGameName = \"primus\"\t\t'The backglass and DOF name, as the original table had it"
+    },
+    {
+      "line": 138,
+      "text": ".GameName = cGameName"
+    },
+    {
+      "line": 139,
+      "text": "If Err Then MsgBox \"Can't start Game \" & cGameName & vbNewLine & Err.Description : Exit Sub"
+    },
+    {
+      "line": 162,
+      "text": "Drain.CreateSizedBallWithMass BallSize / 2, BallMass"
+    },
+    {
+      "line": 164,
+      "text": "Controller.Switch(17) = 1"
+    },
+    {
+      "line": 207,
+      "text": "SolCallback(5) = \"SolTopEject\"\t\t\t' Top Eject"
+    },
+    {
+      "line": 208,
+      "text": "SolCallback(6) = \"SolTrough\"\t\t\t' Trough"
+    },
+    {
+      "line": 209,
+      "text": "SolCallback(16) = \"SolKnocker\"\t\t\t' Free Game knocker"
+    },
+    {
+      "line": 210,
+      "text": "SolCallback(sLLFlipper) = \"SolLFlipper\"\t' Left Flipper"
+    },
+    {
+      "line": 211,
+      "text": "SolCallback(sLRFlipper) = \"SolRFlipper\"\t' Right Flipper"
+    },
+    {
+      "line": 220,
+      "text": "Controller.Switch(17) = 1"
+    },
+    {
+      "line": 226,
+      "text": "Drain.DestroyBall"
+    },
+    {
+      "line": 228,
+      "text": "Controller.Switch(17) = 0"
+    },
+    {
+      "line": 229,
+      "text": "BallRelease.CreateSizedBallWithMass BallSize / 2, BallMass"
+    },
+    {
+      "line": 230,
+      "text": "BallRelease.Kick 135, 4, 0"
+    },
+    {
+      "line": 241,
+      "text": "Controller.Switch(20) = 1"
+    },
+    {
+      "line": 246,
+      "text": "Controller.Switch(20) = 0"
+    },
+    {
+      "line": 259,
+      "text": "Controller.Switch(20) = 0"
+    },
+    {
+      "line": 283,
+      "text": "Sub T9_Hit()    : Controller.Switch(14) = 1 : PlaySoundAt \"rollover\", T9 : DOFALT 110, 2 : End Sub"
+    },
+    {
+      "line": 284,
+      "text": "Sub T9_UnHit()  : Controller.Switch(14) = 0 : End Sub"
+    },
+    {
+      "line": 285,
+      "text": "Sub T10_Hit()   : Controller.Switch(13) = 1 : PlaySoundAt \"rollover\", T10 : DOFALT 111, 2 : End Sub"
+    },
+    {
+      "line": 286,
+      "text": "Sub T10_UnHit() : Controller.Switch(13) = 0 : End Sub"
+    },
+    {
+      "line": 287,
+      "text": "Sub T11_Hit()   : Controller.Switch(28) = 1 : PlaySoundAt \"rollover\", T11 : DOFALT 112, 2 : End Sub"
+    },
+    {
+      "line": 288,
+      "text": "Sub T11_UnHit() : Controller.Switch(28) = 0 : End Sub"
+    },
+    {
+      "line": 289,
+      "text": "Sub T12_Hit()   : Controller.Switch(27) = 1 : PlaySoundAt \"rollover\", T12 : DOFALT 113, 2 : End Sub"
+    },
+    {
+      "line": 290,
+      "text": "Sub T12_UnHit() : Controller.Switch(27) = 0 : End Sub"
+    },
+    {
+      "line": 291,
+      "text": "Sub T13_Hit()   : Controller.Switch(25) = 1 : PlaySoundAt \"rollover\", T13 : DOFALT 114, 2 : End Sub"
+    },
+    {
+      "line": 292,
+      "text": "Sub T13_UnHit() : Controller.Switch(25) = 0 : End Sub"
+    },
+    {
+      "line": 295,
+      "text": "Sub Trigger1_Hit()    : Controller.Switch(29) = 1 : DOFALT 127, 2 : End Sub"
+    },
+    {
+      "line": 296,
+      "text": "Sub Trigger1_UnHit()  : Controller.Switch(29) = 0 : End Sub"
+    },
+    {
+      "line": 297,
+      "text": "Sub Trigger2_Hit()    : Controller.Switch(30) = 1 : DOFALT 128, 2 : End Sub"
+    },
+    {
+      "line": 298,
+      "text": "Sub Trigger2_UnHit()  : Controller.Switch(30) = 0 : End Sub"
+    },
+    {
+      "line": 299,
+      "text": "Sub Trigger3_Hit()    : Controller.Switch(31) = 1 : DOFALT 129, 2 : End Sub"
+    },
+    {
+      "line": 300,
+      "text": "Sub Trigger3_UnHit()  : Controller.Switch(31) = 0 : End Sub"
+    },
+    {
+      "line": 301,
+      "text": "Sub Trigger4_Hit()    : Controller.Switch(32) = 1 : DOFALT 130, 2 : End Sub"
+    },
+    {
+      "line": 302,
+      "text": "Sub Trigger4_UnHit()  : Controller.Switch(32) = 0 : End Sub"
+    },
+    {
+      "line": 303,
+      "text": "Sub Trigger7_Hit()    : Controller.Switch(33) = 1 : DOFALT 131, 2 : End Sub"
+    },
+    {
+      "line": 304,
+      "text": "Sub Trigger7_UnHit()  : Controller.Switch(33) = 0 : End Sub"
+    },
+    {
+      "line": 305,
+      "text": "Sub Trigger6_Hit()    : Controller.Switch(34) = 1 : End Sub"
+    },
+    {
+      "line": 306,
+      "text": "Sub Trigger6_UnHit()  : Controller.Switch(34) = 0 : End Sub"
+    },
+    {
+      "line": 307,
+      "text": "Sub Trigger14_Hit()   : Controller.Switch(35) = 1 : DOFALT 134, 2 : End Sub"
+    },
+    {
+      "line": 308,
+      "text": "Sub Trigger14_UnHit() : Controller.Switch(35) = 0 : End Sub"
+    },
+    {
+      "line": 309,
+      "text": "Sub Trigger5_Hit()    : Controller.Switch(36) = 1 : DOFALT 126, 2 : End Sub"
+    },
+    {
+      "line": 310,
+      "text": "Sub Trigger5_UnHit()  : Controller.Switch(36) = 0 : End Sub"
+    },
+    {
+      "line": 313,
+      "text": "Sub LeftOutLaneTrigger_Hit()    : Controller.Switch(37) = 1 : PlaySoundAtVol \"rollover\", LeftOutLaneTrigger, VolRol : DOFALT 115, 2 : End Sub"
+    },
+    {
+      "line": 314,
+      "text": "Sub LeftOutLaneTrigger_UnHit()  : Controller.Switch(37) = 0 : End Sub"
+    },
+    {
+      "line": 315,
+      "text": "Sub LeftInLaneTrigger_Hit()     : Controller.Switch(18) = 1 : PlaySoundAtVol \"rollover\", LeftInLaneTrigger, VolRol : DOFALT 116, 2 : End Sub"
+    },
+    {
+      "line": 316,
+      "text": "Sub LeftInLaneTrigger_UnHit()   : Controller.Switch(18) = 0 : End Sub"
+    },
+    {
+      "line": 317,
+      "text": "Sub RightInLaneTrigger_Hit()    : Controller.Switch(6) = 1 : PlaySoundAtVol \"rollover\", RightInLaneTrigger, VolRol : DOFALT 117, 2 : End Sub"
+    },
+    {
+      "line": 318,
+      "text": "Sub RightInLaneTrigger_UnHit()  : Controller.Switch(6) = 0 : End Sub"
+    },
+    {
+      "line": 319,
+      "text": "Sub RightOutLaneTrigger_Hit()   : Controller.Switch(19) = 1 : PlaySoundAtVol \"rollover\", RightOutLaneTrigger, VolRol : DOFALT 118, 2 : End Sub"
+    },
+    {
+      "line": 320,
+      "text": "Sub RightOutLaneTrigger_UnHit() : Controller.Switch(19) = 0 : End Sub"
+    },
+    {
+      "line": 321,
+      "text": "Sub Trigger8_Hit()              : Controller.Switch(16) = 1 : PlaySoundAtVol \"rollover\", Trigger8, VolTrig : End Sub"
+    },
+    {
+      "line": 322,
+      "text": "Sub Trigger8_UnHit()            : Controller.Switch(16) = 0 : End Sub"
+    },
+    {
+      "line": 325,
+      "text": "Sub LampSplashOn_Hit()   : Controller.Switch(5) = 1 : PlaySoundAt \"rollover\", LampSplashOn : End Sub"
+    },
+    {
+      "line": 326,
+      "text": "Sub LampSplashOn_UnHit() : Controller.Switch(5) = 0 : DOFALT 120, 2 : End Sub"
+    },
+    {
+      "line": 330,
+      "text": "Sub Bumper1_Hit() : vpmTimer.PulseSw 12 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper1, VolBump : DOFALT 105, 2 : End Sub"
+    },
+    {
+      "line": 331,
+      "text": "Sub Bumper3_Hit() : vpmTimer.PulseSw 10 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper3, VolBump : DOFALT 106, 2 : End Sub"
+    },
+    {
+      "line": 332,
+      "text": "Sub Bumper2_Hit() : vpmTimer.PulseSw 11 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper2, VolBump : DOFALT 107, 2 : End Sub"
+    },
+    {
+      "line": 333,
+      "text": "Sub Bumper4_Hit() : vpmTimer.PulseSw 9  : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper4, VolBump : DOFALT 108, 2 : End Sub"
+    },
+    {
+      "line": 334,
+      "text": "Sub Bumper5_Hit() : vpmTimer.PulseSw 26 : PlaySoundAtVol SoundFX(\"fx_bumper\", DOFContactors), Bumper5, VolBump : DOFALT 109, 2 : End Sub"
+    },
+    {
+      "line": 374,
+      "text": "Sub Blinkwall3_Hit()           : vpmTimer.PulseSw 44 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 375,
+      "text": "Sub Blinkwall2_Hit()           : vpmTimer.PulseSw 43 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 376,
+      "text": "Sub RubberBand000_VPW006_Hit() : vpmTimer.PulseSw 42 : End Sub"
+    },
+    {
+      "line": 377,
+      "text": "Sub Blinkwall1_Hit()           : vpmTimer.PulseSw 38 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 378,
+      "text": "Sub Blinkwallm1_Hit()          : vpmTimer.PulseSw 39 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 379,
+      "text": "Sub BlinkwallR2_Hit()          : vpmTimer.PulseSw 24 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 380,
+      "text": "Sub BlinkwallR1_Hit()          : vpmTimer.PulseSw 21 : PlaySoundAt \"fx_rubber2\", ActiveBall : End Sub"
+    },
+    {
+      "line": 388,
+      "text": "If closed <> LeftEOS Then LeftEOS = closed : Controller.Switch(1) = closed"
+    },
+    {
+      "line": 390,
+      "text": "If closed <> RightEOS Then RightEOS = closed : Controller.Switch(2) = closed"
+    },
+    {
+      "line": 500,
+      "text": "pos = Controller.GetMech(mech)"
+    },
+    {
+      "line": 507,
+      "text": "score = ReelDigit(0, 20) * 1000 + ReelDigit(1, 20) * 100 + ReelDigit(2, 20) * 10 + ReelDigit(3, 20)"
+    },
+    {
+      "line": 508,
+      "text": "credits = ReelDigit(4, 10)"
+    },
+    {
+      "line": 781,
+      "text": "vpmTimer.PulseSw 7"
+    },
+    {
+      "line": 808,
+      "text": "vpmTimer.PulseSw 8"
+    }
+  ],
+  "source_vpx": {
+    "path": "working-root:vpx-sources/stern/primus-2018/supplied-pinmame-2026-10-25/Primus (Stern 2018) 1.21 PinMAME.vpx",
+    "sha256": "5d646a08b30f4cd94df09e5d8a28792ebb68035011e6fd892dd4e6a7a653dfdc",
+    "size": 82862080
+  },
+  "transcribed_by": "GPT-6.1 Sol xhigh",
+  "transform": "x=round((raw_x-left)/(right-left),6); y=round((raw_y-top)/(bottom-top),6). x0left, x1right, y0rear, y1apron. Wall coordinates are the arithmetic centroid of all stored drag points, a mechanism projection rather than a measured leaf.",
+  "version": 1
+}
