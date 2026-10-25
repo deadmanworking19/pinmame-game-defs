@@ -445,6 +445,8 @@ def is_repository_or_site_package_path(entry: str) -> bool:
     return (
         path == repository_root
         or repository_root in path.parents
+        # Editable installs may expose a different checkout's src directory.
+        or (path / "pinmame_game_defs" / "__init__.py").is_file()
         or any(part.casefold() in {"site-packages", "dist-packages"} for part in path.parts)
     )
 
