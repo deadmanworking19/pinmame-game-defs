@@ -1,0 +1,334 @@
+# src/wpc/spike1.c at 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+
+Full-file SHA256: `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`. Lines are source-literal except trailing whitespace is removed; gaps are explicit. Method: direct UTF-8 source read, numbered below. Source comments describe the emulator and are not physical fitment evidence.
+
+## Lines 41-46
+
+```text
+41:   Transformers The Pin and Avengers The Pin run Stern's earlier ELG framework: one node board, a
+42:   16 character alphanumeric display of 16 segments (CORE_SEG16S, each segment at one of 16
+43:   levels) and the game's sounds as WAV files. The game counts its switches, coils and lamps from 0,
+44:   as its test menu shows them; their PinMAME numbers are one more.
+45: ************************************************************************************************/
+46:
+```
+
+## Lines 60-74
+
+```text
+60: #define SPIKE1_REGION     REGION_USER1 /* the game folder's files, mapped from the set on disk (ROMREGION_MAPPED) */
+61: #define SPIKE1_AUDIO_RATE 44100        /* the stream's rate until the game sets /dev/i2s to its own */
+62: #define SPIKE1_PEN0       (COL_COUNT + 48 + 48 + 48) /* the core's palette, then 32768 pens of RGB555 */
+63: #define SPIKE1_MAXCOILS   64
+64: #define SPIKE1_MAXLEDS    256
+65: #define SPIKE1_MAXMECHS   8            /* Whoa Nellie's five reels are the most a title has */
+66: #define SPIKE1_MAXFILES   512          /* Avengers The Pin's program and its 365 sounds are the most a title has */
+67: #define SPIKE1_ALNUM_DIGITS 16         /* the ELG titles' display: the game keeps its text to 16 of the frame's 32 positions */
+68: #define SPIKE1_FIRSTCUSTSOL CORE_FIRSTCUSTSOL /* solenoid 51 */
+69: #define SPIKE1_NCUSTSOLS  (CORE_MODOUT_SOL_MAX - SPIKE1_FIRSTCUSTSOL + 1)
+70: #define SPIKE1_GAMEONSOL  33           /* GAME ON, as SAM's: the flippers enabled - their reflexes armed */
+71: #define SPIKE1_GAMEONBIT  0x10         /* its bit in solenoids2, where the core takes SAM's */
+72: #define SPIKE1_IOFREQ     1000         /* the I/O exchange: the node boards scan their switches far faster than a frame */
+73:
+74: /* The numbers a title's manual gives the switches PinMAME's keys reach; they differ between titles */
+```
+
+## Lines 239-274
+
+```text
+239:     if (n == flip) return 88 + k;
+240:     if (n == 88 + k) return flip;
+241:   }
+242:   return n;
+243: }
+244:
+245: static int spike1_sw2m(int no)
+246: {
+247:   if (no >= 0 && no <= 95) return spike1_swap(no);
+248:   if (no >= 101 && no <= 132) return 96 + (no - 101);
+249:   return 127;
+250: }
+251:
+252: static int spike1_m2sw(int col, int row)
+253: {
+254:   const int m = col * 8 + row;
+255:   return m < 96 ? spike1_swap(m) : 101 + (m - 96);
+256: }
+257:
+258: /* lamp n <-> matrix entry n - 1; the core passes and expects matrix columns counted from 1 */
+259: static int spike1_lamp2m(int no) { return no + 7; }
+260: static int spike1_m2lamp(int col, int row) { return (col - 1) * 8 + row + 1; }
+261:
+262: /*-------------------------------------------------
+263: /  the cabinet keys
+264: /-------------------------------------------------*/
+265: #define SPIKE1_COMPORTS \
+266:   PORT_START /* 2: CORE_COREINPORT */ \
+267:     COREPORT_BITDEF(  0x0001, IPT_COIN1,   IP_KEY_DEFAULT) \
+268:     COREPORT_BITDEF(  0x0002, IPT_COIN2,   IP_KEY_DEFAULT) \
+269:     COREPORT_BITDEF(  0x0004, IPT_COIN3,   KEYCODE_3) \
+270:     COREPORT_BITDEF(  0x0008, IPT_COIN4,   KEYCODE_4) \
+271:     COREPORT_BIT(     0x0010, "Back",      KEYCODE_7) \
+272:     COREPORT_BIT(     0x0020, "Minus",     KEYCODE_8) \
+273:     COREPORT_BIT(     0x0040, "Plus",      KEYCODE_9) \
+274:     COREPORT_BIT(     0x0080, "Select",    KEYCODE_0) \
+```
+
+## Lines 300-312
+
+```text
+300:   for (i = 0; i < 4; i++) core_setSw(SPIKE1_SW_BACK - i, inports[CORE_COREINPORT] & (0x0010 << i)); /* back, minus, plus, select */
+301:   core_setSw(SPIKE1_SW_DCSENSE, !(inports[CORE_COREINPORT] & 0x0100));
+302:   if (locals.startSw >= 0) core_setSw(locals.startSw, inports[CORE_COREINPORT] & 0x0200);
+303:   if (sw->tilt) core_setSw(sw->tilt, inports[CORE_COREINPORT] & 0x0400);
+304:   if (sw->slam) core_setSw(sw->slam, inports[CORE_COREINPORT] & 0x0800); /* a free-play title (Spider-Man) has no coin or slam switches */
+305: }
+306:
+307: /*-------------------------------------------------
+308: /  the I/O, every millisecond (SPIKE1_IOFREQ): the game reads a board's switches every 2 to 5 ms,
+309: /  at the node bus wire's pace, so a change is there for its next read. Coils, LEDs and the DMD go
+310: /  out as soon as the game sets them. The core reports solenoid changes to its hosts once a frame
+311: /  (core_updateSw), so a coil stays on for a frame at least: a pulse that came and went between two
+312: /  frames still shows. Shared state the host's thread reads is built here first and then stored once
+```
+
+## Lines 326-335
+
+```text
+326: static void spike1_sync_io(void)
+327: {
+328:   int i, gameOn = 0;
+329:   UINT32 sols = 0, sols2 = coreGlobals.solenoids2 & ~(UINT32)(CORE_LLFLIPSOLBITS | CORE_LRFLIPSOLBITS | SPIKE1_GAMEONBIT);
+330:   UINT8 lamps[CORE_MAXLAMPCOL];
+331:   const double now = timer_get_time(), frame = 1.0 / Machine->drv->frames_per_second;
+332:   /* switches that changed, the DIP switches from the DIP settings */
+333:   const int dips = core_getDip(0);
+334:   for (i = 0; i < 8; i++) core_setSw(SPIKE1_SW_DIP1 + i, (dips >> i) & 1);
+335:   for (i = 0; i < locals.nsw; i++) {
+```
+
+## Lines 356-383
+
+```text
+356:       if (diag.on) fprintf(stderr, "[spike1 driver] switch %d %s and back\n", locals.sw[i], closed ? "opened" : "closed");)
+357:     }
+358:     locals.swSeen[i] = changes;
+359:   }
+360:   /* coils */
+361:   for (i = 0; i < SPIKE1_MAXCOILS; i++) {
+362:     const int sol = locals.coilSol[i];
+363:     if (sol) {
+364:       unsigned level = spike1_pinmame_coil_output(i);
+365:       if (level && !locals.coilLevel[i]) locals.coilOnAt[i] = now;
+366:       else if (!level && now - locals.coilOnAt[i] <= frame) level = locals.coilLevel[i];
+367:       locals.coilLevel[i] = (UINT8)level;
+368:       coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + sol - 1].value = level / 255.0f;
+369:       if (level && sol <= 32) sols |= CORE_SOLBIT(sol);
+370:     }
+371:   }
+372:   /* the flipper outputs, and GAME ON: the flippers enabled. The game arms the flippers' reflexes on
+373:      the boards - with the slings' and pops' - while a ball is in play, and disarms them when it
+374:      tilts and when a ball or the game ends, so a table switches its own slings and pops with it */
+375:   for (i = 0; i < 4; i++) {
+376:     const int coil = locals.flipCoil[i >> 1][i & 1]; /* a flipper coil always has a solenoid, so its level is taken above */
+377:     if (coil >= 0 && locals.coilLevel[coil]) sols2 |= (i >> 1) ? CORE_LRFLIPSOLBITS : CORE_LLFLIPSOLBITS;
+378:     if (coil >= 0 && spike1_pinmame_coil_reflex_armed(coil)) gameOn = 1;
+379:   }
+380:   if (gameOn) sols2 |= SPIKE1_GAMEONBIT;
+381:   coreGlobals.solenoids = coreGlobals.pulsedSolState = sols;
+382:   coreGlobals.solenoids2 = sols2;
+383:   coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + SPIKE1_GAMEONSOL - 1].value = gameOn ? 1.0f : 0.0f;
+```
+
+## Lines 410-422
+
+```text
+410:     int digit, k;
+411:     locals.dmdFrames = spike1_pinmame_alnum(levels);
+412:     for (digit = 0; digit < SPIKE1_ALNUM_DIGITS; digit++) {
+413:       UINT16 lit = 0;
+414:       for (k = 0; k < SPIKE1_ALNUM_SEGMENTS; k++) {
+415:         const UINT8 level = levels[digit * SPIKE1_ALNUM_SEGMENTS + k];
+416:         if (level) lit |= 1 << (15 - k);
+417:         coreGlobals.physicOutputState[CORE_MODOUT_SEG0 + digit * 16 + 15 - k].value = level / 15.0f;
+418:       }
+419:       coreGlobals.segments[digit].w = lit;
+420:     }
+421:   }
+422: }
+```
+
+## Lines 600-630
+
+```text
+600:   {0}
+601: };
+602:
+603: /* The insert starts 68 pixels down: below the DMD at its double size (64) as well as at its single */
+604: static core_tLCDLayout spike1_dmd_insert[] = {
+605:   {0, 0, SPIKE1_DMD_HEIGHT, SPIKE1_DMD_WIDTH, CORE_DMD, NULL, NULL},
+606:   {68, 0, SPIKE1_INSERT_HEIGHT, SPIKE1_INSERT_WIDTH, CORE_VIDEO, (genf *)spike1_insert_video, NULL},
+607:   {0}
+608: };
+609:
+610: /* The CPU board's LCD in the same place */
+611: static core_tLCDLayout spike1_dmd_lcd[] = {
+612:   {0, 0, SPIKE1_DMD_HEIGHT, SPIKE1_DMD_WIDTH, CORE_DMD, NULL, NULL},
+613:   {68, 0, SPIKE1_LCD_HEIGHT, SPIKE1_LCD_WIDTH, CORE_VIDEO, (genf *)spike1_lcd_video, NULL},
+614:   {0}
+615: };
+616:
+617: /* The RGB matrix alone, a title's only display */
+618: static core_tLCDLayout spike1_rgb[] = {
+619:   {0, 0, SPIKE1_RGB_HEIGHT, SPIKE1_RGB_WIDTH, CORE_VIDEO, (genf *)spike1_rgb_video, NULL},
+620:   {0}
+621: };
+622:
+623: /* The ELG titles' alphanumeric display, their only one: a line of 16 characters */
+624: static core_tLCDLayout spike1_alnum[] = {
+625:   {0, 0, 0, SPIKE1_ALNUM_DIGITS, CORE_SEG16S, NULL, NULL},
+626:   {0}
+627: };
+628:
+629: /*-------------------------------------------------
+630: /  sound: the game's DAC, 16-bit stereo, at the rate the game sets (Ghostbusters 44.1 kHz,
+```
+
+## Lines 700-758
+
+```text
+700:   for (i = 0; i <= CORE_MODOUT_SOL_MAX; i++) locals.coilOf[i] = -1;
+701:   locals.flipCoil[0][0] = locals.flipCoil[0][1] = locals.flipCoil[1][0] = locals.flipCoil[1][1] = -1;
+702:   for (i = 0; spike1_pinmame_coil(i, &number, &name); i++) {
+703:     int sol;
+704:     if (number < 0 || number >= SPIKE1_MAXCOILS) continue;
+705:     if (number >= 1 && number <= 32) sol = number;
+706:     else if (cust < SPIKE1_NCUSTSOLS) sol = SPIKE1_FIRSTCUSTSOL + cust++;
+707:     else continue;
+708:     locals.coilSol[number] = sol;
+709:     locals.coilOf[sol] = number;
+710:     {
+711:       /* Supreme writes LT and RT (RT FLIPPER POWER) */
+712:       char full[64];
+713:       if (!strncmp(name, "LT ", 3)) snprintf(full, sizeof(full), "LEFT %s", name + 3);
+714:       else if (!strncmp(name, "RT ", 3)) snprintf(full, sizeof(full), "RIGHT %s", name + 3);
+715:       else snprintf(full, sizeof(full), "%s", name);
+716:       if (!strcmp(full, "LEFT FLIPPER") || !strcmp(full, "LEFT FLIPPER POWER")) locals.flipCoil[0][0] = number;
+717:       if (!strcmp(full, "LEFT FLIPPER HOLD")) locals.flipCoil[0][1] = number;
+718:       if (!strcmp(full, "RIGHT FLIPPER") || !strcmp(full, "RIGHT FLIPPER POWER")) locals.flipCoil[1][0] = number;
+719:       if (!strcmp(full, "RIGHT FLIPPER HOLD")) locals.flipCoil[1][1] = number;
+720:     }
+721:   }
+722:   /* the core counts lamps in whole columns, up to the highest Light Reference number of the title;
+723:      a motor drive is no lamp, and Light Reference 0 has no PinMAME number */
+724:   coreGlobals.nLamps = 8 * (CORE_CUSTLAMPCOL + core_gameData->hw.lampCol);
+725:   locals.nLeds = 0;
+726:   for (i = 0; i < SPIKE1_MAXLEDS && spike1_pinmame_led(i, &number, &kind, &name); i++) {
+727:     locals.ledLamp[i] = number >= 1 && number <= coreGlobals.nLamps && !(kind & SPIKE1_LED_MOTOR) ? number : 0;
+728:     locals.nLeds = i + 1;
+729:   }
+730:   /* through the lower flippers (45-48) at least, so GAME ON (33) and they are physical outputs too */
+731:   coreGlobals.nSolenoids = cust ? SPIKE1_FIRSTCUSTSOL - 1 + cust : CORE_FIRSTLFLIPSOL + 3;
+732:   coreGlobals.nGI = 0;
+733:   /* the alphanumeric display's segments are modulated outputs too (spike1_sync_io) */
+734:   coreGlobals.nAlphaSegs = (core_gameData->lcdLayout->type & CORE_SEGALL) == CORE_SEG16S ? SPIKE1_ALNUM_DIGITS * 16 : 0;
+735:   core_set_pwm_output_type(CORE_MODOUT_LAMP0, coreGlobals.nLamps, CORE_MODOUT_NONE);
+736:   core_set_pwm_output_type(CORE_MODOUT_SOL0, coreGlobals.nSolenoids, CORE_MODOUT_NONE);
+737: }
+738:
+739: static void spike1_map_switches(void)
+740: {
+741:   int i, number, closed;
+742:   const char *name;
+743:   locals.nsw = 0;
+744:   for (i = 0; locals.nsw < 256 && spike1_pinmame_switch(i, &number, &closed, &name); i++) {
+745:     locals.sw[locals.nsw] = number;
+746:     locals.swState[locals.nsw] = (UINT8)closed;
+747:     locals.nsw++;
+748:     /* what is closed at rest - the trough with its balls, the door's power sense - starts closed in PinMAME too */
+749:     core_setSw(number, closed);
+750:   }
+751:   for (i = 0; i < locals.nsw; i++) {
+752:     locals.swM[i] = spike1_sw2m(locals.sw[i]);
+753:     locals.swSeen[i] = spike1_swChanges[locals.swM[i]];
+754:   }
+755:   core_swChangedHook = spike1_swChanged;
+756:   locals.startSw = spike1_pinmame_find_switch("START BUTTON");
+757:   if (locals.startSw < 0) locals.startSw = spike1_pinmame_find_switch("START"); /* the ELG titles' name */
+758: }
+```
+
+## Lines 900-944
+
+```text
+900:   INPUT_PORTS_END
+901:
+902: /* layout: spike1_dmd, or spike1_dmd_insert for a title with an LCD insert; lamps: its highest Light
+903:    Reference number - the lamps take the 8 standard lamp columns and as many custom ones as they need;
+904:    switches: SPIKE1_SWITCHES(...) with the manual's numbers. The flipper switches need no FLIP_SWNO:
+905:    spike1_sw2m() puts them in the flipper column */
+906: #define SPIKE1_LAMPCOLS(lamps) (((lamps) + 7) / 8 > CORE_CUSTLAMPCOL ? ((lamps) + 7) / 8 - CORE_CUSTLAMPCOL : 0)
+907: #define SPIKE1_CORE(layout, lamps, flippers) \
+908:   { GEN_SPIKE1, layout, \
+909:     { FLIP_SW(flippers) | FLIP_SOL(FLIP_L), 4, SPIKE1_LAMPCOLS(lamps), SPIKE1_NCUSTSOLS, 0, 0, 0, 0, spike1_getSol, NULL, spike1_getMech } }
+910: #define SPIKE1_INIT(name, folder, layout, lamps, switches) \
+911:   SPIKE1_INPUT_PORTS(name) \
+912:   static spike1_tGameData name##GameData = { SPIKE1_CORE(layout, lamps, FLIP_L), folder, switches, SPIKE1_NOHOMES, SPIKE1_NOLIMIT }; \
+913:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+914: /* the same for a title with upper flippers (flippers FLIP_L | FLIP_U, switches SPIKE1_SWITCHES_UPPER),
+915:    home switches on other boards (homes SPIKE1_HOMES) or a limit motor (limit SPIKE1_LIMIT_MOTOR) */
+916: #define SPIKE1_INIT_EX(name, folder, layout, lamps, flippers, switches, homes, limit) \
+917:   SPIKE1_INPUT_PORTS(name) \
+918:   static spike1_tGameData name##GameData = { SPIKE1_CORE(layout, lamps, flippers), folder, switches, homes, limit }; \
+919:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+920: /* the same as SPIKE1_INIT for a game program without a symbol table: symbols lists the addresses */
+921: #define SPIKE1_INIT_SYMBOLS(name, folder, layout, lamps, switches, symbols) \
+922:   SPIKE1_INPUT_PORTS(name) \
+923:   static spike1_tGameData name##GameData = { SPIKE1_CORE(layout, lamps, FLIP_L), folder, switches, SPIKE1_NOHOMES, SPIKE1_NOLIMIT, symbols }; \
+924:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+925: /* the same for a title with the RGB matrix as its display (Spider-Man): displayLink is the file the
+926:    machine's /usr/local/spike/display.hex points at, whose name tells the game its display type */
+927: #define SPIKE1_INIT_RGB(name, folder, lamps, switches, displayLink) \
+928:   SPIKE1_INPUT_PORTS(name) \
+929:   static spike1_tGameData name##GameData = { SPIKE1_CORE(spike1_rgb, lamps, FLIP_L), folder, switches, SPIKE1_NOHOMES, SPIKE1_NOLIMIT, NULL, displayLink }; \
+930:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+931: /* the same as SPIKE1_INIT for a title with an encoder motor (encoder SPIKE1_ENCODER_MOTOR) */
+932: #define SPIKE1_INIT_ENCODER(name, folder, layout, lamps, switches, encoder) \
+933:   SPIKE1_INPUT_PORTS(name) \
+934:   static spike1_tGameData name##GameData = { SPIKE1_CORE(layout, lamps, FLIP_L), folder, switches, SPIKE1_NOHOMES, SPIKE1_NOLIMIT, NULL, NULL, encoder }; \
+935:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+936: /* the same for a title on Stern's ELG framework (Transformers, Avengers The Pin): the alphanumeric
+937:    display as its only one, and program the game folder's program the machine runs, the target of
+938:    its /usr/local/games/game link */
+939: #define SPIKE1_INIT_ALNUM(name, folder, program, lamps, switches) \
+940:   SPIKE1_INPUT_PORTS(name) \
+941:   static spike1_tGameData name##GameData = { SPIKE1_CORE(spike1_alnum, lamps, FLIP_L), folder, switches, SPIKE1_NOHOMES, SPIKE1_NOLIMIT, NULL, NULL, { 0 }, program }; \
+942:   static void init_##name(void) { core_gameData = &name##GameData.core; }
+943: /* Another edition of a title (a Pro beside its LE): the set name_ver, a clone of the set parent,
+944:    with its own game data from SPIKE1_INIT*(data, ...). Its files are the edition's own; those it
+```
+
+## Lines 950-961
+
+```text
+950: / Transformers The Pin
+951: /-------------------------------------------------------------------*/
+952: /* Stern's ELG framework (game folder "tf-elg", from the update image transformers_pin-1.0.18.iso): one
+953:    node board (node 8: 46 switches, 8 coils, 64 lamps), the 16 character alphanumeric display, and
+954:    its sounds as WAV files. The machine runs the folder's "gamer", 1.0.18 (its /usr/local/games/game
+955:    link; the folder's "game" is an older build, v0.0.123). A home model: no coin door. The numbers
+956:    are the game's own plus one */
+957: SPIKE1_INIT_ALNUM(tfcp, "tf-elg", "gamer", 64, SPIKE1_SWITCHES(2, 3, 4, 5, 0, 0, 0, 0, 46, 0))
+958: ROM_START(tfcp_1018)
+959:   ROM_REGION(0x02c39000, SPIKE1_REGION, ROMREGION_MAPPED)
+960:     ROM_LOAD("gamer", 0x00000000, 0x00104148, CRC(14587823) SHA1(42647a7dc47d596a0c455a483fa2c350eb2da139))
+961:     ROM_LOAD("Award_02_A.wav", 0x00105000, 0x0002f37e, CRC(6041b02e) SHA1(10075e7cd245d2d933e9c7314ab508ede99cbc17))
+```
+
+## Lines 1248-1250
+
+```text
+1248:     ROM_LOAD("windDown02.wav", 0x02c06000, 0x00032c74, CRC(3c706081) SHA1(7567d990c9d3d5fa0a19853abf7110f111acf30a))
+1249: ROM_END
+1250: CORE_GAMEDEF(tfcp, 1018, "Transformers The Pin (1.0.18)", 2012, "Stern", spike1, 0)
+```
