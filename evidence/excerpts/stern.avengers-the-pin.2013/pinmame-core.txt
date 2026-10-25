@@ -1,0 +1,96 @@
+# src/wpc/core.c at 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+
+Full-file SHA256: `38a4418adba7f2ef408e8f92bfcf3e5ab950c45164cb69461460af3747386c00`. Lines are source-literal except trailing whitespace is removed; gaps are explicit. Method: direct UTF-8 source read, numbered below. Source comments describe the emulator and are not physical fitment evidence.
+
+## Lines 1793-1880
+
+```text
+1793: void core_updateSw(int flipEn) {
+1794:   /*-- handle flippers--*/
+1795:   const int flip = core_gameData->hw.flippers;
+1796:   const int flipSwCol = (core_gameData->gen & (GEN_GTS3 | GEN_SPA | GEN_ALVG | GEN_ALVG_DMD2 | GEN_WICO)) ? 15 : CORE_FLIPPERSWCOL;
+1797:   int inports[CORE_MAXPORTS];
+1798:   UINT8 swFlip;
+1799:   int ii;
+1800:
+1801:   if (g_fHandleKeyboard) {
+1802:     const int n = CORE_COREINPORT+(coreData->coreDips+31)/16;
+1803:     for (ii = 0; ii < n; ii++)
+1804:       inports[ii] = readinputport(ii);
+1805:
+1806:     /*-- buttons --*/
+1807:     swFlip = 0;
+1808:     if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWLLFLIPBUTBIT;
+1809:     if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWLRFLIPBUTBIT;
+1810:     if (locals.flipMask & CORE_SWULFLIPBUTBIT) {    /* have UL switch */
+1811:       if (flip & FLIP_BUT(FLIP_UL))
+1812:         { if (inports[CORE_FLIPINPORT] & CORE_ULFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }
+1813:       else
+1814:         { if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }
+1815:     }
+1816:     if (locals.flipMask & CORE_SWURFLIPBUTBIT) {    /* have UR switch */
+1817:       if (flip & FLIP_BUT(FLIP_UR))
+1818:         { if (inports[CORE_FLIPINPORT] & CORE_URFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }
+1819:       else
+1820:         { if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }
+1821:     }
+1822:   }
+1823:   else
+1824:     swFlip = (coreGlobals.swMatrix[flipSwCol] ^ coreGlobals.invSw[flipSwCol]) & (CORE_SWULFLIPBUTBIT|CORE_SWURFLIPBUTBIT|CORE_SWLLFLIPBUTBIT|CORE_SWLRFLIPBUTBIT);
+1825:
+1826: #ifdef PROC_SUPPORT
+1827:   /*-- Only handle flipper switches if we're not in a real game, otherwise they --*/
+1828:   /*-- will get physically activated anyway */
+1829:   if (!coreGlobals.p_rocEn) {
+1830: #endif
+1831:
+1832:     /*-- set switches in matrix for non-fliptronic games --*/
+1833:     if (FLIP_SWL(flip)) core_setSw(FLIP_SWL(flip), swFlip & CORE_SWLLFLIPBUTBIT);
+1834:     if (FLIP_SWR(flip)) core_setSw(FLIP_SWR(flip), swFlip & CORE_SWLRFLIPBUTBIT);
+1835: #ifdef PROC_SUPPORT
+1836:   }
+1837: #endif
+1838:
+1839:   /*-- fake solenoids if not CPU controlled --*/
+1840:   if ((flip & FLIP_SOL(FLIP_L)) == 0) {
+1841:     coreGlobals.solenoids2 &= 0xffffff00;
+1842:     if (flipEn) {
+1843:       if (swFlip & CORE_SWLLFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LLFLIPSOLBITS;
+1844:       if (swFlip & CORE_SWLRFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LRFLIPSOLBITS;
+1845:     }
+1846:   }
+1847:
+1848:   /*-- EOS switches --*/
+1849:   if (locals.flipMask & CORE_SWULFLIPEOSBIT) {
+1850:     if (core_getSol(sULFlip)) locals.flipTimer[0] += 1;
+1851:     else                      locals.flipTimer[0] = 0;
+1852:     if (locals.flipTimer[0] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWULFLIPEOSBIT;
+1853:   }
+1854:   if (locals.flipMask & CORE_SWURFLIPEOSBIT) {
+1855:     if (core_getSol(sURFlip)) locals.flipTimer[1] += 1;
+1856:     else                      locals.flipTimer[1] = 0;
+1857:     if (locals.flipTimer[1] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWURFLIPEOSBIT;
+1858:   }
+1859:   if (locals.flipMask & CORE_SWLLFLIPEOSBIT) {
+1860:     if (core_getSol(sLLFlip)) locals.flipTimer[2] += 1;
+1861:     else                      locals.flipTimer[2] = 0;
+1862:     if (locals.flipTimer[2] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLLFLIPEOSBIT;
+1863:   }
+1864:   if (locals.flipMask & CORE_SWLRFLIPEOSBIT) {
+1865:     if (core_getSol(sLRFlip)) locals.flipTimer[3] += 1;
+1866:     else                      locals.flipTimer[3] = 0;
+1867:     if (locals.flipTimer[3] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLRFLIPEOSBIT;
+1868:   }
+1869:   coreGlobals.swMatrix[flipSwCol] = (coreGlobals.swMatrix[flipSwCol]         & ~locals.flipMask) |
+1870:                                     ((swFlip ^ coreGlobals.invSw[flipSwCol]) &  locals.flipMask);
+1871:
+1872:   /*-- update core dependent switches --*/
+1873:   if (coreData->updSw)  coreData->updSw(g_fHandleKeyboard ? inports : NULL);
+1874:
+1875:   /*-- update game dependent switches --*/
+1876:   if (g_fHandleMechanics) {
+1877:     if (core_gameData->hw.handleMech) core_gameData->hw.handleMech(g_fHandleMechanics);
+1878:   }
+1879:
+1880:   /*-- run simulator --*/
+```

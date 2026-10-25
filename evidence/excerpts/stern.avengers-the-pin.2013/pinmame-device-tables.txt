@@ -1,0 +1,84 @@
+# src/spike1/spike1_devices.cpp at 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+
+Full-file SHA256: `234d5e4eda63724ff85df0ff4499cd05971195d46fff7a567cbfe434c039074e`. Lines are source-literal except trailing whitespace is removed; gaps are explicit. Method: direct UTF-8 source read, numbered below. Source comments describe the emulator and are not physical fitment evidence.
+
+## Lines 1097-1172
+
+```text
+1097: // The ELG titles' tables:
+1098: //   g_smap<n>     a board's switch map: 64 inputs of 56 bytes - [switch byte, u32][bit mask]
+1099: //                 [inverted][name, SWITCH_...] - then 0x4c bytes of the map's own state. The game
+1100: //                 numbers a switch byte * 8 + bit; an inverted input reads 0 while it is closed
+1101: //   __coil_table  60 bytes a coil: [node][output][type: 0 pulse, 1 reflex, 2 flipper][power 1][ms]
+1102: //                 [power 2][ms][hold-off ms][input][EOS input][2 bytes][name, "0 - SLINGSHOTS"]
+1103: //   __lamp_table  [node][output] a lamp
+1104: // The game counts its switches, coils and lamps from 0, as its test menu shows them; here they are
+1105: // one more, as PinMAME's numbers start at 1. nodemap_init() registers one map, for the one board
+1106: // the coil and lamp tables name (node 8 in both titles); the maps it leaves empty are not in the
+1107: // program's data. The board's names lose their SWITCH_ prefix and underscores, as the other titles
+1108: // write them. The CPU board's own switches (g_smap_gpio) are empty in both
+1109: void spike1_devices::elg_load_tables()
+1110: {
+1111: 	constexpr uint32_t COIL_ENTRY = 60, COIL_NAME_AT = 12, MAP_INPUTS = 64, MAP_ENTRY = 56, MAP_STATE_BYTES = 0x4c;
+1112: 	auto table = [&](const char *name, std::vector<uint8_t> &out) {
+1113: 		const uint32_t a = m_cfg.symbol(name), size = m_cfg.symbol_size ? m_cfg.symbol_size(name) : 0;
+1114: 		out.assign(size, 0);
+1115: 		return a && size && guest_read(a, out.data(), size);
+1116: 	};
+1117: 	m_elg_nodes.clear();
+1118: 	auto add_node = [&](uint8_t node) { if (node && node < 128 && std::find(m_elg_nodes.begin(), m_elg_nodes.end(), node) == m_elg_nodes.end()) m_elg_nodes.push_back(node); };
+1119: 	std::vector<uint8_t> t;
+1120: 	if (table("__coil_table", t))
+1121: 		for (uint32_t i = 0; (i + 1) * COIL_ENTRY <= t.size(); i++) {
+1122: 			const uint8_t *e = &t[i * COIL_ENTRY];
+1123: 			std::string name(reinterpret_cast<const char *>(e + COIL_NAME_AT), strnlen(reinterpret_cast<const char *>(e + COIL_NAME_AT), COIL_ENTRY - COIL_NAME_AT));
+1124: 			const size_t dash = name.find(" - ");
+1125: 			if (dash != std::string::npos) name = name.substr(dash + 3);
+1126: 			if (name.empty() || !e[0] || e[1] >= COILS_PER_NODE) continue; // the table's unused entries, "8 - "
+1127: 			m_coils.push_back({ uint16_t(i + 1), e[0], e[1], name });
+1128: 			add_node(e[0]);
+1129: 		}
+1130: 	if (table("__lamp_table", t))
+1131: 		for (uint32_t i = 0; 2 * i + 1 < t.size(); i++) {
+1132: 			if (!t[2 * i] || t[2 * i + 1] >= LED_CHANNELS) continue; // node 0: unused
+1133: 			m_leds.push_back({ uint16_t(i + 1), t[2 * i], t[2 * i + 1], "LAMP " + std::to_string(i), 1 }); // as the lamp test names it
+1134: 			add_node(t[2 * i]);
+1135: 		}
+1136: 	uint32_t maps = 0;
+1137: 	for (const auto &map : m_cfg.symbols_with_prefix ? m_cfg.symbols_with_prefix("g_smap") : std::vector<std::string>()) {
+1138: 		if (!table(map.c_str(), t) || t.size() != MAP_INPUTS * MAP_ENTRY + MAP_STATE_BYTES) continue;
+1139: 		std::vector<switch_info> found;
+1140: 		for (uint32_t position = 0; position < MAP_INPUTS; position++) {
+1141: 			const uint8_t *e = &t[position * MAP_ENTRY];
+1142: 			const uint32_t byte = uint32_t(e[0] | (e[1] << 8) | (e[2] << 16) | (uint32_t(e[3]) << 24)), mask = e[4];
+1143: 			if (!mask || (mask & (mask - 1)) || byte > 7) continue;
+1144: 			unsigned bit = 0;
+1145: 			while (!((mask >> bit) & 1)) bit++;
+1146: 			std::string name(reinterpret_cast<const char *>(e + 6), strnlen(reinterpret_cast<const char *>(e + 6), MAP_ENTRY - 6));
+1147: 			if (name.rfind("SWITCH_", 0) == 0) name = name.substr(7);
+1148: 			std::replace(name.begin(), name.end(), '_', ' ');
+1149: 			switch_info s;
+1150: 			s.number = uint16_t(byte * 8 + bit + 1);
+1151: 			s.position = uint8_t(position);
+1152: 			s.active_high = !e[5];
+1153: 			s.name = name;
+1154: 			found.push_back(s);
+1155: 		}
+1156: 		if (found.empty()) continue;
+1157: 		maps++;
+1158: 		if (maps > 1 || m_elg_nodes.size() != 1) { SPIKE1_LOG("devices: ELG switch map " + map + ": its board is not known (more than one map or board)"); continue; }
+1159: 		for (auto &s : found) {
+1160: 			s.node = m_elg_nodes[0];
+1161: 			if (s.active_high) m_sw_active_high[s.node][s.position >> 3] |= uint8_t(1 << (s.position & 7));
+1162: 			m_switches.push_back(s);
+1163: 		}
+1164: 	}
+1165: 	// The trough holds a ball at each of its numbered optos (TROUGH 1-3); the jam optos stay open
+1166: 	for (const auto &s : m_switches)
+1167: 		if (s.name.rfind("TROUGH ", 0) == 0 && s.name.size() > 7 && std::isdigit(uint8_t(s.name[7]))) set_switch(s.node, s.position, true, 0);
+1168: 	SPIKE1_DEBUG_ONLY(std::string closed; for (const auto &s : m_switches) if (switch_closed(s.node, s.position)) closed += ' ' + s.name + ',';)
+1169: 	SPIKE1_LOG("devices: ELG framework: " + std::to_string(m_coils.size()) + " coils, " + std::to_string(m_leds.size()) + " lamps, " +
+1170: 		std::to_string(m_switches.size()) + " switches from the game's tables; closed at rest:" + (closed.empty() ? " none" : closed.substr(0, closed.size() - 1)));
+1171: }
+1172:
+```
