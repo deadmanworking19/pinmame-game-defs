@@ -365,7 +365,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 
 ## Projection classes
 
-`auto_plunger_impulse_trigger`, `bound_object_center`, `flipper_pivot`, `three_drop_wall_centroid`, `wall_drag_point_centroid`
+`auto_plunger_impulse_trigger`, `bound_object_center`, `flipper_pivot`, `pop_bumper_center`, `three_drop_wall_centroid`, `wall_drag_point_centroid`
 
 ## Retained geometry and projection audit
 
@@ -410,9 +410,9 @@ VPX SHA-256 `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`; 
 | sol.4 | Flipper.RightFlipper | 0.621693 | 0.844392 | flipper_pivot |
 | sol.5 | Wall.LeftSlingshot | 0.227585 | 0.728906 | wall_drag_point_centroid |
 | sol.5 | Wall.RightSlingshot | 0.682278 | 0.72847 | wall_drag_point_centroid |
-| sol.7 | Bumper.Bumper2 | 0.237151 | 0.164063 | bound_object_center |
-| sol.7 | Bumper.Bumper3 | 0.494992 | 0.200104 | bound_object_center |
-| sol.8 | Bumper.Bumper1 | 0.301641 | 0.273215 | bound_object_center |
+| sol.7 | Bumper.Bumper2 | 0.237151 | 0.164063 | pop_bumper_center |
+| sol.7 | Bumper.Bumper3 | 0.494992 | 0.200104 | pop_bumper_center |
+| sol.8 | Bumper.Bumper1 | 0.301641 | 0.273215 | pop_bumper_center |
 | sol.9 | Wall.sw1+Wall.sw2+Wall.sw3 | 0.334535 | 0.405129 | three_drop_wall_centroid |
 | sol.10 | Gate.Gate003 | 0.580645 | 0.053224 | bound_object_center |
 
