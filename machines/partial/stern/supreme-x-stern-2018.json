@@ -8,19 +8,18 @@
   "coverage": {
     "dimensions": {
       "address_enumeration": "observed",
-      "catalog_identity": "observed",
-      "mechanisms": "candidate",
+      "catalog_identity": "validated",
+      "mechanisms": "observed",
       "physical_wiring": "unknown",
       "recreation_knowledge": "observed",
       "semantic_naming": "candidate",
-      "spatial_placement": "unknown",
+      "spatial_placement": "observed",
       "variant_coverage": "candidate"
     },
     "missing": [
       "driver_mapping",
       "input_semantics",
       "output_semantics",
-      "display_inventory",
       "mechanism_inventory",
       "mechanism_behavior",
       "polarity",
@@ -37,12 +36,28 @@
       "id": "display.dmd",
       "kind": "dmd",
       "label": "Supreme public DMD layout",
+      "physical_location": "cabinet_or_service",
       "provenance": {
         "source_refs": [
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "pinmame.adapter.current",
+          "supreme.backbox-photo"
         ],
-        "status": "observed"
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "spike1.driver.8e0f721e3df7",
+            "supreme.runtime.api-r2",
+            "pinmame.adapter.current",
+            "supreme.backbox-photo"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "width": 128
     }
@@ -120,14 +135,34 @@
       "kind": "switch",
       "label": "SHOOTER LANE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 28; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 28; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.swShooter (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-shooter-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.94417,
+            "y": 0.894881
+          }
         ],
         "status": "observed"
       }
@@ -160,13 +195,33 @@
       "kind": "switch",
       "label": "LEFT OUTLANE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 17; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 17; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw02 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-outlane-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.050373,
+            "y": 0.757461
+          }
         ],
         "status": "observed"
       }
@@ -199,13 +254,33 @@
       "kind": "switch",
       "label": "LEFT RETURN LANE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 18; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 18; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw03 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-return-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.131179,
+            "y": 0.736211
+          }
         ],
         "status": "observed"
       }
@@ -238,13 +313,33 @@
       "kind": "switch",
       "label": "RIGHT RETURN LANE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 19; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 19; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw04 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-return-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.772379,
+            "y": 0.736211
+          }
         ],
         "status": "observed"
       }
@@ -277,13 +372,33 @@
       "kind": "switch",
       "label": "RIGHT OUTLANE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 20; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 20; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw05 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-outlane-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.853185,
+            "y": 0.758406
+          }
         ],
         "status": "observed"
       }
@@ -316,14 +431,48 @@
       "kind": "switch",
       "label": "LEFT/RIGHT SLINGSHOTS",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 29; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 29; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Wall.LeftSlingshot (wall_drag_point_centroid), Wall.RightSlingshot (wall_drag_point_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-slingshot-wall",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.227585,
+            "y": 0.728906
+          },
+          {
+            "id": "vpx-right-slingshot-wall",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.682278,
+            "y": 0.72847
+          }
         ],
         "status": "observed"
       }
@@ -1035,13 +1184,33 @@
       "kind": "switch",
       "label": "STANDUP TARGET 1",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 32; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 32; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st3 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-bottom-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.086401,
+            "y": 0.581061
+          }
         ],
         "status": "observed"
       }
@@ -1074,13 +1243,33 @@
       "kind": "switch",
       "label": "LEFT CENTER STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 33; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 33; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st2 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-center-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.086244,
+            "y": 0.553908
+          }
         ],
         "status": "observed"
       }
@@ -1113,13 +1302,33 @@
       "kind": "switch",
       "label": "LEFT TOP STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 34; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 34; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st1 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-top-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.085416,
+            "y": 0.526831
+          }
         ],
         "status": "observed"
       }
@@ -1152,13 +1361,33 @@
       "kind": "switch",
       "label": "TOP RT STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 35; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 35; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st4 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-top-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.829036,
+            "y": 0.507882
+          }
         ],
         "status": "observed"
       }
@@ -1191,13 +1420,33 @@
       "kind": "switch",
       "label": "CENTER RT STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 36; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 36; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st5 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-center-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.828692,
+            "y": 0.535024
+          }
         ],
         "status": "observed"
       }
@@ -1230,13 +1479,33 @@
       "kind": "switch",
       "label": "BOTTOM RT STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 37; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 37; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st6 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-bottom-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.828314,
+            "y": 0.561815
+          }
         ],
         "status": "observed"
       }
@@ -1301,13 +1570,33 @@
       "kind": "switch",
       "label": "LEFT ORBIT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 3; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 3; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw31 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-orbit-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.065065,
+            "y": 0.120892
+          }
         ],
         "status": "observed"
       }
@@ -1340,13 +1629,33 @@
       "kind": "switch",
       "label": "CENT. SINGLE STANDUP",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 4; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 4; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st8 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-center-single-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.318536,
+            "y": 0.316299
+          }
         ],
         "status": "observed"
       }
@@ -1380,13 +1689,33 @@
       "kind": "switch",
       "label": "LEFT RAMP EXIT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 1; this identifies the ROM route, not a verified physical connector. Firmware/emulator startup uses logical closed here; this is not physical normally-closed construction.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 1; this identifies the ROM route, not a verified physical connector. Firmware/emulator startup uses logical closed here; this is not physical normally-closed construction. Retained VPX coordinate evidence: Trigger.sw33 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-ramp-exit-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.062966,
+            "y": 0.198338
+          }
         ],
         "status": "observed"
       }
@@ -1419,13 +1748,33 @@
       "kind": "switch",
       "label": "TOP LANES LEFT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 5; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 5; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw34 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-top-left-lane-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.31168,
+            "y": 0.104363
+          }
         ],
         "status": "observed"
       }
@@ -1458,13 +1807,33 @@
       "kind": "switch",
       "label": "TOP LANES CENTER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 6; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 6; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw35 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-top-center-lane-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.40403,
+            "y": 0.104363
+          }
         ],
         "status": "observed"
       }
@@ -1497,13 +1866,33 @@
       "kind": "switch",
       "label": "TOP LANES RIGHT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 7; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 7; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw36 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-top-right-lane-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.49533,
+            "y": 0.104363
+          }
         ],
         "status": "observed"
       }
@@ -1536,13 +1925,47 @@
       "kind": "switch",
       "label": "LT/RT POP BUMPERS",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 0; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 0; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Bumper.Bumper2 (bound object center), Bumper.Bumper3 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-top-pop",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.237151,
+            "y": 0.164063
+          },
+          {
+            "id": "vpx-right-top-pop",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.494992,
+            "y": 0.200104
+          }
         ],
         "status": "observed"
       }
@@ -1575,13 +1998,33 @@
       "kind": "switch",
       "label": "BOTTOM POP BUMPER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 2; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 2; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Bumper.Bumper1 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-bottom-pop",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.301641,
+            "y": 0.273215
+          }
         ],
         "status": "observed"
       }
@@ -1646,13 +2089,33 @@
       "kind": "switch",
       "label": "DROP TARGET LEFT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 21; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 21; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Wall.sw1 (wall_drag_point_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-drop-wall",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.285491,
+            "y": 0.421478
+          }
         ],
         "status": "observed"
       }
@@ -1685,13 +2148,33 @@
       "kind": "switch",
       "label": "DROP TARGET CENTER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 22; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 22; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Wall.sw2 (wall_drag_point_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-center-drop-wall",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.333989,
+            "y": 0.405348
+          }
         ],
         "status": "observed"
       }
@@ -1724,13 +2207,33 @@
       "kind": "switch",
       "label": "DROP TARGET RIGHT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 23; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 23; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Wall.sw3 (wall_drag_point_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-drop-wall",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.384124,
+            "y": 0.388561
+          }
         ],
         "status": "observed"
       }
@@ -1795,13 +2298,33 @@
       "kind": "switch",
       "label": "CENTER STANDUP TARGET",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 8; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 8; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: HitTarget.st7 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-center-standup",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.507825,
+            "y": 0.24133
+          }
         ],
         "status": "observed"
       }
@@ -1834,13 +2357,33 @@
       "kind": "switch",
       "label": "CAPTIVE BALL",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 9; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 9; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw45 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-captive-ball-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.464477,
+            "y": 0.372119
+          }
         ],
         "status": "observed"
       }
@@ -1873,13 +2416,33 @@
       "kind": "switch",
       "label": "SPINNER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 10; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 10; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Spinner.Spinner001 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-spinner",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.591614,
+            "y": 0.164611
+          }
         ],
         "status": "observed"
       }
@@ -1912,13 +2475,33 @@
       "kind": "switch",
       "label": "RIGHT INNER ORBIT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 11; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 11; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw47 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-inner-orbit-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.86158,
+            "y": 0.166698
+          }
         ],
         "status": "observed"
       }
@@ -1951,13 +2534,33 @@
       "kind": "switch",
       "label": "RIGHT ORBIT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 12; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 12; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw48 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-orbit-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.911953,
+            "y": 0.091141
+          }
         ],
         "status": "observed"
       }
@@ -1991,13 +2594,33 @@
       "kind": "switch",
       "label": "RIGHT RAMP EXIT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 13; this identifies the ROM route, not a verified physical connector. Firmware/emulator startup uses logical closed here; this is not physical normally-closed construction.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 13; this identifies the ROM route, not a verified physical connector. Firmware/emulator startup uses logical closed here; this is not physical normally-closed construction. Retained VPX coordinate evidence: Trigger.sw49 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-ramp-exit-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.676881,
+            "y": 0.207782
+          }
         ],
         "status": "observed"
       }
@@ -2030,13 +2653,33 @@
       "kind": "switch",
       "label": "CAPTIVE BALL 2",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 14; this identifies the ROM route, not a verified physical connector.",
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Firmware device node 8, position 14; this identifies the ROM route, not a verified physical connector. Retained VPX coordinate evidence: Trigger.sw50 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated.",
         "switch_type": "unknown"
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-captive-ball-two-trigger",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.436637,
+            "y": 0.343979
+          }
         ],
         "status": "observed"
       }
@@ -5132,8 +5775,20 @@
     "ipdb_id": 6609,
     "kind": "physical_pinball",
     "manufacturer": "Stern",
+    "model_number": "PINBALL I-00PL * SUPREME 1",
     "name": "Supreme x Stern",
     "opdb_id": "G3EnZ-MePOV",
+    "playfield": {
+      "height": 2117.6,
+      "provenance": {
+        "source_refs": [
+          "supreme.vpx.table.008"
+        ],
+        "status": "observed"
+      },
+      "units": "vpx",
+      "width": 952.9
+    },
     "year": 2018
   },
   "mechanisms": [
@@ -5141,7 +5796,7 @@
       "actuators": [
         "sol.1"
       ],
-      "behavior": "ROM labels TROUGH 1-6 and TROUGH JAM are preserved. Startup closes public 18-21; 16,17 and 22 start open. After six coin pulses and START BUTTON 13 the ROM pulsed solenoid 1 at physical level 210; it stopped after the harness opened 18 and asserted shooter input 1. This is a simulated transfer after a ROM-driven serve, not physical verification of a six-ball trough, four installed balls, opto construction, ejection geometry or drain behavior.",
+      "behavior": "ROM labels TROUGH 1-6 and TROUGH JAM are preserved. Startup closes public 18-21; 16,17 and 22 start open. After six coin pulses and START BUTTON 13 the ROM pulsed solenoid 1 at physical level 210; it stopped after the harness opened 18 and asserted shooter input 1. This is a simulated transfer after a ROM-driven serve, not physical verification of a six-ball trough, four installed balls, opto construction, ejection geometry or drain behavior. Retained VPX script evidence (lines 177-188 and 516-562): the recreation initializes four balls on swTrough1-4, maps its five table trough kickers to inputs 21-17, locally advances a ball toward the eject end after occupancy changes, sends Drain to that local chain, and lets sol.1 kick swTrough1 toward the shooter lane. This is table-only topology and a simulated route; no physical trough count, sixth/jam sensor fitment, drain path, geometry, or construction is established.",
       "id": "mech.trough",
       "kind": "kicker",
       "label": "ROM trough and ball-serve logic",
@@ -5149,7 +5804,8 @@
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5167,7 +5823,7 @@
       "actuators": [
         "sol.2"
       ],
-      "behavior": "With public shooter input 1 asserted after a proven trough pulse, LAUNCH BUTTON 15 closed for 150 ms and the ROM pulsed AUTO PLUNGER solenoid 2 at 191. Input 1 then opened. Physical launcher type, stroke, ball path, manual plunger fitment and load quantity remain unknown.",
+      "behavior": "With public shooter input 1 asserted after a proven trough pulse, LAUNCH BUTTON 15 closed for 150 ms and the ROM pulsed AUTO PLUNGER solenoid 2 at 191. Input 1 then opened. Physical launcher type, stroke, ball path, manual plunger fitment and load quantity remain unknown. Retained VPX script evidence (lines 190-197 and 564-567): an impulse helper is attached to swShooter and switch 1; sol.2 calls its AutoFire method. The visible manual Plunger object is operated from the plunger key separately (lines 319-370). The output placement is therefore a shooter-trigger projection, not proof that a physical auto launcher shares the manual plunger's assembly, stroke, or path.",
       "id": "mech.launch",
       "kind": "kicker",
       "label": "ROM shooter and launch logic",
@@ -5175,7 +5831,8 @@
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5190,7 +5847,7 @@
         "sol.47",
         "sol.48"
       ],
-      "behavior": "LEFT FLIPPER BUTTON 8 held 500 ms produced actual solenoid 3 levels 255 -> 30 -> 0 and virtual mirrors 47/48 at 255 -> 0 in the physical-all API mode. The core synthesizes EOS input 9 after two VBLANKs from the mirror state. Mirrors are not additional physical coils. The exact ROM has no separate LEFT FLIPPER HOLD coil row; winding count and EOS contact construction require primary physical evidence.",
+      "behavior": "LEFT FLIPPER BUTTON 8 held 500 ms produced actual solenoid 3 levels 255 -> 30 -> 0 and virtual mirrors 47/48 at 255 -> 0 in the physical-all API mode. The core synthesizes EOS input 9 after two VBLANKs from the mirror state. Mirrors are not additional physical coils. The exact ROM has no separate LEFT FLIPPER HOLD coil row; winding count and EOS contact construction require primary physical evidence. Retained VPX script evidence (lines 581-601): sol.3 activates and returns LeftFlipper. Its observed effect is projected to that Flipper.center pivot; neither the scripted animation nor the PWM level proves a winding, EOS, or physical coil assembly.",
       "id": "mech.left-flipper",
       "kind": "other",
       "label": "ROM lower left flipper logic",
@@ -5199,7 +5856,8 @@
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
           "spike1.core.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5214,7 +5872,7 @@
         "sol.45",
         "sol.46"
       ],
-      "behavior": "RIGHT FLIPPER BUTTON 10 held 500 ms produced RT FLIPPER POWER solenoid 4 levels 255 -> 30 -> 0 and virtual mirrors 45/46 at 255 -> 0 in physical-all API mode. The core synthesizes EOS input 11. The exact ROM has no separate right HOLD coil row; mirrors and duty changes do not establish physical winding count.",
+      "behavior": "RIGHT FLIPPER BUTTON 10 held 500 ms produced RT FLIPPER POWER solenoid 4 levels 255 -> 30 -> 0 and virtual mirrors 45/46 at 255 -> 0 in physical-all API mode. The core synthesizes EOS input 11. The exact ROM has no separate right HOLD coil row; mirrors and duty changes do not establish physical winding count. Retained VPX script evidence (lines 603-623): sol.4 activates and returns RightFlipper. Its observed effect is projected to that Flipper.center pivot; neither the scripted animation nor the PWM level proves a winding, EOS, or physical coil assembly.",
       "id": "mech.right-flipper",
       "kind": "other",
       "label": "ROM lower right flipper logic",
@@ -5223,7 +5881,8 @@
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
           "spike1.core.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5236,7 +5895,7 @@
       "actuators": [
         "sol.5"
       ],
-      "behavior": "Public LEFT/RIGHT SLINGSHOTS input 6 closed for 100 ms during BALL 1 and produced LT/RT SLINGSHOT solenoid 5 at 194 -> 0; the retained DMD score reached 130. ROM naming groups both sides under one route. Physical load count, sensor sharing, series/parallel wiring and separate left/right behavior remain unknown.",
+      "behavior": "Public LEFT/RIGHT SLINGSHOTS input 6 closed for 100 ms during BALL 1 and produced LT/RT SLINGSHOT solenoid 5 at 194 -> 0; the retained DMD score reached 130. ROM naming groups both sides under one route. Physical load count, sensor sharing, series/parallel wiring and separate left/right behavior remain unknown. Retained VPX script evidence (lines 1279-1329 and 751-792): each slingshot wall pulses shared sw.6, but sol.5 only marks GameOn while VPX kicks the ball itself. The two wall-centroid positions are table collision/effect projections, not separate coil, switch, or wiring proof.",
       "id": "mech.sling-combined",
       "kind": "other",
       "label": "ROM combined left/right slingshot route",
@@ -5244,7 +5903,8 @@
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5256,14 +5916,15 @@
       "actuators": [
         "sol.7"
       ],
-      "behavior": "ROM names pair LT/RT POP BUMPERS input 37 with LT/RT POP BUMPER solenoid 7. This proposed logical grouping was not exercised. Physical bumper count, circuit topology and switch construction require a Supreme manual or direct inspection.",
+      "behavior": "ROM names pair LT/RT POP BUMPERS input 37 with LT/RT POP BUMPER solenoid 7. This proposed logical grouping was not exercised. Physical bumper count, circuit topology and switch construction require a Supreme manual or direct inspection. Retained VPX script evidence (lines 646-665 and 784-790): Bumper2 and Bumper3 each pulse shared sw.37, and sol.7 only marks GameOn. Two named table bumper centers are recorded as projections; physical top-pop count, circuit sharing, and output actuation remain unknown.",
       "id": "mech.pop-combined",
       "kind": "other",
       "label": "ROM combined left/right pop route",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
         ],
         "status": "candidate"
       },
@@ -5275,14 +5936,15 @@
       "actuators": [
         "sol.8"
       ],
-      "behavior": "ROM names BOTTOM POP BUMPER input 38 and output 8. Proposed logical grouping is unexercised; physical topology, quantity and behavior are unknown.",
+      "behavior": "ROM names BOTTOM POP BUMPER input 38 and output 8. Proposed logical grouping is unexercised; physical topology, quantity and behavior are unknown. Retained VPX script evidence (lines 646-651 and 792-794): Bumper1 pulses sw.38 and sol.8 only marks GameOn. Its table bumper center is a recreation projection, not physical bumper or coil proof.",
       "id": "mech.pop-bottom",
       "kind": "other",
       "label": "ROM bottom pop route",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
         ],
         "status": "candidate"
       },
@@ -5294,7 +5956,7 @@
       "actuators": [
         "sol.9"
       ],
-      "behavior": "ROM names three drop positions LEFT/CENTER/RIGHT at 40/41/42 and DROP TARGET RESET solenoid 9. This candidate grouping does not prove the physical bank size, reset assembly, target travel or switch construction. No drop/reset scenario was run.",
+      "behavior": "ROM names three drop positions LEFT/CENTER/RIGHT at 40/41/42 and DROP TARGET RESET solenoid 9. This candidate grouping does not prove the physical bank size, reset assembly, target travel or switch construction. No drop/reset scenario was run. Retained VPX script evidence (lines 696-731 and 842-855): droppable walls sw1/sw2/sw3 map to switches 40/41/42, and sol.9 invokes DTRaise for all three. The three sensor positions are exact wall centroids; the one reset-output position is their documented arithmetic centroid. Empty DTAction and ROM-mode animation do not prove physical reset hardware or travel. The factory card identifies lightning targets as qualifying Supreme shots and pop hits as increasing Supreme values. The programmer ASR lead at 3:25-3:49 describes the bank/sign multiball and an escape path because no coil lowers the drops. This lead does not validate the physical reset mechanism or gate polarity.",
       "id": "mech.drop-bank",
       "kind": "drop_target_bank",
       "label": "ROM three named drop positions and reset route",
@@ -5327,7 +5989,10 @@
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008",
+          "supreme.factory-rule-card",
+          "supreme.programmer-tutorial-lead"
         ],
         "status": "candidate"
       },
@@ -5341,14 +6006,15 @@
       "actuators": [
         "sol.10"
       ],
-      "behavior": "CONTROL GATE solenoid 10 is present in the exact ROM. Position sensors, open/closed state, travel, control polarity, fitted assembly and physical ball path are unknown. It was not exercised.",
+      "behavior": "CONTROL GATE solenoid 10 is present in the exact ROM. Position sensors, open/closed state, travel, control polarity, fitted assembly and physical ball path are unknown. It was not exercised. Retained VPX script evidence (lines 734-744): sol.10 toggles Gate003.Open with ControlGateCoilCloses=True, but the script says to reverse that constant if ROM behavior differs. This is a table control-gate implementation only; physical polarity, fitment, travel, and path remain unresolved.",
       "id": "mech.gate",
       "kind": "gate",
       "label": "ROM control-gate route",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
         ],
         "status": "candidate"
       },
@@ -5358,7 +6024,7 @@
       "actuators": [
         "sol.51"
       ],
-      "behavior": "Public LEFT COIN 76 was pulsed six times for 300 ms with 1.5 s settling. The ROM emitted COIN METER 51 at 255 -> 0 for each pulse and displayed seven credits under fresh pricing defaults. Other coin inputs were not exercised. Actual coin-slot/meter quantity and fitted meter construction are unknown; custom 51 is allocated by ROM traversal from Driver Reference 33.",
+      "behavior": "Public LEFT COIN 76 was pulsed six times for 300 ms with 1.5 s settling. The ROM emitted COIN METER 51 at 255 -> 0 for each pulse and displayed seven credits under fresh pricing defaults. Other coin inputs were not exercised. Actual coin-slot/meter quantity and fitted meter construction are unknown; custom 51 is allocated by ROM traversal from Driver Reference 33. The retained VPX script contains no coin-meter geometry or handler. Runtime observations retain sol.51 activity, but the VPX cannot place or prove a fitted physical coin meter.",
       "id": "mech.coin-meter",
       "kind": "other",
       "label": "ROM coin-meter route",
@@ -5366,7 +6032,8 @@
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
         ],
         "status": "observed"
       },
@@ -5383,14 +6050,15 @@
         "sol.52",
         "sol.53"
       ],
-      "behavior": "ROM names TICKET METER 52, TICKET DISPENSER 53 and TICKET NOTCH input 83. Firmware references 34/35 allocate custom public 52/53 by traversal. Physical ticket hardware and enablement are unverified; no ticket scenario was run.",
+      "behavior": "ROM names TICKET METER 52, TICKET DISPENSER 53 and TICKET NOTCH input 83. Firmware references 34/35 allocate custom public 52/53 by traversal. Physical ticket hardware and enablement are unverified; no ticket scenario was run. The retained VPX script has no ticket-meter, dispenser, or notch handler or playfield geometry. That absence is a recreation gap, not evidence that ticket hardware is unfitted or absent.",
       "id": "mech.ticket",
       "kind": "other",
       "label": "ROM ticket-device routes",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
         ],
         "status": "candidate"
       },
@@ -5400,14 +6068,16 @@
     },
     {
       "actuators": [],
-      "behavior": "SPINNER input 46 is a candidate passive mechanism sensor. No movement, scoring, pulse duration, physical part or geometry was verified.",
+      "behavior": "SPINNER input 46 is a candidate passive mechanism sensor. No movement, scoring, pulse duration, physical part or geometry was verified. Retained VPX script evidence (line 307): Spinner001 pulses sw.46. The spinner center is a direct table object position; its physical sensor and assembly remain unvalidated. The photographed factory card assigns Meteor Shower scoring growth to the spinner. This primary rule statement does not establish the spinner contact type or electrical wiring.",
       "id": "mech.spinner",
       "kind": "other",
       "label": "ROM spinner input",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008",
+          "supreme.factory-rule-card"
         ],
         "status": "candidate"
       },
@@ -5417,14 +6087,17 @@
     },
     {
       "actuators": [],
-      "behavior": "ROM names CAPTIVE BALL and CAPTIVE BALL 2 at 45/50. This grouping preserves names without inferring how many physical balls, switches or assemblies are installed; it was not exercised.",
+      "behavior": "ROM names CAPTIVE BALL and CAPTIVE BALL 2 at 45/50. This grouping preserves names without inferring how many physical balls, switches or assemblies are installed; it was not exercised. Retained VPX script evidence (lines 292-295): triggers sw45 and sw50 assert the two captive-ball inputs. They are table trigger positions, not evidence of physical captive-ball count, sensor type, or geometry. The photographed factory card states that freeing a trapped ball starts Galaxy multiball and hitting the target above it adds a ball during multiball. The card establishes these rules, not an eject coil or an electrical relationship. The retained programmer ASR lead at 2:53-3:16 and 12:31-12:46 describes passive capture and a replacement serve; the second capture can roll away. Audio/speaker attribution remains unverified.",
       "id": "mech.captive",
       "kind": "other",
       "label": "ROM captive-ball inputs",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008",
+          "supreme.factory-rule-card",
+          "supreme.programmer-tutorial-lead"
         ],
         "status": "candidate"
       },
@@ -5435,14 +6108,15 @@
     },
     {
       "actuators": [],
-      "behavior": "LEFT/RIGHT RAMP EXIT inputs 33/49 start logically closed according to the ROM device model. Firmware rest state does not prove NC construction, opto fitment, ramp geometry or actual path. No ramp transfer was exercised.",
+      "behavior": "LEFT/RIGHT RAMP EXIT inputs 33/49 start logically closed according to the ROM device model. Firmware rest state does not prove NC construction, opto fitment, ramp geometry or actual path. No ramp transfer was exercised. Retained VPX script evidence (lines 301-305): invisible table triggers sw33 and sw49 invert the two ramp-exit inputs. They are direct implementation sensor proxies; no optical construction or ramp path is established.",
       "id": "mech.ramp-exit",
       "kind": "other",
       "label": "ROM ramp-exit inputs",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
         ],
         "status": "candidate"
       },
@@ -5453,14 +6127,15 @@
     },
     {
       "actuators": [],
-      "behavior": "Outlane, return-lane, standup, top-lane and orbit labels are retained as exact ROM aliases on these inputs. This is an inventory of firmware names; it does not assert physical device counts or geometry. These inputs were not exercised.",
+      "behavior": "Outlane, return-lane, standup, top-lane and orbit labels are retained as exact ROM aliases on these inputs. This is an inventory of firmware names; it does not assert physical device counts or geometry. These inputs were not exercised. The factory card says three top-lane stars start timed double scoring; all seven Lucky Stars advance bonus multiplier; any two Supreme shots light extra ball; and successive ramp/other shot combinations award additional points. It supplies no pulse durations, wire colors or switch contact normal states.",
       "id": "mech.lane-orbit-targets",
       "kind": "other",
       "label": "Other ROM playfield-labelled routes",
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.factory-rule-card"
         ],
         "status": "candidate"
       },
@@ -5581,13 +6256,33 @@
       "kind": "coil",
       "label": "AUTO PLUNGER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 2 addresses firmware node 8, position 4, Driver Reference 2; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 2 addresses firmware node 8, position 4, Driver Reference 2; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Trigger.swShooter (auto_plunger_impulse_trigger). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-shooter-impulse-projection",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.94417,
+            "y": 0.894881
+          }
         ],
         "status": "observed"
       }
@@ -5620,13 +6315,33 @@
       "kind": "coil",
       "label": "LEFT FLIPPER POWER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 3 addresses firmware node 8, position 5, Driver Reference 3; firmware route is observed, physical load fitment is unknown. One named POWER row is present for this side. The observed 255-to-30 duty transition does not establish winding quantity."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 3 addresses firmware node 8, position 5, Driver Reference 3; firmware route is observed, physical load fitment is unknown. One named POWER row is present for this side. The observed 255-to-30 duty transition does not establish winding quantity. Retained VPX coordinate evidence: Flipper.LeftFlipper (flipper_pivot). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-flipper-pivot",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.286824,
+            "y": 0.844364
+          }
         ],
         "status": "observed"
       }
@@ -5659,13 +6374,33 @@
       "kind": "coil",
       "label": "RT FLIPPER POWER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 4 addresses firmware node 8, position 0, Driver Reference 4; firmware route is observed, physical load fitment is unknown. One named POWER row is present for this side. The observed 255-to-30 duty transition does not establish winding quantity."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 4 addresses firmware node 8, position 0, Driver Reference 4; firmware route is observed, physical load fitment is unknown. One named POWER row is present for this side. The observed 255-to-30 duty transition does not establish winding quantity. Retained VPX coordinate evidence: Flipper.RightFlipper (flipper_pivot). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-right-flipper-pivot",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.621693,
+            "y": 0.844392
+          }
         ],
         "status": "observed"
       }
@@ -5698,13 +6433,47 @@
       "kind": "coil",
       "label": "LT/RT SLINGSHOT",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 5 addresses firmware node 8, position 7, Driver Reference 5; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 5 addresses firmware node 8, position 7, Driver Reference 5; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Wall.LeftSlingshot (wall_drag_point_centroid), Wall.RightSlingshot (wall_drag_point_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
           "spike1.driver.8e0f721e3df7",
-          "supreme.runtime.api-r2"
+          "supreme.runtime.api-r2",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-slingshot-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.227585,
+            "y": 0.728906
+          },
+          {
+            "id": "vpx-right-slingshot-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.682278,
+            "y": 0.72847
+          }
         ],
         "status": "observed"
       }
@@ -5769,12 +6538,46 @@
       "kind": "coil",
       "label": "LT/RT POP BUMPER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 7 addresses firmware node 8, position 6, Driver Reference 7; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 7 addresses firmware node 8, position 6, Driver Reference 7; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Bumper.Bumper2 (bound object center), Bumper.Bumper3 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-left-top-pop-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.237151,
+            "y": 0.164063
+          },
+          {
+            "id": "vpx-right-top-pop-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.494992,
+            "y": 0.200104
+          }
         ],
         "status": "observed"
       }
@@ -5807,12 +6610,32 @@
       "kind": "coil",
       "label": "BOTTOM POP BUMPER",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 8 addresses firmware node 8, position 8, Driver Reference 8; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 8 addresses firmware node 8, position 8, Driver Reference 8; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Bumper.Bumper1 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-bottom-pop-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.301641,
+            "y": 0.273215
+          }
         ],
         "status": "observed"
       }
@@ -5845,12 +6668,32 @@
       "kind": "coil",
       "label": "DROP TARGET RESET",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 9 addresses firmware node 8, position 3, Driver Reference 9; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 9 addresses firmware node 8, position 3, Driver Reference 9; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Wall.sw1+Wall.sw2+Wall.sw3 (three_drop_wall_centroid). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-drop-bank-reset-projection",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.334535,
+            "y": 0.405129
+          }
         ],
         "status": "observed"
       }
@@ -5883,12 +6726,32 @@
       "kind": "coil",
       "label": "CONTROL GATE",
       "physical": {
-        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 10 addresses firmware node 8, position 2, Driver Reference 10; firmware route is observed, physical load fitment is unknown."
+        "notes": "No Supreme primary manual or direct hardware inspection retained. Physical fitment, contact construction, assembly, part number, wiring, load/emitter quantity and placement remain unknown; ROM naming is an emulator label. Public solenoid 10 addresses firmware node 8, position 2, Driver Reference 10; firmware route is observed, physical load fitment is unknown. Retained VPX coordinate evidence: Gate.Gate003 (bound object center). Observed recreation proxies; physical geometry and construction remain unvalidated."
       },
       "provenance": {
         "source_refs": [
           "supreme.rom.routes.101",
-          "spike1.driver.8e0f721e3df7"
+          "spike1.driver.8e0f721e3df7",
+          "supreme.vpx.script.008"
+        ],
+        "status": "observed"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "vpx-control-gate-effect",
+            "provenance": {
+              "source_refs": [
+                "supreme.vpx.table.008",
+                "supreme.vpx.script.008"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.580645,
+            "y": 0.053224
+          }
         ],
         "status": "observed"
       }
@@ -12747,6 +13610,150 @@
       "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
       "sha256": "c868c84d080d836d54714c8ca17c82f677bfd8de363e623d8a173a5599050dfd",
       "uri": "working-root:review-artifacts/spike1-refresh-2026-10-25/source-refresh/current-api-catalog.json"
+    },
+    {
+      "acquired_at": "2026-10-26T13:52:48Z",
+      "attribution": "User-supplied retained community VPX input; no original author is recorded in the table metadata.",
+      "excerpts": [
+        {
+          "id": "vpx-extraction-manifest",
+          "locator": "Original identity, extraction bounds, complete external manifest algorithm, count, bytes, digest, attribution and license limits.",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/vpx-extraction-manifest.md",
+          "reviewed": false,
+          "sha256": "b46076fbf8be70e7fd7966cfd6b46e0b8bb53925d3dc73883e971a5394fadb40",
+          "transcribed_by": "Codex curator from the exact retained extraction"
+        }
+      ],
+      "id": "supreme.vpx.table.008",
+      "kind": "vpx_table",
+      "license": "No license or redistribution permission was supplied with the user-provided community VPX table.",
+      "locator": "User-supplied original supreme_008.vpx; 64,925,696 bytes; retained filesystem creation timestamp 2026-10-26T13:52:48Z. Adjacent vpxtool git:v0.33.3 extraction supreme_008/ has canonical manifest.json/manifest.sha256 generated by tools/build_external_evidence_manifest.py --game supreme_101: 565 files, 64,800,271 bytes, SHA256 9f4af73ce3091bde3c61ff734feb92a3ec48f113d57327bc8142e2b6905b41bb. Manifest uses canonical UTF-8 JSON, case-sensitive sorted relative POSIX paths, byte sizes and SHA-256 for every file, excluding only its two generated files. Exact bounds are gamedata.json left=0, top=0, right=952.9, bottom=2117.6.",
+      "original_filename": "supreme_008.vpx",
+      "rights": "Retained external user-supplied evidence only; no table, image, sound, or script redistribution rights are asserted.",
+      "sha256": "444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9",
+      "source_id": "user-supplied:supreme_008.vpx",
+      "uri": "working-root:vpx-sources/stern/supreme-x-stern-2018/supreme_008.vpx"
+    },
+    {
+      "acquired_at": "2026-10-26T13:52:48Z",
+      "attribution": "User-supplied retained community VPX input; script attribution/original author is unrecorded in the table metadata.",
+      "excerpts": [
+        {
+          "id": "vpx-script-io-and-mechanisms",
+          "locator": "script.vbs lines 77-84, 130-264, 272-307, 516-567, 581-665, 675-798, 842-855, 1110-1192 and 1279-1329: compact I/O, geometry, mechanism and limitation transcription.",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/vpx-script-io-and-mechanisms.md",
+          "reviewed": false,
+          "sha256": "83d142399b38700a33ad770054a8c83b65a9d66d385cd17d27cb8469dd3eec8e",
+          "transcribed_by": "Codex curator from the exact retained script"
+        }
+      ],
+      "id": "supreme.vpx.script.008",
+      "kind": "vpx_script",
+      "license": "No license or redistribution permission was supplied with the user-provided community VPX table.",
+      "locator": "vpxtool git:v0.33.3 extraction supreme_008/script.vbs, 114,094 bytes, SHA256 f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca. Parent original SHA256 444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9; parent extraction manifest SHA256 9f4af73ce3091bde3c61ff734feb92a3ec48f113d57327bc8142e2b6905b41bb. The script is recreation implementation evidence, not physical construction proof, and no known-working status is asserted.",
+      "original_filename": "script.vbs",
+      "rights": "Retained external user-supplied evidence only; no script redistribution rights are asserted.",
+      "sha256": "f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca",
+      "source_id": "user-supplied:supreme_008.vpx/script.vbs",
+      "uri": "working-root:vpx-sources/stern/supreme-x-stern-2018/supreme_008/script.vbs"
+    },
+    {
+      "acquired_at": "2026-10-26T14:00:46.710365Z",
+      "attribution": "Dean Grover, original photographer, via IPDB 6609",
+      "excerpts": [
+        {
+          "id": "supreme.factory-model-photo.observations",
+          "locator": "IPDB 6609 photo 75062, https://www.ipdb.org/showpic.pl?id=6609&picno=75062; MODEL/REV label on January 2018 prototype serial 275786",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/physical-web-research.md",
+          "reviewed": true,
+          "sha256": "e60ddd400c19fa030a5e7b622e31bc9fccc53eaabd69823214ff80ad892e342c",
+          "transcribed_by": "GPT-6.1-Sol curator, direct photograph inspection"
+        }
+      ],
+      "id": "supreme.factory-model-photo",
+      "kind": "human_review",
+      "license": "Copyright retained by the original photographer/publisher; no redistribution license supplied. Only factual observations are included.",
+      "locator": "IPDB 6609 photo 75062, https://www.ipdb.org/showpic.pl?id=6609&picno=75062; MODEL/REV label on January 2018 prototype serial 275786; retained working-root:review-artifacts/stern.supreme-x-stern.2018/session-20261026/ipdb-image-14.png",
+      "original_filename": "ipdb-image-14.png",
+      "revision": "IPDB:6609/photo:75062",
+      "sha256": "d8035e505e0cb938c2866146d4f70bc1f8c969f378367c39e6b34c81ab847133",
+      "source_id": "IPDB:6609/photo:75062",
+      "uri": "https://www.ipdb.org/images/6609/image-14.png"
+    },
+    {
+      "acquired_at": "2026-10-26T14:00:12.245996Z",
+      "attribution": "Dean Grover, original photographer, via IPDB 6609",
+      "excerpts": [
+        {
+          "id": "supreme.backbox-photo.observations",
+          "locator": "IPDB 6609 photo 75054, https://www.ipdb.org/showpic.pl?id=6609&picno=75054; backbox DMD below translite beside speaker",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/physical-web-research.md",
+          "reviewed": true,
+          "sha256": "e60ddd400c19fa030a5e7b622e31bc9fccc53eaabd69823214ff80ad892e342c",
+          "transcribed_by": "GPT-6.1-Sol curator, direct photograph inspection"
+        }
+      ],
+      "id": "supreme.backbox-photo",
+      "kind": "human_review",
+      "license": "Copyright retained by the original photographer/publisher; no redistribution license supplied. Only factual observations are included.",
+      "locator": "IPDB 6609 photo 75054, https://www.ipdb.org/showpic.pl?id=6609&picno=75054; backbox DMD below translite beside speaker; retained working-root:review-artifacts/stern.supreme-x-stern.2018/session-20261026/ipdb-image-5.png",
+      "original_filename": "ipdb-image-5.png",
+      "revision": "IPDB:6609/photo:75054",
+      "sha256": "05eaeba2bfbf312f999397168f2801d9e79e6c4b98ad32dd4c4ad3a5297ac662",
+      "source_id": "IPDB:6609/photo:75054",
+      "uri": "https://www.ipdb.org/images/6609/image-5.png"
+    },
+    {
+      "acquired_at": "2026-10-26T14:11:52.631647Z",
+      "attribution": "OCPinballs, photograph of factory Supreme instruction card in a production machine, Pinside ad 124610",
+      "excerpts": [
+        {
+          "id": "supreme.factory-rule-card.observations",
+          "locator": "Pinside ad 124610, photo 2639645, https://pinside.com/pinball/forum/topic/for-sale-supreme-1; complete instruction card in lower-left apron; original 1983x2643 px, crop (60,2180,620,2570), all ten bullets visually read and factually paraphrased",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/physical-web-research.md",
+          "reviewed": true,
+          "sha256": "e60ddd400c19fa030a5e7b622e31bc9fccc53eaabd69823214ff80ad892e342c",
+          "transcribed_by": "GPT-6.1-Sol curator, direct photograph inspection"
+        }
+      ],
+      "id": "supreme.factory-rule-card",
+      "kind": "human_review",
+      "license": "Copyright retained by the original photographer/publisher; no redistribution license supplied. Only factual observations are included.",
+      "locator": "Pinside ad 124610, photo 2639645, https://pinside.com/pinball/forum/topic/for-sale-supreme-1; complete instruction card in lower-left apron; original 1983x2643 px, crop (60,2180,620,2570), all ten bullets visually read and factually paraphrased; retained working-root:review-artifacts/stern.supreme-x-stern.2018/session-20261026/pinside-2021-2639645.jpeg",
+      "original_filename": "pinside-2021-2639645.jpeg",
+      "revision": "Pinside:ad:124610/photo:2639645",
+      "sha256": "fd6f0408c7c6baf8ece115b19ce2cc021fbc5b5e4dbf6c386ffc5a491a57ba4c",
+      "source_id": "Pinside:ad:124610/photo:2639645",
+      "uri": "https://imgproxy.pinside.com/MZPRD6USxgjreIC_LUEQUuexEhSlEDjLgs02uXiHXTg/rs:fit:3000:3000/fn:pinside_market_124610_11_4a952c0758e9/wm:0.8:soea:10:10:0.07/wmu:aHR0cHM6Ly9waW5zaWRlLmNvbS9pbWcvbG9nby9waW5zaWRlLXdhdGVybWFyay1mdWxsLW9wLnN2Zw/-/wm:1:ce:0:0:0.75/wmu:aHR0cHM6Ly9pbWFnZXMucGluc2lkZS5jb20vd20vYWQvMTI0NjEwL09DUGluYmFsbHM/enc/7HLOSgOXEUxlwUC8dE4X6RYmnX5B1g09gG1U6H20QNv-QGZTnE_vvEFDQ1CS3wFu9btC-fyd9bfkRd8Gtnt54jLs__VBH5kT1Wl83RnWOD41EbCfNlDBIoYu7p_ypk2W.jpeg"
+    },
+    {
+      "acquired_at": "2026-10-26T14:02:46.945172Z",
+      "attribution": "Colorado Pinball Collective; description identifies Supreme programmer Dean Grover; YouTube automatic captions",
+      "excerpts": [
+        {
+          "id": "supreme.programmer-tutorial-lead.observations",
+          "locator": "2:53-4:26 passive capture and multiballs; 12:31-12:46 open-sided capture; 49:08-49:25 linked slings. 698 browser ASR segments, not audio-verified; no validated electrical facts inferred",
+          "method": "mixed",
+          "path": "evidence/excerpts/stern.supreme-x-stern.2018/physical-web-research.md",
+          "reviewed": false,
+          "sha256": "e60ddd400c19fa030a5e7b622e31bc9fccc53eaabd69823214ff80ad892e342c",
+          "transcribed_by": "YouTube automatic captions retained as an unverified research lead"
+        }
+      ],
+      "id": "supreme.programmer-tutorial-lead",
+      "kind": "human_review",
+      "license": "Copyright retained by the original photographer/publisher; no redistribution license supplied. Only factual observations are included.",
+      "locator": "2:53-4:26 passive capture and multiballs; 12:31-12:46 open-sided capture; 49:08-49:25 linked slings. 698 browser ASR segments, not audio-verified; no validated electrical facts inferred; retained working-root:review-artifacts/stern.supreme-x-stern.2018/session-20261026/programmer-segments.json",
+      "original_filename": "programmer-segments.json",
+      "revision": "YouTube:47VnHAlFke8/ASR",
+      "sha256": "cc22d8ff5ff2b720fb375edb6345911a33569b0f1cc75256c12cc305c3144798",
+      "source_id": "YouTube:47VnHAlFke8/ASR",
+      "uri": "https://www.youtube.com/watch?v=47VnHAlFke8"
     }
   ]
 }

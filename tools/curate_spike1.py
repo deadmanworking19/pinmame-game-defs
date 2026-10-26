@@ -320,11 +320,16 @@ def artifacts(root: Path, game: str) -> dict[Path, bytes]:
 	knowledge_bytes = _load_knowledge(seed_path, root, definition)
 	_validate_definition(root, definition, knowledge_path)
 	report = spatial_report(definition)
+	markdown = report_markdown(report)
+	if game == "supreme_101":
+		import curate_supreme_x_stern_2018 as supreme
+		report = supreme.enrich_spatial_report(root, definition, report)
+		markdown = supreme.report_markdown(report)
 	return {
 		definition_path: seed_bytes,
 		knowledge_path: knowledge_bytes,
 		report_path: canonical_bytes(report),
-		markdown_path: report_markdown(report).encode("utf-8"),
+		markdown_path: markdown.encode("utf-8"),
 	}
 
 

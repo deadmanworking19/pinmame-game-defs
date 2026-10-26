@@ -6,19 +6,19 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 
 ## Coverage blockers
 
-`driver_mapping`, `input_semantics`, `output_semantics`, `display_inventory`, `mechanism_inventory`, `mechanism_behavior`, `polarity`, `variant_differences`, `recreation_notes`, `spatial_placement`
+`driver_mapping`, `input_semantics`, `output_semantics`, `mechanism_inventory`, `mechanism_behavior`, `polarity`, `variant_differences`, `recreation_notes`, `spatial_placement`
 
 ## Device inventory
 
 | Collection | Device | Binding | Provenance | Spatial presence |
 | --- | --- | --- | --- | --- |
 | inputs | sw.0 | pinmame.input.switch:0 | observed | not_applicable (not_applicable) |
-| inputs | sw.1 | pinmame.input.switch:1 | observed | absent |
-| inputs | sw.2 | pinmame.input.switch:2 | observed | absent |
-| inputs | sw.3 | pinmame.input.switch:3 | observed | absent |
-| inputs | sw.4 | pinmame.input.switch:4 | observed | absent |
-| inputs | sw.5 | pinmame.input.switch:5 | observed | absent |
-| inputs | sw.6 | pinmame.input.switch:6 | observed | absent |
+| inputs | sw.1 | pinmame.input.switch:1 | observed | declared (observed) |
+| inputs | sw.2 | pinmame.input.switch:2 | observed | declared (observed) |
+| inputs | sw.3 | pinmame.input.switch:3 | observed | declared (observed) |
+| inputs | sw.4 | pinmame.input.switch:4 | observed | declared (observed) |
+| inputs | sw.5 | pinmame.input.switch:5 | observed | declared (observed) |
+| inputs | sw.6 | pinmame.input.switch:6 | observed | declared (observed) |
 | inputs | sw.7 | pinmame.input.switch:7 | observed | not_applicable (not_applicable) |
 | inputs | sw.8 | pinmame.input.switch:8 | observed | absent |
 | inputs | sw.9 | pinmame.input.switch:9 | observed | not_applicable (not_applicable) |
@@ -36,33 +36,33 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | inputs | sw.21 | pinmame.input.switch:21 | observed | absent |
 | inputs | sw.22 | pinmame.input.switch:22 | observed | absent |
 | inputs | sw.23 | pinmame.input.switch:23 | observed | not_applicable (not_applicable) |
-| inputs | sw.24 | pinmame.input.switch:24 | observed | absent |
-| inputs | sw.25 | pinmame.input.switch:25 | observed | absent |
-| inputs | sw.26 | pinmame.input.switch:26 | observed | absent |
-| inputs | sw.27 | pinmame.input.switch:27 | observed | absent |
-| inputs | sw.28 | pinmame.input.switch:28 | observed | absent |
-| inputs | sw.29 | pinmame.input.switch:29 | observed | absent |
+| inputs | sw.24 | pinmame.input.switch:24 | observed | declared (observed) |
+| inputs | sw.25 | pinmame.input.switch:25 | observed | declared (observed) |
+| inputs | sw.26 | pinmame.input.switch:26 | observed | declared (observed) |
+| inputs | sw.27 | pinmame.input.switch:27 | observed | declared (observed) |
+| inputs | sw.28 | pinmame.input.switch:28 | observed | declared (observed) |
+| inputs | sw.29 | pinmame.input.switch:29 | observed | declared (observed) |
 | inputs | sw.30 | pinmame.input.switch:30 | observed | not_applicable (not_applicable) |
-| inputs | sw.31 | pinmame.input.switch:31 | observed | absent |
-| inputs | sw.32 | pinmame.input.switch:32 | observed | absent |
-| inputs | sw.33 | pinmame.input.switch:33 | observed | absent |
-| inputs | sw.34 | pinmame.input.switch:34 | observed | absent |
-| inputs | sw.35 | pinmame.input.switch:35 | observed | absent |
-| inputs | sw.36 | pinmame.input.switch:36 | observed | absent |
-| inputs | sw.37 | pinmame.input.switch:37 | observed | absent |
-| inputs | sw.38 | pinmame.input.switch:38 | observed | absent |
+| inputs | sw.31 | pinmame.input.switch:31 | observed | declared (observed) |
+| inputs | sw.32 | pinmame.input.switch:32 | observed | declared (observed) |
+| inputs | sw.33 | pinmame.input.switch:33 | observed | declared (observed) |
+| inputs | sw.34 | pinmame.input.switch:34 | observed | declared (observed) |
+| inputs | sw.35 | pinmame.input.switch:35 | observed | declared (observed) |
+| inputs | sw.36 | pinmame.input.switch:36 | observed | declared (observed) |
+| inputs | sw.37 | pinmame.input.switch:37 | observed | declared (observed) |
+| inputs | sw.38 | pinmame.input.switch:38 | observed | declared (observed) |
 | inputs | sw.39 | pinmame.input.switch:39 | observed | not_applicable (not_applicable) |
-| inputs | sw.40 | pinmame.input.switch:40 | observed | absent |
-| inputs | sw.41 | pinmame.input.switch:41 | observed | absent |
-| inputs | sw.42 | pinmame.input.switch:42 | observed | absent |
+| inputs | sw.40 | pinmame.input.switch:40 | observed | declared (observed) |
+| inputs | sw.41 | pinmame.input.switch:41 | observed | declared (observed) |
+| inputs | sw.42 | pinmame.input.switch:42 | observed | declared (observed) |
 | inputs | sw.43 | pinmame.input.switch:43 | observed | not_applicable (not_applicable) |
-| inputs | sw.44 | pinmame.input.switch:44 | observed | absent |
-| inputs | sw.45 | pinmame.input.switch:45 | observed | absent |
-| inputs | sw.46 | pinmame.input.switch:46 | observed | absent |
-| inputs | sw.47 | pinmame.input.switch:47 | observed | absent |
-| inputs | sw.48 | pinmame.input.switch:48 | observed | absent |
-| inputs | sw.49 | pinmame.input.switch:49 | observed | absent |
-| inputs | sw.50 | pinmame.input.switch:50 | observed | absent |
+| inputs | sw.44 | pinmame.input.switch:44 | observed | declared (observed) |
+| inputs | sw.45 | pinmame.input.switch:45 | observed | declared (observed) |
+| inputs | sw.46 | pinmame.input.switch:46 | observed | declared (observed) |
+| inputs | sw.47 | pinmame.input.switch:47 | observed | declared (observed) |
+| inputs | sw.48 | pinmame.input.switch:48 | observed | declared (observed) |
+| inputs | sw.49 | pinmame.input.switch:49 | observed | declared (observed) |
+| inputs | sw.50 | pinmame.input.switch:50 | observed | declared (observed) |
 | inputs | sw.51 | pinmame.input.switch:51 | observed | not_applicable (not_applicable) |
 | inputs | sw.52 | pinmame.input.switch:52 | observed | not_applicable (not_applicable) |
 | inputs | sw.53 | pinmame.input.switch:53 | observed | not_applicable (not_applicable) |
@@ -149,15 +149,15 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | inputs | dip.7 | pinmame.input.dip:7 | observed | not_applicable (not_applicable) |
 | inputs | dip.8 | pinmame.input.dip:8 | observed | not_applicable (not_applicable) |
 | outputs | sol.1 | pinmame.output.solenoid:1 | observed | absent |
-| outputs | sol.2 | pinmame.output.solenoid:2 | observed | absent |
-| outputs | sol.3 | pinmame.output.solenoid:3 | observed | absent |
-| outputs | sol.4 | pinmame.output.solenoid:4 | observed | absent |
-| outputs | sol.5 | pinmame.output.solenoid:5 | observed | absent |
+| outputs | sol.2 | pinmame.output.solenoid:2 | observed | declared (observed) |
+| outputs | sol.3 | pinmame.output.solenoid:3 | observed | declared (observed) |
+| outputs | sol.4 | pinmame.output.solenoid:4 | observed | declared (observed) |
+| outputs | sol.5 | pinmame.output.solenoid:5 | observed | declared (observed) |
 | outputs | sol.6 | pinmame.output.solenoid:6 | observed | not_applicable (not_applicable) |
-| outputs | sol.7 | pinmame.output.solenoid:7 | observed | absent |
-| outputs | sol.8 | pinmame.output.solenoid:8 | observed | absent |
-| outputs | sol.9 | pinmame.output.solenoid:9 | observed | absent |
-| outputs | sol.10 | pinmame.output.solenoid:10 | observed | absent |
+| outputs | sol.7 | pinmame.output.solenoid:7 | observed | declared (observed) |
+| outputs | sol.8 | pinmame.output.solenoid:8 | observed | declared (observed) |
+| outputs | sol.9 | pinmame.output.solenoid:9 | observed | declared (observed) |
+| outputs | sol.10 | pinmame.output.solenoid:10 | observed | declared (observed) |
 | outputs | sol.11 | pinmame.output.solenoid:11 | observed | not_applicable (not_applicable) |
 | outputs | sol.12 | pinmame.output.solenoid:12 | observed | not_applicable (not_applicable) |
 | outputs | sol.13 | pinmame.output.solenoid:13 | observed | not_applicable (not_applicable) |
@@ -343,7 +343,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 | outputs | lamp.135 | pinmame.output.lamp:135 | observed | not_applicable (not_applicable) |
 | outputs | lamp.136 | pinmame.output.lamp:136 | observed | not_applicable (not_applicable) |
 | outputs | solenoid.game-on | pinmame.output.solenoid:33 | validated | not_applicable (not_applicable) |
-| displays | display.dmd |  | observed | absent |
+| displays | display.dmd |  | validated | not_applicable (not_applicable) |
 
 ## Sources
 
@@ -353,10 +353,67 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `spike1.core.8e0f721e3df7` (pinmame_core): `9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a`
 - `spike1.driver.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `spike1.libpinmame.8e0f721e3df7` (pinmame_core): `96739dc787262e9d6379c8c7eb311209e061c389b5b63d0c9997116d910e0777`
+- `supreme.backbox-photo` (human_review): `05eaeba2bfbf312f999397168f2801d9e79e6c4b98ad32dd4c4ad3a5297ac662`
+- `supreme.factory-model-photo` (human_review): `d8035e505e0cb938c2866146d4f70bc1f8c969f378367c39e6b34c81ab847133`
+- `supreme.factory-rule-card` (human_review): `fd6f0408c7c6baf8ece115b19ce2cc021fbc5b5e4dbf6c386ffc5a491a57ba4c`
 - `supreme.identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
+- `supreme.programmer-tutorial-lead` (human_review): `cc22d8ff5ff2b720fb375edb6345911a33569b0f1cc75256c12cc305c3144798`
 - `supreme.rom.routes.101` (rom_static_analysis): `5e43fd949decd03843f9baa35d3e74fb17ae0095e76595f20940045796212f7c`
 - `supreme.runtime.api-r2` (runtime_scenario): `de0bc286584d1e484217083db67e28da246b176809beaac454482c50d6b7f1a0`
+- `supreme.vpx.script.008` (vpx_script): `f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca`
+- `supreme.vpx.table.008` (vpx_table): `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`
 
 ## Projection classes
 
-None declared by the schema-valid seed; no class or coordinate was inferred.
+`auto_plunger_impulse_trigger`, `bound_object_center`, `flipper_pivot`, `three_drop_wall_centroid`, `wall_drag_point_centroid`
+
+## Retained geometry and projection audit
+
+VPX SHA-256 `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`; script `f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca`; complete extraction manifest `9f4af73ce3091bde3c61ff734feb92a3ec48f113d57327bc8142e2b6905b41bb` (565 files, 64800271 bytes). Bounds: left=0, top=0, right=952.9, bottom=2117.6. Coordinates use (x-left)/(right-left), (y-top)/(bottom-top), six decimals.
+
+| Device | Bound object | x | y | Coordinate role |
+| --- | --- | --- | --- | --- |
+| sw.1 | Trigger.swShooter | 0.94417 | 0.894881 | bound_object_center |
+| sw.2 | Trigger.sw02 | 0.050373 | 0.757461 | bound_object_center |
+| sw.3 | Trigger.sw03 | 0.131179 | 0.736211 | bound_object_center |
+| sw.4 | Trigger.sw04 | 0.772379 | 0.736211 | bound_object_center |
+| sw.5 | Trigger.sw05 | 0.853185 | 0.758406 | bound_object_center |
+| sw.6 | Wall.LeftSlingshot | 0.227585 | 0.728906 | wall_drag_point_centroid |
+| sw.6 | Wall.RightSlingshot | 0.682278 | 0.72847 | wall_drag_point_centroid |
+| sw.24 | HitTarget.st3 | 0.086401 | 0.581061 | bound_object_center |
+| sw.25 | HitTarget.st2 | 0.086244 | 0.553908 | bound_object_center |
+| sw.26 | HitTarget.st1 | 0.085416 | 0.526831 | bound_object_center |
+| sw.27 | HitTarget.st4 | 0.829036 | 0.507882 | bound_object_center |
+| sw.28 | HitTarget.st5 | 0.828692 | 0.535024 | bound_object_center |
+| sw.29 | HitTarget.st6 | 0.828314 | 0.561815 | bound_object_center |
+| sw.31 | Trigger.sw31 | 0.065065 | 0.120892 | bound_object_center |
+| sw.32 | HitTarget.st8 | 0.318536 | 0.316299 | bound_object_center |
+| sw.33 | Trigger.sw33 | 0.062966 | 0.198338 | bound_object_center |
+| sw.34 | Trigger.sw34 | 0.31168 | 0.104363 | bound_object_center |
+| sw.35 | Trigger.sw35 | 0.40403 | 0.104363 | bound_object_center |
+| sw.36 | Trigger.sw36 | 0.49533 | 0.104363 | bound_object_center |
+| sw.37 | Bumper.Bumper2 | 0.237151 | 0.164063 | bound_object_center |
+| sw.37 | Bumper.Bumper3 | 0.494992 | 0.200104 | bound_object_center |
+| sw.38 | Bumper.Bumper1 | 0.301641 | 0.273215 | bound_object_center |
+| sw.40 | Wall.sw1 | 0.285491 | 0.421478 | wall_drag_point_centroid |
+| sw.41 | Wall.sw2 | 0.333989 | 0.405348 | wall_drag_point_centroid |
+| sw.42 | Wall.sw3 | 0.384124 | 0.388561 | wall_drag_point_centroid |
+| sw.44 | HitTarget.st7 | 0.507825 | 0.24133 | bound_object_center |
+| sw.45 | Trigger.sw45 | 0.464477 | 0.372119 | bound_object_center |
+| sw.46 | Spinner.Spinner001 | 0.591614 | 0.164611 | bound_object_center |
+| sw.47 | Trigger.sw47 | 0.86158 | 0.166698 | bound_object_center |
+| sw.48 | Trigger.sw48 | 0.911953 | 0.091141 | bound_object_center |
+| sw.49 | Trigger.sw49 | 0.676881 | 0.207782 | bound_object_center |
+| sw.50 | Trigger.sw50 | 0.436637 | 0.343979 | bound_object_center |
+| sol.2 | Trigger.swShooter | 0.94417 | 0.894881 | auto_plunger_impulse_trigger |
+| sol.3 | Flipper.LeftFlipper | 0.286824 | 0.844364 | flipper_pivot |
+| sol.4 | Flipper.RightFlipper | 0.621693 | 0.844392 | flipper_pivot |
+| sol.5 | Wall.LeftSlingshot | 0.227585 | 0.728906 | wall_drag_point_centroid |
+| sol.5 | Wall.RightSlingshot | 0.682278 | 0.72847 | wall_drag_point_centroid |
+| sol.7 | Bumper.Bumper2 | 0.237151 | 0.164063 | bound_object_center |
+| sol.7 | Bumper.Bumper3 | 0.494992 | 0.200104 | bound_object_center |
+| sol.8 | Bumper.Bumper1 | 0.301641 | 0.273215 | bound_object_center |
+| sol.9 | Wall.sw1+Wall.sw2+Wall.sw3 | 0.334535 | 0.405129 | three_drop_wall_centroid |
+| sol.10 | Gate.Gate003 | 0.580645 | 0.053224 | bound_object_center |
+
+All listed points are observed recreation proxies. Slings use wall drag-point centroids; the reset output uses the mean of the three drop-wall centroids; flipper effects use pivots. Bumper output positions project onto the corresponding bumper centers. These do not measure under-playfield coils. The guessed control-gate coil-on direction remains unresolved. No trough, cabinet or service location is invented. Insert/lightmap and GI render helpers do not establish emitter sockets, quantities or string membership, so lamp placements remain absent. The independently photographed backbox display uses cabinet_or_service. See the knowledge note and physical-web-research excerpt for primary rule-card and photo evidence.

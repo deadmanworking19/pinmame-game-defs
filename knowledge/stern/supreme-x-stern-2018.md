@@ -6,17 +6,17 @@ The active adapter is PinMAME `46e1a01a0f73dc5ce163d98db1ae435883ecc450`. Virtua
 
 Source records: `pinmame.adapter.current` provides the pinned code and active-route excerpts; `pinmame.catalog.current` provides the current public driver descriptor. Both supplement the historical sources below.
 
-This partial definition for `stern.supreme-x-stern.2018`, driver `supreme_101`, uses exact pinned source, exact-ROM static routing analysis and an actual public LibPinMAME run. Independent cross-provider review remains pending. No Supreme primary manual, known-working exact VPX recreation or physical inspection is retained. Public route identity is established; physical contact polarity, wiring, fitted loads, emitter quantities, cabinet/playfield placement, geometry and complete mechanism behavior remain unknown.
+This partial definition for `stern.supreme-x-stern.2018`, driver `supreme_101`, uses pinned PinMAME source, exact-ROM routing analysis, a retained LibPinMAME run, the supplied `supreme_008.vpx`, factory-label/display photographs and a photographed factory rule card. The VPX supplies observed sensor/effect proxies; its generic Basic VPW Example Table header does not identify its author or establish working status. The model label, backbox display and card rules are independently documented. Contact polarity, wiring, cabinet peripheral fitment, complete lighting quantities/positions and some mechanism behavior remain unresolved, so the record stays partial.
 
 ## Identity and physical evidence limits
 
 The [retained OPDB snapshot](working-root:review-artifacts/spike1-2026-10-10/identity/latest-opdb.json), SHA256 `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`, has the exact `machines` record `G3EnZ-MePOV`: name “Supreme x Stern”, `physicalMachine=1`, manufacture date `2018-06-01`, manufacturer “Stern Pinball, Inc.” and IPDB `6609`. The source catalog independently identifies Supreme (1.01.0), Stern, 2018 in [spike1.c:970–991](https://github.com/vpinball/pinmame/blob/8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53/src/wpc/spike1.c#L970). These support this physical title identity. OPDB features, player count and image labels are secondary metadata and are not used to establish wiring or component quantities.
 
-[IPDB machine 6609](https://www.ipdb.org/machine.cgi?id=6609) is an identity/manual-search lead. The recorded identity research reports model text `PINBALL I-00PL * SUPREME1` and no PDF links. The inspected page bytes were not retained, so the model number remains absent from structured identity. The committed OPDB identity excerpt establishes the title and catalog IDs without establishing that model number. Neither a Heavy Metal manual nor secondary IPDB feature prose is Supreme physical wiring evidence. The public display is an observed 128×32 DMD at controller index 0, depth 4. Its physical cabinet location remains unasserted.
+[IPDB machine 6609](https://www.ipdb.org/machine.cgi?id=6609) is retained in the 2026-10-26 research. Dean Grover's factory-label photograph establishes `PINBALL I-00PL * SUPREME 1`; his display photograph, corroborated by production photos, establishes the DMD's backbox location. PinMAME/runtime evidence supplies its 128x32 dimensions, controller index 0 and depth 4. Secondary IPDB feature prose and another title's manual are not used as Supreme wiring evidence.
 
 ## Exact artifacts and reproducibility
 
-PinMAME is pinned to `8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53`. Supreme's extracted `game` is 4,599,307 bytes, SHA256 `bb435ed68a1492b339c2736e93d753caba2378ac09f33c2e70bdea5a80d9bf85`, CRC32 `681a3c00`, SHA1 `dc9cbf0a4204a3bbaecede3a5f5f9b1f9a2269c2`. The matching checked archive `supreme_101.zip` is 121,951,961 bytes, SHA256 `d0136f8997f02ef617014823b34e9e41140cfbe37af98cb3014ed878c7011c36`. The [full routing facts](working-root:review-artifacts/spike1-2026-10-10/rom-maps/supreme_101.json) have SHA256 `5e43fd949decd03843f9baa35d3e74fb17ae0095e76595f20940045796212f7c` and retain all row names, class bits, node positions, original device indices, source hashes and ELF table locators. The game program matches the source manifest and the archive's extracted `game` bytes; all source archive-entry names, sizes and CRC metadata match. Retained build/extraction logs report successful full archive checks; the table extractor does not claim a second independent payload CRC pass over every large image file.
+The historical routing/runtime evidence below is pinned to `8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53`. Supreme's extracted `game` is 4,599,307 bytes, SHA256 `bb435ed68a1492b339c2736e93d753caba2378ac09f33c2e70bdea5a80d9bf85`, CRC32 `681a3c00`, SHA1 `dc9cbf0a4204a3bbaecede3a5f5f9b1f9a2269c2`. The matching checked archive `supreme_101.zip` is 121,951,961 bytes, SHA256 `d0136f8997f02ef617014823b34e9e41140cfbe37af98cb3014ed878c7011c36`. The [full routing facts](working-root:review-artifacts/spike1-2026-10-10/rom-maps/supreme_101.json) have SHA256 `5e43fd949decd03843f9baa35d3e74fb17ae0095e76595f20940045796212f7c` and retain all row names, class bits, node positions, original device indices, source hashes and ELF table locators. The game program matches the source manifest and the archive's extracted `game` bytes; all source archive-entry names, sizes and CRC metadata match. Retained build/extraction logs report successful full archive checks; the table extractor does not claim a second independent payload CRC pass over every large image file.
 
 The standalone [map log](working-root:review-artifacts/spike1-2026-10-10/supreme_101-map.log) has SHA256 `e05913b20ea9cae7ce63658237cc1ee49306b60590198342168498be47e07da1`. `spike1boot.exe` has SHA256 `f79c4f05ad9a293294651e674d8697e7637eae46d1a3bb6fa8c9f40233e42e24`; the retained extraction tool v1 has SHA256 `59e4d5940064443b1ad2c1d6aaf05b7a3a594e71b890ec3d4287989166b40446`. The full ROM-derived switch/coil/LED tables reconcile to printed counts `66/12/65`, with no duplicate switch/coil references, duplicate node positions or truncated names. The only repeated exported lamp references are 1, 2 and 3.
 
@@ -155,19 +155,30 @@ Other exact firmware labels cover outlanes2/5, return lanes3/4, standups24–29/
 
 Supreme's source initializer uses no special home-switch linkage or limit-motor helper. `GetMech(0..3)` was zero at retained snapshots; the driver returns zero when no motor position is available. This does not prove absence of a fitted physical motor or mechanism. No mechanism-position simulation is asserted in this definition. There is no physical electrical relationship entry because connectors, power feeds, load fan-out and switch circuits remain unknown; causal runtime observations are described explicitly instead.
 
-A Supreme primary manual, schematic/parts set or direct cabinet/playfield inspection is needed to establish model identity, fitted coin/ticket hardware, trough and ball counts, flipper assemblies/windings/EOS contacts, sling/pop shared circuits, gate/drop-bank assemblies, launcher geometry, physical lamp/GI/flasher types, emitter quantities, alias fan-out and normalized coordinates. An exact known-working recreation could add runtime behavior and mapping evidence, but source names, another title's manual and further lamp/coil API toggles cannot settle physical construction. A later complete gameplay/drain and mechanism exercise should retain its own fresh state, DLL/ROM/source hashes, explicit title references and raw trace.
+A Supreme primary manual, schematic/parts set or direct cabinet/playfield inspection is needed to establish fitted coin/ticket hardware, trough and ball counts, flipper assemblies/windings/EOS contacts, sling/pop shared circuits, gate/drop-bank assemblies, launcher geometry, physical lamp/GI/flasher types, emitter quantities, alias fan-out and normalized coordinates. An exact known-working recreation could add runtime behavior and mapping evidence, but source names, another title's manual and further lamp/coil API toggles cannot settle physical construction. A later complete gameplay/drain and mechanism exercise should retain its own fresh state, DLL/ROM/source hashes, explicit title references and raw trace.
 
 ## Provenance and import note
 
 Public routing is sourced from the immutable [driver](https://github.com/vpinball/pinmame/blob/8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53/src/wpc/spike1.c) and [core](https://github.com/vpinball/pinmame/blob/8e0f721e3df7a2b4e8a9d2f4454ac7a9aa1ced53/src/wpc/core.c), whose full-file SHA256 values are respectively `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9` and `9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a`. Exact locators and generation/inspection times are in the six source records. PinMAME source is BSD-3-Clause; ROM rights remain with their owners. The retained artifacts contain hashes, derived table facts, runtime metadata and display snapshots; ROM bytes must remain outside the repository. OPDB provides identity metadata and does not grant redistribution rights to its linked images.
 
-This external candidate deliberately references existing absolute evidence paths rather than nonexistent portable excerpts. On import, retain complete portable routing/runtime/identity excerpts, replace the source URIs and add their byte digests without dropping the full original hash chain, and place this note at `knowledge/stern/supreme-2018.md`. Schema and semantic validation can run on the candidate without a repository root; linked-file validation requires those imports. The `partial` coverage and unknown physical fields must survive that conversion. No independent review or author-ready promotion is claimed.
+The retained VPX source is now recorded through portable compact excerpts and an external reproducible extraction manifest. It supplements rather than replaces the full original hash chain. Schema and semantic validation can run without optional evidence roots; the evidence-enabled gate checks the exact retained VPX, script, and manifest. The `partial` coverage and unknown physical fields survive this enrichment. No independent review or author-ready promotion is claimed.
 
 Source `spike1.libpinmame.8e0f721e3df7` pins the plugin DIP indexing implementation; the canonical physical DIP group uses LibPinMAME bank/bit routing in the controller profile.
 
 ## Retained source records
 
 External locators prefixed `working-root:` resolve under the configured sibling `pinmame-game-defs-working-dir`. Portable factual excerpts carry their own fail-closed repository digests; source-owned PDFs, ROMs, frames and tables remain external.
+
+- `supreme.vpx.table.008` and `supreme.vpx.script.008` identify the supplied
+  `supreme_008.vpx`, its `vpxtool git:v0.33.3` extraction and compact I/O
+  excerpts. The original VPX SHA-256 is
+  `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`; its
+  script SHA-256 is
+  `f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca`.
+  The external complete extraction manifest has 565 files, 64,800,271 bytes,
+  and digest `9f4af73ce3091bde3c61ff734feb92a3ec48f113d57327bc8142e2b6905b41bb`.
+  It is user-supplied recreation evidence only: no physical construction,
+  license, original table author, or known-working claim is inferred.
 
 - `pinmame.catalog.8e0f721e3df7` (pinmame_catalog): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`. src/wpc/spike1.c:970-991; CORE_GAMEDEF(supreme,101) and exact ROM manifest; catalog metadata reproduced by PinmameGetGames. Inspected 2026-10-10T19:33:29Z.
 - `spike1.driver.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`. src/wpc/spike1.c:191-225 (switch/lamp conversion),259-313 (DIP/switch/output synchronization),511-564 (coil allocation, LED export and initial switch state),685-707 (title limits/layout),970-991 (Supreme exact title). Full-file source SHA256; inspected 2026-10-10T19:33:29Z.
@@ -176,3 +187,47 @@ External locators prefixed `working-root:` resolve under the configured sibling 
 - `supreme.runtime.api-r2` (runtime_scenario): `de0bc286584d1e484217083db67e28da246b176809beaac454482c50d6b7f1a0`. Fresh-state public LibPinMAME scenario started 2026-10-10T19:15:58Z, process 26292, 52 s, exit 0. Physical-all mask index/value 2/2; approximately 10 ms polls; keyboard off; mechanics=1; ready timeout70s, bootwait25s, supervisor timeout180s. Scenario SHA256 98b11a14ddd1efdee203f021ae5f78eccc03d027cb14cbbe04221837f970f337. DLL SHA256 1875e0961759cbd21b566d31a60c7f9e7c59c26c7f1e0d21f97b1b50118db005. Python3.12.9; harness SHA256 49c5e733bf436a260c915d88e275189950d8ebcc55575f01ab2d153099e1dd44; external recorder SHA256 41400f2bdf14a0bb50e14a2d3368e0058366c9c156bfb64bcc7e4ce60013c529. Step events and snapshots, solenoid/display callbacks and shutdown. Complete JSONL SHA256 0a3e81a4f3f364bee1a2692c24fdc0e4f09e5c29182e951fe22bf1eecfbed190; derived observations SHA256 f5e1bc071c9fa78f3c4c722ae659aa3f563710381b99305be22bbab0c4916ee1. GetSwitch host readback is not ROM evidence.
 - `supreme.identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`. machines[opdbId=G3EnZ-MePOV]: Supreme x Stern, physicalMachine=1, manufacturer Stern Pinball Inc., manufactureDate2018-06-01, ipdbId6609, display dmd, record updated2022-01-26. Selection read with PowerShell ConvertFrom-Json on 2026-10-10T19:33:29Z; snapshot retained2026-10-10T19:02:39Z. OPDB identity authority only; features/playerCount/images are not primary wiring or physical quantity evidence.
 - `spike1.libpinmame.8e0f721e3df7` (pinmame_core): `96739dc787262e9d6379c8c7eb311209e061c389b5b63d0c9997116d910e0777`. Get/SetDIPSwitchState2074–2092 and Plugin StateMapping2419–2424; plugin bit indices use srcId directly while published IDs are one-based.
+
+
+## Verified factory label, display and production rule card
+
+`supreme.factory-model-photo` records Dean Grover's IPDB 6609 photo 75062 of
+the prototype label: `PINBALL I-00PL * SUPREME 1`. Its serial and voltage
+rating apply to that example. `supreme.backbox-photo` (photo 75054), the
+retained production photographs and current PinMAME display topology settle
+the single 128x32 display at controller index 0 in the backbox. Its spatial
+record is therefore `not_applicable/cabinet_or_service`, with validated
+provenance. The display-inventory requirement is complete; the machine remains
+partial for the other declared requirements.
+
+`supreme.factory-rule-card` is OCPinballs's production-machine photograph,
+Pinside ad 124610/photo 2639645. A curator visually checked all ten bullets
+on the original apron card. The portable excerpt
+`evidence/excerpts/stern.supreme-x-stern.2018/physical-web-research.md`
+paraphrases the complete region and records the original hash, dimensions and
+crop. The rules cover lightning targets qualifying Supreme shots, Supreme
+scoring progression, Meteor Shower spinner scoring, top-lane timed double
+scoring, seven-star bonus multipliers, extra ball after two Supreme shots,
+pop-driven value/shot changes, trapped-ball Galaxy multiball, add-a-ball from
+the target above the trapped ball and sequential-shot combination awards.
+
+`supreme.programmer-tutorial-lead` retains the browser's automatic transcript
+of Colorado Pinball Collective's *Supreme pinball with Dean Grover*. Its
+description identifies the game's programmer. The ASR lead explains passive
+capture/replacement serve (2:53-3:16), drop-bank/sign multiball and an escape
+path without electrical drop-down (3:25-3:49), the final timed multiball
+(4:02-4:26), open-sided second-ball capture (12:31-12:46) and linked slings
+(49:08-49:25). The audio and speaker attribution were not checked: these are
+qualified reconstruction leads, not validated electrical assertions.
+
+The retained research includes both Pinside club pages, all 15 launch-thread
+pages, production ads 124610 and 192007, the IPDB page/prototype photographs,
+Stern's manuals index and direct Pinside searches for Supreme manual,
+schematic, wiring, gate and opto information. No title-specific factory
+wiring/parts pages were located. None of the production photos show cabinet
+internals or the playfield underside. Primary photos and the factory rule
+card resolve the facts above; they cannot settle physical switch normal
+states, fitted coin/ticket equipment, complete trough hardware, gate-coil
+direction or every lighting emitter's quantity and position. Those concrete
+gaps still prevent author-ready promotion. A manual or direct physical
+inspection is needed to settle them.

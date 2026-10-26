@@ -139,7 +139,10 @@ class Spike1DefinitionTests(unittest.TestCase):
 		for device in definition['inputs'] + definition['outputs']:
 			self.assertNotIn('normally_closed', device)
 			self.assertNotIn('quantity', device.get('physical', {}))
-			self.assertNotIn('placements', device.get('spatial', {}))
+			for placement in device.get('spatial', {}).get('placements', []):
+				self.assertEqual('observed', placement['provenance']['status'])
+				self.assertIn('supreme.vpx.table.008', placement['provenance']['source_refs'])
+				self.assertIn('supreme.vpx.script.008', placement['provenance']['source_refs'])
 
 
 if __name__ == '__main__':
