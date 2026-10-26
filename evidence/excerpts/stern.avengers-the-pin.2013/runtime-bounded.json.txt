@@ -1,0 +1,325 @@
+{
+  "archive_identity_note": "Archive SHA256 verified immediately before extraction/run preparation and reverified after the completed run; source-declared member content checks are in the acquisition record.",
+  "authority": "Causal emulator callbacks only. Host switch readback is not ROM evidence. No physical construction, quantity, geometry, service-test or complete-gameplay claim.",
+  "configuration": {
+    "boot_wait_s": 25,
+    "handle_mechanics": 0,
+    "keyboard_enabled": false,
+    "ready_timeout_s": 70,
+    "solenoid_mask_mode": "physical-all (2,2)"
+  },
+  "display_callbacks": [
+    {
+      "depth": 0,
+      "display_count": 2,
+      "event": "display_available",
+      "height": 0,
+      "index": 0,
+      "left": 0,
+      "length": 16,
+      "time_s": 0.035759,
+      "top": 0,
+      "type": 13,
+      "width": 0
+    },
+    {
+      "depth": 2,
+      "display_count": 2,
+      "event": "display_available",
+      "height": 32,
+      "index": 1,
+      "left": 0,
+      "length": 0,
+      "time_s": 0.035827,
+      "top": 0,
+      "type": 14,
+      "width": 128
+    }
+  ],
+  "events_sha256": "8737e7f2811a465d913bd0cd3213a5cae5b1800d865e61d6feb1c392f296018b",
+  "exit_code": 0,
+  "failure": null,
+  "format": "pinmame-bounded-runtime-observations",
+  "game": "avscp_103",
+  "initial_state": "Fresh previously nonexistent state directory; no inherited NVRAM and no host initial-switch injection. Source initializes numbered trough routes9/10/11.",
+  "library_sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5",
+  "limitations": [
+    "Synthetic host trough/shooter transfer is a probe stimulus, not observed physical ball travel.",
+    "No service menus, lock output5, drop-reset8, tilt, drain or complete game were exercised.",
+    "Raw sixteen-character CORE_SEG16S frames were retained; no decoded display text is asserted. Index1 DMD-availability metadata has no DMD frames and is not an additional physical display.",
+    "stderr reports no NVRAM commit within5000ms on shutdown; API stop reached0 and wrapper exited0, but persistence is unverified.",
+    "The first standalone map probe used an incorrect flat WAV layout and failed sounds/FX_Bang01.wav lookup. It is diagnostic only; corrected standalone layout supplies sounds/ and exact tables agree."
+  ],
+  "manifest_path": "review-artifacts/spike1-refresh-2026-10-25/home-games/avscp-followup/runtime-gameplay-01/manifest.json",
+  "manifest_sha256": "52da0f7c7ad767f9be9891fbe1f17d6b0c11ca74514f4da45e752cac30b9f2d5",
+  "official_harness_sha256": "49c5e733bf436a260c915d88e275189950d8ebcc55575f01ab2d153099e1dd44",
+  "physical_mode_wrapper_sha256": "8b7afa92b13429f9efa74a89023989a297f5fe9abef7fcee759041346e7aa2ad",
+  "program_sha256": "724e3162b3befab4025f180cf70a138bd8055d22bbad57f2f2aa2999deab5bab",
+  "rom_archive_path": "roms/spike1/avscp_103.zip",
+  "rom_archive_sha256": "adec1013a1edb8ecf2c150f7576e254036ff39f355b68f38f0790cda02e32f78",
+  "run_path": "review-artifacts/spike1-refresh-2026-10-25/home-games/avscp-followup/runtime-gameplay-01/run.json",
+  "run_sha256": "1ad56fef0b39dbb9b9271b3b8ce3f26bab516395c691226acadb6d5a955d56bb",
+  "scenario_path": "review-artifacts/spike1-refresh-2026-10-25/home-games/avscp-followup/gameplay-v1.json",
+  "scenario_sha256": "6f2e75fc44cf4a34d86018da07879c99e36d8f10e79a06c3c014b7040e00d8ee",
+  "segment_frame_count": 104,
+  "source_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+  "steps": [
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "START and require ROM trough-eject response",
+      "matched_outputs": [
+        {
+          "number": 4,
+          "states": [
+            127,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 3,
+      "solenoid_transitions": [
+        {
+          "number": 4,
+          "states": [
+            127,
+            0
+          ]
+        },
+        {
+          "number": 33,
+          "states": [
+            255
+          ]
+        }
+      ],
+      "step": 1,
+      "switch": 1,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "synthetic transfer: release TROUGH 3",
+      "settle_s": 0.3,
+      "solenoid_transitions": [],
+      "state": 0,
+      "step": 2,
+      "switch": 11,
+      "type": "set_switch"
+    },
+    {
+      "label": "synthetic ball arrives at SHOOTER LANE",
+      "settle_s": 0.7,
+      "solenoid_transitions": [],
+      "state": 1,
+      "step": 3,
+      "switch": 17,
+      "type": "set_switch"
+    },
+    {
+      "label": "synthetic ball leaves SHOOTER LANE",
+      "settle_s": 0.3,
+      "solenoid_transitions": [],
+      "state": 0,
+      "step": 4,
+      "switch": 17,
+      "type": "set_switch"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 100,
+      "label": "SHOOTER LANE EXIT",
+      "rest_state": 0,
+      "settle_s": 0.8,
+      "solenoid_transitions": [],
+      "step": 5,
+      "switch": 18,
+      "type": "pulse"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 500,
+      "label": "LEFT FLIPPER requires actual lower coil response",
+      "matched_outputs": [
+        {
+          "number": 2,
+          "states": [
+            255,
+            44,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.5,
+      "solenoid_transitions": [
+        {
+          "number": 2,
+          "states": [
+            255,
+            44,
+            0
+          ]
+        },
+        {
+          "number": 47,
+          "states": [
+            255,
+            0
+          ]
+        },
+        {
+          "number": 48,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 6,
+      "switch": 2,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 500,
+      "label": "RIGHT FLIPPER requires actual lower coil response",
+      "matched_outputs": [
+        {
+          "number": 3,
+          "states": [
+            255,
+            44,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.5,
+      "solenoid_transitions": [
+        {
+          "number": 3,
+          "states": [
+            255,
+            44,
+            0
+          ]
+        },
+        {
+          "number": 45,
+          "states": [
+            255,
+            0
+          ]
+        },
+        {
+          "number": 46,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 7,
+      "switch": 3,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "SLINGSHOTS requires coil1",
+      "matched_outputs": [
+        {
+          "number": 1,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 1,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 8,
+      "switch": 6,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "TOP POP BUMPER requires coil7",
+      "matched_outputs": [
+        {
+          "number": 7,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 7,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 9,
+      "switch": 7,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "BOTTOM AND RIGHT POP BUMPERS requires coil6",
+      "matched_outputs": [
+        {
+          "number": 6,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 6,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 10,
+      "switch": 8,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "bounded confirmation complete",
+      "solenoid_transitions": [],
+      "step": 11,
+      "type": "wait"
+    }
+  ],
+  "stop_states": [
+    2,
+    1,
+    3,
+    0
+  ],
+  "version": 1
+}
