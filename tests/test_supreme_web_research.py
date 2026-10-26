@@ -13,6 +13,7 @@ from pinmame_game_defs.validation import validate_machine
 ROOT = Path(__file__).resolve().parents[1]
 MACHINE = ROOT / 'machines/partial/stern/supreme-x-stern-2018.json'
 EXTERNAL_FILES = {
+    'supreme.factory-ball-label': ('grailed-69068187-03.jpg', '4c69acd2f98d3be027d07c9177b963a3ee3e4c4fc1312b97d8221f7dba2f84d9'),
     'supreme.factory-model-photo': ('ipdb-image-14.png', 'd8035e505e0cb938c2866146d4f70bc1f8c969f378367c39e6b34c81ab847133'),
     'supreme.backbox-photo': ('ipdb-image-5.png', '05eaeba2bfbf312f999397168f2801d9e79e6c4b98ad32dd4c4ad3a5297ac662'),
     'supreme.factory-rule-card': ('pinside-2021-2639645.jpeg', 'fd6f0408c7c6baf8ece115b19ce2cc021fbc5b5e4dbf6c386ffc5a491a57ba4c'),

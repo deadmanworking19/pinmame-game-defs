@@ -231,3 +231,10 @@ states, fitted coin/ticket equipment, complete trough hardware, gate-coil
 direction or every lighting emitter's quantity and position. Those concrete
 gaps still prevent author-ready promotion. A manual or direct physical
 inspection is needed to settle them.
+
+A further primary photograph, Grailed listing 69068187/photo 4, clearly shows
+the factory label `INSTALL 4 BALLS` below the apron. Source
+`supreme.factory-ball-label` and its complete label excerpt independently
+corroborate four installed balls for that photographed example. This settles
+an installed-ball instruction; it does not prove the trough's number of
+sensor positions, jam hardware, opto/contact construction or firmware variants.

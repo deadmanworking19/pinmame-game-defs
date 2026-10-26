@@ -354,6 +354,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `spike1.driver.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `spike1.libpinmame.8e0f721e3df7` (pinmame_core): `96739dc787262e9d6379c8c7eb311209e061c389b5b63d0c9997116d910e0777`
 - `supreme.backbox-photo` (human_review): `05eaeba2bfbf312f999397168f2801d9e79e6c4b98ad32dd4c4ad3a5297ac662`
+- `supreme.factory-ball-label` (human_review): `4c69acd2f98d3be027d07c9177b963a3ee3e4c4fc1312b97d8221f7dba2f84d9`
 - `supreme.factory-model-photo` (human_review): `d8035e505e0cb938c2866146d4f70bc1f8c969f378367c39e6b34c81ab847133`
 - `supreme.factory-rule-card` (human_review): `fd6f0408c7c6baf8ece115b19ce2cc021fbc5b5e4dbf6c386ffc5a491a57ba4c`
 - `supreme.identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
