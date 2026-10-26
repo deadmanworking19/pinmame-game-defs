@@ -238,3 +238,53 @@ the factory label `INSTALL 4 BALLS` below the apron. Source
 corroborate four installed balls for that photographed example. This settles
 an installed-ball instruction; it does not prove the trough's number of
 sensor positions, jam hardware, opto/contact construction or firmware variants.
+
+## Shared-design comparison with Spider-Man The Pin
+
+The official donor manual 780-50H8-00 is now a qualified reference, not excluded
+merely because the artwork/title differs. `supreme.shared-design.manual` and
+`supreme.shared-design.crosswalk` retain the complete switch/coil/light rows
+and a deterministic exact node-position/public-address comparison. It finds
+56 shared switch routes, all 12 coil routes and all 65 LED rows. All common
+public addresses and LED class bits agree; 72 literal name changes remain
+visible instead of silently replacing Supreme labels with Spider-Man labels.
+The manual reconciles 51 switch rows (including 9 CPU C-namespace rows), 9
+playfield coil rows and 61 playfield lighting rows. Donor component types and
+parts are available in each affected device's explicitly qualified physical
+notes, with full connector/wire cells preserved in the comparison excerpt.
+They are candidate references, not confirmed Supreme harness or part fields.
+
+The two games are not electrically identical in every respect. Tilt public 14
+moves from donor node 8/27 to Supreme node 1/14; launch public 15 moves from 8/26
+to 1/15. Eight additional Supreme node 1 switch routes concern ticket notch,
+tournament start, five coin channels and slam tilt. Generic node 1 coin/ticket
+coil routes remain unconfirmed physical fitment even though both firmwares
+contain them. Public lamp 1/2/3 collisions still combine distinct node 1 cabinet
+and node 8 playfield rows; the donor's playfield rows prove no cabinet load.
+Supreme's photographed manual plunger/coin-door cabinet and 128x32 DMD differ
+from the donor's cabinet controls and 64x32 RGB transport. Node firmware also
+differs (donor 0.19.1, Supreme 0.22.0). No ROM interchangeability is asserted.
+
+`donor-assemblies.md` transcribes the complete pages 21-22 assembly tables.
+These identify candidate trough, auto-launcher, flipper, slingshot, bumper,
+drop-bank, gate and spinner assemblies without assigning their part numbers
+or quantities to Supreme. Existing Supreme geometry and the photographed
+four-ball installation label remain independent evidence; they do not settle
+all underside components or emitter positions. Physical wiring stays candidate,
+contact polarity and cabinet fitment stay unresolved, and the record is partial.
+
+## Completed exact driver mapping
+
+`supreme.archive.identity.current` and `supreme.driver.identity.current`
+record a fresh independent decompression
+of every member of the authorized Supreme archive: all 10 payloads match the
+pinned current source's size, CRC32 and SHA1, and have their own SHA256. The
+retained archive matches the user's original archive byte-for-byte. The
+complete current initializer/manifest/driver declaration is excerpted in
+`current-driver-identity.md`; the catalog assigns the one supported Supreme
+driver, `supreme_101`, exactly once to this physical record, with no missing
+clone. Existing exact-ROM routes and retained runtime remain pinned to their
+own revisions. This resolves `driver_mapping`, independently of the donor
+hardware assumptions. It does not settle the separate physical-compatibility
+or variant-differences requirements. Eight requirements remain, so the generated
+completion score is 50%, still partial.

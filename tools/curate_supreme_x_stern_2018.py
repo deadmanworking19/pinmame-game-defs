@@ -8,6 +8,7 @@ from pathlib import Path
 from build_external_evidence_manifest import check_manifest
 from pinmame_game_defs.jsonio import file_sha256, load_json
 from pinmame_game_defs.spatial import extract_spatial_candidates
+from supreme_shared_evidence import verify_contract
 
 GAME = "supreme_101"
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,6 +59,7 @@ def verify_external_evidence(root=ROOT):
 
 def enrich_spatial_report(root, definition, report):
     """Add the title's explicit object/projection audit to the common inventory."""
+    shared = verify_contract(root, definition)
     mapping = load_json(root / MAPPING)
     verify_external_evidence(root)
     sources = {source["id"]: source for source in definition["sources"]}
@@ -88,6 +90,12 @@ def enrich_spatial_report(root, definition, report):
     report["decision"]["reason"] = "Observed VPX sensor/effect proxies and verified backbox display; physical wiring, gate action, lighting sockets and cabinet fitment remain incomplete."
     report["observed_placements"] = observed
     report["projection_classes"] = sorted({row.get("projection", "bound_object_center") for row in observed})
+    report["shared_design"] = {
+        "authority_limit": shared["authority_limit"],
+        "counts": {key: value["counts"] for key, value in shared["sections"].items()},
+        "supreme_only_switch_routes": shared["sections"]["switches"]["supreme_only"],
+        "donor_only_switch_routes": shared["sections"]["switches"]["spiderman_only"],
+    }
     report["retained_vpx"] = {"path": VPX, "sha256": VPX_SHA256, "script_sha256": SCRIPT_SHA256,
                               "manifest_sha256": MANIFEST_SHA256, "file_count": 565, "total_bytes": 64800271,
                               "bounds": {"left": 0, "top": 0, "right": 952.9, "bottom": 2117.6}}
@@ -113,6 +121,21 @@ def report_markdown(report):
              "The guessed control-gate coil-on direction remains unresolved. No trough, cabinet or service location is invented. "
              "Insert/lightmap and GI render helpers do not establish emitter sockets, quantities or string membership, so lamp placements remain absent. "
              "The independently photographed backbox display uses cabinet_or_service. See the knowledge note and physical-web-research excerpt for primary rule-card and photo evidence.\n")
+    text += "\n## Shared-design comparison and completed driver mapping\n\n"
+    text += report["shared_design"]["authority_limit"] + "\n\n"
+    text += "| Routing table | Shared routes | Supreme only | Donor only | Reconciled donor manual rows |\n| --- | --- | --- | --- | --- |\n"
+    for name, counts in report["shared_design"]["counts"].items():
+        text += f"| {name} | {counts['shared']} | {counts['supreme_only']} | {counts['spiderman_only']} | {counts['manual_matched']} |\n"
+    text += ("\nSwitch rows include nine CPU C-namespace references. Donor tilt 14 at node 8/27 and launch 15 at node 8/26 "
+             "move to Supreme node 1/14 and node 1/15, so public-number agreement does not justify copying their wiring. "
+             "Eight other Supreme cabinet switch routes have no donor route. Three node 1 coil routes and four node 1 LED routes "
+             "remain physically unconfirmed, including the cabinet/playfield collisions at lamp 1/2/3. "
+             "Full literal donor rows and all route exceptions are retained in shared-design-crosswalk.json.txt. "
+             "The donor assembly lists are candidate references, not Supreme part-number or quantity assignments.\n\n"
+             "The sole supported Supreme driver is mapped to its physical record and all ten ROM payloads independently match "
+             "the pinned current source manifest. This resolves driver_mapping; physical compatibility, variant differences, "
+             "contact polarity, wiring, cabinet fitment and complete placement remain unresolved. See driver-map-identity.json.txt "
+             "and current-driver-identity.md for the exact archive/source proof.\n")
     return text
 
 

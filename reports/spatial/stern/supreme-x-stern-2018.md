@@ -6,7 +6,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 
 ## Coverage blockers
 
-`driver_mapping`, `input_semantics`, `output_semantics`, `mechanism_inventory`, `mechanism_behavior`, `polarity`, `variant_differences`, `recreation_notes`, `spatial_placement`
+`input_semantics`, `output_semantics`, `mechanism_inventory`, `mechanism_behavior`, `polarity`, `variant_differences`, `recreation_notes`, `spatial_placement`
 
 ## Device inventory
 
@@ -353,7 +353,9 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `spike1.core.8e0f721e3df7` (pinmame_core): `9ef4b590d31be77ffa21765faeec9df4e3a175c2597f9f7e8937091cea888d6a`
 - `spike1.driver.8e0f721e3df7` (pinmame_core): `756ecd840f234cf7a62f84ef331ccb8b61f0f1aeffc409bc7b776d6c037211c9`
 - `spike1.libpinmame.8e0f721e3df7` (pinmame_core): `96739dc787262e9d6379c8c7eb311209e061c389b5b63d0c9997116d910e0777`
+- `supreme.archive.identity.current` (human_review): `e6796302e6cf81af5274dbccec8c7e4b29a2e38919a4a4ee034c326e69ebc0d9`
 - `supreme.backbox-photo` (human_review): `05eaeba2bfbf312f999397168f2801d9e79e6c4b98ad32dd4c4ad3a5297ac662`
+- `supreme.driver.identity.current` (pinmame_core): `0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486`
 - `supreme.factory-ball-label` (human_review): `4c69acd2f98d3be027d07c9177b963a3ee3e4c4fc1312b97d8221f7dba2f84d9`
 - `supreme.factory-model-photo` (human_review): `d8035e505e0cb938c2866146d4f70bc1f8c969f378367c39e6b34c81ab847133`
 - `supreme.factory-rule-card` (human_review): `fd6f0408c7c6baf8ece115b19ce2cc021fbc5b5e4dbf6c386ffc5a491a57ba4c`
@@ -361,6 +363,8 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 - `supreme.programmer-tutorial-lead` (human_review): `cc22d8ff5ff2b720fb375edb6345911a33569b0f1cc75256c12cc305c3144798`
 - `supreme.rom.routes.101` (rom_static_analysis): `5e43fd949decd03843f9baa35d3e74fb17ae0095e76595f20940045796212f7c`
 - `supreme.runtime.api-r2` (runtime_scenario): `de0bc286584d1e484217083db67e28da246b176809beaac454482c50d6b7f1a0`
+- `supreme.shared-design.crosswalk` (human_review): `d953cb68f47433ed6a02f3dd458f1bf49b3cac01695c5bd90ffd03dddfd82678`
+- `supreme.shared-design.manual` (manual): `5bfe21f7c3f0a71823ca225612d9514604347c6b2d37978c128954a9b87a49b5`
 - `supreme.vpx.script.008` (vpx_script): `f2bb8a48bd0aa49310d7e7e8bc165757d59d168110815ac1712dcc971e7a34ca`
 - `supreme.vpx.table.008` (vpx_table): `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`
 
@@ -418,3 +422,17 @@ VPX SHA-256 `444c21186425f23c173dece87fe9f683e2ee5c101e76271bf1d2339d1920edd9`; 
 | sol.10 | Gate.Gate003 | 0.580645 | 0.053224 | bound_object_center |
 
 All listed points are observed recreation proxies. Slings use wall drag-point centroids; the reset output uses the mean of the three drop-wall centroids; flipper effects use pivots. Bumper output positions project onto the corresponding bumper centers. These do not measure under-playfield coils. The guessed control-gate coil-on direction remains unresolved. No trough, cabinet or service location is invented. Insert/lightmap and GI render helpers do not establish emitter sockets, quantities or string membership, so lamp placements remain absent. The independently photographed backbox display uses cabinet_or_service. See the knowledge note and physical-web-research excerpt for primary rule-card and photo evidence.
+
+## Shared-design comparison and completed driver mapping
+
+Matches prove routing only; the sibling manual proves sibling hardware; Supreme physical fitment/harness, polarity, parts and emitter counts remain unconfirmed.
+
+| Routing table | Shared routes | Supreme only | Donor only | Reconciled donor manual rows |
+| --- | --- | --- | --- | --- |
+| switches | 56 | 10 | 2 | 51 |
+| coils | 12 | 0 | 0 | 9 |
+| leds | 65 | 0 | 0 | 61 |
+
+Switch rows include nine CPU C-namespace references. Donor tilt 14 at node 8/27 and launch 15 at node 8/26 move to Supreme node 1/14 and node 1/15, so public-number agreement does not justify copying their wiring. Eight other Supreme cabinet switch routes have no donor route. Three node 1 coil routes and four node 1 LED routes remain physically unconfirmed, including the cabinet/playfield collisions at lamp 1/2/3. Full literal donor rows and all route exceptions are retained in shared-design-crosswalk.json.txt. The donor assembly lists are candidate references, not Supreme part-number or quantity assignments.
+
+The sole supported Supreme driver is mapped to its physical record and all ten ROM payloads independently match the pinned current source manifest. This resolves driver_mapping; physical compatibility, variant differences, contact polarity, wiring, cabinet fitment and complete placement remain unresolved. See driver-map-identity.json.txt and current-driver-identity.md for the exact archive/source proof.
