@@ -388,7 +388,7 @@ Coordinate convention: x=0 left, x=1 right, y=0 rear/backglass end, y=1 apron/fr
 ## Sources
 
 - `catalog.driver` (pinmame_catalog): `fa7d45f1f3d6798ff620f64e4155bfd53b3d3cfc8fec9937304afb987f397bfb`
-- `controller.profile` (human_review): `79afdb62eb4c29899b7997e097d3f08fe85e786e598d9ef4bda8cb260eece0c1`
+- `controller.profile` (human_review): `c4d9a96eeade7d0d372cc69de06dc2a2857908954f1a774540cb590731287530`
 - `identity.opdb` (human_review): `be658179b49b2bc02dce55d928c3d6a6afe6307e2b00a0ac7ffc1a745ac2d9f3`
 - `manual.assembly` (manual): `a091af04322e78e966867b18bbe8131887a8bc6f5157c842065f4b21603610b9`
 - `manual.cpu` (manual): `a091af04322e78e966867b18bbe8131887a8bc6f5157c842065f4b21603610b9`

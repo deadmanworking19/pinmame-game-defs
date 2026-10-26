@@ -1,6 +1,6 @@
 # Own-edition switches-page15 table
 
-Spider-Man_ThePin_web.pdf, PDF/printed page 15; source SHA256 `5bfe21f7c3f0a71823ca225612d9514604347c6b2d37978c128954a9b87a49b5`. Extracted with PyMuPDF 1.28.2 from the printed vector grid, then every cell visually compared with the page render by gpt-6.1-sol. `BLANK` denotes a genuinely empty printed cell; `-` is a printed dash. Physical line wraps are joined with one space; spelling, wire order, capitalization, hyphenation, blank rows and every column are preserved. No inferred repeated cells. No table image is committed. The external extraction records the exact point-coordinate cell grid.
+Spider-Man_ThePin_web.pdf, PDF/printed page 15; source SHA256 `5bfe21f7c3f0a71823ca225612d9514604347c6b2d37978c128954a9b87a49b5`. Extracted with PyMuPDF 1.28.2 from the printed vector grid, then every cell visually compared with the rendered page. `BLANK` denotes a genuinely empty printed cell; `-` is a printed dash. Physical line wraps are joined with one space; spelling, wire order, capitalization, hyphenation, blank rows and every column are preserved. No inferred repeated cells. No table image is committed. The external extraction records the exact point-coordinate cell grid.
 
 | ID | Name | Node | Node Ext | Conn. | Input Pin | Input Wire | GND Pin | Ground Wire | Location | Type | Address | Part Number |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

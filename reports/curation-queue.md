@@ -13,7 +13,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 7 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
 | 8 | 2016 | Ghostbusters (Limited Edition) | Stern | partial | 50% |
 | 9 | 2016 | Pabst Can Crusher | Stern | partial | 50% |
-| 10 | 2016 | Spider-Man The Pin | Stern | partial | 38% |
+| 10 | 2016 | Spider-Man The Pin | Stern | partial | 44% |
 | 11 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |
 | 12 | 2015 | Game of Thrones (Limited Edition) | Stern | partial | 44% |
 | 13 | 2015 | Game of Thrones (Pro) | Stern | partial | 50% |
@@ -27,7 +27,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 21 | 2014 | Mustang Pro | Stern | author_ready | 100% |
 | 22 | 2014 | The Walking Dead Premium / Limited Edition | Stern | author_ready | 100% |
 | 23 | 2014 | The Walking Dead Pro | Stern | author_ready | 100% |
-| 24 | 2013 | Avengers The Pin | Stern | partial | 38% |
+| 24 | 2013 | Avengers The Pin | Stern | partial | 44% |
 | 25 | 2013 | Metallica Premium / Limited Edition | Stern | author_ready | 100% |
 | 26 | 2013 | Metallica Pro | Stern | author_ready | 100% |
 | 27 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready | 100% |
