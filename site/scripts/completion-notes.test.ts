@@ -9,11 +9,11 @@ test('every canonical missing requirement has an action description', () => {
 	assert.deepEqual(Object.keys(COMPLETION_REQUIREMENTS).sort(), [...schema.$defs.coverage.properties.missing.items.enum].sort())
 })
 
-test('Twilight Zone includes both the mini-playfield survey and clock validation', () => {
+test('Twilight Zone includes the current playfield and street-lamp survey blockers', () => {
 	const report = readFileSync(new URL('../../reports/spatial/bally/twilight-zone-1993.md', import.meta.url), 'utf8')
 	const notes = extractCompletionNotes(report)
-	assert.ok(notes?.includes('continuity or bulb survey'))
-	assert.ok(notes?.includes('measuring the page 2-33 bracket offset'))
+	assert.ok(notes?.includes('a bulb survey of strings 01 and 05'))
+	assert.ok(notes?.includes("a photograph or survey of a stock street lamp's sockets"))
 	assert.ok(notes?.includes('## Unresolved spatial evidence'))
 	assert.ok(!notes?.includes('Retained evidence'))
 })
