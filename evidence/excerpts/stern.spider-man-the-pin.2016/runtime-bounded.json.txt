@@ -1,0 +1,398 @@
+{
+  "authority": "Causal emulator callbacks and display transport only; physical manual controls fitment. Synthetic transfers do not prove ball travel, physical timing, socket count, geometry or complete gameplay.",
+  "configuration": {
+    "boot_wait_s": 25,
+    "initial_state": "Fresh nonexistent state path, no inherited NVRAM; no host initial switch injections. Source initializes four occupied trough routes and other named defaults.",
+    "keyboard_enabled": false,
+    "mechanics_mask": 0,
+    "ready_timeout_s": 70,
+    "solenoid_mask_index": 2,
+    "solenoid_mask_value": 2
+  },
+  "display_callbacks": [
+    {
+      "depth": 24,
+      "display_count": 2,
+      "event": "display_available",
+      "height": 32,
+      "index": 0,
+      "left": 0,
+      "length": 0,
+      "time_s": 0.049732,
+      "top": 0,
+      "type": 15,
+      "width": 64
+    }
+  ],
+  "dmd_summary": {},
+  "driver": "smancp_101",
+  "exit_code": 0,
+  "failure": null,
+  "format": "pinmame-bounded-runtime-observations",
+  "limitations": [
+    "First START checkpoint contains repeated trough-coil pulses while host occupancy remains static; it is not one physical ball transfer or a measured pulse schedule.",
+    "Trough/shooter occupancy changes are explicit synthetic host actions, not ROM-generated switch evidence.",
+    "No service menu, drop reset, control-gate sequence, drain, complete game, NC construction, physical timing or geometry claim.",
+    "API stop reaches state 0 and process exits 0, but stderr reports no NVRAM commit within 5000 ms; persistence is unverified.",
+    "RGB callback is 64x32 depth24 CORE_VIDEO transport; this neither counts physical display assemblies nor supplies their geometry."
+  ],
+  "provenance": {
+    "archive": {
+      "path": "roms/spike1/smancp_101.zip",
+      "sha256": "0c5c51f509475a64fbbed6997fccad738c0c024facac81261af1ffce8f112c28",
+      "size": 279963005
+    },
+    "completion": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/runtime-01/completion.json",
+      "sha256": "16a773fe9c7b195d5ea57bf7a1abe84e89e7098cf127144113c5ffd211c4e829",
+      "size": 1451
+    },
+    "library": {
+      "path": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5",
+      "size": 10166272
+    },
+    "manifest": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/runtime-01/manifest.json",
+      "sha256": "1c645fc2731074ede90a12e08854ff0084f24c290018fd604c3f810a9cbee420",
+      "size": 1137
+    },
+    "official_harness": {
+      "path": "worktrees/pinmame-game-defs-spider-man-rom-refresh-20261026/tools/run_pinmame_harness.py",
+      "sha256": "49c5e733bf436a260c915d88e275189950d8ebcc55575f01ab2d153099e1dd44",
+      "size": 52279
+    },
+    "physical_mode_wrapper": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/record_current_physical.py",
+      "sha256": "495c54e412117c21fcf489729c7f2edcc5940d40ee6764b4e963e9fd5b63963a",
+      "size": 4795
+    },
+    "raw_events": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/runtime-01/run.events.jsonl",
+      "sha256": "daf1c7039e3222e32e855f19db6583f200697f1fda8268591811702658ca8fb8",
+      "size": 1735341
+    },
+    "run": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/runtime-01/run.json",
+      "sha256": "0bf6cfc7a84dff23c1e5d28647dc19bf70878b7b09e0b0a02bc2d53336804626",
+      "size": 3126813
+    },
+    "scenario": {
+      "path": "review-artifacts/spike1-refresh-2026-10-25/home-games/smancp-followup/bounded-scenario-v1.json",
+      "sha256": "be983bac8ad11e290568dbf6b770a06406300cc794eef3f2dd748e1fea355214",
+      "size": 2769
+    },
+    "source_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+  },
+  "steps": [
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "START requires actual trough output 1",
+      "matched_outputs": [
+        {
+          "number": 1,
+          "states": [
+            210,
+            0,
+            210,
+            0,
+            210,
+            0,
+            210,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 3,
+      "solenoid_transitions": [
+        {
+          "number": 1,
+          "states": [
+            210,
+            0,
+            210,
+            0,
+            210,
+            0,
+            210,
+            0
+          ]
+        },
+        {
+          "number": 33,
+          "states": [
+            255
+          ]
+        }
+      ],
+      "step": 1,
+      "switch": 13,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "Synthetic transfer removes rear TROUGH 4 occupancy; three source-numbered trough routes remain",
+      "observed_state": 0,
+      "settle_s": 0.3,
+      "solenoid_transitions": [],
+      "state": 0,
+      "step": 2,
+      "switch": 18,
+      "type": "set_switch"
+    },
+    {
+      "label": "Synthetic arrival at SHOOTER LANE",
+      "observed_state": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [],
+      "state": 1,
+      "step": 3,
+      "switch": 1,
+      "type": "set_switch"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "LAUNCH requires actual auto-plunger output 2",
+      "matched_outputs": [
+        {
+          "number": 2,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 1,
+      "solenoid_transitions": [
+        {
+          "number": 2,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 4,
+      "switch": 15,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "Synthetic shooter-lane departure",
+      "observed_state": 0,
+      "settle_s": 0.5,
+      "solenoid_transitions": [
+        {
+          "number": 2,
+          "states": [
+            255
+          ]
+        }
+      ],
+      "state": 0,
+      "step": 5,
+      "switch": 1,
+      "type": "set_switch"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 500,
+      "label": "LEFT FLIPPER requires actual coil 3",
+      "matched_outputs": [
+        {
+          "number": 3,
+          "states": [
+            255,
+            30,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.5,
+      "solenoid_transitions": [
+        {
+          "number": 2,
+          "states": [
+            0
+          ]
+        },
+        {
+          "number": 3,
+          "states": [
+            255,
+            30,
+            0
+          ]
+        },
+        {
+          "number": 47,
+          "states": [
+            255,
+            0
+          ]
+        },
+        {
+          "number": 48,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 6,
+      "switch": 8,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 500,
+      "label": "RIGHT FLIPPER requires actual coil 4",
+      "matched_outputs": [
+        {
+          "number": 4,
+          "states": [
+            255,
+            30,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.5,
+      "solenoid_transitions": [
+        {
+          "number": 4,
+          "states": [
+            255,
+            30,
+            0
+          ]
+        },
+        {
+          "number": 45,
+          "states": [
+            255,
+            0
+          ]
+        },
+        {
+          "number": 46,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 7,
+      "switch": 10,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "Combined SLINGSHOTS require coil 5",
+      "matched_outputs": [
+        {
+          "number": 5,
+          "states": [
+            194,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 5,
+          "states": [
+            194,
+            0
+          ]
+        }
+      ],
+      "step": 8,
+      "switch": 6,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "Combined upper POP BUMPERS require coil 7",
+      "matched_outputs": [
+        {
+          "number": 7,
+          "states": [
+            235,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 7,
+          "states": [
+            235,
+            0
+          ]
+        }
+      ],
+      "step": 9,
+      "switch": 37,
+      "type": "pulse_until_output"
+    },
+    {
+      "active_state": 1,
+      "hold_ms": 120,
+      "label": "BOTTOM POP requires coil 8",
+      "matched_outputs": [
+        {
+          "number": 8,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "pulses": 1,
+      "settle_s": 0.7,
+      "solenoid_transitions": [
+        {
+          "number": 8,
+          "states": [
+            255,
+            0
+          ]
+        }
+      ],
+      "step": 10,
+      "switch": 38,
+      "type": "pulse_until_output"
+    },
+    {
+      "label": "Bounded routing confirmation complete",
+      "solenoid_transitions": [],
+      "step": 11,
+      "type": "wait"
+    }
+  ],
+  "stop_states": [
+    2,
+    1,
+    3,
+    0
+  ],
+  "version": 1,
+  "video_summary": {
+    "0": {
+      "changed_frames": 246,
+      "recorded_events": 246,
+      "suppressed_events": 0
+    }
+  }
+}

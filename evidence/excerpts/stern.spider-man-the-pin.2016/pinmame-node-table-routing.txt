@@ -1,0 +1,294 @@
+Pinned current-source node-table decoder and manual-number mapping
+Revision 46e1a01a0f73dc5ce163d98db1ae435883ecc450; source SHA256 234d5e4eda63724ff85df0ff4499cd05971195d46fff7a567cbfe434c039074e
+Original line numbers preserved; trailing whitespace on numbered blank lines trimmed. Emulator startup/flag logic is not physical NC/fitment evidence.
+
+src/spike1/spike1_devices.cpp:1210-1398
+1210: // ---------------------------------------------------------------- switches
+1211: //
+1212: // The title's tables, all {entries, count, entry size} descriptors:
+1213: //   node_board_table          entry +12: the board's bus address (upper half on newer SDKs)
+1214: //   node_board_device_table   24-byte entries: +8 number, +12 names (English first),
+1215: //                             +16 type << 16 | board, +20 position << 16; type 2 = coil,
+1216: //                             4 = LED channel, 7 = switch
+1217: //   switch_table              entry per switch number: +0x10 flags (bit 2: active high,
+1218: //   switch_dedicated_table    bit 7: closed at rest), the dedicated ones numbered from 129
+1219: // The numbers there are the game's own; apply_manual_numbers() gives switches, coils and LED channels the manual's
+1220: void spike1_devices::load_device_table()
+1221: {
+1222: 	m_switches.clear();
+1223: 	m_coils.clear();
+1224: 	m_leds.clear();
+1225: 	std::memset(m_sw_closed, 0, sizeof(m_sw_closed));
+1226: 	std::memset(m_sw_read, 0, sizeof(m_sw_read));
+1227: 	std::memset(m_sw_changed, 0, sizeof(m_sw_changed));
+1228: 	std::memset(m_sw_active_high, 0, sizeof(m_sw_active_high));
+1229: 	if (!m_cfg.symbol) return;
+1230: 	if (m_elg) { elg_load_tables(); return; }
+1231: 	auto desc = [&](const char *name, uint32_t out[3]) {
+1232: 		out[0] = out[1] = out[2] = 0;
+1233: 		const uint32_t a = m_cfg.symbol(name);
+1234: 		return a && guest_read(a, out, 12) && out[0] && out[1] && out[2];
+1235: 	};
+1236: 	uint32_t boards[3], devices[3], table[3], dedicated[3];
+1237: 	if (!desc("node_board_table", boards) || !desc("node_board_device_table", devices)) return;
+1238: 	const bool have_table = desc("switch_table", table);
+1239: 	const bool have_dedicated = desc("switch_dedicated_table", dedicated);
+1240: 	std::vector<uint8_t> node_of(boards[1]);
+1241: 	bool upper = false;
+1242: 	std::vector<uint32_t> raw(boards[1]);
+1243: 	for (uint32_t i = 0; i < boards[1]; i++) { guest_read(boards[0] + i * boards[2] + 12, &raw[i], 4); if (raw[i] >= 0x10000) upper = true; }
+1244: 	for (uint32_t i = 0; i < boards[1]; i++) node_of[i] = uint8_t((upper ? raw[i] >> 16 : raw[i]) & 0x7f);
+1245:
+1246: 	// The device table is what the switch test names a board's inputs from; the switch code reads
+1247: 	// them through the program's compiled maps (compiled_switch_inputs()), which place a few
+1248: 	// switches elsewhere: Supreme, Primus, Whoa Nellie and Pabst read SLAM TILT at cabinet input
+1249: 	// 21 where their tables have 22, KISS the reverse, and WWE's SDK the CPU board's DIP switches
+1250: 	// 2-8 and service buttons an input lower than its table (DIP 2 at 1, SERVICE SELECT at 8, BACK
+1251: 	// at 11, as the later titles' tables have them). A switch the maps read at none of its table
+1252: 	// positions is wired where they read it - on its own board when they read it there
+1253: 	const std::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> compiled = compiled_switch_inputs();
+1254: 	std::string moved;
+1255: 	std::vector<std::pair<switch_info, uint16_t>> found; // with their switch-table flags
+1256: 	std::vector<std::pair<int, size_t>> device(devices[1], { 0, 0 }); // device index -> (type, index in m_coils/m_leds)
+1257: 	// An entry's four u16 fields from +16: [board][type][flags][position] up to node firmware 0.52,
+1258: 	// [board][position][type][flags] in Heavy Metal's SDK (0.67). The order whose type field holds
+1259: 	// a device type (2 coil, 4 LED, 7 switch) in more entries is the title's
+1260: 	auto is_device = [](uint32_t t) { return t == 2 || t == 4 || t == 7; };
+1261: 	int typed_first = 0, typed_second = 0;
+1262: 	for (uint32_t i = 0; i < devices[1]; i++) {
+1263: 		uint32_t e[6] = {};
+1264: 		if (!guest_read(devices[0] + i * devices[2], e, 24)) continue;
+1265: 		typed_first += is_device(e[4] >> 16);
+1266: 		typed_second += is_device(e[5] & 0xffff);
+1267: 	}
+1268: 	const bool position_first = typed_second > typed_first;
+1269: 	for (uint32_t i = 0; i < devices[1]; i++) {
+1270: 		uint32_t e[6] = {};
+1271: 		if (!guest_read(devices[0] + i * devices[2], e, 24)) continue;
+1272: 		if (position_first) { // to [board][type][flags][position]
+1273: 			const uint32_t board_position = e[4], type_flags = e[5];
+1274: 			e[4] = (board_position & 0xffff) | (type_flags << 16);
+1275: 			e[5] = (type_flags >> 16) | (board_position & 0xffff0000);
+1276: 		}
+1277: 		const uint32_t type = e[4] >> 16, board = e[4] & 0xffff;
+1278: 		if (type != 2 && type != 4 && type != 7) continue;
+1279: 		uint32_t name_ptr = 0;
+1280: 		std::string name;
+1281: 		if (e[3] && guest_read(e[3], &name_ptr, 4) && name_ptr) m_mem.read_string(name_ptr, name, 64);
+1282: 		while (!name.empty() && name.back() == ' ') name.pop_back();
+1283: 		const uint8_t node = board < node_of.size() ? node_of[board] : 0, position = uint8_t(e[5] >> 16);
+1284: 		if (type != 7) {
+1285: 			auto &list = type == 2 ? m_coils : m_leds;
+1286: 			device[i] = { int(type), list.size() };
+1287: 			list.push_back({ uint16_t(e[2]), node, position, name });
+1288: 			continue;
+1289: 		}
+1290: 		switch_info s;
+1291: 		s.number = uint16_t(e[2]);
+1292: 		s.node = node;
+1293: 		s.position = position;
+1294: 		s.name = name;
+1295: 		const auto read_at = compiled.find(s.number);
+1296: 		if (read_at != compiled.end() &&
+1297: 		    std::find(read_at->second.begin(), read_at->second.end(), std::make_pair(s.node, s.position)) == read_at->second.end()) {
+1298: 			auto input = std::find_if(read_at->second.begin(), read_at->second.end(),
+1299: 				[&](const std::pair<uint8_t, uint8_t> &i) { return i.first == s.node; });
+1300: 			if (input == read_at->second.end()) input = read_at->second.begin();
+1301: 			moved += ' ' + name + ' ' + std::to_string(input->first) + '-' + std::to_string(input->second) +
+1302: 				" (" + std::to_string(s.node) + '-' + std::to_string(s.position) + "),";
+1303: 			s.node = input->first;
+1304: 			s.position = input->second;
+1305: 		}
+1306: 		uint16_t flags = 0;
+1307: 		if (have_table && s.number < table[1]) guest_read(table[0] + s.number * table[2] + 0x10, &flags, 2);
+1308: 		else if (have_dedicated && s.number >= 129 && s.number - 129u < dedicated[1]) guest_read(dedicated[0] + (s.number - 129u) * dedicated[2] + 0x10, &flags, 2);
+1309: 		s.active_high = (flags & 4) != 0;
+1310: 		if (s.active_high) m_sw_active_high[s.node][(s.position >> 3) & 7] |= uint8_t(1 << (s.position & 7));
+1311: 		device[i] = { 7, found.size() };
+1312: 		found.push_back({ s, flags });
+1313: 	}
+1314:
+1315: 	// What is closed while the machine stands idle with its coin door shut: a trough opto for every
+1316: 	// installed ball, the firmware's own closed-at-rest marks on other switches, and the door's power sense (DC present)
+1317: 	auto upper_name = [](std::string n) { for (auto &c : n) c = char(std::toupper(uint8_t(c))); return n; };
+1318: 	uint8_t installed = 1;
+1319: 	if (const uint32_t a = m_cfg.symbol("hook_balls_installed_in_game")) guest_read(a, &installed, 1);
+1320: 	if (installed < 1 || installed > 12) installed = 1;
+1321: 	std::vector<const switch_info *> troughs;
+1322: 	for (const auto &f : found) if (upper_name(f.first.name).find("TROUGH") != std::string::npos) troughs.push_back(&f.first);
+1323: 	auto trough_key = [&](const switch_info *s) {
+1324: 		const std::string n = upper_name(s->name);
+1325: 		const size_t at = n.find("TROUGH ");
+1326: 		if (at != std::string::npos && std::isdigit(uint8_t(n[at + 7]))) return std::atoi(n.c_str() + at + 7);
+1327: 		return 1000; // the jam opto and unnumbered ones after the ball positions
+1328: 	};
+1329: 	std::stable_sort(troughs.begin(), troughs.end(), [&](const switch_info *a, const switch_info *b) { return trough_key(a) < trough_key(b); });
+1330: 	for (size_t i = 0; i < troughs.size() && i < installed; i++) set_switch(troughs[i]->node, troughs[i]->position, true, 0);
+1331: 	for (const auto &f : found) {
+1332: 		const std::string n = upper_name(f.first.name);
+1333: 		if (((f.second & 0x80) && n.find("TROUGH") == std::string::npos) ||
+1334: 		    n.find("INTERLOCK") != std::string::npos || n.find("DC SENSE") != std::string::npos)
+1335: 			set_switch(f.first.node, f.first.position, true, 0);
+1336: 	}
+1337: 	if (!moved.empty())
+1338: 		SPIKE1_LOG("devices: where the game's switch maps read what its device table puts elsewhere:" + moved.substr(0, moved.size() - 1));
+1339: 	for (auto &f : found) m_switches.push_back(f.first);
+1340: 	apply_manual_numbers(device);
+1341: 	SPIKE1_DEBUG_ONLY(std::string closed; for (const auto &s : m_switches) if (switch_closed(s.node, s.position)) closed += ' ' + s.name + ',';)
+1342: 	SPIKE1_LOG("devices: " + std::to_string(m_coils.size()) + " coils, " + std::to_string(m_leds.size()) + " LED channels, " +
+1343: 		std::to_string(m_switches.size()) + " switches from the game's tables, " + std::to_string(installed) +
+1344: 		" balls installed; closed at rest:" + (closed.empty() ? " none" : closed.substr(0, closed.size() - 1)));
+1345: }
+1346:
+1347: // Where the game's switch code reads each switch. The program's board records (g_node_data) give
+1348: // each board's node address and then its switch map (g_smap_<board>): an entry for each of 64
+1349: // inputs, the first word the switch's word in the game's switch bits (0xf0 | word for the
+1350: // dedicated switches, numbered from 129) and the u16 after it its bit, then the map's own state,
+1351: // 0x54 bytes. The entries are 8 bytes from Supreme on and 56 in WWE's and Spider-Man's SDKs. A
+1352: // program without the records has none here: Heavy Metal's SDK builds its maps from the device
+1353: // table as it starts, and a map the program fills in itself (Game of Thrones' topper) is empty
+1354: std::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> spike1_devices::compiled_switch_inputs()
+1355: {
+1356: 	constexpr uint32_t MAP_INPUTS = 64, MAP_STATE_BYTES = 0x54;
+1357: 	std::map<uint16_t, std::vector<std::pair<uint8_t, uint8_t>>> inputs;
+1358: 	const uint32_t records = m_cfg.symbol("g_node_data"), records_size = m_cfg.symbol_size ? m_cfg.symbol_size("g_node_data") : 0;
+1359: 	if (!records || records_size < 8 || !m_cfg.symbols_with_prefix) return inputs;
+1360: 	std::vector<uint32_t> words(records_size / 4);
+1361: 	if (!guest_read(records, words.data(), uint32_t(words.size() * 4))) return inputs;
+1362: 	for (const auto &name : m_cfg.symbols_with_prefix("g_smap_")) {
+1363: 		const uint32_t map = m_cfg.symbol(name), size = m_cfg.symbol_size(name);
+1364: 		if (!map || size <= MAP_STATE_BYTES || (size - MAP_STATE_BYTES) % MAP_INPUTS) continue;
+1365: 		const uint32_t entry = (size - MAP_STATE_BYTES) / MAP_INPUTS;
+1366: 		const auto ref = std::find(words.begin() + 1, words.end(), map); // the record's map, after its node address
+1367: 		if (entry < 8 || ref == words.end() || (*(ref - 1) & 0xff) > 127) continue;
+1368: 		const uint8_t node = uint8_t(*(ref - 1));
+1369: 		for (uint32_t position = 0; position < MAP_INPUTS; position++) {
+1370: 			uint32_t e[2];
+1371: 			if (!guest_read(map + position * entry, e, 8)) break;
+1372: 			const uint32_t word = e[0], mask = e[1] & 0xffff;
+1373: 			if (!mask || (mask & (mask - 1)) || word > 0xff) continue;
+1374: 			unsigned bit = 0;
+1375: 			while (!((mask >> bit) & 1)) bit++;
+1376: 			const uint16_t number = uint16_t(word & 0xf0 ? 129 + (word & 0xf) * 16 + bit : 1 + word * 16 + bit);
+1377: 			inputs[number].push_back({ node, uint8_t(position) });
+1378: 		}
+1379: 	}
+1380: 	return inputs;
+1381: }
+1382:
+1383: const spike1_devices::switch_info *spike1_devices::find_switch(const std::string &name) const
+1384: {
+1385: 	auto upper = [](std::string n) { for (auto &c : n) c = char(std::toupper(uint8_t(c))); return n; };
+1386: 	const std::string want = upper(name);
+1387: 	for (const auto &s : m_switches) if (upper(s.name) == want) return &s;
+1388: 	return nullptr;
+1389: }
+1390:
+1391: void spike1_devices::set_switch(uint8_t node, uint8_t position, bool closed, uint64_t now_ns)
+1392: {
+1393: 	uint8_t &b = m_sw_closed[node & 127][(position >> 3) & 7];
+1394: 	const uint8_t bit = uint8_t(1 << (position & 7)), was = b;
+1395: 	b = closed ? uint8_t(b | bit) : uint8_t(b & ~bit);
+1396: 	m_sw_changed[node & 127][(position >> 3) & 7] |= uint8_t((was ^ b) & bit);
+1397: 	run_reflexes(node & 127, now_ns);
+1398: }
+
+src/spike1/spike1_devices.cpp:2329-2426
+2329: //
+2330: // The device table numbers coils its own way; the service menu and the manual use the Driver
+2331: // Reference and Light Reference numbers, which the title's coil and LED tables hold:
+2332: //   node_board_device_cl_table_data   entries of 56 bytes (sys_nbd_cl_get_table_ptr()): +32 the
+2333: //                                     device's index in the low half (Heavy Metal's SDK keeps flags
+2334: //                                     in the high half), +48 bits 16-23 its Driver Reference number;
+2335: //                                     in WWE's SDK 28 bytes: +20 the index in the low half, +24
+2336: //                                     bits 16-23 the number
+2337: //   node_board_device_led_table       {entries, count, size}, 24-byte entries: +12 the Light
+2338: //                                     Reference number in the low half, the device's index in the
+2339: //                                     high half; +16 the class bits
+2340: //   node_board_device_sw_table        {entries, count, size}: 20 bytes before an entry's end the
+2341: //                                     Switch Reference number in the low half, the device's index in
+2342: //                                     the high half (+32 of 52 bytes in Ghostbusters, +44 of 64 in
+2343: //                                     Whoa Nellie, whose entries carry three more pointers); in
+2344: //                                     WWE's (64 bytes) +40 the index, +60 the number in the low half;
+2345: //                                     in Spider-Man's (68 bytes) the number and index as the first
+2346: //                                     form but 24 bytes before the end, at +44
+2347: // The manual numbers the CPU board's own switches (DIP switches, service buttons, the door's power
+2348: // sense) apart, as C1-C16: they become 101-116 here, so that every switch has one number
+2349: // Entry 0 of each is a blank. An entry that names no device of the right type is skipped
+2350: void spike1_devices::apply_manual_numbers(const std::vector<std::pair<int, size_t>> &device)
+2351: {
+2352: 	unsigned coils = 0, leds = 0;
+2353: 	const uint32_t cl = m_cfg.symbol("node_board_device_cl_table_data");
+2354: 	const uint32_t cl_count_at = m_cfg.symbol("NODE_BOARD_DEVICE_CL_TABLE_DATA_ENTRY_COUNT");
+2355: 	uint32_t cl_count = 0;
+2356: 	if (cl && cl_count_at && guest_read(cl_count_at, &cl_count, 4) && cl_count) {
+2357: 		const uint32_t size = m_cfg.symbol_size ? m_cfg.symbol_size("node_board_device_cl_table_data") : 0;
+2358: 		const uint32_t stride = size / cl_count;
+2359: 		// where an entry keeps the device's index and the Driver Reference number (bits 16-23)
+2360: 		const uint32_t index_at = stride >= 52 ? 32 : stride == 28 ? 20 : 0, number_at = stride >= 52 ? 48 : 24;
+2361: 		for (uint32_t i = 1; index_at && i < cl_count; i++) {
+2362: 			uint32_t index = 0, number = 0;
+2363: 			if (!guest_read(cl + i * stride + index_at, &index, 4) || !guest_read(cl + i * stride + number_at, &number, 4)) continue;
+2364: 			index &= 0xffff;
+2365: 			if (index >= device.size() || device[index].first != 2) continue;
+2366: 			m_coils[device[index].second].number = uint16_t((number >> 16) & 0xff);
+2367: 			coils++;
+2368: 		}
+2369: 	}
+2370: 	uint32_t lt[3] = {};
+2371: 	const uint32_t lt_at = m_cfg.symbol("node_board_device_led_table");
+2372: 	if (lt_at && guest_read(lt_at, lt, 12) && lt[0] && lt[2] >= 20) {
+2373: 		for (uint32_t i = 1; i < lt[1]; i++) {
+2374: 			uint32_t w[2] = {};
+2375: 			if (!guest_read(lt[0] + i * lt[2] + 12, w, 8)) continue;
+2376: 			const uint32_t index = w[0] >> 16;
+2377: 			if (index >= device.size() || device[index].first != 4) continue;
+2378: 			output_info &led = m_leds[device[index].second];
+2379: 			led.number = uint16_t(w[0] & 0xffff);
+2380: 			led.kind = uint16_t(w[1] & 0xffff);
+2381: 			leds++;
+2382: 		}
+2383: 	}
+2384: 	unsigned switches = 0;
+2385: 	uint32_t st[3] = {};
+2386: 	const uint32_t st_at = m_cfg.symbol("node_board_device_sw_table");
+2387: 	if (st_at && guest_read(st_at, st, 12) && st[0] && st[2] >= 36 && st[2] <= 256) {
+2388: 		// Three layouts: index << 16 | number 20 bytes before an entry's end; or (WWE's SDK) the
+2389: 		// index 24 bytes before the end and the number in the last word's low half; or (Spider-Man's)
+2390: 		// index << 16 | number 24 bytes before the end. The first that names switch devices is the
+2391: 		// title's
+2392: 		for (int layout = 0; layout < 3 && !switches; layout++)
+2393: 			for (uint32_t i = 1; i < st[1]; i++) {
+2394: 				const uint32_t entry = st[0] + i * st[2];
+2395: 				uint32_t index = 0, number = 0;
+2396: 				if (layout != 1) {
+2397: 					uint32_t w = 0;
+2398: 					if (!guest_read(entry + st[2] - (layout == 0 ? 20 : 24), &w, 4)) continue;
+2399: 					index = w >> 16;
+2400: 					number = w & 0xffff;
+2401: 				} else {
+2402: 					if (!guest_read(entry + st[2] - 24, &index, 4) || !guest_read(entry + st[2] - 4, &number, 4)) continue;
+2403: 					number &= 0xffff;
+2404: 				}
+2405: 				if (index >= device.size() || device[index].first != 7 || device[index].second >= m_switches.size()) continue;
+2406: 				switch_info &sw = m_switches[device[index].second];
+2407: 				sw.number = uint16_t(number + (sw.node == 0 ? CPU_SWITCH_BASE : 0));
+2408: 				switches++;
+2409: 			}
+2410: 	}
+2411: 	// An optional topper's board (the game names its boards lang_text_nb_<node>) numbers its
+2412: 	// switches from 1 again, apart from the manual: they become 121 and up, clear of the playfield's
+2413: 	std::set<uint8_t> toppers;
+2414: 	for (const switch_info &sw : m_switches) {
+2415: 		const uint32_t at = m_cfg.symbol("lang_text_nb_" + std::to_string(sw.node));
+2416: 		uint32_t text = 0;
+2417: 		std::string name;
+2418: 		if (at && guest_read(at, &text, 4) && text) m_mem.read_string(text, name, 16);
+2419: 		if (name.compare(0, 6, "TOPPER") == 0) toppers.insert(sw.node);
+2420: 	}
+2421: 	for (switch_info &sw : m_switches)
+2422: 		if (toppers.count(sw.node)) sw.number = uint16_t(sw.number + TOPPER_SWITCH_BASE);
+2423: 	SPIKE1_LOG("devices: the manual's numbers for " + std::to_string(switches) + " of " + std::to_string(m_switches.size()) + " switches, " +
+2424: 		std::to_string(coils) + " of " + std::to_string(m_coils.size()) + " coils and " +
+2425: 		std::to_string(leds) + " of " + std::to_string(m_leds.size()) + " LED channels");
+2426: }
