@@ -21,6 +21,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 32 | The Addams Family | `bally.the-addams-family.1992` | 100% |
 | 32 | The Addams Family | `bally.the-addams-family-gold.1994` | 19% |
 | 33 | Star Trek: The Next Generation | `williams.star-trek-the-next-generation.1993` | 100% |
+| 35 | Ghostbusters | `stern.ghostbusters-limited-edition.2016` | 81% |
 | 36 | AC/DC | `stern.ac-dc-premium-limited-edition-luci.2012` | 100% |
 | 36 | AC/DC | `stern.ac-dc-pro.2012` | 100% |
 | 38 | Tales of the Arabian Nights | `williams.tales-of-the-arabian-nights.1996` | 94% |
@@ -51,10 +52,13 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 89 | Eight Ball Deluxe | `bally.eight-ball-deluxe.1981` | 75% |
 | 90 | Fish Tales | `williams.fish-tales.1992` | 100% |
 | 91 | Revenge From Mars | `bally.revenge-from-mars.1999` | 94% |
+| 92 | Game Of Thrones | `stern.game-of-thrones-limited-edition.2015` | 44% |
+| 92 | Game Of Thrones | `stern.game-of-thrones-pro.2015` | 50% |
 | 93 | Fathom | `bally.fathom.1981` | 81% |
 | 94 | Judge Dredd | `bally.judge-dredd.1993` | 88% |
 | 97 | Flash Gordon | `bally.flash-gordon.1980` | 88% |
 | 98 | No Good Gofers | `williams.no-good-gofers.1997` | 94% |
+| 99 | KISS | `stern.kiss-limited-edition.2015` | 50% |
 | 100 | High Speed | `williams.high-speed.1986` | 88% |
 | 101 | Ripley's Believe It or Not! | `stern.ripley-s-believe-it-or-not.2004` | 88% |
 | 102 | Indianapolis 500 | `bally.indianapolis-500.1995` | 94% |
