@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -10,9 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "the-simpsons-pinball-party-2003.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "stern" / "the-simpsons-pinball-party-2003.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "stern" / "the-simpsons-pinball-party-2003.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-simpsons-pinball-party-2003.json"
+DEFINITION_PATH = AUTHOR_READY_PATH
 KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "the-simpsons-pinball-party-2003.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "whitestar.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "stern" / "the-simpsons-pinball-party-2003.json"
@@ -72,17 +75,11 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		# Held at partial by lamp 80's unplaced second LED and by public lamps 81-96, whose
-		# availability is unknown. Polarity and both former conflicts were settled on 2026-09-25.
-		self.assertEqual(["output_semantics", "spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["semantic_naming"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in ("semantic_naming", "spatial_placement"):
-				continue
 			self.assertEqual("validated", state, dimension)
 		self.assertEqual("stern.the-simpsons-pinball-party.2003", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -93,7 +90,7 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.whitestar", self.definition["controller"]["platform"])
 		self.assertEqual("0x4000000000", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
 	def test_former_conflicts_are_settled_and_nothing_still_cites_them(self) -> None:
 		"""Both conflicts were resolved by evidence, so no record may keep pointing at them.
@@ -111,8 +108,8 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		for claim in ("structurally unreachable", "always reads inactive", "never read by this driver"):
 			self.assertNotIn(claim, text, claim)
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -177,7 +174,9 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual({"status": "not_applicable", "reason": "cabinet_or_service", "provenance": ds5["spatial"]["provenance"]}, ds5["spatial"])
 		for address in (84, 83, 82, 81, 88, -2, -1, 0):
 			self.assertEqual("used", self.switches[address]["availability"])
-			self.assertFalse(self.switches[address]["normally_closed"], address)
+			self.assertEqual(address in (81, 83), self.switches[address]["normally_closed"], address)
+		for address in (81, 83):
+			self.assertEqual("internal_nonvisual", self.switches[address]["spatial"]["reason"])
 		for address in FLIPPER_COLUMN_HOLES:
 			self.assertEqual("unused", self.switches[address]["availability"], address)
 			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
@@ -201,6 +200,13 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 			self.assertEqual("16", next(a["value"] for a in device["aliases"] if a["namespace"] == "manual.address"))
 		for device in (left_power, left_hold):
 			self.assertEqual("15", next(a["value"] for a in device["aliases"] if a["namespace"] == "manual.address"))
+		for device in (right_power, left_power):
+			self.assertEqual("control_signal", device["kind"])
+			self.assertEqual("internal_nonvisual", device["spatial"]["reason"])
+			self.assertNotIn("wiring", device)
+		for device in (right_hold, left_hold):
+			self.assertEqual("coil", device["kind"])
+			self.assertIn("one 22-1080 winding", device["physical"]["notes"])
 		self.assertIn(15, self.solenoids)
 		self.assertIn(16, self.solenoids)
 		# Public 15 is PinMAME's fast-flip/game-on state (se.c fastflipaddr, simpprty only).
@@ -219,7 +225,7 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual("optional", self.solenoids[24]["availability"])
 		for address in (33, 34, 35):
 			self.assertEqual("optional", self.solenoids[address]["availability"], address)
-			self.assertEqual({"status": "not_applicable", "reason": "unused", "provenance": self.solenoids[address]["spatial"]["provenance"]}, self.solenoids[address]["spatial"])
+			self.assertEqual({"status": "not_applicable", "reason": "cabinet_or_service", "provenance": self.solenoids[address]["spatial"]["provenance"]}, self.solenoids[address]["spatial"])
 		for address in (36, 37, 38, 39, 40, 41, 42, 43, 44, 50):
 			self.assertEqual("unused", self.solenoids[address]["availability"], address)
 		self.assertEqual("unused", self.solenoids[49]["availability"])
@@ -234,21 +240,23 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		self.assertEqual("optional", self.lamps[32]["availability"])
 		self.assertEqual("not_applicable", self.lamps[32]["spatial"]["status"])
 		self.assertEqual(2, self.lamps[16]["physical"]["quantity"])
+		self.assertEqual([(0.123, 0.506), (0.236, 0.507)],
+		                 [(p["x"], p["y"]) for p in self.lamps[16]["spatial"]["placements"]])
 		for address in AUX_PORT_LAMP_ADDRESSES:
 			lamp = self.lamps[address]
 			self.assertEqual("virtual", lamp["kind"], address)
-			self.assertEqual("unknown", lamp["availability"], address)
+			self.assertEqual("unused", lamp["availability"], address)
 			self.assertEqual("virtual", lamp["spatial"]["reason"], address)
 			port = "$3406" if address <= 88 else "$3407"
-			self.assertIn(port, lamp["label"], address)
-			self.assertIn("Resolution path:", lamp["physical"]["notes"], address)
+			self.assertIn(port, lamp["physical"]["notes"], address)
+			self.assertTrue({"manual.stern.the-simpsons-pinball-party.2003",
+			                 "rom-audit.simpsons-party.lamp-scan", "runtime.simpsons-party.lamp-service"}
+			                <= set(lamp["provenance"]["source_refs"]))
 
-	def test_mode_sign_leds_are_placed_per_led_only_where_the_evidence_separates_them(self) -> None:
+	def test_mode_sign_leds_are_placed_per_led(self) -> None:
 		"""Lamps 73-80 are the back-panel LED mode sign (board 520-5225-00), not the TV.
 
-		The sign is vertical, so L1-L7 share one playfield point and each is placed at its own
-		retained primitive. Lamp 80 is two LEDs (L8, L9) with one retained object, so it gets no
-		spatial key rather than a one-of-two placement.
+		The later VPW table has a distinct world-space emitter mesh for each of nine LEDs.
 		"""
 		column = []
 		for address in range(73, 80):
@@ -263,19 +271,34 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 		ys = [y for _, y in column]
 		self.assertLess(max(xs) - min(xs), 0.0002)
 		self.assertLess(max(ys) - min(ys), 0.0002)
-		self.assertLess(max(ys), 0.05, "the sign stands at the rear of the playfield")
+		self.assertLess(max(ys), 0.07, "the sign stands at the rear of the playfield")
 		self.assertEqual(len(set(column)), len(column), "each lamp keeps its own primitive's coordinate")
 		lamp80 = self.lamps[80]
 		self.assertEqual(2, lamp80["physical"]["quantity"])
-		self.assertNotIn("spatial", lamp80)
+		self.assertEqual([(0.576166, 0.060144), (0.645962, 0.060066)],
+		                 [(p["x"], p["y"]) for p in lamp80["spatial"]["placements"]])
 		self.assertIn("L8 at the bottom-left and L9 at the bottom-right", lamp80["physical"]["notes"])
 
 	def test_gi_is_a_single_aggregate_channel(self) -> None:
 		self.assertEqual({0}, set(self.gi))
 		gi = self.gi[0]
 		self.assertEqual("validated", gi["spatial"]["status"])
-		self.assertEqual(42, len(gi["spatial"]["placements"]))
-		self.assertEqual(42, gi["physical"]["quantity"])
+		self.assertEqual("used", gi["availability"])
+		for fuse in ("F24", "F25", "F26", "F27"):
+			self.assertIn(fuse, gi["physical"]["notes"])
+
+	def test_each_flasher_is_one_physical_emitter(self) -> None:
+		positions = {21: (0.065979, 0.501498), 22: (0.917988, 0.03), 23: (0.933551, 0.204829),
+		             25: (0.956922, 0.569589), 26: (0.931028, 0.463965), 27: (0.73, 0.13),
+		             28: (0.109357, 0.314714), 29: (0.220927, 0.346212),
+		             31: (0.146205, 0.107127), 32: (0.335745, 0.027936)}
+		for address, expected in positions.items():
+			flasher = self.solenoids[address]
+			self.assertEqual("flasher", flasher["kind"])
+			self.assertEqual(1, flasher["physical"]["quantity"], address)
+			self.assertEqual(1, len(flasher["spatial"]["placements"]), address)
+			self.assertEqual("emitter", flasher["spatial"]["placements"][0]["role"])
+			self.assertEqual(expected, tuple(flasher["spatial"]["placements"][0][k] for k in ("x", "y")))
 
 	def test_every_spatial_placement_is_validated_unique_and_in_range(self) -> None:
 		seen_ids: set[str] = set()
@@ -295,8 +318,8 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		# Left/right flippers: left flipper must sit left of right flipper.
-		left_flipper_x = self.solenoids[47]["spatial"]["placements"][0]["x"]
-		right_flipper_x = self.solenoids[45]["spatial"]["placements"][0]["x"]
+		left_flipper_x = self.solenoids[48]["spatial"]["placements"][0]["x"]
+		right_flipper_x = self.solenoids[46]["spatial"]["placements"][0]["x"]
 		self.assertLess(left_flipper_x, right_flipper_x)
 		# Outlanes/return lanes: left-named switches sit left of right-named switches.
 		self.assertLess(self.switches[57]["spatial"]["placements"][0]["x"], self.switches[60]["spatial"]["placements"][0]["x"])
@@ -324,15 +347,14 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 				continue  # Auto Launch is a standalone coil (plungerIM.AutoFire); no additional topology to document.
 			self.assertIn(solenoid["id"], actuator_ids, f"solenoid {address} ({solenoid['label']}) has no mechanism")
 
-	def test_spatial_report_names_the_single_remaining_gap(self) -> None:
+	def test_spatial_report_has_no_omitted_devices(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
 		self.assertEqual([], report["unresolved"])
-		self.assertEqual(1, len(report["blockers"]))
-		self.assertIn("Lamp 80", report["blockers"][0])
-		self.assertEqual([{"address": 80, "group": "pinmame.output.lamp"}], report["omitted_outputs"])
+		self.assertEqual([], report["blockers"])
+		self.assertEqual([], report["omitted_outputs"])
 		self.assertEqual([], report["omitted_inputs"])
-		self.assertEqual(2, len(report["additional_tables_checked"]))
+		self.assertEqual(3, len(report["additional_tables_checked"]))
 
 	def test_relationships_use_proven_causality_only(self) -> None:
 		self.assertEqual(1, len(self.definition["relationships"]))
@@ -342,9 +364,37 @@ class SimpsonsPartyDefinitionTests(unittest.TestCase):
 	def test_display_inventory_is_the_backbox_dmd_and_mini_dmd(self) -> None:
 		displays = {display["id"]: display for display in self.definition["displays"]}
 		self.assertEqual({"display.dmd", "display.mini-dmd"}, set(displays))
-		for display in displays.values():
-			self.assertEqual("not_applicable", display["spatial"]["status"])
-			self.assertEqual("cabinet_or_service", display["spatial"]["reason"])
+		main, mini = displays["display.dmd"], displays["display.mini-dmd"]
+		self.assertEqual((128, 32, 0), (main["width"], main["height"], main["controller_index"]))
+		self.assertEqual("cabinet_or_service", main["spatial"]["reason"])
+		self.assertEqual((14, 10, 3), (mini["width"], mini["height"], mini["controller_index"]))
+		self.assertEqual("playfield", mini["physical_location"])
+		self.assertEqual([(0.432609, 0.081458)], [(p["x"], p["y"]) for p in mini["spatial"]["placements"]])
+
+	@unittest.skipUnless(os.environ.get("PINMAME_SOURCE_ROOT"), "retained PinMAME source is not configured")
+	def test_mini_dmd_dimensions_follow_the_pinned_transport_layout(self) -> None:
+		import curate_simpsons_party as curator
+		root = Path(os.environ["PINMAME_SOURCE_ROOT"])
+		source = next(s for s in self.definition["sources"] if s["id"] == curator.LIBPINMAME_SOURCE)
+		pins = {
+			"src/libpinmame/libpinmame.cpp": source["sha256"],
+			"src/wpc/core.h": "b6c03b20a09fbadff1ce16f9f1cfc9e5bace08857cb998b92d8f304695ec97c0",
+			"src/wpc/segames.c": "205dca0bd34d32c711aa99ac9c40dc02e91a0caaf3d3ccb1108f98aee03d69d4",
+		}
+		for path, digest in pins.items():
+			self.assertEqual(digest, hashlib.sha256((root / path).read_bytes()).hexdigest(), path)
+		layout_source = (root / "src/wpc/segames.c").read_text(encoding="utf-8")
+		layout = re.search(r"static core_tLCDLayout dispSPP\[\] = \{(.*?)\n\};", layout_source, re.S).group(1)
+		row = re.search(r"\{34,10,(\d+),(\d+),\s*CORE_VIDEO", layout)
+		self.assertIsNotNone(row)
+		height, width = map(int, row.groups())
+		mini = next(d for d in self.definition["displays"] if d["id"] == "display.mini-dmd")
+		self.assertEqual((width, height), (mini["width"], mini["height"]))
+		self.assertEqual(2, len(re.findall(r"CORE_DMD\s*\|\s*CORE_NODISP", layout)))
+		api = (root / "src/libpinmame/libpinmame.cpp").read_text(encoding="utf-8")
+		video = re.search(r"if \(\(layout->type & CORE_SEGMASK\) == CORE_VIDEO\) \{(.*?)\n\s*\}\s*else if", api, re.S).group(1)
+		self.assertRegex(video, r"layout\.width\s*=\s*layout->length;")
+		self.assertRegex(video, r"layout\.height\s*=\s*layout->start;")
 
 	def test_sources_are_hashed_licensed_and_free_of_local_paths(self) -> None:
 		for source in self.definition["sources"]:
@@ -479,14 +529,13 @@ class SimpsonsPartyCuratorTests(unittest.TestCase):
 
 	def test_curator_check_mode_refuses_drift(self) -> None:
 		import curate_simpsons_party as curator
+		from unittest import mock
 
-		original = DEFINITION_PATH.read_bytes()
-		try:
-			DEFINITION_PATH.write_bytes(original.replace(b'"partial"', b'"author_ready"', 1))
+		bad = curator.build()
+		bad["machine"]["name"] += " drift"
+		with mock.patch.object(curator, "build", return_value=bad):
 			with self.assertRaises(RuntimeError):
 				curator.check(ROOT)
-		finally:
-			DEFINITION_PATH.write_bytes(original)
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:
 		import curate_simpsons_party as curator

@@ -1,0 +1,115 @@
+{
+  "coordinate_convention": {
+    "space": "playfield",
+    "source_bounds": {
+      "left": 0,
+      "top": 0,
+      "right": 952,
+      "bottom": 2115
+    },
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2115; 0=rear/backglass, 1=apron/player"
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1348,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "9f21a0b4af3387d3b7b3dbd7480909d141c2cfeb00c6c9b59f417723918338bc",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.simpsons-party-0-8-2",
+    "total_bytes": 167511025,
+    "vpxtool_version": "vpxtool"
+  },
+  "source_hashes": {
+    "embedded_script_sha256": "5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee",
+    "manual_sha256": "412023c67f699d68c10c6a70120712d34d71417b7dd16f1662e252a66561c898",
+    "table_sha256": "c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034"
+  },
+  "visual_review_cache": {
+    "root": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/completion-20261029/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/manual-transcription.md",
+      "sha256": "18a1d499a3525bd72340f0e5a98af98c3fb8b867f0f3b1b655242f5cc7ef37e8"
+    }
+  },
+  "additional_tables_checked": [
+    {
+      "original_filename": "Simpsons Pinball Party, The (Stern 2003).vpx",
+      "found_in": "the contributor's Tables and Tables Archive folders (byte-identical copies)",
+      "table_sha256": "c15f41e42921dfaebbd42e382573e2bcc09d5af45860218565a2e3b3de041561",
+      "script_sha256": "145c65db98712a916f678078b519fc6c13c93b56acf46e8f2c70a3f8ac7f9c10",
+      "manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/Simpsons Pinball Party, The (Stern 2003).manifest.json",
+      "manifest_sha256": "da51e690d8b51c45864d5214ab3e7b9da5cca6d704effb85755cc5942a698005",
+      "file_count": 1320,
+      "total_bytes": 105934503,
+      "finding": "same Coindropper/32assassin script base; l73-l80 at the same coordinates as the retained table"
+    },
+    {
+      "original_filename": "The Simpsons Pinball Party (Stern 2003).vpx",
+      "found_in": "the contributor's Tables Archive folder",
+      "table_sha256": "6db86f7609ec68e220d0115289a48218a5076bfa6ff0301bb0c00b279d124ee1",
+      "script_sha256": "a77a5dcabe6f4748c5ab8abb6f2f07f09065c9bb8e1a74c808a5c6cb29f7422e",
+      "manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/The Simpsons Pinball Party (Stern 2003).manifest.json",
+      "manifest_sha256": "eab2a2606c183dc42b49a93ae1a3c38f366e9eb6238e98f2621aa432647e9b20",
+      "file_count": 1406,
+      "total_bytes": 173391321,
+      "finding": "same script base with added lighting code; l73-l80 at the same coordinates as the retained table"
+    }
+  ],
+  "projections": [
+    {
+      "group": "pinmame.input.switch",
+      "address": 10,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center): bsTrough.InitSw 0,14,13,12,11,10,0,0 reads all five trough positions through the shared cvpmBallStack helper's internal ball-queue logic, which exposes no separate playfield object per position."
+    },
+    {
+      "group": "pinmame.input.switch",
+      "address": 11,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center); see switch 10."
+    },
+    {
+      "group": "pinmame.input.switch",
+      "address": 12,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center); see switch 10."
+    },
+    {
+      "group": "pinmame.input.switch",
+      "address": 13,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center); see switch 10."
+    },
+    {
+      "group": "pinmame.input.switch",
+      "address": 14,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center); see switch 10. Switch 14 is also the trough VUK opto nearest the kicker (Sw. 14 & 15 Part Note)."
+    },
+    {
+      "group": "pinmame.input.switch",
+      "address": 15,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center): the 5-Ball Stacking Opto shares its Transmitter/Receiver OPTO PC Board note with switch 14 and has no dedicated playfield object in the retained extraction either."
+    },
+    {
+      "group": "pinmame.output.solenoid",
+      "address": 1,
+      "reason": "Projected onto the five-ball trough's own release kicker (BallRelease, table object center): SolRelease pulses bsTrough.ExitSol_On, the shared cvpmBallStack ejector for the whole trough, not a fixed visible coil body."
+    },
+    {
+      "group": "pinmame.output.solenoid",
+      "address": 4,
+      "reason": "Projected onto the drop-target bank's own middle target (SW18/Drop Target #2, table object center): dtDrop.SolDropUp resets all three bank positions together and the retained table exposes no separate reset-bar mesh."
+    },
+    {
+      "group": "pinmame.output.solenoid",
+      "address": 30,
+      "reason": "Projected onto the drop-target bank's own middle target (SW18/Drop Target #2, table object center): SolDropBankTrips (dtDrop.Hit 1/2/3) trips all three bank positions together; see solenoid 4."
+    }
+  ],
+  "excluded_object_classes": [
+    "Homer, Homer2, Homer3, homer4 internal VPX triggers (Homer Head figure animation helpers; no Controller.Switch call)",
+    "Trigger1-Trigger6 (PlaySound-only audio-cue helpers; no Controller.Switch call)",
+    "swplunger (internal ball-detection helper for the cvpmImpulseP shooter-lane class; switch 16 itself is bound to the separately-named sw16 object)",
+    "CapKicker/capBall (a static decorative captive-ball prop with no switch or solenoid binding)",
+    "l80 Primitive (models only one of lamp 80's two LEDs; see blockers)",
+    "LEDY, LEDG and LEDR collections (empty; hidden by the script at start-up and bound to no lamp)",
+    "r*/g*/y* TV LED lights (the 14x10 mini-DMD, driven from Controller.ChangedLEDs, a display rather than lamps)"
+  ]
+}

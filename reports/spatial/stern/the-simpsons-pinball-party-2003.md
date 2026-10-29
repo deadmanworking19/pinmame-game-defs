@@ -1,20 +1,56 @@
-# The Simpsons Pinball Party (Stern, 2003) spatial review
+# stern.the-simpsons-pinball-party.2003 spatial review
 
-Status: partial. The physical machine record itself is `partial` at `machines/partial/stern/the-simpsons-pinball-party-2003.json` for the reasons below; every located device carries a validated placement or a documented projection, and one honest gap remains: the second red LED of lamp 80.
+Status: author_ready.
 
-The matching source is the retained known-working, non-VPW `The Simpsons Pinball Party v0.8.2.vpx` at SHA-256 `c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034`. The retained `vpxtool` extraction produced the embedded script at SHA-256 `5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2115`, and every canonical coordinate is x/952 and y/2115 rounded to at most six fractional places.
+Placements: 211 (inputs, outputs and displays).
 
-## Evidence decisions
+## Evidence and decisions
 
-- The embedded VPX script is the runtime address and causality authority; the Stern operations manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology and public address arithmetic; the retained table supplies geometry.
-- The retained manual's text layer double-doubles most characters and additionally shifts character codes by a constant on the diagnostics chapter's own embedded font subset; every printed table used here was read from a rendered page and transcribed into `external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/manual-transcription.md`, never from `pdftotext` output.
-- Trough switches 10-14 and the stacking opto 15 have no dedicated playfield trigger object because the retained script reads the five ball positions through the shared cvpmBallStack helper class and pulses 15 from SolRelease rather than from Hit/Unhit events; all six are documented projections onto the trough's own release-kicker object (BallRelease). The manual's switch-location drawing puts 10 at the trough's far left end and stamps 14 and 15 together at its right-hand exit.
-- Solenoids 4 (Drops Reset Up) and 30 (Drop Bank Trips) act on all three drop-target bank positions at once and have no separate reset-bar mesh in the retained table; both are documented projections onto the bank's own middle target (Drop Target #2).
-- Lamp 32 (Tournament Button) and matrix switch 53 (Tournament Button) are both optional, gated behind the Optional Tournament Kit per matching manual footnotes on both the switch- and lamp-locations pages; lamp 32 additionally has no `l32` object in the retained script's own lamp-fade sequence at all.
-- Lamps 73-80 are the LEDs of the mode sign (LED PCB Mode Signifier 520-5225-00) bolted to the back panel next to the TV, above the playfield (manual PDF 37, 42, 82, 114, 170). The sign is vertical and faces the player, so L1-L7 share one playfield point and differ only in height. The retained script drives them with NFadeObj onto primitives l73-l80, which sit at one x/y and step down in z in the manual's order; lamps 73-79 are each placed at their own primitive's x/y. Lamp 80 is two LEDs and the tables model one, so it has no spatial key. Two further local tables were extracted and checked; both share the retained table's script base and place l73-l80 identically, so they add no independent geometry. The earlier reading of these lamps as the empty LEDY/LEDG/LEDR collections was wrong: those collections are unused, and the script's UpdateLeds drives the TV's 14x10 mini-DMD, which PinMAME publishes as a display.
-- Public lamps 81-96 are enumerated as virtual outputs with unknown availability and a controlled `virtual` record; no lamp circuit exists for them.
-- General illumination is a single aggregate PinMAME channel (`coreGlobals.nGI = 1`); its 42 placements come directly from the retained table's own `GI` collection (37 `GI_N` Light objects plus 5 `spotlightright*` objects), which the script's UpdateGI toggles together, matching the manual's own single-relay, multi-fuse wiring diagram.
-- Solenoid 24 (Optional Coil) and solenoids 33-35 (AUX 1-3, UK-only up/down posts) take controlled `not_applicable`/`unused` records per their explicit manual footnotes; the retained table (a US/export-configuration recreation) models no object for any of them.
+- The original table script controls runtime bindings; the factory manual controls physical devices and wiring. VPW is supplemental geometry with shared ancestry, not independent physical authority.
+- Mode sign: nine individual world-mesh bounds centres project LEDs 73-80; 80 has two. The old sign had a mis-scaled width 129.57 versus VPW 87.5, with plastic aspect ratio about 0.72 versus VPW 0.55. Its old y about 0.0345 differs from the new y about 0.0601. Factory board geometry and owner-photo front windows reconcile the rebuilt sign; these are table-specific geometry defects, not a general rejection of old runtime bindings.
+- Ten flash circuits each have one bulb: nine domes including the Comic Book Guy light and the Homer socket. The aggregate BOM count 13 does not establish additional bulbs on those circuits; render doubles are not physical sockets.
+- The mini TV is a physical 14x10 bicolor display on the playfield. LibPinMAME exposes its composite frame at index3 with width14 and height10; layout indices1/2 are the green/red CORE_NODISP planes of the same TV. The main 128x32 DMD is in the backbox.
+- Lamp 16 has two manual leader endpoints calibrated against 6 controls, with normalized uncertainty 0.02; one glow does not locate two sockets.
+- Backpanel has 10 physical sockets; the eight shared socket controls fit a 1D projective mapping. backwall_gion world mesh y=-4.0773VPU is just behind the modelled playfield bounds; factoryPDF121 and owner photographs put the sockets on the upright rear panel. Clamp its plane to y=0, disclose raw out-of-range value; no change to x from lightmap geometry.
+- The missing upper GI socket uses the factory underside-axis fit at (0.25, 0.01), with normalized uncertainty 0.01. The remaining matched table points retain their own coordinates.
+- Owner-photo fixed-camera triangulation locates the Homer socket holder and the GI5 replacement LED cap. The original incandescent filament is not visible; bulb axis, replacement body and camera model add systematic uncertainty beyond the perturbation interval.
+- HEP finished-build photos5/6 show a separate horizontal unhooded lamp under PARTY, between the reflector and right flipper. Its own replacement LED cap projects to (.69,.82), independently reproduced from four calibrated views. The factory location, circuit totals and unique laydown GI wedge holder reconcile the nominal F25 #555; contacts, wire colors and original filament are hidden. The camera/UV and replacement-filament allowance is .03 x/.02 y.
+- Public lamps 81-96 are not physical matrix circuits. The service test exercises 1-80, and the bounded ROM writer scan corroborates the disposition; neither a silent trace nor an extended-opcode-only scan proves no arbitrary indexed write.
+
+## Blockers
+
+None recorded.
+
+## Retained sources
+
+- Original table SHA-256 `c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034`; embedded script SHA-256 `5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee`.
+- Manual SHA-256 `412023c67f699d68c10c6a70120712d34d71417b7dd16f1662e252a66561c898`; extraction manifest `external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/extracted-vpxtool.manifest.json` SHA-256 `9f21a0b4af3387d3b7b3dbd7480909d141c2cfeb00c6c9b59f417723918338bc`.
+- Simpsons Pinball Party, The (Stern 2003).vpx: table SHA-256 `c15f41e42921dfaebbd42e382573e2bcc09d5af45860218565a2e3b3de041561`; same Coindropper/32assassin script base; l73-l80 at the same coordinates as the retained table
+- The Simpsons Pinball Party (Stern 2003).vpx: table SHA-256 `6db86f7609ec68e220d0115289a48218a5076bfa6ff0301bb0c00b279d124ee1`; same script base with added lighting code; l73-l80 at the same coordinates as the retained table
+- Simpsons Pinball Party, The (Stern 2003) VPW 2.0.vpx: table SHA-256 `bf646ead3726060267f855ac94401d5ea89e5bddcd49b829706a0c675f0374eb`; Supplemental VPW geometry shares ancestry with the older table and is not independent physical-fitment evidence.
+- Owner photogrammetry: https://pinside.com/pinball/forum/topic/tspp-owners-club-members-only/page/148#post-8334936 (hawkeyexx, post #7385, September 7 2024, photos 5, 6, 7 and 9; photo 11 is from the same author's post #7387 (8334945) and is used only in sensitivity checks).
+- Upper GI source crop `evidence/excerpts/stern.the-simpsons-pinball-party.2003/upper-gi-sockets.webp` SHA-256 `9bbaf0c064ca5b46f62ef8b89e244df10144c3c29b57ba453f3cc6a2870cf395`.
+- Review artifact `the-simpsons-pinball-party-2003/completion-20261029/manual-p037.webp` SHA-256 `2881511e382df2feb7b16061c930452ecc4a0e506bdbf568a194c8dab31ac82f`: Manual PDF37 full page 1122x1452 render at132dpi, control pixels read on this image.
+- Review artifact `the-simpsons-pinball-party-2003/completion-20261029/lamp16-detail.webp` SHA-256 `a09c97052dc3616718e36ffa0c2361b9ce29d7900f6f7c33d3dba3ec9b91011c`: PDF37 crop .125,.385,.255,.44, native embedded150dpi,167x91; leader tips at55,55 and117,57 in crop.
+- Review artifact `the-simpsons-pinball-party-2003/completion-20261029/owner-gi-xOrdg6N.webp` SHA-256 `fab79b9ed322e4928705e637de529116c563e726b3c37f193ced081d45485f43`: 760x1013 owner photograph linked by u/dicknards in https://www.reddit.com/r/pinball/comments/1lntg0g/simpsons_pinball_party_gi_lighting_issue/ (June2025).
+- Review artifact `the-simpsons-pinball-party-2003/completion-20261029/gallery/gallery-03-full.jpg` SHA-256 `8f85af428523acc70ecc8693f651f98da68c3468ab674a8766b11af376ee99e0`: Pinside gallery image3854842,20240408_181603.jpg,2048x2731; see gallery page https://pinside.com/pinball/machine/simpsons-pinball-party/gallery; contributor not asserted.
+- Review artifact `the-simpsons-pinball-party-2003/completion-20261029/backpanel-gallery03-wide.png` SHA-256 `0d977b5e5c5fede45196d69a749dfce658a0a3cf29864c4d3a5f462e2b92aa27`: Native unscaled crop (650,70)-(1400,310) of gallery image3854842; only pixel reading aid, no new source.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/party-gi.json` SHA-256 `e7917082fc27ea0044ec9dc594a56b35535513ded6d6aa3447061ce02bf4d1a6`: High_End_Pins HEP post15408 (8323533), photos5/6: separate horizontal unhooded lamp under PARTY, distinct from the nearby reflector and V01 bayonet. Its own visible replacement LED body projects to (.69,.82) through four jointly calibrated photo views. Target lies inside the printed-art control hull in both measurement views. Correlated SIFT controls and shared-lens/no-distortion assumptions are disclosed; allowance .03 in x/.02 in y includes replacement-body versus original-filament uncertainty. The original filament, socket contacts and F25 wire colors are not observed. Matching the factory right-return description and unique laydown GI wedge holder identifies the nominal #555 by inference, not a printed per-location label.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/left-return.json` SHA-256 `19afdc332c2c430462ec8d375f344585ab6388e08872faed370635c5e4df00dd`: Fourth left sling/return socket, nominal yellow GI symbol Y03. Own flat source annulus uses four threshold fits; standard-library pixel boundaries independently reproduce the axis. Owner gallery08 shows its occupied socket, distinct from the lower return lamp, and registration target is inside the flat-art control hull. Coarse (.11,.78), .01 normalized projection allowance; no original filament is observed.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/gi-cbg-symbol.json` SHA-256 `2bf86d66425baef1d4c186c558ede8d955f19a88595cc55a146957172abd4c8a`: Factory PDF121 yellow GI bulb symbol near CBG, distinct from a remote part callout. Sixteen independent insert/bumper/wood-opening controls place it inside their hull. Coarse (.17,.32), with .05 normalized schematic projection allowance in each axis. No photographed socket or filament axis is claimed. The born-digital page has no native raster resolution; the150dpi image is a working reference and the committed crop uses type-derived676dpi.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/cbg-flasher.json` SHA-256 `192437914d0f64ea5ff2ebeae6200496562dbdb8018998af571151d93a670ec9`: Factory PDF33 clear cover29 plan reconciled against ten independently read insert/bumper/outlane controls spanning more than half playfield height, target inside their hull. Inherited own Light.f29a bulb plan agrees within .01 normalized after explicit old/new table-bound conversion. Factory29 black stamp controls below-playfield construction; the VPX halo70 does not overrule it. The PDF85 holder under CBG/left ramp does not by itself establish bulb height.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/gi-hardware-crosschecks.json` SHA-256 `d705283779950592a609e44dc01e504283468a66bba13e9546fd75ed01e9ac6b`: Owner hawkeyexx photo11 identifies actual mini-flipper shaft floor contacts at modeled GI030/GI053. Sandman454 post5169 photo7 shows an installed GI007 bulb, photo8 identifies GI032's bare wooden flasher-wire passage, and photo10 identifies GI31's reflector-wire passage. Nearby fitted metal bayonet shells provide physical contrast. Extrapolated homographies are identity guides only; full source/read/inlier pins and limitations are retained.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/exposed-sockets.json` SHA-256 `baf5e71eb8878f5a3020dd0e00a758f28ec547bd8466ea35071ff916761b8326`: Owner hawkeyexx, Pinside post7481, 2024-11-20, image3: upper playfield and TV removed. GI007 and GI038 contain real empty metal lamp sockets, matching the known separate left socket. Their printed annuli are inside the 162-inlier planar-registration hull. Registration is an identity crosscheck; exact coordinates remain each VPW Light's own bulb center. Original filament position and wire color are not inferred from this photograph. Complete source/read/inlier pins are retained.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/vpx-components.json` SHA-256 `0a2f669e173a40038b557150f0084633a86f8859186ed5facc5235afc7b582f9`: Compact extraction of exact VPW2.0 bulb Light centers, surfaces, world-mesh bounds and object-file hashes. Source extraction and world manifests are pinned. GI030/GI053 are shaft-hole helpers; GI043 duplicates GI040. A show_bulb_mesh flag is a geometry candidate, not physical quantity authority.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/right-return.json` SHA-256 `257a7668e3bf6cfd940ebae442c04fbc519332b795837f43b29678480ab18f9f`: Own upper socket annulus in the flat Playfield2 UV plane, fitted at four thresholds; x=u/1844,y=v/4096. Independent owner Dancingbear's Pinside ad198006 photo14 shows a real unhooded bulb in that opening, separate from the elevated reflector and lower GI31 opening. Coarse (.80,.78), .02 normalized projection allowance. The photo homography is extrapolated and only an observed identity check; it is not the coordinate authority. Native review shows the broad cylindrical brass shell/collar below the replacement LED, corroborating the factory V01 #44 bayonet association. The complete underboard mounting and original filament are hidden.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/left-socket.json` SHA-256 `03c332cd9c7f98471bf3b62f9b5bc6910b5649b7d5254756b6f107d2bc8d8f1e`: Separate bayonet socket beside the left mini-flipper, physically visible in Pinside gallery photo28. Its own flat source annulus uses eight native edge reads, a least-squares circle fit and an independent gold-component bounding-axis check. x=u/1844,y=v/4096 gives coarse (.18,.19), with .02 normalized allowance. This is a socket-plane projection, not an observed original filament; quantity is not inferred from this one fixture.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/mode-sign.json` SHA-256 `47aefb89e03caf9ff3cd1842859868a709fd994335041dc1a0f47f40815a5859`: Owner hawkeyexx Pinside post7385 photos6/7: two photographed front LED windows triangulate near (.583,.071) and (.645,.070). Reprojection residuals 4.3-6.4px and camera/plastic-pose limitations are explicit. These are front windows, not unseen PCB bases. They corroborate the new VPW emitter y=.060 area and reject the old mis-scaled sign at y=.0345; exact coordinates remain the new individual emitter meshes.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/spotlights.json` SHA-256 `a258aac9ad784b752cc52e4315ebef91a52b81c5ab0954776fb637bd288cce44`: Four physical reflector/socket axes from exact VPW world vertices (Primitive24/98/108/116), not whole-assembly centroids. Factory #555 bulbs use manufacturer CEC light-center-length16.5mm and documented VPX units. Projection bounds use the entire modeled seating interval plus10% scale allowance; rounded .01 with .02 normalized uncertainty, conditional on the recorded model/seat assumptions. No original filament is directly observed.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/photogrammetry.json` SHA-256 `0c54550c1fe200be4b3cbe05ba2729e0e896032c976134112ab9dcc22de06258`: hawkeyexx's Pinside post7385 (8334936), head and upper playfield removed: Homer own socket in photos6/7/9 and fifth GI spotlight in photos5/7. Fixed-camera stdlib replay follows retained OpenCV planar calibration and source pixel readings. Coarse playfield projection, uncertainty .01 normalized; replacement LED and socket anchors, not observed original incandescent filaments. Camera assumptions, sensitivity fits and rejected mismatched points are explicit in the record.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/upper-gi.json` SHA-256 `71b6e1696eb2376078c6d9a9cac3bc8780803721db3d01ddd2a89bebd6782289`: Factory PDF112 underside drawing: seven small bayonet socket axes, distinct from six matrix insert sockets65-70. Twelve independent mechanism/insert/board-feature controls fit the drawing; six sockets reconcile VPW's Wall341 bulbs, the seventh rear-middle socket is measured inside the control hull at (.25,.01), rounded .01 with .01 normalized uncertainty. Residuals, source pixels, leave-one-out sensitivity and control origins retained.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/completion-measurements.json` SHA-256 `64821a2e61a3172e51723ab13c2642cf220dbc9c22142d6360171a591df1bf20`: Reproducible factory-drawing and physical-photo measurements. Lamp16's two leader endpoints use six independent mechanism controls; backpanel sockets use two elevations and a recorded one-dimensional projective fit. Each retains source pixel reads, formula, bounds, hashes, projection and uncertainty.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-scan.json` SHA-256 `0b193b56ed7b53516178942c0d2a0a4d07e868b2b70e042a1c5c66846a848443`: tools/simpsons_party_rom_audit.py verifies all 18 clone CPU members against pinned source SHA1, then the four ten-word tables and bounded fixed-bank writer signatures. Raw operand scan is explicitly limited to listed extended stores/RMW, not arbitrary indexed writes. No physical quantity or coordinate derives from ROM activity.
+- Portable evidence `internal:tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-service.json` SHA-256 `54426cb0c5c520cc455246877ce40d4e251e35a9d71801bd4a6fc5bc64e92566`: Fresh-state simpprty 5.00 service diagnostics: verified DMD navigation into Single Lamp and All Lamps. Positive transitions for every address 1-80, no extra slot transition. Retains raw trace, scenario, library, CPU and DMD frame hashes; absence alone never proves an address unused.
 
 ## Explicit projections
 
@@ -27,26 +63,479 @@ The matching source is the retained known-working, non-VPW `The Simpsons Pinball
 - pinmame.output.solenoid 1: Projected onto the five-ball trough's own release kicker (BallRelease, table object center): SolRelease pulses bsTrough.ExitSol_On, the shared cvpmBallStack ejector for the whole trough, not a fixed visible coil body.
 - pinmame.output.solenoid 4: Projected onto the drop-target bank's own middle target (SW18/Drop Target #2, table object center): dtDrop.SolDropUp resets all three bank positions together and the retained table exposes no separate reset-bar mesh.
 - pinmame.output.solenoid 30: Projected onto the drop-target bank's own middle target (SW18/Drop Target #2, table object center): SolDropBankTrips (dtDrop.Hit 1/2/3) trips all three bank positions together; see solenoid 4.
+- pinmame.output.lamp 16: Two factory leader endpoints under the Pops2X sign, calibrated through six mechanism controls; .02 normalized uncertainty.
+- pinmame.output.solenoid 27: Homer own socket-holder projection from head-removed owner photographs; .01 normalized uncertainty, original filament not observed.
+- pinmame.output.gi 0: Backpanel: two physical elevations and rear-plane y=0; missing upper socket: factory underside controls; left and right-return sockets: own flat annuli; CBG-area GI: factory device-symbol projection with .05 normalized allowance; four reflector sockets: conditional filament-axis projections; fifth reflector: replacement LED-cap camera projection; horizontal PARTY lamp: its own replacement-cap projection with .03 x/.02 y allowance. Per-fixture source records state limits and uncertainties.
 
-## Counts
+## General illumination
 
-- Placements: 211
-- Located input addresses: 51
-- Located output bindings: 110
-- Inputs with no spatial key at all: 0
-- Outputs with no spatial key at all: 1
-- Inputs with a controlled `cabinet_or_service` record: 20
-- Inputs with a controlled `dip_switch` record: 8
-- Inputs with a controlled `unused` record: 5
-- Outputs with a controlled `cabinet_or_service` record: 1
-- Outputs with a controlled `unused` record: 17
-- Outputs with a controlled `virtual` record: 18
+- gi.string-1: 51 physical emitters, 49 placements.
+- One aggregate GI relay: Whitestar nGI=1 and the known-working UpdateGI script agree with the factory relay switching all four fused branches together (PDF121): F24 backpanel, F25 left playfield plus right return, F26 upper playfield plus five reflector spots and coin door, F27 right playfield. These are not four independently controllable strings. The reconciled physical layout has 26 main-floor #44 locations (25 physical socket anchors and the CBG factory-symbol projection), seven upper-playfield bayonets and ten rear-panel bayonets, plus five #555 reflector spots and the separate horizontal unhooded lamp under the PARTY right-return plastic: 49 playfield/rear emitters, all placed. Its #555/F25 association follows the factory location description, circuit totals and unique laydown GI wedge holder; the photograph does not expose the contacts or wire colors. Physical quantity 51 includes the two US coin-door #555 bulbs, which have no playfield coordinates; the European one-bulb coin door gives 50. This quantity describes the retained physical layout, not a universal production invariant. PDF121 nominally lists 40 GI #44 and six non-cabinet #555; PDF90's 45 total #44 minus four matrix #44 implies 41 GI bayonets, while the reconciled #44 locations total 43. The socket rows likewise sum to 45 (19 staple-down + four laydown + 22 long-shell), two fewer than the 47 #44 locations including the matrix. The factory explicitly warns GI quantities may change during production. The photo-confirmed extra rear-floor sockets are retained instead of deleting physical hardware to fit either nominal count. GI030/GI053 coincide with the mini-flipper shafts and are excluded; GI040/GI043 are one socket, not two. GI032 and GI31 mark flasher/spotlight wiring passages, not bulbs. The older 42-member render collection is not a physical inventory. Upper missing socket and backpanel coordinates are calibrated factory/photo projections with .01 normalized uncertainty. The separate left and right-return sockets use their own flat texture annuli with .02 allowance; the fourth left-return socket uses .01. The CBG-area GI uses the factory bulb-symbol projection at (.17,.32), with .05 schematic allowance per axis, not a photographed filament. Four reflector axes use conditional #555 filament projections with .02 allowance, and the fifth uses a replacement LED-cap projection with .01 allowance. The PARTY lamp uses its own replacement LED body projection at (.69,.82), with .03 x/.02 y allowance for camera/UV assumptions, partial occlusion and original-filament displacement; it is not the V01 bayonet, reflector or GI31 wiring passage. Original incandescent filaments are not observed.
 
-## Promotion decision
+## Excluded helpers
 
-This record stays `partial`. Its conflicts are settled: switch 14's public sense comes from the known-working script and switch 15's from hash-pinned ROM runs, and DS-5 (public 88) is the right button's second contact, which PinMAME does not synthesize but does deliver to the ROM, which fires solenoids 13 and 14 from it. Two gaps remain. Lamp 80's second LED has no coordinate (`spatial_placement`), and public lamps 81-96, which PinMAME publishes because the driver declares four auxiliary lamp columns, are fed only by CPU ports $3406/$3407 and have unknown availability (`output_semantics`). `coverage.missing = ["output_semantics", "spatial_placement"]` records both.
+- Homer, Homer2, Homer3, homer4 internal VPX triggers (Homer Head figure animation helpers; no Controller.Switch call)
+- Trigger1-Trigger6 (PlaySound-only audio-cue helpers; no Controller.Switch call)
+- swplunger (internal ball-detection helper for the cvpmImpulseP shooter-lane class; switch 16 itself is bound to the separately-named sw16 object)
+- CapKicker/capBall (a static decorative captive-ball prop with no switch or solenoid binding)
+- LEDY, LEDG and LEDR collections (empty; hidden by the script at start-up and bound to no lamp)
+- r*/g*/y* TV LED lights (the 14x10 mini-DMD, driven from Controller.ChangedLEDs, a display rather than lamps)
+- The old 42-member GI collection contains illumination proxies and is not a physical socket count.
+- Flasherbase9 and Flasherbase10 are minimized/dummy meshes, not additional dome sockets.
+- Homer l127 and l127a are illumination helpers, not the fixed flasher socket.
+- GI_040 and GI_043 duplicate overlapping glow objects and are not extra physical sockets.
+- GI_030 and GI_053 sit at the two mini-flipper shaft contacts, not separate bulb sockets.
+- GI_032 is the Pops flasher wiring passage and GI_31 is the right-return spotlight wiring passage; neither is another bulb.
 
-## Retained evidence
+## Inputs dispositions
 
-- Extraction manifest `external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/extracted-vpxtool.manifest.json`, SHA-256 `9f21a0b4af3387d3b7b3dbd7480909d141c2cfeb00c6c9b59f417723918338bc`, 1348 files, 167511025 bytes.
-- Human transcription of every printed table and diagram read from the rendered manual pages, SHA-256 `18a1d499a3525bd72340f0e5a98af98c3fb8b867f0f3b1b655242f5cc7ef37e8`.
+- `switch.matrix-1` (pinmame.input.switch 1): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-2` (pinmame.input.switch 2): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-3` (pinmame.input.switch 3): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-4` (pinmame.input.switch 4): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-5` (pinmame.input.switch 5): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-6` (pinmame.input.switch 6): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-7` (pinmame.input.switch 7): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-8` (pinmame.input.switch 8): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-9` (pinmame.input.switch 9): validated; availability used.
+  - `switch.matrix-9.sensor` (sensor): (0.284496, 0.362626); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-10` (pinmame.input.switch 10): validated; availability used.
+  - `switch.matrix-10.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-11` (pinmame.input.switch 11): validated; availability used.
+  - `switch.matrix-11.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-12` (pinmame.input.switch 12): validated; availability used.
+  - `switch.matrix-12.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-13` (pinmame.input.switch 13): validated; availability used.
+  - `switch.matrix-13.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-14` (pinmame.input.switch 14): validated; availability used.
+  - `switch.matrix-14.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-15` (pinmame.input.switch 15): validated; availability used.
+  - `switch.matrix-15.sensor` (sensor): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `switch.matrix-16` (pinmame.input.switch 16): validated; availability used.
+  - `switch.matrix-16.sensor` (sensor): (0.939282, 0.8812); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-17` (pinmame.input.switch 17): validated; availability used.
+  - `switch.matrix-17.sensor` (sensor): (0.841389, 0.510159); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-18` (pinmame.input.switch 18): validated; availability used.
+  - `switch.matrix-18.sensor` (sensor): (0.85557, 0.538298); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-19` (pinmame.input.switch 19): validated; availability used.
+  - `switch.matrix-19.sensor` (sensor): (0.869724, 0.566933); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-20` (pinmame.input.switch 20): validated; availability used.
+  - `switch.matrix-20.sensor` (sensor): (0.919662, 0.51358); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-21` (pinmame.input.switch 21): validated; availability used.
+  - `switch.matrix-21.sensor` (sensor): (0.873153, 0.334596); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-22` (pinmame.input.switch 22): validated; availability used.
+  - `switch.matrix-22.sensor` (sensor): (0.83638, 0.255916); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-23` (pinmame.input.switch 23): validated; availability used.
+  - `switch.matrix-23.sensor` (sensor): (0.783215, 0.34016); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-24` (pinmame.input.switch 24): validated; availability used.
+  - `switch.matrix-24.sensor` (sensor): (0.843156, 0.212669); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-25` (pinmame.input.switch 25): validated; availability used.
+  - `switch.matrix-25.sensor` (sensor): (0.324736, 0.239885); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-26` (pinmame.input.switch 26): validated; availability used.
+  - `switch.matrix-26.sensor` (sensor): (0.448229, 0.101437); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-27` (pinmame.input.switch 27): not_applicable; availability unused (unused; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-28` (pinmame.input.switch 28): not_applicable; availability unused (unused; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-29` (pinmame.input.switch 29): validated; availability used.
+  - `switch.matrix-29.sensor` (sensor): (0.302914, 0.149233); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-30` (pinmame.input.switch 30): validated; availability used.
+  - `switch.matrix-30.sensor` (sensor): (0.352248, 0.195782); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-31` (pinmame.input.switch 31): validated; availability used.
+  - `switch.matrix-31.sensor` (sensor): (0.345683, 0.513749); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-32` (pinmame.input.switch 32): validated; availability used.
+  - `switch.matrix-32.sensor` (sensor): (0.208604, 0.596466); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-33` (pinmame.input.switch 33): validated; availability used.
+  - `switch.matrix-33.sensor` (sensor): (0.174107, 0.109279); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-34` (pinmame.input.switch 34): validated; availability used.
+  - `switch.matrix-34.sensor` (sensor): (0.210347, 0.08753); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-35` (pinmame.input.switch 35): validated; availability used.
+  - `switch.matrix-35.sensor` (sensor): (0.31995, 0.028369); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-36` (pinmame.input.switch 36): validated; availability used.
+  - `switch.matrix-36.sensor` (sensor): (0.190947, 0.037386); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-37` (pinmame.input.switch 37): validated; availability used.
+  - `switch.matrix-37.sensor` (sensor): (0.508004, 0.05061); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-38` (pinmame.input.switch 38): validated; availability used.
+  - `switch.matrix-38.sensor` (sensor): (0.062792, 0.28393); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-39` (pinmame.input.switch 39): validated; availability used.
+  - `switch.matrix-39.sensor` (sensor): (0.064452, 0.259946); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-40` (pinmame.input.switch 40): validated; availability used.
+  - `switch.matrix-40.sensor` (sensor): (0.060717, 0.235234); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-41` (pinmame.input.switch 41): validated; availability used.
+  - `switch.matrix-41.sensor` (sensor): (0.645745, 0.207544); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-42` (pinmame.input.switch 42): validated; availability used.
+  - `switch.matrix-42.sensor` (sensor): (0.63524, 0.238749); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-43` (pinmame.input.switch 43): validated; availability used.
+  - `switch.matrix-43.sensor` (sensor): (0.625787, 0.272319); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-44` (pinmame.input.switch 44): validated; availability used.
+  - `switch.matrix-44.sensor` (sensor): (0.852425, 0.184991); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-45` (pinmame.input.switch 45): validated; availability used.
+  - `switch.matrix-45.sensor` (sensor): (0.693276, 0.300503); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-46` (pinmame.input.switch 46): validated; availability used.
+  - `switch.matrix-46.sensor` (sensor): (0.627548, 0.048122); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-47` (pinmame.input.switch 47): validated; availability used.
+  - `switch.matrix-47.sensor` (sensor): (0.23392, 0.286257); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-48` (pinmame.input.switch 48): validated; availability used.
+  - `switch.matrix-48.sensor` (sensor): (0.425044, 0.136436); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-49` (pinmame.input.switch 49): validated; availability used.
+  - `switch.matrix-49.sensor` (sensor): (0.082799, 0.468807); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-50` (pinmame.input.switch 50): validated; availability used.
+  - `switch.matrix-50.sensor` (sensor): (0.302074, 0.482273); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-51` (pinmame.input.switch 51): validated; availability used.
+  - `switch.matrix-51.sensor` (sensor): (0.167804, 0.560972); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-52` (pinmame.input.switch 52): validated; availability used.
+  - `switch.matrix-52.sensor` (sensor): (0.052354, 0.408489); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-53` (pinmame.input.switch 53): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-54` (pinmame.input.switch 54): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-55` (pinmame.input.switch 55): validated; availability used.
+  - `switch.matrix-55.sensor` (sensor): (0.07153, 0.048448); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-56` (pinmame.input.switch 56): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.matrix-57` (pinmame.input.switch 57): validated; availability used.
+  - `switch.matrix-57.sensor` (sensor): (0.061876, 0.750421); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-58` (pinmame.input.switch 58): validated; availability used.
+  - `switch.matrix-58.sensor` (sensor): (0.135647, 0.737638); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-59` (pinmame.input.switch 59): validated; availability used.
+  - `switch.matrix-59.sensor` (sensor): (0.231191, 0.727249); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-60` (pinmame.input.switch 60): validated; availability used.
+  - `switch.matrix-60.sensor` (sensor): (0.850768, 0.751016); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-61` (pinmame.input.switch 61): validated; availability used.
+  - `switch.matrix-61.sensor` (sensor): (0.774656, 0.739985); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-62` (pinmame.input.switch 62): validated; availability used.
+  - `switch.matrix-62.sensor` (sensor): (0.69015, 0.724369); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-63` (pinmame.input.switch 63): validated; availability used.
+  - `switch.matrix-63.sensor` (sensor): (0.138991, 0.139329); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.matrix-64` (pinmame.input.switch 64): validated; availability used.
+  - `switch.matrix-64.sensor` (sensor): (0.925746, 0.080332); sources: vpx-table.simpsons-party-0-8-2.
+- `switch.dedicated-ds-1` (pinmame.input.switch 84): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-2` (pinmame.input.switch 83): not_applicable; availability used (internal_nonvisual; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-3` (pinmame.input.switch 82): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-4` (pinmame.input.switch 81): not_applicable; availability used (internal_nonvisual; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-5` (pinmame.input.switch 88): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-6` (pinmame.input.switch -2): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-7` (pinmame.input.switch -1): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dedicated-ds-8` (pinmame.input.switch 0): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.flipper-column-85` (pinmame.input.switch 85): not_applicable; availability unused (unused; sources: pinmame.core.8371478a7640).
+- `switch.flipper-column-86` (pinmame.input.switch 86): not_applicable; availability unused (unused; sources: pinmame.core.8371478a7640).
+- `switch.flipper-column-87` (pinmame.input.switch 87): not_applicable; availability unused (unused; sources: pinmame.core.8371478a7640).
+- `switch.memory-protect` (pinmame.input.switch -3): not_applicable; availability used (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-1` (pinmame.input.dip 1): not_applicable; availability used (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-2` (pinmame.input.dip 2): not_applicable; availability used (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-3` (pinmame.input.dip 3): not_applicable; availability used (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-4` (pinmame.input.dip 4): not_applicable; availability used (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-5` (pinmame.input.dip 5): not_applicable; availability used (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-6` (pinmame.input.dip 6): not_applicable; availability unused (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-7` (pinmame.input.dip 7): not_applicable; availability unused (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `switch.dip-8` (pinmame.input.dip 8): not_applicable; availability unused (dip_switch; sources: manual.stern.the-simpsons-pinball-party.2003).
+
+## Outputs dispositions
+
+- `device.trough-up-kicker` (pinmame.output.solenoid 1): validated; availability used.
+  - `device.trough-up-kicker.effect` (effect): (0.869901, 0.858728); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `device.auto-launch` (pinmame.output.solenoid 2): validated; availability used.
+  - `device.auto-launch.effect` (effect): (0.939551, 0.96666); sources: vpx-table.simpsons-party-0-8-2.
+- `device.couch-release` (pinmame.output.solenoid 3): validated; availability used.
+  - `device.couch-release.effect` (effect): (0.066492, 0.280003); sources: vpx-table.simpsons-party-0-8-2.
+- `device.drops-reset-up` (pinmame.output.solenoid 4): validated; availability used.
+  - `device.drops-reset-up.effect` (effect): (0.85557, 0.538298); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `device.itchy-scratchy-eject-vuk` (pinmame.output.solenoid 5): validated; availability used.
+  - `device.itchy-scratchy-eject-vuk.effect` (effect): (0.919662, 0.51358); sources: vpx-table.simpsons-party-0-8-2.
+- `device.upper-left-vuk` (pinmame.output.solenoid 6): validated; availability used.
+  - `device.upper-left-vuk.effect` (effect): (0.07153, 0.048448); sources: vpx-table.simpsons-party-0-8-2.
+- `device.tv-release` (pinmame.output.solenoid 7): validated; availability used.
+  - `device.tv-release.effect` (effect): (0.508774, 0.061277); sources: vpx-table.simpsons-party-0-8-2.
+- `device.homer-head` (pinmame.output.solenoid 8): validated; availability used.
+  - `device.homer-head.effect` (effect): (0.750992, 0.114326); sources: vpx-table.simpsons-party-0-8-2.
+- `device.left-bumper` (pinmame.output.solenoid 9): validated; availability used.
+  - `device.left-bumper.effect` (effect): (0.082799, 0.468807); sources: vpx-table.simpsons-party-0-8-2.
+- `device.right-bumper` (pinmame.output.solenoid 10): validated; availability used.
+  - `device.right-bumper.effect` (effect): (0.302074, 0.482273); sources: vpx-table.simpsons-party-0-8-2.
+- `device.bottom-bumper` (pinmame.output.solenoid 11): validated; availability used.
+  - `device.bottom-bumper.effect` (effect): (0.167804, 0.560972); sources: vpx-table.simpsons-party-0-8-2.
+- `device.upf-left-flipper` (pinmame.output.solenoid 12): validated; availability used.
+  - `device.upf-left-flipper.effect` (effect): (0.146008, 0.190544); sources: vpx-table.simpsons-party-0-8-2.
+- `device.upf-right-flipper` (pinmame.output.solenoid 13): validated; availability used.
+  - `device.upf-right-flipper.effect` (effect): (0.519958, 0.103073); sources: vpx-table.simpsons-party-0-8-2.
+- `device.top-right-flipper` (pinmame.output.solenoid 14): validated; availability used.
+  - `device.top-right-flipper.effect` (effect): (0.881561, 0.437677); sources: vpx-table.simpsons-party-0-8-2.
+- `device.fast-flip-game-on-state` (pinmame.output.solenoid 15): not_applicable; availability used (virtual; sources: pinmame.core.8371478a7640).
+- `device.not-used-raw-solenoid-position-16` (pinmame.output.solenoid 16): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.left-slingshot` (pinmame.output.solenoid 17): validated; availability used.
+  - `device.left-slingshot.effect` (effect): (0.231191, 0.727249); sources: vpx-table.simpsons-party-0-8-2.
+- `device.right-slingshot` (pinmame.output.solenoid 18): validated; availability used.
+  - `device.right-slingshot.effect` (effect): (0.69015, 0.724369); sources: vpx-table.simpsons-party-0-8-2.
+- `device.upper-right-eject` (pinmame.output.solenoid 19): validated; availability used.
+  - `device.upper-right-eject.effect` (effect): (0.843156, 0.212669); sources: vpx-table.simpsons-party-0-8-2.
+- `device.garage-door-eject` (pinmame.output.solenoid 20): validated; availability used.
+  - `device.garage-door-eject.effect` (effect): (0.422957, 0.130954); sources: vpx-table.simpsons-party-0-8-2.
+- `device.flash-pops-clear` (pinmame.output.solenoid 21): validated; availability used.
+  - `device.flash-pops-clear.emitter` (emitter): (0.065979, 0.501498); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-r-ramp-red` (pinmame.output.solenoid 22): validated; availability used.
+  - `device.flash-r-ramp-red.emitter` (emitter): (0.917988, 0.03); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-r-ramp-orange` (pinmame.output.solenoid 23): validated; availability used.
+  - `device.flash-r-ramp-orange.emitter` (emitter): (0.933551, 0.204829); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.optional-coil` (pinmame.output.solenoid 24): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `device.flash-itchy` (pinmame.output.solenoid 25): validated; availability used.
+  - `device.flash-itchy.emitter` (emitter): (0.956922, 0.569589); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-scratchy` (pinmame.output.solenoid 26): validated; availability used.
+  - `device.flash-scratchy.emitter` (emitter): (0.931028, 0.463965); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-homer-head` (pinmame.output.solenoid 27): validated; availability used.
+  - `device.flash-homer-head.emitter` (emitter): (0.73, 0.13); sources: human-review.simpsons-party.physical-socket-projections, manual.stern.the-simpsons-pinball-party.2003, vpx-script.simpsons-party-0-8-2.
+- `device.flash-couch` (pinmame.output.solenoid 28): validated; availability used.
+  - `device.flash-couch.emitter` (emitter): (0.109357, 0.314714); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-comic-book-guy` (pinmame.output.solenoid 29): validated; availability used.
+  - `device.flash-comic-book-guy.emitter` (emitter): (0.220927, 0.346212); sources: vpx-table.simpsons-party-0-8-2, human-review.simpsons-party.cbg-flasher-plan, manual.stern.the-simpsons-pinball-party.2003, vpx-script.simpsons-party-0-8-2.
+- `device.drop-bank-trips` (pinmame.output.solenoid 30): validated; availability used.
+  - `device.drop-bank-trips.effect` (effect): (0.85557, 0.538298); sources: vpx-table.simpsons-party-0-8-2, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-upf-orange` (pinmame.output.solenoid 31): validated; availability used.
+  - `device.flash-upf-orange.emitter` (emitter): (0.146205, 0.107127); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.flash-upf-red` (pinmame.output.solenoid 32): validated; availability used.
+  - `device.flash-upf-red.emitter` (emitter): (0.335745, 0.027936); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003.
+- `device.left-up-down-post` (pinmame.output.solenoid 33): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `device.center-up-down-post` (pinmame.output.solenoid 34): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `device.right-up-down-post` (pinmame.output.solenoid 35): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `device.unused-auxiliary-board-output-36` (pinmame.output.solenoid 36): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-37` (pinmame.output.solenoid 37): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-38` (pinmame.output.solenoid 38): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-39` (pinmame.output.solenoid 39): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-40` (pinmame.output.solenoid 40): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-41` (pinmame.output.solenoid 41): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-42` (pinmame.output.solenoid 42): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-43` (pinmame.output.solenoid 43): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-compatibility-hole-44` (pinmame.output.solenoid 44): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.right-flipper-power` (pinmame.output.solenoid 45): not_applicable; availability used (internal_nonvisual; sources: pinmame.core.46e1a01a0f73).
+- `device.right-flipper-hold` (pinmame.output.solenoid 46): validated; availability used.
+  - `device.right-flipper-hold.effect` (effect): (0.622557, 0.84258); sources: vpx-table.simpsons-party-0-8-2.
+- `device.left-flipper-power` (pinmame.output.solenoid 47): not_applicable; availability used (internal_nonvisual; sources: pinmame.core.46e1a01a0f73).
+- `device.left-flipper-hold` (pinmame.output.solenoid 48): validated; availability used.
+  - `device.left-flipper-hold.effect` (effect): (0.287992, 0.842009); sources: vpx-table.simpsons-party-0-8-2.
+- `device.pinmame-simulator-ball-shooter-channel` (pinmame.output.solenoid 49): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `device.reserved-wpc-family-output-50` (pinmame.output.solenoid 50): not_applicable; availability unused (virtual; sources: pinmame.core.4ec52ff0ac13).
+- `lamp.matrix-1` (pinmame.output.lamp 1): validated; availability used.
+  - `lamp.matrix-1.emitter` (emitter): (0.062862, 0.715097); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-9` (pinmame.output.lamp 9): validated; availability used.
+  - `lamp.matrix-9.emitter` (emitter): (0.695245, 0.510208); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-17` (pinmame.output.lamp 17): validated; availability used.
+  - `lamp.matrix-17.emitter` (emitter): (0.083679, 0.475017); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-25` (pinmame.output.lamp 25): validated; availability used.
+  - `lamp.matrix-25.emitter` (emitter): (0.413837, 0.390658); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-33` (pinmame.output.lamp 33): validated; availability used.
+  - `lamp.matrix-33.emitter` (emitter): (0.399734, 0.332123); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-41` (pinmame.output.lamp 41): validated; availability used.
+  - `lamp.matrix-41.emitter` (emitter): (0.344298, 0.249351); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-49` (pinmame.output.lamp 49): validated; availability used.
+  - `lamp.matrix-49.emitter` (emitter): (0.585051, 0.139051); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-57` (pinmame.output.lamp 57): validated; availability used.
+  - `lamp.matrix-57.emitter` (emitter): (0.512729, 0.657924); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-65` (pinmame.output.lamp 65): validated; availability used.
+  - `lamp.matrix-65.emitter` (emitter): (0.223818, 0.170579); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-73` (pinmame.output.lamp 73): validated; availability used.
+  - `lamp.matrix-73.emitter` (emitter): (0.576142, 0.060063); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-2` (pinmame.output.lamp 2): validated; availability used.
+  - `lamp.matrix-2.emitter` (emitter): (0.136615, 0.679376); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-10` (pinmame.output.lamp 10): validated; availability used.
+  - `lamp.matrix-10.emitter` (emitter): (0.706707, 0.532225); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-18` (pinmame.output.lamp 18): validated; availability used.
+  - `lamp.matrix-18.emitter` (emitter): (0.302146, 0.486855); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-26` (pinmame.output.lamp 26): validated; availability used.
+  - `lamp.matrix-26.emitter` (emitter): (0.39439, 0.409993); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-34` (pinmame.output.lamp 34): validated; availability used.
+  - `lamp.matrix-34.emitter` (emitter): (0.447864, 0.364783); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-42` (pinmame.output.lamp 42): validated; availability used.
+  - `lamp.matrix-42.emitter` (emitter): (0.373078, 0.272778); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-50` (pinmame.output.lamp 50): validated; availability used.
+  - `lamp.matrix-50.emitter` (emitter): (0.552393, 0.176155); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-58` (pinmame.output.lamp 58): validated; availability used.
+  - `lamp.matrix-58.emitter` (emitter): (0.379795, 0.661519); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-66` (pinmame.output.lamp 66): validated; availability used.
+  - `lamp.matrix-66.emitter` (emitter): (0.217224, 0.133444); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-74` (pinmame.output.lamp 74): validated; availability used.
+  - `lamp.matrix-74.emitter` (emitter): (0.576138, 0.060056); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-3` (pinmame.output.lamp 3): validated; availability used.
+  - `lamp.matrix-3.emitter` (emitter): (0.457788, 0.851608); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-11` (pinmame.output.lamp 11): validated; availability used.
+  - `lamp.matrix-11.emitter` (emitter): (0.718626, 0.553971); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-19` (pinmame.output.lamp 19): validated; availability used.
+  - `lamp.matrix-19.emitter` (emitter): (0.173931, 0.563719); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-27` (pinmame.output.lamp 27): validated; availability used.
+  - `lamp.matrix-27.emitter` (emitter): (0.742565, 0.412332); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-35` (pinmame.output.lamp 35): validated; availability used.
+  - `lamp.matrix-35.emitter` (emitter): (0.480431, 0.343746); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-43` (pinmame.output.lamp 43): validated; availability used.
+  - `lamp.matrix-43.emitter` (emitter): (0.407553, 0.298767); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-51` (pinmame.output.lamp 51): validated; availability used.
+  - `lamp.matrix-51.emitter` (emitter): (0.613967, 0.177198); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-59` (pinmame.output.lamp 59): validated; availability used.
+  - `lamp.matrix-59.emitter` (emitter): (0.493069, 0.616344); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-67` (pinmame.output.lamp 67): validated; availability used.
+  - `lamp.matrix-67.emitter` (emitter): (0.253728, 0.110979); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-75` (pinmame.output.lamp 75): validated; availability used.
+  - `lamp.matrix-75.emitter` (emitter): (0.576154, 0.060062); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-4` (pinmame.output.lamp 4): validated; availability used.
+  - `lamp.matrix-4.emitter` (emitter): (0.777561, 0.68107); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-12` (pinmame.output.lamp 12): validated; availability used.
+  - `lamp.matrix-12.emitter` (emitter): (0.728228, 0.575315); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-20` (pinmame.output.lamp 20): validated; availability used.
+  - `lamp.matrix-20.emitter` (emitter): (0.154629, 0.418044); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-28` (pinmame.output.lamp 28): validated; availability used.
+  - `lamp.matrix-28.emitter` (emitter): (0.703494, 0.439526); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-36` (pinmame.output.lamp 36): validated; availability used.
+  - `lamp.matrix-36.emitter` (emitter): (0.512734, 0.371229); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-44` (pinmame.output.lamp 44): validated; availability used.
+  - `lamp.matrix-44.emitter` (emitter): (0.450858, 0.16993); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-52` (pinmame.output.lamp 52): validated; availability used.
+  - `lamp.matrix-52.emitter` (emitter): (0.588098, 0.219489); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-60` (pinmame.output.lamp 60): validated; availability used.
+  - `lamp.matrix-60.emitter` (emitter): (0.439227, 0.669492); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-68` (pinmame.output.lamp 68): validated; availability used.
+  - `lamp.matrix-68.emitter` (emitter): (0.300005, 0.08935); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-76` (pinmame.output.lamp 76): validated; availability used.
+  - `lamp.matrix-76.emitter` (emitter): (0.576145, 0.060081); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-5` (pinmame.output.lamp 5): validated; availability used.
+  - `lamp.matrix-5.emitter` (emitter): (0.852648, 0.717957); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-13` (pinmame.output.lamp 13): validated; availability used.
+  - `lamp.matrix-13.emitter` (emitter): (0.765539, 0.599739); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-21` (pinmame.output.lamp 21): validated; availability used.
+  - `lamp.matrix-21.emitter` (emitter): (0.379138, 0.437807); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-29` (pinmame.output.lamp 29): validated; availability used.
+  - `lamp.matrix-29.emitter` (emitter): (0.68892, 0.471203); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-37` (pinmame.output.lamp 37): validated; availability used.
+  - `lamp.matrix-37.emitter` (emitter): (0.655513, 0.364874); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-45` (pinmame.output.lamp 45): validated; availability used.
+  - `lamp.matrix-45.emitter` (emitter): (0.419465, 0.208457); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-53` (pinmame.output.lamp 53): validated; availability used.
+  - `lamp.matrix-53.emitter` (emitter): (0.577909, 0.258216); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-61` (pinmame.output.lamp 61): validated; availability used.
+  - `lamp.matrix-61.emitter` (emitter): (0.42455, 0.633539); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-69` (pinmame.output.lamp 69): validated; availability used.
+  - `lamp.matrix-69.emitter` (emitter): (0.341266, 0.111958); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-77` (pinmame.output.lamp 77): validated; availability used.
+  - `lamp.matrix-77.emitter` (emitter): (0.576199, 0.0601); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-6` (pinmame.output.lamp 6): validated; availability used.
+  - `lamp.matrix-6.emitter` (emitter): (0.890687, 0.626244); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-14` (pinmame.output.lamp 14): validated; availability used.
+  - `lamp.matrix-14.emitter` (emitter): (0.690423, 0.622341); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-22` (pinmame.output.lamp 22): validated; availability used.
+  - `lamp.matrix-22.emitter` (emitter): (0.07863, 0.31311); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-30` (pinmame.output.lamp 30): validated; availability used.
+  - `lamp.matrix-30.emitter` (emitter): (0.613913, 0.489476); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-38` (pinmame.output.lamp 38): validated; availability used.
+  - `lamp.matrix-38.emitter` (emitter): (0.616575, 0.397686); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-46` (pinmame.output.lamp 46): validated; availability used.
+  - `lamp.matrix-46.emitter` (emitter): (0.48574, 0.212133); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-54` (pinmame.output.lamp 54): validated; availability used.
+  - `lamp.matrix-54.emitter` (emitter): (0.564959, 0.295862); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-62` (pinmame.output.lamp 62): validated; availability used.
+  - `lamp.matrix-62.emitter` (emitter): (0.481563, 0.701975); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-70` (pinmame.output.lamp 70): validated; availability used.
+  - `lamp.matrix-70.emitter` (emitter): (0.344673, 0.065322); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-78` (pinmame.output.lamp 78): validated; availability used.
+  - `lamp.matrix-78.emitter` (emitter): (0.576167, 0.060064); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-7` (pinmame.output.lamp 7): validated; availability used.
+  - `lamp.matrix-7.emitter` (emitter): (0.238377, 0.622325); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-15` (pinmame.output.lamp 15): validated; availability used.
+  - `lamp.matrix-15.emitter` (emitter): (0.742075, 0.637148); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-23` (pinmame.output.lamp 23): validated; availability used.
+  - `lamp.matrix-23.emitter` (emitter): (0.100019, 0.344326); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-31` (pinmame.output.lamp 31): validated; availability used.
+  - `lamp.matrix-31.emitter` (emitter): (0.957361, 0.921393); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-39` (pinmame.output.lamp 39): validated; availability used.
+  - `lamp.matrix-39.emitter` (emitter): (0.675313, 0.401049); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-47` (pinmame.output.lamp 47): validated; availability used.
+  - `lamp.matrix-47.emitter` (emitter): (0.45418, 0.239363); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-55` (pinmame.output.lamp 55): validated; availability used.
+  - `lamp.matrix-55.emitter` (emitter): (0.917512, 0.252545); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-63` (pinmame.output.lamp 63): validated; availability used.
+  - `lamp.matrix-63.emitter` (emitter): (0.333983, 0.722684); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-71` (pinmame.output.lamp 71): not_applicable; availability unused (unused; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.matrix-79` (pinmame.output.lamp 79): validated; availability used.
+  - `lamp.matrix-79.emitter` (emitter): (0.576188, 0.060081); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.matrix-8` (pinmame.output.lamp 8): validated; availability used.
+  - `lamp.matrix-8.emitter` (emitter): (0.375094, 0.538737); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-16` (pinmame.output.lamp 16): validated; availability used.
+  - `lamp.matrix-16.emitter.1` (emitter): (0.123, 0.506); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion, vpx-table.simpsons-party-0-8-2.
+  - `lamp.matrix-16.emitter.2` (emitter): (0.236, 0.507); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion, vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-24` (pinmame.output.lamp 24): validated; availability used.
+  - `lamp.matrix-24.emitter` (emitter): (0.119027, 0.371225); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-32` (pinmame.output.lamp 32): not_applicable; availability optional (cabinet_or_service; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.matrix-40` (pinmame.output.lamp 40): validated; availability used.
+  - `lamp.matrix-40.emitter` (emitter): (0.633864, 0.428295); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-48` (pinmame.output.lamp 48): validated; availability used.
+  - `lamp.matrix-48.emitter` (emitter): (0.923593, 0.219325); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-56` (pinmame.output.lamp 56): validated; availability used.
+  - `lamp.matrix-56.emitter` (emitter): (0.909024, 0.281423); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-64` (pinmame.output.lamp 64): validated; availability used.
+  - `lamp.matrix-64.emitter` (emitter): (0.611777, 0.704346); sources: vpx-table.simpsons-party-0-8-2.
+- `lamp.matrix-72` (pinmame.output.lamp 72): not_applicable; availability unused (unused; sources: manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.matrix-80` (pinmame.output.lamp 80): validated; availability used.
+  - `lamp.matrix-80.emitter.1` (emitter): (0.576166, 0.060144); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+  - `lamp.matrix-80.emitter.2` (emitter): (0.645962, 0.060066); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.mode-sign-front-windows.
+- `lamp.aux-port-81` (pinmame.output.lamp 81): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-82` (pinmame.output.lamp 82): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-83` (pinmame.output.lamp 83): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-84` (pinmame.output.lamp 84): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-85` (pinmame.output.lamp 85): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-86` (pinmame.output.lamp 86): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-87` (pinmame.output.lamp 87): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-88` (pinmame.output.lamp 88): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-89` (pinmame.output.lamp 89): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-90` (pinmame.output.lamp 90): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-91` (pinmame.output.lamp 91): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-92` (pinmame.output.lamp 92): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-93` (pinmame.output.lamp 93): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-94` (pinmame.output.lamp 94): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-95` (pinmame.output.lamp 95): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `lamp.aux-port-96` (pinmame.output.lamp 96): not_applicable; availability unused (virtual; sources: pinmame.core.46e1a01a0f73, manual.stern.the-simpsons-pinball-party.2003).
+- `gi.string-1` (pinmame.output.gi 0): validated; availability used.
+  - `gi.string-1.emitter.bulb-01` (emitter): (0.722875, 0.717467); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-02` (emitter): (0.186994, 0.716901); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-03` (emitter): (0.579477, 0.067645); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.exposed-main-sockets.
+  - `gi.string-1.emitter.bulb-04` (emitter): (0.795192, 0.150041); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-05` (emitter): (0.951924, 0.321734); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-06` (emitter): (0.939927, 0.372994); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-07` (emitter): (0.927809, 0.414074); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-08` (emitter): (0.669715, 0.1483); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-09` (emitter): (0.142277, 0.08964); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-10` (emitter): (0.68464, 0.211729); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-11` (emitter): (0.675243, 0.236355); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-12` (emitter): (0.019316, 0.348102); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-13` (emitter): (0.024487, 0.36943); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-14` (emitter): (0.223955, 0.228757); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.exposed-main-sockets.
+  - `gi.string-1.emitter.bulb-15` (emitter): (0.30133, 0.179895); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-16` (emitter): (0.038504, 0.622481); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-17` (emitter): (0.95596, 0.62624); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-18` (emitter): (0.106423, 0.26839); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-19` (emitter): (0.878091, 0.007307); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-20` (emitter): (0.919307, 0.021856); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-21` (emitter): (0.150672, 0.066133); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-22` (emitter): (0.023796, 0.090619); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-23` (emitter): (0.035362, 0.138176); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-24` (emitter): (0.03511, 0.166641); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-25` (emitter): (0.459735, 0.051302); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.bulb-26` (emitter): (0.215037, 0.757791); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-27` (emitter): (0.69375, 0.758699); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.bulb-28` (emitter): (0.174345, 0.808063); sources: manual.stern.the-simpsons-pinball-party.2003, vpx-table.simpsons-party-vpw-2-0, human-review.simpsons-party.vpw-component-extraction.
+  - `gi.string-1.emitter.upper-rear-middle` (emitter): (0.25, 0.01); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.upper-gi-sockets.
+  - `gi.string-1.emitter.left-mini-flipper` (emitter): (0.18, 0.19); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.left-bayonet-socket.
+  - `gi.string-1.emitter.left-return-upper` (emitter): (0.11, 0.78); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.left-return-socket.
+  - `gi.string-1.emitter.cbg-factory-symbol` (emitter): (0.17, 0.32); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.gi-cbg-factory-symbol.
+  - `gi.string-1.emitter.backpanel-01` (emitter): (0.05, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-02` (emitter): (0.1, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-03` (emitter): (0.16, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-04` (emitter): (0.2, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-05` (emitter): (0.26, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-06` (emitter): (0.75, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-07` (emitter): (0.8, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-08` (emitter): (0.85, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-09` (emitter): (0.89, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.backpanel-10` (emitter): (0.94, 0); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.hardware-completion.
+  - `gi.string-1.emitter.spot-primitive24` (emitter): (0.8, 0.77); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.spotlight-socket-axes, vpx-geometry.simpsons-party-vpw-2-0.
+  - `gi.string-1.emitter.spot-primitive98` (emitter): (0.92, 0.33); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.spotlight-socket-axes, vpx-geometry.simpsons-party-vpw-2-0.
+  - `gi.string-1.emitter.spot-primitive108` (emitter): (0.37, 0.27); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.spotlight-socket-axes, vpx-geometry.simpsons-party-vpw-2-0.
+  - `gi.string-1.emitter.spot-primitive116` (emitter): (0.26, 0.27); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.spotlight-socket-axes, vpx-geometry.simpsons-party-vpw-2-0.
+  - `gi.string-1.emitter.spot-monorail-support` (emitter): (0.34, 0.26); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.physical-socket-projections.
+  - `gi.string-1.emitter.right-return-bayonet` (emitter): (0.8, 0.78); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.right-return-socket.
+  - `gi.string-1.emitter.right-return-unhooded` (emitter): (0.69, 0.82); sources: manual.stern.the-simpsons-pinball-party.2003, human-review.simpsons-party.party-horizontal-lamp.
+
+## Displays dispositions
+
+- `display.dmd` (display 0): not_applicable (cabinet_or_service; sources: pinmame.core.4ec52ff0ac13, manual.stern.the-simpsons-pinball-party.2003).
+- `display.mini-dmd` (display 3): validated.
+  - `display.mini-dmd.display` (display): (0.432609, 0.081458); sources: vpx-geometry.simpsons-party-vpw-2-0, vpx-script.simpsons-party-vpw-2-0, manual.stern.the-simpsons-pinball-party.2003, pinmame.core.46e1a01a0f73.

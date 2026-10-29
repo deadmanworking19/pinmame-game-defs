@@ -105,7 +105,7 @@ class RepositoryValidationTests(unittest.TestCase):
 			_validate_python_line_endings(root, errors)
 			self.assertEqual(["tests/test_fixture.py: Python sources must use LF line endings"], errors)
 
-	def test_author_ready_display_na_provenance_has_core_and_physical_manual_evidence(self) -> None:
+	def test_author_ready_display_placement_has_core_and_physical_manual_evidence(self) -> None:
 		checked = []
 		display_count = 0
 		for path in sorted((ROOT / "machines" / "author-ready").rglob("*.json")):
@@ -116,12 +116,24 @@ class RepositoryValidationTests(unittest.TestCase):
 				spatial = display.get("spatial")
 				display_count += 1
 				self.assertIsNotNone(spatial, path.as_posix())
-				self.assertEqual("not_applicable", spatial.get("status"), path.as_posix())
-				self.assertEqual("cabinet_or_service", spatial.get("reason"), path.as_posix())
+				if display.get("physical_location") == "playfield":
+					self.assertEqual("validated", spatial.get("status"), path.as_posix())
+					placements = spatial.get("placements", [])
+					self.assertTrue(placements, path.as_posix())
+					for placement in placements:
+						self.assertEqual("playfield", placement.get("space"), path.as_posix())
+						for axis in ("x", "y"):
+							self.assertGreaterEqual(placement[axis], 0, path.as_posix())
+							self.assertLessEqual(placement[axis], 1, path.as_posix())
+				else:
+					self.assertEqual("not_applicable", spatial.get("status"), path.as_posix())
+					self.assertEqual("cabinet_or_service", spatial.get("reason"), path.as_posix())
+					placements = [spatial]
 				sources = {source["id"]: source for source in definition["sources"]}
-				refs = spatial["provenance"]["source_refs"]
-				self.assertTrue(any(sources[ref].get("kind") == "pinmame_core" for ref in refs), path.as_posix())
-				self.assertTrue(any(sources[ref].get("kind") in {"manual", "human_review"} for ref in refs), path.as_posix())
+				for placement in placements:
+					refs = placement["provenance"]["source_refs"]
+					self.assertTrue(any(sources[ref].get("kind") == "pinmame_core" for ref in refs), path.as_posix())
+					self.assertTrue(any(sources[ref].get("kind") in {"manual", "human_review"} for ref in refs), path.as_posix())
 				checked.append(path)
 		self.assertGreater(display_count, 0)
 		self.assertEqual(display_count, len(checked))

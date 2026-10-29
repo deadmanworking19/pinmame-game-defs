@@ -16,20 +16,20 @@ from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+from drawing_callouts import apply as apply_drawing_fit, fit as drawing_fit
+from simpsons_party_photogrammetry import replay as replay_photogrammetry
+from simpsons_party_spotlights import project as project_spotlight
+from simpsons_party_right_return import replay as replay_right_return
+from simpsons_party_left_socket import replay as replay_left_socket
+from simpsons_party_left_return import replay as replay_left_return
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# This record stays partial for two reasons. Public lamps 81-96 are published by pinned
-# PinMAME (hw.lampCol = 4 gives twelve lamp columns) and fed only by CPU writes to ports
-# $3406/$3407, which no retained source ties to hardware, so their availability is unknown
-# (output_semantics). And lamp 80 is two red LEDs (L8 bottom-left, L9 bottom-right of the
-# mode sign) while every retained table models one, so its second emitter has no coordinate
-# (spatial_placement). Both former conflicts were settled on 2026-09-25: switches 14/15 by
-# the known-working script and hash-pinned ROM runs, DS-5 (public 88) by the manual's own
-# doubled right-button drawing and a ROM run showing it fires solenoids 13 and 14.
+# Physical fitment follows the factory manual; runtime scan evidence and supplemental
+# VPW 2.0 geometry resolve the previously unassigned outputs and missing sign LED.
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/stern/the-simpsons-pinball-party-2003.json"
 PARTIAL_PATH = ROOT / "machines/partial/stern/the-simpsons-pinball-party-2003.json"
-DEFINITION_PATH = PARTIAL_PATH
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/stern/the-simpsons-pinball-party-2003.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/stern/the-simpsons-pinball-party-2003.md"
@@ -51,6 +51,50 @@ RUNTIME_STACKING_PATH = "evidence/runtime/whitestar/simpsons-pinball-party-stack
 RUNTIME_FLIPPERS = "runtime.simpsons-pinball-party.flipper-buttons"
 RUNTIME_FLIPPERS_PATH = "evidence/runtime/whitestar/simpsons-pinball-party-flipper-buttons.json"
 VPM_CORE_SHA256 = "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69"
+CURRENT_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+CURRENT_CORE_SOURCE = f"pinmame.core.{CURRENT_REVISION[:12]}"
+LIBPINMAME_SOURCE = f"pinmame.libpinmame.{CURRENT_REVISION[:12]}"
+VPW_TABLE_SOURCE = "vpx-table.simpsons-party-vpw-2-0"
+VPW_SCRIPT_SOURCE = "vpx-script.simpsons-party-vpw-2-0"
+VPW_GEOMETRY_SOURCE = "vpx-geometry.simpsons-party-vpw-2-0"
+LAMP_SCAN_SOURCE = "rom-audit.simpsons-party.lamp-scan"
+LAMP_SERVICE_SOURCE = "runtime.simpsons-party.lamp-service"
+VPW_RELATIVE_PATH = Path("stern/the-simpsons-pinball-party-2003/vpw-2.0")
+VPW_TABLE_SHA256 = "bf646ead3726060267f855ac94401d5ea89e5bddcd49b829706a0c675f0374eb"
+VPW_SCRIPT_SHA256 = "0a36b2c0c1834f2982cd0a8ce998f48775590c7604219ae149afd527f4d7088d"
+VPW_MANIFEST_SHA256 = "f9834d22b515ffa4f10a93fbac97614ec98f93e42dd1fbe65a93fe849541b76a"
+VPW_WORLD_MANIFEST_SHA256 = "aa3c8877ad37b3277f7ab40829e824c46fc12a900d154ed97ba8ed175687ab3f"
+VPW_OBJ_SHA256 = "f2c8e3d25f1d8ac8e2c088110a54ea51117d16b45e21088884ba4e1a9696845d"
+MEASUREMENTS_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/completion-measurements.json"
+PHYSICAL_REVIEW_SOURCE = "human-review.simpsons-party.hardware-completion"
+PHOTOGRAMMETRY_SOURCE = "human-review.simpsons-party.physical-socket-projections"
+UPPER_GI_SOURCE = "human-review.simpsons-party.upper-gi-sockets"
+PHOTOGRAMMETRY_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/photogrammetry.json"
+UPPER_GI_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/upper-gi.json"
+MODE_REVIEW_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/mode-sign.json"
+SPOTLIGHTS_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/spotlights.json"
+MODE_REVIEW_SOURCE = "human-review.simpsons-party.mode-sign-front-windows"
+SPOTLIGHT_SOURCE = "human-review.simpsons-party.spotlight-socket-axes"
+RIGHT_RETURN_SOURCE = "human-review.simpsons-party.right-return-socket"
+LEFT_SOCKET_SOURCE = "human-review.simpsons-party.left-bayonet-socket"
+RIGHT_RETURN_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/right-return.json"
+LEFT_SOCKET_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/left-socket.json"
+EXPOSED_SOCKETS_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/exposed-sockets.json"
+EXPOSED_SOCKETS_SOURCE = "human-review.simpsons-party.exposed-main-sockets"
+VPW_COMPONENTS_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/vpx-components.json"
+VPW_COMPONENTS_SOURCE = "human-review.simpsons-party.vpw-component-extraction"
+GI_HARDWARE_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/gi-hardware-crosschecks.json"
+GI_HARDWARE_SOURCE = "human-review.simpsons-party.gi-hardware-crosschecks"
+GI_CBG_SYMBOL_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/gi-cbg-symbol.json"
+GI_CBG_SYMBOL_SOURCE = "human-review.simpsons-party.gi-cbg-factory-symbol"
+CBG_FLASHER_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/cbg-flasher.json"
+CBG_FLASHER_SOURCE = "human-review.simpsons-party.cbg-flasher-plan"
+LEFT_RETURN_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/left-return.json"
+LEFT_RETURN_SOURCE = "human-review.simpsons-party.left-return-socket"
+PARTY_GI_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/party-gi.json"
+PARTY_GI_SOURCE = "human-review.simpsons-party.party-horizontal-lamp"
+KNOWLEDGE_PATH = ROOT / "knowledge/stern/the-simpsons-pinball-party-2003.md"
+KNOWLEDGE_SEED_PATH = ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003-knowledge.md"
 
 TABLE_SHA256 = "c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034"
 SCRIPT_SHA256 = "5378f6baf3106ed013c6d1a787f4b6789bc1febe925903f05cb2eda9327b98ee"
@@ -137,22 +181,22 @@ SCRIPT_EVIDENCED_OPTOS = {
 	    "asserting 1 while the kicked ball passes the stacking beam",
 }
 HARNESS_EVIDENCED_OPTOS = {15}
-# The eight mode-sign LEDs (lamps 73-80) sit on LED PCB (Mode Signifier) 520-5225-00, bolted to
-# the back panel next to the TV (manual PDF 82, 114, 170). The sign is vertical and faces the
-# player, so L1-L7 (lamps 73-79) stack in one column and project onto one playfield point; each
-# lamp is placed at its own retained Primitive's position (l73-l79, x/952, y/2115), which
-# differ only in height (z 305 down to 185 in 20-unit steps). Lamp 80 is two red LEDs, L8 at
-# the bottom-left and L9 at the bottom-right of the plastic; every retained table models one
-# object (l80, z 165), so lamp 80 carries no spatial key rather than a one-of-two placement.
-MODE_SIGN_LAMP_POSITIONS: dict[int, tuple[float, float]] = {
-	73: (0.576284, 0.034467), 74: (0.57628, 0.03446), 75: (0.576295, 0.034466), 76: (0.576286, 0.034485),
-	77: (0.576341, 0.034505), 78: (0.576309, 0.034468), 79: (0.57633, 0.034485),
+# The nine mode-sign LEDs (lamps 73-80) sit on LED PCB (Mode Signifier) 520-5225-00, bolted to
+# the back panel next to the TV (manual PDF 82, 114, 170). VPW 2.0 models all nine.
+# Coordinates are each emitter's world-space OBJ bounds centre, normalized against that
+# table's own 952.94 x 2117.65 bounds. Height is projected onto the playfield plane.
+MODE_SIGN_LAMP_POSITIONS: dict[int, list[tuple[float, float]]] = {
+	73: [(0.576142, 0.060063)], 74: [(0.576138, 0.060056)],
+	75: [(0.576154, 0.060062)], 76: [(0.576145, 0.060081)],
+	77: [(0.576199, 0.0601)], 78: [(0.576167, 0.060064)],
+	79: [(0.576188, 0.060081)],
+	80: [(0.576166, 0.060144), (0.645962, 0.060066)],
 }
 MODE_SIGN_LED = {73: "L1", 74: "L2", 75: "L3", 76: "L4", 77: "L5", 78: "L6", 79: "L7", 80: "L8 and L9"}
 # hw.lampCol = 4 makes PinMAME publish twelve lamp columns, public 1-96 (se.c:425 nLamps =
 # 64 + lampCol*8; vpintf.c vp_getChangedLamps scans CORE_STDLAMPCOLS + lampCol columns). The
-# printed 8x10 matrix fills 1-80; 81-88 and 89-96 are coreGlobals.lampMatrix[10]/[11], written
-# only by se.c's gilamp_w when the CPU writes port $3406/$3407.
+# printed 8x10 matrix fills 1-80. The two extra columns can receive gilamp_w writes or,
+# in binary mode, auxlamp_w strobes 4/8. The ROM scanner uses only aux strobes 1/2.
 AUX_PORT_LAMP_ADDRESSES = range(81, 97)
 # core.c:2455 memcpy's coreGlobals.invSw from core_gameData->wpc.invSw, and
 # simpprtyGameData's positional-aggregate initializer never sets the trailing wpc/sxx struct
@@ -242,6 +286,9 @@ DEDICATED_SWITCH_LABELS = {
 # construction facts that explain DS-5. The ROM owns every flipper here: hw.flippers declares
 # FLIP_SOL(FLIP_L), so each coil below fires only because the ROM read the button.
 _EOS_NOTE = (
+	" Physical EOS construction is normally closed (factory PDF124 N.C. legend and technical "
+	"overview), opening about 1/16 inch on the stroke. This does not describe PinMAME's "
+	"synthesized public EOS level."
 	" Written by PinMAME, not by a host: simpprtyGameData declares FLIP_SOL(FLIP_L), which sets "
 	"the lower-flipper FLIP_EOS bits, so core.c's end-of-stroke simulation rewrites this address "
 	"every frame from the flipper coil's state (the flipper-button harness run shows it rising while "
@@ -327,17 +374,17 @@ SOLENOID_POSITIONS: dict[int, list[tuple[float, float]]] = {
 	12: [(0.146008, 0.190544)], 13: [(0.519958, 0.103073)], 14: [(0.881561, 0.437677)],
 	17: [(0.231191, 0.727249)], 18: [(0.69015, 0.724369)], 19: [(0.843156, 0.212669)],
 	20: [(0.422957, 0.130954)],
-	21: [(0.070504, 0.501178), (0.068826, 0.501003)],
-	22: [(0.915957, 0.030272), (0.918495, 0.029516)],
-	23: [(0.910896, 0.217616), (0.911209, 0.217718)],
-	25: [(0.936124, 0.585242), (0.936114, 0.585205)],
-	26: [(0.95557, 0.410025)],
-	27: [(0.745782, 0.137667), (0.746155, 0.10312)],
-	28: [(0.110869, 0.309826), (0.109282, 0.30992)],
-	29: [(0.220923, 0.344955), (0.220927, 0.346212)],
+	21: [(0.065979, 0.501498)],
+	22: [(0.917988, 0.03)],
+	23: [(0.933551, 0.204829)],
+	25: [(0.956922, 0.569589)],
+	26: [(0.931028, 0.463965)],
+	27: [(0.73, 0.13)],
+	28: [(0.109357, 0.314714)],
+	29: [(0.220927, 0.346212)],
 	30: [(0.85557, 0.538298)],
-	31: [(0.179229, 0.106751), (0.179478, 0.106711)],
-	32: [(0.333227, 0.028891), (0.335623, 0.028533)],
+	31: [(0.146205, 0.107127)],
+	32: [(0.335745, 0.027936)],
 	45: [(0.622557, 0.84258)], 46: [(0.622557, 0.84258)],
 	47: [(0.287992, 0.842009)], 48: [(0.287992, 0.842009)],
 }
@@ -514,19 +561,17 @@ LAMP_ROW_WIRING = {
 	9: ("Red-White", "J12-P10", "Q41"), 10: ("Red", "J12-P11", "Q42"),
 }
 
-GI_POSITIONS: list[tuple[float, float]] = [
-	(0.763655, 0.793243), (0.173319, 0.805537), (0.948996, 0.626498), (0.150438, 0.072166),
-	(0.142323, 0.089766), (0.144374, 0.186887), (0.796739, 0.154132), (0.67629, 0.153711),
-	(0.689362, 0.216333), (0.942694, 0.322637), (0.025794, 0.503356), (0.302249, 0.179042),
-	(0.880228, 0.007174), (0.925668, 0.022304), (0.508909, 0.10171), (0.105859, 0.26758),
-	(0.222572, 0.228494), (0.682593, 0.24155), (0.019024, 0.347433), (0.933123, 0.373911),
-	(0.02556, 0.366766), (0.91725, 0.413417), (0.037698, 0.620194), (0.186158, 0.716438),
-	(0.71557, 0.715597), (0.211368, 0.756364), (0.685691, 0.757205), (0.807263, 0.767829),
-	(0.926939, 0.314358), (0.314896, 0.242022), (0.234473, 0.250159), (0.220408, 0.760034),
-	(0.688507, 0.761434), (0.177458, 0.809907), (0.768805, 0.79814), (0.923801, 0.027768),
-	(0.878361, 0.012638), (0.680726, 0.237347), (0.687495, 0.21213), (0.674423, 0.149509),
-	(0.794871, 0.149929), (0.906449, 0.567225),
-]
+# Physical bulb candidates accepted after reconciliation with the factory diagram and
+# teardown photographs. GI030/GI053 are mini-flipper shaft holes, and GI043 duplicates
+# GI040. Never turn an arbitrary GI collection or show-mesh count into quantity.
+GI_BULB_OBJECTS = (
+    "GI_003", "GI_005", "GI_007", "GI_012", "GI_013", "GI_014", "GI_015",
+    "GI_020", "GI_024", "GI_026", "GI_028", "GI_034", "GI_036",
+    "GI_038", "GI_040", "GI_045", "GI_046", "GI_049", "GI_050", "GI_054",
+    "GI_055", "GI_056", "GI_057", "GI_059", "GI_060", "GI_1", "GI_27", "GI_30",
+)
+# Physical identity and the final PARTY lamp projection have been reconciled.
+GI_REVIEW_PENDING = ()
 
 
 def _file_sha256(path: Path) -> str:
@@ -595,8 +640,76 @@ def write_extraction_manifest(source_root: Path) -> Path:
 	return manifest_path
 
 
+def verify_vpw(source_root: Path) -> None:
+	"""Recompute both complete extractions, including the exact world-space export."""
+	base = source_root / VPW_RELATIVE_PATH
+	for folder, expected_hash in (("extracted", VPW_MANIFEST_SHA256), ("world-obj", VPW_WORLD_MANIFEST_SHA256)):
+		manifest = base / f"{folder}.manifest.json"
+		actual = canonical_bytes(build_extraction_manifest(base / folder))
+		if manifest.read_bytes() != actual or hashlib.sha256(actual).hexdigest() != expected_hash:
+			raise RuntimeError(f"VPW {folder} extraction identity differs: {manifest}")
+	for path, expected in (
+		(base / "source/Simpsons Pinball Party, The (Stern 2003) VPW 2.0.vpx", VPW_TABLE_SHA256),
+		(base / "extracted/script.vbs", VPW_SCRIPT_SHA256),
+		(base / "world-obj/Simpsons Pinball Party, The (Stern 2003) VPW 2.0.obj", VPW_OBJ_SHA256),
+	):
+		if _file_sha256(path) != expected:
+			raise RuntimeError(f"VPW source identity differs: {path}")
+
+
+def world_bounds(path: Path, names: set[str]) -> dict[str, tuple[tuple[float, ...], tuple[float, ...]]]:
+	"""Read exact world vertices from the pinned vpxtool OBJ, including baked geometry."""
+	points: dict[str, list[tuple[float, ...]]] = {}
+	name = ""
+	with path.open(encoding="utf-8") as stream:
+		for line in stream:
+			if line.startswith("o "):
+				name = line[2:].strip()
+			elif name in names and line.startswith("v "):
+				points.setdefault(name, []).append(tuple(float(n) for n in line.split()[1:4]))
+	if set(points) != names:
+		raise RuntimeError(f"Missing world geometry: {sorted(names - set(points))}")
+	return {name: (tuple(min(p[i] for p in rows) for i in range(3)), tuple(max(p[i] for p in rows) for i in range(3))) for name, rows in points.items()}
+
+
+def lamp16_measurement() -> list[tuple[float, float]]:
+	data = load_json(MEASUREMENTS_PATH)["lamp16"]
+	w, h = data["table_bounds"]
+	transform = drawing_fit((tuple(c["pixel"]), (c["vpx_center"][0] / w, c["vpx_center"][1] / h)) for c in data["controls"])
+	return [tuple(round(n, 3) for n in apply_drawing_fit(transform, point)) for point in data["points"]]
+
+
+def backpanel_measurement() -> list[tuple[float, float]]:
+	data = load_json(MEASUREMENTS_PATH)["backpanel"]
+	a, b, c = data["coefficients"]
+	return [(round((a * u + b) / (c * u + 1), data["round_decimals"]), data["plane_y"]) for u, _ in data["pixel_centres"]]
+
+
+def upper_gi_measurement() -> tuple[float, float]:
+	data = load_json(UPPER_GI_PATH)
+	w, h = data["table_bounds"]
+	transform = drawing_fit((tuple(c["pixel"]), (c["world"][0] / w, c["world"][1] / h)) for c in data["controls"])
+	point = next(row for row in data["gi"] if row["description"] == "rear middle")
+	if not point["inside_control_hull"]:
+		raise RuntimeError("Upper GI measurement is extrapolated")
+	return tuple(round(n, 2) for n in apply_drawing_fit(transform, point["pixel"]))
+
+
 def provenance(*source_refs: str) -> dict[str, Any]:
 	return {"status": "validated", "source_refs": list(source_refs)}
+
+
+def gi_cbg_measurement() -> tuple[float, float]:
+	"""Invert the factory-symbol control fit; the symbol is not a filament."""
+	d = load_json(GI_CBG_SYMBOL_PATH)
+	fit = drawing_fit([(tuple(c["world"]), tuple(c["pixel"])) for c in d["controls"]])
+	(a, b, c), (e, f, g) = fit
+	u, v = d["symbol_center_source_crop"]
+	det = a * f - b * e
+	if abs(det) < 1e-12:
+		raise RuntimeError("Degenerate factory GI drawing fit")
+	world = ((f * (u - c) - b * (v - g)) / det, (a * (v - g) - e * (u - c)) / det)
+	return tuple(round(value / bound, 2) for value, bound in zip(world, d["texture"]["world_bounds"]))
 
 
 def located(identifier: str, role: str, positions: list[tuple[float, float]], *source_refs: str) -> dict[str, Any]:
@@ -620,8 +733,181 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
-def source_records() -> list[dict[str, Any]]:
+def completion_sources() -> list[dict[str, Any]]:
+	base = "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/vpw-2.0/"
+	attribution = "VPin Workshop; based on Coindropper/32assassin; supplemental rebuilt hardware geometry"
 	return [
+		{
+			"id": PARTY_GI_SOURCE, "kind": "human_review",
+			"uri": "internal:" + PARTY_GI_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "e7917082fc27ea0044ec9dc594a56b35535513ded6d6aa3447061ce02bf4d1a6",
+			"locator": "High_End_Pins HEP post15408 (8323533), photos5/6: separate horizontal unhooded lamp under PARTY, distinct from the nearby reflector and V01 bayonet. Its own visible replacement LED body projects to (.69,.82) through four jointly calibrated photo views. Target lies inside the printed-art control hull in both measurement views. Correlated SIFT controls and shared-lens/no-distortion assumptions are disclosed; allowance .03 in x/.02 in y includes replacement-body versus original-filament uncertainty. The original filament, socket contacts and F25 wire colors are not observed. Matching the factory right-return description and unique laydown GI wedge holder identifies the nominal #555 by inference, not a printed per-location label.",
+			"license": "NOASSERTION", "attribution": "High_End_Pins, Pinside HEP build photographs; Stern factory physical description; derived calibrated two-view replacement-body projection",
+		},
+		{
+			"id": LEFT_RETURN_SOURCE, "kind": "human_review",
+			"uri": "internal:" + LEFT_RETURN_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "19afdc332c2c430462ec8d375f344585ab6388e08872faed370635c5e4df00dd",
+			"locator": "Fourth left sling/return socket, nominal yellow GI symbol Y03. Own flat source annulus uses four threshold fits; standard-library pixel boundaries independently reproduce the axis. Owner gallery08 shows its occupied socket, distinct from the lower return lamp, and registration target is inside the flat-art control hull. Coarse (.11,.78), .01 normalized projection allowance; no original filament is observed.",
+			"license": "NOASSERTION", "attribution": "VPW source artwork; Pinside gallery physical owner photograph, uploader unasserted; local own-socket projection",
+		},
+		{
+			"id": GI_CBG_SYMBOL_SOURCE, "kind": "human_review",
+			"uri": "internal:" + GI_CBG_SYMBOL_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "2bf86d66425baef1d4c186c558ede8d955f19a88595cc55a146957172abd4c8a",
+			"locator": "Factory PDF121 yellow GI bulb symbol near CBG, distinct from a remote part callout. Sixteen independent insert/bumper/wood-opening controls place it inside their hull. Coarse (.17,.32), with .05 normalized schematic projection allowance in each axis. No photographed socket or filament axis is claimed. The born-digital page has no native raster resolution; the150dpi image is a working reference and the committed crop uses type-derived676dpi.",
+			"license": "NOASSERTION", "attribution": "Stern Pinball factory drawing; derived device-symbol projection",
+		},
+		{
+			"id": CBG_FLASHER_SOURCE, "kind": "human_review",
+			"uri": "internal:" + CBG_FLASHER_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "192437914d0f64ea5ff2ebeae6200496562dbdb8018998af571151d93a670ec9",
+			"locator": "Factory PDF33 clear cover29 plan reconciled against ten independently read insert/bumper/outlane controls spanning more than half playfield height, target inside their hull. Inherited own Light.f29a bulb plan agrees within .01 normalized after explicit old/new table-bound conversion. Factory29 black stamp controls below-playfield construction; the VPX halo70 does not overrule it. The PDF85 holder under CBG/left ramp does not by itself establish bulb height.",
+			"license": "NOASSERTION", "attribution": "Stern factory location drawing; retained VPX bulb geometry; derived planar reconciliation",
+		},
+		{
+			"id": GI_HARDWARE_SOURCE, "kind": "human_review",
+			"uri": "internal:" + GI_HARDWARE_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "d705283779950592a609e44dc01e504283468a66bba13e9546fd75ed01e9ac6b",
+			"locator": "Owner hawkeyexx photo11 identifies actual mini-flipper shaft floor contacts at modeled GI030/GI053. Sandman454 post5169 photo7 shows an installed GI007 bulb, photo8 identifies GI032's bare wooden flasher-wire passage, and photo10 identifies GI31's reflector-wire passage. Nearby fitted metal bayonet shells provide physical contrast. Extrapolated homographies are identity guides only; full source/read/inlier pins and limitations are retained.",
+			"license": "NOASSERTION", "attribution": "hawkeyexx and Sandman454, Pinside; local derived hardware crosschecks",
+		},
+		{
+			"id": EXPOSED_SOCKETS_SOURCE, "kind": "human_review",
+			"uri": "internal:" + EXPOSED_SOCKETS_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "baf5e71eb8878f5a3020dd0e00a758f28ec547bd8466ea35071ff916761b8326",
+			"locator": "Owner hawkeyexx, Pinside post7481, 2024-11-20, image3: upper playfield and TV removed. GI007 and GI038 contain real empty metal lamp sockets, matching the known separate left socket. Their printed annuli are inside the 162-inlier planar-registration hull. Registration is an identity crosscheck; exact coordinates remain each VPW Light's own bulb center. Original filament position and wire color are not inferred from this photograph. Complete source/read/inlier pins are retained.",
+			"license": "NOASSERTION", "attribution": "hawkeyexx, Pinside; derived identity registration by pinmame-game-defs curation",
+		},
+		{
+			"id": VPW_COMPONENTS_SOURCE, "kind": "human_review",
+			"uri": "internal:" + VPW_COMPONENTS_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "0a2f669e173a40038b557150f0084633a86f8859186ed5facc5235afc7b582f9",
+			"locator": "Compact extraction of exact VPW2.0 bulb Light centers, surfaces, world-mesh bounds and object-file hashes. Source extraction and world manifests are pinned. GI030/GI053 are shaft-hole helpers; GI043 duplicates GI040. A show_bulb_mesh flag is a geometry candidate, not physical quantity authority.",
+			"license": "NOASSERTION", "attribution": "VPin Workshop geometry; deterministic local extraction",
+		},
+		{
+			"id": RIGHT_RETURN_SOURCE, "kind": "human_review",
+			"uri": "internal:" + RIGHT_RETURN_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "257a7668e3bf6cfd940ebae442c04fbc519332b795837f43b29678480ab18f9f",
+			"locator": "Own upper socket annulus in the flat Playfield2 UV plane, fitted at four thresholds; x=u/1844,y=v/4096. Independent owner Dancingbear's Pinside ad198006 photo14 shows a real unhooded bulb in that opening, separate from the elevated reflector and lower GI31 opening. Coarse (.80,.78), .02 normalized projection allowance. The photo homography is extrapolated and only an observed identity check; it is not the coordinate authority. Native review shows the broad cylindrical brass shell/collar below the replacement LED, corroborating the factory V01 #44 bayonet association. The complete underboard mounting and original filament are hidden.",
+			"license": "NOASSERTION", "attribution": "VPW source texture; physical photograph by Dancingbear, Pinside ad198006; derived own-socket projection",
+		},
+		{
+			"id": LEFT_SOCKET_SOURCE, "kind": "human_review",
+			"uri": "internal:" + LEFT_SOCKET_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "03c332cd9c7f98471bf3b62f9b5bc6910b5649b7d5254756b6f107d2bc8d8f1e",
+			"locator": "Separate bayonet socket beside the left mini-flipper, physically visible in Pinside gallery photo28. Its own flat source annulus uses eight native edge reads, a least-squares circle fit and an independent gold-component bounding-axis check. x=u/1844,y=v/4096 gives coarse (.18,.19), with .02 normalized allowance. This is a socket-plane projection, not an observed original filament; quantity is not inferred from this one fixture.",
+			"license": "NOASSERTION", "attribution": "VPW source texture; Pinside physical gallery photograph; derived own-socket projection",
+		},
+		{
+			"id": MODE_REVIEW_SOURCE, "kind": "human_review",
+			"uri": "internal:" + MODE_REVIEW_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "47aefb89e03caf9ff3cd1842859868a709fd994335041dc1a0f47f40815a5859",
+			"locator": "Owner hawkeyexx Pinside post7385 photos6/7: two photographed front LED windows triangulate near (.583,.071) and (.645,.070). Reprojection residuals 4.3-6.4px and camera/plastic-pose limitations are explicit. These are front windows, not unseen PCB bases. They corroborate the new VPW emitter y=.060 area and reject the old mis-scaled sign at y=.0345; exact coordinates remain the new individual emitter meshes.",
+			"license": "NOASSERTION", "attribution": "Owner photographs by hawkeyexx; derived measurements by pinmame-game-defs curation",
+		},
+		{
+			"id": SPOTLIGHT_SOURCE, "kind": "human_review",
+			"uri": "internal:" + SPOTLIGHTS_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "a258aac9ad784b752cc52e4315ebef91a52b81c5ab0954776fb637bd288cce44",
+			"locator": "Four physical reflector/socket axes from exact VPW world vertices (Primitive24/98/108/116), not whole-assembly centroids. Factory #555 bulbs use manufacturer CEC light-center-length16.5mm and documented VPX units. Projection bounds use the entire modeled seating interval plus10% scale allowance; rounded .01 with .02 normalized uncertainty, conditional on the recorded model/seat assumptions. No original filament is directly observed.",
+			"license": "NOASSERTION", "attribution": "Stern hardware identity; VPW geometry; CEC Industries #555 specification; Visual Pinball unit documentation; local derived projection",
+		},
+		{
+			"id": PHOTOGRAMMETRY_SOURCE, "kind": "human_review",
+			"uri": "internal:" + PHOTOGRAMMETRY_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "0c54550c1fe200be4b3cbe05ba2729e0e896032c976134112ab9dcc22de06258",
+			"locator": "hawkeyexx's Pinside post7385 (8334936), head and upper playfield removed: Homer own socket in photos6/7/9 and fifth GI spotlight in photos5/7. Fixed-camera stdlib replay follows retained OpenCV planar calibration and source pixel readings. Coarse playfield projection, uncertainty .01 normalized; replacement LED and socket anchors, not observed original incandescent filaments. Camera assumptions, sensitivity fits and rejected mismatched points are explicit in the record.",
+			"license": "NOASSERTION", "attribution": "Owner photographs by hawkeyexx; derived measurements by pinmame-game-defs curation",
+		},
+		{
+			"id": UPPER_GI_SOURCE, "kind": "human_review",
+			"uri": "internal:" + UPPER_GI_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "71b6e1696eb2376078c6d9a9cac3bc8780803721db3d01ddd2a89bebd6782289",
+			"locator": "Factory PDF112 underside drawing: seven small bayonet socket axes, distinct from six matrix insert sockets65-70. Twelve independent mechanism/insert/board-feature controls fit the drawing; six sockets reconcile VPW's Wall341 bulbs, the seventh rear-middle socket is measured inside the control hull at (.25,.01), rounded .01 with .01 normalized uncertainty. Residuals, source pixels, leave-one-out sensitivity and control origins retained.",
+			"license": "NOASSERTION", "attribution": "Stern Pinball factory drawing; derived measurements by pinmame-game-defs curation",
+		},
+		{
+			"id": PHYSICAL_REVIEW_SOURCE, "kind": "human_review",
+			"uri": "internal:" + MEASUREMENTS_PATH.relative_to(ROOT).as_posix(),
+			"sha256": "64821a2e61a3172e51723ab13c2642cf220dbc9c22142d6360171a591df1bf20",
+			"locator": "Reproducible factory-drawing and physical-photo measurements. Lamp16's two leader endpoints use six independent mechanism controls; backpanel sockets use two elevations and a recorded one-dimensional projective fit. Each retains source pixel reads, formula, bounds, hashes, projection and uncertainty.",
+			"license": "NOASSERTION", "attribution": "pinmame-game-defs curation; original factory and owner sources attributed in the measurement record",
+		},
+		{
+			"id": CURRENT_CORE_SOURCE, "kind": "pinmame_core",
+			"uri": "https://github.com/vpinball/pinmame", "revision": CURRENT_REVISION,
+			"locator": (
+				"src/wpc/segames.c simpprtyGameData and all eighteen CPU ROM declarations; src/wpc/se.c "
+				"lampstrb_w ($2008), auxlamp_w ($2009), lampdriv_w ($200A), gilamp_w/r ($3406/7), "
+				"vblank lampMatrix copy/clear, nLamps=64+lampCol*8, nGI=1 and dispSPP; src/wpc/core.c "
+				"core_write_pwm_output_lamp_matrix binary fallback scans every selected strobe bit, "
+				"while physical-output mode respects the two-column auxiliary matrix. Thus auxiliary "
+				"bits 4/8 are another potential binary writer for public lamps 81-96."
+			),
+			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
+		},
+		{
+			"id": LIBPINMAME_SOURCE, "kind": "pinmame_core",
+			"uri": f"https://github.com/vpinball/pinmame/blob/{CURRENT_REVISION}/src/libpinmame/libpinmame.cpp",
+			"revision": CURRENT_REVISION,
+			"sha256": "956ea00d6b1f5b3b8533534ca2319fb931618f8fac3aa3792340a106a15ad76e",
+			"locator": (
+				"CORE_VIDEO layout initialization at lines 913-919 assigns width=layout.length and "
+				"height=layout.start, as defined by src/wpc/core.h core_dispLayout. The same revision's "
+				"src/wpc/segames.c dispSPP index3 is {34,10,10,14,CORE_VIDEO,seminidmd_update}: "
+				"the composite TV frame is width14, height10. Indices1/2 are green/red planes of "
+				"that same TV, flagged CORE_DMD|CORE_NODISP, not additional physical displays."
+			),
+			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
+		},
+		{
+			"id": VPW_TABLE_SOURCE, "kind": "vpx_table", "uri": base + "source/Simpsons%20Pinball%20Party,%20The%20(Stern%202003)%20VPW%202.0.vpx",
+			"sha256": VPW_TABLE_SHA256, "revision": "VPW 2.0, 2022-08-22",
+			"locator": "Acquired 2026-10-29 from https://vpuniverse.com/files/file/10383-simpsons-pinball-party-stern-2003-vpw-mod/. Same table lineage, so supplements the old recreation rather than independently corroborating it. Exact bounds 0,0,952.94,2117.65.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": attribution,
+		},
+		{
+			"id": VPW_SCRIPT_SOURCE, "kind": "vpx_script", "uri": base + "extracted/script.vbs",
+			"sha256": VPW_SCRIPT_SHA256,
+			"locator": "Const cGameName=simpprty; Lampz.Callback 73-79 and two accumulating callbacks 80 (l80/l80b); UpdateLeds TV dot mapping; UpdateGI and Lampz.obj(111)=ColtoArray(GI); Flupper dome callbacks. Physical quantities follow the factory manual, not callback helper counts.",
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": attribution,
+		},
+		{
+			"id": VPW_GEOMETRY_SOURCE, "kind": "vpx_table", "uri": base + "world-obj/Simpsons%20Pinball%20Party,%20The%20(Stern%202003)%20VPW%202.0.obj",
+			"sha256": VPW_OBJ_SHA256,
+			"locator": (
+				"vpxtool git:v0.33.3 export obj --units vpu. Each baked primitive uses its own world-space mesh bounds, "
+				"not its stored origin. LEDOff screen bounds centre (412.249985,172.5); l73-l80/l80b are individual emitters. "
+				f"extracted.manifest.json SHA256 {VPW_MANIFEST_SHA256}, 2488 files, 198228549 bytes; "
+				f"world-obj.manifest.json SHA256 {VPW_WORLD_MANIFEST_SHA256}, 85 files, 74135186 bytes. "
+				"Both manifests use canonical JSON with sorted relative POSIX paths, byte sizes and SHA256 for every file. "
+				"Normalize this table by x/952.94,y/2117.65; the earlier table uses x/952,y/2115."
+			),
+			"license": "NOASSERTION", "rights": "NOASSERTION", "attribution": attribution,
+		},
+		{
+			"id": LAMP_SCAN_SOURCE, "kind": "rom_static_analysis",
+			"uri": "internal:tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-scan.json",
+			"sha256": "0b193b56ed7b53516178942c0d2a0a4d07e868b2b70e042a1c5c66846a848443",
+			"revision": CURRENT_REVISION,
+			"locator": "tools/simpsons_party_rom_audit.py verifies all 18 clone CPU members against pinned source SHA1, then the four ten-word tables and bounded fixed-bank writer signatures. Raw operand scan is explicitly limited to listed extended stores/RMW, not arbitrary indexed writes. No physical quantity or coordinate derives from ROM activity.",
+			"license": "NOASSERTION", "attribution": "Local analysis of authorized ROMs; ROM bytes remain external",
+		},
+		{
+			"id": LAMP_SERVICE_SOURCE, "kind": "runtime_scenario",
+			"uri": "internal:tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-service.json",
+			"sha256": "54426cb0c5c520cc455246877ce40d4e251e35a9d71801bd4a6fc5bc64e92566",
+			"revision": CURRENT_REVISION,
+			"locator": "Fresh-state simpprty 5.00 service diagnostics: verified DMD navigation into Single Lamp and All Lamps. Positive transitions for every address 1-80, no extra slot transition. Retains raw trace, scenario, library, CPU and DMD frame hashes; absence alone never proves an address unused.",
+			"license": "NOASSERTION", "attribution": "Local LibPinMAME run of authorized ROMs",
+		},
+	]
+
+
+def source_records() -> list[dict[str, Any]]:
+	return completion_sources() + [
 		{
 			"id": CATALOG_SOURCE,
 			"kind": "pinmame_catalog",
@@ -675,8 +961,9 @@ def source_records() -> list[dict[str, Any]]:
 				"leave it unset and publish 15 as constant zero; se.c:425 nLamps = 64 + lampCol*8 and "
 				"src/wpc/vpintf.c:65-110 vp_getChangedLamps scans CORE_STDLAMPCOLS + lampCol = 12 columns, so "
 				"public lamps run 1-96; se.c:628-632 gilamp_w/gilamp_r and the memory map at se.c:1099/1118 "
-				"(\"GI lamps on Simpsons?\") are the only writers of lampMatrix columns 10-11 (public 81-96), "
-				"and no PWM output is written for them on this driver."
+				"(\"GI lamps on Simpsons?\") address lampMatrix columns 10-11 (public 81-96). "
+				"The newer source audit also accounts for binary auxiliary strobes 4/8; no PWM output "
+				"is written for these extra columns on this driver."
 			),
 			"license": "BSD-3-Clause",
 			"attribution": "PinMAME contributors",
@@ -777,7 +1064,10 @@ def source_records() -> list[dict[str, Any]]:
 				"and 141) identify the LED Mode Signifier board 520-5225-00 on the back panel next to the TV, and "
 				"PDF page 42 (printed 28) ties its LEDs to lamps 73-80; PDF page 121 (Section 5 "
 				"Chapter 2, printed 103) carries the General Illumination Circuit Detailed Wiring "
-				"Diagram. The text layer double-doubles most characters and, on the diagnostics "
+				"Diagram. PDF124 (printed106) establishes normally-closed lower EOS contacts, "
+				"single-winding flipper coils and kick/hold timing; PDF126 (printed108) establishes "
+				"cabinet/coin-contact NO construction and UK Post Save button behavior. "
+				"The text layer double-doubles most characters and, on the diagnostics "
 				"chapter specifically, shifts character codes by a constant +29 with no ToUnicode "
 				"correction on some pages; every table cited here was read from a rendered page, "
 				"never from pdftotext output."
@@ -786,6 +1076,63 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "Stern Pinball, Inc.; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
 			"excerpts": [
+				{
+					"id": "excerpt.simpsons-party.flipper-construction",
+					"locator": "PDF124, printed106, full flipper contact diagram and technical overview; parts crosscheck PDF96/97",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/flipper-construction.md",
+					"sha256": "1f4ba3d96622b3721dc829275d0a9b474c774813a64cd35a63e6d606ef5cebbf",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/flipper-construction.webp",
+					"image_sha256": "9a487ae895f495fc4fbaac264ff0a9079ed3cecfecdf498c2d7845b841f243a1",
+					"image_derivation": "The_Simpsons_Manual.pdf page 124, crop box 0.03,0.02,0.94,0.93, born-digital page rendered for legibility (smallest type in region 5.0pt, targeting 11px glyphs), rendered at 158 dpi, grayscale, 1226x1587 WebP quality 70",
+					"method": "mixed", "transcribed_by": "curation, primary visual review of own factory circuit", "reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.cabinet-contact-polarity",
+					"locator": "PDF126, printed108, complete cabinet/coin/dedicated/UK contact regions and Post Save note",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/cabinet-contact-polarity.md",
+					"sha256": "ac6116943e72445a4f17490ce6d520f9a5426ecf5d4226c1d1fa40ed729538e7",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/cabinet-contact-polarity.webp",
+					"image_sha256": "45820cf1e705010a68071b0f44125bc094a24eed9348de43d93616077624f385",
+					"image_derivation": "The_Simpsons_Manual.pdf page 126, crop box 0.02,0.02,0.97,0.94, born-digital page rendered for legibility (smallest type in region 3.0pt, targeting 11px glyphs), rendered at 186 dpi, capped to 1500px wide, grayscale, 1501x1881 WebP quality 70",
+					"method": "mixed", "transcribed_by": "curation, primary visual review of own factory circuit", "reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.gi-cbg-symbol",
+					"locator": "PDF121, printed103, individual yellow-circuit GI bulb symbol beside CBG",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/gi-cbg-symbol.md",
+					"sha256": "af64a88e57998f477ca7a8129663d30d090604240443efcf83ebddb1616bbf21",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/gi-cbg-symbol.webp",
+					"image_sha256": "79e374f2d8b9a47aa84d51875a7087e3c3a8728ef2719db85281f8fa4b6bbf64",
+					"image_derivation": "The_Simpsons_Manual.pdf page 121, crop box 0.113725,0.687879,0.231373,0.781818, born-digital page rendered for legibility (smallest type in region 1.2pt, targeting 11px glyphs), rendered at 676 dpi, colour, 676x699 WebP quality 70",
+					"method": "manual", "transcribed_by": "curation, visually checked factory device-symbol measurement", "reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.bulbs-and-sockets",
+					"locator": "PDF90/92, printed72/74, full small bayonet and wedge bulb/socket tables",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/bulbs-and-sockets.md",
+					"sha256": "3da6a028d2bbcae25f713392a7d2862a4a357e9603a66fcc108f45ce4e7adab6",
+					"method": "manual", "transcribed_by": "primary curator, visual full-table reading", "reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.pops-two-bulbs",
+					"locator": "PDF37, Pops 2X lamp16 two leaders",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/pops-two-bulbs.md",
+					"sha256": "f915798070a2c13c92c8769364189391129dc03f4b092c2fd95f45b76d2558f4",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/pops-two-bulbs.webp",
+					"image_sha256": "d19155c08b6ad03428aa5c3611d22551596f85ac145bc588f98fc418c4434e5d",
+					"image_derivation": "The_Simpsons_Manual.pdf page 37, crop box 0.125,0.385,0.255,0.44, scanned page rendered at its native resolution (embedded image xref 1665, 546px across 3.64in), rendered at 150 dpi, grayscale, 167x91 WebP quality 70",
+					"method": "manual", "transcribed_by": "primary curator, visual drawing reading", "reviewed": True,
+				},
+				{
+					"id": "excerpt.simpsons-party.upper-gi-sockets",
+					"locator": "PDF112, printed94, seven small bayonet sockets beneath the upper playfield",
+					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/upper-gi-sockets.md",
+					"sha256": "8553560f723a249b571ec181a8b714bbe641a19eb970b3f47aac9690930153d7",
+					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/upper-gi-sockets.webp",
+					"image_sha256": "9bbaf0c064ca5b46f62ef8b89e244df10144c3c29b57ba453f3cc6a2870cf395",
+					"image_derivation": "The_Simpsons_Manual.pdf page 112, crop box 0.11,0.04,0.43,0.35, scanned page rendered at its native resolution (embedded image xref 5360, 374px across 2.49in), rendered at 150 dpi, colour, 410x513 WebP quality 70",
+					"method": "manual", "transcribed_by": "primary curator, visual socket-axis reading", "reviewed": True,
+				},
 				{
 					"id": "excerpt.simpsons-party.switch-matrix-dedicated-switches",
 					"locator": "PDF page 30, printed page 16, SWITCH MATRIX GRID & DEDICATED SWITCHES",
@@ -862,7 +1209,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.simpsons-party.general-illumination",
 					"locator": "PDF page 121, Section 5 Chapter 2, printed page 103, General Illumination Circuit Detailed Wiring Diagram",
 					"path": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/general-illumination.md",
-					"sha256": "cb3ad1b12ae358b31dd45ccb87bd1fbcc7778ee8210d78b28e9834638865b29a",
+					"sha256": "e69ffe8a7dd8f4633d54697c9b7f524976a5b0c2936629f8e632a112a251c1b7",
 					"image": "evidence/excerpts/stern.the-simpsons-pinball-party.2003/general-illumination.webp",
 					"image_sha256": "2274c15a61f607eb3cb1286aa108a6700e1dd2c3407f80e1fe2c54ec4d528baf",
 					"image_derivation": "The_Simpsons_Manual.pdf page 121, crop box 0.06,0.03,0.98,0.97 of the page, rendered at 150 dpi with pdftoppm, reduced to 750px wide grayscale, quality 60 WebP",
@@ -879,12 +1226,11 @@ def source_records() -> list[dict[str, Any]]:
 			"revision": "2026-08-07",
 			"sha256": MANUAL_TRANSCRIPTION_SHA256,
 			"locator": (
-				"Retained human transcription of every rendered manual table and diagram used by "
-				"this definition, together with the rendered PNG page cache under "
-				"external:pinmame-manuals/rendered/stern.the-simpsons-pinball-party.2003/ and the "
-				"pinned-source/retained-script cross-reference notes. The retained PDF's text layer "
-				"is unreliable (see the manual source locator), so this transcription is the source "
-				"of record and the OCR text is never an authority."
+				"Retained historical human transcription of the original curated manual tables and "
+				"diagrams, with pinned-source/retained-script cross-references. New completion renders "
+				"are under external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/completion-20261029/ "
+				"and the compact reviewed excerpts and measurements are committed. The retained PDF's "
+				"text layer is unreliable; rendered pages control the readings and OCR is a search aid."
 			),
 			"license": "NOASSERTION",
 			"attribution": "pinmame-game-defs curation",
@@ -1061,6 +1407,8 @@ def input_devices() -> list[dict[str, Any]]:
 						"beam, and never inverts it."
 					)
 			if address in CABINET_MATRIX_LABELS:
+				extra["normally_closed"] = False
+				notes += " Cabinet/coin-door wiring drawing PDF126 explicitly marks these contacts normally open."
 				role_map = {
 					1: "cabinet.left-button-uk", 8: "cabinet.right-button-uk",
 					2: "cabinet.coin.4", 4: "cabinet.coin.right", 5: "cabinet.coin.center",
@@ -1076,6 +1424,8 @@ def input_devices() -> list[dict[str, Any]]:
 						"plumb-bob tilt pendulum, not opto construction."
 					)
 				availability = "used"
+				if address in FUTURE_USE_MATRIX_ADDRESSES:
+					availability = "optional"
 				if address in OPTIONAL_MATRIX_ADDRESSES:
 					availability = "optional"
 					if address in (1, 8):
@@ -1133,8 +1483,8 @@ def input_devices() -> list[dict[str, Any]]:
 				roles=[role],
 				wiring=wiring,
 				physical=physical,
-				normally_closed=False,
-				spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE),
+				normally_closed=address in (81, 83),
+				spatial=not_applicable("internal_nonvisual" if address in (81, 83) else "cabinet_or_service", MANUAL_SOURCE),
 			)
 		)
 
@@ -1281,7 +1631,22 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					"instead."
 				)
 			if address in FLASHER_SOLENOIDS:
-				notes += " #906 wedge-base flashlamp (165-5004-00)."
+				physical["quantity"] = 1
+				notes += (
+					" One #906 wedge-base flashlamp (165-5004-00): PDF33/35 enumerate ten individual "
+					"circuits, each Bulb X1; PDF82/112 list six main and three upper Mini-Mars covers, "
+					"and PDF103 identifies the tenth bare bulb inside Homer. The global PDF92 quantity13 "
+					"and overlapping assembly BOM quantities are not additional sockets on one output. "
+					"Render doubles and toy illumination helpers are excluded."
+				)
+				if address not in (27, 29):
+					notes += " Placement is the physical VPW Flupper dome base's world-space centre, reconciled with the factory location drawing."
+				if address == 23:
+					notes += " Original orange right-ramp dome geometry, with DuffCanToy=0; the Duff-can replacement is an optional table mod."
+				if address == 29:
+					notes += " Old Light.f29a displays its own bulb at the manual's clear CBG cover; f29 is its broad render double. Ten factory insert/bumper/outlane controls reconcile that plan within .01 normalized. Factory33 marks29 below the playfield: the VPX halo70 is a rendering proxy, not construction authority. The new minimized base9 is excluded."
+				if address == 27:
+					notes += " Homer has one bare bulb inside the head. Owner photos with the head removed supply its own socket projection at (.73,.13), rounded to .01 with .01 normalized uncertainty. The observed replacement LED/socket anchor is not an original filament measurement. The old l127/l127a lights illuminate the toy and are excluded; the new minimized base10 is excluded."
 			if address == 24:
 				notes += (
 					' Manual footnote: "Coil Q24 is Optional. If a Coin Meter, Token Dispenser or '
@@ -1304,9 +1669,17 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			availability = "optional" if address == 24 else "used"
 			role = "emitter" if kind == "flasher" else "effect"
 			if address == 24:
+				extra["roles"] = ["cabinet.optional-accessory"]
+				physical["location"] = "cabinet accessory"
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			else:
 				coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in SOLENOID_PROJECTIONS else (VPX_TABLE_SOURCE,)
+				if address in FLASHER_SOLENOIDS - {27, 29}:
+					coordinate_refs = (VPW_GEOMETRY_SOURCE, VPW_SCRIPT_SOURCE, MANUAL_SOURCE)
+				if address == 27:
+					coordinate_refs = (PHOTOGRAMMETRY_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
+				if address == 29:
+					coordinate_refs = (VPX_TABLE_SOURCE, CBG_FLASHER_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], *coordinate_refs)
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE) if address in SOLENOID_CALLBACKS else (MANUAL_SOURCE, CORE_SOURCE)
 			if address in (12, 13, 14, 24):
@@ -1320,6 +1693,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			wiring_data = AUX_SOLENOID_WIRING[address]
 			physical = {
 				"part_number": wiring_data["part_number"],
+				"location": "cabinet (factory gray mounting-location boxes)",
 				"notes": (
 					f"Printed AUX {address - 32} on the \"Solenoid Expander Auxiliary\" board "
 					f"(SE_BOARDID_520_5068_01, matching simpprtyGameData.hw.display), the same "
@@ -1338,8 +1712,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 						{"namespace": "manual.address", "value": f"AUX {address - 32}"},
 					],
 					physical=physical,
+					roles=["cabinet.uk-up-down-post"],
 					wiring=_solenoid_wiring(address, AUX_SOLENOID_WIRING),
-					spatial=not_applicable("unused", MANUAL_SOURCE),
+					spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE),
 				)
 			)
 			continue
@@ -1355,9 +1730,21 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				f"physical Q{physical_solenoid} ({'RIGHT' if physical_solenoid == 16 else 'LEFT'} "
 				f"FLIPPER, printed coil #{physical_solenoid}) is masked out of raw address "
 				f"{physical_solenoid} and exposed here as its {role_word}-phase public address. "
-				"PinMAME synthesizes the paired hold/power state from the same physical coil; a "
-				"recreation must bind one physical flipper coil per side, never two."
+				"PinMAME synthesizes the paired state from the same physical coil; bind one physical "
+				"flipper per side at the script's canonical callback (right46/left48). PDF124 shows "
+				"one 22-1080 winding per lower coil, driven at 50 V with a 40 ms kick followed by "
+				"1 ms pulses every 12 ms while held, not separate physical power/hold windings."
 			)
+			if address in (45, 47):
+				items.append(_device(
+					identifier, label, "control_signal", "pinmame.output.solenoid", address, "used",
+					(MANUAL_SOURCE, CURRENT_CORE_SOURCE, VPX_SCRIPT_SOURCE),
+					aliases=[{"namespace": "pinmame.solenoid", "value": str(address)},
+					         {"namespace": "manual.address", "value": str(physical_solenoid)}],
+					roles=["internal.flipper.power-phase"], physical={"notes": notes},
+					spatial=not_applicable("internal_nonvisual", CURRENT_CORE_SOURCE),
+				))
+				continue
 			items.append(
 				_device(
 					identifier, label, "coil", "pinmame.output.solenoid", address, "used",
@@ -1388,7 +1775,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				(CONTROLLER_SOURCE, PINNED_CORE_SOURCE, RUNTIME_FLIPPERS) if address == 15 else (CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 				physical={"notes": notes},
-				spatial=not_applicable("virtual" if address in (15, 49) else "unused", PINNED_CORE_SOURCE if address == 15 else CORE_SOURCE),
+				spatial=not_applicable("virtual", PINNED_CORE_SOURCE if address == 15 else CORE_SOURCE),
 			)
 		)
 	return items
@@ -1436,6 +1823,8 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "unused", (MANUAL_SOURCE, CONTROLLER_SOURCE), **extra))
 				continue
 			if address == 32:
+				extra["roles"] = ["cabinet.tournament-button-lamp"]
+				physical["location"] = "cabinet optional tournament button"
 				notes += (
 					' Manual footnote: "Lamp 32, Tournament Button (Optional with Tournament Kit, '
 					'Diode in Connector)". The retained script\'s UpdateLamps sequence skips directly '
@@ -1444,7 +1833,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				)
 				physical["notes"] = notes
 				extra["physical"] = physical
-				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
+				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 				items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "optional", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE), **extra))
 				continue
 			if 73 <= address <= 80:
@@ -1460,68 +1849,71 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"typo and not a separate device. The LEDs are ordinary lamp-matrix positions on row "
 					"10 (J12-P11, Q42); they are not the TV's dot matrix, which pinned PinMAME publishes "
 					"as the separate mini-DMD display, and se.c types 73-80 as strobed LEDs. The "
-					"retained known-working script drives them with NFadeObj onto Primitive l"
-					f"{address} of the table's sign (a table-side name, \"Moes Sign\")."
+					"VPW 2.0 script drives each sign emitter through Lampz.Callback; address 80 "
+					"accumulates callbacks for both l80 and l80b."
 				)
 				if address == 80:
 					notes += (
 						" Two red LEDs share this address: L8 at the bottom-left and L9 at the "
 						"bottom-right of the ALIEN INVASION panel (manual PDF 114 and 170; the lamp "
-						"page stamps 80 twice). Every retained table models one object, l80, at the "
-						"column position (z 165), so no coordinate exists for L9 and no spatial key is "
-						"claimed rather than a one-of-two placement."
+						"page stamps 80 twice). The later VPW table models both emitters as l80 and "
+						"l80b. Each placement is its own world-space emitter mesh bounds centre."
 					)
 				else:
 					notes += (
 						" The sign is vertical and faces the player, so L1-L7 stack in one column and "
-						"share one playfield point; this lamp is placed at its own primitive's x/y "
-						f"(normalized {MODE_SIGN_LAMP_POSITIONS[address][0]}, "
-						f"{MODE_SIGN_LAMP_POSITIONS[address][1]}), and its height on the sign "
-						"(retained z 305 for lamp 73 falling 20 units per lamp) is the only thing that "
-						"separates it from its neighbours."
+						"share a projected playfield point. The placement uses this LED's own "
+						"world-space mesh centre; height distinguishes the successive mode windows."
 					)
 				physical["notes"] = notes
 				physical["location"] = "back panel LED mode sign (above the playfield)"
+				physical["notes"] += " The old sign's width/depth were inaccurate: its projected y=.0345 differs from the rebuilt y=.0601. Independently photographed front windows near y=.070 favor the rebuilt geometry, while remaining distinct from the unseen PCB bases."
 				extra["physical"] = physical
-				if address in MODE_SIGN_LAMP_POSITIONS:
-					extra["spatial"] = located(
-						identifier, "emitter", [MODE_SIGN_LAMP_POSITIONS[address]], VPX_TABLE_SOURCE, MANUAL_SOURCE
-					)
-				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, PINNED_CORE_SOURCE, RUNTIME_STACKING)
+				extra["spatial"] = located(
+					identifier, "emitter", MODE_SIGN_LAMP_POSITIONS[address],
+					VPW_GEOMETRY_SOURCE, VPW_SCRIPT_SOURCE, MANUAL_SOURCE, MODE_REVIEW_SOURCE
+				)
+				refs = (MANUAL_SOURCE, VPW_SCRIPT_SOURCE, CURRENT_CORE_SOURCE, LAMP_SERVICE_SOURCE)
 				items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
 				continue
 			physical["notes"] = notes
 			extra["physical"] = physical
-			extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
+			if address == 16:
+				extra["spatial"] = located(identifier, "emitter", lamp16_measurement(), MANUAL_SOURCE, PHYSICAL_REVIEW_SOURCE, VPX_TABLE_SOURCE)
+				physical["notes"] += " Two #44 bulbs under the Pops 2X sign. Coordinates are the two lamp-location leader endpoints (PDF37), calibrated through six mechanism controls; the table's one l16 glow is not two physical sockets. Measurement uncertainty is 0.02 normalized."
+			else:
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
 			refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 			items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
-	# Public 81-96: published by PinMAME, fed only by CPU ports $3406/$3407, tied to no hardware.
+	# Public 81-96 retain their stable IDs but have no fitted physical lamp circuits.
 	for address in AUX_PORT_LAMP_ADDRESSES:
 		port, bit = (0x3406, address - 81) if address <= 88 else (0x3407, address - 89)
 		items.append(
 			_device(
-				f"lamp.aux-port-{address}", f"Unassigned Lamp Port ${port:04X} Bit {bit}", "virtual",
-				"pinmame.output.lamp", address, "unknown",
-				(PINNED_CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STACKING, RUNTIME_FLIPPERS),
+				f"lamp.aux-port-{address}", f"Unused Lamp Compatibility Slot {address}", "virtual",
+				"pinmame.output.lamp", address, "unused",
+				(CURRENT_CORE_SOURCE, MANUAL_SOURCE, LAMP_SCAN_SOURCE, LAMP_SERVICE_SOURCE),
 				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}],
 				physical={
 					"notes": (
 						f"PinMAME publishes public lamps 1-96 for this driver because simpprtyGameData declares "
 						f"hw.lampCol = 4 (se.c nLamps = 64 + 4*8; vpintf.c vp_getChangedLamps scans 8 + 4 columns). "
 						f"The printed 8x10 matrix fills 1-80; this address is bit {bit} of coreGlobals.lampMatrix"
-						f"[{10 + (address - 81) // 8}], which only se.c's gilamp_w writes, copying the byte the CPU stores at port "
-						f"${port:04X} (the memory map's own comment: \"GI lamps on Simpsons?\"). In LibPinMAME's "
+						f"[{10 + (address - 81) // 8}]. gilamp_w can copy a CPU write to ${port:04X}; "
+						"the binary fallback can also OR auxiliary strobes 4/8 into these columns. In LibPinMAME's "
 						"physical-output mode nothing writes this output for this driver, so it reads zero there. "
 						"No lamp circuit exists for it: the manual's lamp matrix has exactly eight drive columns "
 						"(J13, U10-U17) and ten return rows (J12, Q33-Q42), all of them accounted for by 1-80. "
-						"Three hash-pinned harness runs (boot, attract mode and a started game, about 210 s in "
-						"all) never saw it change; that does not prove the ROM never writes it, so availability "
-						"stays unknown. "
-						"Resolution path: static analysis of simpprty's CPU ROM for every write that can reach "
-						"$3406-$3407, or a harness run of the ROM's own lamp tests watching 81-96."
+						"All four CPU revisions share a bounded ten-strobe scanner: eight main strobes plus "
+						"auxiliary values 1 and 2. Neither 4 nor 8 occurs in that scan. The full-image operand "
+						"audit found no listed extended store/RMW to $3406/$3407, including overlapping word "
+						"stores; this is not a proof about arbitrary indexed or indirect writes. The ROM's "
+						"Single and All Lamp tests positively exercised 1-80 and no extra slot changed. "
+						"The unused disposition concerns physical fitment, established by the manual and "
+						"corroborated by the positive scan/test evidence, not by runtime silence alone."
 					)
 				},
-				spatial=not_applicable("virtual", PINNED_CORE_SOURCE),
+				spatial=not_applicable("virtual", CURRENT_CORE_SOURCE, MANUAL_SOURCE),
 			)
 		)
 	return items
@@ -1529,30 +1921,79 @@ def lamp_outputs() -> list[dict[str, Any]]:
 
 def gi_outputs() -> list[dict[str, Any]]:
 	identifier = "gi.string-1"
+	components = load_json(VPW_COMPONENTS_PATH)
+	by_name = {item["object"]: item for item in components["gi_emitters"]}
+	placements = []
+
+	def add(suffix, position, *refs):
+		x, y = position
+		placements.append({
+			"id": f"{identifier}.emitter.{suffix}", "role": "emitter", "space": "playfield",
+			"x": x, "y": y, "provenance": provenance(MANUAL_SOURCE, *refs),
+		})
+
+	for index, name in enumerate(GI_BULB_OBJECTS, 1):
+		item = by_name[name]
+		xy = (round(item["center"]["x"] / 952.94, 6), round(item["center"]["y"] / 2117.65, 6))
+		refs = [VPW_TABLE_SOURCE, VPW_COMPONENTS_SOURCE]
+		if item["surface"] == "Wall341":
+			refs.append(UPPER_GI_SOURCE)
+		if name in ("GI_007", "GI_038"):
+			refs.append(EXPOSED_SOCKETS_SOURCE)
+		add(f"bulb-{index:02d}", xy, *refs)
+	add("upper-rear-middle", upper_gi_measurement(), UPPER_GI_SOURCE)
+	add("left-mini-flipper", replay_left_socket(load_json(LEFT_SOCKET_PATH))["coarse_xy"], LEFT_SOCKET_SOURCE)
+	add("left-return-upper", replay_left_return(load_json(LEFT_RETURN_PATH))["coarse_xy"], LEFT_RETURN_SOURCE)
+	add("cbg-factory-symbol", gi_cbg_measurement(), GI_CBG_SYMBOL_SOURCE)
+	for index, xy in enumerate(backpanel_measurement(), 1):
+		add(f"backpanel-{index:02d}", xy, PHYSICAL_REVIEW_SOURCE)
+	spots = load_json(SPOTLIGHTS_PATH)
+	for record in spots["records"]:
+		add("spot-" + record["object"].lower(), project_spotlight(record, spots)["coarse_xy"], SPOTLIGHT_SOURCE, VPW_GEOMETRY_SOURCE)
+	add("spot-monorail-support", replay_photogrammetry(load_json(PHOTOGRAMMETRY_PATH), "gi5")["coarse_xy"], PHOTOGRAMMETRY_SOURCE)
+	add("right-return-bayonet", replay_right_return(load_json(RIGHT_RETURN_PATH))["coarse_xy"], RIGHT_RETURN_SOURCE)
+	add("right-return-unhooded", replay_photogrammetry(load_json(PARTY_GI_PATH), "right-return-unhooded")["coarse_xy"], PARTY_GI_SOURCE)
 	notes = (
-		"Whitestar publishes exactly one aggregate GI relay (coreGlobals.nGI = 1, se.c). The "
-		"manual's General Illumination Circuit Detailed Wiring Diagram (PDF 121, printed 103) "
-		"shows one relay (U206 74HCT273 data-latch bit through Q200 2N3904) closing four "
-		"separately-fused branches simultaneously (F24 backpanel, F25 left playfield + right "
-		"return lane, F26 upper mini-playfield + spotlights + coin door, F27 right playfield) -- "
-		"a single-relay, multi-fuse design, not four independently switched circuits, matching "
-		"PinMAME's single-channel model exactly. The retained script's UpdateGI toggles every "
-		"member of its own `GI` collection together (`For each xx in GI:xx.State = ...`), the "
-		"same single-relay behavior. Bulb quantity/location per fused branch is transcribed in "
-		"evidence/excerpts/.../general-illumination.md; the manual's own quantities are printed "
-		'"may change during production", so the retained table\'s 42-member `GI` collection (37 '
-		"`GI_N` Light objects plus 5 `spotlightright*` objects) is used as the placement set "
-		"rather than a hand count from the diagram."
+		"One aggregate GI relay: Whitestar nGI=1 and the known-working UpdateGI script agree with "
+		"the factory relay switching all four fused branches together (PDF121): F24 backpanel, "
+		"F25 left playfield plus right return, F26 upper playfield plus five reflector spots and "
+		"coin door, F27 right playfield. These are not four independently controllable strings. "
+		"The reconciled physical layout has 26 main-floor #44 locations (25 physical socket "
+		"anchors and the CBG factory-symbol projection), seven upper-playfield "
+		"bayonets and ten rear-panel bayonets, plus five #555 reflector spots and the separate "
+		"horizontal unhooded lamp under the PARTY right-return plastic: 49 playfield/rear emitters, "
+		"all placed. Its #555/F25 association follows the factory location description, circuit "
+		"totals and unique laydown GI wedge holder; the photograph does not expose the contacts "
+		"or wire colors. Physical quantity 51 includes the two US coin-door #555 bulbs, which have no "
+		"playfield coordinates; the European one-bulb coin door gives 50. This quantity describes the "
+		"retained physical layout, not a universal production invariant. PDF121 nominally lists "
+		"40 GI #44 and six non-cabinet #555; PDF90's 45 total #44 minus four matrix #44 implies "
+		"41 GI bayonets, while the reconciled #44 locations total 43. The socket rows likewise "
+		"sum to 45 (19 staple-down + four laydown + 22 long-shell), two fewer than the "
+		"47 #44 locations including the matrix. The factory explicitly warns "
+		"GI quantities may change during production. The photo-confirmed extra rear-floor "
+		"sockets are retained instead of deleting physical hardware to fit either nominal count. "
+		"GI030/GI053 coincide with the mini-flipper shafts and are excluded; GI040/GI043 are one "
+		"socket, not two. GI032 and GI31 mark flasher/spotlight wiring passages, not bulbs. "
+		"The older 42-member render collection is not a physical inventory. "
+		"Upper missing socket and backpanel coordinates are calibrated factory/photo projections "
+		"with .01 normalized uncertainty. The separate left and right-return sockets use their "
+		"own flat texture annuli with .02 allowance; the fourth left-return socket uses .01. "
+		"The CBG-area GI uses the factory bulb-symbol projection at (.17,.32), with .05 schematic "
+		"allowance per axis, not a photographed filament. Four reflector axes use conditional #555 "
+		"filament projections with .02 allowance, and the fifth uses a replacement LED-cap "
+		"projection with .01 allowance. The PARTY lamp uses its own replacement LED body "
+		"projection at (.69,.82), with .03 x/.02 y allowance for camera/UV assumptions, "
+		"partial occlusion and original-filament displacement; it is not the V01 bayonet, "
+		"reflector or GI31 wiring passage. Original incandescent filaments are not observed."
 	)
-	return [
-		_device(
-			identifier, "General Illumination", "gi", "pinmame.output.gi", 0, "used",
-			(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
-			aliases=[{"namespace": "pinmame.gi", "value": "0"}],
-			physical={"quantity": len(GI_POSITIONS), "notes": notes},
-			spatial=located(identifier, "emitter", GI_POSITIONS, VPX_TABLE_SOURCE),
-		)
-	]
+	return [_device(
+		identifier, "General Illumination", "gi", "pinmame.output.gi", 0, "used",
+		(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CURRENT_CORE_SOURCE, VPW_COMPONENTS_SOURCE, EXPOSED_SOCKETS_SOURCE, GI_HARDWARE_SOURCE),
+		aliases=[{"namespace": "pinmame.gi", "value": "0"}],
+		physical={"quantity": 51, "notes": notes},
+		spatial={"status": "observed" if GI_REVIEW_PENDING else "validated", "placements": placements},
+	)]
 
 
 def displays() -> list[dict[str, Any]]:
@@ -1564,6 +2005,7 @@ def displays() -> list[dict[str, Any]]:
 			"controller_index": 0,
 			"width": 128,
 			"height": 32,
+			"physical_location": "cabinet_or_service",
 			"spatial": not_applicable("cabinet_or_service", CORE_SOURCE, MANUAL_SOURCE),
 			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE),
 		},
@@ -1572,10 +2014,11 @@ def displays() -> list[dict[str, Any]]:
 			"label": "Mini DMD (14x10 bicolor LED sign)",
 			"kind": "video",
 			"controller_index": 3,
-			"width": 10,
-			"height": 14,
-			"spatial": not_applicable("cabinet_or_service", CORE_SOURCE, MANUAL_SOURCE),
-			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE),
+			"width": 14,
+			"height": 10,
+			"physical_location": "playfield",
+			"spatial": located("display.mini-dmd", "display", [(0.432609, 0.081458)], VPW_GEOMETRY_SOURCE, VPW_SCRIPT_SOURCE, MANUAL_SOURCE, CURRENT_CORE_SOURCE),
+			"provenance": provenance(CURRENT_CORE_SOURCE, LIBPINMAME_SOURCE, MANUAL_SOURCE, VPW_SCRIPT_SOURCE),
 		},
 	]
 
@@ -1611,6 +2054,20 @@ def mechanisms() -> list[dict[str, Any]]:
 		return record
 
 	return [
+		mechanism(
+			"mechanism.uk-post-save", "UK optional Post Save deflectors and center post", "other",
+			[output_id(AUX_SOLENOID_LABELS[n]) for n in (33, 34, 35)],
+			["switch.matrix-1", "switch.matrix-8"],
+			"Optional UK cabinet hardware. PDF126 names two normally-open extra buttons below "
+			"the flipper buttons: left operates the left-outlane ball deflector, right operates "
+			"the right-outlane ball deflector, and both together operate the center up/down post. "
+			"The auxiliary coil table names left/center/right outputs at AUX1/2/3 (public33/34/35) "
+			"on board520-5068-01. PDF33 draws these actuators in gray cabinet-mount boxes; no "
+			"playfield coil coordinates are invented from the base US table, which has none. "
+			"The manual does not specify simultaneous left/right deflector suppression, so the "
+			"both-button description must not be interpreted as a complete exclusive truth table.",
+			[], MANUAL_SOURCE, CURRENT_CORE_SOURCE,
+		),
 		mechanism(
 			"mechanism.trough",
 			"Five-ball trough and ball release",
@@ -1751,12 +2208,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Lower flipper pair",
 			"other",
 			[
-				output_id("Right Flipper Power"), output_id("Right Flipper Hold"),
-				output_id("Left Flipper Power"), output_id("Left Flipper Hold"),
+				output_id("Right Flipper Hold"), output_id("Left Flipper Hold"),
 			],
 			["switch.dedicated-ds-1", "switch.dedicated-ds-2", "switch.dedicated-ds-3", "switch.dedicated-ds-4"],
-			"Two 50V flipper coils (printed #15 Left, #16 Right) with separate power and hold "
-			"windings; se_solenoid_w masks physical 15/16 out of the raw solenoid group and "
+			"Two single-winding 50V flipper coils (printed #15 Left, #16 Right). Factory PDF124 "
+			"specifies a 40 ms full-power kick, then 1 ms drive every 12 ms while held. The normally "
+			"closed EOS opens about 1/16 inch when energized; a foldback reclosure triggers "
+			"another 40 ms kick. These are physical construction/timing facts, while PinMAME "
+			"synthesizes the public EOS state. se_solenoid_w masks physical15/16 out of the raw group and "
 			"exposes each coil at a power-phase and canonical-callback public address pair "
 			"(16->45/46, 15->47/48). Dedicated switches DS-1..DS-4 (public 84/83/82/81) supply "
 			"the button and end-of-stroke inputs; se.c's dedswitch_r nibble-reverses the raw "
@@ -1902,20 +2361,17 @@ def build() -> dict[str, Any]:
 			"opdb_id": "GRvBL-MP3Ev",
 		},
 		"coverage": {
-			"status": "partial",
-			# output_semantics: public lamps 81-96 are enumerated but their availability is
-			# unknown (only CPU ports $3406/$3407 feed them). spatial_placement: lamp 80's second
-			# red LED (L9) has no retained coordinate.
-			"missing": ["output_semantics", "spatial_placement"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "candidate",
+				"semantic_naming": "validated",
 				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1930,7 +2386,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/stern/the-simpsons-pinball-party-2003.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/stern/the-simpsons-pinball-party-2003.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1941,262 +2397,107 @@ def build() -> dict[str, Any]:
 
 
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
-	"""Summarize every spatial disposition so the promotion decision is auditable."""
-	located_inputs: list[int] = []
-	not_applicable_inputs: dict[str, list[int]] = {}
-	omitted_inputs: list[int] = []
-	for device in definition["inputs"]:
-		address = int(device["binding"]["device"])
-		spatial = device.get("spatial")
-		if spatial is None:
-			omitted_inputs.append(address)
-		elif spatial["status"] == "not_applicable":
-			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
-		else:
-			located_inputs.append(address)
-	located_outputs: list[dict[str, Any]] = []
-	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
-	omitted_outputs: list[dict[str, Any]] = []
-	placement_count = 0
-	for device in definition["outputs"]:
-		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
-		spatial = device.get("spatial")
-		if spatial is None:
-			omitted_outputs.append(binding)
-		elif spatial["status"] == "not_applicable":
-			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
-		else:
-			placement_count += len(spatial["placements"])
-			located_outputs.append(binding)
-	for device in definition["inputs"]:
-		spatial = device.get("spatial")
-		if spatial is not None and spatial["status"] != "not_applicable":
-			placement_count += len(spatial["placements"])
-	return {
-		"format": "pinmame-spatial-blockers",
-		"version": 1,
-		"machine_id": definition["machine"]["id"],
-		"status": "partial",
-		"blockers": [
-			"Lamp 80 (ALIEN INVASION) is two red LEDs on the mode-sign board, L8 at the bottom-left "
-			"and L9 at the bottom-right of the plastic (manual PDF 114 and 170; the lamp page stamps "
-			"80 twice). Every retained table models one object, l80, at the sign's column position, "
-			"so L9 has no coordinate. Lamp 80 carries no spatial key rather than a one-of-two "
-			"placement that would understate its quantity.",
-		],
-		"coordinate_convention": {
-			"space": "playfield",
-			"source_bounds": {"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2115.0},
-			"x": "x/952; 0=left, 1=right",
-			"y": "y/2115; 0=rear/backglass, 1=apron/player",
-		},
-		"extraction": {
-			"fail_closed": True,
-			"file_count": EXTRACTION_FILE_COUNT,
-			"manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
-			"manifest_sha256": EXTRACTION_MANIFEST_SHA256,
-			"manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/extracted-vpxtool.manifest.json",
-			"source_ref": VPX_EXTRACTION_SOURCE,
-			"total_bytes": EXTRACTION_TOTAL_BYTES,
-			"vpxtool_version": "vpxtool",
-		},
-		"source_hashes": {
-			"embedded_script_sha256": SCRIPT_SHA256,
-			"manual_sha256": MANUAL_SHA256,
-			"table_sha256": TABLE_SHA256,
-		},
-		"placement_count": placement_count,
-		"resolved_input_addresses": sorted(located_inputs),
-		"resolved_output_bindings": sorted(located_outputs, key=lambda item: (item["group"], item["address"])),
-		"not_applicable_inputs": {reason: sorted(addresses) for reason, addresses in sorted(not_applicable_inputs.items())},
-		"not_applicable_outputs": {
-			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
-			for reason, bindings in sorted(not_applicable_outputs.items())
-		},
-		"omitted_inputs": sorted(omitted_inputs),
-		"omitted_outputs": sorted(omitted_outputs, key=lambda item: (item["group"], item["address"])),
-		"projections": (
-			[{"group": "pinmame.input.switch", "address": address, "reason": reason} for address, reason in sorted(SWITCH_PROJECTIONS.items())]
-			+ [{"group": "pinmame.output.solenoid", "address": address, "reason": reason} for address, reason in sorted(SOLENOID_PROJECTIONS.items())]
-		),
-		"visual_review_cache": {
-			"root": "external:pinmame-manuals/rendered/stern.the-simpsons-pinball-party.2003/",
-			"transcription": {
-				"path": "external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/manual-transcription.md",
-				"sha256": MANUAL_TRANSCRIPTION_SHA256,
-			},
-		},
-		"excluded_object_classes": [
-			"Homer, Homer2, Homer3, homer4 internal VPX triggers (Homer Head figure animation helpers; no Controller.Switch call)",
-			"Trigger1-Trigger6 (PlaySound-only audio-cue helpers; no Controller.Switch call)",
-			"swplunger (internal ball-detection helper for the cvpmImpulseP shooter-lane class; switch 16 itself is bound to the separately-named sw16 object)",
-			"CapKicker/capBall (a static decorative captive-ball prop with no switch or solenoid binding)",
-			"l80 Primitive (models only one of lamp 80's two LEDs; see blockers)",
-			"LEDY, LEDG and LEDR collections (empty; hidden by the script at start-up and bound to no lamp)",
-			"r*/g*/y* TV LED lights (the 14x10 mini-DMD, driven from Controller.ChangedLEDs, a display rather than lamps)",
-		],
-		"unresolved": [],
-		"mode_sign": {
-			"board": "LED PCB (Mode Signifier) 520-5225-00 on bracket 535-9232-00, bolted to the back panel next to the TV",
-			"manual_pages": "PDF 37, 42, 82, 114, 170",
-			"construction": "vertical sign facing the player; L1-L7 (lamps 73-79) in one column, L8 and L9 (lamp 80) at the bottom-left and bottom-right",
-			"placement_rule": "each of lamps 73-79 placed at its own retained Primitive's x/y; they differ only in height (z 305 down to 185), which the playfield plane does not represent",
-			"control_object": "Primitive.RubberPostT23 position (411.9, 127.2) coincides with Rubber.Rubber33's drag-point centroid (411.3, 126.7), and the l73-l80 meshes are local (every vertex within 7 units of the origin), so a Primitive position is its world placement here",
-		},
-		"additional_tables_checked": [
-			{
-				"original_filename": "Simpsons Pinball Party, The (Stern 2003).vpx",
-				"found_in": "the contributor's Tables and Tables Archive folders (byte-identical copies)",
-				"table_sha256": "c15f41e42921dfaebbd42e382573e2bcc09d5af45860218565a2e3b3de041561",
-				"script_sha256": "145c65db98712a916f678078b519fc6c13c93b56acf46e8f2c70a3f8ac7f9c10",
-				"manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/Simpsons Pinball Party, The (Stern 2003).manifest.json",
-				"manifest_sha256": "da51e690d8b51c45864d5214ab3e7b9da5cca6d704effb85755cc5942a698005",
-				"file_count": 1320,
-				"total_bytes": 105934503,
-				"finding": "same Coindropper/32assassin script base; l73-l80 at the same coordinates as the retained table",
-			},
-			{
-				"original_filename": "The Simpsons Pinball Party (Stern 2003).vpx",
-				"found_in": "the contributor's Tables Archive folder",
-				"table_sha256": "6db86f7609ec68e220d0115289a48218a5076bfa6ff0301bb0c00b279d124ee1",
-				"script_sha256": "a77a5dcabe6f4748c5ab8abb6f2f07f09065c9bb8e1a74c808a5c6cb29f7422e",
-				"manifest_uri": "external:pinmame-vpx-sources/stern/the-simpsons-pinball-party-2003/alt-tables/The Simpsons Pinball Party (Stern 2003).manifest.json",
-				"manifest_sha256": "eab2a2606c183dc42b49a93ae1a3c38f366e9eb6238e98f2621aa432647e9b20",
-				"file_count": 1406,
-				"total_bytes": 173391321,
-				"finding": "same script base with added lighting code; l73-l80 at the same coordinates as the retained table",
-			},
-		],
-	}
+	from simpsons_party_completion_report import build_report
+
+	return build_report(
+		definition,
+		legacy_report=load_json(ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003-spatial-sources.json"),
+		vpw_components=load_json(ROOT / "tools/seeds/stern/the-simpsons-pinball-party-2003/vpx-components.json"),
+		measurements=load_json(MEASUREMENTS_PATH),
+		upper_gi=load_json(UPPER_GI_PATH),
+		photogrammetry=load_json(PHOTOGRAMMETRY_PATH),
+		pending_gi=GI_REVIEW_PENDING,
+	)
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
-	lines = [
-		"# The Simpsons Pinball Party (Stern, 2003) spatial review",
-		"",
-		f"Status: {report['status']}. The physical machine record itself is `partial` at "
-		"`machines/partial/stern/the-simpsons-pinball-party-2003.json` for the reasons below; "
-		"every located device carries a validated placement or a documented projection, and one "
-		"honest gap remains: the second red LED of lamp 80.",
-		"",
-		"The matching source is the retained known-working, non-VPW `The Simpsons Pinball Party "
-		f"v0.8.2.vpx` at SHA-256 `{TABLE_SHA256}`. The retained `vpxtool` extraction produced the "
-		f"embedded script at SHA-256 `{SCRIPT_SHA256}`; that embedded stream is the runtime and "
-		f"causality authority. Exact playfield bounds are `{TABLE_BOUNDS}`, and every canonical "
-		"coordinate is x/952 and y/2115 rounded to at most six fractional places.",
-		"",
-		"## Evidence decisions",
-		"",
-		"- The embedded VPX script is the runtime address and causality authority; the Stern "
-		"operations manual is the physical inventory, quantity, polarity, and wiring authority; "
-		"pinned PinMAME owns controller topology and public address arithmetic; the retained "
-		"table supplies geometry.",
-		"- The retained manual's text layer double-doubles most characters and additionally "
-		"shifts character codes by a constant on the diagnostics chapter's own embedded font "
-		"subset; every printed table used here was read from a rendered page and transcribed "
-		"into `external:pinmame-review-artifacts/the-simpsons-pinball-party-2003/"
-		"manual-transcription.md`, never from `pdftotext` output.",
-		"- Trough switches 10-14 and the stacking opto 15 have no dedicated playfield trigger "
-		"object because the retained script reads the five ball positions through the shared "
-		"cvpmBallStack helper class and pulses 15 from SolRelease rather than from Hit/Unhit "
-		"events; all six are documented projections onto the trough's own release-kicker object "
-		"(BallRelease). The manual's switch-location drawing puts 10 at the trough's far left end "
-		"and stamps 14 and 15 together at its right-hand exit.",
-		"- Solenoids 4 (Drops Reset Up) and 30 (Drop Bank Trips) act on all three drop-target "
-		"bank positions at once and have no separate reset-bar mesh in the retained table; both "
-		"are documented projections onto the bank's own middle target (Drop Target #2).",
-		"- Lamp 32 (Tournament Button) and matrix switch 53 (Tournament Button) are both "
-		"optional, gated behind the Optional Tournament Kit per matching manual footnotes on "
-		"both the switch- and lamp-locations pages; lamp 32 additionally has no `l32` object in "
-		"the retained script's own lamp-fade sequence at all.",
-		"- Lamps 73-80 are the LEDs of the mode sign (LED PCB Mode Signifier 520-5225-00) bolted "
-		"to the back panel next to the TV, above the playfield (manual PDF 37, 42, 82, 114, 170). "
-		"The sign is vertical and faces the player, so L1-L7 share one playfield point and differ "
-		"only in height. The retained script drives them with NFadeObj onto primitives l73-l80, "
-		"which sit at one x/y and step down in z in the manual's order; lamps 73-79 are each "
-		"placed at their own primitive's x/y. Lamp 80 is two LEDs and the tables model one, so it "
-		"has no spatial key. Two further local tables were extracted and checked; both share the "
-		"retained table's script base and place l73-l80 identically, so they add no independent "
-		"geometry. The earlier reading of these lamps as the empty LEDY/LEDG/LEDR collections was "
-		"wrong: those collections are unused, and the script's UpdateLeds drives the TV's 14x10 "
-		"mini-DMD, which PinMAME publishes as a display.",
-		"- Public lamps 81-96 are enumerated as virtual outputs with unknown availability and a "
-		"controlled `virtual` record; no lamp circuit exists for them.",
-		"- General illumination is a single aggregate PinMAME channel (`coreGlobals.nGI = 1`); "
-		"its 42 placements come directly from the retained table's own `GI` collection (37 "
-		"`GI_N` Light objects plus 5 `spotlightright*` objects), which the script's UpdateGI "
-		"toggles together, matching the manual's own single-relay, multi-fuse wiring diagram.",
-		"- Solenoid 24 (Optional Coil) and solenoids 33-35 (AUX 1-3, UK-only up/down posts) take "
-		"controlled `not_applicable`/`unused` records per their explicit manual footnotes; the "
-		"retained table (a US/export-configuration recreation) models no object for any of them.",
-		"",
-		"## Explicit projections",
-		"",
-	]
-	for entry in report["projections"]:
-		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
-	lines += [
-		"",
-		"## Counts",
-		"",
-		f"- Placements: {report['placement_count']}",
-		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
-		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Inputs with no spatial key at all: {len(report['omitted_inputs'])}",
-		f"- Outputs with no spatial key at all: {len(report['omitted_outputs'])}",
-	]
-	for reason, addresses in report["not_applicable_inputs"].items():
-		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
-	for reason, bindings in report["not_applicable_outputs"].items():
-		lines.append(f"- Outputs with a controlled `{reason}` record: {len(bindings)}")
-	lines += [
-		"",
-		"## Promotion decision",
-		"",
-		"This record stays `partial`. Its conflicts are settled: switch 14's public sense comes "
-		"from the known-working script and switch 15's from hash-pinned ROM runs, and DS-5 (public "
-		"88) is the right button's second contact, which PinMAME does not synthesize but does "
-		"deliver to the ROM, which fires solenoids 13 and 14 from it. Two gaps remain. Lamp 80's "
-		"second LED has no coordinate (`spatial_placement`), and public lamps 81-96, which PinMAME "
-		"publishes because the driver declares four auxiliary lamp columns, are fed only by CPU "
-		"ports $3406/$3407 and have unknown availability (`output_semantics`). "
-		"`coverage.missing = [\"output_semantics\", \"spatial_placement\"]` records both.",
-		"",
-		"## Retained evidence",
-		"",
-		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 "
-		f"`{EXTRACTION_MANIFEST_SHA256}`, {EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
-		f"- Human transcription of every printed table and diagram read from the rendered manual "
-		f"pages, SHA-256 `{MANUAL_TRANSCRIPTION_SHA256}`.",
-		"",
-	]
-	return "\n".join(lines)
+	from simpsons_party_completion_report import render_report
+
+	return render_report(report)
+
+
+def render_knowledge() -> str:
+	text = KNOWLEDGE_SEED_PATH.read_text(encoding="utf-8")
+	status = (
+		"**partial** — the ROM/output and sign gaps are resolved; the factory-listed separate "
+		"F25 #555 above the right return still needs a defensible location."
+		if GI_REVIEW_PENDING else
+		"**author-ready** — physical I/O, Whitestar bindings, opto polarity, flipper inputs, "
+		"mechanism causality, driver variants, spatial placement, and recreation behavior are documented."
+	)
+	text = text.replace("{{COVERAGE_STATUS}}", status)
+	text = text.replace("{{GI_INVENTORY}}", gi_outputs()[0]["physical"]["notes"])
+	if "{{" in text or "}}" in text:
+		raise RuntimeError("Simpsons Pinball Party knowledge still contains an unresolved placeholder")
+	return text
+
+
+def verify_proposal(definition: dict[str, Any]) -> None:
+	"""Refuse incomplete promotion or changed portable evidence before writing anything."""
+	from pinmame_game_defs.validation import validate_machine
+
+	expected_status = "partial" if GI_REVIEW_PENDING else "author_ready"
+	if definition["coverage"]["status"] != expected_status:
+		raise RuntimeError("Simpsons Pinball Party coverage does not match its resolved evidence")
+	if GI_REVIEW_PENDING and DEFINITION_PATH != PARTIAL_PATH:
+		raise RuntimeError("Simpsons Pinball Party GI remains unresolved; refusing promotion")
+	if GI_REVIEW_PENDING and definition["coverage"]["missing"] != ["spatial_placement"]:
+		raise RuntimeError("Simpsons Pinball Party partial must disclose its remaining spatial gap")
+	for source in definition["sources"]:
+		uri = source.get("uri", "")
+		if uri.startswith("internal:") and "sha256" in source:
+			path = ROOT / uri.removeprefix("internal:")
+			if not path.is_file() or _file_sha256(path) != source["sha256"]:
+				raise RuntimeError(f"Simpsons Pinball Party portable source identity differs: {source['id']}")
+	photo = load_json(PHOTOGRAMMETRY_PATH)
+	if tuple(replay_photogrammetry(photo, "homer")["coarse_xy"]) != SOLENOID_POSITIONS[27][0]:
+		raise RuntimeError("Homer placement differs from its physical socket projection")
+	# Replay conditional filament intervals independently of the source table installation.
+	spots = load_json(SPOTLIGHTS_PATH)
+	for record in spots["records"]:
+		project_spotlight(record, spots)
+	replay_right_return(load_json(RIGHT_RETURN_PATH))
+	replay_left_socket(load_json(LEFT_SOCKET_PATH))
+	replay_left_return(load_json(LEFT_RETURN_PATH))
+	replay_photogrammetry(load_json(PARTY_GI_PATH), "right-return-unhooded")
+	errors = validate_machine(definition, ROOT)
+	if errors:
+		raise RuntimeError("Simpsons Pinball Party proposal is incomplete:\n" + "\n".join(errors))
+	blockers = build_spatial_report(definition)["blockers"]
+	expected = {"Coverage missing: spatial_placement", "gi.string-1: spatial status observed"}
+	expected.update("GI: " + item for item in GI_REVIEW_PENDING)
+	if any(item not in expected for item in blockers) or (not GI_REVIEW_PENDING and blockers):
+		raise RuntimeError("Simpsons Pinball Party spatial audit has unexpected blockers")
+	render_knowledge()
 
 
 def generate(root: Path = ROOT) -> Path:
 	definition = build()
+	verify_proposal(definition)
 	write_json(root / DEFINITION_PATH.relative_to(ROOT), definition)
 	write_json(root / SEED_PATH.relative_to(ROOT), definition)
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	write_text(root / KNOWLEDGE_PATH.relative_to(ROOT), render_knowledge())
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if DEFINITION_PATH == AUTHOR_READY_PATH and stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Simpsons Pinball Party author-ready definition is present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if DEFINITION_PATH == AUTHOR_READY_PATH and stale_partial_path.exists():
+		raise RuntimeError(f"Stale Simpsons Pinball Party partial definition is present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Simpsons Pinball Party definition is missing: {definition_path}")
 	if not seed_path.is_file():
 		raise RuntimeError(f"Simpsons Pinball Party seed is missing: {seed_path}")
 	definition = build()
+	verify_proposal(definition)
 	expected = canonical_bytes(definition)
 	if definition_path.read_bytes() != expected:
 		raise RuntimeError(f"Simpsons Pinball Party definition drifted from its deterministic curator: {definition_path}")
@@ -2209,7 +2510,10 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"Simpsons Pinball Party spatial audit drifted from its deterministic curator: {report_path}")
 	if not markdown_path.is_file() or markdown_path.read_text(encoding="utf-8") != render_spatial_report(report):
 		raise RuntimeError(f"Simpsons Pinball Party spatial review drifted from its deterministic curator: {markdown_path}")
-	print("Simpsons Pinball Party definition, seed, and spatial audit match the deterministic curator.")
+	knowledge_path = root / KNOWLEDGE_PATH.relative_to(ROOT)
+	if not knowledge_path.is_file() or knowledge_path.read_text(encoding="utf-8") != render_knowledge():
+		raise RuntimeError(f"Simpsons Pinball Party knowledge drifted from its deterministic curator: {knowledge_path}")
+	print("Simpsons Pinball Party definition, seed, knowledge, and spatial audit match the deterministic curator.")
 
 
 def main() -> None:

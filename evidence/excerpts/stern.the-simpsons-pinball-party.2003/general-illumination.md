@@ -23,24 +23,35 @@ which sets `coreGlobals.nGI = 1` and exposes exactly one aggregate GI channel
 | Circuit | Fuse | J15 pin | Wire | Location | Bulbs (per diagram, `*` = quantity may change) |
 | --- | --- | --- | --- | --- | --- |
 | 1 | F24 | P1 (BRN-WHT/WHT-BRN) | WHT-BRN | On Backpanel | 10 ea. #44 (`#10*`) |
-| 2 | F25 | P2 (WHT-YEL/YEL) | WHT-YEL | Left P/F x10, Rt. Bot. x1, above P/F Rt. Return Lane Spot x1 | 11 ea. #44 + 1 ea. #555 (`#12*`) |
+| 2 | F25 | P2 (WHT-YEL/YEL) | WHT-YEL | Left P/F x10, Rt. Bot. x1, above P/F Rt. Return under Plastic x1 | 11 ea. #44 + 1 ea. #555 (`#12*`) |
 | 3 | F26 | P3 (WHT-GRN/GRN) | WHT-GRN | Upper Mini-P/F x7, above P/F Spotlights x5, US Coin Door x2 (Euro x1) | 7 ea. #44 + 5 ea. #555 + coin-door bulbs (`#13*`/`#14*`) |
 | 4 | F27 | P4 (WHT-VIO/VIO) | WHT-VIO | Right Playfield x12 | 12 ea. #44 (`#12*`) |
 
 Footer note: "G.I. Bulb quantities may change during production." Playfield
 map callouts on the diagram itself: yellow dots (`Y`) mark circuit-2 bulbs
-including "GIs above, Rt. Return Lane" and "GIs above, Rt. Return Lane Spot";
-green dots (`G`) mark circuit-3 bulbs including "GI above P/F X1 Spotlight
+including "GIs above, Rt. Return Lane"; the separate "GIs above, Rt. Return
+Lane Spot" box has a green `G`, not yellow. Green dots (`G`) mark circuit-3 bulbs including "GI above P/F X1 Spotlight
 Bart" and "GIs underneath the Upper Playfield X7 + X3 Spotlights"; violet
 dots (`V`) mark circuit-4 bulbs on the right playfield; brown dots (`B`) mark
 circuit-1 backpanel bulbs ("Gls above Playfield on Backpanel X10").
 
-The retained VPX table's own `GI` collection (42 members: `GI_1`.."GI_37"
-Light objects plus `spotlightright`, `spotlightright1`-`spotlightright4`) is
-used as the placement set for the canonical single GI device rather than a
-hand-count from this diagram's approximate, asterisked quantities; both
-describe the same single-relay GI, and this diagram corroborates the general
-above/below-playfield/backbox split rather than fixing an exact bulb count.
+The diagram distinguishes five green reflector spotlights (three under the
+upper playfield, Bart, and the right-return spotlight) from one yellow lamp
+above the right-return plastic. It prints the F25 bulb totals together rather
+than assigning a bulb type to each location. Associating its one #555 with
+the horizontal unhooded lamp photographed under the PARTY plastic is a curation
+inference, supported by the location description and the one laydown GI wedge
+holder in the parts list; it is not a literal per-location bulb-type label.
+The two branches together list six noncabinet #555 bulbs, plus the two US or
+one Euro coin-door #555 bulbs. The nominal noncabinet
+#44 count is 10 + 11 + 7 + 12 = 40. No individual source mesh or render
+collection overrides these printed quantities without a physical reconciliation.
+
+The older recreation's 42-member `GI` collection contains bulb render doubles
+and spotlight glows. Collection membership establishes its script grouping;
+it does not establish physical bulb quantity or socket positions. The physical
+completion review reconciles actual bulbs against the factory diagram and
+parts tables, with the production-variation footnote preserved.
 
 ## Crop
 

@@ -1,9 +1,6 @@
 # The Simpsons Pinball Party (Stern, 2003)
 
-Coverage: **partial - complete physical I/O inventory, Whitestar bindings, opto polarity, flipper
-inputs, mechanism causality, driver-variant boundary, and recreation behavior validated; held below
-author-ready because lamp 80's second LED has no coordinate and public lamps 81-96, which PinMAME
-publishes for this driver, have unknown availability**
+Coverage: **author-ready** — physical I/O, Whitestar bindings, opto polarity, flipper inputs, mechanism causality, driver variants, spatial placement, and recreation behavior are documented.
 
 ## Identity and evidence precedence
 
@@ -79,9 +76,9 @@ than carried over from the WPC games curated earlier:
    single-relay design PinMAME models.
 7. **`hw.lampCol` counts every lamp column beyond the eighth, including printed ones.** PinMAME
    publishes `64 + lampCol*8` lamps. This driver's `lampCol = 4` covers the printed rows 9-10
-   (public 65-80, the aux lamp strobe) *and* two more columns, public 81-96, which only `se.c`'s
-   `gilamp_w` fills from CPU ports `$3406`/`$3407`. An earlier pass counted the four columns as
-   81-112; the range is 81-96.
+   (public 65-80, the aux lamp strobe) *and* two more columns, public 81-96. `se.c`'s `gilamp_w`
+   can fill the latter from CPU ports `$3406`/`$3407`; the binary fallback can also OR auxiliary
+   strobes 4 and 8 into them. An earlier pass counted the four columns as 81-112; the range is 81-96.
 
 ## Address topology for this game specifically
 
@@ -99,8 +96,8 @@ than carried over from the WPC games curated earlier:
   token dispenser, or knocker, and the ROM pulses it once per inserted coin.
 - Lamps: 8x10 matrix 1-80 (two "NOT USED" positions, 71-72); lamp 32 (Tournament Button) is optional,
   gated behind the Optional Tournament Kit, and has no `l32` object anywhere in the retained script's
-  own lamp-fade sequence at all. Public 81-96 are enumerated as virtual outputs with unknown
-  availability; see "Unresolved: lamps 81-96" below.
+  own lamp-fade sequence at all. Public 81-96 are unused virtual compatibility outputs; see
+  "Lamp compatibility slots 81-96" below.
 - GI: one aggregate channel, public address 0.
 
 ## Ball path: trough, saucers, and VUKs
@@ -182,7 +179,20 @@ the main playfield.
 The right cabinet button is a doubled switch. The manual prints part 180-5164-00 *Doubled* for both
 DS-3 (Right Flipper Button) and DS-5 (Upper Rt. Flipper Button, GRY-GRN to CN6-P7), and its
 switch-location drawing stamps DS-3 and DS-5 on the same right button; the left button carries DS-1
-alone. So one press of the right button closes both 82 and 88.
+alone. A full press of the right button closes both 82 and 88; the factory flipper
+circuit description says a half press closes only the lower-right contact.
+
+The factory five-flipper circuit (PDF124, printed106) explicitly marks DS-2 and
+DS-4 **normally closed**, opening about1/16inch when energized. The other dedicated
+button contacts and the cabinet/coin-door matrix contacts (PDF126) are normally open.
+PinMAME synthesizes the public EOS states from the coil state; physical NC construction
+does not authorize a host to invert or drive those synthesized bits.
+
+Each lower flipper has one22-1080 winding. The factory specifies a40ms kick at50V,
+followed by1ms pulses every12ms while the button remains held. If a ball forces the
+held flipper back and the EOS recloses, the CPU supplies another40ms kick. Public45
+and47 are power-phase control signals for the physical coils on callbacks46 and48;
+they do not describe additional coils or separate hold windings.
 
 A hash-pinned harness run with a game in progress
 (`evidence/runtime/whitestar/simpsons-pinball-party-flipper-buttons.json`, keyboard handling off, so
@@ -236,43 +246,88 @@ the retained script's `UpdateLeds` reads that display from `Controller.ChangedLE
 `LEDY`/`LEDG`/`LEDR` collections it hides at start-up were never bound to lamps 73-80. The script
 drives 73-80 with `NFadeObj` onto eight primitives `l73`-`l80` (its own name for them is "Moes Sign").
 
-**Placement.** The sign is vertical and faces the player, so L1-L7 stack in one column and project
-onto one playfield point. Each of lamps 73-79 is placed at its own primitive's x/y (about 0.5763,
-0.0345); the primitives differ only in height, from z 305 for lamp 73 down in 20-unit steps, which
-matches the manual's top-to-bottom order. That is one position per LED, not an average. Lamp 80 is
-two LEDs and every retained table models one object, so it carries no spatial key: L9's position is
-the one spatial gap left on this machine. Two further local tables were copied, extracted and checked
-(`Simpsons Pinball Party, The (Stern 2003).vpx` and `The Simpsons Pinball Party (Stern 2003).vpx`,
-hashes in the spatial report); both share the retained table's script base and place `l73`-`l80`
-identically, so they add no independent geometry.
+**Placement.** The later VPW 2.0 table models nine physical emitter meshes: `l73`-`l80` and
+`l80b`. Its script accumulates both callbacks at 80. Their world-space mesh bounds centres, divided
+by that table's own 952.94 by 2117.65 bounds, give one projected position per LED: lamp 80's L8 and
+L9 are at approximately (0.576166, 0.060144) and (0.645962, 0.060066). The sign is vertical, so
+height is projected onto the playfield plane. An earlier reading used the stored primitive origins
+as world points and mis-scaled the y position; the older table also models only one of the two
+lamp-80 LEDs. VPW is a supplemental geometry source, not independent evidence of the manual's
+physical fitment: the tables share ancestry.
+
+## Two Pops 2X bulbs and the playfield TV
+
+The manual's lamp-location drawing (PDF 37) labels two #44 bulbs under the common Pops 2X sign as
+lamp 16. The two leader endpoints, calibrated against six retained table mechanism centres, project
+to (0.123, 0.506) and (0.236, 0.507); the measurement uncertainty is 0.02 normalized. The old
+table's single `l16` glow is not two physical sockets. The 128x32 DMD is in the backbox. The separate
+14x10 bicolor mini-DMD is the playfield TV: the VPW `LEDOff` screen's world-mesh centre projects to
+(0.432609, 0.081458). LibPinMAME exposes the composite frame at controller index 3 with width 14
+and height 10: `core_dispLayout.start` is the height and `length` is the width, and the API copies
+those fields directly. Layout indices 1 and 2 are the green and red LED planes of the same TV,
+flagged `CORE_DMD|CORE_NODISP`; they do not represent additional physical displays.
+
+## Flash lamps and the Homer socket
+
+The manual's flash-lamp table and location drawings identify ten individual #906 circuits, each
+marked Bulb X1: solenoids 21-23, 25-29, 31 and 32. Eight use the later VPW dome bases, reconciled
+with the factory drawing; the Comic Book Guy flasher uses its own older `f29a` bulb rather than its
+broad glow. The tenth is the fixed socket alongside the Homer pivot shaft. Its physical owner-photo
+socket-holder projection is approximately (0.73, 0.13), with camera-model and replacement-bulb
+uncertainty; this is not an observation of the original incandescent filament. The global manual
+BOM lists 13 #906 bulbs, but that aggregate and overlapping assembly quantities do not create
+additional sockets on the ten independently listed circuits. See
+`tools/seeds/stern/the-simpsons-pinball-party-2003/photogrammetry.json` for the camera inputs,
+replay, sensitivity and limitations.
 
 ## General illumination
 
-One aggregate PinMAME GI channel (public address 0). The manual's wiring diagram shows one relay
-closing four separately-fused branches (F24 backpanel/10 bulbs, F25 left playfield plus right return
-lane/11 #44 + 1 #555, F26 upper mini-playfield plus spotlights plus coin door/7 #44 + 5 #555 plus
-coin-door bulbs, F27 right playfield/12 #44), all switched together -- matching PinMAME's
-single-channel model with no script-vs-manual disagreement. The manual's own bulb counts are printed
-"may change during production", so the retained table's own `GI` collection (37 `GI_N` Light objects
-plus 5 `spotlightright*` objects, 42 members total, toggled together by the script's `UpdateGI`) is
-used as the placement set rather than a hand count from the diagram.
+One aggregate GI relay: Whitestar nGI=1 and the known-working UpdateGI script agree with the factory relay switching all four fused branches together (PDF121): F24 backpanel, F25 left playfield plus right return, F26 upper playfield plus five reflector spots and coin door, F27 right playfield. These are not four independently controllable strings. The reconciled physical layout has 26 main-floor #44 locations (25 physical socket anchors and the CBG factory-symbol projection), seven upper-playfield bayonets and ten rear-panel bayonets, plus five #555 reflector spots and the separate horizontal unhooded lamp under the PARTY right-return plastic: 49 playfield/rear emitters, all placed. Its #555/F25 association follows the factory location description, circuit totals and unique laydown GI wedge holder; the photograph does not expose the contacts or wire colors. Physical quantity 51 includes the two US coin-door #555 bulbs, which have no playfield coordinates; the European one-bulb coin door gives 50. This quantity describes the retained physical layout, not a universal production invariant. PDF121 nominally lists 40 GI #44 and six non-cabinet #555; PDF90's 45 total #44 minus four matrix #44 implies 41 GI bayonets, while the reconciled #44 locations total 43. The socket rows likewise sum to 45 (19 staple-down + four laydown + 22 long-shell), two fewer than the 47 #44 locations including the matrix. The factory explicitly warns GI quantities may change during production. The photo-confirmed extra rear-floor sockets are retained instead of deleting physical hardware to fit either nominal count. GI030/GI053 coincide with the mini-flipper shafts and are excluded; GI040/GI043 are one socket, not two. GI032 and GI31 mark flasher/spotlight wiring passages, not bulbs. The older 42-member render collection is not a physical inventory. Upper missing socket and backpanel coordinates are calibrated factory/photo projections with .01 normalized uncertainty. The separate left and right-return sockets use their own flat texture annuli with .02 allowance; the fourth left-return socket uses .01. The CBG-area GI uses the factory bulb-symbol projection at (.17,.32), with .05 schematic allowance per axis, not a photographed filament. Four reflector axes use conditional #555 filament projections with .02 allowance, and the fifth uses a replacement LED-cap projection with .01 allowance. The PARTY lamp uses its own replacement LED body projection at (.69,.82), with .03 x/.02 y allowance for camera/UV assumptions, partial occlusion and original-filament displacement; it is not the V01 bayonet, reflector or GI31 wiring passage. Original incandescent filaments are not observed.
 
-## Unresolved: lamps 81-96
+The horizontal lamp under the PARTY plastic is independently visible in
+[High_End_Pins' finished build, post15408](https://pinside.com/pinball/forum/topic/hep-this-week-9-17-18/page/309#post-8323533),
+photos5 and6. Its replacement LED body projects to (.69,.82), separate from
+the nearby upright bayonet and elevated reflector. Four calibrated views and
+two independently read body centres agree; correlated printed-art controls,
+camera assumptions and replacement-versus-original filament uncertainty remain
+explicit in the portable measurement seed. The .03 x/.02 y allowance is a
+conservative projection allowance, not a statistical confidence interval.
+
+Each physical fixture has its own placement provenance. The extra rear-floor sockets are
+visible in owner hawkeyexx's
+[post7481](https://pinside.com/pinball/forum/topic/tspp-owners-club-members-only/page/150#post-8443227).
+Sandman454's [post5169](https://pinside.com/pinball/forum/topic/tspp-owners-club-members-only/page/104#post-5753164)
+shows the Pops flasher wiring passage; the same owner's right-return view and Dancingbear's
+ad198006 show the distinct reflector-wire passage. Their homographies are identity guides
+where controls do not enclose a point. Neither wiring passage is an additional bulb.
+
+The factory GI device-symbol near CBG is measured on PDF121 using sixteen independent
+controls, including actual inserts, bumper axes and two wood openings. It lies inside
+their hull. This is an explicitly approximate circuit-bulb symbol projection, rather
+than a photographically measured filament. The nearby raised cone in teardown photos
+is not its coordinate authority. The seventh upper GI uses a separate factory underside
+fit; the ten backpanel sockets use two physical elevations.
+
+## Lamp compatibility slots 81-96
 
 `simpprtyGameData.hw.lampCol = 4` makes PinMAME publish public lamps 1-96: `se.c` sets `nLamps = 64 +
 4*8`, and `vp_getChangedLamps` scans eight plus four columns. The printed 8x10 matrix fills 1-80.
-Public 81-88 and 89-96 are `coreGlobals.lampMatrix[10]` and `[11]`, which only `se.c`'s `gilamp_w`
-writes, copying whatever the CPU stores at ports `$3406`/`$3407` (the memory map's own comment: "GI
-lamps on Simpsons?"). In LibPinMAME's physical-output mode nothing writes those outputs for this
-driver. No lamp circuit exists for them: the manual's lamp matrix has exactly eight drive columns and
-ten return rows, all accounted for by 1-80.
+Public 81-88 and 89-96 are `coreGlobals.lampMatrix[10]` and `[11]`. `se.c`'s `gilamp_w` can copy
+CPU writes at ports `$3406`/`$3407` (the memory map's own comment: "GI lamps on Simpsons?"); in
+binary mode auxiliary strobes 4 and 8 can also select those columns. In LibPinMAME's physical-output
+mode nothing writes those outputs for this driver. No lamp circuit exists for them: the manual's
+lamp matrix has exactly eight drive columns and ten return rows, all accounted for by 1-80.
 
-Whether the ROM ever writes those ports is not settled. Three hash-pinned harness runs (boot, attract
-mode, and a started game with every flipper input exercised, about 210 s in all) never saw 81-96
-change. That does not prove the ROM never writes them, so the sixteen addresses are enumerated as virtual outputs with
-`availability: unknown` and `output_semantics` stays in `coverage.missing`. Resolution path: static
-analysis of the `simpprty` CPU ROM for every write that can reach `$3406-$3407`, or a harness run of
-the ROM's own lamp tests watching 81-96.
+All four CPU images, checked against the pinned source hashes across all eighteen drivers, contain a
+bounded ten-strobe writer: eight main strobes plus auxiliary values 1 and 2, not the 4 or 8 that can
+feed public 81-96 through the binary fallback. The full-image byte-pattern scan found no listed
+extended store or read-modify-write to $3406/$3407; it does not establish absence of arbitrary
+indexed or indirect writes. In a fresh-state Single Lamp walk and All Lamps test, every address
+1-80 changed and none above 80 did. Those controls corroborate the bounded scan; silence alone does
+not prove an address unused. The manual's own 8x10 physical matrix establishes no additional fitted
+lamp circuit. The sixteen public compatibility slots are therefore marked virtual and unused; see
+`tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-scan.json` and
+`tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-service.json`.
 
 ## Manual identity and physical vs. UK-market variant hardware
 
@@ -298,8 +353,8 @@ fitted by default -- and are recorded as `optional`, distinct from the two genui
 - Wire the right flipper button to both public 82 and public 88. The ROM fires the lower right flipper
   from 82 and the upper-mini-playfield right flipper (13) and top right flipper (14) from 88; the left
   button (84) fires the lower left flipper and the upper-mini-playfield left flipper (12).
-- Treat solenoids 15/16 as non-coils; bind the two lower flipper coils at 45/46 (right) and 47/48
-  (left) only, one physical coil per side. On the `simpprty` driver, public 15 is the fast-flip
+- Treat solenoids 15/16 as non-coils; bind the two lower physical flipper coils at46 (right) and48
+  (left). Keep45/47 as internal power-phase signals for those same coils. On the `simpprty` driver, public15 is the fast-flip
   game-on state.
 - Place the mode-sign LEDs 73-79 on the vertical sign on the back panel next to the TV, top to
   bottom in address order, and lamp 80 as two red LEDs at the sign's bottom corners. Do not model
@@ -317,6 +372,16 @@ fitted by default -- and are recorded as `optional`, distinct from the two genui
 - `vpx-table.simpsons-party-0-8-2`: retained table (v0.8.2), SHA-256
   `c7d14c512ae81eb0e26cddf9f74690818ae2259350cd334fc98be5e7ece79034`, bounds
   `left=0 top=0 right=952 bottom=2115`.
+- VPW 2.0 supplemental table and world-space mesh extraction: source table SHA-256
+  `bf646ead3726060267f855ac94401d5ea89e5bddcd49b829706a0c675f0374eb`; world OBJ SHA-256
+  `f2c8e3d25f1d8ac8e2c088110a54ea51117d16b45e21088884ba4e1a9696845d`. The full extraction
+  and world-object manifests are retained externally and independently verified.
+- `tools/seeds/stern/the-simpsons-pinball-party-2003/completion-measurements.json` records the
+  lamp-16 drawing controls and retained image hashes; `photogrammetry.json` records the Homer and
+  GI photo readings and fixed-camera replay. The owner photographs are attributed there.
+- `tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-scan.json` records the bounded CPU
+  audit; `tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-service.json` records the service
+  walk and its retained trace and source hashes.
 - `vpm-script-library.core-vbs-3-61`: the VPinMAME `core.vbs` 3.61 script library that defines
   `cvpmBallStack`, SHA-256 `a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69`.
 - `runtime.simpsons-pinball-party.stacking-opto` and `runtime.simpsons-pinball-party.flipper-buttons`:
