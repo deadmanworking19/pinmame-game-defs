@@ -500,7 +500,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Limited Edition's another. Bram Stoker's Dracula's 2026-10-23 rework validates every placement,
 		# removing one more. Space Station's legacy record omitted it too; its curated partial keeps every table
 		# placement observed, adding one.
-		self.assertEqual(720, report["missing_requirement_counts"]["spatial_placement"])
+		# Sega Godzilla's legacy record omitted it too; its curated partial explicitly
+		# names the unvalidated GI sockets and optional UK device locations.
+		self.assertEqual(721, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

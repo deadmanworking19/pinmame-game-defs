@@ -1,0 +1,298 @@
+{
+  "driver_ids": [
+    "godz_090"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.godzilla.1998"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <pinned pinmame64.dll> --game <godzilla|godz_100|godz_090> --rom-path <user read-only ROM root> --work-dir <new empty state directory> --scenario tools/harness-scenarios/whitestar/godzilla-<driver>-gameplay.json --output <external raw.json> --dmd-dir <external dmd> --snapshot-while-held; HandleMechanics0; keyboard disabled; default binary output mode. Exact per-driver archive hashes are recorded in rom-archive-hashes.json alongside this external bundle.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "godz_090",
+    "observations": {
+      "runs": {
+        "godz-090-gameplay": {
+          "limitation": "Scripted ball states and injected input readback are host stimuli, not observations of physical switches. These runs neither prove optional physical loads fitted nor locate bulbs, identify an absent address as unused, establish UK configuration, or measure physical timing.",
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                1,
+                27,
+                32
+              ],
+              "host_stimulus_switch_addresses": [
+                54
+              ],
+              "input_address": 54,
+              "input_kind": "switch",
+              "label": "start",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                1,
+                27,
+                32
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                2,
+                19
+              ],
+              "host_stimulus_switch_addresses": [
+                53
+              ],
+              "input_address": 53,
+              "input_kind": "switch",
+              "label": "launch button",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                2,
+                19
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                6,
+                9,
+                25
+              ],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "input_address": 49,
+              "input_kind": "switch",
+              "label": "left bumper",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                9,
+                25
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                6,
+                10,
+                25
+              ],
+              "host_stimulus_switch_addresses": [
+                50
+              ],
+              "input_address": 50,
+              "input_kind": "switch",
+              "label": "right bumper",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                10,
+                25
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                6,
+                11,
+                25
+              ],
+              "host_stimulus_switch_addresses": [
+                51
+              ],
+              "input_address": 51,
+              "input_kind": "switch",
+              "label": "bottom bumper",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                11,
+                25
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                6,
+                12,
+                31
+              ],
+              "host_stimulus_switch_addresses": [
+                59
+              ],
+              "input_address": 59,
+              "input_kind": "switch",
+              "label": "left sling",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                12,
+                31
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                6,
+                13,
+                31
+              ],
+              "host_stimulus_switch_addresses": [
+                62
+              ],
+              "input_address": 62,
+              "input_kind": "switch",
+              "label": "right sling",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                13,
+                31
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                45,
+                46
+              ],
+              "host_stimulus_switch_addresses": [
+                82
+              ],
+              "input_address": 82,
+              "input_kind": "switch",
+              "label": "right flipper button",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                45,
+                46
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                47,
+                48
+              ],
+              "host_stimulus_switch_addresses": [
+                84
+              ],
+              "input_address": 84,
+              "input_kind": "switch",
+              "label": "left flipper button",
+              "observed_switch_addresses": [],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                47,
+                48
+              ]
+            }
+          ],
+          "note": "godz_090: default binary outputs. Recorded response windows also include incidental flash/shaker effects; simultaneous changes alone are not general causal relationships. Root2.05 alone exports15fastflip because se.c390 matches godzilla but not the godz_100/godz_090 driver names.",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            19,
+            24,
+            25,
+            27,
+            31,
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      },
+      "service_language": "English DMD observed; service menus not used"
+    },
+    "raw_runs": [
+      {
+        "action_count": 21,
+        "boot_wait_s": 25,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "godz-090-gameplay",
+        "nvram_initialization": "new empty isolated directory; no inherited state; all host ball movement explicitly scripted; keyboard and built-in mechanics disabled; godz_090.zip SHA256 eac3950f78acf80c7335553372574c6c108f0a2ffa0ca19faa1e8735991fcfdc",
+        "retained_from": "external:pinmame-review-artifacts/sega.godzilla.1998/harness/godz_090-gameplay.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/godzilla-godz_090-gameplay.json",
+        "scenario_sha256": "705e2add5a7d26ebb0cd841147beb2a19d16f1af1ea6d52c970d5e923abef96d",
+        "self_test_pulses": 0,
+        "sha256": "1ac60a72a4cc1afefeb81df40737596a6b4d979560b57a409bb31a78d8f7e490",
+        "snapshot_count": 22,
+        "watch_switches": [
+          5,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          41,
+          42,
+          43,
+          44,
+          49,
+          50,
+          51,
+          53,
+          54,
+          59,
+          62,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "eac3950f78acf80c7335553372574c6c108f0a2ffa0ca19faa1e8735991fcfdc"
+  },
+  "source": {
+    "attribution": "User-owned ROM archive; PinMAME contributors; pinmame-game-defs harness",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION; ROMs retained locally, not redistributed",
+    "path": "external:pinmame-review-artifacts/sega.godzilla.1998/harness/manifest.json",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame-game-defs",
+    "revision": "8e8b27143a0889c57efaee40df88b03480e61d7f",
+    "sha256": "46e9b7f0a91f8e3da47d1c2cde741850661495a07957e2caf802d212889e3519"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

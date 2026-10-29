@@ -88,7 +88,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 82 | 1999 | Harley Davidson | Stern | partial | 13% |
 | 83 | 1998 | Cactus Canyon | Bally | author_ready | 100% |
 | 84 | 1998 | The Champion Pub | Bally | partial | 88% |
-| 85 | 1998 | Godzilla | Sega | partial | 19% |
+| 85 | 1998 | Godzilla | Sega | partial | 50% |
 | 86 | 1998 | Golden Cue | Sega | partial | 13% |
 | 87 | 1998 | Lost In Space | Sega | partial | 13% |
 | 88 | 1998 | Titanic (Coin Dropper) | Sega | partial | 6% |

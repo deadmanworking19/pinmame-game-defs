@@ -181,7 +181,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 234 | Monopoly | `stern.monopoly.2001` | 13% |
 | 235 | Dungeons & Dragons | `bally.dungeons-dragons.1987` | 13% |
 | 236 | Evel Knievel | `bally.evel-knievel.1977` | 13% |
-| 237 | Godzilla | `sega.godzilla.1998` | 19% |
+| 237 | Godzilla | `sega.godzilla.1998` | 50% |
 | 238 | Dr. Dude | `bally.dr-dude-and-his-excellent-ray.1990` | 13% |
 | 239 | Big Hurt | `gottlieb.frank-thomas-big-hurt.1995` | 13% |
 | 239 | Austin Powers | `stern.austin-powers.2001` | 19% |
