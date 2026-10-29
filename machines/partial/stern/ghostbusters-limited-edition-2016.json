@@ -1,10 +1,10 @@
 {
   "conflicts": [
     {
-      "description": "Older own16/21 endpoint labels conflict; exact own30/34 fit520-5343-01, while OEM5343 explicitly bypasses the older door-switch section. The retained literal cells describe incompatible generic labels, not a fittedGB door contact.",
+      "description": "Older own16/21 endpoint labels conflict; exact own30/34 fit520-5343-01, while OEM5343 explicitly bypasses the older door-switch section. The retained literal cells describe incompatible generic labels, not a fitted GB door contact.",
       "id": "conflict.cpu-interlock-endpoints",
       "path": "$.inputs[111].wiring",
-      "rationale": "Positive title-specific board fitment and complete OEM circuit establish constant nVBBGOOD grounding atR8. Model116 as constant power-good; do not select a mechanical interlock throw from either older table. The obsolete label disagreement cannot alter the recreation.",
+      "rationale": "Positive title-specific board fitment and complete OEM circuit establish constant nVBBGOOD grounding at R8. Model 116 as constant power-good; do not select a mechanical interlock throw from either older table. The obsolete label disagreement cannot alter the recreation.",
       "source_refs": [
         "circuit.ghostbusters-le.power-good",
         "manual.ghostbusters-le-premium.2016",
@@ -15,7 +15,7 @@
       "status": "ignored"
     },
     {
-      "description": "Factory folio16 reference87 SIXTH COIN is1-SW-21 and reference89 SLAM TILT is1-SW-22. Exact ROM instead maps node1/position21 to public89 SLAM TILT and node1/position22 to public80 SIXTH COIN. Public routes/names follow the exact source/ROM; physical circuit associations/endpoints are withheld until cabinet-node wiring or direct title inspection resolves this semantic mismatch. Unmapped public87 must not be used as an extra ROM input. Resolution path: A machine owner can trace the cabinet Slam Tilt and Sixth Coin contacts to Node1 connector positions21/22, or supply the exact factory cabinet wiring sheet.",
+      "description": "Factory folio16 reference87 SIXTH COIN is1-SW-21 and reference89 SLAM TILT is1-SW-22. Exact ROM instead maps node1/position21 to public89 SLAM TILT and node1/position22 to public80 SIXTH COIN. The own cabinet connector table establishes Sixth Coin/DBA public80 at CN9-5 with ground CN9-6 and Slam Tilt public89 at CN5-4 with ground CN5-3. The settled public routes and connector endpoints are preserved; only the older printed node-position associations disagree. Unmapped public87 is not an additional ROM input. The installed accessory/contact construction and connected throws remain unproved, as stated in the input records.",
       "id": "conflict.cabinet-slam-sixth-coin",
       "path": "$.inputs",
       "rationale": "Own cabinet connector table independently names each physical function and its connector. The exact ROM settles public80/89. Only older printed node-position associations disagree; these are wiring-detail annotations under the runbook, not an unresolved physical identity or fitted-device conflict.",
@@ -3020,7 +3020,7 @@
       "normally_closed": false,
       "physical": {
         "location": "Playfield",
-        "notes": "Factory reference 43, PDF/folio 14, circuit 8-SW-12; printed type Micro.  Exact ROM at8-SW-12/public 43 is named RIGHT RAMP, while the factory reference is LEFT RAMP EXIT. The shared endpoint is preserved but the physical ball-path/left-versus-right association remains unresolved; no geometry is inferred. Completion review: own switch drawing15, own wire-ramp BOM45, ROM and exact script settle RIGHT RAMP. The printed Left Ramp Exit name remains a literal source error; it does not identify an unfitted LE switch. Ordinary Com/N.O. contact construction follows the official shared SPIKE switch circuit, with own-title contact type and signal/ground routing. It is not inferred from an emulator active flag. Direct right-ramp contact object centre, now reconciled by own switch-location drawing15. This remains an observed mechanism projection; a contact/coil body centre was not independently measured.",
+        "notes": "Factory reference 43, PDF/folio 14, circuit 8-SW-12; printed type Micro. Exact ROM at8-SW-12/public 43 is named RIGHT RAMP, while the factory reference is LEFT RAMP EXIT. The shared endpoint is preserved. Completion review: own switch drawing15, own wire-ramp BOM45, ROM and exact script settle RIGHT RAMP. The printed Left Ramp Exit name remains a literal source error; it does not identify an unfitted LE switch. Ordinary Com/N.O. contact construction follows the official shared SPIKE switch circuit, with own-title contact type and signal/ground routing. It is not inferred from an emulator active flag. Direct right-ramp contact object centre, now reconciled by own switch-location drawing15. This remains an observed mechanism projection; a contact/coil body centre was not independently measured.",
         "part_number": "180-5209-00",
         "switch_type": "other"
       },
