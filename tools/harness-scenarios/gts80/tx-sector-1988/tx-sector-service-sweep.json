@@ -1,0 +1,62 @@
+{
+  "actions": [
+    {
+      "label": "boot settle",
+      "seconds": 8,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "bookkeeping",
+      "settle_s": 1,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "lamp test",
+      "settle_s": 1,
+      "switch": 47,
+      "type": "pulse"
+    },
+    {
+      "label": "complete lamp sweep",
+      "seconds": 36,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "reach RELAY+SOLENOID TEST",
+      "max_pulses": 5,
+      "settle_s": 1,
+      "switch": 7,
+      "texts": [
+        "RELAY+SOLENOID TEST"
+      ],
+      "type": "pulse_until_display"
+    },
+    {
+      "label": "complete relay and coil sweep",
+      "seconds": 50,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "txsector",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 56
+    },
+    {
+      "state": 1,
+      "switch": 66
+    }
+  ],
+  "notes": "Binary output mode; fresh empty NVRAM; direct canonical GTS80 decimal switches only. Factory PDF17 printed11 service test numbering. Full raw output events and segments retained.",
+  "version": 1,
+  "watch_switches": [
+    56,
+    66
+  ]
+}

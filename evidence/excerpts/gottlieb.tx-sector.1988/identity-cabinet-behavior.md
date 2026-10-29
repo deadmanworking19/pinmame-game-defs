@@ -1,0 +1,19 @@
+# Identity, cabinet and behavior reads
+
+Method: curator visual reads of the retained native manual pages, and retained HTML/photo inspection. Factual paraphrase; separate table excerpts preserve assignments literally.
+
+Manual SHA256: 7b9d03dc3105d758b3603a14ef942f2219007ef1de0796bde8ae21a5ebbf6ec5.
+
+PDF1-2: TX-Sector instruction manual; game #712; Premier Technology/Gottlieb. PDF3-4: two 20-character fluorescent alphanumeric display rows. Replacement ZS-400/ZS-410 board arrangements are not indiscriminately interchangeable; follow the part-number notice rather than inventing an emulator display variant.
+
+PDF52, printed46, lower-right cabinet wiring: play/test, replay, plumb-bob tilt, ball-roll tilt, left advance and right advance are on the cabinet diode board. Left/right/center coin contacts are on strobes1/2/3 and return7. Play/test is strobe0/return7; replay4/7; tilts5/7; advance buttons0/6 and1/6. The slam contact is drawn normally closed on its dedicated line; ordinary matrix contacts are drawn open. Right flipper return044 and left return033 feed the playboard. Three coin-chute lamps use 6.3V AC separately from the controlled matrix. PDF51 printed45 supplies lightbox illumination separately; no controlled lightbox-emitter count is inferred.
+
+PDF10-11 printed4-5: the four top-bank and four right-bank targets score and advance energy; completing a bank can reset the opposite bank. Upper holes are scoring/teleport entrances. Lower holes capture balls and can initiate the opposite teleport. The left rollover drop enables the left-ramp teleport with a lower-left captured ball. The shooter ramp starts multiball with two captured balls. Return rollovers light the opposite spinner; right return can trip the rollover drop. Two-ball multiball describes play, not the total installed-ball inventory.
+
+PDF47-48 printed41-42: T switches playboard GI. Q switches the non-controlled flipper/kicker supply. S switches four hole supplies against four pairs of #67 flash lamps through A19. The separate single-target trip is lamp13; solenoid7 resets it. Outhole solenoid9 and lamp2 ball release are distinct devices, with passive return/trough/shooter transport between them. Three #455 energy-level lamps have a steady +6V feed and no controlled lamp ID. PDF56 printed50: two left flipper assemblies, one right; two contact kickers, two kicking targets, three pop bumpers, two four-target banks, one rollover-drop assembly, four hole kickers (three MA-1049 plus one MA-1061), manual shooter/return hardware and passive gates/rollunders.
+
+Retained IPDB machine2699 HTML independently identifies TX-Sector, March1988, Premier/Gottlieb, model712 and System80B. Pinside independently links IPDB2699 to TX-Sector/Gottlieb/March1988. Photos #2850224 and #2850228 corroborate player-view ordering, three bumpers/flippers, two drop banks, one rollover drop, elevated right-ramp lightshow sockets and two dome locations. Installed bulbs include replacements; photos do not change factory bulb types.
+
+Flipprojets Freeplay_EN.php: its System80B modification replaces only the 8KB PROM1 on the original piggyback, needs no CPU-board modification and changes credit replenishment. It activates with coinage DIP groups1-5,9-13,17-21 off. PinMAME's six TX-Sector registrations share generation, display, switch masks, sound hardware and routing; language/credit revisions are firmware variants on this physical machine.
+
+Q is printed L3 in PDF47/54, while the same manual assigns Shoot Again to L3. Driver-board routing, pinned driver, service test and script distinguish Q/public0 from Shoot Again/public3; retain the printed defect without a duplicate binding. S ON/OFF in the physical table is distinct from the script's public12 convention: the script routes holes while12=0 and flash effects while12=1. A Light.State value does not measure relay-armature energization.

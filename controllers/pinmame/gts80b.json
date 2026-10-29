@@ -1,0 +1,76 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.gts80b",
+  "authority": "pinmame",
+  "hardware_family": "Gottlieb System 80B (GEN_GTS80B)",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Dedicated inputs, decimal switch matrix and flipper-button column",
+      "address_rules": [
+        { "minimum": -8, "maximum": -1 },
+        { "minimum": 0, "maximum": 7 },
+        { "minimum": 10, "maximum": 17 },
+        { "minimum": 20, "maximum": 27 },
+        { "minimum": 30, "maximum": 37 },
+        { "minimum": 40, "maximum": 47 },
+        { "minimum": 50, "maximum": 57 },
+        { "minimum": 60, "maximum": 67 },
+        { "minimum": 70, "maximum": 77 },
+        { "minimum": 111, "maximum": 118 }
+      ],
+      "transports": { "libpinmame": { "channel": "switch" } },
+      "notes": "At PinMAME revision 46e1a01a0f73dc5ce163d98db1ae435883ecc450, GTS80_sw2m maps a canonical matrix number n in 00-77 to internal index ((n+1)%10)*8+(n+1)/10, using integer division. The tens digit is the strobe and the units digit the return. RIOT U4 scans internal columns 1-8 and reads their normalized bits without complementing them. The per-game inversion mask determines the relation to raw contacts; for an unmasked cell public 1 is the set bit the CPU reads. This alone does not prove physical construction or the ROM's active condition. Consumers must not apply a second controller-wide inversion.\n\nThe converter does not reject invalid decimal numbers and the native switch API does not bounds-check converted indices. Treat 8 and 9 in the units position, strobes above 7, and all other numbers outside the declared rules as unsupported, even where they alias an in-range bit. For example 80 aliases 01 and 120 aliases 118.\n\nDedicated -8 through -1 map to internal column 0. -1 is slam: an unmasked set slam bit makes the RIOT U5 input low; the read level depends on the game's mask. -4 reaches sndbrd_0_diag; when the selected interface is SNDBRD_GTS80B it has no diagnostic callback. Video controls -8 through -5 apply only to video display drivers, and -3/-2 have no corresponding selected input handler. Representation does not establish fitment. With keyboard handling enabled, the driver rewrites 07 Test, 17/27/37 Coin 1/2/3, 47 Start and 57 Tilt on every update; with keyboard disabled, direct writes to those positions persist. The CPU can also scan 67 and 77.\n\nInternal flipper column 11 is 111-118: 112 is the lower right button and 114 the lower left button. When a game declares FLIP_SWNO(left,right), core_updateSw copies these button states to that game's declared matrix positions every update, overwriting direct host writes there. Copy destinations and FLIP_SOL/EOS flags must be read from each game's own declaration. Drive the public button positions rather than copied matrix positions. The CPU matrix scan does not read column 11 directly; other column bits alone do not prove fitted buttons or EOS contacts."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "CPU and sound-board DIP ordinals",
+      "address_rules": [{ "minimum": 1, "maximum": 42 }],
+      "transports": { "libpinmame": { "channel": "dip" } },
+      "notes": "MDRV_DIPS(42) declares ordinals 1-42. CPU DIPs 1-32 occupy banks 0-3: with RIOT U5 port B bit 7 set, RIOT U4 reads the bank selected by (riot2b >> 4) & 3 and returns its bit-reversed byte. The port declarations also provide bank 4 (33-40) and bank 5 bits 0-1 (41-42), but the named older sound-board settings are not automatically valid for System 80B.\n\nWhen the selected sound module is gts80bs2, its Y CPU reads 0x4000 through s80bs1_sound_input_r: output bits 0-3 use bank 4 bits 4-7 (37-40), bits 4-5 use bank 5 bits 0-1 (41-42), bit 6 is the inverse of bank 4 bit 0 (33), and bit 7 is speech DRQ. The source calls bit 6 a test input and reuses older sound DIP declarations; 34-36 do not feed this read. This does not establish any particular sound ROM's setting semantics or physical DIP fitment. The separate -4 diagnostic switch has no callback on the SNDBRD_GTS80B interface. Other sound modules may use different read paths; inspect the game's module selection."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Driver outputs, relay states and synthetic lower flippers",
+      "address_rules": [
+        { "minimum": 1, "maximum": 11 },
+        { "minimum": 45, "maximum": 48 }
+      ],
+      "transports": { "libpinmame": { "channel": "solenoid" } },
+      "notes": "RIOT U6 port A is inverted: bits 0-1 select one of 1-4 when bit 5 enables that bank, bits 2-3 select one of 5-8 when bit 6 enables its bank, and bit 7 drives 9. The binary state is accumulated over four VBLANKs. For GEN_GTS80B, 10 is the game-on state from lamp 0 even when lamp 1 is set; 11 is the lamp 1 tilt-relay state. The 80/80A game-on expression also gates on tilt and must not be applied to 80B.\n\nFor cabinet-wired lower flippers declared with FLIP_SWNO without FLIP_SOL, core_updateSw fabricates 45/46 from right button 112 and 47/48 from left button 114 while game-on is enabled. Each pair follows the same button, not measured winding or EOS timing. These flags and any other flipper path require the game's own declaration. In the selected physical or modulated solenoid mode the core reads physical output slots for 1-32: the driver writes 1-9, game-on 10 and tilt 11. Synthetic lower-flipper states are still assembled from solenoids2 for direct reads and changed-output aggregation on this non-modulated-flipper path. Physical integration and binary timing differ; CORE_MODOUT_FORCE_ON alone is not the same read-mode flag as physical or modulated solenoids. The listed addresses do not establish the presence or identity of physical loads."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Lamp and low-power driver outputs",
+      "address_rules": [{ "minimum": 0, "maximum": 63 }],
+      "transports": { "libpinmame": { "channel": "lamp" } },
+      "notes": "GTS80_lamp2m and vp_getLampIndex make public lamp n internal lamp bit n. MACHINE_INIT declares nLamps = 64 + hw.lampCol * 8; each game's lampCol is game data, and this profile lists the base 0-63 envelope. RIOT U6 port B selects twelve four-bit latches, whose normal selections publish 0-47; lamp 0 supplies the game-on relay state and lamp 1 the tilt-relay state. Lamp 4 supplies sound command bit 4 when SNDBRD_GTS80B is selected. A lamp-channel output need not drive a bulb. A selector-12 write publishes binary 48-51 as complements of 44-47; this describes the stored latch update, not an unconditional initialization or physical-brightness identity. The physical slots 48-51 are driven by complemented latch bits, with their own output integration.\n\nIn the normal binary latch path 52-63 remain zero. There is an important source caveat: the binary lampMatrix write checks column >= 0 but not column <= 11. Selector nibbles 13, 14 and 15 can write binary 48-51, 52-55 and 56-59 respectively, so complement and zero claims are conditional on those selectors not being written; check each ROM's use separately. The physical latch writes are bounded to selectors 1-12. In physical-lamp mode 52-55 mirror solenoids 1-4, 56-59 mirror 5-8, 60 mirrors 9, and 61-63 are unwritten. Source comments number these physical mirrors one higher; the actual slot arithmetic and public lamp conversion give 52-60. No output state proves physical fitment."
+    },
+    {
+      "id": "pinmame.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "Emulated general illumination channel",
+      "address_rules": [{ "values": [0] }],
+      "transports": { "libpinmame": { "channel": "gi" } },
+      "notes": "The driver declares one GI channel. In binary mode vp_getGI(0) reads coreGlobals.gi[0], which the driver does not write, so it remains zero. In physical-GI mode the first latch writes lamp 1's tilt-relay bit to GI 0, with the reversed CORE_MODOUT_BULB_44_6_3V_AC_REV output type. The code models a normally closed relay feed and explicitly says the tilt relay's gating of controlled lamp power is not emulated. The actual machine's GI wiring, strings and fitment require its own evidence."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "locator": "Portable excerpt: evidence/excerpts/gottlieb.tx-sector.1988/pinmame-controller.txt. Revision-scoped generic paths: src/wpc/gts80.c (GTS80_sw2m, GTS80_m2sw, SWITCH_UPDATE, RIOT read/write handlers, GTS80_vblank, MACHINE_INIT and drivers); src/wpc/gts80.h (ports and DIP declarations); src/wpc/gts80s.c (module-specific sound input and memory maps/interfaces); src/wpc/core.h and core.c (game-data fields, flipper flags, core_updateSw, switch/solenoid access and physical outputs); src/wpc/vpintf.c (lamp, solenoid and GI read/change paths). Game declarations in the same retained excerpt must be interpreted in each machine record, not inherited as generation-wide facts. This portable excerpt is shared evidence for this controller profile and the machine record; preserve it or relink every consumer when reorganizing game evidence."
+    }
+  ]
+}

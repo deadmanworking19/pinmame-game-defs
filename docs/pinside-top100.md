@@ -106,7 +106,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 156 | Baywatch | `sega.baywatch.1995` | 75% |
 | 158 | The Sopranos | `stern.the-sopranos.2005` | 94% |
 | 159 | Viking | `bally.viking.1979` | 94% |
-| 160 | TX-Sector | `gottlieb.tx-sector.1988` | 13% |
+| 160 | TX-Sector | `gottlieb.tx-sector.1988` | 75% |
 | 162 | Black Knight | `williams.black-knight.1980` | 100% |
 | 163 | Space Station | `williams.space-station.1987` | 94% |
 | 165 | Stars | `stern.stars.1978` | 75% |

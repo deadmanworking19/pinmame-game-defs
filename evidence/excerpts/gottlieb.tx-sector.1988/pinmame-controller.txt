@@ -1,0 +1,1992 @@
+Portable exact source regions. Trailing whitespace is trimmed for Git; source file bytes, hashes and numbered locators remain authoritative. No omitted tool output.
+
+### src/wpc/gts80games.c | file SHA256 153659b7e44bd4c8a2d05aeb430be8936f5b3a6c43bc2b8de0de6b85c542e610 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1-15 ---
+1: #include "driver.h"
+2: #include "sndbrd.h"
+3: #include "sim.h"
+4: #include "gts80.h"
+5: #include "gts80s.h"
+6: #include "machine/6532riot.h"
+7:
+8: #define INITGAME(name, gen, flip, disptype, sb, disp, inv) \
+9:   static core_tGameData name##GameData = {gen, disptype, {flip,0,0,0,sb,disp},NULL,{{0},{inv}}}; \
+10:   static void init_##name(void) { core_gameData = &name##GameData; }
+11:
+12: #define FLIP616   FLIP_SWNO(6,16)
+13:
+14: GTS80_INPUT_PORTS_START(gts80, 1)       GTS80_INPUT_PORTS_END
+15: GTS80VID_INPUT_PORTS_START(gts80vid, 1) GTS80_INPUT_PORTS_END
+--- lines 44-50 ---
+44: static core_tLCDLayout dispAlpha[] = {
+45:   {0, 0, 0,20,CORE_SEG16},  {2, 0,20,20,CORE_SEG16}, {0}
+46: };
+47:
+48: #define INIT_S80(name, disptype, sb) \
+49: static core_tGameData name##GameData = {GEN_GTS80, disptype, {0,0,0,0,sb,0},NULL,{{0},{0}}}; \
+50: static void init_##name(void) { core_gameData = &name##GameData; } \
+--- lines 2037-2094 ---
+2037: /*-------------------------------------------------------------------
+2038: / TX-Sector (#712)
+2039: /-------------------------------------------------------------------*/
+2040: INITGAME(txsector, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2041: GTS80B_2K_ROMSTART(txsector, "prom2.cpu", CRC(f12514e6) SHA1(80bca17c33df99ed1a7acc21f7f70ea90e7c0463),
+2042:                              "prom1.cpu", CRC(e51d39da) SHA1(b6e4d573b62cc441a153cc4d8b647ee46b4dd2a7))
+2043: GTS80BSSOUND3232(            "drom1.snd", CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2044:                              "yrom1.snd", CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2045: GTS80_ROMEND
+2046: #define input_ports_txsector input_ports_gts80
+2047: CORE_GAMEDEFNV(txsector, "TX-Sector",1988,"Gottlieb",gl_mGTS80BS2,0)
+2048:
+2049: INITGAME(txsectfp, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2050: GTS80B_2K_ROMSTART(txsectfp, "prom2.cpu",    CRC(f12514e6) SHA1(80bca17c33df99ed1a7acc21f7f70ea90e7c0463),
+2051:                              "prom1_fp.cpu", CRC(13283b01) SHA1(e4e0602ead0ec4d4f54a39df3d08b1aaeb92f1ca))
+2052: GTS80BSSOUND3232(            "drom1.snd",    CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2053:                              "yrom1.snd",    CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2054: GTS80_ROMEND
+2055: #define input_ports_txsectfp input_ports_txsector
+2056: CORE_CLONEDEFNV(txsectfp,txsector, "TX-Sector (Free Play)",1988,"Flipprojets",gl_mGTS80BS2,0)
+2057:
+2058: // #712Y
+2059: INITGAME(txsectrg, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2060: GTS80B_2K_ROMSTART(txsectrg, "prom2g.cpu", CRC(2b17261f) SHA1(a3195190c0d5116b60e487a7b7f3a28c1f110e89),
+2061:                              "prom1g.cpu", CRC(83ea2f11) SHA1(ac3570597512c71c099aa15f0750a12a3e206b83))
+2062: GTS80BSSOUND3232(            "drom1.snd",  CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2063:                              "yrom1.snd",  CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2064: GTS80_ROMEND
+2065: #define input_ports_txsectrg input_ports_txsector
+2066: CORE_CLONEDEFNV(txsectrg,txsector, "TX-Sector (German)",1988,"Gottlieb",gl_mGTS80BS2,0)
+2067:
+2068: INITGAME(txsecgfp, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2069: GTS80B_2K_ROMSTART(txsecgfp, "prom2g.cpu",   CRC(2b17261f) SHA1(a3195190c0d5116b60e487a7b7f3a28c1f110e89),
+2070:                              "prom1g_fp.cpu",CRC(0c374395) SHA1(52a7035598ba83aaf149550e7d08190f9773c25a))
+2071: GTS80BSSOUND3232(            "drom1.snd",    CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2072:                              "yrom1.snd",    CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2073: GTS80_ROMEND
+2074: #define input_ports_txsecgfp input_ports_txsector
+2075: CORE_CLONEDEFNV(txsecgfp,txsector, "TX-Sector (German Free Play)",1988,"Flipprojets",gl_mGTS80BS2,0)
+2076:
+2077: // #712X
+2078: INITGAME(txsectrf, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2079: GTS80B_2K_ROMSTART(txsectrf, "prom2f.cpu", CRC(1bd08247) SHA1(968cc30e5e5c783e73cb3278a58189c4f8b8186f),
+2080:                              "prom1f.cpu", CRC(8df27155) SHA1(67aeeab0d50e43674082e1dd99a849db64ba00b2))
+2081: GTS80BSSOUND3232(            "drom1.snd",  CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2082:                              "yrom1.snd",  CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2083: GTS80_ROMEND
+2084: #define input_ports_txsectrf input_ports_txsector
+2085: CORE_CLONEDEFNV(txsectrf,txsector, "TX-Sector (French)",1988,"Gottlieb",gl_mGTS80BS2,0)
+2086:
+2087: INITGAME(txsecffp, GEN_GTS80B, FLIP616, dispAlpha, SNDBRD_GTS80B,GTS80_DISPALPHA,0)
+2088: GTS80B_2K_ROMSTART(txsecffp, "prom2f.cpu",   CRC(1bd08247) SHA1(968cc30e5e5c783e73cb3278a58189c4f8b8186f),
+2089:                              "prom1f_fp.cpu",CRC(45e47931) SHA1(a92d323c4892cd1aa429cd884a8f1d33f0379667))
+2090: GTS80BSSOUND3232(            "drom1.snd",    CRC(61d66ca1) SHA1(59b1705b13d46b29f45257c566274f3cdce15ec2),
+2091:                              "yrom1.snd",    CRC(469ef444) SHA1(faa16f34357a53c3fc61b59251fabdc44c605000))
+2092: GTS80_ROMEND
+2093: #define input_ports_txsecffp input_ports_txsector
+2094: CORE_CLONEDEFNV(txsecffp,txsector, "TX-Sector (French Free Play)",1988,"Flipprojets",gl_mGTS80BS2,0)
+### src/wpc/gts80.h | file SHA256 38d6750443a340bf19613310169a5dfed0e2be4aa625d41f2fb9ea7d92b77482 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1-188 ---
+1: #pragma once
+2:
+3: #include "core.h"
+4: #include "sim.h"
+5:
+6: /*-------------------------
+7: / Machine driver constants
+8: /--------------------------*/
+9: /*-- Common Inports for GTS80Games --*/
+10: #define GTS80_COMPORTS \
+11:   PORT_START /* 0 */ \
+12:     /* switch column 8 */ \
+13:     COREPORT_BIT(     0x0001, "Test",             KEYCODE_8) \
+14:     COREPORT_BITDEF(  0x0002, IPT_COIN1,          IP_KEY_DEFAULT) \
+15:     COREPORT_BITDEF(  0x0004, IPT_COIN2,          IP_KEY_DEFAULT) \
+16:     COREPORT_BITDEF(  0x0008, IPT_COIN3,          KEYCODE_3) \
+17:     COREPORT_BITDEF(  0x0010, IPT_START1,         IP_KEY_DEFAULT) \
+18:     COREPORT_BITDEF(  0x0020, IPT_TILT,           KEYCODE_INSERT) \
+19:     /* These are put in switch column 0 */ \
+20:     COREPORT_BIT(     0x8000, "Slam Tilt",        KEYCODE_HOME) \
+21:     COREPORT_BIT(     0x1000, "Sound Test",       KEYCODE_9)
+22:
+23: #define GTS80VID_COMPORTS \
+24:     COREPORT_BIT(     0x0f00, "Video Test",       KEYCODE_7) \
+25:     COREPORT_BIT(     0x0100, "Joystick Right",   KEYCODE_RIGHT) \
+26:     COREPORT_BIT(     0x0200, "Joystick Left",    KEYCODE_LEFT) \
+27:     COREPORT_BIT(     0x0400, "Joystick Up",      KEYCODE_UP) \
+28:     COREPORT_BIT(     0x0800, "Joystick Down",    KEYCODE_DOWN)
+29:
+30: #define GTS80_DIPS \
+31:   PORT_START /* 1 */ \
+32:     COREPORT_DIPNAME( 0x0001, 0x0000, "S1") \
+33:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+34:       COREPORT_DIPSET(0x0001, DEF_STR(On) ) \
+35:     COREPORT_DIPNAME( 0x0002, 0x0002, "S2") \
+36:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+37:       COREPORT_DIPSET(0x0002, DEF_STR(On) ) \
+38:     COREPORT_DIPNAME( 0x0004, 0x0000, "S3") \
+39:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+40:       COREPORT_DIPSET(0x0004, DEF_STR(On) ) \
+41:     COREPORT_DIPNAME( 0x0008, 0x0000, "S4") \
+42:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+43:       COREPORT_DIPSET(0x0008, DEF_STR(On) ) \
+44:     COREPORT_DIPNAME( 0x0010, 0x0000, "S5") \
+45:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+46:       COREPORT_DIPSET(0x0010, DEF_STR(On) ) \
+47:     COREPORT_DIPNAME( 0x0020, 0x0000, "S6") \
+48:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+49:       COREPORT_DIPSET(0x0020, DEF_STR(On) ) \
+50:     COREPORT_DIPNAME( 0x0040, 0x0000, "S7") \
+51:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+52:       COREPORT_DIPSET(0x0040, DEF_STR(On) ) \
+53:     COREPORT_DIPNAME( 0x0080, 0x0000, "S8") \
+54:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+55:       COREPORT_DIPSET(0x0080, DEF_STR(On) ) \
+56:     COREPORT_DIPNAME( 0x0100, 0x0100, "S9") \
+57:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+58:       COREPORT_DIPSET(0x0100, DEF_STR(On) ) \
+59:     COREPORT_DIPNAME( 0x0200, 0x0200, "S10") \
+60:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+61:       COREPORT_DIPSET(0x0200, DEF_STR(On) ) \
+62:     COREPORT_DIPNAME( 0x0400, 0x0000, "S11") \
+63:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+64:       COREPORT_DIPSET(0x0400, DEF_STR(On) ) \
+65:     COREPORT_DIPNAME( 0x0800, 0x0000, "S12") \
+66:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+67:       COREPORT_DIPSET(0x0800, DEF_STR(On) ) \
+68:     COREPORT_DIPNAME( 0x1000, 0x0000, "S13") \
+69:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+70:       COREPORT_DIPSET(0x1000, DEF_STR(On) ) \
+71:     COREPORT_DIPNAME( 0x2000, 0x0000, "S14") \
+72:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+73:       COREPORT_DIPSET(0x2000, DEF_STR(On) ) \
+74:     COREPORT_DIPNAME( 0x4000, 0x0000, "S15") \
+75:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+76:       COREPORT_DIPSET(0x4000, DEF_STR(On) ) \
+77:     COREPORT_DIPNAME( 0x8000, 0x8000, "S16") \
+78:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+79:       COREPORT_DIPSET(0x8000, DEF_STR(On) ) \
+80:   PORT_START /* 2 */ \
+81:     COREPORT_DIPNAME( 0x0001, 0x0001, "S17") \
+82:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+83:       COREPORT_DIPSET(0x0001, DEF_STR(On) ) \
+84:     COREPORT_DIPNAME( 0x0002, 0x0002, "S18") \
+85:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+86:       COREPORT_DIPSET(0x0002, DEF_STR(On) ) \
+87:     COREPORT_DIPNAME( 0x0004, 0x0000, "S19") \
+88:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+89:       COREPORT_DIPSET(0x0004, DEF_STR(On) ) \
+90:     COREPORT_DIPNAME( 0x0008, 0x0008, "S20") \
+91:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+92:       COREPORT_DIPSET(0x0008, DEF_STR(On) ) \
+93:     COREPORT_DIPNAME( 0x0010, 0x0010, "S21") \
+94:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+95:       COREPORT_DIPSET(0x0010, DEF_STR(On) ) \
+96:     COREPORT_DIPNAME( 0x0020, 0x0000, "S22") \
+97:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+98:       COREPORT_DIPSET(0x0020, DEF_STR(On) ) \
+99:     COREPORT_DIPNAME( 0x0040, 0x0040, "S23") \
+100:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+101:       COREPORT_DIPSET(0x0040, DEF_STR(On) ) \
+102:     COREPORT_DIPNAME( 0x0080, 0x0080, "S24") \
+103:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+104:       COREPORT_DIPSET(0x0080, DEF_STR(On) ) \
+105:     COREPORT_DIPNAME( 0x0100, 0x0100, "S25") \
+106:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+107:       COREPORT_DIPSET(0x0100, DEF_STR(On) ) \
+108:     COREPORT_DIPNAME( 0x0200, 0x0200, "S26") \
+109:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+110:       COREPORT_DIPSET(0x0200, DEF_STR(On) ) \
+111:     COREPORT_DIPNAME( 0x0400, 0x0400, "S27") \
+112:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+113:       COREPORT_DIPSET(0x0400, DEF_STR(On) ) \
+114:     COREPORT_DIPNAME( 0x0800, 0x0800, "S28") \
+115:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+116:       COREPORT_DIPSET(0x0800, DEF_STR(On) ) \
+117:     COREPORT_DIPNAME( 0x1000, 0x1000, "S29") \
+118:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+119:       COREPORT_DIPSET(0x1000, DEF_STR(On) ) \
+120:     COREPORT_DIPNAME( 0x2000, 0x2000, "S30") \
+121:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+122:       COREPORT_DIPSET(0x2000, DEF_STR(On) ) \
+123:     COREPORT_DIPNAME( 0x4000, 0x4000, "S31") \
+124:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+125:       COREPORT_DIPSET(0x4000, DEF_STR(On) ) \
+126:     COREPORT_DIPNAME( 0x8000, 0x8000, "S32") \
+127:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+128:       COREPORT_DIPSET(0x8000, DEF_STR(On) )
+129:
+130: #define GTS80_SNDDIPS \
+131:   PORT_START /* 3 */ \
+132:     COREPORT_DIPNAME( 0x0001, 0x0000, "SS:S1: Self Test") \
+133:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+134:       COREPORT_DIPSET(0x0001, DEF_STR(On) ) \
+135:     COREPORT_DIPNAME( 0x0002, 0x0000, "SS:S2: Not Used") \
+136:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+137:       COREPORT_DIPSET(0x0002, DEF_STR(On) ) \
+138:     COREPORT_DIPNAME( 0x000c, 0x0004, "SS:S3-S4: Attract Mode Speech") \
+139:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+140:       COREPORT_DIPSET(0x0004, "10s" ) \
+141:       COREPORT_DIPSET(0x0008, "2m" ) \
+142:       COREPORT_DIPSET(0x000c, "4m" ) \
+143:     COREPORT_DIPNAME( 0x0010, 0x0010, "SS:S5: Background Sound ") \
+144:       COREPORT_DIPSET(0x0000, "Disabled" ) \
+145:       COREPORT_DIPSET(0x0010, "Enabled" ) \
+146:     COREPORT_DIPNAME( 0x0020, 0x0020, "SS:S6: Speech") \
+147:       COREPORT_DIPSET(0x0000, "Disabled" ) \
+148:       COREPORT_DIPSET(0x0020, "Enabled" ) \
+149:     COREPORT_DIPNAME( 0x0040, 0x0000, "SS:S7: Not Used") \
+150:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+151:       COREPORT_DIPSET(0x0040, DEF_STR(On) ) \
+152:     COREPORT_DIPNAME( 0x0080, 0x0000, "SS:S8: Not Used") \
+153:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+154:       COREPORT_DIPSET(0x0080, DEF_STR(On) ) \
+155:     COREPORT_DIPNAME( 0x0100, 0x0000, "S:S1") \
+156:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+157:       COREPORT_DIPSET(0x0100, DEF_STR(On) ) \
+158:     COREPORT_DIPNAME( 0x0200, 0x0000, "S:S2") \
+159:       COREPORT_DIPSET(0x0000, DEF_STR(Off) ) \
+160:       COREPORT_DIPSET(0x0200, DEF_STR(On) )
+161:
+162: // 07:Test, 17:Coin1, etc.
+163:
+164: /*-- Standard input ports --*/
+165: #define GTS80_INPUT_PORTS_START(name,balls) \
+166:   INPUT_PORTS_START(name) \
+167:     CORE_PORTS \
+168:     SIM_PORTS(balls) \
+169:     GTS80_COMPORTS \
+170:     GTS80_DIPS \
+171:     GTS80_SNDDIPS
+172:
+173: #define GTS80VID_INPUT_PORTS_START(name,balls) \
+174:   INPUT_PORTS_START(name) \
+175:     CORE_PORTS \
+176:     SIM_PORTS(balls) \
+177:     GTS80_COMPORTS \
+178:     GTS80VID_COMPORTS \
+179:     GTS80_DIPS \
+180:     GTS80_SNDDIPS
+181:
+182: #define GTS80_INPUT_PORTS_END INPUT_PORTS_END
+183:
+184: #define GTS80_COMINPORT       CORE_COREINPORT
+185:
+186: /*-- GTS80 switch numbers --*/
+187: #define GTS80_SWSLAMTILT	  -1
+188:
+--- lines 258-278 ---
+258: /*-- GTS80B Main CPU regions and ROM, 8K single game PROM --*/
+259: #define GTS80B_8K_ROMSTART(name, n1, chk1) \
+260:   ROM_START(name) \
+261:     NORMALREGION(0x10000, GTS80_MEMREG_CPU) \
+262:       ROM_LOAD(n1, 0x2000, 0x2000, chk1) \
+263:         ROM_RELOAD(0x6000, 0x2000)       \
+264:         ROM_RELOAD(0xa000, 0x2000)       \
+265:         ROM_RELOAD(0xe000, 0x2000)
+266:
+267: /*-- GTS80B Main CPU regions and ROM, 8K & 2K game PROM --*/
+268: #define GTS80B_2K_ROMSTART(name, n1, chk1, n2, chk2) \
+269:   ROM_START(name) \
+270:     NORMALREGION(0x10000, GTS80_MEMREG_CPU) \
+271:       ROM_LOAD(n1, 0x1000, 0x0800, chk1) \
+272:         ROM_RELOAD(0x5000, 0x0800)       \
+273:         ROM_RELOAD(0x9000, 0x0800)       \
+274:         ROM_RELOAD(0xd000, 0x0800)       \
+275:       ROM_LOAD(n2, 0x2000, 0x2000, chk2) \
+276:         ROM_RELOAD(0x6000, 0x2000)       \
+277:         ROM_RELOAD(0xa000, 0x2000)       \
+278:         ROM_RELOAD(0xe000, 0x2000)
+--- lines 310-318 ---
+310: #define gl_mGTS80SS_old	gts80ss_old
+311: #define gl_mGTS80SS		gts80ss
+312: #define gl_mGTS80VID	gts80vid
+313: #define gl_mGTS80TAB	gts80tab
+314: #define gl_mGTS80B		gts80b
+315: #define gl_mGTS80BS1	gts80bs1
+316: #define gl_mGTS80BS2	gts80bs2
+317: #define gl_mGTS80BS3	gts80bs3
+318: #define gl_mGTS80BS3A	gts80bs3a
+### src/wpc/gts80s.h | file SHA256 11a10323265cf80494d7a5504f0735f0654322fc87c0254483ddc6fbcb69b500 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 55-108 ---
+55:    Gen 3 - DSP: 1x(YM2151): OTHER: None
+56: */
+57:
+58: /*-- Sound rom macros --*/
+59:
+60: /* Load 32k Rom Space */
+61: #define GTS80BS_ROMLOAD32(start, n, chk) \
+62:   ROM_LOAD(n, start,  0x8000, chk)
+63:
+64: /*-- Gen 1: 3 x 8K Sound CPU Roms --*/
+65: #define GTS80BSSOUND888(n1,chk1,n2,chk2,n3,chk3) \
+66:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+67:     ROM_LOAD(n1,0xe000,0x2000, chk1)\
+68:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1) \
+69:     ROM_LOAD(n2,0xe000,0x2000, chk2)\
+70:     ROM_LOAD(n3,0xc000,0x2000, chk3)
+71:
+72: /*-- Gen 2 : 2 x 8K Sound CPU Roms --*/
+73: #define GTS80BSSOUND88(n1,chk1,n2,chk2) \
+74:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+75:     ROM_LOAD(n1,0xe000,0x2000, chk1)\
+76:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1) \
+77:     ROM_LOAD(n2,0xe000,0x2000, chk2)
+78:
+79: /*-- Amazon Hunt II : only 1x8K Sound CPU Rom, no music --*/
+80: #define GTS80BSSOUND8(n1,chk1) \
+81:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1) \
+82:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+83: 	ROM_LOAD(n1,0xe000,0x2000, chk1)
+84:
+85: /*-- Gen 2 & 3: 1 x 32K Sound CPU Roms --*/
+86: #define GTS80BSSOUND32(n1,chk1) \
+87:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+88:     GTS80BS_ROMLOAD32(0x8000, n1, chk1) \
+89:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1)
+90:
+91: /*-- Gen 2 & 3: 2 x 32K Sound CPU Roms --*/
+92: #define GTS80BSSOUND3232(n1,chk1,n2,chk2) \
+93:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+94:     GTS80BS_ROMLOAD32(0x8000, n1, chk1) \
+95:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1) \
+96:     GTS80BS_ROMLOAD32(0x8000, n2, chk2)
+97:
+98: /*-- Gen 2 & 3: 2 x 32K Sound CPU Roms --*/
+99: #define GTS80BSSOUND3x32(n1,chk1,n2,chk2,n3,chk3) \
+100:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU3) \
+101:     GTS80BS_ROMLOAD32(0x8000, n1, chk1) \
+102:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU2) \
+103:     GTS80BS_ROMLOAD32(0x8000, n2, chk2) \
+104:   SOUNDREGION(0x10000, GTS80_MEMREG_SCPU1) \
+105:     GTS80BS_ROMLOAD32(0x8000, n3, chk3)
+106:
+107: extern MACHINE_DRIVER_EXTERN(gts80s_b1);
+108: extern MACHINE_DRIVER_EXTERN(gts80s_b2);
+### src/wpc/gts80.c | file SHA256 9e1669e2ef720aef53e6204a3639196b1fc912c583849e51fb12a3e6efc4dfad | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1-17 ---
+1: /************************************************************************************************
+2: / Gottlieb System 80 Pinball
+3: /
+4: / Switches:        Numbering
+5: /   Col0  Col8      Col0 Col1  Col2  Col3  ... Col10 Col11
+6: / 0 Right Test     -8    00 79 01 80 02 81     101   111
+7: / 1 Left  COIN1    -7 09 10 89 11 90 12 91     102   112
+8: / 2 Up    COIN2    -6 19 20    21    22        103   113
+9: / 3 Down  COIN3    -5 29 30    31    32        104   114
+10: / 4       START    -4 39 40    41    42        105   115
+11: / 5       TILT     -3 49 50    51    52        106   116
+12: / 6                -2 59 60    61    62        107   117
+13: / 7 Slam           -1 69 70    71    72        108   118
+14: /
+15: / Solenoid 10: flipper enable (GameOn relay, and not tilted on S80 & S80A)
+16: / Solenoid 11: Tilt relay (lamp 1), whose normally closed contact feeds the playfield GI, like GTS3's solenoid 31
+17: ************************************************************************************************/
+--- lines 34-48 ---
+34: #define GTS80_SOLSMOOTH       4 /* Smooth the Solenoids over this number of VBLANKS */
+35: #define GTS80_DISPLAYSMOOTH   2 /* Smooth the display over this number of VBLANKS */
+36:
+37: // Rockwell 10939/10941 Segment Rasterizer
+38: typedef struct Rockwell10939State {
+39:    int coreSegPos; // position of output in coreGlobals.segments
+40:    int corePWMSegPos; // position of PWM output in coreGlobals
+41:    int nHalted; // Halt state (display driver start halted then refresh process is started)
+42:    int isCtrlDataWord; // Next data is a control word
+43:    UINT8 nDigits; // Number of driven digits
+44:    UINT8 nWriteCol;
+45:    UINT8 nDigitCycle; // 16, 32 or 64 cycles per digit
+46:    UINT8 dutyCycle; // brightness duty cycle relative to nDigitCycle - 1 (0..63)
+47:    UINT8 display[20]; // 16 segments encoded as 8 bits character codes (see core_ascii2seg16)
+48: } Rockwell10939State;
+--- lines 77-203 ---
+77: static INTERRUPT_GEN(GTS80_vblank) {
+78:   static UINT32 gameOn;
+79:
+80: #ifdef LISY_SUPPORT
+81:     // Keep the LISY80 tickled each time we run around the interrupt
+82:     // so it knows we are still alive
+83:     // we use it in 2.011 to handle special functions for play & test switch
+84:     //	if (coreGlobals.p_rocEn) ???
+85:     lisy80TickleWatchdog();
+86: #endif
+87:
+88:   GTS80locals.vblankCount++;
+89:   /*-- lamps are not strobed so no need to smooth --*/
+90:   /*-- solenoids --*/
+91:   if ((GTS80locals.vblankCount % GTS80_SOLSMOOTH) == 0) {
+92:     // Lamp 0 controls GameOn relay (map as sol 10), lamp 1 controls Tilt relay (map as sol 11), on all generations
+93:     // Flippers are enabled by GameOn and not Tilt on S80 & S80A, by GameOn only on S80B (whose games also use the Tilt relay for GI effects, e.g. Rock, Raven)
+94:     const UINT8 relays = coreGlobals.lampMatrix[0] & 0x03; // bit 0: GameOn relay, bit 1: Tilt relay
+95:     gameOn = (core_gameData->gen & (GEN_GTS80 | GEN_GTS80A)) ? (relays == 0x01) : (relays & 0x01);
+96:     coreGlobals.solenoids = GTS80locals.solenoids | (gameOn << 9) | ((UINT32)(relays & 0x02) << 9);
+97:     core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, gameOn << 1, 0x02); // Also as output, for physical solenoids
+98:     GTS80locals.solenoids = coreGlobals.pulsedSolState;
+99:     coreGlobals.pulsedSolState = 0;
+100:   }
+101:   /*-- display (only BCD version as the alphanum directly drive core outputs) --*/
+102:   if ((core_gameData->hw.display & GTS80_DISPALPHA) == 0 && (GTS80locals.vblankCount % GTS80_DISPLAYSMOOTH) == 0) {
+103:     memcpy(coreGlobals.segments, GTS80locals.segments, sizeof(coreGlobals.segments));
+104:     memset(GTS80locals.segments, 0, sizeof(GTS80locals.segments));
+105:   }
+106:   core_updateSw(gameOn & 0x01);
+107: }
+108:
+109: /* GTS80 switch numbering, row and column is swapped */
+110: static int GTS80_sw2m(int no) {
+111:   if (no >= 96)    return (no/10)*8+(no%10-1);
+112:   else if (no < 0) return no + 8;
+113:   else { no += 1;  return (no%10)*8 + no/10; }
+114: }
+115:
+116: static int GTS80_m2sw(int col, int row) {
+117:   if (col == 0 && row == 0)
+118:     return -8;                    // matches sw2m(-8) == 0
+119:   else if (col <= 9)
+120:     return row * 10 + col - 1;    // inverse of the 0<=no<96 branch
+121:   else
+122:     return col * 10 + row + 1;    // inverse of the no>=96 branch
+123: }
+124: static int GTS80_lamp2m(int no)           { return no+8; }
+125: static int GTS80_m2lamp(int col, int row) { return (col-1)*8+row; }
+126:
+127: static SWITCH_UPDATE(GTS80) {
+128:   int isSlammed;
+129:   UINT8 invPattern = coreGlobals.invSw[0];
+130:
+131:   if (inports) {
+132:     CORE_SETKEYSW(inports[GTS80_COMINPORT], 0x3f, 8);
+133:     // All the matrix switches come from LISY80, so we only want to read
+134:     // the first column from the keyboard if we are not using the LISY80
+135:     // at the moment we keep it as it is, as we do switch reading via Riot0
+136:     // Sound test
+137:     CORE_SETKEYSW(inports[GTS80_COMINPORT] >> 8, 0x10, 0);
+138:     // Set slam switch
+139:     CORE_SETKEYSW(((inports[GTS80_COMINPORT] >> 8) & 0x80) ^ invPattern ? 0x80 : 0,0x80,0);
+140:     if (core_gameData->hw.display & GTS80_DISPVIDEO)
+141:       CORE_SETKEYSW(inports[GTS80_COMINPORT]>>8,0x0f,0);
+142:   }
+143:
+144:   /*-- slam tilt --*/
+145:   isSlammed = core_getSw(GTS80_SWSLAMTILT);
+146:   GTS80locals.slamSw = isSlammed ? invPattern : (invPattern ^ 0xff);
+147:   riot6532_set_input_a(1, GTS80locals.slamSw);
+148:   if (core_gameData->hw.display & GTS80_DISPVIDEO) { // Also triggers NMI on video CPU
+149:     cpu_set_irq_line(GTS80_VIDCPU, IRQ_LINE_NMI, isSlammed ? ASSERT_LINE : CLEAR_LINE);
+150:   }
+151:   // sound test
+152:   sndbrd_0_diag(coreGlobals.swMatrix[0] & 0x10);
+153: }
+154:
+155: static WRITE_HANDLER(GTS80_sndCmd_w) {
+156:   sndbrd_0_data_w(0, data);
+157: }
+158:
+159: /*---------------
+160: / Riot0 Switch reading
+161: /----------------*/
+162: static READ_HANDLER(riot6532_0a_r) {
+163:   int bits = 0;
+164:   if (GTS80locals.riot1b & 0x80) {
+165: #ifndef LISY_SUPPORT
+166:     bits = core_getDip((GTS80locals.riot2b>>4)&0x03);
+167: #else
+168:     //we can configure the dip switches via /boot/lisy80/dips
+169:     bits = lisy80_get_mpudips((GTS80locals.riot2b>>4)&0x03);
+170: #endif
+171:     return core_revbyte(bits);
+172:   }
+173:   else {
+174: #ifndef LISY_SUPPORT
+175:     //old routine without LISY80
+176:     int ii;
+177:     for (ii = 8; ii > 0; ii--) {
+178:       bits <<= 1;
+179:       if (coreGlobals.swMatrix[ii] & GTS80locals.riot0b) bits |= 1;
+180:     }
+181: #else
+182:     //get the switches from Lisy80
+183:     bits = lisy80_switch_handler(GTS80locals.riot0b);
+184: #endif
+185:     return bits;
+186:   }
+187: }
+188:
+189: static WRITE_HANDLER(riot6532_0b_w) {
+190:   GTS80locals.riot0b = data;
+191: #ifdef LISY_SUPPORT
+192:   //we use this routine to be able to 'throttle' the game a bit
+193:   lisy80_throttle(GTS80locals.riot0b);
+194: #endif
+195:   GTS80locals.buf8212int |= (data & 0x03); // for caveman only
+196: }
+197:
+198: /*---------------------------
+199: /  Riot1 Display
+200: /----------------------------*/
+201: /* Slam Tilt Switch Input */
+202: static READ_HANDLER(slam_sw_r) {
+203:   return GTS80locals.slamSw;
+--- lines 291-435 ---
+291: /* Alphanumeric */
+292: static WRITE_HANDLER(riot6532_1a_w) {
+293:   if (~data & GTS80locals.riot1a & 0x10)
+294:     GTS80locals.alphaData = (GTS80locals.alphaData & 0xf0) | (GTS80locals.riot1b & 0x0f);
+295:   if (data & ~GTS80locals.riot1a & 0x20)
+296:     GTS80locals.alphaData = (GTS80locals.alphaData & 0x0f) | ((GTS80locals.riot1b & 0x0f)<<4);
+297:   GTS80locals.riot1a = data;
+298: #if defined(PINMAME) && defined(LISY_SUPPORT)
+299:   //send port A to lisy80
+300:   lisy80_display_handler_alpha( 0, GTS80locals.riot1a); //0 means porta
+301: #endif /* PINMAME && LISY_SUPPORT */
+302: }
+303:
+304: static void rockwell10939_ld(Rockwell10939State* state, UINT8 data) {
+305:    if (state->isCtrlDataWord == 0 && data == 0x01) {
+306:       state->isCtrlDataWord = 1; // Next data is a control word
+307:    }
+308:    else if (state->isCtrlDataWord == 1 && data != 0x01) {
+309:       state->isCtrlDataWord = 0;
+310:       if (data == 0x05)
+311:          state->nDigitCycle = 16;
+312:       else if (data == 0x06)
+313:          state->nDigitCycle = 32;
+314:       else if (data == 0x07)
+315:          state->nDigitCycle = 64;
+316:       // 0x08 0x09 0x0A are cusrsor control mode (not implemented)
+317:       else if (data == 0x0e)
+318:          state->nHalted = 0; // Start Display Refresh Cycle (start display strobing, also start second slave display driver)
+319:       else if (data >= 0x40 && data <= 0x7F)
+320:          state->dutyCycle = data & 0x7F; // Duty cycle (brightness, relative to nDigitCycle - 1)
+321:       else if (data >= 0x80 && data <= 0x9F)
+322:          state->nDigits = data == 0x80 ? 32 : (data & 0x1F); // Digit Counter Register: number of digits to drive
+323:       else if (data >= 0xC0 && data <= 0xD3)
+324:          state->nWriteCol = data & 0x1F; // Next write column
+325:       //if (data != 0xc0)
+326:       //   printf("%8.5f Driver %02d: Control data word 1: %02x\n", timer_get_time(), state->coreSegPos, data);
+327:    }
+328:    else if (state->nDigits) {
+329:       //printf("%8.5f Driver %02d: %02x\n", timer_get_time(), state->coreSegPos + state->nWriteCol, data);
+330:       const UINT16 seg16 = core_ascii2seg16[data & 0x7f];
+331:       coreGlobals.segments[state->coreSegPos + state->nWriteCol].w = seg16;
+332:       const float brightness = (state->dutyCycle == 0) ? 1.f : (float)(state->dutyCycle + 1) / (float)state->nDigitCycle;
+333:       for (int i = 0, pos = state->corePWMSegPos + state->nWriteCol * 16; i < 16; i++, pos++)
+334:         coreGlobals.physicOutputState[pos].value = (seg16 & (1 << i)) ? brightness : 0.f;
+335:       state->display[state->nWriteCol] = data;
+336:       state->nWriteCol = (state->nWriteCol + 1) % state->nDigits;
+337:    }
+338: }
+339:
+340: static WRITE_HANDLER(riot6532_1b_w) {
+341:   // FIXME comment say falling edge, while code say rising edge
+342:   if (core_lowToHigh(GTS80locals.riot1b, data, 0x10)) // LD1 (falling edge)
+343:     rockwell10939_ld(&GTS80locals.seg1State, GTS80locals.alphaData);
+344:   if (core_lowToHigh(GTS80locals.riot1b, data, 0x20)) // LD2
+345:     rockwell10939_ld(&GTS80locals.seg2State, GTS80locals.alphaData);
+346:   GTS80locals.riot1b = data;
+347: #if defined(PINMAME) && defined(LISY_SUPPORT)
+348:   //send port B to lisy80
+349:   lisy80_display_handler_alpha( 1, GTS80locals.riot1b); //1 means portb
+350: #endif /* PINMAME && LISY_SUPPORT */
+351: }
+352:
+353: /*---------------------------
+354: /  Riot2 Solenoids, Lamps and Sound
+355: /----------------------------*/
+356: /* solenoids */
+357: static WRITE_HANDLER(riot6532_2a_w) {
+358: #if defined(PINMAME) && defined(LISY_SUPPORT)
+359:   //send port A RIOT 2 to lisy80
+360:   lisy80_coil_handler_a( data);
+361: #endif /* PINMAME && LISY_SUPPORT */
+362:   data = ~data;
+363:
+364:   /* solenoids 1-4, PA0 & PA1 enabled by PA5 */
+365:   const UINT8 sol1_4 = (data & 0x20) ? (1 << (data & 0x03)) : 0;
+366:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = sol1_4;
+367:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0, sol1_4, 0x0f);
+368:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 48, sol1_4 << 4, 0xf0); // Also output as Lamp 53..56 as solenoids are often also used to drive flashers in parallel
+369:
+370:   /* solenoid 5-8, PA2 & PA3 enabled by PA6 */
+371:   const UINT8 sol5_8 = (data & 0x40) ? (0x10 << ((data >> 2) & 0x03)) : 0;
+372:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = (coreGlobals.pulsedSolState & 0xffffff0f) | sol5_8;
+373:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0, sol5_8, 0xf0);
+374:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 56, sol5_8 >> 4, 0x0f); // Also output as Lamp 57..60 as solenoids are often also used to drive flashers in parallel
+375:
+376:   /* solenoid 9, directly wired to PA7 */
+377:   GTS80locals.solenoids |= coreGlobals.pulsedSolState = (coreGlobals.pulsedSolState & 0xfffffeff) | ((data & 0x80)<<1);
+378:   core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, data >> 7, 0x01);
+379:   core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 56, (data >> 3) & 0x10, 0x10); // Also output as Lamp 61 as solenoids are often also used to drive flashers in parallel
+380:
+381:   if (core_gameData->hw.soundBoard == SNDBRD_GTS80B) {
+382:     if (data&0x10) GTS80_sndCmd_w(0, (coreGlobals.lampMatrix[0]&0x10) | (data&0x0f));
+383:   } else {
+384:     GTS80_sndCmd_w(0, ((coreGlobals.lampMatrix[1]&0x02)?0x10:0x00) | ((data&0x10) ? (data&0x0f) : 0));
+385:   }
+386: }
+387:
+388: static WRITE_HANDLER(riot6532_2b_w) {
+389: #if defined(PINMAME) && defined(LISY_SUPPORT)
+390:   //send port B RIOT 2 to lisy80
+391:   lisy80_coil_handler_b( data);
+392: #endif /* PINMAME && LISY_SUPPORT */
+393:
+394:   GTS80locals.riot2b = data;
+395:
+396:   // PB4..PB7 select column latch (12 columns from 1 to 12), PB0..PB3 lamp states (4 lamps per latch)
+397:   const int column = ((data & 0xf0) >> 4) - 1;
+398:   data &= 0x0f;
+399:
+400:   if (column >= 0 && column <= 11) {
+401:      if ((column & 1) == 0) { // 0, 2, 4, 6, 8, 10
+402:         core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + (column >> 1) * 8, data, 0x0f);
+403:         // Duplicate lamp 1 (Tilt relay) to GI string: the playfield GI goes through the relay's normally closed contact
+404:         // TODO so does the +6V DC of the controlled playfield lamps (Panthera, Haunted House, Raven schematics): they are off while
+405:         // the Tilt relay is on (tilt, S80B GI effects), whatever their driver outputs. Not emulated
+406:         if (column == 0) {
+407:            core_write_masked_pwm_output_8b(CORE_MODOUT_GI0, data >> 1, 0x01);
+408:            core_write_masked_pwm_output_8b(CORE_MODOUT_SOL0 + 8, data << 1, 0x04); // Also as solenoid 11 (Tilt relay)
+409:         }
+410:      }
+411:      else { // 1, 3, 5, 7, 9, 11
+412:         core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + (column >> 1) * 8, data << 4, 0xf0);
+413:         if (column == 11)
+414:            core_write_masked_pwm_output_8b(CORE_MODOUT_LAMP0 + 48, data ^ 0x0f, 0x0f); // Additional 13th column corresponding to inverted 12th column
+415:      }
+416:   }
+417:
+418:   if (column >= 0) {
+419:     if (column & 1) {
+420:       coreGlobals.lampMatrix[column/2] = (coreGlobals.lampMatrix[column/2] & 0x0f) | (data<<4);
+421:       if (column == 11) // Additional 13th column corresponding to inverted 12th column
+422:         coreGlobals.lampMatrix[6] = data ^ 0x0f;
+423:     }
+424:     else {
+425:       coreGlobals.lampMatrix[column/2] = (coreGlobals.lampMatrix[column/2] & 0xf0) | data;
+426:     }
+427:     if (core_gameData->hw.display & GTS80_DISPVIDEO) {
+428:       if (column == 1)      GTS80locals.vidPlayer = data;
+429:       else if (column == 3) GTS80locals.vidCmd = data;
+430:       else if ((column == 4) && (data & 0x01)) {
+431:         soundlatch_w(0,GTS80locals.vidCmd); pic8259_0_issue_irq(0);
+432:       }
+433:     }
+434:   }
+435: }
+--- lines 592-646 ---
+592: static MACHINE_INIT(gts80) {
+593:   memset(&GTS80locals, 0, sizeof GTS80locals);
+594:
+595:   /* init RIOTS */
+596:   riot6532_config(0, &GTS80_riot6532_intf[0]); // switches
+597:   if (core_gameData->hw.display & GTS80_DISPALPHA)
+598:     riot6532_config(1, &GTS80_riot6532_intf[2]); // ALPHA Seg
+599:   else
+600:     riot6532_config(1, &GTS80_riot6532_intf[1]); // BCD Seg
+601:   riot6532_config(2, &GTS80_riot6532_intf[3]); // Lamp + Sol
+602:
+603:   riot6532_set_clock(0, 3579545./4.);
+604:   riot6532_set_clock(1, 3579545./4.);
+605:   riot6532_set_clock(2, 3579545./4.);
+606:
+607:   GTS80locals.slamSw = 0x80;
+608:
+609:   // Interrupt controller
+610:   if (core_gameData->hw.display & GTS80_DISPVIDEO) pic8259_0_config(GTS80_VIDCPU,0);
+611:   sndbrd_0_init(core_gameData->hw.soundBoard, 1, memory_region(GTS80_MEMREG_SCPU1), NULL, NULL);
+612:
+613:   riot6532_reset();
+614:
+615:   // Segment display rasterizers
+616:   GTS80locals.seg1State.coreSegPos = 0;
+617:   GTS80locals.seg1State.corePWMSegPos = CORE_MODOUT_SEG0;
+618:   GTS80locals.seg1State.nDigitCycle = 64; // At startup, defaults to 64 cycles per digit
+619:   GTS80locals.seg2State.coreSegPos = 20;
+620:   GTS80locals.seg2State.corePWMSegPos = CORE_MODOUT_SEG0 + 20 * 16;
+621:   GTS80locals.seg2State.nDigitCycle = 64; // At startup, defaults to 64 cycles per digit
+622:
+623:   // Hardware supports 48 low power output (lamps and other uses), not strobed, and 9 high power (solenoids)
+624:   coreGlobals.nGI = 1;
+625:   core_set_pwm_output_type(CORE_MODOUT_GI0, coreGlobals.nGI, CORE_MODOUT_BULB_44_6_3V_AC_REV);
+626:   coreGlobals.nLamps = 64 + core_gameData->hw.lampCol * 8;
+627:   core_set_pwm_output_bulb(CORE_MODOUT_LAMP0, coreGlobals.nLamps, BULB_44, 6.f, FALSE, 0.f, 1.f);
+628:   coreGlobals.nSolenoids = CORE_FIRSTCUSTSOL - 1 + core_gameData->hw.custSol;
+629:   core_set_pwm_output_type(CORE_MODOUT_SOL0, coreGlobals.nSolenoids, CORE_MODOUT_SOL_2_STATE);
+630:   if (core_gameData->hw.display & GTS80_DISPALPHA)
+631:   {
+632:      coreGlobals.nAlphaSegs = 2 * 20 * 16;
+633:      core_set_pwm_output_type(CORE_MODOUT_SEG0, coreGlobals.nAlphaSegs, CORE_MODOUT_NONE); // No eye flicker fusion, just the direct PWM duty ratio from the display driver
+634:   }
+635:   else
+636:   {
+637:      coreGlobals.nAlphaSegs = 3 * 20 * 16; // Actually can be 4x6 + 1x4 / 5x6 + 1x4 / 4x7 + 1x4 / 4x7 + 1x6 + 1x4
+638:      core_set_pwm_output_led_vfd(CORE_MODOUT_SEG0, coreGlobals.nAlphaSegs, TRUE, 16.0f / 0.7f); // Futaba VFD with 0.7ms pulse over 16ms period
+639:   }
+640:   const struct GameDriver* rootDrv = Machine->gamedrv;
+641:   while (rootDrv->clone_of && (rootDrv->clone_of->flags & NOT_A_DRIVER) == 0)
+642:      rootDrv = rootDrv->clone_of;
+643:   const char* const gn = rootDrv->name;
+644:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 0, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // GameOver relay (Q)
+645:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 1, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Tilt relay (T)
+646:   core_set_pwm_output_type(CORE_MODOUT_LAMP0 + 4, 1, CORE_MODOUT_LEGACY_SOL_2_STATE); // Sound 16
+--- lines 681-684 ---
+681:   else {
+682:     // TODO Not yet implemented hardware (we need proper output definition as the low power output are also used for other purposes)
+683:   }
+684: }
+--- lines 709-722 ---
+709: MACHINE_DRIVER_START(gts80)
+710:   MDRV_IMPORT_FROM(PinMAME)
+711:   MDRV_CPU_ADD_TAG("mcpu", M6502, 3579545./4.)
+712:   MDRV_CPU_MEMORY(GTS80_readmem, GTS80_writemem)
+713:   MDRV_CPU_VBLANK_INT(GTS80_vblank, 1)
+714:   MDRV_SWITCH_UPDATE(GTS80)
+715:   MDRV_CORE_INIT_RESET_STOP(gts80,NULL,gts80)
+716:   MDRV_NVRAM_HANDLER(gts80)
+717:   MDRV_DIPS(42) /* 42 DIPs (32 for the controller board, 8 for the SS- and 2 for the S-Board*/
+718:   MDRV_SWITCH_CONV(GTS80_sw2m,GTS80_m2sw)
+719:   MDRV_LAMP_CONV(GTS80_lamp2m,GTS80_m2lamp)
+720:   MDRV_SOUND_CMD(GTS80_sndCmd_w)
+721:   MDRV_SOUND_CMDHEADING("GTS80")
+722: MACHINE_DRIVER_END
+--- lines 751-770 ---
+751: static MACHINE_DRIVER_START(gts80b_ns)
+752:   MDRV_IMPORT_FROM(gts80)
+753:   MDRV_SCREEN_SIZE(320, 200)
+754:   MDRV_VISIBLE_AREA(0, 319, 0, 199)
+755: MACHINE_DRIVER_END
+756:
+757: MACHINE_DRIVER_START(gts80b)
+758:   MDRV_IMPORT_FROM(gts80b_ns)
+759:   MDRV_IMPORT_FROM(gts80s_sp)
+760: MACHINE_DRIVER_END
+761:
+762: MACHINE_DRIVER_START(gts80bs1)
+763:   MDRV_IMPORT_FROM(gts80b_ns)
+764:   MDRV_IMPORT_FROM(gts80s_b1)
+765: MACHINE_DRIVER_END
+766:
+767: MACHINE_DRIVER_START(gts80bs2)
+768:   MDRV_IMPORT_FROM(gts80b_ns)
+769:   MDRV_IMPORT_FROM(gts80s_b2)
+770: MACHINE_DRIVER_END
+### src/wpc/gts80s.c | file SHA256 a82ae6a67d9b05f6f9e92505a304f43e517a308b22d3998f617fd6d0473dfa63 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 878-889 ---
+878: //Generation 1 Specific
+879: /* bits 0-3 are probably unused (future expansion) */
+880: /* bits 4 & 5 are two dip switches. Unused? */
+881: /* bit 6 is the test switch. When 0, the CPU plays a pulsing tone. */
+882: /* bit 7 comes from the speech chip DATA REQUEST pin */
+883: // GV 07/17/05: re-using the sound dips introduced with the older sound boards for now.
+884: static READ_HANDLER(s80bs1_sound_input_r)
+885: {
+886: 	int data = (core_getDip(4) >> 4) | ((core_getDip(5) & 0x03) << 4) | ((~core_getDip(4) & 0x01) << 6);
+887: 	if(GTS80BS_locals.speechboard_drq) data |= 0x80;
+888: 	return data;
+889: }
+--- lines 984-990 ---
+984: WRITE_HANDLER(gts80b_data_w)
+985: {
+986: 	// ignore the first byte (probably comes in too early)
+987: 	if (!GTS80BS_locals.firstCmd) { GTS80BS_locals.firstCmd = 1; return; }
+988: 	data ^= 0xff;	/*Data is inverted from main cpu*/
+989: 	s80bs_sh_w(0,data);
+990: //	snd_cmd_log(data);
+--- lines 1025-1059 ---
+1025: /***************************/
+1026: /* GENERATION 2 MEMORY MAP */
+1027: /***************************/
+1028:
+1029: /*********/
+1030: /* Y-CPU */
+1031: /*********/
+1032: MEMORY_READ_START(GTS80BS2_readmem)
+1033: { 0x0000, 0x07ff, MRA_RAM },
+1034: { 0x4000, 0x4000, s80bs1_sound_input_r }, // at least Victory is using the test dip switch!
+1035: { 0x6800, 0x6800, soundlatch_r},
+1036: { 0x7000, 0x7000, s80bs_cause_dac_nmi_r},
+1037: { 0x8000, 0xffff, MRA_ROM },
+1038: MEMORY_END
+1039: MEMORY_WRITE_START(GTS80BS2_writemem)
+1040: { 0x0000, 0x07ff, MWA_RAM },
+1041: { 0x2000, 0x2000, MWA_NOP },
+1042: { 0x6000, 0x6000, s80bs_nmi_rate_w},
+1043: { 0x8000, 0x8000, s80bs_ay8910_latch_w},
+1044: { 0xa000, 0xa000, s80bs1_sound_control_w},
+1045: { 0xa001,0xffff, MWA_ROM},
+1046: MEMORY_END
+1047: /*********/
+1048: /* D-CPU */
+1049: /*********/
+1050: MEMORY_READ_START(GTS80BS2_readmem2)
+1051: { 0x0000, 0x07ff, MRA_RAM },
+1052: { 0x4000, 0x4000, soundlatch_r},
+1053: { 0x8000, 0xffff, MRA_ROM },
+1054: MEMORY_END
+1055: MEMORY_WRITE_START(GTS80BS2_writemem2)
+1056: { 0x0000, 0x07ff, MWA_RAM },
+1057: { 0x8000, 0x8000, s80bs_dac_vol_w },
+1058: { 0x8001, 0x8001, s80bs_dac_data_w},
+1059: MEMORY_END
+--- lines 1349-1371 ---
+1349: // Init
+1350: void gts80b_init(struct sndbrdData *brdData) {
+1351: 	int drq = GTS80BS_locals.speechboard_drq;
+1352: 	//GTS80BS_locals.nmi_timer = NULL;
+1353: 	memset(&GTS80BS_locals, 0, sizeof(GTS80BS_locals));
+1354: 	GTS80BS_locals.cpuNo = brdData->cpuNo;
+1355: 	//Start the programmable timer circuit
+1356: 	timer_set(TIME_IN_HZ(250000>>8), 0, nmi_callback);
+1357: 	//Must not be cleared here because it's set by the sp0250 chip earlier
+1358: 	GTS80BS_locals.speechboard_drq = drq;
+1359: }
+1360:
+1361: // Cleanup
+1362: void gts80b_exit(int boardNo)
+1363: {
+1364: 	if(GTS80BS_locals.nmi_timer)
+1365: 		timer_remove(GTS80BS_locals.nmi_timer);
+1366: 	GTS80BS_locals.nmi_timer = NULL;
+1367: }
+1368:
+1369: const struct sndbrdIntf gts80bIntf = {
+1370:   "GTS80B", gts80b_init, gts80b_exit, NULL, gts80b_data_w, gts80b_data_w, NULL, NULL, NULL, 0 //SNDBRD_NODATASYNC|SNDBRD_NOCTRLSYNC
+1371: };
+--- lines 1390-1404 ---
+1390: //System S80B - Gen 2
+1391: MACHINE_DRIVER_START(gts80s_b2)
+1392:   MDRV_CPU_ADD_TAG("y-cpu", M6502, 2000000)
+1393:   MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
+1394:   MDRV_CPU_MEMORY(GTS80BS2_readmem, GTS80BS2_writemem)
+1395:
+1396:   MDRV_CPU_ADD_TAG("d-cpu", M6502, 2000000)
+1397:   MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
+1398:   MDRV_CPU_MEMORY(GTS80BS2_readmem2, GTS80BS2_writemem2)
+1399:
+1400:   MDRV_SOUND_ADD(DAC, GTS80BS_dacInt)
+1401:   MDRV_SOUND_ADD(AY8910, GTS80BS_ay8910Int)
+1402: #ifdef ENABLE_MECHANICAL_SAMPLES
+1403:   MDRV_SOUND_ADD(SAMPLES, samples_interface)
+1404: #endif
+### src/wpc/core.h | file SHA256 b6c03b20a09fbadff1ce16f9f1cfc9e5bace08857cb998b92d8f304695ec97c0 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 138-164 ---
+138: / Flipper hardware is described with the following macros
+139: /  (macros use FLIP_LL, FLIP_LR, FLIP_UL, FLIP_UR)
+140: / FLIP_SW()      Flipper switches available
+141: / FLIP_SWNO(L,R) Flipper switch numbers if other than default (Pre-fliptronics)
+142: / FLIP_SOL()     CPU controlled flippers
+143: / Example: CPU controlled upper right flipper
+144: /   FLIP_SW(FLIP_LL | FLIP_LR | FLIP_UR) + FLIP_SOL(FLIP_LL | FLIP_LR | FLIP_UR)
+145: / Example: Flippers not controlled by CPU
+146: /   FLIP_SWNO(swFlipL, swFlipR)
+147: /--------------------------------------------------------------*/
+148: /*-- flipper names --*/
+149: #define FLIP_LR        (0x1)
+150: #define FLIP_LL        (0x2)
+151: #define FLIP_UR        (0x4)
+152: #define FLIP_UL        (0x8)
+153: #define FLIP_L         (FLIP_LL | FLIP_LR)
+154: #define FLIP_U         (FLIP_UL | FLIP_UR)
+155:
+156: /*-- definition macros --*/
+157: #define FLIP_BUT(x)    ((x)<<16)
+158: #define FLIP_SW(x)     ((x)<<20)
+159: #define FLIP_SWNO(l,r) (((l)<<8)|(r)|FLIP_SW(FLIP_L))
+160: #define FLIP_EOS(x)    ((x)<<28)
+161: #define FLIP_SOL(x)    (((x)<<24)|FLIP_EOS(x))
+162:
+163: #define FLIP_SWL(x)    (((x)>>8)&0xff)
+164: #define FLIP_SWR(x)    ((x)&0xff)
+--- lines 290-340 ---
+290: /*       BY17/BY35                       */
+291: /*  1-15 Standard Pulse                  */
+292: /* 17-20 Standard Hold                   */
+293: /*                                       */
+294: /*       GTS80                           */
+295: /*  1- 9 Standard                        */
+296: /* 10    GameOn (fake)                   */
+297: /* 11    Tilt (for GI) (fake)            */
+298: #define CORE_FIRSTEXTSOL   37
+299: #define CORE_FIRSTUFLIPSOL 33
+300: #define CORE_FIRSTCUSTSOL  51
+301: #define CORE_FIRSTLFLIPSOL 45
+302: #define CORE_FIRSTSIMSOL   49
+303: #define CORE_MAXSOL        64
+304:
+305: #define CORE_SSFLIPENSOL  23
+306: #define CORE_FIRSTSSSOL   17
+307:
+308: #define CORE_SOLBIT(x) (1u<<((x)-1))
+309:
+310: /*  Flipper Solenoid numbers */
+311: #define sLRFlip     (CORE_FIRSTLFLIPSOL+1)
+312: #define sLRFlipPow  (CORE_FIRSTLFLIPSOL+0)
+313: #define sLLFlip     (CORE_FIRSTLFLIPSOL+3)
+314: #define sLLFlipPow  (CORE_FIRSTLFLIPSOL+2)
+315: #define sURFlip     (CORE_FIRSTUFLIPSOL+1)
+316: #define sURFlipPow  (CORE_FIRSTUFLIPSOL+0)
+317: #define sULFlip     (CORE_FIRSTUFLIPSOL+3)
+318: #define sULFlipPow  (CORE_FIRSTUFLIPSOL+2)
+319:
+320: /*-- Flipper solenoid bits --*/
+321: #define CORE_LRFLIPSOLBITS 0x03
+322: #define CORE_LLFLIPSOLBITS 0x0c
+323: #define CORE_URFLIPSOLBITS 0x30
+324: #define CORE_ULFLIPSOLBITS 0xc0
+325:
+326: /*-- create a custom solenoid number --*/
+327: /* example: #define swCustom CORE_CUSTSOLNO(1)  // custom solenoid 1 */
+328: #define CORE_CUSTSOLNO(n) (CORE_FIRSTCUSTSOL-1+(n))
+329:
+330: #define CORE_COINDOORSWCOL                0 /* internal array number */
+331: #define CORE_MAXSWCOL                    16 /* switch columns (0-9=sw matrix, 10=coin door, 11=cabinet/flippers) */
+332: #define CORE_FLIPPERSWCOL                11 /* internal array number */
+333: #define CORE_STDSWCOLS                   12 /* Base number of switch matrix columns */
+334: #define CORE_CUSTSWCOL       CORE_STDSWCOLS /* first custom (game specific) switch column */
+335: #define CORE_MAXLAMPCOL                  78 /* lamp column (0-7=std lamp matrix 8- custom) */
+336: #define CORE_STDLAMPCOLS                  8 /* Base number of lamp matrix columns */
+337: #define CORE_CUSTLAMPCOL   CORE_STDLAMPCOLS /* first custom lamp column */
+338: #define CORE_MAXPORTS                     8 /* Maximum input ports */
+339: #define CORE_MAXGI                        5 /* Maximum GI strings */
+340: #define CORE_MAXNVRAM                131118 /* Maximum number of NVRAM bytes, only used for get_ChangedNVRAM so far */
+--- lines 347-359 ---
+347: /*-------------------
+348: /  Flipper Switches
+349: / in column FLIPPERSWCOL
+350: /--------------------*/
+351: #define CORE_SWLRFLIPEOSBIT 0x01
+352: #define CORE_SWLRFLIPBUTBIT 0x02
+353: #define CORE_SWLLFLIPEOSBIT 0x04
+354: #define CORE_SWLLFLIPBUTBIT 0x08
+355: #define CORE_SWURFLIPEOSBIT 0x10
+356: #define CORE_SWURFLIPBUTBIT 0x20
+357: #define CORE_SWULFLIPEOSBIT 0x40
+358: #define CORE_SWULFLIPBUTBIT 0x80
+359:
+--- lines 498-515 ---
+498:    double readOnTime;                     /* Reader: total ON time up to readTime */
+499: } core_tPhysicOutput;
+500:
+501: #ifdef LSB_FIRST
+502: typedef union { struct { UINT8 lo, hi; } b; UINT16 w; } core_tWord;
+503: typedef core_tWord core_tSeg[CORE_SEGCOUNT];
+504: #else /* LSB_FIRST */
+505: typedef union { struct { UINT8 hi, lo; } b; UINT16 w; } core_tWord;
+506: typedef core_tWord core_tSeg[CORE_SEGCOUNT];
+507: #endif /* LSB_FIRST */
+508: typedef struct {
+509:   /*-- Switches --*/
+510:   volatile UINT8  swMatrix[CORE_MAXSWCOL];
+511:   volatile UINT8  invSw[CORE_MAXSWCOL];                         /* Active low switches */
+512:   /*-- Strobed lamp matrix --*/
+513:   volatile UINT8  lampMatrix[CORE_MAXLAMPCOL];                  /* Strobed lamp matrix binary state as integrated during last strobe to On/Off state */
+514:   volatile UINT8  tmpLampMatrix[CORE_MAXLAMPCOL];               /* Strobed lamp matrix binary state being currently integrated (intermediate state until next end of strobe) */
+515:   /*-- Alphanumeric driver --*/
+--- lines 548-578 ---
+548: typedef struct {
+549:   const UINT64  gen;                /* Hardware Generation */
+550:   core_tLCDLayout *lcdLayout;       /* LCD display layout */
+551:   const struct {
+552:     UINT32  flippers;      /* flippers installed (see defines below) */
+553:     int     swCol, lampCol, custSol; /* Custom switch columns, lamp columns and solenoids */
+554:     UINT32  soundBoard, display;
+555:     UINT32  gameSpecific1, gameSpecific2;
+556:     /*-- custom functions --*/
+557:     int  (*getSol)(int solNo);        /* get state of custom solenoid */
+558:     void (*handleMech)(int mech);     /* update switches depending on playfield mechanics */
+559:     int  (*getMech)(int mechNo);      /* get status of mechanics */
+560:     void (*drawMech)(BMTYPE **line);  /* draw game specific hardware */
+561:     core_tLampDisplay *lampData;      /* lamp layout */
+562: #ifdef ENABLE_MECHANICAL_SAMPLES
+563:     wpc_tSamSolMap   *solsammap;      /* solenoids samples */
+564: #endif
+565:   } hw;
+566:   const void *simData;
+567:   const struct { /* WPC specific stuff */
+568:     char serialNo[21];  /* Security chip serial number */
+569:     UINT8 invSw[CORE_MAXSWCOL]; /* inverted switches (e.g. optos) */
+570:     /* common switches */
+571:     struct { int start, tilt, sTilt, coinDoor, shooter; } comSw;
+572:   } wpc;
+573:   const struct { /* S3-S11 specific stuff (incl DE) */
+574:     int muxSol;  /* S11 Mux solenoid */
+575:     int ssSw[8]; /* Special solenoid switches */
+576:   } sxx;
+577:   /* simulator data */
+578: } core_tGameData;
+### src/wpc/core.c | file SHA256 38a4418adba7f2ef408e8f92bfcf3e5ab950c45164cb69461460af3747386c00 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1793-1874 ---
+1793: void core_updateSw(int flipEn) {
+1794:   /*-- handle flippers--*/
+1795:   const int flip = core_gameData->hw.flippers;
+1796:   const int flipSwCol = (core_gameData->gen & (GEN_GTS3 | GEN_SPA | GEN_ALVG | GEN_ALVG_DMD2 | GEN_WICO)) ? 15 : CORE_FLIPPERSWCOL;
+1797:   int inports[CORE_MAXPORTS];
+1798:   UINT8 swFlip;
+1799:   int ii;
+1800:
+1801:   if (g_fHandleKeyboard) {
+1802:     const int n = CORE_COREINPORT+(coreData->coreDips+31)/16;
+1803:     for (ii = 0; ii < n; ii++)
+1804:       inports[ii] = readinputport(ii);
+1805:
+1806:     /*-- buttons --*/
+1807:     swFlip = 0;
+1808:     if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWLLFLIPBUTBIT;
+1809:     if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWLRFLIPBUTBIT;
+1810:     if (locals.flipMask & CORE_SWULFLIPBUTBIT) {    /* have UL switch */
+1811:       if (flip & FLIP_BUT(FLIP_UL))
+1812:         { if (inports[CORE_FLIPINPORT] & CORE_ULFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }
+1813:       else
+1814:         { if (inports[CORE_FLIPINPORT] & CORE_LLFLIPKEY) swFlip |= CORE_SWULFLIPBUTBIT; }
+1815:     }
+1816:     if (locals.flipMask & CORE_SWURFLIPBUTBIT) {    /* have UR switch */
+1817:       if (flip & FLIP_BUT(FLIP_UR))
+1818:         { if (inports[CORE_FLIPINPORT] & CORE_URFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }
+1819:       else
+1820:         { if (inports[CORE_FLIPINPORT] & CORE_LRFLIPKEY) swFlip |= CORE_SWURFLIPBUTBIT; }
+1821:     }
+1822:   }
+1823:   else
+1824:     swFlip = (coreGlobals.swMatrix[flipSwCol] ^ coreGlobals.invSw[flipSwCol]) & (CORE_SWULFLIPBUTBIT|CORE_SWURFLIPBUTBIT|CORE_SWLLFLIPBUTBIT|CORE_SWLRFLIPBUTBIT);
+1825:
+1826: #ifdef PROC_SUPPORT
+1827:   /*-- Only handle flipper switches if we're not in a real game, otherwise they --*/
+1828:   /*-- will get physically activated anyway */
+1829:   if (!coreGlobals.p_rocEn) {
+1830: #endif
+1831:
+1832:     /*-- set switches in matrix for non-fliptronic games --*/
+1833:     if (FLIP_SWL(flip)) core_setSw(FLIP_SWL(flip), swFlip & CORE_SWLLFLIPBUTBIT);
+1834:     if (FLIP_SWR(flip)) core_setSw(FLIP_SWR(flip), swFlip & CORE_SWLRFLIPBUTBIT);
+1835: #ifdef PROC_SUPPORT
+1836:   }
+1837: #endif
+1838:
+1839:   /*-- fake solenoids if not CPU controlled --*/
+1840:   if ((flip & FLIP_SOL(FLIP_L)) == 0) {
+1841:     coreGlobals.solenoids2 &= 0xffffff00;
+1842:     if (flipEn) {
+1843:       if (swFlip & CORE_SWLLFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LLFLIPSOLBITS;
+1844:       if (swFlip & CORE_SWLRFLIPBUTBIT) coreGlobals.solenoids2 |= CORE_LRFLIPSOLBITS;
+1845:     }
+1846:   }
+1847:
+1848:   /*-- EOS switches --*/
+1849:   if (locals.flipMask & CORE_SWULFLIPEOSBIT) {
+1850:     if (core_getSol(sULFlip)) locals.flipTimer[0] += 1;
+1851:     else                      locals.flipTimer[0] = 0;
+1852:     if (locals.flipTimer[0] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWULFLIPEOSBIT;
+1853:   }
+1854:   if (locals.flipMask & CORE_SWURFLIPEOSBIT) {
+1855:     if (core_getSol(sURFlip)) locals.flipTimer[1] += 1;
+1856:     else                      locals.flipTimer[1] = 0;
+1857:     if (locals.flipTimer[1] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWURFLIPEOSBIT;
+1858:   }
+1859:   if (locals.flipMask & CORE_SWLLFLIPEOSBIT) {
+1860:     if (core_getSol(sLLFlip)) locals.flipTimer[2] += 1;
+1861:     else                      locals.flipTimer[2] = 0;
+1862:     if (locals.flipTimer[2] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLLFLIPEOSBIT;
+1863:   }
+1864:   if (locals.flipMask & CORE_SWLRFLIPEOSBIT) {
+1865:     if (core_getSol(sLRFlip)) locals.flipTimer[3] += 1;
+1866:     else                      locals.flipTimer[3] = 0;
+1867:     if (locals.flipTimer[3] >= CORE_FLIPSTROKETIME) swFlip |= CORE_SWLRFLIPEOSBIT;
+1868:   }
+1869:   coreGlobals.swMatrix[flipSwCol] = (coreGlobals.swMatrix[flipSwCol]         & ~locals.flipMask) |
+1870:                                     ((swFlip ^ coreGlobals.invSw[flipSwCol]) &  locals.flipMask);
+1871:
+1872:   /*-- update core dependent switches --*/
+1873:   if (coreData->updSw)  coreData->updSw(g_fHandleKeyboard ? inports : NULL);
+1874:
+--- lines 2217-2255 ---
+2217: int core_getSw(int swNo) {
+2218:   if (coreData->sw2m) swNo = coreData->sw2m(swNo); else swNo = (swNo/10)*8+(swNo%10-1);
+2219:   return (coreGlobals.swMatrix[swNo/8] ^ coreGlobals.invSw[swNo/8]) & (1<<(swNo%8));
+2220: }
+2221:
+2222: int core_getSwCol(int colEn) {
+2223:   int ii = 1;
+2224:   if (colEn) {
+2225:     while ((colEn & 0x01) == 0) {
+2226:       colEn >>= 1;
+2227:       ii++;
+2228:     }
+2229:   }
+2230:   return coreGlobals.swMatrix[ii];
+2231: }
+2232:
+2233: /*----------------------
+2234: /  Set/reset a switch
+2235: /-----------------------*/
+2236: void (*core_swChangedHook)(int swMatrixNo) = NULL;
+2237:
+2238: void core_setSw(int swNo, int value) {
+2239:   UINT8 was;
+2240:   if (coreData->sw2m) swNo = coreData->sw2m(swNo); else swNo = (swNo/10)*8+(swNo%10-1);
+2241:   //fprintf(stderr,"\nPinMAME switch %d",swNo);
+2242:   was = coreGlobals.swMatrix[swNo/8];
+2243:   coreGlobals.swMatrix[swNo/8] &= ~(1<<(swNo%8)); /* clear the bit first */
+2244: #ifdef PROC_SUPPORT
+2245:    if (coreGlobals.p_rocEn) {
+2246:       coreGlobals.swMatrix[swNo/8] |=  ((value ? 0xff : 0) ^ 0) & (1<<(swNo%8));
+2247:    } else {
+2248: #endif
+2249:
+2250:   coreGlobals.swMatrix[swNo/8] |=  ((value ? 0xff : 0) ^ coreGlobals.invSw[swNo/8]) & (1<<(swNo%8));
+2251: #ifdef PROC_SUPPORT
+2252:    }
+2253: #endif
+2254:   if (core_swChangedHook && ((was ^ coreGlobals.swMatrix[swNo/8]) & (1<<(swNo%8)))) core_swChangedHook(swNo);
+2255: }
+--- lines 2456-2516 ---
+2456: int core_getSol(int solNo) {
+2457:   // No solenoid 0, but VPM's Solenoids/SolenoidsState arrays start at index 0
+2458:   if (solNo < 1)
+2459:     return 0;
+2460:   // Binary states are returned as 0/1, like the changed solenoid list. The integrated value is only returned with physical solenoid outputs
+2461:   // or modulated solenoids: with CORE_MODOUT_FORCE_ON alone (SAM, Capcom, pinHeck), a blinking flasher would read on for the whole sequence
+2462:   // 1-32: driver board outputs, like core_getAllSol / core_getAllPhysicSols
+2463:   if (solNo <= 28 || (solNo <= 32 && !(core_gameData->gen & GEN_ALLWPC)))
+2464:     return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value) : ((coreGlobals.solenoids & CORE_SOLBIT(solNo)) != 0);
+2465:   else if (solNo <= 32) // 29-32 WPC: remap GameOn/J111 GPIO (hacky)
+2466:     // Binary state even with physical outputs, while core_getAllPhysicSols reports slots 28-30 (CORE_MODOUT_PULSE, same states) as 0/255
+2467:     return (coreGlobals.solenoids2 & (1<<(solNo-29+8))) != 0;
+2468:   else if (solNo <= 36) { // 33-36 driver specific sols
+2469:     if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))
+2470:       return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value); // Fliptronics are implemented through PWM (needed as these are used to drive flashers on some games)
+2471:     if (coreGlobals.hasModulatedFlippers && (options.usemodsol & CORE_MODOUT_FORCE_ON)) // Binary state of the flipper outputs, like core_getFlipSolBits
+2472:       return coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value > 0.f;
+2473:     if (core_gameData->gen & GEN_ALLWPC) { // WPC only: Upper flipper (note that other systems also have upper flippers, they just don't implement the legacy PinMAME flipper output mapping)
+2474:       int mask;
+2475:       /*-- flipper coils --*/
+2476:       if      ((solNo == sURFlip) && (core_gameData->hw.flippers & FLIP_SOL(FLIP_UR)))
+2477:         mask = CORE_URFLIPSOLBITS;
+2478:       else if ((solNo == sULFlip) && (core_gameData->hw.flippers & FLIP_SOL(FLIP_UL)))
+2479:         mask = CORE_ULFLIPSOLBITS;
+2480:       else
+2481:         mask = 1<<(solNo - 33 + 4);
+2482:       return (coreGlobals.solenoids2 & mask) != 0;
+2483:     }
+2484:     else if (core_gameData->gen & (GEN_SAM | GEN_SPIKE1)) // SAM, SPIKE 1: fake GameOn solenoid for fast flips
+2485:        return (coreGlobals.solenoids2 & 0x10) != 0;
+2486:     else if (core_gameData->gen & GEN_ALLWS) // Whitestar: aux board outputs (magnets, ...), like core_getAllSol
+2487:        return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value) : ((coreGlobals.solenoids2 & (1<<(solNo - 33 + 4))) != 0);
+2488:   }
+2489:   else if (solNo <= 44) { // 37-44 WPC95 & S11 extra
+2490:     if (core_gameData->gen & (GEN_WPC95|GEN_WPC95DCS)) { // Duplicated in 37..40 / 41..44, so always read from 41..44 (hence the |4 in the index/mask) for solenoids, and 37..40 for PWM outputs
+2491:       if (coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))
+2492:         return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + (solNo <= 40 ? solNo : (solNo - 4))-1].value);
+2493:       else
+2494:         return (coreGlobals.solenoids & (1<<((solNo - 13)|4))) != 0;
+2495:     }
+2496:     if (core_gameData->gen & (GEN_ALLS11 | GEN_PINHECK)) // S11 outputs in slots 40-47; pinHeck's GI 8-15 in 36-43, its lower flippers using 44-47
+2497:       return coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)) ? saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + ((core_gameData->gen & GEN_PINHECK) ? solNo - 1 : 32 + solNo - 37 + 8)].value) : ((coreGlobals.solenoids2 & (1<<(solNo - 37 + 8))) != 0);
+2498:   }
+2499:   else if (solNo <= 48) { // 45-48 Lower flippers
+2500:     if (coreGlobals.hasModulatedFlippers && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))
+2501:       return saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value); // Fliptronics are implemented through PWM
+2502:     if (coreGlobals.hasModulatedFlippers && (options.usemodsol & CORE_MODOUT_FORCE_ON)) // Binary state of the flipper outputs, like core_getFlipSolBits
+2503:       return coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + solNo - 1].value > 0.f;
+2504:     int mask = 1<<(solNo - 45);
+2505:     /*-- Game must have lower flippers but for symmetry we check anyway --*/
+2506:     if      /*(*/(solNo == sLRFlip) //&& (core_gameData->hw.flippers & FLIP_SOL(FLIP_LR)))
+2507:       mask = CORE_LRFLIPSOLBITS;
+2508:     else if /*(*/(solNo == sLLFlip) //&& (core_gameData->hw.flippers & FLIP_SOL(FLIP_LL)))
+2509:       mask = CORE_LLFLIPSOLBITS;
+2510:     return (coreGlobals.solenoids2 & mask) != 0;
+2511:   }
+2512:   else if (solNo <= 50) // 49-50 simulated
+2513:     return sim_getSol(solNo);
+2514:   else if (core_gameData->hw.getSol)
+2515:     return core_gameData->hw.getSol(solNo);
+2516:   return 0;
+--- lines 2664-2674 ---
+2664: int core_getDip(int dipBank) {
+2665: #if defined(VPINMAME) || defined(LIBPINMAME)
+2666:   return vp_getDIP(dipBank);
+2667: #else /* VPINMAME */
+2668:   return (readinputport(CORE_COREINPORT+1+dipBank/2)>>((dipBank & 0x01)*8))&0xff;
+2669: #endif /* VPINMAME */
+2670: }
+2671:
+2672: /*--------------------
+2673: /   Draw a LED digit
+2674: /---------------------*/
+--- lines 2766-2780 ---
+2766:           locals.timers[ii] = timer_alloc(coreData->timers[ii].callback);
+2767:           if (coreData->timers[ii].rate > 0.) {
+2768:             timer_adjust(locals.timers[ii], TIME_IN_HZ(coreData->timers[ii].rate), 0, TIME_IN_HZ(coreData->timers[ii].rate));
+2769:           } else { // negative = fractional hz value, e.g. as usec
+2770:             timer_adjust(locals.timers[ii], TIME_IN_USEC(-coreData->timers[ii].rate), 0, TIME_IN_USEC(-coreData->timers[ii].rate));
+2771:           }
+2772:         }
+2773:       }
+2774:     }
+2775:     swlog_start();
+2776:     /*-- init switch matrix --*/
+2777:     memcpy((void*)coreGlobals.invSw, (void*)core_gameData->wpc.invSw, sizeof(core_gameData->wpc.invSw));
+2778:     memcpy((void*)coreGlobals.swMatrix, (void*)coreGlobals.invSw, sizeof(coreGlobals.invSw));
+2779:     /*-- validate switch & lamp matrices --*/
+2780:     if (coreData->m2sw) {
+--- lines 2829-2839 ---
+2829:     /*-- masks bit used by flippers --*/
+2830:     {
+2831:       const UINT32 flip = core_gameData->hw.flippers;
+2832:       locals.flipMask = CORE_SWLRFLIPBUTBIT | CORE_SWLLFLIPBUTBIT |
+2833:          ((flip & FLIP_SW(FLIP_UL)) ? CORE_SWULFLIPBUTBIT : 0) |
+2834:          ((flip & FLIP_SW(FLIP_UR)) ? CORE_SWURFLIPBUTBIT : 0) |
+2835:          ((flip & FLIP_EOS(FLIP_UL))? CORE_SWULFLIPEOSBIT : 0) |
+2836:          ((flip & FLIP_EOS(FLIP_UR))? CORE_SWURFLIPEOSBIT : 0) |
+2837:          ((flip & FLIP_EOS(FLIP_LL))? CORE_SWLLFLIPEOSBIT : 0) |
+2838:          ((flip & FLIP_EOS(FLIP_LR))? CORE_SWLRFLIPEOSBIT : 0);
+2839:     }
+### src/wpc/vpintf.c | file SHA256 c62312cad37fdc228819058b086c94ca4beec056bdfb4f08f826ee89022fbd37 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 30-180 ---
+30: /*------------------------------------
+31: /  get status of a lamp (0=off, 1=on)
+32: /-------------------------------------*/
+33: int vp_getLampIndex(int lampNo) {
+34:   if (coreData && coreData->lamp2m) lampNo = coreData->lamp2m(lampNo) - 8;
+35:   return lampNo >= 0 && lampNo < CORE_MODOUT_LAMP_MAX ? lampNo : -1;
+36: }
+37:
+38: int vp_getLamp(int lampNo) {
+39:   lampNo = vp_getLampIndex(lampNo);
+40:   if (lampNo < 0) return 0;
+41:   /*-- Physical output mode: return a physically meaningful value depending on the output type --*/
+42:   if (coreGlobals.nLamps && (options.usemodsol & CORE_MODOUT_ENABLE_PHYSOUT_LAMPS))
+43:     return (int)saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_LAMP0 + lampNo].value);
+44:   return (coreGlobals.lampMatrix[lampNo/8]>>(lampNo%8)) & 0x01;
+45: }
+46:
+47: /*------------------------------------
+48: /  get status of a solenoid (0=off, !0=on)
+49: /-------------------------------------*/
+50: int vp_getSolenoid(int solNo)
+51: {
+52:   return core_getSol(solNo);
+53: }
+54:
+55: /*-------------------------------------------
+56: /  get status of a GIString (0=off, !0=on)
+57: / (WPC, Whitestar and SAM games only)
+58: /-------------------------------------*/
+59: int vp_getGI(int giNo)
+60: {
+61:   /*-- Physical output mode: return a physically meaningful value depending on the output type --*/
+62:   if (coreGlobals.nGI && (options.usemodsol & CORE_MODOUT_ENABLE_PHYSOUT_GI))
+63:     return (giNo >= 0 && giNo < CORE_MODOUT_GI_MAX) ? (int)saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_GI0 + giNo].value) : 0;
+64:   return (giNo >= 0 && giNo < CORE_MAXGI) ? coreGlobals.gi[giNo] : 0;
+65: }
+66:
+67: /*-------------------------------------------
+68: /  get all lamps changed since last call
+69: /  returns number of changed lamps
+70: /-------------------------------------*/
+71: int vp_getChangedLamps(vp_tChgLamps chgStat) {
+72:   int idx = 0;
+73:   /*-- fill in array --*/
+74:   if (coreGlobals.nLamps && (options.usemodsol & CORE_MODOUT_ENABLE_PHYSOUT_LAMPS))
+75:   {
+76:     int ii;
+77:     for (ii = 0; ii < coreGlobals.nLamps; ii++) {
+78:       const UINT8 val = saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_LAMP0 + ii].value);
+79:       if (val != locals.lastPhysicsOutput[CORE_MODOUT_LAMP0 + ii]) {
+80:         chgStat[idx].lampNo = coreData && coreData->m2lamp ? coreData->m2lamp((ii / 8) + 1, ii & 7) : 0;
+81:         chgStat[idx].currStat = val;
+82:         idx++;
+83:         locals.lastPhysicsOutput[CORE_MODOUT_LAMP0 + ii] = val;
+84:       }
+85:     }
+86:   }
+87:   else
+88:   {
+89:     UINT8 lampMatrix[CORE_MAXLAMPCOL];
+90:     memcpy(lampMatrix, (void*)coreGlobals.lampMatrix, sizeof(lampMatrix));
+91:     const int hasSAMModulatedLeds = (core_gameData->gen & GEN_SAM) && (core_gameData->hw.lampCol > 2);
+92:     const int nCol = CORE_STDLAMPCOLS + (hasSAMModulatedLeds ? 2 : core_gameData->hw.lampCol);
+93:     int ii;
+94:     for (ii = 0; ii < nCol; ii++) {
+95:       int chgLamp = lampMatrix[ii] ^ locals.lastLampMatrix[ii];
+96:       if (chgLamp) {
+97:         int tmpLamp = lampMatrix[ii];
+98:         int jj;
+99:
+100:         for (jj = 0; jj < 8; jj++) {
+101:           if (chgLamp & 0x01) {
+102:             chgStat[idx].lampNo = coreData && coreData->m2lamp ? coreData->m2lamp(ii+1, jj) : 0;
+103:             chgStat[idx].currStat = tmpLamp & 0x01;
+104:             idx++;
+105:           }
+106:           chgLamp >>= 1;
+107:           tmpLamp >>= 1;
+108:         }
+109:       }
+110:     }
+111:     memcpy((void*)locals.lastLampMatrix, lampMatrix, sizeof(lampMatrix));
+112:     // Backward compatibility for modulated LED & RGB LEDs of SAM hardware
+113:     if (hasSAMModulatedLeds) {
+114:       for (ii = 80; ii < coreGlobals.nLamps; ii++) {
+115:         const UINT8 val = saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_LAMP0 + ii].value);
+116:         if (val != locals.lastPhysicsOutput[CORE_MODOUT_LAMP0 + ii]) {
+117:           chgStat[idx].lampNo = ii + 1;
+118:           chgStat[idx].currStat = val;
+119:           idx++;
+120:           locals.lastPhysicsOutput[CORE_MODOUT_LAMP0 + ii] = val;
+121:         }
+122:       }
+123:     }
+124:   }
+125:   return idx;
+126: }
+127:
+128: /*-------------------------------------------
+129: /  get all solenoids changed since last call
+130: /  returns number of changed solenoids
+131: /-------------------------------------*/
+132: int vp_getChangedSolenoids(vp_tChgSols chgStat)
+133: {
+134:   int ii, idx = 0;
+135:   // The backward compatibility is not perfect here: mod sol was only available for a bunch of generations, and would limit modulation to the first 32 solenoids
+136:   if (coreGlobals.nSolenoids && (options.usemodsol & (CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS | CORE_MODOUT_ENABLE_MODSOL)))
+137:   {
+138:     float state[CORE_MODOUT_SOL_MAX];
+139:     core_getAllPhysicSols(state);
+140:     for (ii = 0; ii < coreGlobals.nSolenoids; ii++) {
+141:       if ((options.usemodsol & CORE_MODOUT_ENABLE_MODSOL) && (coreGlobals.physicOutputState[CORE_MODOUT_SOL0 + ii].type == CORE_MODOUT_BULB_44_6_3V_AC_REV))
+142:         state[ii] = 1.0f - state[ii];
+143:       UINT8 v = saturatedByte(state[ii]);
+144:       if (v != locals.lastPhysicsOutput[CORE_MODOUT_SOL0 + ii]) {
+145:         chgStat[idx].solNo = ii + 1;
+146:         chgStat[idx].currStat = v;
+147:         idx++;
+148:         locals.lastPhysicsOutput[CORE_MODOUT_SOL0 + ii] = v;
+149:       }
+150:     }
+151:   }
+152:   else {
+153: 	 UINT64 allSol = core_getAllSol();
+154: 	 UINT64 chgSol = (allSol ^ locals.lastSol) & vp_getSolMask64();
+155: 	 locals.lastSol = allSol;
+156: 	 for (ii = 0; ii < CORE_FIRSTCUSTSOL + core_gameData->hw.custSol - 1; ii++)
+157: 	 {
+158: 		if (chgSol & 0x01) {
+159: 		  chgStat[idx].solNo = ii+1; // Solenoid number
+160: 		  chgStat[idx].currStat = (allSol & 0x01);
+161: 		  idx++;
+162: 		}
+163: 		chgSol >>= 1;
+164: 		allSol >>= 1;
+165: 	 }
+166:   }
+167:   return idx;
+168: }
+169:
+170: /*-------------------------------------------
+171: /  get all GIstrings changed since last call
+172: /  returns number of canged GIstrings
+173: /-------------------------------------*/
+174: int vp_getChangedGI(vp_tChgGIs chgStat) {
+175:   /*-- Physical output mode: return a physically meaningful value depending on the output type --*/
+176:   if (coreGlobals.nGI && (options.usemodsol & CORE_MODOUT_ENABLE_PHYSOUT_GI))
+177:   {
+178: 	  int idx = 0;
+179: 	  for (int i = 0; i < coreGlobals.nGI; i++) {
+180: 		  UINT8 val = saturatedByte(coreGlobals.physicOutputState[CORE_MODOUT_GI0 + i].value);
+### src/libpinmame/libpinmame.cpp | file SHA256 956ea00d6b1f5b3b8533534ca2319fb931618f8fac3aa3792340a106a15ad76e | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1440-1478 ---
+1440: }
+1441:
+1442: /******************************************************
+1443:  * PinmameGetSwitch
+1444:  ******************************************************/
+1445:
+1446: PINMAMEAPI int PinmameGetSwitch(const int swNo)
+1447: {
+1448: 	const std::shared_lock lock(_stateMutex);
+1449: 	return IsEmulationRunning() ? vp_getSwitch(swNo) : 0;
+1450: }
+1451:
+1452: /******************************************************
+1453:  * PinmameSetSwitch
+1454:  ******************************************************/
+1455:
+1456: PINMAMEAPI void PinmameSetSwitch(const int swNo, const int state)
+1457: {
+1458: 	const std::shared_lock lock(_stateMutex);
+1459: 	if (!IsEmulationRunning())
+1460: 		return;
+1461:
+1462: 	vp_putSwitch(swNo, state ? 1 : 0);
+1463: }
+1464:
+1465: /******************************************************
+1466:  * PinmameSetSwitches
+1467:  ******************************************************/
+1468:
+1469: PINMAMEAPI void PinmameSetSwitches(const PinmameSwitchState* const p_states, const int numSwitches)
+1470: {
+1471: 	const std::shared_lock lock(_stateMutex);
+1472: 	if (!IsEmulationRunning())
+1473: 		return;
+1474:
+1475: 	for (int i = 0; i < numSwitches; ++i)
+1476: 		vp_putSwitch(p_states[i].swNo, p_states[i].state ? 1 : 0);
+1477: }
+1478:
+### src/wpc/driver.c | file SHA256 165dbb7d4f3ebf38d668e90c9283df87881048de1b531c73a23d9c4122a5667d | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 850-859 ---
+850: DRIVERNV(diamngfp)      //                Diamond Lady (German Free Play)
+851: DRIVERNV(diamondf)      //                Diamond Lady (French)
+852: DRIVERNV(diamnffp)      //                Diamond Lady (French Free Play)
+853: DRIVERNV(txsector)      //S80b-712: 03/88 TX-Sector
+854: DRIVERNV(txsectfp)      //                TX-Sector (Free Play)
+855: DRIVERNV(txsectrg)      //                TX-Sector (German)
+856: DRIVERNV(txsecgfp)      //                TX-Sector (German Free Play)
+857: DRIVERNV(txsectrf)      //                TX-Sector (French)
+858: DRIVERNV(txsecffp)      //                TX-Sector (French Free Play)
+859: DRIVERNV(robowars)      //S80b-714: 04/88 Robo-War
+### src/wpc/gen.h | file SHA256 77deabc0f1ff902381e31d6d60d23b6585a27631848a1d13e64111b7205d7562 | commit 46e1a01a0f73dc5ce163d98db1ae435883ecc450
+--- lines 1-77 ---
+1: #pragma once
+2:
+3: #if defined(__GNUC__)
+4: #define U64(x) __extension__ x##LL
+5: #elif defined(_MSC_VER)
+6: #define U64(x) x##ui64
+7: #endif
+8:
+9: /*-- All Hardware Generations --*/
+10: #define GEN_WPCALPHA_1  U64(0x0000000000001) /* Alpha-numeric display S11 sound, Dr Dude 10/90 */
+11: #define GEN_WPCALPHA_2  U64(0x0000000000002) /* Alpha-numeric display,  - The Machine BOP 4/91*/
+12: #define GEN_WPCDMD      U64(0x0000000000004) /* Dot Matrix Display, Terminator 2 7/91 - Party Zone 10/91 */
+13: #define GEN_WPCFLIPTRON U64(0x0000000000008) /* Fliptronic flippers, Addams Family 2/92 - Twilight Zone 5/93 */
+14: #define GEN_WPCDCS      U64(0x0000000000010) /* DCS Sound system, Indiana Jones 10/93 - Popeye 3/94 */
+15: #define GEN_WPCSECURITY U64(0x0000000000020) /* Security chip, World Cup Soccer 3/94 - Jackbot 10/95 */
+16: #define GEN_WPC95DCS    U64(0x0000000000040) /* Hybrid WPC95 driver + DCS sound, Who Dunnit */
+17: #define GEN_WPC95       U64(0x0000000000080) /* Integrated boards, Congo 3/96 - Cactus Canyon 2/99 */
+18: #define GEN_S11         U64(0x0000080000000) /* No external sound board */
+19: #define GEN_S11X        U64(0x0000000000100) /* S11C sound board */
+20: #define GEN_S11A        GEN_S11X
+21: #define GEN_S11B        GEN_S11X
+22: #define GEN_S11B2       U64(0x0000000000200) /* Jokerz! sound board */
+23: #define GEN_S11C        U64(0x0000000000400) /* No CPU board sound */
+24: #define GEN_S9          U64(0x0000000000800) /* S9 CPU, 4x7+1x4 */
+25: #define GEN_DE          U64(0x0000000001000) /* DE AlphaSeg */
+26: #define GEN_DEDMD16     U64(0x0000000002000) /* DE 128x16 */
+27: #define GEN_DEDMD32     U64(0x0000000004000) /* DE 128x32 */
+28: #define GEN_DEDMD64     U64(0x0000000008000) /* DE 192x64 */
+29: #define GEN_S7          U64(0x0000000010000) /* S7 CPU */
+30: #define GEN_S6          U64(0x0000000020000) /* S6 CPU */
+31: #define GEN_S4          U64(0x0000000040000) /* S4 CPU */
+32: #define GEN_S3C         U64(0x0000000080000) /* S3 CPU No Chimes */
+33: #define GEN_S3          U64(0x0000000100000)
+34: #define GEN_BY17        U64(0x0000000200000)
+35: #define GEN_BY35        U64(0x0000000400000)
+36: #define GEN_STMPU100    U64(0x0000000800000) /* Stern MPU - 100*/
+37: #define GEN_STMPU200    U64(0x0000001000000) /* Stern MPU - 200*/
+38: #define GEN_ASTRO       U64(0x0000002000000) /* Unknown Astro game, Stern hardware */
+39: #define GEN_HNK	        U64(0x0000004000000) /* Hankin */
+40: #define GEN_BYPROTO     U64(0x0000008000000) /* Bally Bow & Arrow prototype */
+41: #define GEN_BY6803      U64(0x0000010000000)
+42: #define GEN_BY6803A     U64(0x0000020000000)
+43: #define GEN_BOWLING     U64(0x0000040000000) /* Big Ball Bowling, Stern hardware */
+44:
+45: #define GEN_GTS1        U64(0x0000100000000) /* GTS1 */
+46: #define GEN_GTS80       U64(0x0000200000000) /* GTS80 */
+47: #define GEN_GTS80A      GEN_GTS80
+48: #define GEN_GTS80B      U64(0x0000400000000) /* GTS80B */
+49: #define GEN_RECEL       U64(0x0000800000000) /* Recel System III */
+50: #define GEN_WS          U64(0x0004000000000) /* Whitestar */
+51: #define GEN_WS_1        U64(0x0008000000000) /* Whitestar with extra RAM */
+52: #define GEN_WS_2        U64(0x0010000000000) /* Whitestar with extra DMD */
+53: #define GEN_GTS3        U64(0x0020000000000) /* GTS3 */
+54:
+55: #define GEN_ZAC1        U64(0x0040000000000)
+56: #define GEN_ZAC2        U64(0x0080000000000)
+57:
+58: #define GEN_SAM         U64(0x0100000000000) /* Stern SAM */
+59:
+60: #define GEN_ALVG        U64(0x0200000000000) /* Alvin G Hardware */
+61: #define GEN_ALVG_DMD2   U64(0x0400000000000) /* Alvin G Hardware, with more shades */
+62: #define GEN_MRGAME      U64(0x0800000000000) /* Mr.Game Hardware */
+63: #define GEN_SLEIC       U64(0x1000000000000) /* Sleic Hardware */
+64: #define GEN_WICO        U64(0x2000000000000) /* Wico Hardware */
+65:
+66: #define GEN_SPA         U64(0x4000000000000) /* Stern PA */ //!! can be removed again as soon as SPIKE is emulated
+67:
+68: #define GEN_P2K         U64(0x8000000000000) /* Midway Pinball 2000 */
+69: #define GEN_PINHECK     U64(0x10000000000000)/* Spooky PinHeck */
+70: #define GEN_CAPCOM      U64(0x20000000000000)/* Capcom */
+71: #define GEN_SPIKE1      U64(0x40000000000000)/* Stern SPIKE 1 */
+72:
+73: #define GEN_ALLWPC      U64(0x00000000000ff) /* All WPC */
+74: #define GEN_ALLS11      U64(0x000008000ff00) /* All Sys11 */
+75: #define GEN_ALLBY35     U64(0x0000047e00000) /* All Bally35 and derivatives */
+76: #define GEN_ALLS80      U64(0x0000600000000) /* All GTS80 */
+77: #define GEN_ALLWS       U64(0x001c000000000) /* All Whitestar */
+### tools\run_pinmame_harness.py | file SHA256 49c5e733bf436a260c915d88e275189950d8ebcc55575f01ab2d153099e1dd44 | worktree HEAD 3ae4115314e6a555380f750336487db96d213d06
+--- lines 91-104 ---
+91: MIN_SAFE_PUBLIC_SWITCH = -7
+92: MAX_SAFE_PUBLIC_SWITCH = 120
+93: # WPC's wpc_sw2m maps public 121-128 to internal column CORE_CUSTSWCOL (12), inside the
+94: # 16-column coreGlobals.swMatrix, so reading a WPC driver's custom switch column is safe.
+95: # Sequential converters map the same numbers past the array, so this is opt-in and read-only.
+96: WPC_CUSTOM_SWITCH_RANGE = range(121, 129)
+97: # PINMAME_HARDWARE_GEN_WPCALPHA_1 through PINMAME_HARDWARE_GEN_WPC95 (libpinmame.h): every
+98: # generation whose switch conversion is wpc_sw2m.
+99: WPC_HARDWARE_GEN_MASK = 0xFF
+100: # Switch conversions a scenario may name. 'gts3' is gts3_sw2m (src/wpc/gts3.c), whose decimal
+101: # numbering skips last digits 8 and 9 and reaches the cabinet port at -8 and the core flipper
+102: # column at 140-147; PINMAME_HARDWARE_GEN_GTS3 (libpinmame.h) gates it at run time.
+103: SWITCH_CONVERTERS = ("sequential", "gts3")
+104: GTS3_HARDWARE_GEN = 0x0020000000000
+--- lines 553-605 ---
+553: def _gts3_switch_address_valid(switch: int) -> bool:
+554: 	"""Whether gts3_sw2m maps ``switch`` inside the 16-column switch matrix.
+555:
+556: 	``gts3_sw2m(no)`` (src/wpc/gts3.c) returns ``(no / 10 + 1) * 8 + no % 10`` with C's truncating
+557: 	division, and -1 when ``no % 10 > 7``. -8 to -1 land in internal column 0 (the cabinet port), 0 to
+558: 	117 in the twelve matrix columns, and 140 to 147 in internal column 15, the core flipper column and
+559: 	the last one of coreGlobals.swMatrix.
+560: 	"""
+561: 	if -8 <= switch <= -1:
+562: 		return True
+563: 	return 0 <= switch <= 147 and switch % 10 <= 7
+564:
+565:
+566: def _switch_address_valid(switch: int, converter: str) -> bool:
+567: 	if converter == "gts3":
+568: 		return _gts3_switch_address_valid(switch)
+569: 	return MIN_SAFE_PUBLIC_SWITCH <= switch <= MAX_SAFE_PUBLIC_SWITCH
+570:
+571:
+572: def _validate_public_switch_address(
+573: 	switch: int,
+574: 	error_type: type[Exception] = ValueError,
+575: 	converter: str | None = "sequential",
+576: ) -> None:
+577: 	"""Reject addresses that can overrun an unchecked PinMAME switch matrix.
+578:
+579: 	PinMAME's native core_getSw/core_setSw functions do not bounds-check the converted
+580: 	matrix index. Until LibPinMAME exposes a driver's converter, the harness uses the
+581: 	conservative range shared by sequential converters and refuses less-safe addresses,
+582: 	unless the scenario names the ``gts3`` converter, whose numbers the run then admits only
+583: 	after the driver reports the GTS3 generation. ``converter=None`` accepts an address that
+584: 	any known converter admits. Command-line switches are always checked as sequential; only a
+585: 	scenario can name another converter.
+586: 	"""
+587: 	converters = SWITCH_CONVERTERS if converter is None else (converter,)
+588: 	if not any(_switch_address_valid(switch, name) for name in converters):
+589: 		if converter == "gts3":
+590: 			raise error_type(
+591: 				"a gts3 public switch address must be -8 to -1, or 0 to 147 with a last digit of 0-7; "
+592: 				f"got {switch}"
+593: 			)
+594: 		raise error_type(
+595: 			f"public switch address must be between {MIN_SAFE_PUBLIC_SWITCH} and "
+596: 			f"{MAX_SAFE_PUBLIC_SWITCH}; got {switch}"
+597: 		)
+598:
+599:
+600: def _require_gts3_generation(generation: int) -> None:
+601: 	if not generation & GTS3_HARDWARE_GEN:
+602: 		raise RuntimeError(
+603: 			f"switch_converter 'gts3' needs a GTS3-generation driver; PinmameGetHardwareGen() returned "
+604: 			f"{generation:#x}, whose switch conversion would read past the switch matrix"
+605: 		)
+--- lines 815-856 ---
+815: 		)
+816: 	if scenario and (args.initial_switch or args.pulse):
+817: 		raise ValueError("--scenario cannot be combined with --initial-switch or --pulse")
+818: 	initial_switches = (
+819: 		[(item["switch"], item["state"]) for item in scenario.get("initial_switches", [])]
+820: 		if scenario
+821: 		else list(args.initial_switch)
+822: 	)
+823: 	switch_converter = (scenario or {}).get("switch_converter", "sequential")
+824: 	actions: list[dict[str, Any]] = (
+825: 		list(scenario.get("actions", []))
+826: 		if scenario
+827: 		else [
+828: 			{
+829: 				"type": "pulse",
+830: 				"switch": switch,
+831: 				"hold_ms": hold_ms,
+832: 				"settle_s": settle_s,
+833: 				"snapshot_while_held": args.snapshot_while_held,
+834: 			}
+835: 			for switch, hold_ms, settle_s in args.pulse
+836: 		]
+837: 	)
+838: 	watch_switch_set = set(args.watch_switch)
+839: 	if scenario:
+840: 		watch_switch_set.update(scenario.get("watch_switches", []))
+841: 	watch_switch_set.update(switch for switch, _state in initial_switches)
+842: 	watch_switch_set.update(
+843: 		action["switch"]
+844: 		for action in actions
+845: 		if action["type"] in ("pulse", "set_switch", "pulse_until_display", "pulse_until_output")
+846: 		and "switch" in action
+847: 	)
+848: 	for switch in watch_switch_set:
+849: 		_validate_public_switch_address(switch, converter=switch_converter)
+850: 	confirmed_watch_switches = tuple(sorted(watch_switch_set))
+851: 	# Until the driver's generation is confirmed, snapshots read only addresses every sequential
+852: 	# converter also keeps inside the matrix, so a failure snapshot after a refused start is safe.
+853: 	watch_switches = (
+854: 		confirmed_watch_switches
+855: 		if switch_converter == "sequential"
+856: 		else tuple(switch for switch in confirmed_watch_switches if _switch_address_valid(switch, "sequential"))
+--- lines 1004-1026 ---
+1004: 		raise RuntimeError(f"PinmameRun returned status {status}")
+1005:
+1006: 	snapshots: list[dict[str, Any]] = []
+1007: 	steps: list[dict[str, Any]] = []
+1008: 	failure: dict[str, Any] | None = None
+1009: 	current_step: int | None = None
+1010: 	current_label: str | None = None
+1011: 	try:
+1012: 		if not recorder.ready.wait(args.ready_timeout):
+1013: 			raise TimeoutError("PinMAME did not report a ready state")
+1014: 		if switch_converter == "gts3":
+1015: 			_require_gts3_generation(library.PinmameGetHardwareGen())
+1016: 			watch_switches = confirmed_watch_switches
+1017: 		watch_switches = _with_wpc_custom_watch(library, watch_switches, args.watch_wpc_custom_switch)
+1018: 		for switch, state in initial_switches:
+1019: 			library.PinmameSetSwitch(switch, state)
+1020: 			recorder.record(
+1021: 				"switch",
+1022: 				number=switch,
+1023: 				state=state,
+1024: 				observed_state=1 if library.PinmameGetSwitch(switch) else 0,
+1025: 				initial=True,
+1026: 			)
+--- lines 1320-1360 ---
+1320: 			else:  # _load_scenario rejects this; keep run() defensive for constructed Namespaces.
+1321: 				raise ValueError(f"unsupported action type: {action_type}")
+1322: 			step_result["transitions"] = recorder.transition_summary(start_index)
+1323: 			_append_output_snapshot(
+1324: 				snapshots, recorder, label, args.dmd_dir, library, watch_switches
+1325: 			)
+1326: 			steps.append(step_result)
+1327: 			current_step = None
+1328: 			current_label = None
+1329: 		if args.observe > 0:
+1330: 			_wait_with_poll(library, recorder, args.observe)
+1331: 			snapshots.append(
+1332: 				_output_snapshot(
+1333: 					recorder,
+1334: 					"final observation",
+1335: 					args.dmd_dir,
+1336: 					len(snapshots),
+1337: 					library,
+1338: 					watch_switches,
+1339: 				)
+1340: 			)
+1341: 	except Exception as exc:
+1342: 		failure = {
+1343: 			"type": type(exc).__name__,
+1344: 			"message": str(exc),
+1345: 			"step": current_step,
+1346: 			"label": current_label,
+1347: 		}
+1348: 		recorder.record("failure", **failure)
+1349: 		_append_output_snapshot(
+1350: 			snapshots,
+1351: 			recorder,
+1352: 			f"failure: {current_label or type(exc).__name__}",
+1353: 			args.dmd_dir,
+1354: 			library,
+1355: 			watch_switches,
+1356: 		)
+1357: 	finally:
+1358: 		with pressed_keys_lock:
+1359: 			pressed_keys.clear()
+1360: 		if library.PinmameIsRunning():
+### src/wpc/sndbrd.c | full-file SHA256 c563706921b04ef9574503c5d4552176bfa7d5af1f07eb0a60f86a7e5df32194
+--- lines 72-85 ---
+72:   return intf[board].brdIntf ? intf[board].brdIntf->typestr : NULL;
+73: }
+74:
+75: void sndbrd_exit(int board) {
+76:   const struct sndbrdIntf *b = sndbrd_intf(board);
+77:   if (b && b->exit)
+78:     b->exit(board);
+79:   memset(&intf[board],0,sizeof(intf[0]));
+80: }
+81: void sndbrd_diag(int board, int button) {
+82:   const struct sndbrdIntf *b = sndbrd_intf(board);
+83:   if (b && b->diag)
+84:     b->diag(button);
+85: }
+--- lines 170-176 ---
+170:                    WRITE_HANDLER((*data_cb)),WRITE_HANDLER((*ctrl_cb))) {
+171:   sndbrd_init(1, brdType, cpuNo, romRegion, data_cb, ctrl_cb);
+172: }
+173: void sndbrd_0_exit(void) { sndbrd_exit(0); }
+174: void sndbrd_1_exit(void) { sndbrd_exit(1); }
+175: void sndbrd_0_diag(int button) { sndbrd_diag(0,button); }
+176: void sndbrd_1_diag(int button) { sndbrd_diag(1,button); }
+### src/wpc/sndbrd.h | full-file SHA256 df4900b299ed1a2ba00b05f548be432647436e920933618af131e3b3e6f755b7
+--- lines 46-60 ---
+46: struct sndbrdIntf {
+47:   const char* typestr;
+48:   void (*init)(struct sndbrdData *brdData);
+49:   void (*exit)(int boardNo);
+50:   void (*diag)(int buttons);
+51:   WRITE_HANDLER((*manCmd_w));
+52:   WRITE_HANDLER((*data_w));
+53:    READ_HANDLER((*data_r));
+54:   WRITE_HANDLER((*ctrl_w));
+55:    READ_HANDLER((*ctrl_r));
+56:   UINT32 flags;
+57:   /* Used instead when the sound is off (sample rate 0): the board's CPU does not run,
+58:      this answers what the main CPU waits for from it (boot reply, queries). Optional. */
+59:   const struct sndbrdIntf *soundOff;
+60: };
+### src/libpinmame/libpinmame.h | full-file SHA256 f9d22bf93a8a3716ac24904c70290d7696671b2937444e45cab3f5b4b1b93a59
+--- lines 150-168 ---
+150: 	PINMAME_HARDWARE_GEN_S3 = 0x0000000100000,
+151: 	PINMAME_HARDWARE_GEN_BY17 = 0x0000000200000,
+152: 	PINMAME_HARDWARE_GEN_BY35 = 0x0000000400000,
+153: 	PINMAME_HARDWARE_GEN_STMPU100 = 0x0000000800000,    // Stern MPU - 100
+154: 	PINMAME_HARDWARE_GEN_STMPU200 = 0x0000001000000,    // Stern MPU - 200
+155: 	PINMAME_HARDWARE_GEN_ASTRO = 0x0000002000000,       // Unknown Astro game, Stern hardware
+156: 	PINMAME_HARDWARE_GEN_HNK = 0x0000004000000,         // Hankin
+157: 	PINMAME_HARDWARE_GEN_BYPROTO = 0x0000008000000,     // Bally Bow & Arrow prototype
+158: 	PINMAME_HARDWARE_GEN_BY6803 = 0x0000010000000,
+159: 	PINMAME_HARDWARE_GEN_BY6803A = 0x0000020000000,
+160: 	PINMAME_HARDWARE_GEN_BOWLING = 0x0000040000000,     // Big Ball Bowling, Stern hardware
+161: 	PINMAME_HARDWARE_GEN_GTS1 = 0x0000100000000,        // GTS1
+162: 	PINMAME_HARDWARE_GEN_GTS80 = 0x0000200000000,       // GTS80
+163: 	PINMAME_HARDWARE_GEN_GTS80A = PINMAME_HARDWARE_GEN_GTS80,
+164: 	PINMAME_HARDWARE_GEN_GTS80B = 0x0000400000000,      // GTS80B
+165: 	PINMAME_HARDWARE_GEN_RECEL = 0x0000800000000,       // Recel System III
+166: 	PINMAME_HARDWARE_GEN_WS = 0x0004000000000,          // Whitestar
+167: 	PINMAME_HARDWARE_GEN_WS_1 = 0x0008000000000,        // Whitestar with extra RAM
+168: 	PINMAME_HARDWARE_GEN_WS_2 = 0x0010000000000,        // Whitestar with extra DMD
+### schemas/harness-scenario.schema.json | full-file SHA256 96b7761a9c9cc62f0f514368e115165c8d6bdeb65cae01c3dbc4f8d1a29d9a21
+--- lines 1-48 ---
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/harness-scenario.schema.json",
+4:   "title": "PinMAME runtime harness scenario",
+5:   "type": "object",
+6:   "additionalProperties": false,
+7:   "required": ["format", "version", "actions"],
+8:   "properties": {
+9:     "format": { "const": "pinmame-harness-scenario" },
+10:     "version": { "const": 1 },
+11:     "game": { "type": "string", "minLength": 1 },
+12:     "notes": { "type": "string", "minLength": 1 },
+13:     "switch_converter": {
+14:       "description": "The driver's public switch conversion. 'sequential' (the default) admits -7 to 120. 'gts3' admits gts3_sw2m's numbers (-8 to -1, and 0 to 147 whose last digit is 0-7), and the harness refuses to touch a switch until PinmameGetHardwareGen() reports PINMAME_HARDWARE_GEN_GTS3.",
+15:       "enum": ["sequential", "gts3"],
+16:       "default": "sequential"
+17:     },
+18:     "initial_switches": {
+19:       "type": "array",
+20:       "items": { "$ref": "#/$defs/switchState" }
+21:     },
+22:     "watch_switches": {
+23:       "type": "array",
+24:       "uniqueItems": true,
+25:       "items": { "$ref": "#/$defs/publicSwitchAddress" }
+26:     },
+27:     "actions": {
+28:       "type": "array",
+29:       "items": {
+30:         "oneOf": [
+31:           { "$ref": "#/$defs/pulse" },
+32:           { "$ref": "#/$defs/setSwitch" },
+33:           { "$ref": "#/$defs/pulseKey" },
+34:           { "$ref": "#/$defs/setKey" },
+35:           { "$ref": "#/$defs/pulseUntilDisplay" },
+36:           { "$ref": "#/$defs/pulseUntilOutput" },
+37:           { "$ref": "#/$defs/waitUntilOutput" },
+38:           { "$ref": "#/$defs/wait" }
+39:         ]
+40:       }
+41:     }
+42:   },
+43:   "$defs": {
+44:     "publicSwitchAddress": {
+45:       "description": "Union of the public-switch envelopes the harness knows to be safe: -7 to 120 for PinMAME's sequential converters, and -8 to 147 for gts3_sw2m. The harness re-checks every address against the scenario's switch_converter, and checks the running driver's generation before calling the unchecked native switch API with a converter-specific address.",
+46:       "type": "integer",
+47:       "minimum": -8,
+48:       "maximum": 147
+### controllers/pinmame/gts80.json | full-file SHA256 7977066f5bf8685a6d114db94e2a54d8c8cd1a5146a1f4bf3ff0e6ca40bf71f7
+--- lines 1-174 ---
+1: {
+2:   "format": "pinmame-controller-profile",
+3:   "version": 1,
+4:   "id": "pinmame.gts80",
+5:   "authority": "pinmame",
+6:   "hardware_family": "Gottlieb System 80",
+7:   "inversion_applied_by_emulator": true,
+8:   "groups": [
+9:     {
+10:       "id": "pinmame.input.switch",
+11:       "direction": "input",
+12:       "kind": "switch",
+13:       "label": "Dedicated slam, sound-test and video inputs, the 8x8 strobe/return switch matrix, and the synthetic flipper-button column",
+14:       "address_rules": [
+15:         {
+16:           "minimum": -8,
+17:           "maximum": -1
+18:         },
+19:         {
+20:           "minimum": 0,
+21:           "maximum": 7
+22:         },
+23:         {
+24:           "minimum": 10,
+25:           "maximum": 17
+26:         },
+27:         {
+28:           "minimum": 20,
+29:           "maximum": 27
+30:         },
+31:         {
+32:           "minimum": 30,
+33:           "maximum": 37
+34:         },
+35:         {
+36:           "minimum": 40,
+37:           "maximum": 47
+38:         },
+39:         {
+40:           "minimum": 50,
+41:           "maximum": 57
+42:         },
+43:         {
+44:           "minimum": 60,
+45:           "maximum": 67
+46:         },
+47:         {
+48:           "minimum": 70,
+49:           "maximum": 77
+50:         },
+51:         {
+52:           "minimum": 111,
+53:           "maximum": 118
+54:         }
+55:       ],
+56:       "transports": {
+57:         "libpinmame": {
+58:           "channel": "switch"
+59:         },
+60:         "controller_plugin": {
+61:           "group_id": 1,
+62:           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+63:         }
+64:       },
+65:       "notes": "#### Matrix conversion\n\n`MACHINE_DRIVER_START(gts80)` in `src/wpc/gts80.c` installs its own converters, `MDRV_SWITCH_CONV(GTS80_sw2m, GTS80_m2sw)`, so a public System 80 switch number is the factory's two-digit matrix number: the tens digit is the strobe and the units digit the return, as in the game manuals' \"SW.nn\" cells.\n\n| Public | Internal | Meaning |\n| --- | --- | --- |\n| `n` in `0-77` (units digit `0-7`) | column `(n+1)%10`, row `(n+1)/10` | strobe `n/10`, return `n%10` |\n| `-8` to `-1` | column 0, row `n+8` | dedicated inputs outside the matrix |\n| `111-118` | column 11, row `n%10-1` | PinMAME's flipper switch column |\n\nThe ROM strobes one row per scan through RIOT U4 port B (`riot6532_0b_w`) and `riot6532_0a_r` returns `swMatrix[1..8]` for the strobed row, so it can read only internal columns 1-8: public `x0-x7` for strobes `0-7`. Numbers whose units digit is 8 or 9, and columns 9 and 10, are never read.\n\n#### Return 7 and the cabinet\n\nInternal column 8 is return 7. When PinMAME's own keyboard handling is on, `SWITCH_UPDATE(GTS80)` rewrites its six low rows from `GTS80_COMPORTS` on every update: `07` Test, `17` Coin 1, `27` Coin 2, `37` Coin 3, `47` Start and `57` Tilt (`src/wpc/gts80.h`). With keyboard handling off, as under LibPinMAME and VPinMAME, the host writes these addresses directly. The ROM reads return 7 like any other column; `67` and `77` are not in the port. Which cabinet switch is wired to which return-7 position is game documentation.\n\n#### Dedicated inputs\n\n| Address | Source | Hardware |\n| --- | --- | --- |\n| `-1` | `GTS80_SWSLAMTILT`, port bit `0x8000` \"Slam Tilt\" | the slam switch, read on RIOT U5 port A bit 7 (`slam_sw_r`), never through the matrix |\n| `-4` | port bit `0x1000` \"Sound Test\" | the sound board's test button: `SWITCH_UPDATE(GTS80)` passes `swMatrix[0] & 0x10` to `sndbrd_0_diag` |\n| `-8` to `-5` | port bits `0x0100-0x0800` (`GTS80VID_COMPORTS`) | Caveman's video joystick; published only on `GTS80_DISPVIDEO` drivers |\n\n`-3` and `-2` are not written by any port.\n\nThe slam input is published active-high: `SWITCH_UPDATE(GTS80)` presents RIOT U5 PA7 to the ROM as `invPattern` (0) while `core_getSw(-1)` is set and as `0xff` otherwise, and System 80 games' per-game `invSw` is zero. So public `-1 = 1` means the slam contact is open (slammed), and a consumer holds `-1` at 0 for a machine at rest.\n\n#### Flipper buttons\n\nSystem 80 flippers are switched by the cabinet buttons through relay contacts and the CPU never reads the buttons. PinMAME still keeps its flipper switch column at internal column 11 (`CORE_FLIPPERSWCOL`), which `GTS80_sw2m`'s `no >= 96` branch publishes at `111-118`: `CORE_SWLRFLIPBUTBIT` is public `112` and `CORE_SWLLFLIPBUTBIT` public `114`. The `INIT_S80`, `INIT_S80D7` and `INIT_S80A` game macros in `src/wpc/gts80games.c` set `hw.flippers` to 0, so `core_updateSw` copies the buttons into no matrix switch and models no end-of-stroke or upper-button bit; it uses `112` and `114` only to fabricate the synthetic flipper outputs (see the solenoid group). `111`, `113` and `115-118` carry nothing.\n\n#### Polarity\n\nEvery `INIT_S80`/`INIT_S80D7`/`INIT_S80A` game declares a zero `invSw`, and `riot6532_0a_r` returns `swMatrix` bits unmodified, so a matrix switch's public `1` is the closed contact the ROM reads.",
+66:       "notes_format": "markdown"
+67:     },
+68:     {
+69:       "id": "pinmame.input.dip",
+70:       "direction": "configuration",
+71:       "kind": "dip_switch",
+72:       "label": "CPU-board switches S1-S32 and the sound-board option banks",
+73:       "address_rules": [
+74:         {
+75:           "minimum": 1,
+76:           "maximum": 42
+77:         }
+78:       ],
+79:       "transports": {
+80:         "libpinmame": {
+81:           "channel": "dip"
+82:         }
+83:       },
+84:       "notes": "#### Addressing\n\n`MDRV_DIPS(42)` declares 42 DIP bits. A public DIP address is `bank * 8 + bit + 1` (`core_getDip`).\n\n| Addresses | Bank | Consumer |\n| --- | --- | --- |\n| `1-32` | 0-3 | the CPU board's switches S1-S32 (`GTS80_DIPS` ports 1-2), read by `riot6532_0a_r` through `core_getDip((riot2b>>4)&0x03)` while RIOT U5 port B bit 7 is set, bit-reversed by `core_revbyte` |\n| `33-40` | 4 | the sound/speech board's bank (`GTS80_SNDDIPS` \"SS:S1-S8\"), read once by `gts80ss_init` (`src/wpc/gts80s.c`) |\n| `41-42` | 5, bits 0-1 | the sound-only board's two switches (\"S:S1\", \"S:S2\"), read once by `gts80s_init` |\n\nWhich switch does what is game documentation; a definition cites its own manual.",
+85:       "notes_format": "markdown"
+86:     },
+87:     {
+88:       "id": "pinmame.output.solenoid",
+89:       "direction": "controlled_device",
+90:       "kind": "solenoid",
+91:       "label": "Nine solenoid drivers, the synthetic game-on and tilt relay states, and synthetic flipper outputs",
+92:       "address_rules": [
+93:         {
+94:           "minimum": 1,
+95:           "maximum": 11
+96:         },
+97:         {
+98:           "minimum": 45,
+99:           "maximum": 48
+100:         }
+101:       ],
+102:       "transports": {
+103:         "libpinmame": {
+104:           "channel": "solenoid"
+105:         },
+106:         "controller_plugin": {
+107:           "group_id": 1,
+108:           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+109:         }
+110:       },
+111:       "notes": "#### Address map\n\n| Addresses | Behavior |\n| --- | --- |\n| `1-8` | `riot6532_2a_w`: RIOT U6 port A, inverted. Bits 0-1 select one of solenoids 1-4 while bit 5 enables them, and bits 2-3 one of 5-8 while bit 6 enables them, so at most one of 1-4 and one of 5-8 is on at a time. |\n| `9` | Port A bit 7 drives solenoid 9 directly. |\n| `10` | Synthetic, binary mode only: `GTS80_vblank` publishes lamp 0's driver state (the Q, game-over relay) while lamp 1 (the T, tilt relay) is off. This is the game-on state, and the same bit is the `flipEn` argument of `core_updateSw`. |\n| `11` | Synthetic, binary mode only: lamp 1's driver state (the T relay). |\n| `12-44` | Not published: `core_getSol` reads `coreGlobals.solenoids` for `1-28`, where System 80 sets only bits `0-10`, and returns `0` for `29-44`, whose branches serve other generations. |\n| `45-48` | Synthetic lower-flipper outputs. |\n\nThe same port byte also carries the sound command: on every write except on `SNDBRD_GTS80B` boards, `GTS80_sndCmd_w` sends the inverted byte's low four bits while its bit 4 is set (0 otherwise), plus `0x10` while lamp 9 (Sound 16) is on.\n\n#### Synthetic flipper outputs `45-48`\n\nNo System 80 driver declares `FLIP_SOL`, so `core_updateSw` fabricates flipper state in `coreGlobals.solenoids2` from the right (`112`) and left (`114`) button bits while the game-on bit (solenoid `10`) is set: `45`/`46` follow the right button and `47`/`48` the left. There is no driver-board output behind them.\n\n#### Physical-output mode\n\nIn PinMAME's physical-output mode `riot6532_2a_w` also writes solenoids 1-9 to the physical lamp outputs 52-60 (see the lamp group).\n\nWhen physical or modulated solenoid output is enabled (`CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS`, `CORE_MODOUT_ENABLE_MODSOL` or `CORE_MODOUT_FORCE_ON`), `core_getSol` reads `1-28` from `physicOutputState`, which System 80 writes only for solenoids 1-9, so `10` and `11` read `0` in that mode. A consumer in that mode takes the same states from the physical lamp outputs: game on is lamp `0` on while lamp `1` is off, and the tilt state is lamp `1`. The synthetic flipper outputs `45-48` are unaffected, because `GTS80_vblank` still passes its own game-on bit to `core_updateSw`.",
+112:       "notes_format": "markdown"
+113:     },
+114:     {
+115:       "id": "pinmame.output.lamp",
+116:       "direction": "controlled_device",
+117:       "kind": "lamp",
+118:       "label": "Twelve latched lamp columns, the inverted twelfth column, and the physical-output solenoid mirrors",
+119:       "address_rules": [
+120:         {
+121:           "minimum": 0,
+122:           "maximum": 63
+123:         }
+124:       ],
+125:       "transports": {
+126:         "libpinmame": {
+127:           "channel": "lamp"
+128:         },
+129:         "controller_plugin": {
+130:           "group_id": 512,
+131:           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+132:         }
+133:       },
+134:       "notes": "#### Addressing\n\nRIOT U6 port B selects one of twelve 4-bit lamp latches (bits 4-7, columns 1-12) and carries its four lamp states (bits 0-3, `riot6532_2b_w`). The latches are not strobed: each holds its value. `MDRV_LAMP_CONV(GTS80_lamp2m, GTS80_m2lamp)` makes the public lamp number the factory's \"L\" number: `vp_getLampIndex(n)` is `lamp2m(n) - 8 = n`, so public `n` is bit `n%8` of `lampMatrix[n/8]`, and lamp `0` exists.\n\n| Public | Source |\n| --- | --- |\n| `0-47` | the twelve latches, four lamps each, in order |\n| `48-51` | `lampMatrix[6] = data ^ 0x0f` of the twelfth latch: the inverted state of lamps `44-47`, the System 80 driver board's inverted latch outputs |\n| `52-63` | binary mode: constant 0. Physical-output mode: `52-60` mirror solenoids 1-9 (`riot6532_2a_w`), `61-63` stay 0 |\n\n`MACHINE_INIT(gts80)` sets `coreGlobals.nLamps = 64 + hw.lampCol * 8`, and every System 80 game declares `lampCol = 0`.\n\n#### Platform-wide lamp roles\n\n`GTS80_vblank` treats lamp 0 as the GameOn relay (published as solenoid 10) and lamp 1 as the Tilt relay (solenoid 11) for `GEN_GTS80` and `GEN_GTS80A`, and `MACHINE_INIT(gts80)` types lamps 0, 1 and 4 as two-state outputs. `riot6532_2a_w` adds lamp 9 to the sound command as bit 4 (Sound 16) on every board except `SNDBRD_GTS80B`, which takes `lampMatrix[0] & 0x10` (lamp 4) instead. What the other lamp outputs drive, including the relays and coils that games run from lamp drivers, is game documentation.",
+135:       "notes_format": "markdown"
+136:     },
+137:     {
+138:       "id": "pinmame.output.gi",
+139:       "direction": "controlled_device",
+140:       "kind": "gi",
+141:       "label": "One physical-output-mode GI channel that mirrors lamp 0",
+142:       "address_rules": [
+143:         {
+144:           "values": [
+145:             0
+146:           ]
+147:         }
+148:       ],
+149:       "transports": {
+150:         "libpinmame": {
+151:           "channel": "gi"
+152:         },
+153:         "controller_plugin": {
+154:           "group_id": 256,
+155:           "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+156:         }
+157:       },
+158:       "notes": "`MACHINE_INIT(gts80)` declares one GI output (`coreGlobals.nGI = 1`) of type `CORE_MODOUT_BULB_44_6_3V_AC_REV`, and `riot6532_2b_w` writes lamp 0's latch bit to it whenever the first lamp latch is written, with the source comment \"Duplicate lamp 0 to GI string as it drives the Tilt relay that in turn drives the main GI\". It carries state only in PinMAME's physical-output mode; in binary mode `vp_getGI` returns `coreGlobals.gi[0]`, which System 80 never writes, so it is constant 0. Whether a game's general illumination follows lamp 0, lamp 1 or other relays is game documentation.",
+159:       "notes_format": "markdown"
+160:     }
+161:   ],
+162:   "sources": [
+163:     {
+164:       "uri": "https://github.com/vpinball/pinmame",
+165:       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+166:       "locator": "src/wpc/gts80.c (switch numbering header, GTS80_vblank solenoid 10/11 synthesis and core_updateSw(gameOn & 0x01), GTS80_sw2m/GTS80_m2sw, GTS80_lamp2m/GTS80_m2lamp, SWITCH_UPDATE(GTS80), riot6532_0a_r/riot6532_0b_w switch matrix, slam_sw_r, riot6532_2a_w solenoids 1-9 and sound command, riot6532_2b_w lamp latches and the inverted 13th column, MACHINE_INIT(gts80) nGI/nLamps/nSolenoids and output types, MACHINE_DRIVER_START(gts80) MDRV_DIPS(42), MDRV_SWITCH_CONV, MDRV_LAMP_CONV); src/wpc/gts80.h (GTS80_COMPORTS, GTS80VID_COMPORTS, GTS80_DIPS, GTS80_SNDDIPS, GTS80_SWSLAMTILT); src/wpc/gts80games.c (INITGAME, INIT_S80, INIT_S80D7, INIT_S80A: hw.flippers 0, zero invSw, lampCol 0); src/wpc/gts80s.c (gts80s_init core_getDip(5), gts80ss_init core_getDip(4)); src/wpc/core.c (core_updateSw, core_getSol, core_getDip, CORE_MODOUT_BULB_44_6_3V_AC_REV); src/wpc/core.h (CORE_FLIPPERSWCOL, CORE_SWLRFLIPBUTBIT, CORE_SWLLFLIPBUTBIT, CORE_FIRSTLFLIPSOL); src/wpc/vpintf.c (vp_getLampIndex, vp_getLamp, vp_getChangedLamps, vp_getGI)"
+167:     },
+168:     {
+169:       "uri": "https://github.com/vpinball/pinmame",
+170:       "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+171:       "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+172:     }
+173:   ]
+174: }

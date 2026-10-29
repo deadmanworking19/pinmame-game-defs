@@ -1,0 +1,114 @@
+{
+  "comparison_rule": "All numerical values, object identities, hashes, list order and non-path text reproduce exactly. Descriptive absolute source paths may reflect supplied relocation roots. Only comparison.json source.old_mapping intentionally changes to the neutral retained mapping copy; no object or numerical value changes.",
+  "dependencies": [
+    "Python 3.13 or newer",
+    "Pillow",
+    "repository package and its jsonschema dependency"
+  ],
+  "format": "tx-sector-retained-derivations",
+  "instructions": {
+    "path": "gottlieb.tx-sector.1988/session-20261029/derivations/README.md",
+    "sha256": "5edf9920017e16e566574beb27c06613bbb7706cb3586fc98a2c4e8070ddcf87"
+  },
+  "output_comparisons": [
+    {
+      "output": "photo/fit-915018.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/inputs/fit-915018.json"
+    },
+    {
+      "output": "photo/pixel-reads.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/inputs/pixel-reads.json"
+    },
+    {
+      "output": "spatial/mapping.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/mapping.json"
+    },
+    {
+      "output": "spatial/manual54-controls.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/manual54-controls.json"
+    },
+    {
+      "output": "spatial/manual54-checks.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/manual54-checks.json"
+    },
+    {
+      "output": "newer-comparison/comparison.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/inputs/comparison.json"
+    },
+    {
+      "output": "newer-comparison/socket-mesh-inspection.json",
+      "retained_path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/inputs/socket-mesh-inspection.json"
+    }
+  ],
+  "path_convention": "Every path below is relative to the review-artifacts root. Supply working/repository/photo roots explicitly; write only to a new output directory. Source manifests preserve historical absolute paths as descriptive provenance; the photo reproducer resolves filenames under --photo-root and verifies keys, hashes and dimensions. Other descriptive source paths are relocated by supplied roots, not used as historical lookup instructions.",
+  "retained_inputs": [
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/inventory/controller-rom-audit.json",
+      "sha256": "06ec17915aac242f719fe5f4aa3a040dd431ec01d644d8917d5d53c7f2b99e16"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/inventory/original/candidate-inventory-final.json",
+      "sha256": "699c89ef17d3144327c59c09213fa6f30b747d3d547e7f2923327ea3062cb845"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/inventory/newer/candidate-inventory-final.json",
+      "sha256": "8ced93f914319f58ba85576e2d739adb815290cb813c7dc6f7c326cb01f63358"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/mapping.json",
+      "sha256": "103acfc3e943053662ea75bb6530c74554df5eaeea1f91b6491bbf4ad2d45d57"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/manual54-controls.json",
+      "sha256": "aa5430974503cc53c4f965323c8646a71e407c867385988397e25a25210c2745"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/inputs/manual54-checks.json",
+      "sha256": "cecfeb2c725b3dceb2d6cf1bce047a826f67bdf984cf3ea956997d9351b78057"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/inputs/comparison.json",
+      "sha256": "9c71305ca83a410d29e73e179fb75c10cf26c63ddedc076629c579f4d0ca0f6e"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/inputs/socket-mesh-inspection.json",
+      "sha256": "177da4600e64411ee5bf1426b29954f98149a0cb356f96f93a82ec1a746047f6"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/inputs/pixel-reads.json",
+      "sha256": "b3ccd13a284829e77455b277c18ad7c30ca8bc9a3143a2151d47b772386db911"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/inputs/fit-915018.json",
+      "sha256": "068cd1d7f0d52f942e193fe7a311da8223f4a81d3b11070200a187470b63d38a"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/inputs/photo-manifest.json",
+      "sha256": "693e8634288ab107ddc99040a3c33c98d4fcdb3f69a07ab06d47a364ae4530d8"
+    }
+  ],
+  "root_environment": "PINMAME_REVIEW_ARTIFACTS_ROOT",
+  "scripts": [
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/fit_photo.py",
+      "sha256": "c7ee2eaa99661574b93a9b002818aada73030b5606fb0d021a323de66d91c0fd"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/photo/create_pixel_reads.py",
+      "sha256": "77fd6e626a467d0dee464079917b1d308aa63f0bb2518dbe9a071facf11152dc"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/spatial/map_candidates.py",
+      "sha256": "acde08580479ef23f4653b13e4c636a9193baa374ff3e8556a904e7de5bd0d18"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/compare.py",
+      "sha256": "9215295cf9daa9288c83c1dfacccaf6df84bf4d353147a2fe2348d86c690cfcc"
+    },
+    {
+      "path": "gottlieb.tx-sector.1988/session-20261029/derivations/newer-comparison/inspect_socket_meshes.py",
+      "sha256": "8322f30a04694786cb36a638bfdb24d371cc3f25a829e8e8f6d62ffa442f1f58"
+    }
+  ],
+  "version": 1
+}
