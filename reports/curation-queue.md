@@ -151,7 +151,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 145 | 1994 | U.S.A. Football (Redemption, P08) | Alvin G | partial | 6% |
 | 146 | 1994 | Corvette | Bally | partial | 81% |
 | 147 | 1994 | Popeye Saves the Earth | Bally | partial | 19% |
-| 148 | 1994 | The Addams Family Gold | Bally | partial | 19% |
+| 148 | 1994 | The Addams Family Gold | Bally | author_ready | 100% |
 | 149 | 1994 | The Shadow | Bally | partial | 94% |
 | 150 | 1994 | World Cup Soccer | Bally | author_ready | 100% |
 | 151 | 1994 | Guns N' Roses | Data East | partial | 81% |

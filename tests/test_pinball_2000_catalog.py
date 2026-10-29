@@ -74,12 +74,12 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# Dr. Dude's factory WPC hardware batch is a separate partial physical-machine record.
 		self.assertEqual(
 			{
-				"author_ready_count": 41,
+				"author_ready_count": 42,
 				"driver_count": 2981,
 				"game_count": 811,
 				"machine_count": 834,
 				"non_game_count": 23,
-				"partial_count": 767,
+				"partial_count": 766,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

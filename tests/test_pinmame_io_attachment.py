@@ -28,7 +28,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.wpc-95": 2,
 	# Demolition Man (curated 2026-10-09) now declares its platform from the curated definition.
 	"pinmame.wpc-dcs": 2,
-	"pinmame.wpc-fliptronic": 6,
+	"pinmame.wpc-fliptronic": 5,  # Gold now cites its dedicated pinned core source.
 	# The Shadow (curated 2026-09-26) and Corvette (curated 2026-10-16) now declare their platform from the curated definition.
 	"pinmame.wpc-security": 1,  # Dirty Harry now cites its dedicated curator's pinned core source.
 }

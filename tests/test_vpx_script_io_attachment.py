@@ -30,9 +30,10 @@ CORPUS_REPOSITORIES = (
 # game-specific factory/source/runtime seed; its corpus citations use file URLs.
 # Medusa's factory/source/runtime curation replaces 111 candidate devices from three scripts.
 # TX-Sector replaces its 30 imported candidate devices from two scripts.
-EXPECTED_ATTACHED_MACHINES = 262
-EXPECTED_ATTACHED_DEVICES = 12081
-EXPECTED_ATTACHED_SCRIPTS = 323
+# Gold replaces 57 candidates from one script with its own complete definition.
+EXPECTED_ATTACHED_MACHINES = 261
+EXPECTED_ATTACHED_DEVICES = 12024
+EXPECTED_ATTACHED_SCRIPTS = 322
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

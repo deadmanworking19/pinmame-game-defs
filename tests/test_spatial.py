@@ -369,7 +369,7 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(41, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(42, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -383,14 +383,14 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Limited Edition as a record of its own, and the 2026-10-23 Limited Edition curation promotes that record.
 		# Dr. Dude's documented WPC batch adds one separate partial physical record.
 		self.assertEqual(811, report["machine_count"])
-		self.assertEqual(41, report["author_ready_count"])
+		self.assertEqual(42, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(753, report["partial_count"])
+		self.assertEqual(752, report["partial_count"])
 		self.assertEqual(17, report["stub_count"])
 		self.assertEqual(23, report["non_game_record_count"])
 		self.assertEqual(834, report["catalog_record_count"])
@@ -503,7 +503,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Sega Godzilla's legacy record omitted it too; its curated partial explicitly
 		# names the unvalidated GI sockets and optional UK device locations.
 		# Dr. Dude's WPC batch has independently unresolved physical socket placement, adding one.
-		self.assertEqual(721, report["missing_requirement_counts"]["spatial_placement"])
+		# Gold's complete physical inventory and disclosed placements remove one gap.
+		self.assertEqual(720, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -568,7 +569,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(834, len(catalog["machines"]))
 		self.assertEqual(811, catalog["summary"]["game_count"])
 		self.assertEqual(834, catalog["summary"]["machine_count"])
-		self.assertEqual(41, catalog["summary"]["author_ready_count"])
+		self.assertEqual(42, catalog["summary"]["author_ready_count"])
 		self.assertEqual(26, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
@@ -579,7 +580,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# from 777 to 775. The 2026-10-09 Black Hole curation folds its blkholea residual into the
 		# main record, removing one more. Centaur's 2026-10-22 promotion, Terminator 2's, World Cup
 		# Soccer's and the Lord of the Rings Limited Edition's 2026-10-23 ones each move one record to author_ready.
-		self.assertEqual(767, catalog["summary"]["partial_count"])
+		self.assertEqual(766, catalog["summary"]["partial_count"])
 		self.assertEqual(23, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))
