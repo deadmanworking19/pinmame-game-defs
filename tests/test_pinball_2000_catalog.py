@@ -71,14 +71,15 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# move one more partial to author_ready.
 		# The current SPIKE baseline adds thirteen partial definitions and nine system parents;
 		# the unrelated new roots and unclaimed conversion variants remain explicit residual stubs.
+		# Dr. Dude's factory WPC hardware batch is a separate partial physical-machine record.
 		self.assertEqual(
 			{
 				"author_ready_count": 40,
 				"driver_count": 2981,
-				"game_count": 810,
-				"machine_count": 833,
+				"game_count": 811,
+				"machine_count": 834,
 				"non_game_count": 23,
-				"partial_count": 767,
+				"partial_count": 768,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

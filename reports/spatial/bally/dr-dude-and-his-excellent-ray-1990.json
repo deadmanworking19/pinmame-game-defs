@@ -1,0 +1,2540 @@
+{
+  "blockers": [
+    "GI 10: factory socket count and complete switched-string membership are not documented by the retained views. The 32 modelled bulb candidates do not prove the total; bumper-cap and any under-apron sockets must be reconciled with an actual wired lamp layout.",
+    "Flashers 15, 25-31: retained table Light/Flasher helpers do not identify every physical bulb center. Mixer 25-27 each have a #906 mini-playfield socket and #89 gear socket; keep both physical quantities but omit unverified coordinates, especially under-disc sockets.",
+    "Lamps 1-5 and 9-12: rear-panel sprite/window anchors do not give the separate physical socket centers. Retain a measured elevation or socket model before placing them.",
+    "Sling switches 55/56: each matrix address covers two physical contacts; the single table sling event does not locate both contacts.",
+    "Observed insert/dome and hidden-coil projections have explicit roles; they must be checked from a physical drawing/measurement before spatial validation. No helper is labelled an observed socket.",
+    "PA-6 System 11C firmware agrees with LA-2 across complete service address/name sweeps, but physical prototype fitment is not established by shared initialization or those sweeps."
+  ],
+  "bounds": {
+    "bottom": 2100,
+    "left": 0,
+    "right": 952,
+    "top": 0
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "validated",
+      "catalog_identity": "validated",
+      "mechanisms": "validated",
+      "physical_wiring": "validated",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "validated",
+      "spatial_placement": "observed",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "spatial_placement",
+      "variant_differences"
+    ],
+    "status": "partial"
+  },
+  "extraction": {
+    "algorithm": "Case-sensitive relative POSIX paths; each byte size and SHA256; sorted-key compact UTF8JSON plus LF; official build_external_evidence_manifest.py",
+    "file_count": 2162,
+    "manifest_sha256": "45d291221118f56a09325ba8b857eabf6e46a2b999b14d774bf5c1ed008cc0b7",
+    "total_bytes": 193525037
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.dr-dude-and-his-excellent-ray.1990",
+  "markdown": "# Dr. Dude production spatial evidence\n\nStatus: **partial**. Normalize positions as `(x-left)/(right-left)` and `(y-top)/(bottom-top)`, then use the repository's `spatial._round_point` to round to six decimals. The axes run from left to right and rear to apron.\n\nRetained table SHA-256: `2d0e176a9783022357ffa69b5cd1fbd935757e411a735e273c19f878a209adf9`; script: `44f0924de1c33320134185cff9fa7cd09515497221b9ba0b805a4713c318a1eb`; extraction manifest: `45d291221118f56a09325ba8b857eabf6e46a2b999b14d774bf5c1ed008cc0b7` (2,162 files). The world-space OBJ export has SHA-256 `2d5cddbe375813b3664974f70584ea82f9c06c05f595db39eda08f50245bd26a`. The JSON report lists and checks each selected object, raw center and coordinate method against the retained evidence.\n\n## Placement decisions\n\nThe record distinguishes script-bound targets, triggers, insert lights and filament meshes from projections onto insert/dome footprints or hidden mechanisms. A Flasher sprite or broad glow does not establish a physical socket. Return lanes 19/20 follow the physical sides established by the matrix, parts list and ROM labels; the misnumbered drawing and reversed table binding are documented defects. Thirty-two bulb meshes supply candidate GI locations. Their count and collection membership do not establish factory routing or completeness.\n\n## Blockers\n\n- GI 10: factory socket count and complete switched-string membership are not documented by the retained views. The 32 modelled bulb candidates do not prove the total; bumper-cap and any under-apron sockets must be reconciled with an actual wired lamp layout.\n- Flashers 15, 25-31: retained table Light/Flasher helpers do not identify every physical bulb center. Mixer 25-27 each have a #906 mini-playfield socket and #89 gear socket; keep both physical quantities but omit unverified coordinates, especially under-disc sockets.\n- Lamps 1-5 and 9-12: rear-panel sprite/window anchors do not give the separate physical socket centers. Retain a measured elevation or socket model before placing them.\n- Sling switches 55/56: each matrix address covers two physical contacts; the single table sling event does not locate both contacts.\n- Observed insert/dome and hidden-coil projections have explicit roles; they must be checked from a physical drawing/measurement before spatial validation. No helper is labelled an observed socket.\n- PA-6 System 11C firmware agrees with LA-2 across complete service address/name sweeps, but physical prototype fitment is not established by shared initialization or those sweeps.\n\nThe complete semantic inventory remains present. Missing coordinates never remove a fitted lamp or coil. Promotion remains refused until these physical and evidence gaps are resolved.\n",
+  "normalization": "Bounds formula (x-left)/(right-left), (y-top)/(bottom-top), using repository spatial._round_point to six decimals; x=0 left, x=1 right, y=0 rear, y=1 apron",
+  "obj_sha256": "2d5cddbe375813b3664974f70584ea82f9c06c05f595db39eda08f50245bd26a",
+  "omitted_spatial": [
+    {
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-sling",
+      "reason": "Two paired kicker-actuating contacts (A-4834-H + B-8734-1) share this matrix address; table has one sling event. Individual contact centers are not retained, so no spatial placement is invented."
+    },
+    {
+      "binding": {
+        "device": 56,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-sling",
+      "reason": "Two paired kicker-actuating contacts (A-4834-H + B-8734-1) share this matrix address; table has one sling event. Individual contact centers are not retained, so no spatial placement is invented."
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.big-shot",
+      "reason": "Solenoid table PDF 102 prints #89; PDF 103 parts list prints #906. Runtime binding agrees on Big Shot flasher; physical bulb type remains uncertain. No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.mixmaster-heart",
+      "reason": "Two bulbs per Mixer circuit: mini-playfield A-12336-1/#906 plus gear assembly A-9302/#89. The paginatedscan2-42 says4p only for01C, while its1-36 and the live Operations Manual2-42 say2p, agreeing with assemblies and ROM2F.L. labels. The low01C drawing balloon is not proof of extra apron bulbs. One scriptLight candidate is retained; the under-disc socket has no trustworthy coordinate. No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.mixmaster-gab",
+      "reason": "Two bulbs per Mixer circuit: mini-playfield A-12336-1/#906 plus gear assembly A-9302/#89. The paginatedscan2-42 says4p only for01C, while its1-36 and the live Operations Manual2-42 say2p, agreeing with assemblies and ROM2F.L. labels. The low01C drawing balloon is not proof of extra apron bulbs. One scriptLight candidate is retained; the under-disc socket has no trustworthy coordinate. No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.mixmaster-magnet",
+      "reason": "Two bulbs per Mixer circuit: mini-playfield A-12336-1/#906 plus gear assembly A-9302/#89. The paginatedscan2-42 says4p only for01C, while its1-36 and the live Operations Manual2-42 say2p, agreeing with assemblies and ROM2F.L. labels. The low01C drawing balloon is not proof of extra apron bulbs. One scriptLight candidate is retained; the under-disc socket has no trustworthy coordinate. No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.magnetic-personality",
+      "reason": " No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.gift-of-gab",
+      "reason": " No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.heart-of-rock-n-roll",
+      "reason": " No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "flasher.drop-targets",
+      "reason": " No modelled bulb mesh/source socket center is verified; broad script Light/glow helpers are listed in the spatial report only, not promoted as emitter placements."
+    },
+    {
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.1",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.2",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.3",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.4",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.5",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.9",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.10",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.11",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.12",
+      "reason": "Physical rear-panel lamp/window documented by the manual and IPDB54014. Script uses a Flasher sprite/window helper, which is not a socket; spatial omitted until a physical socket measurement or defensible elevation projection is retained."
+    }
+  ],
+  "promotion_decision": "partial; do not treat missing emitter coordinates/quantities as zero or replace them with glow helpers.",
+  "records": [
+    {
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.shooter",
+      "item_file": "gameitems/Trigger.Sw9.json",
+      "object": "Sw9",
+      "placement_id": "switch.shooter.placement-1",
+      "raw_x": 891.8417,
+      "raw_y": 1819.0758,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.out-hole",
+      "item_file": "gameitems/Kicker.Drain.json",
+      "object": "Drain",
+      "placement_id": "switch.out-hole.placement-1",
+      "raw_x": 456.74902,
+      "raw_y": 1997.3994,
+      "reason": "Projection of the outhole contact onto the drain mechanism mouth; instantaneous table transit does not model its separate contact body.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.heart",
+      "item_file": "gameitems/HitTarget.sw14.json",
+      "object": "sw14",
+      "placement_id": "switch.heart.placement-1",
+      "raw_x": 348.6852,
+      "raw_y": 840.0024,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.enter-ramp",
+      "item_file": "gameitems/Trigger.Sw15.json",
+      "object": "Sw15",
+      "placement_id": "switch.enter-ramp.placement-1",
+      "raw_x": 242.75134,
+      "raw_y": 826.2391,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.ramp-made",
+      "item_file": "gameitems/Trigger.sw16.json",
+      "object": "sw16",
+      "placement_id": "switch.ramp-made.placement-1",
+      "raw_x": 479.5743,
+      "raw_y": 54.27571,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.left-outlane",
+      "item_file": "gameitems/Trigger.Sw17.json",
+      "object": "Sw17",
+      "placement_id": "switch.left-outlane.placement-1",
+      "raw_x": 54.25,
+      "raw_y": 1548.6115,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.right-outlane",
+      "item_file": "gameitems/Trigger.Sw18.json",
+      "object": "Sw18",
+      "placement_id": "switch.right-outlane.placement-1",
+      "raw_x": 806.70374,
+      "raw_y": 1550.1115,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.right-inlane",
+      "item_file": "gameitems/Trigger.Sw20.json",
+      "object": "Sw20",
+      "placement_id": "switch.right-inlane.placement-1",
+      "raw_x": 725.70374,
+      "raw_y": 1537.1115,
+      "reason": "Physical lane geometry taken from opposite-numbered VPX object because the table reverses public19/20 writes; factory/player-view sides retained.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.left-inlane",
+      "item_file": "gameitems/Trigger.Sw19.json",
+      "object": "Sw19",
+      "placement_id": "switch.left-inlane.placement-1",
+      "raw_x": 134.375,
+      "raw_y": 1535.1115,
+      "reason": "Physical lane geometry taken from opposite-numbered VPX object because the table reverses public19/20 writes; factory/player-view sides retained.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-drop1",
+      "item_file": "gameitems/HitTarget.sw21.json",
+      "object": "sw21",
+      "placement_id": "switch.r-drop1.placement-1",
+      "raw_x": 786.29517,
+      "raw_y": 1054.5306,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-drop2",
+      "item_file": "gameitems/HitTarget.sw22.json",
+      "object": "sw22",
+      "placement_id": "switch.r-drop2.placement-1",
+      "raw_x": 790.0701,
+      "raw_y": 1111.0247,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-drop3",
+      "item_file": "gameitems/HitTarget.sw23.json",
+      "object": "sw23",
+      "placement_id": "switch.r-drop3.placement-1",
+      "raw_x": 793.49414,
+      "raw_y": 1167.1228,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-drop4",
+      "item_file": "gameitems/HitTarget.sw24.json",
+      "object": "sw24",
+      "placement_id": "switch.r-drop4.placement-1",
+      "raw_x": 796.99115,
+      "raw_y": 1224.1442,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.refle-x",
+      "item_file": "gameitems/HitTarget.sw25.json",
+      "object": "sw25",
+      "placement_id": "switch.refle-x.placement-1",
+      "raw_x": 536.2461,
+      "raw_y": 802.0938,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.refl-ex",
+      "item_file": "gameitems/HitTarget.sw26.json",
+      "object": "sw26",
+      "placement_id": "switch.refl-ex.placement-1",
+      "raw_x": 520.8469,
+      "raw_y": 752.6185,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.ref-lex",
+      "item_file": "gameitems/HitTarget.sw27.json",
+      "object": "sw27",
+      "placement_id": "switch.ref-lex.placement-1",
+      "raw_x": 505.72192,
+      "raw_y": 702.219,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.re-flex",
+      "item_file": "gameitems/HitTarget.sw28.json",
+      "object": "sw28",
+      "placement_id": "switch.re-flex.placement-1",
+      "raw_x": 491.17776,
+      "raw_y": 653.25354,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.r-eflex",
+      "item_file": "gameitems/HitTarget.sw29.json",
+      "object": "sw29",
+      "placement_id": "switch.r-eflex.placement-1",
+      "raw_x": 476.39658,
+      "raw_y": 603.46954,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.reflex",
+      "item_file": "gameitems/HitTarget.sw30.json",
+      "object": "sw30",
+      "placement_id": "switch.reflex.placement-1",
+      "raw_x": 461.2025,
+      "raw_y": 553.99414,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.big-shot-target",
+      "item_file": "gameitems/HitTarget.sw31.json",
+      "object": "sw31",
+      "placement_id": "switch.big-shot-target.placement-1",
+      "raw_x": 582.48773,
+      "raw_y": 866.58655,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-popper",
+      "item_file": "gameitems/Trigger.sw32.json",
+      "object": "sw32",
+      "placement_id": "switch.r-popper.placement-1",
+      "raw_x": 760.3369,
+      "raw_y": 654.4346,
+      "reason": "Projection of the switch within its popper onto the script ball-detection trigger; trigger center is not a separate limit-switch body.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-gab-t",
+      "item_file": "gameitems/HitTarget.sw33.json",
+      "object": "sw33",
+      "placement_id": "switch.mixer-gab-t.placement-1",
+      "raw_x": 821.74084,
+      "raw_y": 451.2861,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-gab-m",
+      "item_file": "gameitems/HitTarget.sw34.json",
+      "object": "sw34",
+      "placement_id": "switch.mixer-gab-m.placement-1",
+      "raw_x": 796.80066,
+      "raw_y": 496.72034,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-gab-b",
+      "item_file": "gameitems/HitTarget.sw35.json",
+      "object": "sw35",
+      "placement_id": "switch.mixer-gab-b.placement-1",
+      "raw_x": 771.009,
+      "raw_y": 542.28516,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-heart-l",
+      "item_file": "gameitems/HitTarget.sw36.json",
+      "object": "sw36",
+      "placement_id": "switch.mixer-heart-l.placement-1",
+      "raw_x": 624.13776,
+      "raw_y": 286.1402,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-heart-m",
+      "item_file": "gameitems/HitTarget.sw37.json",
+      "object": "sw37",
+      "placement_id": "switch.mixer-heart-m.placement-1",
+      "raw_x": 675.00665,
+      "raw_y": 286.1402,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-heart-r",
+      "item_file": "gameitems/HitTarget.sw38.json",
+      "object": "sw38",
+      "placement_id": "switch.mixer-heart-r.placement-1",
+      "raw_x": 725.36414,
+      "raw_y": 286.1403,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "switch.top-left10",
+      "item_file": "gameitems/Wall.wall101.json",
+      "object": "wall101",
+      "placement_id": "switch.top-left10.placement-1",
+      "raw_x": 156.83805000000007,
+      "raw_y": 419.4993033333338,
+      "reason": "Leaf contact at this rubber point projected onto the script-bound Wall101 triangle centroid.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-mag-t",
+      "item_file": "gameitems/HitTarget.sw41.json",
+      "object": "sw41",
+      "placement_id": "switch.mixer-mag-t.placement-1",
+      "raw_x": 526.2415,
+      "raw_y": 451.34946,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-mag-m",
+      "item_file": "gameitems/HitTarget.sw42.json",
+      "object": "sw42",
+      "placement_id": "switch.mixer-mag-m.placement-1",
+      "raw_x": 551.627,
+      "raw_y": 496.63666,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.mixer-mag-b",
+      "item_file": "gameitems/HitTarget.sw43.json",
+      "object": "sw43",
+      "placement_id": "switch.mixer-mag-b.placement-1",
+      "raw_x": 577.30707,
+      "raw_y": 540.9334,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "switch.mid-mid10",
+      "item_file": "gameitems/Wall.sw46.json",
+      "object": "sw46",
+      "placement_id": "switch.mid-mid10.placement-1",
+      "raw_x": 219.67834714897884,
+      "raw_y": 602.0062507205298,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 47,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "switch.mid-bot10",
+      "item_file": "gameitems/Wall.sw47.json",
+      "object": "sw47",
+      "placement_id": "switch.mid-bot10.placement-1",
+      "raw_x": 366.5034552681276,
+      "raw_y": 754.0325304894958,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "switch.mid-top10",
+      "item_file": "gameitems/Wall.sw48.json",
+      "object": "sw48",
+      "placement_id": "switch.mid-top10.placement-1",
+      "raw_x": 311.2751049928993,
+      "raw_y": 656.5878563683931,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 49,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.i-test",
+      "item_file": "gameitems/HitTarget.sw49.json",
+      "object": "sw49",
+      "placement_id": "switch.i-test.placement-1",
+      "raw_x": 277.48685,
+      "raw_y": 184.26591,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_position_property",
+      "device_id": "switch.magnet-target",
+      "item_file": "gameitems/HitTarget.sw50.json",
+      "object": "sw50",
+      "placement_id": "switch.magnet-target.placement-1",
+      "raw_x": 57.44677,
+      "raw_y": 968.5857,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.l-popper",
+      "item_file": "gameitems/Trigger.sw51.json",
+      "object": "sw51",
+      "placement_id": "switch.l-popper.placement-1",
+      "raw_x": 100.53009,
+      "raw_y": 386.17255,
+      "reason": "Projection of the switch within its popper onto the script ball-detection trigger; trigger center is not a separate limit-switch body.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 52,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.left-jet",
+      "item_file": "gameitems/Bumper.Bumper1.json",
+      "object": "Bumper1",
+      "placement_id": "switch.left-jet.placement-1",
+      "raw_x": 226.96298,
+      "raw_y": 291.1483,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 53,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.right-jet",
+      "item_file": "gameitems/Bumper.Bumper2.json",
+      "object": "Bumper2",
+      "placement_id": "switch.right-jet.placement-1",
+      "raw_x": 439.70367,
+      "raw_y": 336.7779,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.bottom-jet",
+      "item_file": "gameitems/Bumper.Bumper3.json",
+      "object": "Bumper3",
+      "placement_id": "switch.bottom-jet.placement-1",
+      "raw_x": 292.10733,
+      "raw_y": 491.9403,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 59,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-loop",
+      "item_file": "gameitems/Trigger.Sw59.json",
+      "object": "Sw59",
+      "placement_id": "switch.r-loop.placement-1",
+      "raw_x": 855.1406,
+      "raw_y": 317.07822,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "sensor",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.r-trough",
+      "item_file": "gameitems/Kicker.BallRelease.json",
+      "object": "BallRelease",
+      "placement_id": "switch.r-trough.placement-1",
+      "raw_x": 830.0902,
+      "raw_y": 1792.8531,
+      "reason": "Trough switch projected onto the trough feed assembly; no individual switch-body geometry is retained. Shared anchor does not mean a single physical switch.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.c-trough",
+      "item_file": "gameitems/Kicker.BallRelease.json",
+      "object": "BallRelease",
+      "placement_id": "switch.c-trough.placement-1",
+      "raw_x": 830.0902,
+      "raw_y": 1792.8531,
+      "reason": "Trough switch projected onto the trough feed assembly; no individual switch-body geometry is retained. Shared anchor does not mean a single physical switch.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "switch.l-trough",
+      "item_file": "gameitems/Kicker.BallRelease.json",
+      "object": "BallRelease",
+      "placement_id": "switch.l-trough.placement-1",
+      "raw_x": 830.0902,
+      "raw_y": 1792.8531,
+      "reason": "Trough switch projected onto the trough feed assembly; no individual switch-body geometry is retained. Shared anchor does not mean a single physical switch.",
+      "role": "sensor",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.out-hole",
+      "item_file": "gameitems/Kicker.Drain.json",
+      "object": "Drain",
+      "placement_id": "coil.out-hole.placement-1",
+      "raw_x": 456.74902,
+      "raw_y": 1997.3994,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.trough",
+      "item_file": "gameitems/Kicker.BallRelease.json",
+      "object": "BallRelease",
+      "placement_id": "coil.trough.placement-1",
+      "raw_x": 830.0902,
+      "raw_y": 1792.8531,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.l-popper",
+      "item_file": "gameitems/Trigger.sw51.json",
+      "object": "sw51",
+      "placement_id": "coil.l-popper.placement-1",
+      "raw_x": 100.53009,
+      "raw_y": 386.17255,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.r-popper",
+      "item_file": "gameitems/Trigger.sw32.json",
+      "object": "sw32",
+      "placement_id": "coil.r-popper.placement-1",
+      "raw_x": 760.3369,
+      "raw_y": 654.4346,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.r-drop",
+      "item_file": "gameitems/HitTarget.sw22.json",
+      "object": "sw22",
+      "placement_id": "coil.r-drop.placement-1",
+      "raw_x": 790.0701,
+      "raw_y": 1111.0247,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.magnet",
+      "item_file": "gameitems/Trigger.RMagnet.json",
+      "object": "RMagnet",
+      "placement_id": "coil.magnet.placement-1",
+      "raw_x": 90.2178,
+      "raw_y": 1151.1959,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "coil.big-shot",
+      "item_file": "gameitems/Primitive.primguy.json",
+      "object": "primguy",
+      "placement_id": "coil.big-shot.placement-1",
+      "raw_x": 586.48145,
+      "raw_y": 745.4476950000001,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.motor",
+      "item_file": "gameitems/Trigger.trMixMaster.json",
+      "object": "trMixMaster",
+      "placement_id": "coil.motor.placement-1",
+      "raw_x": 674.5521,
+      "raw_y": 428.7322,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.left-jet",
+      "item_file": "gameitems/Bumper.Bumper1.json",
+      "object": "Bumper1",
+      "placement_id": "coil.left-jet.placement-1",
+      "raw_x": 226.96298,
+      "raw_y": 291.1483,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "effect",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "coil.left-sling",
+      "item_file": "gameitems/Wall.LeftSlingShot.json",
+      "object": "LeftSlingShot",
+      "placement_id": "coil.left-sling.placement-1",
+      "raw_x": 198.96278740148293,
+      "raw_y": 1534.024929154763,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.right-jet",
+      "item_file": "gameitems/Bumper.Bumper2.json",
+      "object": "Bumper2",
+      "placement_id": "coil.right-jet.placement-1",
+      "raw_x": 439.70367,
+      "raw_y": 336.7779,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "effect",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "polygon_area_centroid",
+      "device_id": "coil.right-sling",
+      "item_file": "gameitems/Wall.Rightslingshot.json",
+      "object": "Rightslingshot",
+      "placement_id": "coil.right-sling.placement-1",
+      "raw_x": 657.8820086235297,
+      "raw_y": 1533.3457047469435,
+      "reason": "Mechanism effect projected onto its own fixed table part; not a measurement of the hidden coil body. Reset7 uses a member of its own drop bank, not a sensor driven directly by the coil.",
+      "role": "effect",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "coil.bottom-jet",
+      "item_file": "gameitems/Bumper.Bumper3.json",
+      "object": "Bumper3",
+      "placement_id": "coil.bottom-jet.placement-1",
+      "raw_x": 292.10733,
+      "raw_y": 491.9403,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "effect",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.6",
+      "item_file": "gameitems/Light.L6.json",
+      "object": "L6",
+      "placement_id": "lamp.6.placement-1",
+      "raw_x": 770.0116,
+      "raw_y": 922.6991,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.7",
+      "item_file": "gameitems/Light.L7.json",
+      "object": "L7",
+      "placement_id": "lamp.7.placement-1",
+      "raw_x": 801.2314,
+      "raw_y": 852.89075,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.8",
+      "item_file": "gameitems/Light.L8.json",
+      "object": "L8",
+      "placement_id": "lamp.8.placement-1",
+      "raw_x": 832.82764,
+      "raw_y": 783.42444,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.15",
+      "item_file": "gameitems/Light.L15.json",
+      "object": "L15",
+      "placement_id": "lamp.15.placement-1",
+      "raw_x": 94.49655,
+      "raw_y": 765.6926,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.16",
+      "item_file": "gameitems/Light.l16.json",
+      "object": "l16",
+      "placement_id": "lamp.16.placement-1",
+      "raw_x": 58.8331,
+      "raw_y": 600.21875,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.25",
+      "item_file": "gameitems/Light.L25.json",
+      "object": "L25",
+      "placement_id": "lamp.25.placement-1",
+      "raw_x": 492.86966,
+      "raw_y": 823.8842,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.26",
+      "item_file": "gameitems/Light.L26.json",
+      "object": "L26",
+      "placement_id": "lamp.26.placement-1",
+      "raw_x": 476.79724,
+      "raw_y": 773.2414,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.27",
+      "item_file": "gameitems/Light.l27.json",
+      "object": "l27",
+      "placement_id": "lamp.27.placement-1",
+      "raw_x": 461.8141,
+      "raw_y": 723.1951,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.28",
+      "item_file": "gameitems/Light.L28.json",
+      "object": "L28",
+      "placement_id": "lamp.28.placement-1",
+      "raw_x": 446.87506,
+      "raw_y": 672.7953,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.29",
+      "item_file": "gameitems/Light.L29.json",
+      "object": "L29",
+      "placement_id": "lamp.29.placement-1",
+      "raw_x": 431.07733,
+      "raw_y": 622.6176,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.30",
+      "item_file": "gameitems/Light.L30.json",
+      "object": "L30",
+      "placement_id": "lamp.30.placement-1",
+      "raw_x": 416.63577,
+      "raw_y": 571.8429,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.31",
+      "item_file": "gameitems/Light.L31.json",
+      "object": "L31",
+      "placement_id": "lamp.31.placement-1",
+      "raw_x": 514.73663,
+      "raw_y": 1017.32587,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.41",
+      "item_file": "gameitems/Light.L41.json",
+      "object": "L41",
+      "placement_id": "lamp.41.placement-1",
+      "raw_x": 739.3581,
+      "raw_y": 1055.7959,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.42",
+      "item_file": "gameitems/Light.l42.json",
+      "object": "l42",
+      "placement_id": "lamp.42.placement-1",
+      "raw_x": 678.0289,
+      "raw_y": 1085.2633,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.43",
+      "item_file": "gameitems/Light.L43.json",
+      "object": "L43",
+      "placement_id": "lamp.43.placement-1",
+      "raw_x": 655.32007,
+      "raw_y": 1147.8245,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.44",
+      "item_file": "gameitems/Light.L44.json",
+      "object": "L44",
+      "placement_id": "lamp.44.placement-1",
+      "raw_x": 685.6303,
+      "raw_y": 1207.4435,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.46",
+      "item_file": "gameitems/Light.L46.json",
+      "object": "L46",
+      "placement_id": "lamp.46.placement-1",
+      "raw_x": 383.6496,
+      "raw_y": 1026.7416,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.47",
+      "item_file": "gameitems/Light.L47.json",
+      "object": "L47",
+      "placement_id": "lamp.47.placement-1",
+      "raw_x": 372.55182,
+      "raw_y": 963.1511,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.48",
+      "item_file": "gameitems/Light.L48.json",
+      "object": "L48",
+      "placement_id": "lamp.48.placement-1",
+      "raw_x": 360.98355,
+      "raw_y": 899.8068,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.49",
+      "item_file": "gameitems/Light.L49.json",
+      "object": "L49",
+      "placement_id": "lamp.49.placement-1",
+      "raw_x": 174.54596,
+      "raw_y": 1293.3981,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.50",
+      "item_file": "gameitems/Light.l50.json",
+      "object": "l50",
+      "placement_id": "lamp.50.placement-1",
+      "raw_x": 177.63902,
+      "raw_y": 1193.748,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.51",
+      "item_file": "gameitems/Light.l51.json",
+      "object": "l51",
+      "placement_id": "lamp.51.placement-1",
+      "raw_x": 186.05595,
+      "raw_y": 1136.5515,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.52",
+      "item_file": "gameitems/Light.l52.json",
+      "object": "l52",
+      "placement_id": "lamp.52.placement-1",
+      "raw_x": 159.98112,
+      "raw_y": 1082.8044,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.53",
+      "item_file": "gameitems/Light.L53.json",
+      "object": "L53",
+      "placement_id": "lamp.53.placement-1",
+      "raw_x": 554.6217,
+      "raw_y": 1177.034,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.54",
+      "item_file": "gameitems/Light.l54.json",
+      "object": "l54",
+      "placement_id": "lamp.54.placement-1",
+      "raw_x": 594.8147,
+      "raw_y": 1068.4801,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.55",
+      "item_file": "gameitems/Light.l55.json",
+      "object": "l55",
+      "placement_id": "lamp.55.placement-1",
+      "raw_x": 616.0047,
+      "raw_y": 1006.87476,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.56",
+      "item_file": "gameitems/Light.l56.json",
+      "object": "l56",
+      "placement_id": "lamp.56.placement-1",
+      "raw_x": 636.77386,
+      "raw_y": 946.81287,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.58",
+      "item_file": "gameitems/Light.l58.json",
+      "object": "l58",
+      "placement_id": "lamp.58.placement-1",
+      "raw_x": 273.0204,
+      "raw_y": 976.318,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.60",
+      "item_file": "gameitems/Light.L60.json",
+      "object": "L60",
+      "placement_id": "lamp.60.placement-1",
+      "raw_x": 430.10602,
+      "raw_y": 1433.2446,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.61",
+      "item_file": "gameitems/Light.L61.json",
+      "object": "L61",
+      "placement_id": "lamp.61.placement-1",
+      "raw_x": 429.58563,
+      "raw_y": 1502.1263,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.62",
+      "item_file": "gameitems/Light.L62.json",
+      "object": "L62",
+      "placement_id": "lamp.62.placement-1",
+      "raw_x": 429.74454,
+      "raw_y": 1570.512,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.63",
+      "item_file": "gameitems/Light.L63.json",
+      "object": "L63",
+      "placement_id": "lamp.63.placement-1",
+      "raw_x": 430.03616,
+      "raw_y": 1636.9973,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 64,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.64",
+      "item_file": "gameitems/Light.L64.json",
+      "object": "L64",
+      "placement_id": "lamp.64.placement-1",
+      "raw_x": 429.46606,
+      "raw_y": 1707.4556,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.13",
+      "item_file": "gameitems/Primitive.p13.json",
+      "object": "p13",
+      "placement_id": "lamp.13.placement-1",
+      "raw_x": 155.140965,
+      "raw_y": 975.6666700000001,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.14",
+      "item_file": "gameitems/Primitive.p14.json",
+      "object": "p14",
+      "placement_id": "lamp.14.placement-1",
+      "raw_x": 129.547755,
+      "raw_y": 886.5452,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.17",
+      "item_file": "gameitems/Primitive.pFilament17.json",
+      "object": "pFilament17",
+      "placement_id": "lamp.17.placement-1",
+      "raw_x": 152.371445,
+      "raw_y": 190.500615,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.18",
+      "item_file": "gameitems/Primitive.pFilament18.json",
+      "object": "pFilament18",
+      "placement_id": "lamp.18.placement-1",
+      "raw_x": 128.024005,
+      "raw_y": 174.068855,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.19",
+      "item_file": "gameitems/Primitive.pFilament19.json",
+      "object": "pFilament19",
+      "placement_id": "lamp.19.placement-1",
+      "raw_x": 102.5448925,
+      "raw_y": 201.173715,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.20",
+      "item_file": "gameitems/Primitive.pFilament20.json",
+      "object": "pFilament20",
+      "placement_id": "lamp.20.placement-1",
+      "raw_x": 79.01681500000001,
+      "raw_y": 174.235005,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.21",
+      "item_file": "gameitems/Primitive.pFilament21.json",
+      "object": "pFilament21",
+      "placement_id": "lamp.21.placement-1",
+      "raw_x": 54.674133499999996,
+      "raw_y": 189.216865,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.22",
+      "item_file": "gameitems/Primitive.p22.json",
+      "object": "p22",
+      "placement_id": "lamp.22.placement-1",
+      "raw_x": 556.5261,
+      "raw_y": 1530.3236499999998,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.23",
+      "item_file": "gameitems/Primitive.p23.json",
+      "object": "p23",
+      "placement_id": "lamp.23.placement-1",
+      "raw_x": 579.18703,
+      "raw_y": 1465.46105,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.24",
+      "item_file": "gameitems/Primitive.p24.json",
+      "object": "p24",
+      "placement_id": "lamp.24.placement-1",
+      "raw_x": 601.8223700000001,
+      "raw_y": 1400.17515,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.32",
+      "item_file": "gameitems/Primitive.p32.json",
+      "object": "p32",
+      "placement_id": "lamp.32.placement-1",
+      "raw_x": 271.58879,
+      "raw_y": 1414.7408500000001,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.33",
+      "item_file": "gameitems/Primitive.p33.json",
+      "object": "p33",
+      "placement_id": "lamp.33.placement-1",
+      "raw_x": 677.539485,
+      "raw_y": 196.13370500000002,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.34",
+      "item_file": "gameitems/Primitive.p34.json",
+      "object": "p34",
+      "placement_id": "lamp.34.placement-1",
+      "raw_x": 472.50723500000004,
+      "raw_y": 549.1315,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.35",
+      "item_file": "gameitems/Primitive.p35.json",
+      "object": "p35",
+      "placement_id": "lamp.35.placement-1",
+      "raw_x": 880.429675,
+      "raw_y": 548.1725749999999,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.36",
+      "item_file": "gameitems/Primitive.pFil36.json",
+      "object": "pFil36",
+      "placement_id": "lamp.36.placement-1",
+      "raw_x": 43.690274,
+      "raw_y": 854.49603,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.37",
+      "item_file": "gameitems/Primitive.pFil37.json",
+      "object": "pFil37",
+      "placement_id": "lamp.37.placement-1",
+      "raw_x": 360.564175,
+      "raw_y": 713.79895,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.38",
+      "item_file": "gameitems/Primitive.pFil38.json",
+      "object": "pFil38",
+      "placement_id": "lamp.38.placement-1",
+      "raw_x": 681.323245,
+      "raw_y": 826.3395,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.39",
+      "item_file": "gameitems/Primitive.p39.json",
+      "object": "p39",
+      "placement_id": "lamp.39.placement-1",
+      "raw_x": 307.685335,
+      "raw_y": 1541.3788,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.45",
+      "item_file": "gameitems/Primitive.p45.json",
+      "object": "p45",
+      "placement_id": "lamp.45.placement-1",
+      "raw_x": 749.3110750000001,
+      "raw_y": 1229.06005,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 57,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.57",
+      "item_file": "gameitems/Primitive.pFil57.json",
+      "object": "pFil57",
+      "placement_id": "lamp.57.placement-1",
+      "raw_x": 246.338405,
+      "raw_y": 841.3659,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "lamp.59",
+      "item_file": "gameitems/Primitive.p59.json",
+      "object": "p59",
+      "placement_id": "lamp.59.placement-1",
+      "raw_x": 299.5298,
+      "raw_y": 1095.12865,
+      "reason": "Projection of the physical lamp onto its script-controlled insert/dome footprint; world-space mesh bounds used. The primitive is not claimed to be a socket.",
+      "role": "emitter",
+      "status": "observed"
+    },
+    {
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.40",
+      "item_file": "gameitems/Light.L40a.json",
+      "object": "L40a",
+      "placement_id": "lamp.40.placement-1",
+      "raw_x": 51.665718,
+      "raw_y": 1446.108,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "coordinate_method": "VPX_center",
+      "device_id": "lamp.40",
+      "item_file": "gameitems/Light.L40b.json",
+      "object": "L40b",
+      "placement_id": "lamp.40.placement-2",
+      "raw_x": 806.76215,
+      "raw_y": 1448.1808,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "flasher.excellent-ray",
+      "item_file": "gameitems/Primitive.pFilament132b.json",
+      "object": "pFilament132b",
+      "placement_id": "flasher.excellent-ray.placement-1",
+      "raw_x": 103.049065,
+      "raw_y": 213.226205,
+      "reason": "Exact retained script-bound part center; physical identity reconciled against factory layout and retained photograph.",
+      "role": "emitter",
+      "status": "validated"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb1.json",
+      "object": "pBulb1",
+      "placement_id": "gi.playfield.placement-1",
+      "raw_x": 197.41928000000001,
+      "raw_y": 1695.06405,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb2.json",
+      "object": "pBulb2",
+      "placement_id": "gi.playfield.placement-2",
+      "raw_x": 139.43254000000002,
+      "raw_y": 1655.05225,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb3.json",
+      "object": "pBulb3",
+      "placement_id": "gi.playfield.placement-3",
+      "raw_x": 204.93547,
+      "raw_y": 1577.17465,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb4.json",
+      "object": "pBulb4",
+      "placement_id": "gi.playfield.placement-4",
+      "raw_x": 183.33357,
+      "raw_y": 1503.8922499999999,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb5.json",
+      "object": "pBulb5",
+      "placement_id": "gi.playfield.placement-5",
+      "raw_x": 660.68487,
+      "raw_y": 1695.32815,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb6.json",
+      "object": "pBulb6",
+      "placement_id": "gi.playfield.placement-6",
+      "raw_x": 717.78242,
+      "raw_y": 1655.1846500000001,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb7.json",
+      "object": "pBulb7",
+      "placement_id": "gi.playfield.placement-7",
+      "raw_x": 655.141775,
+      "raw_y": 1576.7594,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb8.json",
+      "object": "pBulb8",
+      "placement_id": "gi.playfield.placement-8",
+      "raw_x": 676.274595,
+      "raw_y": 1504.69995,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb9.json",
+      "object": "pBulb9",
+      "placement_id": "gi.playfield.placement-9",
+      "raw_x": 82.74946299999999,
+      "raw_y": 1298.73665,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb10.json",
+      "object": "pBulb10",
+      "placement_id": "gi.playfield.placement-10",
+      "raw_x": 36.557536999999996,
+      "raw_y": 1170.78495,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb11.json",
+      "object": "pBulb11",
+      "placement_id": "gi.playfield.placement-11",
+      "raw_x": 824.787775,
+      "raw_y": 1064.1388000000002,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb12.json",
+      "object": "pBulb12",
+      "placement_id": "gi.playfield.placement-12",
+      "raw_x": 829.0991750000001,
+      "raw_y": 1138.0459,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb13.json",
+      "object": "pBulb13",
+      "placement_id": "gi.playfield.placement-13",
+      "raw_x": 832.48695,
+      "raw_y": 1211.02915,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb14.json",
+      "object": "pBulb14",
+      "placement_id": "gi.playfield.placement-14",
+      "raw_x": 833.1027750000001,
+      "raw_y": 1317.27055,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb15.json",
+      "object": "pBulb15",
+      "placement_id": "gi.playfield.placement-15",
+      "raw_x": 41.003147,
+      "raw_y": 925.6483000000001,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb16.json",
+      "object": "pBulb16",
+      "placement_id": "gi.playfield.placement-16",
+      "raw_x": 159.7343,
+      "raw_y": 784.1804999999999,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb17.json",
+      "object": "pBulb17",
+      "placement_id": "gi.playfield.placement-17",
+      "raw_x": 134.21320500000002,
+      "raw_y": 683.3938599999999,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb18.json",
+      "object": "pBulb18",
+      "placement_id": "gi.playfield.placement-18",
+      "raw_x": 305.9239,
+      "raw_y": 793.53656,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb19.json",
+      "object": "pBulb19",
+      "placement_id": "gi.playfield.placement-19",
+      "raw_x": 766.560125,
+      "raw_y": 777.7953,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb20.json",
+      "object": "pBulb20",
+      "placement_id": "gi.playfield.placement-20",
+      "raw_x": 563.3171500000001,
+      "raw_y": 775.59282,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb21.json",
+      "object": "pBulb21",
+      "placement_id": "gi.playfield.placement-21",
+      "raw_x": 548.43092,
+      "raw_y": 724.2502999999999,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb22.json",
+      "object": "pBulb22",
+      "placement_id": "gi.playfield.placement-22",
+      "raw_x": 532.93688,
+      "raw_y": 674.7306550000001,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb23.json",
+      "object": "pBulb23",
+      "placement_id": "gi.playfield.placement-23",
+      "raw_x": 519.26593,
+      "raw_y": 623.995715,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb24.json",
+      "object": "pBulb24",
+      "placement_id": "gi.playfield.placement-24",
+      "raw_x": 503.46825,
+      "raw_y": 573.261,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb25.json",
+      "object": "pBulb25",
+      "placement_id": "gi.playfield.placement-25",
+      "raw_x": 37.133278000000004,
+      "raw_y": 445.563475,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb26.json",
+      "object": "pBulb26",
+      "placement_id": "gi.playfield.placement-26",
+      "raw_x": 133.809615,
+      "raw_y": 447.72379,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb27.json",
+      "object": "pBulb27",
+      "placement_id": "gi.playfield.placement-27",
+      "raw_x": 185.38828999999998,
+      "raw_y": 180.108565,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb28.json",
+      "object": "pBulb28",
+      "placement_id": "gi.playfield.placement-28",
+      "raw_x": 74.669645,
+      "raw_y": 256.5315,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb29.json",
+      "object": "pBulb29",
+      "placement_id": "gi.playfield.placement-29",
+      "raw_x": 871.3667499999999,
+      "raw_y": 180.665325,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb30.json",
+      "object": "pBulb30",
+      "placement_id": "gi.playfield.placement-30",
+      "raw_x": 906.743105,
+      "raw_y": 311.09740999999997,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb31.json",
+      "object": "pBulb31",
+      "placement_id": "gi.playfield.placement-31",
+      "raw_x": 846.762825,
+      "raw_y": 596.805355,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    },
+    {
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "coordinate_method": "exported_OBJ_world_mesh_AABB_center",
+      "device_id": "gi.playfield",
+      "item_file": "gameitems/Primitive.pBulb32.json",
+      "object": "pBulb32",
+      "placement_id": "gi.playfield.placement-32",
+      "raw_x": 838.7229,
+      "raw_y": 921.6755350000001,
+      "reason": "Candidate bulb geometry only: these 32 individually modelled bulbs are not a machine-side GI count or proven string membership. Three bumper cap bulbs and any apron/back-panel sockets remain separately unverified; no quantity is asserted.",
+      "role": "emitter",
+      "status": "candidate"
+    }
+  ],
+  "script_sha256": "44f0924de1c33320134185cff9fa7cd09515497221b9ba0b805a4713c318a1eb",
+  "table_sha256": "2d0e176a9783022357ffa69b5cd1fbd935757e411a735e273c19f878a209adf9",
+  "version": 1
+}

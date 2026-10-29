@@ -1,0 +1,34 @@
+# Dr. Dude And His Excellent Ray (WPC, 1990)
+
+Coverage: **partial - separate physical WPC hardware edition, with complete public address enumeration and retained service tests.**
+
+Most model 2016 machines use System 11C; IPDB 737 records a small WPC alphanumeric batch. The factory change sheet explicitly replaces the CPU, power driver, display boards, transformer, cables, bottom arch and selected coils. The two WPC firmware sets `dd_p06` and `dd_p7` therefore belong here, while `dd_l2`, `dd_lu1`, `dd_l3c` and `dd_p6` remain on the production System 11C record. A PinMAME clone parent is not hardware compatibility. The WPC record uses no duplicate production OPDB identity.
+
+## Controller and addresses
+
+Pinned PinMAME 46e1a01a uses `GEN_WPCALPHA_1`, two 16-character `CORE_SEG16R` displays at offsets 0 and 20, zero matrix inversion and `FLIP_SWNO(82, 81)`. The inventory contains 64 matrix addresses 11-88 in decimal column/row notation, 8 dedicated inputs 1-8, 8 flipper-column positions 111-118 and 8 DIP bits. Outputs are 50 solenoid slots, 64 lamps 11-88 and five GI channels 0-4. These are WPC addresses; never apply the System 11 sequential matrix or A/C relay aliases.
+
+The physical WPC solenoid table and the ROM coil test agree on 1-28: poppers 1/2, Big Shot 3, reset 4, magnet 5, knocker 6, slings 7/8, outhole 9, feeder 10, bumpers 13-15, Mixer flashers 17-19, field flashers 20-24/26, motor 27 and backbox middle-insert flasher 28. Blank loads 11/12/16/25 are named NOT USED by the ROM even though a service sweep pulses them. The old A/C notes printed under the WPC table are reused System 11 text and establish no WPC relay 12. Output 28 has its own named step and also emits brief coincident pulses during other test steps; a pulse is not extra fitment. Slots 29/30 are meaningful virtual J111 GPIO state channels with used availability; their game-specific physical loads remain unknown. Slot 32 is the constant-zero fourth state position; 31 is pre-Fliptronic GAME ON/flipper relay state. Simulator shooter 49 is readable used virtual state, not an autoplunge coil.
+
+Drive lower flipper buttons 112 (right) and 114 (left). The core copies them to matrix 81/82 and fabricates 45/46 and 47/48. Direct repeated holds can mask that overwrite in a test; do not drive the copied matrix contacts in a recreation. The separate WPC flipper register complements its column, unlike the matrix row read. Unproven extra bits remain explicitly unknown. Dedicated input 5 is the prototype ROM's service direction level; pulses on 6 advance its tests. The later Escape/Down/Up/Enter key labels do not describe this early firmware's navigation, and its source CoinDoor keyboard toggle is mapped to the right-coin matrix contact, not a WPC-95 interlock.
+
+## Physical behavior and geometry
+
+The documented common layout retains the manual shooter, three-ball trough, two poppers and habitrails, four-drop bank, magnetic lane, fixed nine-target Mixmaster with driven central gear/post, Big Shot linkage, two flippers, three bumpers and two slings. The WPC replacement sheet changes selected actuators and electronics; it does not establish new ball routes or hidden socket centers. Keep occupied trough/outhole/popper switches active until their balls move and drops active until reset. Never turn a coil into a direct occupancy sensor or replace the nine Mixmaster contacts with the simulator's preset hit sequence. Neither the Mixmaster nor Big Shot has an extra home sensor documented here. Common physical assembly drawings give topology, not measured WPC timing or a working WPC script.
+
+The retained System 11C VPX is used only for an explicit common-part coordinate overlay. The WPC physical full-playfield photo IPDB 27661 corroborates count, side and order of the fixed parts; it does not prove hidden socket centers. Every copied position remains observed and cites its geometry role separately. G.I. candidates are not transferred across the different WPC string wiring. The factory WPC triac table preserves all five literal wire/pin/transistor rows but prints no string functions or bulb quantities. The ROM individually cycles GI 0-4 under one generic GEN. ILLUMINATION label; that does not fill the blank cells.
+
+## Retained tests and limits
+
+Both ROM sets match their pinned archive/member hashes and started from independent empty state directories. Successful service runs inherited only each set's hashed initialization NV file. Complete switch, single-lamp, coil and flasher traces are retained with exact native and scenario hashes. Both sets agree across all 64 matrix labels, 64 single-lamp address/name pairs and two coil cycles. Output activity is runtime evidence; it does not count physical bulbs, identify a GI string or prove unfitted GPIO loads. A separate fresh-state PA-7 follow-up used matrix 71 and lower flippers 112/114 as positive controls. It confirmed the flipper display names and paired synthetic outputs, and matrix coin 14 followed by Start 13 raised GAME ON 31 with BALL 1 displayed. Dedicated coin 1-4, service 7/8 and the other flipper bits produced no response in their isolated probes; their fitment remains unknown. Input 5 high with Advance 6 selects the next test, while 5 low at SOUND TEST advances its item. Complete raw traces and the bounded limits are retained.
+
+The current physical coordinates and hardware facts remain visible even while the following requirements block promotion.
+
+- No distinct WPC OPDB snapshot record is established; the production resolved ID is deliberately not duplicated.
+- Dedicated inputs 1-4 and 7-8 and flipper-column bits other than 112/114 have no proven physical fitment or complete ROM-use interpretation; service 5/6 navigation is observed, but physical construction/polarity still needs evidence.
+- WPC G.I. channels 0-4 are individually exercised, but the factory triac function/quantity cells are blank. Exact string names, loads, bulb counts and positions remain unknown; the production GI relay grouping cannot be copied.
+- J111 GPIO 29/30 load fitment and the game-specific physical wiring of game-on 31 remain unverified.
+- Common fixed-part coordinates are an explicit observed production-table overlay. WPC-specific hidden coil/socket measurements and the missing production rear-panel/flasher/paired-contact centers are still needed.
+- Custom physical topology is recorded, but a known-working WPC table or physical motion/causal exercise is not retained; do not promote unmeasured timings or simulator ball-state sequences.
+
+The production record has its own spatial and prototype-fitment blockers. Neither physical edition is promoted for firmware coverage alone. Manuals, ROMs, tables and photographs remain in the retained external roots; only factual excerpts and derived evidence enter Git.

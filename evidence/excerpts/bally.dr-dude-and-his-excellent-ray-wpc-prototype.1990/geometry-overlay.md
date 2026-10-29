@@ -1,0 +1,5 @@
+# Physical WPC geometry overlay
+
+IPDB737 photograph27661, https://www.ipdb.org/showpic.pl?id=737&picno=27661, direct resource https://www.ipdb.org/images/737/image-26.jpg, SHA-256 `a9a7227d5f5df76dd2d20b851dc31c288b6f63f87fbca1c64dae7a9ed6bb2986`; image courtesy of Michael Sciulli. Retained locally, copyright not redistributed. Primary curator visual review on 2026-10-29.
+
+This WPC boardset machine has the same two flippers, three bumpers, right four-drop bank, six REFLEX targets, two poppers, magnet lane, left ramp, raised nine-target Mixmaster, BigShot and lamp-insert layout as the common factory playfield. The WPC change sheet explicitly lists the changed bottom arch, coils, boards and cables; it does not document new hidden socket coordinates. The retained VPX is the System11C runtime version dd_l2. Its geometry is reused here only through named common physical parts with an explicit WPC edition overlay, at observed status. There is no independent WPC VPX script in evidence. G.I. candidates are not copied across the different WPC string wiring. Missing production socket/contact locations remain missing in this edition too.

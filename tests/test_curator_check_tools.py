@@ -102,14 +102,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Stars now has its own reviewed factory/source/runtime basis.
 		# Medusa now has its own factory/source/runtime basis instead of the bulk-promotion marker.
 		# TX-Sector now has a game-specific manual, table and runtime evidence seed.
-		self.assertEqual(628, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Dr. Dude now has reviewed production/WPC seeds instead of the bulk-promotion marker.
+		self.assertEqual(627, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(628, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(627, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

@@ -1,0 +1,9 @@
+# Physical photograph review
+
+- IPDB737 `ipdb-737-12484-image-21.jpg`, SHA-256 `cfc2d2e534ba252ebfd6001dd306c2177b7235c9e9cb5d5a7714fa02317916fb`; https://www.ipdb.org/showpic.pl?id=737&picno=12484; direct resource https://www.ipdb.org/images/737/image-21.jpg. Robert Winter.
+- IPDB737 `ipdb-737-42167-image-37.jpg`, SHA-256 `f5a59644d72d970b459cdee61f2c154427fa4d46883c9795ff32450cc8b7f0f3`; https://www.ipdb.org/showpic.pl?id=737&picno=42167; direct resource https://www.ipdb.org/images/737/image-37.jpg. John Gray.
+- IPDB737 `ipdb-737-54014-image-43.jpg`, SHA-256 `83e6c50ef2f84107838dd6a71347f463bb87b0cfe2a5ceed983a459db591248c`; https://www.ipdb.org/showpic.pl?id=737&picno=54014; direct resource https://www.ipdb.org/images/737/image-43.jpg. Mark Steinman.
+- IPDB737 `ipdb-737-54016-image-44.jpg`, SHA-256 `9e56b44efc9327db910dd18ad0526cfb9ca247197663cb58d574ce5449c055b6`; https://www.ipdb.org/showpic.pl?id=737&picno=54016; direct resource https://www.ipdb.org/images/737/image-44.jpg. Mark Steinman.
+- IPDB737 `ipdb-737-54017-image-45.jpg`, SHA-256 `ff23cbf8622017e1a27cead5208cefad898a08df5256dd9261b2fb7d60f517ac`; https://www.ipdb.org/showpic.pl?id=737&picno=54017; direct resource https://www.ipdb.org/images/737/image-45.jpg. Mark Steinman.
+
+Primary curator visual read on 2026-10-29: upper playfield shows three translucent colored MixMaster domes, separate inner bulbs under its clear cover, rear Jackpot-O-Meter and vertical IExam sign. Middle/lower photographs show only one 2X/4X/6X bonus ladder to the right of the Dude-O-Meter; the central repeated labels in the manual drawing do not correspond to extra inserts. Under-lower-playfield photo is too small/obscured to inventory every G.I. socket or prove unfitted apron flashbulbs. No physical bulb total is inferred from lighting glows. Photographs retained locally, not redistributed.

@@ -12,17 +12,17 @@ Count: **0**
 
 Count: **11**
 
-- romset=acd_170_ac; opdb_id=G43W4-MKNW0
-- romset=beachbms; opdb_id=G5B9Z-MLBjW
-- romset=beav_butt; opdb_id=G5DYX-M0oVW
-- romset=kpb106; opdb_id=G48od-MJNnn
-- romset=kpv106; opdb_id=G48od-MJNnn
-- romset=medusaf; opdb_id=G4xXQ-MDWW1
-- romset=rambo; opdb_id=GrJWP-MJ7N1
-- romset=rs_70; opdb_id=G4dWd-MJ2p6
-- romset=smbv; opdb_id=GRBzQ-MLO1j
-- romset=tom_20; opdb_id=G5BLE-MQ75Y
-- romset=tomjerry; opdb_id=G5B9Z-MLBjW
+- opdb_id=G43W4-MKNW0; romset=acd_170_ac
+- opdb_id=G5B9Z-MLBjW; romset=beachbms
+- opdb_id=G5DYX-M0oVW; romset=beav_butt
+- opdb_id=G48od-MJNnn; romset=kpb106
+- opdb_id=G48od-MJNnn; romset=kpv106
+- opdb_id=G4xXQ-MDWW1; romset=medusaf
+- opdb_id=GrJWP-MJ7N1; romset=rambo
+- opdb_id=G4dWd-MJ2p6; romset=rs_70
+- opdb_id=GRBzQ-MLO1j; romset=smbv
+- opdb_id=G5BLE-MQ75Y; romset=tom_20
+- opdb_id=G5B9Z-MLBjW; romset=tomjerry
 
 ## Catalog drivers without a CSV mapping
 
@@ -394,7 +394,7 @@ Count: **363**
 
 ## Machine definitions without a CSV mapping
 
-Count: **243**
+Count: **244**
 
 - `alvin-g.dinosaur-eggs-r02.1993`
 - `alvin-g.u-s-a-football-redemption-p08.1994`
@@ -402,6 +402,7 @@ Count: **243**
 - `bally-midway.big-bat.1984`
 - `bally-midway.midnight-marauders-gun-game.1984`
 - `bally.continental-bingo.1980`
+- `bally.dr-dude-and-his-excellent-ray-wpc-prototype.1990`
 - `bally.league-champ-1-1.1996`
 - `bally.mysterian-prototype.1982`
 - `bally.rapid-fire.1982`
@@ -644,7 +645,7 @@ Count: **243**
 
 Count: **1**
 
-- opdb_id=Grj6X-MJNV1; name=X-Men (LE)
+- name=X-Men (LE); opdb_id=Grj6X-MJNV1
 
 ## Definitions mapped to multiple OPDB machine records
 
@@ -660,31 +661,32 @@ Count: **5**
 
 Count: **2**
 
-- machine_id=bally.black-pyramid.1984; family_opdb_ids=GRB8Z,GRVnY; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
-- machine_id=stern.flight-2000.1980; family_opdb_ids=G48kY,GRo6e; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
+- family_opdb_ids=GRB8Z,GRVnY; machine_id=bally.black-pyramid.1984; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
+- family_opdb_ids=G48kY,GRo6e; machine_id=stern.flight-2000.1980; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
 
 ## CSV OPDB machine records split across definitions
 
-Count: **8**
+Count: **9**
 
-- opdb_id=G43W4-MKNW0; machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018
-- opdb_id=G4jXr-MQ6kz; machine_ids=bally.kiss.1979,bally.kiss.1979.kiss
-- opdb_id=G5KXk-MLB9V; machine_ids=bally.eight-ball-deluxe.1981,bally.eight-ball-deluxe.1981.eballdlx
-- opdb_id=G5VDd-MJpqO; machine_ids=williams-oliver.firepower.1980,williams.firepower.1980
-- opdb_id=G5b38-MDqkx; machine_ids=stern.meteor.1979,stern.meteor.1979.meteora
-- opdb_id=GRbl7-ML8EY; machine_ids=bally.speakeasy.1982,ltd.speakeasy.1982
-- opdb_id=GrEzp-MDbW3; machine_ids=gottlieb.volcano.1981,gottlieb.volcano.1981.vlcno_ax
-- opdb_id=GrqZX-MD15w; machine_ids=stern.lord-of-the-rings-limited-edition.2009,stern.lord-of-the-rings.2003
+- machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018; opdb_id=G43W4-MKNW0
+- machine_ids=bally.kiss.1979,bally.kiss.1979.kiss; opdb_id=G4jXr-MQ6kz
+- machine_ids=bally.eight-ball-deluxe.1981,bally.eight-ball-deluxe.1981.eballdlx; opdb_id=G5KXk-MLB9V
+- machine_ids=williams-oliver.firepower.1980,williams.firepower.1980; opdb_id=G5VDd-MJpqO
+- machine_ids=stern.meteor.1979,stern.meteor.1979.meteora; opdb_id=G5b38-MDqkx
+- machine_ids=bally.speakeasy.1982,ltd.speakeasy.1982; opdb_id=GRbl7-ML8EY
+- machine_ids=gottlieb.volcano.1981,gottlieb.volcano.1981.vlcno_ax; opdb_id=GrEzp-MDbW3
+- machine_ids=stern.lord-of-the-rings-limited-edition.2009,stern.lord-of-the-rings.2003; opdb_id=GrqZX-MD15w
+- machine_ids=bally.dr-dude-and-his-excellent-ray.1990,bally.dr-dude-and-his-excellent-ray-wpc-prototype.1990; opdb_id=GRVEJ-MDq1w
 
 ## Selected OPDB records that intentionally differ from the CSV machine record
 
 Count: **5**
 
-- machine_id=stern.ac-dc-led-pro.2014; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNW0-AOENR; selected_ipdb_id=6441
-- machine_id=stern.ac-dc-premium-limited-edition-luci.2012; csv_opdb_ids=G43W4-MrRpw; selected_opdb_id=G43W4-MXrPx; selected_ipdb_id=5775
-- machine_id=stern.ac-dc-vault-edition.2018; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNX0; selected_ipdb_id=6439
-- machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
-- machine_id=stern.lord-of-the-rings-limited-edition.2009; csv_opdb_ids=GrqZX-MD15w; selected_opdb_id=GrqZX-MDEPd; selected_ipdb_id=5558
+- csv_opdb_ids=G43W4-MKNW0; machine_id=stern.ac-dc-led-pro.2014; selected_ipdb_id=6441; selected_opdb_id=G43W4-MKNW0-AOENR
+- csv_opdb_ids=G43W4-MrRpw; machine_id=stern.ac-dc-premium-limited-edition-luci.2012; selected_ipdb_id=5775; selected_opdb_id=G43W4-MXrPx
+- csv_opdb_ids=G43W4-MKNW0; machine_id=stern.ac-dc-vault-edition.2018; selected_ipdb_id=6439; selected_opdb_id=G43W4-MKNX0
+- csv_opdb_ids=Grj6X-MJNV1; machine_id=stern.x-men-limited-edition.2012; selected_ipdb_id=5823; selected_opdb_id=Grj6X-MJNV1-AOwN1
+- csv_opdb_ids=GrqZX-MD15w; machine_id=stern.lord-of-the-rings-limited-edition.2009; selected_ipdb_id=5558; selected_opdb_id=GrqZX-MDEPd
 
 ## Selected OPDB families that differ from the CSV family
 
