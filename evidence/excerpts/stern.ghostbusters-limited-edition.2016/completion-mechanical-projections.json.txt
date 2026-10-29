@@ -1,0 +1,447 @@
+{
+  "bounds": {
+    "bottom": 2115.0,
+    "left": 0.0,
+    "right": 952.0,
+    "top": 0.0
+  },
+  "format": "ghostbusters-mechanical-projection-audit",
+  "investigated_but_not_physical_centres": [
+    {
+      "center_vpu": [
+        -100.4294,
+        88.110565
+      ],
+      "decision": "Off-playfield animation timer editor marker; never a motor/encoder coordinate.",
+      "object": "Timer.SlimerBracket"
+    },
+    {
+      "decision": "Baked arm/drive visual geometry and stored object transform do not identify a separately fitted fixed motor shaft or encoder-package centre. Script rotates/tilts this group. Do not infer fixed internal sensor projection merely from its stored primitive origin.",
+      "object": "Primitive.BM_SlimerArm",
+      "stored_position_vpu": [
+        288.6748,
+        322.92252,
+        -146.68726
+      ],
+      "world_component_count": 16,
+      "world_xy_bounds": [
+        269.2425,
+        124.50702,
+        329.04752,
+        426.3445
+      ]
+    },
+    {
+      "decision": "Toy animation translation centre differs from the actual transformed arm origin; it is not a proved fixed shaft/body location. Moving contact68 and internal69/71/72 are withheld until a fixed own-object anchor is positively identified.",
+      "ellipse_translation_vpu": [
+        285,
+        475
+      ],
+      "object": "BM_Slimer animation formula"
+    },
+    {
+      "decision": "Exact script maps controller display1 here. This is a live display/reflection viewport, corroborating function. Own50 fits a separate LCD/reflector apparatus but does not locate its physical LCD body at the reflected-image centre. Do not assign this optical image plane as a measured screen centre.",
+      "object": "Flasher.Ectomovie",
+      "viewport_center_vpu": [
+        704.22195,
+        594.999975
+      ]
+    }
+  ],
+  "limits": [
+    "All new positions remain observed; physical opto/coil body centres are not claimed. Projections are labelled explicitly and preserve one location per independent sensor/actuator.",
+    "Slimer dynamic contact/encoder and Ecto physical LCD centre remain unmeasured; no unrelated helper is used to fill them. Trough jam21 now has an explicitly observed release-assembly projection, not a measured opto centre."
+  ],
+  "locator": "Exact supplied PinMAME table, direct right-ramp trigger and explicit target/post/gate/eject projections, corroborated by own factory drawings",
+  "placements": [
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.sw43.json",
+        "sha256": "ecd2caa620038eee0484f0fd0cc36ac89541083a755d3b8e008fae6e7d6d7d53",
+        "size": 1715
+      },
+      "description": "Direct right-ramp contact object centre, now reconciled by own switch-location drawing15.",
+      "device_id": "switch.43-right-ramp",
+      "method": null,
+      "object": "Trigger.sw43",
+      "script_locators": [
+        {
+          "line": 2178,
+          "text": "Sub sw43_hit: Controller.Switch(43) = 1 : WireRampOff: DOFALT 118, DOFPulse: End Sub"
+        },
+        {
+          "line": 2179,
+          "text": "Sub sw43_unhit: Controller.Switch(43) = 0: WireRampOn False: End Sub"
+        }
+      ],
+      "x": 0.808462,
+      "y": 0.454231
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw65.json",
+        "sha256": "e3c7211c8fbbf9c5a322446ea561c5797f5a8bd570d193872fcdd3215321e917",
+        "size": 2166
+      },
+      "description": "Drop opto projected onto its independently bound target collision face centroid; optoPCB is below that target in own37.",
+      "device_id": "switch.65-left-1-bank-drop-opto",
+      "method": null,
+      "object": "Wall.sw65",
+      "script_locators": [
+        {
+          "line": 1649,
+          "text": "Set DT65 = (new DropTarget)(sw65, sw65a, BM_sw65, 65, 0, false)"
+        }
+      ],
+      "x": 0.343535,
+      "y": 0.437026
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw66.json",
+        "sha256": "e5a80cf7c8f0eca0080a5e4a2bf5bcd9ad847af9d8b75d1ffd16a2de440ee645",
+        "size": 2168
+      },
+      "description": "Drop opto projected onto its independently bound target collision face centroid; optoPCB is below that target in own37.",
+      "device_id": "switch.66-right-1-bank-drop-opto",
+      "method": null,
+      "object": "Wall.sw66",
+      "script_locators": [
+        {
+          "line": 1650,
+          "text": "Set DT66 = (new DropTarget)(sw66, sw66a, BM_sw66, 66, 0, false)"
+        }
+      ],
+      "x": 0.620001,
+      "y": 0.456884
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw65.json",
+        "sha256": "e3c7211c8fbbf9c5a322446ea561c5797f5a8bd570d193872fcdd3215321e917",
+        "size": 2166
+      },
+      "description": "Drop reset/trip actuator projected onto the corresponding target collision face centroid; separate physical coils in own37.",
+      "device_id": "coil.24-l-1-bank-drop-up",
+      "method": null,
+      "object": "Wall.sw65",
+      "script_locators": [
+        {
+          "line": 1545,
+          "text": "DTRaise 65"
+        },
+        {
+          "line": 1563,
+          "text": "DTDrop 65"
+        }
+      ],
+      "x": 0.343535,
+      "y": 0.437026
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw65.json",
+        "sha256": "e3c7211c8fbbf9c5a322446ea561c5797f5a8bd570d193872fcdd3215321e917",
+        "size": 2166
+      },
+      "description": "Drop reset/trip actuator projected onto the corresponding target collision face centroid; separate physical coils in own37.",
+      "device_id": "coil.25-l-1-bank-drop-down",
+      "method": null,
+      "object": "Wall.sw65",
+      "script_locators": [
+        {
+          "line": 1545,
+          "text": "DTRaise 65"
+        },
+        {
+          "line": 1563,
+          "text": "DTDrop 65"
+        }
+      ],
+      "x": 0.343535,
+      "y": 0.437026
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw66.json",
+        "sha256": "e5a80cf7c8f0eca0080a5e4a2bf5bcd9ad847af9d8b75d1ffd16a2de440ee645",
+        "size": 2168
+      },
+      "description": "Drop reset/trip actuator projected onto the corresponding target collision face centroid; separate physical coils in own37.",
+      "device_id": "coil.26-r-1-bank-drop-up",
+      "method": null,
+      "object": "Wall.sw66",
+      "script_locators": [
+        {
+          "line": 1554,
+          "text": "DTRaise 66"
+        },
+        {
+          "line": 1572,
+          "text": "DTDrop 66"
+        }
+      ],
+      "x": 0.620001,
+      "y": 0.456884
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sw66.json",
+        "sha256": "e5a80cf7c8f0eca0080a5e4a2bf5bcd9ad847af9d8b75d1ffd16a2de440ee645",
+        "size": 2168
+      },
+      "description": "Drop reset/trip actuator projected onto the corresponding target collision face centroid; separate physical coils in own37.",
+      "device_id": "coil.27-r-1-bank-drop-down",
+      "method": null,
+      "object": "Wall.sw66",
+      "script_locators": [
+        {
+          "line": 1554,
+          "text": "DTRaise 66"
+        },
+        {
+          "line": 1572,
+          "text": "DTDrop 66"
+        }
+      ],
+      "x": 0.620001,
+      "y": 0.456884
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw20.json",
+        "sha256": "6da5f6c0abd58d2b0f2f0637dcf331aa3ac341eb02ce633b60e26a0f1588123e",
+        "size": 458
+      },
+      "description": "Trough eject actuator projected onto the exit ball slot; own37 lifts this ball into the shooter.",
+      "device_id": "coil.1-trough",
+      "method": null,
+      "object": "Kicker.sw20",
+      "script_locators": [
+        {
+          "line": 1246,
+          "text": "Sub SolTrough(Enabled)"
+        },
+        {
+          "line": 1253,
+          "text": "sw20.kick 57, 20"
+        }
+      ],
+      "x": 0.856749,
+      "y": 0.864243
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.LockPost.json",
+        "sha256": "3e68a955eeb964baf2355d15c353133ec7df66a8e520f181d1e3f2cc9a01153b",
+        "size": 4538
+      },
+      "description": "Library release actuator projected onto its moving retention post wall centroid; own library31-33 group, not subway optos.",
+      "device_id": "coil.11-lock-post",
+      "method": null,
+      "object": "Wall.LockPost",
+      "script_locators": [
+        {
+          "line": 1413,
+          "text": "LockPost.IsDropped=1"
+        },
+        {
+          "line": 1418,
+          "text": "LockPost.IsDropped=0"
+        }
+      ],
+      "x": 0.087657,
+      "y": 0.369318
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.UpPost.json",
+        "sha256": "bc28e4baa0b5b44f89816b0bbc8bd5a4f16451d8ccda4b2d4e3c5fffac647d2b",
+        "size": 4547
+      },
+      "description": "Up-post actuator projected onto its moving post wall centroid; input36 senses the ball separately.",
+      "device_id": "coil.12-up-post-spinner",
+      "method": null,
+      "object": "Wall.UpPost",
+      "script_locators": [
+        {
+          "line": 542,
+          "text": "UpPost.IsDropped=1"
+        },
+        {
+          "line": 1391,
+          "text": "UpPost.IsDropped=0"
+        },
+        {
+          "line": 1396,
+          "text": "UpPost.IsDropped=1"
+        }
+      ],
+      "x": 0.162233,
+      "y": 0.196341
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Gate.Gate1.json",
+        "sha256": "c072fc0f90980d6d65813148540ce1e93465534299cf3eb2406a192e7463a103",
+        "size": 650
+      },
+      "description": "Electric gate actuator projected onto its separately bound gate pivot; own51 left rear gate assembly.",
+      "device_id": "coil.18-electric-gate",
+      "method": null,
+      "object": "Gate.Gate1",
+      "script_locators": [
+        {
+          "line": 1345,
+          "text": "vpmSolGate Gate1, SoundFX(\"Saucer_Empty\", DOFContactors), Enabled"
+        }
+      ],
+      "x": 0.475993,
+      "y": 0.025859
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.DiverterOn.json",
+        "sha256": "4e37f29dce3477fec5f7f619db38da06c1f0f4b2628f8cd62b5546d3843b6c5c",
+        "size": 2160
+      },
+      "description": "Subway diverter actuator projected onto the energized guide-wall centroid; manual33/44 own diverter.",
+      "device_id": "coil.20-subway-diverter",
+      "method": null,
+      "object": "Wall.DiverterOn",
+      "script_locators": [
+        {
+          "line": 541,
+          "text": "DiverterOn.IsDropped=1"
+        },
+        {
+          "line": 1449,
+          "text": "DiverterOn.IsDropped=0"
+        },
+        {
+          "line": 1454,
+          "text": "DiverterOn.IsDropped=1"
+        }
+      ],
+      "x": 0.864225,
+      "y": 0.457814
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Wall.sublock_wall.json",
+        "sha256": "81f7b9391cfa0269735ffdc38db4702bbbfd01b94c30c2019eae67423de2d643",
+        "size": 2160
+      },
+      "description": "Subway release actuator projected onto its retention wall centroid; own39 opto queue and down post.",
+      "device_id": "coil.21-subway-lock",
+      "method": null,
+      "object": "Wall.sublock_wall",
+      "script_locators": [
+        {
+          "line": 543,
+          "text": "sublock_wall.IsDropped=0"
+        },
+        {
+          "line": 1433,
+          "text": "SubLock_wall.IsDropped=1"
+        },
+        {
+          "line": 1435,
+          "text": "SubLock_wall.IsDropped=0"
+        }
+      ],
+      "x": 0.71349,
+      "y": 0.54728
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Kicker.sw20.json",
+        "sha256": "6da5f6c0abd58d2b0f2f0637dcf331aa3ac341eb02ce633b60e26a0f1588123e",
+        "size": 458
+      },
+      "description": "Trough jam sensor projected onto the fixed release-slot object; own37 places the separate jam opto in this trough assembly. This is a mechanism projection, not a measured opto beam/body centre. The supplied timed jam pulse is a simplified passage model, not independent hardware geometry.",
+      "device_id": "switch.21-trough-jam",
+      "method": "Repository extract_spatial_candidates native object center; six-place normalized player-view coordinates",
+      "object": "Kicker.sw20",
+      "script_locators": [
+        {
+          "line": 1246,
+          "text": "Sub SolTrough(Enabled)"
+        },
+        {
+          "line": 1253,
+          "text": "sw20.kick 57, 20"
+        },
+        {
+          "line": 1254,
+          "text": "vpmTimer.PulseSw 21"
+        }
+      ],
+      "x": 0.856749,
+      "y": 0.864243
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.LeftMagnaSling.json",
+        "sha256": "3d969e34a1402c65f750a34bd6e17c79352399a100bac8e962649340a1bd3116",
+        "size": 1724
+      },
+      "description": "Magnetic sling actuator projected onto its explicitly bound fixed magnetic-field centre. Own13/33/46 prove one left electromagnet, independently of the sling leaf contact. This is an observed field-anchor projection, not an independently measured physical core centre.",
+      "device_id": "coil.5-left-sling-magnet",
+      "method": "Repository extract_spatial_candidates native object center; six-place normalized player-view coordinates",
+      "object": "Trigger.LeftMagnaSling",
+      "script_locators": [
+        {
+          "line": 517,
+          "text": ".InitMagnet LeftMagnaSling, 55 \t\t' Left Magna Sling Strength (adjust to taste)"
+        },
+        {
+          "line": 1335,
+          "text": "SolMiniMagnet mLeftSling, Enabled"
+        },
+        {
+          "line": 1353,
+          "text": "aMag.MagnetOn = True"
+        },
+        {
+          "line": 1355,
+          "text": "aMag.MagnetOn = False"
+        }
+      ],
+      "x": 0.335049,
+      "y": 0.713948
+    },
+    {
+      "artifact": {
+        "path": "working-root:vpx-sources/stern/ghostbusters-limited-edition-2016/supplied-pinmame-2026-10-25/extracted/gameitems/Trigger.RightMagnaSling.json",
+        "sha256": "95c6ee8656c41c02520b5a63a80ec75b5f4156389067e62f5c68454b7d7200f1",
+        "size": 1724
+      },
+      "description": "Magnetic sling actuator projected onto its explicitly bound fixed magnetic-field centre. Own13/33/46 prove one right electromagnet, independently of the sling leaf contact. This is an observed field-anchor projection, not an independently measured physical core centre.",
+      "device_id": "coil.6-right-sling-magnet",
+      "method": "Repository extract_spatial_candidates native object center; six-place normalized player-view coordinates",
+      "object": "Trigger.RightMagnaSling",
+      "script_locators": [
+        {
+          "line": 524,
+          "text": ".InitMagnet RightMagnaSling, 55 \t' Right Magna Sling Strength (adjust to taste)"
+        },
+        {
+          "line": 1340,
+          "text": "SolMiniMagnet mRightSling, Enabled"
+        },
+        {
+          "line": 1353,
+          "text": "aMag.MagnetOn = True"
+        },
+        {
+          "line": 1355,
+          "text": "aMag.MagnetOn = False"
+        }
+      ],
+      "x": 0.579744,
+      "y": 0.713948
+    }
+  ],
+  "version": 1
+}

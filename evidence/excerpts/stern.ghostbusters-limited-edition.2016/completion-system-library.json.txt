@@ -1,0 +1,475 @@
+{
+  "authority": "User source script matches the already retained PR728 review-artifact copy byte for byte. It supplies external constants required by the exact table. No full VPX launch proving the runtime-resolved library path is asserted.",
+  "facts": [
+    "gbust sets tilt86, slam89, coins81-84, start78, tournament79, launch76, flipper buttons9/10 and coil3/4. Public87 remains unmapped.",
+    "The library writes button contacts on key-down/up, exposes the coin-door closure at116, and describes motors/steppers through GetMech; no public lamp1/2 motor binding is introduced."
+  ],
+  "format": "ghostbusters-completion-evidence",
+  "locator": "Retained supplemental spike1.vbs: platform contract, Ghostbusters cabinet branch and key-down/up handlers",
+  "regions": [
+    {
+      "first_line": 1,
+      "last_line": 36,
+      "lines": [
+        {
+          "line": 1,
+          "text": "'Stern Spike 1 (2015-2021)"
+        },
+        {
+          "line": 2,
+          "text": ""
+        },
+        {
+          "line": 3,
+          "text": "'Load it as any system script, with the set name defined first (a Const anywhere in the table"
+        },
+        {
+          "line": 4,
+          "text": "'script will do, as VBScript sets constants before it runs any code):"
+        },
+        {
+          "line": 5,
+          "text": "'   Const cGameName = \"gbust_117h\""
+        },
+        {
+          "line": 6,
+          "text": "'   LoadVPM \"\", \"spike1.vbs\", 3.61"
+        },
+        {
+          "line": 7,
+          "text": "'The titles number their cabinet switches differently, so this script picks swCoin1, swStartButton"
+        },
+        {
+          "line": 8,
+          "text": "'and the rest from cGameName; a table must not declare them itself."
+        },
+        {
+          "line": 9,
+          "text": ""
+        },
+        {
+          "line": 10,
+          "text": "'Switch numbers are the factory manual's Switch Reference numbers, which the game's switch test"
+        },
+        {
+          "line": 11,
+          "text": "'shows. The CPU board's own inputs, which the manual calls C1-C16, are 101-116:"
+        },
+        {
+          "line": 12,
+          "text": "' - 101-108 DIP switches 1-8, set from PinMAME's DIP settings (vpmShowDips)"
+        },
+        {
+          "line": 13,
+          "text": "' - 109-112 the coin door's service buttons: Select, Plus, Minus, Back"
+        },
+        {
+          "line": 14,
+          "text": "' - 116     the power interlock: CLOSED while the coin door is shut. The machine switches its"
+        },
+        {
+          "line": 15,
+          "text": "'           coil power off while it is open, as a real one does. It powers up closed"
+        },
+        {
+          "line": 16,
+          "text": "'An optional topper numbers its switches from 121 (Game of Thrones' TOPPER DRAGON is 121)."
+        },
+        {
+          "line": 17,
+          "text": ""
+        },
+        {
+          "line": 18,
+          "text": "'The flippers are worked by the node boards: a flipper button switch closing fires the flipper"
+        },
+        {
+          "line": 19,
+          "text": "'coil on the board itself, with no GameOn solenoid in between. So a table only closes the button"
+        },
+        {
+          "line": 20,
+          "text": "'switches (vpmKeyDown does) and moves its flippers from the flipper solenoids. The lower flipper"
+        },
+        {
+          "line": 21,
+          "text": "'coils come out as sLLFlipper/sLRFlipper (48/46) on every title, besides their own Driver Reference"
+        },
+        {
+          "line": 22,
+          "text": "'numbers; an upper flipper is its coil's number only (Game of Thrones LE: 18 left, 16 right;"
+        },
+        {
+          "line": 23,
+          "text": "'WWE: 22 left). Titles with upper flippers have a second leaf on each flipper button, which the"
+        },
+        {
+          "line": 24,
+          "text": "'flipper keys close with the lower one, and the staged flipper keys too. A table for a cabinet"
+        },
+        {
+          "line": 25,
+          "text": "'with staged flipper buttons sets Spike1StagedFlippers = True: the upper leaves then follow the"
+        },
+        {
+          "line": 26,
+          "text": "'staged keys only."
+        },
+        {
+          "line": 27,
+          "text": ""
+        },
+        {
+          "line": 28,
+          "text": "'Solenoid map: coils by their Driver Reference number, 1-32; a coil numbered 0 or above 32 as"
+        },
+        {
+          "line": 29,
+          "text": "'51 and up, in number order. Lamps are the LED channels by their Light Reference number (an RGB"
+        },
+        {
+          "line": 30,
+          "text": "'LED is three channels; the GI strings and flashers are LED channels too). The boards fade the"
+        },
+        {
+          "line": 31,
+          "text": "'LEDs, so for lamps that fade as on the machine set Const UseVPMModSol = 2: core.vbs then asks for"
+        },
+        {
+          "line": 32,
+          "text": "'the lamps and coils as levels (0 to 1). A held flipper's coil then reads its hold duty, which is"
+        },
+        {
+          "line": 33,
+          "text": "'below half where the coil holds itself (Ghostbusters: 11%); with core.vbs 3.62 or later this"
+        },
+        {
+          "line": 34,
+          "text": "'script marks each title's flipper coils, and 46/48, in SolOnAboveZero, so their SolCallback stays"
+        },
+        {
+          "line": 35,
+          "text": "'on at any level above 0. Motors and steppers are Controller.GetMech(n)."
+        },
+        {
+          "line": 36,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "first_line": 59,
+      "last_line": 69,
+      "lines": [
+        {
+          "line": 59,
+          "text": "Const swEnter    = 109 ' Service Select"
+        },
+        {
+          "line": 60,
+          "text": "Const swUp       = 110 ' Service Plus"
+        },
+        {
+          "line": 61,
+          "text": "Const swDown     = 111 ' Service Minus"
+        },
+        {
+          "line": 62,
+          "text": "Const swCancel   = 112 ' Service Back"
+        },
+        {
+          "line": 63,
+          "text": "Const swCoinDoor = 116 ' power interlock: set = door CLOSED"
+        },
+        {
+          "line": 64,
+          "text": ""
+        },
+        {
+          "line": 65,
+          "text": "' The cabinet, by title (0 where a title has no such switch)"
+        },
+        {
+          "line": 66,
+          "text": "Dim swCoin1, swCoin2, swCoin3, swCoin4, swStartButton, swTournament, swLaunch, swTilt, swSlamTilt"
+        },
+        {
+          "line": 67,
+          "text": "Dim swLLFlip, swLRFlip, swULFlip, swURFlip"
+        },
+        {
+          "line": 68,
+          "text": "Dim Spike1StagedFlippers : Spike1StagedFlippers = False ' True: the upper flipper leaves on the staged keys only"
+        },
+        {
+          "line": 69,
+          "text": "Private spike1FlipperCoils ' the flipper coils by their Driver Reference numbers, power and hold"
+        }
+      ]
+    },
+    {
+      "first_line": 80,
+      "last_line": 88,
+      "lines": [
+        {
+          "line": 80,
+          "text": "\t\t\tswLLFlip = 9 : swLRFlip = 10 : spike1FlipperCoils = Array(3, 4)"
+        },
+        {
+          "line": 81,
+          "text": "\t\tCase \"wnbjm\", \"primus\", \"pabst\" ' Whoa Nellie! Big Juicy Melons, Primus, Pabst Can Crusher"
+        },
+        {
+          "line": 82,
+          "text": "\t\t\tswCoin1 = 53 : swCoin2 = 54 : swCoin3 = 55 : swCoin4 = 56"
+        },
+        {
+          "line": 83,
+          "text": "\t\t\tswStartButton = 52 : swTilt = 58 : swSlamTilt = 60"
+        },
+        {
+          "line": 84,
+          "text": "\t\t\tswLLFlip = 3 : swLRFlip = 4 : spike1FlipperCoils = Array(1, 2, 3, 4)"
+        },
+        {
+          "line": 85,
+          "text": "\t\tCase \"got\"                      ' Game of Thrones: the LE (got_137h) has upper flippers, the Pro (got_137) none"
+        },
+        {
+          "line": 86,
+          "text": "\t\t\tswCoin1 = 66 : swCoin2 = 67 : swCoin3 = 68 : swCoin4 = 69"
+        },
+        {
+          "line": 87,
+          "text": "\t\t\tswStartButton = 63 : swTournament = 64 : swLaunch = 60 : swTilt = 71 : swSlamTilt = 75"
+        },
+        {
+          "line": 88,
+          "text": "\t\t\tswLLFlip = 10 : swLRFlip = 11 : spike1FlipperCoils = Array(3, 8)"
+        }
+      ]
+    },
+    {
+      "first_line": 176,
+      "last_line": 202,
+      "lines": [
+        {
+          "line": 176,
+          "text": "\t\t\t\tIf swURFlip <> 0 And (Not Spike1StagedFlippers Or keycode = stagedFlipperR) Then .Switch(swURFlip) = True"
+        },
+        {
+          "line": 177,
+          "text": "\t\t\tCase stagedFlipperL  If swULFlip <> 0 Then .Switch(swULFlip) = True"
+        },
+        {
+          "line": 178,
+          "text": "\t\t\tCase stagedFlipperR  If swURFlip <> 0 Then .Switch(swURFlip) = True"
+        },
+        {
+          "line": 179,
+          "text": "\t\t\tCase keyInsertCoin1  If swCoin1 <> 0 Then vpmTimer.AddTimer 750,\"vpmTimer.PulseSw swCoin1'\" : If Not IsEmpty(Eval(\"SCoin\")) Then Playsound SCoin"
+        },
+        {
+          "line": 180,
+          "text": "\t\t\tCase keyInsertCoin2  If swCoin2 <> 0 Then vpmTimer.AddTimer 750,\"vpmTimer.PulseSw swCoin2'\" : If Not IsEmpty(Eval(\"SCoin\")) Then Playsound SCoin"
+        },
+        {
+          "line": 181,
+          "text": "\t\t\tCase keyInsertCoin3  If swCoin3 <> 0 Then vpmTimer.AddTimer 750,\"vpmTimer.PulseSw swCoin3'\" : If Not IsEmpty(Eval(\"SCoin\")) Then Playsound SCoin"
+        },
+        {
+          "line": 182,
+          "text": "\t\t\tCase keyInsertCoin4  If swCoin4 <> 0 Then vpmTimer.AddTimer 750,\"vpmTimer.PulseSw swCoin4'\" : If Not IsEmpty(Eval(\"SCoin\")) Then Playsound SCoin"
+        },
+        {
+          "line": 183,
+          "text": "\t\t\tCase StartGameKey    .Switch(swStartButton) = True"
+        },
+        {
+          "line": 184,
+          "text": "\t\t\tCase keyFront        If swTournament <> 0 Then .Switch(swTournament) = True"
+        },
+        {
+          "line": 185,
+          "text": "\t\t\tCase keyCancel       .Switch(swCancel)      = True"
+        },
+        {
+          "line": 186,
+          "text": "\t\t\tCase keyDown         .Switch(swDown)        = True"
+        },
+        {
+          "line": 187,
+          "text": "\t\t\tCase keyUp           .Switch(swUp)          = True"
+        },
+        {
+          "line": 188,
+          "text": "\t\t\tCase keyEnter        .Switch(swEnter)       = True"
+        },
+        {
+          "line": 189,
+          "text": "\t\t\tCase keySlamDoorHit  If swSlamTilt <> 0 Then .Switch(swSlamTilt) = True"
+        },
+        {
+          "line": 190,
+          "text": "\t\t\t' The door switch reads closed when set, as Pinball 2000's: a \"closed\" door is Switch = True"
+        },
+        {
+          "line": 191,
+          "text": "\t\t\tCase keyCoinDoor     If toggleKeyCoinDoor Then .Switch(swCoinDoor) = Not .Switch(swCoinDoor) Else .Switch(swCoinDoor) = inverseKeyCoinDoor"
+        },
+        {
+          "line": 192,
+          "text": "\t\t\tCase keyBangBack     vpmNudge.DoMechTilt"
+        },
+        {
+          "line": 193,
+          "text": "\t\t\tCase Else            vpmKeyDown = False"
+        },
+        {
+          "line": 194,
+          "text": "\t\tEnd Select"
+        },
+        {
+          "line": 195,
+          "text": "\tEnd With"
+        },
+        {
+          "line": 196,
+          "text": "End Function"
+        },
+        {
+          "line": 197,
+          "text": ""
+        },
+        {
+          "line": 198,
+          "text": "Function vpmKeyUp(ByVal keycode)"
+        },
+        {
+          "line": 199,
+          "text": "\tvpmKeyUp = True ' Assume we handle the key"
+        },
+        {
+          "line": 200,
+          "text": "\tDim stagedFlipperL, stagedFlipperR"
+        },
+        {
+          "line": 201,
+          "text": "\tIf keyStagedFlipperL & \"\" = \"\" Then stagedFlipperL = -1 Else stagedFlipperL = StagedLeftFlipperKey ' \"\" disables staged flipper processing"
+        },
+        {
+          "line": 202,
+          "text": "\tIf keyStagedFlipperR & \"\" = \"\" Then stagedFlipperR = -1 Else stagedFlipperR = StagedRightFlipperKey"
+        }
+      ]
+    },
+    {
+      "first_line": 206,
+      "last_line": 236,
+      "lines": [
+        {
+          "line": 206,
+          "text": "\t\t\t\t.Switch(swLLFlip) = False : vpmKeyUp = False"
+        },
+        {
+          "line": 207,
+          "text": "\t\t\t\tIf swULFlip <> 0 And (Not Spike1StagedFlippers Or keycode = stagedFlipperL) Then .Switch(swULFlip) = False"
+        },
+        {
+          "line": 208,
+          "text": "\t\t\tCase RightFlipperKey"
+        },
+        {
+          "line": 209,
+          "text": "\t\t\t\t.Switch(swLRFlip) = False : vpmKeyUp = False"
+        },
+        {
+          "line": 210,
+          "text": "\t\t\t\tIf swURFlip <> 0 And (Not Spike1StagedFlippers Or keycode = stagedFlipperR) Then .Switch(swURFlip) = False"
+        },
+        {
+          "line": 211,
+          "text": "\t\t\tCase stagedFlipperL  If swULFlip <> 0 Then .Switch(swULFlip) = False"
+        },
+        {
+          "line": 212,
+          "text": "\t\t\tCase stagedFlipperR  If swURFlip <> 0 Then .Switch(swURFlip) = False"
+        },
+        {
+          "line": 213,
+          "text": "\t\t\tCase StartGameKey    .Switch(swStartButton) = False"
+        },
+        {
+          "line": 214,
+          "text": "\t\t\tCase keyFront        If swTournament <> 0 Then .Switch(swTournament) = False"
+        },
+        {
+          "line": 215,
+          "text": "\t\t\tCase keyCancel       .Switch(swCancel)      = False"
+        },
+        {
+          "line": 216,
+          "text": "\t\t\tCase keyDown         .Switch(swDown)        = False"
+        },
+        {
+          "line": 217,
+          "text": "\t\t\tCase keyUp           .Switch(swUp)          = False"
+        },
+        {
+          "line": 218,
+          "text": "\t\t\tCase keyEnter        .Switch(swEnter)       = False"
+        },
+        {
+          "line": 219,
+          "text": "\t\t\tCase keySlamDoorHit  If swSlamTilt <> 0 Then .Switch(swSlamTilt) = False"
+        },
+        {
+          "line": 220,
+          "text": "\t\t\tCase keyCoinDoor     If toggleKeyCoinDoor = False Then .Switch(swCoinDoor) = Not inverseKeyCoinDoor"
+        },
+        {
+          "line": 221,
+          "text": "\t\t\tCase keyShowOpts     .Pause = True : vpmShowOptions : .Pause = False"
+        },
+        {
+          "line": 222,
+          "text": "\t\t\tCase keyShowKeys     .Pause = True : vpmShowHelp : .Pause = False"
+        },
+        {
+          "line": 223,
+          "text": "\t\t\tCase keyAddBall      .Pause = True : vpmAddBall  : .Pause = False"
+        },
+        {
+          "line": 224,
+          "text": "\t\t\tCase keyReset        .Stop : BeginModal : .Run : vpmTimer.Reset : EndModal"
+        },
+        {
+          "line": 225,
+          "text": "\t\t\tCase keyFrame        .LockDisplay = Not .LockDisplay"
+        },
+        {
+          "line": 226,
+          "text": "\t\t\tCase keyDoubleSize   .DoubleSize  = Not .DoubleSize"
+        },
+        {
+          "line": 227,
+          "text": "\t\t\tCase Else            vpmKeyUp = False"
+        },
+        {
+          "line": 228,
+          "text": "\t\tEnd Select"
+        },
+        {
+          "line": 229,
+          "text": "\tEnd With"
+        },
+        {
+          "line": 230,
+          "text": "End Function"
+        }
+      ]
+    }
+  ],
+  "retained_path": "working-root:review-artifacts/ghostbusters-limited-edition-2016/completion-2026-10-29/library/spike1.vbs",
+  "version": 1
+}

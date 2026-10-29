@@ -1,0 +1,38 @@
+{
+  "circuit": "Q1-Q7 TEMT1020 receivers sink illuminated collector nodes to ground; RP1 provides4.7k pull-ups. U2 is the inverting74HC540D, not a541. Clear beam produces high at corresponding U1 74HCT165D A-G inputs; blocking a beam releases the receiver collector high and U2 drives its latch input low. U1 QH supplies MISO via220ohm R17.",
+  "connector": [
+    [
+      "CN1-1",
+      "Ground"
+    ],
+    [
+      "CN1-2",
+      "MISO"
+    ],
+    [
+      "CN1-3",
+      "not connected"
+    ],
+    [
+      "CN1-4",
+      "SCK"
+    ],
+    [
+      "CN1-5",
+      "RCK"
+    ],
+    [
+      "CN1-6",
+      "not connected"
+    ],
+    [
+      "CN1-7",
+      "VCC"
+    ]
+  ],
+  "format": "ghostbusters-completion-evidence",
+  "interpretation": "At the conditioned serial switch interface, ball actuation asserts low and clear beam is high/open. This supports normally-open sensing for the own-reference7001 receiver. It does not say the bare phototransistor is normally open, nor does it derive polarity from a ROM active-high flag.",
+  "locator": "520-7001-00A Trough Receivers, sheet1/1, dated2018-10-05: complete receiver, conditioning, latch and connector circuit",
+  "scope": "Shared internal circuit only, applied because own Ghostbusters switch references name520-7001-00 receiver. It does not place a board or supply title-specific routing. The older generic trough assembly BOM37 names520-5345-00; that older part is not silently assigned this circuit.",
+  "version": 1
+}

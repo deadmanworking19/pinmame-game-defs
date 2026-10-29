@@ -11,7 +11,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 5 | 2017 | The Jetsons | Spooky Pinball | partial | 81% |
 | 6 | 2016 | Domino's Spectacular Pinball Adventure | Spooky Pinball | partial | 75% |
 | 7 | 2016 | Rob Zombie's Spookshow International | Spooky Pinball | partial | 81% |
-| 8 | 2016 | Ghostbusters (Limited Edition) | Stern | partial | 50% |
+| 8 | 2016 | Ghostbusters (Limited Edition) | Stern | partial | 81% |
 | 9 | 2016 | Pabst Can Crusher | Stern | partial | 50% |
 | 10 | 2016 | Spider-Man The Pin | Stern | partial | 44% |
 | 11 | 2016 | Spider-Man Vault Edition | Stern | author_ready | 100% |

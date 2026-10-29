@@ -44,7 +44,11 @@ class Spike1DefinitionTests(unittest.TestCase):
 			with self.subTest(game=game):
 				self.assertEqual('partial', definition['coverage']['status'])
 				self.assertIn('spatial_placement', definition['coverage']['missing'])
-				self.assertIn('mechanism_behavior', definition['coverage']['missing'])
+				if game == 'gbust_117h':
+					self.assertNotIn('mechanism_behavior', definition['coverage']['missing'])
+					self.assertTrue(all(m['provenance']['status'] == 'validated' for m in definition['mechanisms']))
+				else:
+					self.assertIn('mechanism_behavior', definition['coverage']['missing'])
 				self.assertEqual('pinmame.spike1', definition['controller']['platform'])
 				self.assertEqual([], validate_machine(definition, ROOT))
 				groups = {}

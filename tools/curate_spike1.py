@@ -325,6 +325,10 @@ def artifacts(root: Path, game: str) -> dict[Path, bytes]:
 		import curate_supreme_x_stern_2018 as supreme
 		report = supreme.enrich_spatial_report(root, definition, report)
 		markdown = supreme.report_markdown(report)
+	elif game == "gbust_117h":
+		import curate_ghostbusters_le_2016 as ghostbusters
+		report = ghostbusters.enrich_spatial_report(root, definition, report)
+		markdown = ghostbusters.report_markdown(report)
 	return {
 		definition_path: seed_bytes,
 		knowledge_path: knowledge_bytes,

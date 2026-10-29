@@ -563,7 +563,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Bram Stoker's Dracula's 2026-10-23 rework adds one: its 3-8 table and 2-45 drawing disagree on flasher 19's
 		# playfield bulb count.
 		# TX-Sector's retained S-label record is ignored: its public branch routing is settled.
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
+		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		self.assertEqual(834, len(catalog["machines"]))

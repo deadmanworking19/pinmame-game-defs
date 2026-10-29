@@ -1,0 +1,545 @@
+{
+  "facts": [
+    "Ghostbusters encoder motor is node8,index0, source-estimated stops-6/96 and50 counts/s. GetMech0 supplies its modeled encoder count. These are model parameters, not measured physical limits or speeds.",
+    "The motor reads/updates subsystem home/quadrature feedback; public switches are initialized from mapping and need not track later model changes. The independent raw trace exercises motion without feedback writes.",
+    "Motor LED class0x08 rows are withheld from lamp export. Public lamps1/2 have different named cabinet functions. HandleMechanics0 selects user-defined mechanics and bypasses driver GetMech."
+  ],
+  "format": "reviewed-encoder-motor-transport",
+  "locator": "Pinned source46e1a01a: encoder configuration, raw feedback, publication and HandleMechanics branch",
+  "source_files": [
+    {
+      "path": "working-root:source-checkouts/pinmame-46e1a01a/src/spike1/spike1_devices.cpp",
+      "regions": [
+        {
+          "first_line": 1443,
+          "last_line": 1469,
+          "lines": [
+            {
+              "line": 1443,
+              "text": "// Slimer hangs off). The status bits: 0 driving, 1 driving down, 2 holding, 3 homed (the encoder"
+            },
+            {
+              "line": 1444,
+              "text": "// counts from here), 4 away switch found, 5 target switch found, 6 time-out, 7 limit switch, 8 a"
+            },
+            {
+              "line": 1445,
+              "text": "// go without an encoder. Home drives down until the home input is active; the game homes twice,"
+            },
+            {
+              "line": 1446,
+              "text": "// first with the outputs swapped and the home input's polarity turned (up, until out of the home"
+            },
+            {
+              "line": 1447,
+              "text": "// zone), then as configured (down, until into it), so its zero is the zone's edge, reached from"
+            },
+            {
+              "line": 1448,
+              "text": "// above. A go ramps the duty up by a step a tick to its speed, holds it, ramps it down from the"
+            },
+            {
+              "line": 1449,
+              "text": "// point as far before the target as the ramp up took (or from half way) to the least duty, and"
+            },
+            {
+              "line": 1450,
+              "text": "// stops on the exact count"
+            },
+            {
+              "line": 1451,
+              "text": ""
+            },
+            {
+              "line": 1452,
+              "text": "void spike1_devices::link_encoder_motor(uint8_t node, uint8_t motor_index, int16_t low_stop, int16_t high_stop, uint16_t counts_per_s)"
+            },
+            {
+              "line": 1453,
+              "text": "{"
+            },
+            {
+              "line": 1454,
+              "text": "\tmotor &m = m_mechanics[(uint32_t(node) << 8) | motor_index];"
+            },
+            {
+              "line": 1455,
+              "text": "\tm.low = low_stop;"
+            },
+            {
+              "line": 1456,
+              "text": "\tm.high = high_stop;"
+            },
+            {
+              "line": 1457,
+              "text": "\tm.counts_per_s = std::min<double>(std::max<uint16_t>(counts_per_s, 1), 1000.0); // under a count a tick"
+            },
+            {
+              "line": 1458,
+              "text": "\tm.x = std::max(m.low, -0.5);"
+            },
+            {
+              "line": 1459,
+              "text": "}"
+            },
+            {
+              "line": 1460,
+              "text": ""
+            },
+            {
+              "line": 1461,
+              "text": "// An input the firmware names by id: false when the id is unused (bit 6 clear). The board reads its"
+            },
+            {
+              "line": 1462,
+              "text": "// own pin, not what the game was last shown (wire_bytes())"
+            },
+            {
+              "line": 1463,
+              "text": "bool spike1_devices::motor_input(uint8_t node, uint8_t id, bool &active) const"
+            },
+            {
+              "line": 1464,
+              "text": "{"
+            },
+            {
+              "line": 1465,
+              "text": "\tif (!(id & 0x40)) return false;"
+            },
+            {
+              "line": 1466,
+              "text": "\tconst uint8_t in = id & 0x3f, n = node & 127;"
+            },
+            {
+              "line": 1467,
+              "text": "\tconst bool high = ((~(m_sw_closed[n][in >> 3] ^ m_sw_active_high[n][in >> 3])) >> (in & 7)) & 1;"
+            },
+            {
+              "line": 1468,
+              "text": "\tactive = (id & 0x80) ? high : !high;"
+            },
+            {
+              "line": 1469,
+              "text": "\treturn true;"
+            }
+          ]
+        },
+        {
+          "first_line": 1482,
+          "last_line": 1500,
+          "lines": [
+            {
+              "line": 1482,
+              "text": ""
+            },
+            {
+              "line": 1483,
+              "text": "// The mechanism's own switches as it stands: the home input at its zone level below the zone's"
+            },
+            {
+              "line": 1484,
+              "text": "// edge (x < 0), the encoder's two phases a count apart"
+            },
+            {
+              "line": 1485,
+              "text": "void spike1_devices::motor_switches(uint8_t node, const motor &m, uint64_t now_ns)"
+            },
+            {
+              "line": 1486,
+              "text": "{"
+            },
+            {
+              "line": 1487,
+              "text": "\tauto set_level = [&](uint8_t id, bool high) {"
+            },
+            {
+              "line": 1488,
+              "text": "\t\tif (!(id & 0x40)) return;"
+            },
+            {
+              "line": 1489,
+              "text": "\t\tconst uint8_t in = id & 0x3f, n = node & 127;"
+            },
+            {
+              "line": 1490,
+              "text": "\t\tconst bool ah = (m_sw_active_high[n][in >> 3] >> (in & 7)) & 1, closed = high == ah;"
+            },
+            {
+              "line": 1491,
+              "text": "\t\tif (switch_closed(n, in) != closed) set_switch(n, in, closed, now_ns);"
+            },
+            {
+              "line": 1492,
+              "text": "\t};"
+            },
+            {
+              "line": 1493,
+              "text": "\tset_level(m.home_in, (m.x < 0.0) == (m.zone_raw != 0));"
+            },
+            {
+              "line": 1494,
+              "text": "\tif (m.encoder) {"
+            },
+            {
+              "line": 1495,
+              "text": "\t\tconst int32_t c = int32_t(std::floor(m.x));"
+            },
+            {
+              "line": 1496,
+              "text": "\t\tset_level(m.enc_a, (c >> 1) & 1);"
+            },
+            {
+              "line": 1497,
+              "text": "\t\tset_level(m.enc_b, ((c + 1) >> 1) & 1);"
+            },
+            {
+              "line": 1498,
+              "text": "\t}"
+            },
+            {
+              "line": 1499,
+              "text": "}"
+            },
+            {
+              "line": 1500,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "first_line": 1516,
+          "last_line": 1558,
+          "lines": [
+            {
+              "line": 1516,
+              "text": "void spike1_devices::motor_command(uint8_t node, uint8_t cmd, const uint8_t *data, uint32_t n, uint64_t now_ns)"
+            },
+            {
+              "line": 1517,
+              "text": "{"
+            },
+            {
+              "line": 1518,
+              "text": "\tconst uint32_t key = (uint32_t(node) << 8) | data[0];"
+            },
+            {
+              "line": 1519,
+              "text": "\tif (cmd == 0x51 || cmd == 0x57) { // configure, configure update: [motor][16 bytes]"
+            },
+            {
+              "line": 1520,
+              "text": "\t\tif (n < 17) return;"
+            },
+            {
+              "line": 1521,
+              "text": "\t\tauto it = m_motors.find(key);"
+            },
+            {
+              "line": 1522,
+              "text": "\t\tif (it == m_motors.end()) { // the mechanism stands where it stood at power-on"
+            },
+            {
+              "line": 1523,
+              "text": "\t\t\tconst auto mech = m_mechanics.find(key);"
+            },
+            {
+              "line": 1524,
+              "text": "\t\t\tit = m_motors.emplace(key, mech != m_mechanics.end() ? mech->second : motor()).first;"
+            },
+            {
+              "line": 1525,
+              "text": "\t\t\tit->second.at_ns = now_ns;"
+            },
+            {
+              "line": 1526,
+              "text": "\t\t}"
+            },
+            {
+              "line": 1527,
+              "text": "\t\tmotor &m = it->second;"
+            },
+            {
+              "line": 1528,
+              "text": "\t\tm.home_in = data[1]; m.away_in = data[2]; m.watch_in = data[3];"
+            },
+            {
+              "line": 1529,
+              "text": "\t\tm.enc_a = data[4]; m.enc_b = data[5];"
+            },
+            {
+              "line": 1530,
+              "text": "\t\tm.out_down = data[7]; m.out_up = data[8];"
+            },
+            {
+              "line": 1531,
+              "text": "\t\tm.ramp = data[9]; m.least = data[10];"
+            },
+            {
+              "line": 1532,
+              "text": "\t\tm.settle[0] = uint16_t(data[13] | data[14] << 8);"
+            },
+            {
+              "line": 1533,
+              "text": "\t\tm.settle[1] = uint16_t(data[15] | data[16] << 8);"
+            },
+            {
+              "line": 1534,
+              "text": "\t\tif (cmd == 0x51) m.state = 0;"
+            },
+            {
+              "line": 1535,
+              "text": "\t\tm.encoder = (m.enc_a & 0x40) && (m.enc_b & 0x40);"
+            },
+            {
+              "line": 1536,
+              "text": "\t\tm.counted = int32_t(std::floor(m.x));"
+            },
+            {
+              "line": 1537,
+              "text": "\t\tm.status = 0;"
+            },
+            {
+              "line": 1538,
+              "text": "\t\t// Which way each output moves the mechanism, by the LED channel's name (Slimer Motor Forward"
+            },
+            {
+              "line": 1539,
+              "text": "\t\t// and Backward); else as the firmware's go assumes, counting up on out_up"
+            },
+            {
+              "line": 1540,
+              "text": "\t\tauto sign = [&](uint8_t out, int8_t otherwise) -> int8_t {"
+            },
+            {
+              "line": 1541,
+              "text": "\t\t\tfor (const auto &l : m_leds) {"
+            },
+            {
+              "line": 1542,
+              "text": "\t\t\t\tif (l.node != node || l.position != out) continue;"
+            },
+            {
+              "line": 1543,
+              "text": "\t\t\t\tstd::string u = l.name;"
+            },
+            {
+              "line": 1544,
+              "text": "\t\t\t\tfor (auto &ch : u) ch = char(std::toupper(uint8_t(ch)));"
+            },
+            {
+              "line": 1545,
+              "text": "\t\t\t\tif (u.find(\"BACKWARD\") != std::string::npos) return -1;"
+            },
+            {
+              "line": 1546,
+              "text": "\t\t\t\tif (u.find(\"FORWARD\") != std::string::npos) return 1;"
+            },
+            {
+              "line": 1547,
+              "text": "\t\t\t}"
+            },
+            {
+              "line": 1548,
+              "text": "\t\t\treturn otherwise;"
+            },
+            {
+              "line": 1549,
+              "text": "\t\t};"
+            },
+            {
+              "line": 1550,
+              "text": "\t\tm.sign_down = sign(m.out_down, -1);"
+            },
+            {
+              "line": 1551,
+              "text": "\t\tm.sign_up = sign(m.out_up, 1);"
+            },
+            {
+              "line": 1552,
+              "text": "\t\t// the zone is where the home input is active as the game configures it to run - counting"
+            },
+            {
+              "line": 1553,
+              "text": "\t\t// down toward the zone - and the opposite in the swapped configuration"
+            },
+            {
+              "line": 1554,
+              "text": "\t\tm.zone_raw = uint8_t((m.sign_down < 0) == ((m.home_in & 0x80) != 0));"
+            },
+            {
+              "line": 1555,
+              "text": "\t\tmotor_switches(node, m, now_ns);"
+            },
+            {
+              "line": 1556,
+              "text": "\t\tm.last_raw = motor_pins(node, m);"
+            },
+            {
+              "line": 1557,
+              "text": "\t\treturn;"
+            },
+            {
+              "line": 1558,
+              "text": "\t}"
+            }
+          ]
+        }
+      ],
+      "sha256": "234d5e4eda63724ff85df0ff4499cd05971195d46fff7a567cbfe434c039074e"
+    },
+    {
+      "path": "working-root:source-checkouts/pinmame-46e1a01a/src/wpc/spike1.c",
+      "regions": [
+        {
+          "first_line": 392,
+          "last_line": 399,
+          "lines": [
+            {
+              "line": 392,
+              "text": "    }"
+            },
+            {
+              "line": 393,
+              "text": "  }"
+            },
+            {
+              "line": 394,
+              "text": "  for (i = 0; i < CORE_MAXLAMPCOL; i++) coreGlobals.lampMatrix[i] = lamps[i];"
+            },
+            {
+              "line": 395,
+              "text": "  /* the mechs, for GetMech */"
+            },
+            {
+              "line": 396,
+              "text": "  for (i = 0; i < SPIKE1_MAXMECHS; i++) {"
+            },
+            {
+              "line": 397,
+              "text": "    int position = 0;"
+            },
+            {
+              "line": 398,
+              "text": "    locals.mech[i] = spike1_pinmame_motor((unsigned)i, &position, NULL) ? position : 0;"
+            },
+            {
+              "line": 399,
+              "text": "  }"
+            }
+          ]
+        },
+        {
+          "first_line": 726,
+          "last_line": 731,
+          "lines": [
+            {
+              "line": 726,
+              "text": "  for (i = 0; i < SPIKE1_MAXLEDS && spike1_pinmame_led(i, &number, &kind, &name); i++) {"
+            },
+            {
+              "line": 727,
+              "text": "    locals.ledLamp[i] = number >= 1 && number <= coreGlobals.nLamps && !(kind & SPIKE1_LED_MOTOR) ? number : 0;"
+            },
+            {
+              "line": 728,
+              "text": "    locals.nLeds = i + 1;"
+            },
+            {
+              "line": 729,
+              "text": "  }"
+            },
+            {
+              "line": 730,
+              "text": "  /* through the lower flippers (45-48) at least, so GAME ON (33) and they are physical outputs too */"
+            },
+            {
+              "line": 731,
+              "text": "  coreGlobals.nSolenoids = cust ? SPIKE1_FIRSTCUSTSOL - 1 + cust : CORE_FIRSTLFLIPSOL + 3;"
+            }
+          ]
+        },
+        {
+          "first_line": 1826,
+          "last_line": 1827,
+          "lines": [
+            {
+              "line": 1826,
+              "text": "SPIKE1_INIT_ENCODER(gbust, \"ghostbusters_le\", spike1_dmd_insert, 165, SPIKE1_SWITCHES(9, 10, 11, 12, 81, 82, 83, 84, 86, 89),"
+            },
+            {
+              "line": 1827,
+              "text": "                    SPIKE1_ENCODER_MOTOR(8, 0, -6, 96, 50))"
+            }
+          ]
+        }
+      ],
+      "sha256": "0b2dcd6986086b72df9192ee3e5ee7ce136040502139265e4293ef2a6f390486"
+    },
+    {
+      "path": "working-root:source-checkouts/pinmame-46e1a01a/src/wpc/vpintf.c",
+      "regions": [
+        {
+          "first_line": 323,
+          "last_line": 335,
+          "lines": [
+            {
+              "line": 323,
+              "text": "int vp_getMech(int mechNo) {"
+            },
+            {
+              "line": 324,
+              "text": "#if defined(VPINMAME) || defined(LIBPINMAME)"
+            },
+            {
+              "line": 325,
+              "text": "  extern int g_fHandleMechanics;"
+            },
+            {
+              "line": 326,
+              "text": "  if (g_fHandleMechanics == 0)"
+            },
+            {
+              "line": 327,
+              "text": "    return (mechNo < 0) ? mech_getSpeed(MECH_MAXMECH/2-1-mechNo) : mech_getPos(MECH_MAXMECH/2-1+mechNo);"
+            },
+            {
+              "line": 328,
+              "text": "  else"
+            },
+            {
+              "line": 329,
+              "text": "#endif"
+            },
+            {
+              "line": 330,
+              "text": "    return core_gameData->hw.getMech ? core_gameData->hw.getMech(mechNo) : 0;"
+            },
+            {
+              "line": 331,
+              "text": "}"
+            },
+            {
+              "line": 332,
+              "text": ""
+            },
+            {
+              "line": 333,
+              "text": "void vp_setMechData(int para, int data) {"
+            },
+            {
+              "line": 334,
+              "text": "  if      (para == 0) { mech_add(MECH_MAXMECH/2+data-1, &locals.md); memset(&locals.md, 0, sizeof(locals.md)); }"
+            },
+            {
+              "line": 335,
+              "text": "  else if (para == 1) locals.md.sol1   = data;"
+            }
+          ]
+        }
+      ],
+      "sha256": "c62312cad37fdc228819058b086c94ca4beec056bdfb4f08f826ee89022fbd37"
+    }
+  ],
+  "source_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+  "version": 1
+}
