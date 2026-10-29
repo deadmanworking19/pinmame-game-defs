@@ -733,7 +733,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 727 | 1978 | Lectronamo | Stern | partial | 13% |
 | 728 | 1978 | Memory Lane | Stern | partial | 13% |
 | 729 | 1978 | Nugent | Stern | partial | 13% |
-| 730 | 1978 | Stars | Stern | partial | 13% |
+| 730 | 1978 | Stars | Stern | partial | 75% |
 | 731 | 1978 | Wild Fyre | Stern | partial | 13% |
 | 732 | 1978 | Spectra IV | Valley | partial | 13% |
 | 733 | 1978 | Contact | Williams | partial | 13% |

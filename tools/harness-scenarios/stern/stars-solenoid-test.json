@@ -1,0 +1,12 @@
+{
+  "format":"pinmame-harness-scenario","version":1,"game":"stars",
+  "notes":"Fresh state. The factory manual describes lamp, digit, then coil test. Observe public 1 before recording the cycle; pair each public pulse with its contemporaneous player-display number, not ordinal assumptions.",
+  "actions":[
+    {"type":"wait","seconds":25,"label":"boot stabilization"},
+    {"type":"pulse","switch":-7,"hold_ms":150,"settle_s":2,"label":"lamp test"},
+    {"type":"pulse","switch":-7,"hold_ms":150,"settle_s":2,"label":"digit test"},
+    {"type":"pulse","switch":-7,"hold_ms":150,"settle_s":1,"label":"enter coil test"},
+    {"type":"wait_until_output","channel":"solenoid","addresses":[1],"timeout_s":30,"active_only":true,"label":"coil test checkpoint"},
+    {"type":"wait","seconds":50,"label":"capture repeated coil identification sequence"}
+  ]
+}

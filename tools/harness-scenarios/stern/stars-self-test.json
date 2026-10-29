@@ -1,0 +1,10 @@
+{
+  "format":"pinmame-harness-scenario",
+  "version":1,
+  "game":"stars",
+  "notes":"Fresh-state looping first self-test after a 25 second boot. Retain all display and output events; pair diagnostic numbers with public outputs from the observed trace, never from assumed sequence order.",
+  "actions":[
+    {"type":"wait","seconds":25,"label":"boot stabilization"},
+    {"type":"pulse","switch":-7,"hold_ms":150,"settle_s":55,"label":"first self test"}
+  ]
+}

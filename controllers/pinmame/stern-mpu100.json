@@ -1,0 +1,50 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.stern-mpu100",
+  "authority": "pinmame",
+  "hardware_family": "Stern MPU-100",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Matrix, diagnostics and generic flipper positions",
+      "address_rules": [{"minimum": -7, "maximum": -5}, {"minimum": 1, "maximum": 48}, {"minimum": 81, "maximum": 88}],
+      "transports": {"libpinmame": {"channel": "switch"}, "controller_plugin": {"group_id": 5, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}},
+      "notes": "Sequential matrix numbering: public = 8 * zero-based strobe + zero-based return + 1. The shared by35.c reader can select six columns; a five-column machine fits only 1-40. Self test -7 drives PIA0 CA1, CPU diagnostic -6 drives NMI, and sound diagnostic -5 calls the selected sound board; a chime-only game has no sound board to receive it. GEN_STMPU100 uses the Bally-style cabinet port (coins 9-11, credit 6, tilt 7, slam 16), unlike GEN_STMPU200. Those port writes occur only with keyboard handling enabled. The row read is uncomplemented, the generation does not select BY35HW_REVSW, and the game supplies any inversion mask. Consume public state as delivered. The generic flipper column publishes 81-88; lower buttons are right 82 and left 84. FLIP_SW without FLIP_SWNO does not copy them into the ROM matrix, but core_updateSw still uses the lower button bits to synthesize flipper outputs. The driver cannot select the generic flipper column in its row reader. Availability and physical fitment are game-specific."
+    },
+    {
+      "id": "pinmame.input.dip", "direction": "configuration", "kind": "dip_switch",
+      "label": "MPU option switches S1-S32", "address_rules": [{"minimum": 1, "maximum": 32}],
+      "transports": {"libpinmame": {"channel": "dip"}},
+      "notes": "Four eight-switch banks. Public ordinal N is bank floor((N-1)/8), bit (N-1)%8. GEN_STMPU100 selects BY35HW_DIP4. These are configuration switches, independent of identically numbered playfield inputs."
+    },
+    {
+      "id": "physical.input.direct", "direction": "input", "kind": "switch",
+      "label": "Physical flipper end-of-stroke contacts", "address_rules": [{"values": [1, 2]}], "transports": {},
+      "notes": "Profile-local identities 1 left and 2 right are winding-bypass contacts outside PinMAME's switch API. The machine establishes construction, quantity and geometry."
+    },
+    {
+      "id": "pinmame.output.solenoid", "direction": "controlled_device", "kind": "solenoid",
+      "label": "Momentary, continuous and synthetic flipper outputs",
+      "address_rules": [{"minimum": 1, "maximum": 15}, {"minimum": 17, "maximum": 20}, {"minimum": 45, "maximum": 48}],
+      "transports": {"libpinmame": {"channel": "solenoid"}, "controller_plugin": {"group_id": 1, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}},
+      "notes": "PIA1 B selector 0-14 publishes momentary address selector+1; selector 15 is masked off, so 16 is unreachable. The inverted high nibble publishes continuous 17-20. core_updateSw is enabled by public 19. Cabinet-wired flippers synthesize right 45/46 and left 47/48 together for the full enabled lower-button closure, without physical winding or EOS timing. Tables normally consume 46/48. An address with a meaningful duplicate state is used, even if it has no separate physical load. Printed coil-test numbers and transistor numbers require the game's own mapping."
+    },
+    {
+      "id": "pinmame.output.lamp", "direction": "controlled_device", "kind": "lamp",
+      "label": "Main-board discrete SCR lamp outputs",
+      "address_rules": [{"minimum": 1, "maximum": 15}, {"minimum": 17, "maximum": 31}, {"minimum": 33, "maximum": 47}, {"minimum": 49, "maximum": 63}],
+      "transports": {"libpinmame": {"channel": "lamp"}, "controller_plugin": {"group_id": 3, "contract_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450"}},
+      "notes": "Main-board public = 16 * lamp-data-line + decoder selector + 1, selectors 0-14. Slots 16,32,48,64 are unreachable; public 15 is valid. The lamp driver has sixty discrete SCRs, not a switch-style matrix. Trace each decoder line through the game's own resistor/SCR and connector drawing; SCR numbers are not public addresses. This profile covers the main board; auxiliary hardware requires a separately reviewed profile."
+    },
+    {
+      "id": "physical.output.gi", "direction": "controlled_device", "kind": "gi",
+      "label": "Transformer-fed general illumination", "address_rules": [{"values": [1]}], "transports": {},
+      "notes": "Physical identity 1 denotes uncontrolled G.I. when established by the machine's wiring. It has no PinMAME callback. The machine supplies its circuits, regions and socket evidence."
+    }
+  ],
+  "sources": [{"uri": "https://github.com/vpinball/pinmame", "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450", "locator": "src/wpc/by35.c pia0b_r, pia1b_w, by35_lampStrobe, SWITCH_UPDATE(by35), MACHINE_INIT(by35), by35_vblank; src/wpc/by35.h; src/wpc/core.c core_updateSw; src/wpc/core.h FLIP_SW, CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPBUTBIT, sLRFlip/sLLFlip; src/libpinmame/libpinmame.cpp SetupMsgApi"}]
+}
