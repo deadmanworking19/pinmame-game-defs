@@ -55,8 +55,8 @@
       "flags": 0,
       "id": "sprk_090",
       "manufacturer": "Sega",
-      "physical_compatibility": "compatible",
-      "variant_notes": "segames.c builds every South Park driver from one init_sprk (INITGAME(sprk, GEN_WS, se_dmd128x32, 0): no auxiliary board) and the same de_mSES1 machine driver, so the controller routing, lamp columns and display are identical; CPU 0.90 (spkcpu.090) with display 0.90 (spdspa.090) and the 0.90 sound set, the earlier prototype IPDB lists as 'Prototype (Swearing) Roms (.90)'. No fast-flip byte, so public 15 never rises. Not exercised: the authorized ROM archive's sprk_090 set carries spdspa.101 in place of spdspa.090, so it does not load as the driver declares it.",
+      "physical_compatibility": "identical",
+      "variant_notes": "segames.c builds every South Park driver from one init_sprk (INITGAME(sprk, GEN_WS, se_dmd128x32, 0): no auxiliary board) and the same de_mSES1 machine driver, so the controller routing, lamp columns and display are identical; CPU 0.90 (spkcpu.090) with display 0.90 (spdspa.090) and the 0.90 sound set, the earlier prototype IPDB lists as 'Prototype (Swearing) Roms (.90)'. It runs on the same hardware. No fast-flip byte, so public 15 never rises. Not exercised: the authorized ROM archive's sprk_090 set carries spdspa.101 in place of spdspa.090, so it does not load as the driver declares it.",
       "year": "1999"
     },
     {
@@ -2812,7 +2812,7 @@
       "label": "Kenny Opto",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 6, return row 2. The grid prints \"KENNY OPTO\" with mounting class \"Under P/F\"; the page-15 switch table gives part \"TRANS 520-5082-00 / REC 520-5083-01\" and names it \"KENNY (OPTO)\". Mounted under the playfield on the OPTO & Bracket (Long) Assembly 500-6242-02-71 (transmitter 520-5082-00, receiver 520-5083-01) at Kenny. Public 1 is a blocked beam: the retained script holds 42 at 1 while the ball passes, and in the gameplay runs a 1 pulse drew the ROM's Kenny reaction. On Whitestar an opto the script and ROM treat as active at 1 has a matrix contact that rests open. Retained table script: Trigger sw42 holds 42 while the ball passes (lines 820-821). In the gameplay harness runs, closing it once fired the Kenny pivot 14, shook Kenny with 19 and 20 alternately seven times each and flashed 30. Placement from the retained table's Trigger sw42.",
+        "notes": "Printed switch-matrix drive column 6, return row 2. The grid prints \"KENNY OPTO\" with mounting class \"Under P/F\"; the page-15 switch table gives part \"TRANS 520-5082-00 / REC 520-5083-01\" and names it \"KENNY (OPTO)\". Mounted under the playfield on the OPTO & Bracket (Long) Assembly 500-6242-02-71 (transmitter 520-5082-00, receiver 520-5083-01) at Kenny. Public 1 is a blocked beam: the retained script holds 42 at 1 while the ball passes, and in the gameplay runs a 1 pulse drew the ROM's Kenny reaction. On Whitestar an opto the script and ROM treat as active at 1 has a matrix contact that rests open. Retained table script: Trigger sw42 holds 42 while the ball passes (lines 820-821). In the gameplay harness runs, closing it once fired the Kenny pivot 14, shook Kenny with 19 and 20 alternately, nine to ten pulses each in the step's window, and flashed 30. Placement from the retained table's Trigger sw42.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -5130,7 +5130,7 @@
         "device.q30-kenny-and-back-panel-flashers"
       ],
       "assembly_part_number": "500-6358-00-71",
-      "behavior": "Kenny Assembly 500-6358-00-71: Kenny stands on a carriage that two 24-940 coils swing left (Q19) and right (Q20), and the centre 22-1080 coil (Q14) pivots him over ('dead'). A #555 bulb (lamp 30) and the #906 flasher bulb (Q30) are inside the figure. The Kenny opto 42 (OPTO & Bracket (Long) Assembly 500-6242-02-71) sees the ball reach him. In the gameplay runs one 42 closure made the ROM fire Q14 once, alternate Q19 and Q20 seven pulses each, and flash Q30. Balls that reach him drop to the under-trough switch 44. The retained table rotates its Kenny primitive from the three coils.",
+      "behavior": "Kenny Assembly 500-6358-00-71: Kenny stands on a carriage that two 24-940 coils swing left (Q19) and right (Q20), and the centre 22-1080 coil (Q14) pivots him over ('dead'). A #555 bulb (lamp 30) and the #906 flasher bulb (Q30) are inside the figure. The Kenny opto 42 (OPTO & Bracket (Long) Assembly 500-6242-02-71) sees the ball reach him. In the gameplay runs one 42 closure made the ROM fire Q14 once, alternate Q19 and Q20 (nine or ten pulses each before the next step), and flash Q30. Balls that reach him drop to the under-trough switch 44. The retained table rotates its Kenny primitive from the three coils.",
       "id": "mechanism.kenny",
       "kind": "toy",
       "label": "Kenny figure",
@@ -6414,7 +6414,7 @@
       "kind": "coil",
       "label": "Kenny Left",
       "physical": {
-        "notes": "Coils Detailed Chart Table (DR. 6) row #19 \"KENNY LT\": drive transistor Q19, cell \"24-940 / 090-5036-00T\". The Kenny Assembly 500-6358-00-71 (printed pages 72-73): the centre 22-1080 coil (Q14) pivots Kenny over ('dead'), and the two 24-940 coils (Q19 left, Q20 right) swing the carriage. Retained table script: SolCallBack(19) = \"KennyLeft\": swings the Kenny primitive left through UpdateKennyLeft (lines 366-376, 749). In the harness runs it alternated with 20, seven pulses each, from the Kenny opto (42). Placement from the retained table's Primitive Kenny (projection: KennyDead/KennyLeft/KennyRight rotate the Kenny primitive; projected onto it).",
+        "notes": "Coils Detailed Chart Table (DR. 6) row #19 \"KENNY LT\": drive transistor Q19, cell \"24-940 / 090-5036-00T\". The Kenny Assembly 500-6358-00-71 (printed pages 72-73): the centre 22-1080 coil (Q14) pivots Kenny over ('dead'), and the two 24-940 coils (Q19 left, Q20 right) swing the carriage. Retained table script: SolCallBack(19) = \"KennyLeft\": swings the Kenny primitive left through UpdateKennyLeft (lines 366-376, 749). In the harness runs it alternated with 20, nine or ten pulses each, from the Kenny opto (42). Placement from the retained table's Primitive Kenny (projection: KennyDead/KennyLeft/KennyRight rotate the Kenny primitive; projected onto it).",
         "part_number": "090-5036-00T"
       },
       "provenance": {
@@ -6479,7 +6479,7 @@
       "kind": "coil",
       "label": "Kenny Right",
       "physical": {
-        "notes": "Coils Detailed Chart Table (DR. 6) row #20 \"KENNY RT\": drive transistor Q20, cell \"24-940 / 090-5036-00T\". The Kenny Assembly 500-6358-00-71 (printed pages 72-73): the centre 22-1080 coil (Q14) pivots Kenny over ('dead'), and the two 24-940 coils (Q19 left, Q20 right) swing the carriage. Retained table script: SolCallback(20) = \"KennyRight\": swings the Kenny primitive right through UpdateKennyRight (lines 378-388, 750). In the harness runs it alternated with 19, seven pulses each, from the Kenny opto (42). Placement from the retained table's Primitive Kenny (projection: KennyDead/KennyLeft/KennyRight rotate the Kenny primitive; projected onto it).",
+        "notes": "Coils Detailed Chart Table (DR. 6) row #20 \"KENNY RT\": drive transistor Q20, cell \"24-940 / 090-5036-00T\". The Kenny Assembly 500-6358-00-71 (printed pages 72-73): the centre 22-1080 coil (Q14) pivots Kenny over ('dead'), and the two 24-940 coils (Q19 left, Q20 right) swing the carriage. Retained table script: SolCallback(20) = \"KennyRight\": swings the Kenny primitive right through UpdateKennyRight (lines 378-388, 750). In the harness runs it alternated with 19, ten pulses each, from the Kenny opto (42). Placement from the retained table's Primitive Kenny (projection: KennyDead/KennyLeft/KennyRight rotate the Kenny primitive; projected onto it).",
         "part_number": "090-5036-00T"
       },
       "provenance": {
@@ -12882,7 +12882,7 @@
       "label": "General Illumination Relay",
       "physical": {
         "location": "playfield and coin door",
-        "notes": "One G.I. relay on the I/O Power Driver board 520-5137-01 (U206 data latch D0 through R254 and Q200 2N3904, coil on 20v DC with D229 across it) switches the 6.3v AC G.I. supply from J14 to four separately fused circuits on J15 (General Illumination Circuit Detailed Wiring Diagram, printed page 83): B, F24, BRN-WHT to WHT-BRN, Left Playfield & Rt. Outlane, 7 #44; Y, F25, YELLOW to WHT-YEL, Top Lt. & Rt. Playfield, 9 #44; G, F26, GREEN to WHT-GRN, Rt. P/F & Lt. Outlane + Coin Door, 6 #44 plus 2 #555 on the coin door; V, F27, VIOLET to WHT-VIO, Mid Lt. & Rt. Playfield, 9 #44. The page warns that G.I. bulb quantities may change during production. The quantity 33 is the printed 31 playfield bulbs plus the two coin-door bulbs. se.c publishes the relay as GI 0, and the harness runs saw it switch on in attract mode and blink with the outlanes and the right ramp exit. The retained table does not bind GI 0: its GIOn/GIOff/GiBlinking subs (lines 1098-1130) follow table events. Its GI collection reduces to 32 sockets once each Gi/Gis rendering pair is merged: 28 pairs, one lone light at the upper left (Gis26) and three lights inside the turbo bumpers (Gis11-13), against the 31 playfield bulbs the page prints. They are placed as the playfield bulbs, observed only; the mirrored bottom-view drawing gives no per-string assignment. The two coin-door bulbs are counted but not placed.",
+        "notes": "One G.I. relay on the I/O Power Driver board 520-5137-01 (U206 data latch D0 through R254 and Q200 2N3904, coil on 20v DC with D229 across it) switches the 6.3v AC G.I. supply from J14 to four separately fused circuits on J15 (General Illumination Circuit Detailed Wiring Diagram, printed page 83): B, F24, BRN-WHT to WHT-BRN, Left Playfield & Rt. Outlane, 7 #44; Y, F25, YELLOW to WHT-YEL, Top Lt. & Rt. Playfield, 9 #44; G, F26, GREEN to WHT-GRN, Rt. P/F & Lt. Outlane + Coin Door, 6 #44 plus 2 #555 on the coin door; V, F27, VIOLET to WHT-VIO, Mid Lt. & Rt. Playfield, 9 #44. The page warns that G.I. bulb quantities may change during production. The quantity 33 is the printed 31 playfield bulbs plus the two coin-door bulbs. se.c publishes the relay as GI 0, and the harness runs saw it switch on in attract mode and blink with the outlanes and the right ramp exit. The retained table does not bind GI 0: its GIOn/GIOff/GiBlinking subs (lines 1098-1130) follow table events. Its GI collection pairs a bulb-drawing Gis light with a glow-only Gi double at 28 sockets, and has one lone Gis26 at the upper left; each socket is placed on its Gis light. Three more collection lights, Gis11-13, sit on the turbo bumper caps' bulbs, which are matrix lamps 38-40 (one #555 per Turbo Bumper Assembly, printed page 68), so they are table rendering proxies and are not G.I. sockets. That leaves 29 placed sockets against the 31 playfield bulbs the page prints. They are placed as playfield bulbs, observed only; the mirrored bottom-view drawing gives no per-string assignment. The two coin-door bulbs are counted but not placed.",
         "quantity": 33
       },
       "provenance": {
@@ -12909,8 +12909,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.214811,
-            "y": 0.753469
+            "x": 0.211134,
+            "y": 0.754033
           },
           {
             "id": "gi.relay.emitter.2",
@@ -12923,8 +12923,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.935399,
-            "y": 0.343663
+            "x": 0.934874,
+            "y": 0.345615
           },
           {
             "id": "gi.relay.emitter.3",
@@ -12937,8 +12937,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.941702,
-            "y": 0.302035
+            "x": 0.942227,
+            "y": 0.303987
           },
           {
             "id": "gi.relay.emitter.4",
@@ -12951,8 +12951,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.036239,
-            "y": 0.421369
+            "x": 0.033613,
+            "y": 0.421933
           },
           {
             "id": "gi.relay.emitter.5",
@@ -12965,8 +12965,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.03834,
-            "y": 0.371415
+            "x": 0.035714,
+            "y": 0.373367
           },
           {
             "id": "gi.relay.emitter.6",
@@ -12979,8 +12979,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.166492,
-            "y": 0.322387
+            "x": 0.163866,
+            "y": 0.326188
           },
           {
             "id": "gi.relay.emitter.7",
@@ -12993,8 +12993,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.181197,
-            "y": 0.277058
+            "x": 0.181723,
+            "y": 0.27901
           },
           {
             "id": "gi.relay.emitter.8",
@@ -13007,8 +13007,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.126576,
-            "y": 0.241906
+            "x": 0.130252,
+            "y": 0.24432
           },
           {
             "id": "gi.relay.emitter.9",
@@ -13021,8 +13021,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.118172,
-            "y": 0.173451
+            "x": 0.117647,
+            "y": 0.173552
           },
           {
             "id": "gi.relay.emitter.10",
@@ -13035,8 +13035,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.166492,
-            "y": 0.126272
+            "x": 0.164916,
+            "y": 0.127298
           },
           {
             "id": "gi.relay.emitter.11",
@@ -13049,8 +13049,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.057248,
-            "y": 0.083719
+            "x": 0.056723,
+            "y": 0.084283
           },
           {
             "id": "gi.relay.emitter.12",
@@ -13064,7 +13064,7 @@
             "role": "emitter",
             "space": "playfield",
             "x": 0.185399,
-            "y": 0.714616
+            "y": 0.712867
           },
           {
             "id": "gi.relay.emitter.13",
@@ -13077,8 +13077,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.103466,
-            "y": 0.03469
+            "x": 0.10084,
+            "y": 0.037104
           },
           {
             "id": "gi.relay.emitter.14",
@@ -13091,8 +13091,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.231618,
-            "y": 0.016189
+            "x": 0.22479,
+            "y": 0.017678
           },
           {
             "id": "gi.relay.emitter.15",
@@ -13105,8 +13105,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.469013,
-            "y": 0.065217
+            "x": 0.464286,
+            "y": 0.064394
           },
           {
             "id": "gi.relay.emitter.16",
@@ -13119,8 +13119,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.588761,
-            "y": 0.076318
+            "x": 0.579832,
+            "y": 0.077345
           },
           {
             "id": "gi.relay.emitter.17",
@@ -13133,8 +13133,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.597164,
-            "y": 0.056892
+            "x": 0.601891,
+            "y": 0.057456
           },
           {
             "id": "gi.relay.emitter.18",
@@ -13147,8 +13147,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.731618,
-            "y": 0.018964
+            "x": 0.726891,
+            "y": 0.018603
           },
           {
             "id": "gi.relay.emitter.19",
@@ -13161,8 +13161,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.897584,
-            "y": 0.028215
+            "x": 0.89916,
+            "y": 0.029704
           },
           {
             "id": "gi.relay.emitter.20",
@@ -13175,8 +13175,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.939601,
-            "y": 0.033765
+            "x": 0.939076,
+            "y": 0.034791
           },
           {
             "id": "gi.relay.emitter.21",
@@ -13189,8 +13189,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.952206,
-            "y": 0.252081
+            "x": 0.951681,
+            "y": 0.252183
           },
           {
             "id": "gi.relay.emitter.22",
@@ -13203,8 +13203,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.103466,
-            "y": 0.776596
+            "x": 0.102941,
+            "y": 0.776697
           },
           {
             "id": "gi.relay.emitter.23",
@@ -13217,8 +13217,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.805147,
-            "y": 0.775902
+            "x": 0.802521,
+            "y": 0.77716
           },
           {
             "id": "gi.relay.emitter.24",
@@ -13231,8 +13231,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.722164,
-            "y": 0.712303
+            "x": 0.720588,
+            "y": 0.713792
           },
           {
             "id": "gi.relay.emitter.25",
@@ -13245,8 +13245,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.692227,
-            "y": 0.753469
+            "x": 0.693277,
+            "y": 0.754495
           },
           {
             "id": "gi.relay.emitter.26",
@@ -13259,8 +13259,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.044643,
-            "y": 0.626735
+            "x": 0.043067,
+            "y": 0.625911
           },
           {
             "id": "gi.relay.emitter.27",
@@ -13273,8 +13273,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.96271,
-            "y": 0.608233
+            "x": 0.965336,
+            "y": 0.608797
           },
           {
             "id": "gi.relay.emitter.28",
@@ -13287,53 +13287,11 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.956408,
-            "y": 0.394542
+            "x": 0.954832,
+            "y": 0.395106
           },
           {
             "id": "gi.relay.emitter.29",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.south-park-knorr-1-3",
-                "vpx-script.south-park-knorr-1-3"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.076681,
-            "y": 0.468186
-          },
-          {
-            "id": "gi.relay.emitter.30",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.south-park-knorr-1-3",
-                "vpx-script.south-park-knorr-1-3"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.297269,
-            "y": 0.479287
-          },
-          {
-            "id": "gi.relay.emitter.31",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.south-park-knorr-1-3",
-                "vpx-script.south-park-knorr-1-3"
-              ],
-              "status": "observed"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.160714,
-            "y": 0.559768
-          },
-          {
-            "id": "gi.relay.emitter.32",
             "provenance": {
               "source_refs": [
                 "vpx-table.south-park-knorr-1-3",

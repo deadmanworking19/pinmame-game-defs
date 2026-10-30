@@ -84,6 +84,9 @@ LAMPS: dict[int, list[tuple[str, str, str | None]]] = {
 	address: [("Light", f"l{address}", None)] for address in list(range(1, 31)) + list(range(33, 47)) + [48] + list(range(50, 65))
 }
 STACK_DISTANCE = 0.010  # normalized; the table doubles each GI socket as a Gi/Gis pair up to 0.009 apart
+# GI-collection lights that sit on a matrix lamp's bulb rather than a G.I. socket: the turbo bumper caps, whose single
+# #555 bulbs are matrix lamps 38-40 (DR. 4; one bulb per Turbo Bumper Assembly, printed page 68).
+MATRIX_LAMP_PROXIES = {"Gis11": 38, "Gis12": 39, "Gis13": 40}
 
 
 def _candidates(extracted: Path, vpx: Path) -> dict[tuple[str, str], dict]:
@@ -120,17 +123,35 @@ def _entries(by_key: dict, rows: list[tuple[str, str, str | None]]) -> list[dict
 
 
 def _gi(extracted: Path, by_key: dict) -> list[dict]:
+	"""One socket per render-double cluster, placed on the member that draws the bulb (docs/SPATIAL.md)."""
 	collections = {item["name"]: item["items"] for item in json.loads((extracted / "collections.json").read_text(encoding="utf-8"))}
 	lights = sorted((name for name in collections["GI"] if ("Light", name) in by_key), key=str.casefold)
-	groups: list[dict] = []
+	clusters: list[list[str]] = []
 	for name in lights:
-		x, y = _point(by_key, "Light", name)
-		for group in groups:
-			if math.dist((group["x"], group["y"]), (x, y)) < STACK_DISTANCE:
-				group["collapsed"].append(name)
+		point = _point(by_key, "Light", name)
+		for cluster in clusters:
+			if math.dist(_point(by_key, "Light", cluster[0]), point) < STACK_DISTANCE:
+				cluster.append(name)
 				break
 		else:
-			groups.append({"object": name, "collapsed": [name], "x": x, "y": y})
+			clusters.append([name])
+	groups: list[dict] = []
+	for cluster in clusters:
+		def rank(name: str) -> tuple[bool, float, str]:
+			light = json.loads((extracted / "gameitems" / f"Light.{name}.json").read_text(encoding="utf-8"))["Light"]
+			return (not light["show_bulb_mesh"], float(light["falloff_radius"]), name.casefold())
+		chosen = min(cluster, key=rank)
+		if rank(chosen)[0]:
+			raise SystemExit(f"GI cluster {cluster} draws no bulb")
+		if chosen in MATRIX_LAMP_PROXIES:
+			lamp = MATRIX_LAMP_PROXIES[chosen]
+			if len(cluster) != 1 or math.dist(_point(by_key, "Light", chosen), _point(by_key, "Light", f"l{lamp}")) >= STACK_DISTANCE:
+				raise SystemExit(f"{chosen} no longer sits alone on lamp {lamp}'s bulb")
+			continue
+		x, y = _point(by_key, "Light", chosen)
+		groups.append({"object": chosen, "collapsed": sorted(cluster, key=str.casefold), "x": x, "y": y})
+	if set(MATRIX_LAMP_PROXIES) - set(lights):
+		raise SystemExit("a matrix-lamp proxy left the GI collection")
 	return groups
 
 

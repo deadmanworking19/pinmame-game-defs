@@ -59,7 +59,7 @@ class SouthParkTests(unittest.TestCase):
 		machine = self.definition["machine"]
 		self.assertEqual(("sega.south-park.1999", 4444, "G4qbD-MQpxv", 1999, "71"), (machine["id"], machine["ipdb_id"], machine["opdb_id"], machine["year"], machine["model_number"]))
 		compatibility = {driver["id"]: driver["physical_compatibility"] for driver in self.definition["drivers"]}
-		self.assertEqual({"sprk_103": "identical", "sprk_096": "identical", "sprk_090": "compatible"}, compatibility)
+		self.assertEqual({"sprk_103": "identical", "sprk_096": "identical", "sprk_090": "identical"}, compatibility)
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -181,7 +181,12 @@ class SouthParkTests(unittest.TestCase):
 		self.assertEqual(len(placement_ids), len(set(placement_ids)))
 		missing = {item["id"] for item in self.definition["inputs"] + self.definition["outputs"] if item.get("availability") in {"used", "optional"} and "spatial" not in item}
 		self.assertEqual(set(), missing)
-		self.assertEqual(32, len(self.device("output.gi", 0)["spatial"]["placements"]))
+		self.assertEqual(29, len(self.device("output.gi", 0)["spatial"]["placements"]))
+		# Each socket sits on the cluster member that draws the bulb, never on a glow double or a bumper-cap lamp proxy.
+		objects = [entry["object"] for entry in seed["gi"]["0"]]
+		self.assertTrue(all(name.startswith("Gis") for name in objects))
+		self.assertFalse({"Gis11", "Gis12", "Gis13"} & set(objects))
+		self.assertEqual("Gis1", next(entry["object"] for entry in seed["gi"]["0"] if "Gi1" in entry["collapsed"]))
 		self.assertEqual(33, self.device("output.gi", 0)["physical"]["quantity"])
 
 	def test_the_curator_reproduces_every_artifact(self) -> None:
@@ -218,6 +223,7 @@ class SouthParkTests(unittest.TestCase):
 			for label, coil in expected.items():
 				self.assertIn(coil, observed[label]["active_solenoid_addresses"], (run, label))
 			self.assertTrue({14, 19, 20, 30} <= set(observed["Kenny opto (public 42) closed once"]["active_solenoid_addresses"]), run)
+			self.assertNotIn("seven", DEFINITION_PATH.read_text(encoding="utf-8"))
 			self.assertEqual([], observed["under-trough (toilet) (public 43) closed once"]["active_solenoid_addresses"], run)
 			self.assertTrue({47, 48} <= set(observed["left flipper button (public 84) held 1.5 s"]["active_solenoid_addresses"]), run)
 			self.assertTrue({45, 46} <= set(observed["right flipper button (public 82) held 1.5 s"]["active_solenoid_addresses"]), run)
@@ -235,6 +241,17 @@ class SouthParkTests(unittest.TestCase):
 		root = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"])
 		for relative, (game, rom, runs) in evidence_tool.DOCUMENTS.items():
 			self.assertEqual(canonical_bytes(evidence_tool.build(root, game, rom, runs)), (ROOT / relative).read_bytes(), relative)
+
+	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
+	def test_kenny_shake_pulse_counts_behind_the_notes(self) -> None:
+		# The notes say "nine or ten pulses each": count Q14/Q19/Q20 assertions from the Kenny opto closure to the next stimulus.
+		expected = {"sprk-103-gameplay": {14: 1, 19: 9, 20: 10}, "sprk-096-gameplay": {14: 1, 19: 10, 20: 10}}
+		for name, counts in expected.items():
+			events = load(Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / evidence_tool.HARNESS_DIRECTORY / name / "run.json")["events"]
+			start = next(event["time_s"] for event in events if event["event"] == "switch" and event["number"] == 42 and event["state"] and not event.get("initial"))
+			end = min(event["time_s"] for event in events if event["event"] == "switch" and event["number"] != 42 and event["time_s"] > start and not event.get("initial"))
+			actual = {number: sum(1 for event in events if event["event"] == "solenoid" and event["number"] == number and event["state"] and start <= event["time_s"] < end) for number in counts}
+			self.assertEqual(counts, actual, name)
 
 	@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "retained review-artifacts root is not configured")
 	def test_stacking_opto_run_draws_no_coil_in_attract_mode(self) -> None:

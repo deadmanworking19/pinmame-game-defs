@@ -18,7 +18,7 @@ Bounds: `left=0 top=0 right=952 bottom=2162`. Every canonical coordinate is x/95
 - **switch:** The centre of the VPX object the embedded script binds to each switch (trigger, target wall, kicker, slingshot wall, bumper). The trough switches and the stacking opto, which the table does not model, are projected onto the release kicker BallRelease; the three under-trough switches onto the kickers that pulse them; each end-of-stroke contact onto its flipper.
 - **lamp:** The centre of the Light InitLamps assigns to each lamp.
 - **solenoid:** The kicker, slingshot wall, bumper or flipper the script fires, and for flashers the script-driven Lights. The auto launch is placed on the table's Plunger; the toilet seat on the ToiletSeat primitive; the Mr. Hankey coils on the MrHankey primitive; the Kenny coils and the Kenny bulb of flasher 30 on the Kenny primitive. The UK-only coils 21-23, which the US table does not model, are projected where the coil location drawing draws them: the two outlane rollovers and the flippers' midpoint.
-- **gi:** The Light members of the table's GI collection, each Gi/Gis rendering pair merged into one socket; observed only, without per-string assignment.
+- **gi:** The Light members of the table's GI collection, each render-double cluster placed on its member that draws the bulb (show_bulb_mesh); the three turbo-bumper-cap lights on matrix lamps 38-40 are excluded; observed only, without per-string assignment.
 
 ## Unresolved physical geometry
 
@@ -26,7 +26,7 @@ Bounds: `left=0 top=0 right=952 bottom=2162`. Every canonical coordinate is x/95
 - The UK-only coils 21-23 are projections from the coil location drawing onto US-table objects.
 - The toy coils (5, 6, 13, 14, 19, 20) and the Kenny flasher bulb are placed on the primitives the script animates, not on the coil bodies under the playfield.
 - No placement has been checked against the factory location drawings by a callout fit, so every placement stays observed.
-- The table's G.I. collection gives 32 sockets against the 31 playfield bulbs the G.I. page prints, including three lights inside the turbo bumpers; the mirrored bottom-view drawing does not settle which.
+- The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); the mirrored bottom-view drawing does not place the two it lacks.
 
 ## Promotion decision
 

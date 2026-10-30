@@ -117,11 +117,11 @@ DRIVER_NOTES = {
 	),
 	"sprk_090": (
 		"CPU 0.90 (spkcpu.090) with display 0.90 (spdspa.090) and the 0.90 sound set, the earlier prototype IPDB lists as "
-		"'Prototype (Swearing) Roms (.90)'. No fast-flip byte, so public 15 never rises. Not exercised: the authorized ROM "
+		"'Prototype (Swearing) Roms (.90)'. It runs on the same hardware. No fast-flip byte, so public 15 never rises. Not exercised: the authorized ROM "
 		"archive's sprk_090 set carries spdspa.101 in place of spdspa.090, so it does not load as the driver declares it."
 	),
 }
-DRIVER_COMPATIBILITY = {"sprk_103": "identical", "sprk_096": "identical", "sprk_090": "compatible"}
+DRIVER_COMPATIBILITY = {"sprk_103": "identical", "sprk_096": "identical", "sprk_090": "identical"}
 
 
 # --- Switch data -------------------------------------------------------------------------------------
@@ -240,7 +240,7 @@ GAMEPLAY_RESPONSE = {
 	26: "closing it once flashed 28 (Kyle) and blinked the G.I.",
 	37: "closing it once flashed the pop flashers 7",
 	38: "closing it once flashed the pop flashers 7",
-	42: "closing it once fired the Kenny pivot 14, shook Kenny with 19 and 20 alternately seven times each and flashed 30",
+	42: "closing it once fired the Kenny pivot 14, shook Kenny with 19 and 20 alternately, nine to ten pulses each in the step's window, and flashed 30",
 	44: "closing it once, with the super VUK empty, fired the super VUK 3; sprk_103 also shook Kenny with 19 and 20 and flashed 30, and sprk_096 flashed 32",
 	45: "a ball held on it drew repeated super-VUK kicks (3) and the super-VUK flasher 32",
 	46: "a ball held on it flashed 30; sprk_103 fired the top VUK 4 once some seconds later, while sprk_096 fired it only during a later step",
@@ -626,8 +626,8 @@ SOLENOID_RUNTIME = {
 	14: "it fired once from the Kenny opto (42)",
 	17: "it answered the right slingshot switch (62)",
 	18: "it flashed at the drain",
-	19: "it alternated with 20, seven pulses each, from the Kenny opto (42)",
-	20: "it alternated with 19, seven pulses each, from the Kenny opto (42)",
+	19: "it alternated with 20, nine or ten pulses each, from the Kenny opto (42)",
+	20: "it alternated with 19, ten pulses each, from the Kenny opto (42)",
 	24: "each coin on the center slot (5) pulsed it four times, the coin-meter count",
 	25: "it flashed when a ball was served, from the left slingshot, the left orbit and the left lanes, and at the drain",
 	26: "it flashed when a ball was served and at the drain",
@@ -920,9 +920,11 @@ def gi_outputs() -> list[dict[str, Any]]:
 		"coin door; V, F27, VIOLET to WHT-VIO, Mid Lt. & Rt. Playfield, 9 #44. The page warns that G.I. bulb quantities may change during "
 		"production. The quantity 33 is the printed 31 playfield bulbs plus the two coin-door bulbs. se.c publishes the relay as GI 0, and "
 		"the harness runs saw it switch on in attract mode and blink with the outlanes and the right ramp exit. The retained table does not "
-		f"bind GI 0: its GIOn/GIOff/GiBlinking subs (lines 1098-1130) follow table events. Its GI collection reduces to {len(entries)} "
-		"sockets once each Gi/Gis rendering pair is merged: 28 pairs, one lone light at the upper left (Gis26) and three lights inside the "
-		"turbo bumpers (Gis11-13), against the 31 playfield bulbs the page prints. They are placed as the playfield bulbs, observed only; "
+		f"bind GI 0: its GIOn/GIOff/GiBlinking subs (lines 1098-1130) follow table events. Its GI collection pairs a bulb-drawing Gis light with "
+		"a glow-only Gi double at 28 sockets, and has one lone Gis26 at the upper left; each socket is placed on its Gis light. Three more "
+		"collection lights, Gis11-13, sit on the turbo bumper caps' bulbs, which are matrix lamps 38-40 (one #555 per Turbo Bumper "
+		f"Assembly, printed page 68), so they are table rendering proxies and are not G.I. sockets. That leaves {len(entries)} placed sockets "
+		"against the 31 playfield bulbs the page prints. They are placed as playfield bulbs, observed only; "
 		"the mirrored bottom-view drawing gives no per-string assignment. The two coin-door bulbs are counted but not placed."
 	)
 	return [_device(
@@ -992,7 +994,7 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Kenny Assembly 500-6358-00-71: Kenny stands on a carriage that two 24-940 coils swing left (Q19) and right (Q20), and the centre "
 			"22-1080 coil (Q14) pivots him over ('dead'). A #555 bulb (lamp 30) and the #906 flasher bulb (Q30) are inside the figure. The "
 			"Kenny opto 42 (OPTO & Bracket (Long) Assembly 500-6242-02-71) sees the ball reach him. In the gameplay runs one 42 closure "
-			"made the ROM fire Q14 once, alternate Q19 and Q20 seven pulses each, and flash Q30. Balls that reach him drop to the under-trough "
+			"made the ROM fire Q14 once, alternate Q19 and Q20 (nine or ten pulses each before the next step), and flash Q30. Balls that reach him drop to the under-trough "
 			"switch 44. The retained table rotates its Kenny primitive from the three coils.", run, assembly="500-6358-00-71"),
 		_mechanism("lower-flippers", "Lower flippers", "other", [q(15), q(16)], ["switch.84-left-flipper-button", "switch.83-left-flipper-end-of-stroke", "switch.82-right-flipper-button", "switch.81-right-flipper-end-of-stroke"],
 			"Left (500-5944-14) and right (500-5944-04) flipper assemblies with 23-1100 coils on one 50v supply. The CPU applies a 40 ms pulse "
@@ -1338,14 +1340,14 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"switch": "The centre of the VPX object the embedded script binds to each switch (trigger, target wall, kicker, slingshot wall, bumper). The trough switches and the stacking opto, which the table does not model, are projected onto the release kicker BallRelease; the three under-trough switches onto the kickers that pulse them; each end-of-stroke contact onto its flipper.",
 			"lamp": "The centre of the Light InitLamps assigns to each lamp.",
 			"solenoid": "The kicker, slingshot wall, bumper or flipper the script fires, and for flashers the script-driven Lights. The auto launch is placed on the table's Plunger; the toilet seat on the ToiletSeat primitive; the Mr. Hankey coils on the MrHankey primitive; the Kenny coils and the Kenny bulb of flasher 30 on the Kenny primitive. The UK-only coils 21-23, which the US table does not model, are projected where the coil location drawing draws them: the two outlane rollovers and the flippers' midpoint.",
-			"gi": "The Light members of the table's GI collection, each Gi/Gis rendering pair merged into one socket; observed only, without per-string assignment.",
+			"gi": "The Light members of the table's GI collection, each render-double cluster placed on its member that draws the bulb (show_bulb_mesh); the three turbo-bumper-cap lights on matrix lamps 38-40 are excluded; observed only, without per-string assignment.",
 		},
 		"unresolved_geometry": [
 			"The trough switches 10-15 and the under-trough switches 43, 44 and 48 are not modelled by the table; their placements are projections onto mechanism objects.",
 			"The UK-only coils 21-23 are projections from the coil location drawing onto US-table objects.",
 			"The toy coils (5, 6, 13, 14, 19, 20) and the Kenny flasher bulb are placed on the primitives the script animates, not on the coil bodies under the playfield.",
 			"No placement has been checked against the factory location drawings by a callout fit, so every placement stays observed.",
-			"The table's G.I. collection gives 32 sockets against the 31 playfield bulbs the G.I. page prints, including three lights inside the turbo bumpers; the mirrored bottom-view drawing does not settle which.",
+			"The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); the mirrored bottom-view drawing does not place the two it lacks.",
 		],
 		"promotion_decision": "partial: every used device has a placement or a controlled not-applicable record, but projections and placements the drawings do not yet confirm keep spatial_placement in coverage.missing.",
 	}

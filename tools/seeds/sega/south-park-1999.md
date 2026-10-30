@@ -12,9 +12,9 @@ three `sprk_*` drivers of pinned PinMAME: `sprk_103` (CPU 1.03, the production c
 `sprk_096` and `sprk_090`, which IPDB lists as the "Swearing" prototype ROMs. `segames.c` builds all three from one
 `init_sprk`, `INITGAME(sprk, GEN_WS, se_dmd128x32, 0)`: lower flippers only (`FLIP_SW(FLIP_L) | FLIP_SOL(FLIP_L)`), two
 extra lamp columns (lamps 1-80), no custom solenoids, a 128x32 DMD and no auxiliary driver board. The ROMs differ in
-rules, language, sound and in one emulator detail (below), not hardware. `sprk_103` and `sprk_096`, which a harness run
-exercised, are `identical`; `sprk_090` is `compatible`, because the authorized ROM archive's `sprk_090` set carries the
-1.01 display ROM instead of `spdspa.090`, so it was never run.
+rules, language, sound and in one emulator detail (below), not hardware, so all three are `identical`. A harness run
+exercised `sprk_103` and `sprk_096`; `sprk_090` was never run, because the authorized ROM archive's `sprk_090` set
+carries the 1.01 display ROM instead of `spdspa.090`.
 
 The machine's adult-language setting (G, TV-14 and TV-MA, per IPDB) is an operator adjustment, not hardware.
 
@@ -89,7 +89,7 @@ reading for every matrix switch, and `dedswitch_r` does the same for the dedicat
   fired Q5 or Q6. The retained table models the seat, Mr. Hankey and the tank lid with helper flippers.
 - **Kenny.** Kenny stands on a carriage that two 24-940 coils swing left (Q19) and right (Q20); the centre 22-1080
   coil (Q14) pivots him over ("dead"). Lamp 30 (#555) and flasher Q30's #906 bulb are inside the figure. The Kenny opto 42
-  sees the ball arrive; one closure made the ROM fire Q14 once, alternate Q19 and Q20 seven pulses each and flash Q30. A
+  sees the ball arrive; one closure made the ROM fire Q14 once, alternate Q19 and Q20 (nine or ten pulses each) and flash Q30. A
   ball that reaches Kenny drops to 44.
 - **Scoring parts.** Three turbo bumpers (Q9-Q11 / 49-51), two slingshots with two contacts each (Q12/59, Q17/62), the
   left 5-bank (17-21), the centre 3-bank (22-24), the right 3-bank (34-36), the two pop-bumper targets (37, 38), the
@@ -128,8 +128,9 @@ Placements come from the retained table's script-bound objects, normalized again
 - **UK coils.** Q21-Q23 are projections from the coil location drawing.
 - **No callout check.** No placement has been fitted against the switch, lamp, coil and flash location drawings (DR. 5
   and DR. 7), whose crops are in the excerpts.
-- **G.I.** The table's G.I. collection gives 32 sockets once rendering pairs merge, against the 31 playfield bulbs the
-  G.I. page prints, and its bottom-view drawing does not assign them to strings.
+- **G.I.** The table models 29 G.I. sockets, each a bulb-drawing light with its glow double merged, against the 31
+  playfield bulbs the G.I. page prints; three more GI-collection lights sit in the turbo bumper caps on matrix lamps 38-40
+  and are not G.I. sockets. The bottom-view drawing assigns no socket to a string and does not place the two the table lacks.
 
 Nothing here is a disagreement about the machine; the blockers are missing geometry, so the record carries no conflicts.
 
