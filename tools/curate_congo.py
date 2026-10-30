@@ -22,7 +22,7 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 ROOT = Path(__file__).resolve().parents[1]
 PARTIAL_PATH = ROOT / "machines/partial/williams/congo-1995.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/congo-1995.json"
-DEFINITION_PATH = PARTIAL_PATH
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/congo-1995.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/congo-1995.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/congo-1995.md"
@@ -36,10 +36,15 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.congo.1995"
 VPX_TABLE_SOURCE = "vpx-table.congo-jpsalas-nfozzy"
 VPX_SCRIPT_SOURCE = "vpx-script.congo-jpsalas-nfozzy"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.congo-jpsalas-nfozzy"
+FLIPPER_PROBE_SOURCE = "runtime.congo.flipper-button-polarity"
 
 TABLE_SHA256 = "45a6448efb586475a6886962c5bace44789be1d7cd3dde2c507169fdf085432c"
 SCRIPT_SHA256 = "19c19ea64bb120af66ef3ca309a2ec98c08b35ecf08e198bb26b3cd1611cd936"
 MANUAL_SHA256 = "2770692875d10e7cc5bdd11a823ceb9ecfd2f374ed196207ca66631127b77f40"
+# The Fliptronic input run was made on the later PinMAME pin used for runtime evidence.
+RUNTIME_PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+RUNTIME_LIBRARY_SHA256 = "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+FLIPPER_PROBE_RUN_SHA256 = "ed701eb404b26962f9192a221e01c89dc7b6e7af809b7243abf22c1895a14ae5"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/congo-1995/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/congo-1995/extracted-vpxtool.manifest.json")
@@ -202,16 +207,25 @@ DEDICATED_SWITCH_LABELS = {
 	7: ("Volume Up / Up", "service.up", "Raises the volume in normal play and acts as Up inside the menu system."),
 	8: ("Begin Test / Enter", "service.enter", "Enters the menu system in normal play and acts as Enter inside the menu system."),
 }
-# Fliptronic F1-F8 wiring, printed 2-40. F5/F6 (upper right) print Not Used on both this page and
-# the Switch Locations page; the manual's own Solenoid/Flasher Table has no "Upper Right Flipper"
-# row either (only "Upper Left Post" and "Mystery Eject" occupy the printed Upr. Rt. slot), and
-# congoGameData's FLIP_SOL(FLIP_L | FLIP_UL) omits FLIP_UR entirely -- three independent sources
-# agree Congo fits exactly one upper flipper (left).
+# Fliptronic F1-F8 wiring, printed 2-40. Only the Switch Locations page prints F5/F6 (upper right)
+# Not Used; 2-40 prints both with their wires. The manual's own Solenoid/Flasher Table has no
+# "Upper Right Flipper" row (only "Upper Left Post" and "Mystery Eject" occupy the printed Upr. Rt.
+# slot), and congoGameData's FLIP_SOL(FLIP_L | FLIP_UL) omits FLIP_UR entirely, so Congo fits
+# exactly one upper flipper (left). F6 is not an upper-right switch: see BUTTON_OPTOS.
 FLIPPER_SWITCH_WIRING = {
 	111: ("Black-Green", "J208-13"), 112: ("Blue-Violet", "J212-12"),
 	113: ("Black-Blue", "J208-12"), 114: ("Blue-Gray", "J212-11"),
 	115: ("Black-Violet", "J208-11"), 116: ("Black-Yellow", "J212-10"),
 	117: ("Black-Gray", "J208-10"), 118: ("Black-Blue", "J212-9"),
+}
+# Each cabinet button has one two-opto Flipper Opto Board (printed 3-14): OPTO1 leaves on J1-1 and
+# OPTO2 on J1-2, so F6 and F8 are the second optos of the right and left buttons. The congo_21
+# Fliptronic run fired these outputs on a write of 1 at each address.
+BUTTON_OPTOS = {
+	112: ("right", "OPTO2", "J1-2", "J212-12", "the lower right flipper (45/46)"),
+	114: ("left", "OPTO2", "J1-2", "J212-11", "the lower left and upper left flippers (47/48 and 35/36)"),
+	116: ("right", "OPTO1", "J1-1", "J212-10", "the lower right flipper (45/46) exactly as 112 did"),
+	118: ("left", "OPTO1", "J1-1", "J212-9", "the lower left and upper left flippers (47/48 and 35/36) exactly as 114 did"),
 }
 
 # --- Printed Solenoid/Flasher Table (manual page 2-42) and Solenoid/Flashlamp Locations (2-43).
@@ -424,6 +438,9 @@ SWITCH_POSITIONS = {
 	11: [(0.160887, 0.127649)], 12: [(0.921779, 0.144532)], 15: [(0.923854, 0.591225)],
 	16: [(0.058869, 0.820537)], 17: [(0.765140, 0.748602)], 18: [(0.944860, 0.892986)],
 	26: [(0.130026, 0.749171)], 27: [(0.856426, 0.746289)], 28: [(0.723613, 0.531134)],
+	# 25: centre of the transformed-vertex span of the collidable Primitive sw25, the rubber whose
+	# sw25_Hit handler pulses this switch; checked against callout 25 of the Switch Locations drawing.
+	25: [(0.740440, 0.492239)],
 	# 31-35: projected onto the trough's own release kicker (Kicker BallRelease); see SWITCH_PROJECTIONS.
 	31: [(0.887545, 0.883389)], 32: [(0.887545, 0.883389)], 33: [(0.887545, 0.883389)],
 	34: [(0.887545, 0.883389)], 35: [(0.887545, 0.883389)],
@@ -653,7 +670,9 @@ def source_records() -> list[dict[str, Any]]:
 				"carry the lamp/switch/solenoid matrix wiring and locations tables and the general "
 				"illumination and flipper-circuit tables; PDF page 2 (front matter, unnumbered) carries a "
 				"duplicate DIP switch chart and a duplicate Solenoid/Flasher Table; PDF page 118 (printed "
-				"3-5) carries a third copy of the Solenoid/Flasher Table beside the Section 3 schematics."
+				"3-5) carries a third copy of the Solenoid/Flasher Table beside the Section 3 schematics; printed "
+				"3-11, 3-14 and 3-24 (PDF pages 124, 127 and 137) carry the Flipper Circuit Diagram, the "
+				"Flipper Opto Board pin lists and the CPU board connector list."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.",
@@ -729,6 +748,30 @@ def source_records() -> list[dict[str, Any]]:
 					"image_derivation": "Congo_OPS.pdf page 112, crop box 0.04,0.09,0.5,0.74, scanned page rendered at its native resolution (embedded image xref 472, 1700px across 8.50in), rendered at 200 dpi, 782x1434 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.congo.switch-25-callout",
+					"locator": "PDF page 110, printed 2-41, Switch Locations playfield drawing, callout 25 and its fit to the retained table",
+					"path": "evidence/excerpts/williams.congo.1995/switch-25-callout.md",
+					"sha256": "0ae0992d8d0b68680e2a677d47862dbd84f5ccb5381c83c8c9f264ad6e54b54c",
+					"image": "evidence/excerpts/williams.congo.1995/switch-25-callout.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-25-callout.webp"],
+					"image_derivation": "Congo_OPS.pdf page 110, crop box 0.74,0.33,0.95,0.44, scanned page rendered at its native resolution (embedded image xref 464, 1700px across 8.50in), rendered at 200 dpi, grayscale, 357x244 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, leader ends traced pixel by pixel on a 300 dpi render",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.congo.flipper-opto-wiring",
+					"locator": "PDF pages 124, 127 and 137, printed 3-11 Flipper Circuit Diagram, 3-14 Flipper Opto Board Assembly A-20207, 3-24 CPU Board Assembly J208/J212 rows",
+					"path": "evidence/excerpts/williams.congo.1995/flipper-opto-wiring.md",
+					"sha256": "e4e3fbd2897c5c9f3d252e532fe5b0942439f3a38dd326ef508d2face755401c",
+					"image": "evidence/excerpts/williams.congo.1995/flipper-opto-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["flipper-opto-wiring.webp"],
+					"image_derivation": "Congo_OPS.pdf page 127, crop box 0.1,0.08,0.88,0.78, scanned page rendered at its native resolution (embedded image xref 544, 1700px across 8.50in), rendered at 200 dpi, grayscale, 1326x1544 WebP quality 80",
+					"method": "manual",
+					"transcribed_by": "curator, read from 200 dpi renders",
 					"reviewed": True,
 				},
 				{
@@ -811,6 +854,34 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
+		},
+		{
+			"id": FLIPPER_PROBE_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-runtime-evidence/congo-1995/congo_21-flipper-button-polarity/run.json",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"sha256": FLIPPER_PROBE_RUN_SHA256,
+			"locator": (
+				"LibPinMAME harness run of congo_21 from a new, empty state directory with the committed scenario "
+				"tools/harness-scenarios/wpc-95/congo-flipper-button-polarity.json and --handle-mechanics 1: one "
+				"service Escape, coin door closed, two coins, Start until the trough eject (solenoid 9) fires, then "
+				"public 112, 114, 118, 116 and 115 each written 1 and back to 0 by direct switch writes. "
+				f"pinmame64.dll SHA-256 {RUNTIME_LIBRARY_SHA256} built from the pinned revision. The run directory "
+				"is pinned by its own external evidence manifest. It proves emulator-facing polarity and causality only."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation",
+			"excerpts": [
+				{
+					"id": "excerpt.congo.flipper-button-polarity",
+					"locator": "run.json events for switches 112-118 and solenoids 9, 33-36 and 45-48",
+					"path": "evidence/excerpts/williams.congo.1995/flipper-button-polarity.md",
+					"sha256": "928c738a47313a5ba226f2ef66d4547793a18bf35ef5d2bda020c13e856e563a",
+					"method": "manual",
+					"transcribed_by": "curator, event rows read from the retained run.json",
+					"reviewed": True,
+				},
+			],
 		},
 	]
 
@@ -906,12 +977,15 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += " " + SWITCH_PROJECTIONS[address]
 			if address == 25:
 				notes += (
-					" No VPX object supplies a reliable coordinate for this switch: the retained extraction's "
-					"only candidate, a Primitive literally named \"sw25\", sits at local-space (684.0966, "
-					"1112.3384) -- the exact same coordinate as an unrelated Primitive named \"sw1\" (not a "
-					"valid Congo switch address), indicating both are copies of a reusable decorative mesh "
-					"whose position field was never updated to the object's real placement. Left unresolved "
-					"rather than invented; see coverage.missing."
+					" Placed at the retained table's collidable Primitive \"sw25\" (mesh Straight_B2.ob, "
+					"material Rubber White), the rubber band whose sw25_Hit handler pulses this switch: the "
+					"centre of the span of its 56 transformed vertices from a vpxtool OBJ export, (713.784, "
+					"1064.222) in table units. Its position field (684.0966, 1112.3384) is the mesh's pivot at "
+					"one end of the band. A second Primitive \"sw1\" carries the same mesh, position, size and "
+					"rotation with no script handler, an overlapping duplicate rather than a sign that sw25 "
+					"was never placed. Callout 25 on the Switch Locations drawing (printed 2-41) ends at the "
+					"middle of the rubber on the left side of the right-eject saucer bracket; fitted to the "
+					"drawing frame and five other callouts it lies 0.0065 from this centre."
 				)
 			physical["notes"] = notes
 
@@ -944,22 +1018,20 @@ def input_devices() -> list[dict[str, Any]]:
 					physical["location"] = "cabinet interior" if address != 13 else "cabinet"
 					if address == 22:
 						extra["initial_active"] = True
-				elif address == 25:
-					pass  # spatial intentionally omitted -- see notes above and coverage.missing.
 				else:
-					coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in SWITCH_PROJECTIONS else (VPX_TABLE_SOURCE,)
+					coordinate_refs = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in SWITCH_PROJECTIONS or address == 25 else (VPX_TABLE_SOURCE,)
 					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *coordinate_refs)
 			items.append(_device(identifier, label, kind, "pinmame.input.switch", address, availability, refs, **extra))
 
 	flipper_inputs = {
 		111: ("Lower Right Flipper EOS", "internal.flipper.lower.right.eos", "used", False, "leaf", "SW-1A-194", None, True, [(0.618750, 0.861001)]),
-		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", True, "opto", None, "A-17316", True, [(0.618750, 0.861001)]),
+		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", False, "opto", None, "A-17316", True, None),
 		113: ("Lower Left Flipper EOS", "internal.flipper.lower.left.eos", "used", False, "leaf", "SW-1A-194", None, True, [(0.278750, 0.861001)]),
-		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", True, "opto", None, "A-17316", True, [(0.278750, 0.861001)]),
+		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", False, "opto", None, "A-17316", True, None),
 		115: ("Not Used Upper Right Flipper EOS", "internal.unused.flipper", "unused", None, None, None, None, False, None),
-		116: ("Not Used Upper Right Flipper Button", "internal.unused.flipper", "unused", True, "opto", None, "A-17316", True, None),
+		116: ("Right Flipper Button Upper Opto", "flipper.lower.right.button", "used", False, "opto", None, "A-17316", True, None),
 		117: ("Upper Left Flipper EOS", "internal.flipper.upper.left.eos", "used", False, "leaf", "SW-1A-194", None, True, [(0.046680, 0.438945)]),
-		118: ("Upper Left Flipper Button", "flipper.upper.left.button", "used", True, "opto", None, "A-17316", True, [(0.046680, 0.438945)]),
+		118: ("Upper Left Flipper Button", "flipper.upper.left.button", "used", False, "opto", None, "A-17316", True, None),
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, assembly, keep_wiring, position) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
@@ -971,29 +1043,41 @@ def input_devices() -> list[dict[str, Any]]:
 		if assembly:
 			physical["assembly_part_number"] = assembly
 		notes = f"Printed Fliptronic grounded switch F{address - 110}."
+		refs: tuple[str, ...] = (MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE)
 		if availability == "unused":
 			notes += (
 				" Congo has no upper-right flipper: the Switch Locations page marks this position Not Used "
 				"(both the assembly and switch part columns print NOT USED), the manual's Solenoid/Flasher "
 				"Table has no \"Upper Right Flipper\" row at all (the printed Upr. Rt. slot instead drives "
 				"Upper Left Post and Mystery Eject, ordinary non-flipper coils), and congoGameData's "
-				"FLIP_SOL(FLIP_L | FLIP_UL) omits the FLIP_UR bit entirely -- three independent sources agree."
+				"FLIP_SOL(FLIP_L | FLIP_UL) omits the FLIP_UR bit entirely -- three independent sources agree. "
+				"The wiring pages (2-40, 3-11 and 3-24) still print F5 Black-Violet J208-11 to an upper right "
+				"E.O.S. switch on the generic Fliptronic layout, but with no upper right flipper there is no "
+				"switch to wire. PinMAME does not synthesize this end-of-stroke bit for the driver, and in the "
+				"congo_21 Fliptronic run a host write of 1 here moved no flipper, Upper Left Post or Mystery "
+				"Eject output."
 			)
 			physical["location"] = "not installed"
-			if keep_wiring:
-				notes += (
-					" The switch-matrix wiring page nonetheless shades this position as an opto on the reused "
-					"Flipper Opto assembly template (A-17316, same construction as the fitted flipper button "
-					"optos 112/114/118), so its printed construction is recorded even though no physical "
-					"switch is installed."
-				)
-			else:
-				notes += " The matrix-page wiring for this position is drawn as a plain (non-opto) end-of-stroke leaf, matching the fitted flipper EOS template."
-		elif switch_type == "opto":
+			refs += (FLIPPER_PROBE_SOURCE,)
+		elif address in BUTTON_OPTOS:
+			side, opto, board_pin, cpu_pin, fired = BUTTON_OPTOS[address]
 			notes += (
-				" Printed as an opto that is typically closed. WPC-95 reads the flipper column through "
-				"WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized."
+				f" {opto} of the {side} cabinet button's Flipper Opto Board (printed 3-14, board A-20207), "
+				f"leaving on its {board_pin} for CPU board {cpu_pin}. WPC-95 reads the flipper column "
+				"complemented (WPC_FLIPPERSW95 returns ~swMatrix) and congoGameData's flipper-column mask "
+				"byte is 0x00, so public 1 is the pressed button and the contact the matrix sees rests open: "
+				"normally_closed is false. The printed opto shading marks construction only. In the congo_21 "
+				f"Fliptronic run a write of 1 here fired {fired}, and the write of 0 released the hold winding."
 			)
+			if address == 116:
+				notes += (
+					" The Switch Locations list prints \"F6 Not Used ... Upper Right Flipper Cabinet\", but "
+					"this game's own wiring pages wire F6 to the right button's board (2-40 Black-Yellow "
+					"J212-10, the 3-11 cabinet opto table, the 3-14 board pin list and the 3-24 connector "
+					"list) and the ROM consumes it, so it is recorded as the right button's second opto with "
+					"the button's role. Congo still has no upper right flipper."
+				)
+			refs += (FLIPPER_PROBE_SOURCE,)
 		physical["notes"] = notes
 		extra: dict[str, Any] = {
 			"aliases": [
@@ -1007,8 +1091,6 @@ def input_devices() -> list[dict[str, Any]]:
 			extra["wiring"] = {"board": "WPC-95 CPU board", "drive_wire": wire, "drive_connection": connection}
 		if availability == "unused":
 			extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
-			if normally_closed is not None:
-				extra["normally_closed"] = bool(normally_closed)
 		else:
 			extra["normally_closed"] = bool(normally_closed)
 			extra["spatial"] = (
@@ -1024,7 +1106,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"pinmame.input.switch",
 				address,
 				availability,
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				refs,
 				**extra,
 			)
 		)
@@ -1655,16 +1737,17 @@ def mechanisms() -> list[dict[str, Any]]:
 				output_id("Lower Right Flipper Power"), output_id("Lower Right Flipper Hold"),
 				output_id("Lower Left Flipper Power"), output_id("Lower Left Flipper Hold"),
 			],
-			["switch.generic-111", "switch.generic-112", "switch.generic-113", "switch.generic-114"],
+			["switch.generic-111", "switch.generic-112", "switch.generic-116", "switch.generic-113", "switch.generic-114", "switch.generic-118"],
 			"Two FL-11629 flippers on Fliptronic circuits. Each flipper has a separate power and hold winding: "
-			"the ROM energizes the power winding on the cabinet button opto (112 right, 114 left), then drops "
-			"to the hold winding once the end-of-stroke leaf switch (111 right, 113 left) closes. Printed "
-			"circuits 29/30 (Lwr Rt Power/Hold) and 31/32 (Lwr Lt Power/Hold) map to public addresses 45-48.",
+			"the ROM energizes the power winding while either opto of the cabinet button is blocked (112 or "
+			"116 right, 114 or 118 left; each button's Flipper Opto Board carries both), then drops to the "
+			"hold winding once the end-of-stroke leaf switch (111 right, 113 left) closes. Printed circuits "
+			"29/30 (Lwr Rt Power/Hold) and 31/32 (Lwr Lt Power/Hold) map to public addresses 45-48.",
 			[
-				("right", "Lower right flipper", ["switch.generic-111", "switch.generic-112"], "Button opto 112 and end-of-stroke switch 111."),
-				("left", "Lower left flipper", ["switch.generic-113", "switch.generic-114"], "Button opto 114 and end-of-stroke switch 113."),
+				("right", "Lower right flipper", ["switch.generic-111", "switch.generic-112", "switch.generic-116"], "Button optos 112 and 116 and end-of-stroke switch 111."),
+				("left", "Lower left flipper", ["switch.generic-113", "switch.generic-114", "switch.generic-118"], "Button optos 114 and 118 and end-of-stroke switch 113."),
 			],
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
+			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE, FLIPPER_PROBE_SOURCE,
 			assembly_part_number="A-15849-R-2 right with A-15849-L-2 left",
 		),
 		mechanism(
@@ -1672,12 +1755,13 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Upper left flipper",
 			"other",
 			[output_id("Upper Left Flipper Power"), output_id("Upper Left Flipper Hold")],
-			["switch.generic-117", "switch.generic-118"],
-			"Congo's single upper flipper (FL-11630). The ROM energizes the power winding on the cabinet "
-			"button opto (118), then drops to the hold winding once the end-of-stroke leaf switch (117) "
+			["switch.generic-117", "switch.generic-118", "switch.generic-114"],
+			"Congo's single upper flipper (FL-11630), worked by the left cabinet button together with the "
+			"lower left flipper. The ROM energizes the power winding while either opto of the left button is "
+			"blocked (118 or 114), then drops to the hold winding once the end-of-stroke leaf switch (117) "
 			"closes, exactly mirroring the lower-flipper pattern. There is no upper-right counterpart.",
-			[("left", "Upper left flipper", ["switch.generic-117", "switch.generic-118"], "Button opto 118 and end-of-stroke switch 117.")],
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
+			[("left", "Upper left flipper", ["switch.generic-117", "switch.generic-118", "switch.generic-114"], "Button optos 118 and 114 and end-of-stroke switch 117.")],
+			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE, FLIPPER_PROBE_SOURCE,
 			assembly_part_number="A-20738",
 		),
 	]
@@ -1732,8 +1816,8 @@ def build() -> dict[str, Any]:
 			"opdb_id": "GrNd0-MJNW1",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["spatial_placement"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1742,7 +1826,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1776,7 +1860,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		address = int(device["binding"]["device"])
 		spatial = device.get("spatial")
 		if spatial is None:
-			unresolved_inputs.append(address)
+			raise RuntimeError(f"Congo input {address} has no spatial record")
 		elif spatial["status"] == "not_applicable":
 			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
 		else:
@@ -1797,18 +1881,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if spatial is not None and spatial["status"] != "not_applicable":
 			placement_count += len(spatial["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Switch 25 (Right Eject Rubber) has no reliable playfield coordinate. The retained "
-			"extraction's only candidate object, a Primitive literally named \"sw25\", sits at local-"
-			"space (684.0966, 1112.3384) -- the identical coordinate to an unrelated Primitive named "
-			"\"sw1\" (not a valid Congo switch address) -- indicating both are copies of a reusable "
-			"decorative mesh whose transform was never updated to the object's real placement. This is "
-			"the sole reason coverage.status stays partial; every other dimension is validated.",
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": TABLE_WIDTH, "bottom": TABLE_HEIGHT},
@@ -1855,9 +1931,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"l32l, l33l, l38l, l81l co-located brightness-doubling Light objects",
 			"lNNf-style Flasher companion objects (l11f, l12f, l14f, ... f9l2) -- insert glow-overlay effects layered on the lamp's own Light object, not separate physical bulbs",
 		],
-		"unresolved": [
-			{"group": "pinmame.input.switch", "address": 25, "reason": "no reliable VPX object; see blockers"},
-		],
+		"unresolved": [],
 	}
 
 
@@ -1865,10 +1939,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Congo (Williams, 1995) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete except for one "
-		"switch, but the physical machine record itself remains `partial` at "
-		"`machines/partial/williams/congo-1995.json` because that one address has no reliable coordinate; "
-		"see the promotion decision below.",
+		f"Status: {report['status']}. Every input and output has a validated placement or a controlled "
+		"`not_applicable` record, and the physical machine record is `author_ready` at "
+		"`machines/author-ready/williams/congo-1995.json`; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Congo (Williams 1995) 1.1.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained `vpxtool` extraction produced the embedded script at SHA-256 "
@@ -1901,9 +1974,17 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"(37-40 are also unused), unlike WPC-95 games with a DC-motor mechanism.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with "
 		"both PinMAME core and manual provenance.",
-		"- Switch 25 (Right Eject Rubber) is the sole unresolved spatial gap; its `spatial` key is omitted "
-		"entirely rather than a coordinate or an undefined status being invented, matching the precedent set "
-		"by other partial records in this project for a genuinely unlocatable address.",
+		"- Switch 25 (Right Eject Rubber) is placed at the centre of the transformed-vertex span of the "
+		"collidable Primitive `sw25`, the rubber its `sw25_Hit` handler binds. An earlier pass left it "
+		"unplaced because a second Primitive, `sw1`, shares its position field; `sw1` is an overlapping "
+		"duplicate of the same rubber with no handler, and the position field is the mesh's pivot at one "
+		"end of the band. Callout 25 on the Switch Locations drawing (printed 2-41), fitted to the "
+		"drawing frame and five other callouts (28, 37, 56, 64, 65), lies 0.0065 from the placement, "
+		"inside the fit's largest leave-one-out miss (0.0109) and the project's 0.07 callout limit "
+		"(`evidence/excerpts/williams.congo.1995/switch-25-callout.md`).",
+		"- Fliptronic inputs 112, 114, 116 and 118 are the two optos of each cabinet button's Flipper Opto "
+		"Board and take a controlled `cabinet_or_service` record; 115 is unused, since Congo fits no upper "
+		"right flipper.",
 		"",
 		"## Explicit projections",
 		"",
@@ -1927,21 +2008,22 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No authoring-critical semantic, wiring, or mechanism question remains unresolved, and the "
+		"No authoring-critical semantic, wiring, mechanism or spatial question remains unresolved, and the "
 		"deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. Switch "
-		"25 (Right Eject Rubber) is a genuinely used, printed switch with no reliable coordinate anywhere in "
-		"the retained thin table -- its only candidate VPX object shares an identical, evidently-unmoved "
-		"local-space coordinate with an unrelated object -- so it is left without a `spatial` key rather "
-		"than being invented. The definition therefore carries `coverage.missing = [\"spatial_placement\"]` "
-		"and stays `partial` until a richer retained table, a manual playfield diagram calibration, or "
-		"another source resolves this one address.",
+		"25, the last open placement, is the script-bound `sw25` rubber, corroborated by the factory "
+		"drawing, so the definition is promoted to `author_ready` with an empty `coverage.missing`.",
 		"",
 		"## Retained evidence",
 		"",
 		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 `{EXTRACTION_MANIFEST_SHA256}`, "
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
-		"- Human-readable manual transcriptions under `evidence/excerpts/williams.congo.1995/` (six tables "
-		"plus the DIP switch chart), each hashed and cited from the definition's manual source record.",
+		"- Human-readable manual transcriptions under `evidence/excerpts/williams.congo.1995/` (six tables, "
+		"the DIP switch chart, the flipper opto wiring pages and the switch 25 callout fit), each hashed and "
+		"cited from the definition's manual source record.",
+		"- `external:pinmame-review-artifacts/congo/sw25-mesh/`: the `sw25` and `sw1` objects copied from a "
+		"`vpxtool export obj --units vpu` export of the retained table, with the export log and a manifest.",
+		"- `external:pinmame-runtime-evidence/congo-1995/congo_21-flipper-button-polarity/`: the Fliptronic "
+		"input run, pinned by its own manifest.",
 		"",
 	]
 	return "\n".join(lines)
@@ -1954,18 +2036,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Congo author-ready definition is still present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Congo partial definition is still present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Congo definition is missing: {definition_path}")
 	if not seed_path.is_file():

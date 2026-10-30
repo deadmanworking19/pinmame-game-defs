@@ -13,13 +13,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -1181,7 +1179,7 @@
       "label": "Right Eject Rubber",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 2, return row 5. No VPX object supplies a reliable coordinate for this switch: the retained extraction's only candidate, a Primitive literally named \"sw25\", sits at local-space (684.0966, 1112.3384) -- the exact same coordinate as an unrelated Primitive named \"sw1\" (not a valid Congo switch address), indicating both are copies of a reusable decorative mesh whose position field was never updated to the object's real placement. Left unresolved rather than invented; see coverage.missing.",
+        "notes": "Printed switch-matrix drive column 2, return row 5. Placed at the retained table's collidable Primitive \"sw25\" (mesh Straight_B2.ob, material Rubber White), the rubber band whose sw25_Hit handler pulses this switch: the centre of the span of its 56 transformed vertices from a vpxtool OBJ export, (713.784, 1064.222) in table units. Its position field (684.0966, 1112.3384) is the mesh's pivot at one end of the band. A second Primitive \"sw1\" carries the same mesh, position, size and rotation with no script handler, an overlapping duplicate rather than a sign that sw25 was never placed. Callout 25 on the Switch Locations drawing (printed 2-41) ends at the middle of the rubber on the left side of the right-eject saucer bracket; fitted to the drawing frame and five other callouts it lies 0.0065 from this centre.",
         "part_number": "A-17794",
         "switch_type": "leaf"
       },
@@ -1190,6 +1188,25 @@
           "manual.williams.congo.1995",
           "pinmame.core.4ec52ff0ac13",
           "vpx-script.congo-jpsalas-nfozzy"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.matrix-25.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.congo-jpsalas-nfozzy",
+                "manual.williams.congo.1995"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.74044,
+            "y": 0.492239
+          }
         ],
         "status": "validated"
       },
@@ -4060,18 +4077,19 @@
       "id": "switch.generic-112",
       "kind": "switch",
       "label": "Lower Right Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F2. Printed as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F2. OPTO2 of the right cabinet button's Flipper Opto Board (printed 3-14, board A-20207), leaving on its J1-2 for CPU board J212-12. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix) and congoGameData's flipper-column mask byte is 0x00, so public 1 is the pressed button and the contact the matrix sees rests open: normally_closed is false. The printed opto shading marks construction only. In the congo_21 Fliptronic run a write of 1 here fired the lower right flipper (45/46), and the write of 0 released the hold winding.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.congo.1995",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -4174,18 +4192,19 @@
       "id": "switch.generic-114",
       "kind": "switch",
       "label": "Lower Left Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F4. Printed as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F4. OPTO2 of the left cabinet button's Flipper Opto Board (printed 3-14, board A-20207), leaving on its J1-2 for CPU board J212-11. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix) and congoGameData's flipper-column mask byte is 0x00, so public 1 is the pressed button and the contact the matrix sees rests open: normally_closed is false. The printed opto shading marks construction only. In the congo_21 Fliptronic run a write of 1 here fired the lower left and upper left flippers (47/48 and 35/36), and the write of 0 released the hold winding.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.congo.1995",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -4229,13 +4248,14 @@
       "label": "Not Used Upper Right Flipper EOS",
       "physical": {
         "location": "not installed",
-        "notes": "Printed Fliptronic grounded switch F5. Congo has no upper-right flipper: the Switch Locations page marks this position Not Used (both the assembly and switch part columns print NOT USED), the manual's Solenoid/Flasher Table has no \"Upper Right Flipper\" row at all (the printed Upr. Rt. slot instead drives Upper Left Post and Mystery Eject, ordinary non-flipper coils), and congoGameData's FLIP_SOL(FLIP_L | FLIP_UL) omits the FLIP_UR bit entirely -- three independent sources agree. The matrix-page wiring for this position is drawn as a plain (non-opto) end-of-stroke leaf, matching the fitted flipper EOS template."
+        "notes": "Printed Fliptronic grounded switch F5. Congo has no upper-right flipper: the Switch Locations page marks this position Not Used (both the assembly and switch part columns print NOT USED), the manual's Solenoid/Flasher Table has no \"Upper Right Flipper\" row at all (the printed Upr. Rt. slot instead drives Upper Left Post and Mystery Eject, ordinary non-flipper coils), and congoGameData's FLIP_SOL(FLIP_L | FLIP_UL) omits the FLIP_UR bit entirely -- three independent sources agree. The wiring pages (2-40, 3-11 and 3-24) still print F5 Black-Violet J208-11 to an upper right E.O.S. switch on the generic Fliptronic layout, but with no upper right flipper there is no switch to wire. PinMAME does not synthesize this end-of-stroke bit for the driver, and in the congo_21 Fliptronic run a host write of 1 here moved no flipper, Upper Left Post or Mystery Eject output."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.congo.1995",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -4264,31 +4284,32 @@
           "value": "F6"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 116,
         "group": "pinmame.input.switch"
       },
       "id": "switch.generic-116",
       "kind": "switch",
-      "label": "Not Used Upper Right Flipper Button",
-      "normally_closed": true,
+      "label": "Right Flipper Button Upper Opto",
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
-        "location": "not installed",
-        "notes": "Printed Fliptronic grounded switch F6. Congo has no upper-right flipper: the Switch Locations page marks this position Not Used (both the assembly and switch part columns print NOT USED), the manual's Solenoid/Flasher Table has no \"Upper Right Flipper\" row at all (the printed Upr. Rt. slot instead drives Upper Left Post and Mystery Eject, ordinary non-flipper coils), and congoGameData's FLIP_SOL(FLIP_L | FLIP_UL) omits the FLIP_UR bit entirely -- three independent sources agree. The switch-matrix wiring page nonetheless shades this position as an opto on the reused Flipper Opto assembly template (A-17316, same construction as the fitted flipper button optos 112/114/118), so its printed construction is recorded even though no physical switch is installed.",
+        "location": "cabinet flipper button",
+        "notes": "Printed Fliptronic grounded switch F6. OPTO1 of the right cabinet button's Flipper Opto Board (printed 3-14, board A-20207), leaving on its J1-1 for CPU board J212-10. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix) and congoGameData's flipper-column mask byte is 0x00, so public 1 is the pressed button and the contact the matrix sees rests open: normally_closed is false. The printed opto shading marks construction only. In the congo_21 Fliptronic run a write of 1 here fired the lower right flipper (45/46) exactly as 112 did, and the write of 0 released the hold winding. The Switch Locations list prints \"F6 Not Used ... Upper Right Flipper Cabinet\", but this game's own wiring pages wire F6 to the right button's board (2-40 Black-Yellow J212-10, the 3-11 cabinet opto table, the 3-14 board pin list and the 3-24 connector list) and the ROM consumes it, so it is recorded as the right button's second opto with the button's role. Congo still has no upper right flipper.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.congo.1995",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
       "roles": [
-        "internal.unused.flipper"
+        "flipper.lower.right.button"
       ],
       "spatial": {
         "provenance": {
@@ -4297,7 +4318,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       },
       "wiring": {
@@ -4386,18 +4407,19 @@
       "id": "switch.generic-118",
       "kind": "switch",
       "label": "Upper Left Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F8. Printed as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F8. OPTO1 of the left cabinet button's Flipper Opto Board (printed 3-14, board A-20207), leaving on its J1-1 for CPU board J212-9. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix) and congoGameData's flipper-column mask byte is 0x00, so public 1 is the pressed button and the contact the matrix sees rests open: normally_closed is false. The printed opto shading marks construction only. In the congo_21 Fliptronic run a write of 1 here fired the lower left and upper left flippers (47/48 and 35/36) exactly as 114 did, and the write of 0 released the hold winding.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.congo.1995",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -5324,62 +5346,28 @@
         "device.lower-left-flipper-hold"
       ],
       "assembly_part_number": "A-15849-R-2 right with A-15849-L-2 left",
-      "behavior": "Two FL-11629 flippers on Fliptronic circuits. Each flipper has a separate power and hold winding: the ROM energizes the power winding on the cabinet button opto (112 right, 114 left), then drops to the hold winding once the end-of-stroke leaf switch (111 right, 113 left) closes. Printed circuits 29/30 (Lwr Rt Power/Hold) and 31/32 (Lwr Lt Power/Hold) map to public addresses 45-48.",
+      "behavior": "Two FL-11629 flippers on Fliptronic circuits. Each flipper has a separate power and hold winding: the ROM energizes the power winding while either opto of the cabinet button is blocked (112 or 116 right, 114 or 118 left; each button's Flipper Opto Board carries both), then drops to the hold winding once the end-of-stroke leaf switch (111 right, 113 left) closes. Printed circuits 29/30 (Lwr Rt Power/Hold) and 31/32 (Lwr Lt Power/Hold) map to public addresses 45-48.",
       "id": "mechanism.lower-flippers",
       "kind": "other",
       "label": "Lower flipper pair",
       "positions": [
         {
-          "description": "Button opto 112 and end-of-stroke switch 111.",
+          "description": "Button optos 112 and 116 and end-of-stroke switch 111.",
           "id": "right",
           "label": "Lower right flipper",
           "sensors": [
             "switch.generic-111",
-            "switch.generic-112"
+            "switch.generic-112",
+            "switch.generic-116"
           ]
         },
         {
-          "description": "Button opto 114 and end-of-stroke switch 113.",
+          "description": "Button optos 114 and 118 and end-of-stroke switch 113.",
           "id": "left",
           "label": "Lower left flipper",
           "sensors": [
             "switch.generic-113",
-            "switch.generic-114"
-          ]
-        }
-      ],
-      "provenance": {
-        "source_refs": [
-          "manual.williams.congo.1995",
-          "vpx-script.congo-jpsalas-nfozzy",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "sensors": [
-        "switch.generic-111",
-        "switch.generic-112",
-        "switch.generic-113",
-        "switch.generic-114"
-      ]
-    },
-    {
-      "actuators": [
-        "device.upper-left-flipper-power",
-        "device.upper-left-flipper-hold"
-      ],
-      "assembly_part_number": "A-20738",
-      "behavior": "Congo's single upper flipper (FL-11630). The ROM energizes the power winding on the cabinet button opto (118), then drops to the hold winding once the end-of-stroke leaf switch (117) closes, exactly mirroring the lower-flipper pattern. There is no upper-right counterpart.",
-      "id": "mechanism.upper-left-flipper",
-      "kind": "other",
-      "label": "Upper left flipper",
-      "positions": [
-        {
-          "description": "Button opto 118 and end-of-stroke switch 117.",
-          "id": "left",
-          "label": "Upper left flipper",
-          "sensors": [
-            "switch.generic-117",
+            "switch.generic-114",
             "switch.generic-118"
           ]
         }
@@ -5388,13 +5376,55 @@
         "source_refs": [
           "manual.williams.congo.1995",
           "vpx-script.congo-jpsalas-nfozzy",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.generic-111",
+        "switch.generic-112",
+        "switch.generic-116",
+        "switch.generic-113",
+        "switch.generic-114",
+        "switch.generic-118"
+      ]
+    },
+    {
+      "actuators": [
+        "device.upper-left-flipper-power",
+        "device.upper-left-flipper-hold"
+      ],
+      "assembly_part_number": "A-20738",
+      "behavior": "Congo's single upper flipper (FL-11630), worked by the left cabinet button together with the lower left flipper. The ROM energizes the power winding while either opto of the left button is blocked (118 or 114), then drops to the hold winding once the end-of-stroke leaf switch (117) closes, exactly mirroring the lower-flipper pattern. There is no upper-right counterpart.",
+      "id": "mechanism.upper-left-flipper",
+      "kind": "other",
+      "label": "Upper left flipper",
+      "positions": [
+        {
+          "description": "Button optos 118 and 114 and end-of-stroke switch 117.",
+          "id": "left",
+          "label": "Upper left flipper",
+          "sensors": [
+            "switch.generic-117",
+            "switch.generic-118",
+            "switch.generic-114"
+          ]
+        }
+      ],
+      "provenance": {
+        "source_refs": [
+          "manual.williams.congo.1995",
+          "vpx-script.congo-jpsalas-nfozzy",
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.congo.flipper-button-polarity"
         ],
         "status": "validated"
       },
       "sensors": [
         "switch.generic-117",
-        "switch.generic-118"
+        "switch.generic-118",
+        "switch.generic-114"
       ]
     }
   ],
@@ -12608,6 +12638,30 @@
           "transcribed_by": "curator, read from the rendered page"
         },
         {
+          "id": "excerpt.congo.switch-25-callout",
+          "image": "evidence/excerpts/williams.congo.1995/switch-25-callout.webp",
+          "image_derivation": "Congo_OPS.pdf page 110, crop box 0.74,0.33,0.95,0.44, scanned page rendered at its native resolution (embedded image xref 464, 1700px across 8.50in), rendered at 200 dpi, grayscale, 357x244 WebP quality 80",
+          "image_sha256": "3900c0186ddbf6dda7fcc44d9fc8106b5947317daeec989ed0e0a58d44817793",
+          "locator": "PDF page 110, printed 2-41, Switch Locations playfield drawing, callout 25 and its fit to the retained table",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.congo.1995/switch-25-callout.md",
+          "reviewed": true,
+          "sha256": "0ae0992d8d0b68680e2a677d47862dbd84f5ccb5381c83c8c9f264ad6e54b54c",
+          "transcribed_by": "curator, leader ends traced pixel by pixel on a 300 dpi render"
+        },
+        {
+          "id": "excerpt.congo.flipper-opto-wiring",
+          "image": "evidence/excerpts/williams.congo.1995/flipper-opto-wiring.webp",
+          "image_derivation": "Congo_OPS.pdf page 127, crop box 0.1,0.08,0.88,0.78, scanned page rendered at its native resolution (embedded image xref 544, 1700px across 8.50in), rendered at 200 dpi, grayscale, 1326x1544 WebP quality 80",
+          "image_sha256": "f8aa00ebef780b2b960c37f6ae08f4c0534f9838609e52e6e51175f01d473c95",
+          "locator": "PDF pages 124, 127 and 137, printed 3-11 Flipper Circuit Diagram, 3-14 Flipper Opto Board Assembly A-20207, 3-24 CPU Board Assembly J208/J212 rows",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.congo.1995/flipper-opto-wiring.md",
+          "reviewed": true,
+          "sha256": "e4e3fbd2897c5c9f3d252e532fe5b0942439f3a38dd326ef508d2face755401c",
+          "transcribed_by": "curator, read from 200 dpi renders"
+        },
+        {
           "id": "excerpt.congo.dip-switch-chart",
           "image": "evidence/excerpts/williams.congo.1995/dip-switch-chart.webp",
           "image_derivation": "Congo_OPS.pdf page 2, crop box 0.05,0.095,0.95,0.33, scanned page rendered at its native resolution (embedded image xref 4, 1700px across 8.50in), rendered at 200 dpi, 1530x517 WebP quality 80",
@@ -12623,7 +12677,7 @@
       "id": "manual.williams.congo.1995",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "143-page Williams Congo Operations Manual (16-50050-101, November 1995, FINAL), a Paper Capture OCR scan with a usable but imperfect text layer. Printed pages 2-38 through 2-43 carry the lamp/switch/solenoid matrix wiring and locations tables and the general illumination and flipper-circuit tables; PDF page 2 (front matter, unnumbered) carries a duplicate DIP switch chart and a duplicate Solenoid/Flasher Table; PDF page 118 (printed 3-5) carries a third copy of the Solenoid/Flasher Table beside the Section 3 schematics.",
+      "locator": "143-page Williams Congo Operations Manual (16-50050-101, November 1995, FINAL), a Paper Capture OCR scan with a usable but imperfect text layer. Printed pages 2-38 through 2-43 carry the lamp/switch/solenoid matrix wiring and locations tables and the general illumination and flipper-circuit tables; PDF page 2 (front matter, unnumbered) carries a duplicate DIP switch chart and a duplicate Solenoid/Flasher Table; PDF page 118 (printed 3-5) carries a third copy of the Solenoid/Flasher Table beside the Section 3 schematics; printed 3-11, 3-14 and 3-24 (PDF pages 124, 127 and 137) carry the Flipper Circuit Diagram, the Flipper Opto Board pin lists and the CPU board connector list.",
       "original_filename": "Congo_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "2770692875d10e7cc5bdd11a823ceb9ecfd2f374ed196207ca66631127b77f40",
@@ -12668,6 +12722,27 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 c9b02744cbb2e1b0659c7032b0ef42d4e7cadf5c36ed33ac171a037b8be82b62; 925 files, 47770557 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=964 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/williams/congo-1995/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.congo.flipper-button-polarity",
+          "locator": "run.json events for switches 112-118 and solenoids 9, 33-36 and 45-48",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.congo.1995/flipper-button-polarity.md",
+          "reviewed": true,
+          "sha256": "928c738a47313a5ba226f2ef66d4547793a18bf35ef5d2bda020c13e856e563a",
+          "transcribed_by": "curator, event rows read from the retained run.json"
+        }
+      ],
+      "id": "runtime.congo.flipper-button-polarity",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "LibPinMAME harness run of congo_21 from a new, empty state directory with the committed scenario tools/harness-scenarios/wpc-95/congo-flipper-button-polarity.json and --handle-mechanics 1: one service Escape, coin door closed, two coins, Start until the trough eject (solenoid 9) fires, then public 112, 114, 118, 116 and 115 each written 1 and back to 0 by direct switch writes. pinmame64.dll SHA-256 8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5 built from the pinned revision. The run directory is pinned by its own external evidence manifest. It proves emulator-facing polarity and causality only.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "ed701eb404b26962f9192a221e01c89dc7b6e7af809b7243abf22c1895a14ae5",
+      "uri": "external:pinmame-runtime-evidence/congo-1995/congo_21-flipper-button-polarity/run.json"
     }
   ]
 }

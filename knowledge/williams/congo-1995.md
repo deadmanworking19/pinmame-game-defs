@@ -69,6 +69,27 @@ bits 0-2 = 41-43) normalizes precisely the same nine addresses. This matches
 the clean-sweep precedent already established by several other WPC-95/
 Fliptronic-generation games in this project.
 
+**Flipper buttons: two optos each, both read by the ROM, both resting
+open.** Each cabinet button carries one two-opto Flipper Opto Board
+(printed 3-14, A-20207). The right button's board brings OPTO2 out as F2
+(public 112) and OPTO1 as F6 (116); the left button's brings OPTO2 out as
+F4 (114) and OPTO1 as F8 (118). The Switch Locations list prints F6 "Not
+Used ... Upper Right Flipper Cabinet", but the matrix page (2-40), the
+Flipper Circuit Diagram (3-11), the board pin list (3-14) and the CPU
+connector list (3-24) all wire it to the right board's J1-1, so 116 is the
+right button's second opto. A `congo_21` harness run
+(`evidence/excerpts/williams.congo.1995/flipper-button-polarity.md`)
+confirms the ROM reads all four: a write of 1 at 112 or 116 fires the lower
+right flipper (45/46), and a write of 1 at 114 or 118 fires the lower left
+and the upper left flipper together (47/48 and 35/36). WPC-95 reads the
+flipper column complemented and `congoGameData` leaves it unmasked, so
+public 1 is the pressed button and every button contact rests open
+(`normally_closed: false`); the shaded opto cells mark construction only.
+F5 (115) stays unused: no upper right flipper is fitted, PinMAME does not
+synthesize its end-of-stroke bit for this driver, and a write of 1 there
+moved no output. A recreation drives 112 and 114 from the cabinet buttons,
+and may drive 116 and 118 with them.
+
 **A manual can disagree with itself four ways on one fact, and a script's
 actual behavior can be the tiebreaker.** Congo prints its Solenoid/Flasher
 Table three separate times (Section 2 at printed 2-42, an unnumbered
@@ -179,6 +200,16 @@ directly validated rather than projected.
 - **Upper Left Post** (solenoid 33): sits in the printed Fliptronic
   "Upr. Rt." driver-board slot but is an ordinary post, not flipper
   hardware — see the flipper-circuit note above.
+- **Right Eject Rubber** (switch 25, A-17794): a leaf switch behind the
+  straight rubber band on the left side of the Right Eject (map) saucer
+  bracket. The retained table models it as the collidable Primitive `sw25`,
+  whose `sw25_Hit` handler pulses the switch; its position field is the
+  mesh's pivot at one end of the band, so the placement is the centre of
+  its transformed vertices. A second Primitive `sw1` duplicates the same
+  rubber with no handler. Callout 25 on the Switch Locations drawing
+  (printed 2-41) ends on that rubber, 0.0065 from the placement once the
+  drawing is fitted to five other callouts
+  (`evidence/excerpts/williams.congo.1995/switch-25-callout.md`).
 - **Slingshots** (switches 61/62, solenoids 10/11) and **jet bumpers**
   (switches 63-65, solenoids 12-14): standard construction, no surprises.
 
@@ -229,6 +260,9 @@ used; "24-8549" is treated as a printing error.
   boards.
 - Exactly one upper flipper (left); the "Upr. Rt." Fliptronic slot drives an
   ordinary post (33) and a saucer eject (34) instead.
+- The left cabinet button works the lower left and the upper left flipper
+  together; each button has two optos (112/116 right, 114/118 left), all
+  read active at public 1.
 - Headline feature: a hidden lower-level compartment with a gently rocking
   gorilla figure and two small flipper arms that fling the ball at five
   CONGO standup targets, entered after completing G-R-A-Y. No magnet.
@@ -249,3 +283,6 @@ used; "24-8549" is treated as a printing error.
   `evidence/excerpts/williams.congo.1995/`.
 - `vpx-table.congo-jpsalas-nfozzy` / `vpx-script.congo-jpsalas-nfozzy`: the
   retained known-working recreation and its embedded script.
+- `runtime.congo.flipper-button-polarity`: a LibPinMAME harness run of
+  `congo_21` that writes each Fliptronic input 112-118 and records the
+  flipper outputs.

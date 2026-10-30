@@ -46,7 +46,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 83 | Big Bang Bar | `capcom.big-bang-bar.1996` | 100% |
 | 84 | The Getaway: High Speed II | `williams.the-getaway-high-speed-ii.1992` | 88% |
 | 86 | World Cup Soccer | `midway.world-cup-soccer.1994` | 100% |
-| 87 | Congo | `williams.congo.1995` | 94% |
+| 87 | Congo | `williams.congo.1995` | 100% |
 | 88 | X-Men | `stern.x-men-limited-edition.2012` | 100% |
 | 88 | X-Men | `stern.x-men-pro.2012` | 88% |
 | 89 | Eight Ball Deluxe | `bally.eight-ball-deluxe.1981` | 75% |

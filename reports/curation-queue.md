@@ -144,7 +144,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 138 | 1995 | Baywatch | Sega | partial | 75% |
 | 139 | 1995 | Mary Shelley's Frankenstein | Sega | partial | 13% |
 | 140 | 1995 | Jolly Park | Spinball (Spain) | partial | 13% |
-| 141 | 1995 | Congo | Williams | partial | 94% |
+| 141 | 1995 | Congo | Williams | author_ready | 100% |
 | 142 | 1995 | Dirty Harry | Williams | partial | 94% |
 | 143 | 1995 | Jack•Bot | Williams | partial | 88% |
 | 144 | 1995 | Johnny Mnemonic | Williams | partial | 94% |

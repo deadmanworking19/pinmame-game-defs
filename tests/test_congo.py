@@ -12,9 +12,9 @@ from test_excerpts import DRAWING_LIMIT, IMAGE_LIMIT, PAGE_SCALE_DRAWINGS
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "congo-1995.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "congo-1995.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "congo-1995.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "congo-1995.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "congo-1995.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "congo-1995.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "congo-1995.json"
@@ -60,14 +60,11 @@ class CongoDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "spatial_placement":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.congo.1995", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -81,8 +78,8 @@ class CongoDefinitionTests(unittest.TestCase):
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual([], self.definition["conflicts"])
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -139,22 +136,25 @@ class CongoDefinitionTests(unittest.TestCase):
 		self.assertEqual(OPTO_ADDRESSES, normalized)
 
 	def test_flipper_positions_upper_right_unfitted_upper_left_fitted(self) -> None:
-		for address in (111, 112, 113, 114, 117, 118):
+		for address in (111, 112, 113, 114, 116, 117, 118):
 			self.assertEqual("used", self.switches[address]["availability"], address)
-		for address in (115, 116):
-			self.assertEqual("unused", self.switches[address]["availability"], address)
-			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
-		self.assertTrue(self.switches[112]["normally_closed"])
-		self.assertTrue(self.switches[114]["normally_closed"])
-		self.assertTrue(self.switches[118]["normally_closed"])
-		self.assertFalse(self.switches[111]["normally_closed"])
-		self.assertFalse(self.switches[113]["normally_closed"])
-		self.assertFalse(self.switches[117]["normally_closed"])
-		# 116 is unfitted but the wiring page still shades it as an opto template.
-		self.assertTrue(self.switches[116]["normally_closed"])
+		self.assertEqual("unused", self.switches[115]["availability"])
+		self.assertEqual("unused", self.switches[115]["spatial"]["reason"])
+		# WPC-95 reads the flipper column complemented and congoGameData leaves it unmasked, and the
+		# congo_21 run fires a flipper on public 1 at each button opto, so every one rests open.
+		for address in (111, 112, 113, 114, 116, 117, 118):
+			self.assertFalse(self.switches[address]["normally_closed"], address)
+		for address in (112, 114, 115, 116, 118):
+			self.assertIn("runtime.congo.flipper-button-polarity", self.switches[address]["provenance"]["source_refs"], address)
 		self.assertNotIn("normally_closed", self.switches[115])
 		self.assertNotIn("wiring", self.switches[115])
-		self.assertIn("wiring", self.switches[116])
+		# F6 is the right button's second opto (printed 3-14), not an upper-right flipper switch.
+		right_upper_opto = self.switches[116]
+		self.assertEqual("Right Flipper Button Upper Opto", right_upper_opto["label"])
+		self.assertEqual(["flipper.lower.right.button"], right_upper_opto["roles"])
+		self.assertEqual("cabinet_or_service", right_upper_opto["spatial"]["reason"])
+		self.assertEqual("J212-10", right_upper_opto["wiring"]["drive_connection"])
+		self.assertIn("OPTO1 of the right cabinet button", right_upper_opto["physical"]["notes"])
 		upper_left = self.switches[118]
 		self.assertEqual("Upper Left Flipper Button", upper_left["label"])
 		self.assertEqual("used", upper_left["availability"])
@@ -270,13 +270,30 @@ class CongoDefinitionTests(unittest.TestCase):
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
 				self.assertEqual("validated", placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("pinmame-spatial-audit", report["format"])
 		self.assertEqual("validated", report["status"])
-		self.assertEqual([25], report["unresolved_input_addresses"])
+		self.assertEqual([], report["unresolved_input_addresses"])
+		self.assertEqual([], report["unresolved"])
+		self.assertNotIn("blockers", report)
 		self.assertEqual(located, report["placement_count"])
 
-	def test_switch_25_has_no_invented_coordinate(self) -> None:
-		self.assertNotIn("spatial", self.switches[25])
-		self.assertIn("No VPX object supplies a reliable coordinate", self.switches[25]["physical"]["notes"])
+	def test_switch_25_is_placed_on_the_script_bound_rubber(self) -> None:
+		spatial = self.switches[25]["spatial"]
+		self.assertEqual("validated", spatial["status"])
+		[placement] = spatial["placements"]
+		self.assertEqual((0.740440, 0.492239), (placement["x"], placement["y"]))
+		self.assertEqual(
+			["vpx-table.congo-jpsalas-nfozzy", "manual.williams.congo.1995"],
+			placement["provenance"]["source_refs"],
+		)
+		notes = self.switches[25]["physical"]["notes"]
+		self.assertIn("sw25_Hit", notes)
+		self.assertIn("0.0065", notes)
+		# The right-eject rubber sits just left of and above the Right Eject saucer (switch 38).
+		saucer = self.switches[38]["spatial"]["placements"][0]
+		self.assertLess(placement["x"], saucer["x"])
+		self.assertLess(placement["y"], saucer["y"])
+		self.assertLess(abs(placement["x"] - saucer["x"]) + abs(placement["y"] - saucer["y"]), 0.1)
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_pos = _positions(self.switches)
@@ -371,8 +388,15 @@ class CongoDefinitionTests(unittest.TestCase):
 			"2770692875d10e7cc5bdd11a823ceb9ecfd2f374ed196207ca66631127b77f40",
 			sources["manual.williams.congo.1995"]["sha256"],
 		)
+		self.assertEqual(
+			{"runtime.congo.flipper-button-polarity"},
+			{source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"},
+		)
+		self.assertEqual(
+			"ed701eb404b26962f9192a221e01c89dc7b6e7af809b7243abf22c1895a14ae5",
+			sources["runtime.congo.flipper-button-polarity"]["sha256"],
+		)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -385,8 +409,12 @@ class CongoDefinitionTests(unittest.TestCase):
 	def test_manual_source_excerpts_exist_and_hash_match(self) -> None:
 		sources = {source["id"]: source for source in self.definition["sources"]}
 		manual = sources["manual.williams.congo.1995"]
-		self.assertGreaterEqual(len(manual["excerpts"]), 6)
-		for excerpt in manual["excerpts"]:
+		self.assertGreaterEqual(len(manual["excerpts"]), 8)
+		excerpt_ids = {excerpt["id"] for excerpt in manual["excerpts"]}
+		self.assertIn("excerpt.congo.switch-25-callout", excerpt_ids)
+		self.assertIn("excerpt.congo.flipper-opto-wiring", excerpt_ids)
+		runtime = sources["runtime.congo.flipper-button-polarity"]
+		for excerpt in manual["excerpts"] + runtime["excerpts"]:
 			path = ROOT / excerpt["path"]
 			self.assertTrue(path.is_file(), excerpt["path"])
 			import hashlib
@@ -468,6 +496,17 @@ class CongoCuratorTests(unittest.TestCase):
 				curator.check(ROOT)
 		finally:
 			DEFINITION_PATH.write_bytes(original)
+		curator.check(ROOT)
+
+	def test_curator_check_mode_refuses_a_stale_partial(self) -> None:
+		import curate_congo as curator
+
+		PARTIAL_PATH.write_bytes(DEFINITION_PATH.read_bytes())
+		try:
+			with self.assertRaises(RuntimeError):
+				curator.check(ROOT)
+		finally:
+			PARTIAL_PATH.unlink()
 		curator.check(ROOT)
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:
