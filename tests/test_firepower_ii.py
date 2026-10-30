@@ -317,6 +317,13 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
         displays = {d["index"]:d for d in snapshot["displays"]}
         return "".join("".join(glyph[v & 127] for v in displays[i]["segments"]) for i in indexes)
 
+    def _configured(self, variable):
+        # Called inside a subTest, so only the checks that need this root are skipped.
+        value = os.environ.get(variable)
+        if not value:
+            self.skipTest(f"{variable} not configured")
+        return Path(value)
+
     def test_exact_retained_evidence(self):
         curator.verify_external()
 
@@ -389,13 +396,14 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
             if address == 49:
                 lamps={v["number"]:v["states"] for v in steps["tilt 49 closure 1"]["lamps"]}
                 self.assertEqual(lamps[3], [1])
-        script = (Path(os.environ["PINMAME_VPX_SCRIPTS_ROOT"])/"FirePower II (Williams 1983) 1.1.vbs").read_text()
         core = (self.directory.parent/"installed-vbs/core.vbs").read_text()
         s7 = (self.directory.parent/"installed-vbs/s7.vbs").read_text()
-        self.assertIn("vpmNudge.TiltSwitch = 7", script)
-        self.assertIn("If vpmKeyDown(KeyCode) Then Exit Sub", script)
         self.assertIn("vpmTimer.PulseSw TiltSwitch", core)
         self.assertIn("Case keyBangBack     vpmNudge.DoMechTilt", s7)
+        with self.subTest(root="PINMAME_VPX_SCRIPTS_ROOT"):
+            script = (self._configured("PINMAME_VPX_SCRIPTS_ROOT")/"FirePower II (Williams 1983) 1.1.vbs").read_text()
+            self.assertIn("vpmNudge.TiltSwitch = 7", script)
+            self.assertIn("If vpmKeyDown(KeyCode) Then Exit Sub", script)
 
     def test_every_retained_physical_input_hash_is_guarded(self):
         source = Path(os.environ["PINMAME_MANUALS_ROOT"])/"by-machine"/curator.MACHINE_ID
@@ -447,34 +455,36 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
 
     def test_each_pinned_code_file_and_rom_member_guard(self):
         for variable, specs in [("PINMAME_SOURCE_ROOT",curator.SOURCE_FILES), ("PINMAME_VPX_SCRIPTS_ROOT",curator.SCRIPT_FILES)]:
-            source=Path(os.environ[variable])
-            with tempdir() as t:
-                target=Path(t)
-                for name in specs:
-                    p=target/name;p.parent.mkdir(parents=True,exist_ok=True)
-                    shutil.copyfile(source/name,p)
-                with patch.dict(os.environ,{variable:t},clear=True):
-                    curator.verify_external()
+            with self.subTest(root=variable):
+                source=self._configured(variable)
+                with tempdir() as t:
+                    target=Path(t)
                     for name in specs:
-                        p=target/name;original=p.read_bytes()
-                        with self.subTest(file=name):
-                            p.write_bytes(original+b"changed")
-                            with self.assertRaisesRegex(RuntimeError,"absent or changed"):
-                                curator.verify_external()
-                            p.write_bytes(original)
-        source=Path(os.environ["PINMAME_ROM_LIBRARY_ROOT"])
-        with tempdir() as t:
-            p=Path(t)/"fpwr2_l2.zip";shutil.copyfile(source/p.name,p)
-            with patch.dict(os.environ,{"PINMAME_ROM_LIBRARY_ROOT":t},clear=True):
-                curator.verify_external()
-                for name,(size,digest) in curator.ROM_MEMBERS.copy().items():
-                    with self.subTest(member=name), patch.dict(curator.ROM_MEMBERS,{name:(size,"0"*40)}):
-                        with self.assertRaisesRegex(RuntimeError,"ROM members differ"):
-                            curator.verify_external()
-                with p.open("ab") as stream:
-                    stream.write(b"changed")
-                with self.assertRaisesRegex(RuntimeError,"ROM archive absent or changed"):
+                        p=target/name;p.parent.mkdir(parents=True,exist_ok=True)
+                        shutil.copyfile(source/name,p)
+                    with patch.dict(os.environ,{variable:t},clear=True):
+                        curator.verify_external()
+                        for name in specs:
+                            p=target/name;original=p.read_bytes()
+                            with self.subTest(file=name):
+                                p.write_bytes(original+b"changed")
+                                with self.assertRaisesRegex(RuntimeError,"absent or changed"):
+                                    curator.verify_external()
+                                p.write_bytes(original)
+        with self.subTest(root="PINMAME_ROM_LIBRARY_ROOT"):
+            source=self._configured("PINMAME_ROM_LIBRARY_ROOT")
+            with tempdir() as t:
+                p=Path(t)/"fpwr2_l2.zip";shutil.copyfile(source/p.name,p)
+                with patch.dict(os.environ,{"PINMAME_ROM_LIBRARY_ROOT":t},clear=True):
                     curator.verify_external()
+                    for name,(size,digest) in curator.ROM_MEMBERS.copy().items():
+                        with self.subTest(member=name), patch.dict(curator.ROM_MEMBERS,{name:(size,"0"*40)}):
+                            with self.assertRaisesRegex(RuntimeError,"ROM members differ"):
+                                curator.verify_external()
+                    with p.open("ab") as stream:
+                        stream.write(b"changed")
+                    with self.assertRaisesRegex(RuntimeError,"ROM archive absent or changed"):
+                        curator.verify_external()
 
 
 if __name__ == "__main__":
