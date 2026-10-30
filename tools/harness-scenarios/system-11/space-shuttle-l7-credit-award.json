@@ -1,0 +1,667 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "sshtl_l7",
+  "notes": "Space Shuttle L-7 replay credit award with direct public switch writes only. Three balls rest on ball ramp switches 10, 11 and 12; a coin and the credit button start a game and the served ball is plunged. Forty long-ramp shots (upper switch 32 then lower switch 45) raise the score past the factory first replay level, which awards a credit (credit display 00 to 01) and shows what the ROM drives for a credit award. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on top ball ramp position (10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on middle ball ramp position (11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on lower ball ramp position (12)"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin on the left coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.2,
+      "label": "credit button: start a one-player game"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "ROM serves a ball with the ball-ramp release (2)"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "game-start resets settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "served ball leaves ramp position 12"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "remaining balls roll down: position 10 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "a ball now rests on position 12 (11 stays closed)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball on the ball-shooter lane switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 1: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 1: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 2: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 2: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 3: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 3: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 4: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 4: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 5: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 5: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 6: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 6: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 7: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 7: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 8: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 8: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 9: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 9: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 10: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 10: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 11: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 11: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 12: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 12: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 13: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 13: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 14: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 14: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 15: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 15: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 16: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 16: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 17: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 17: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 18: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 18: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 19: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 19: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 20: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 20: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 21: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 21: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 22: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 22: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 23: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 23: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 24: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 24: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 25: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 25: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 26: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 26: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 27: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 27: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 28: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 28: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 29: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 29: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 30: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 30: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 31: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 31: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 32: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 32: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 33: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 33: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 34: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 34: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 35: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 35: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 36: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 36: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 37: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 37: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 38: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 38: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 39: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 39: lower switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 0.3,
+      "label": "long ramp shot 40: upper switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 150,
+      "settle_s": 2.5,
+      "label": "long ramp shot 40: lower switch"
+    },
+    {
+      "type": "wait",
+      "seconds": 5.0,
+      "label": "observe after the last shot"
+    }
+  ]
+}

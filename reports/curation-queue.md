@@ -468,7 +468,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 462 | 1984 | Af-Tor | Wico | partial | 13% |
 | 463 | 1984 | Laser Cue | Williams | partial | 13% |
 | 464 | 1984 | Pennant Fever Baseball (L-2) | Williams | partial | 13% |
-| 465 | 1984 | Space Shuttle | Williams | partial | 19% |
+| 465 | 1984 | Space Shuttle | Williams | partial | 88% |
 | 466 | 1984 | Star Light | Williams | partial | 13% |
 | 467 | 1984 | Still Crazy (L-1) | Williams | partial | 13% |
 | 468 | 1984 | Strike Zone (Shuffle) (L-5) | Williams | partial | 13% |
