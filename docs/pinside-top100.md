@@ -194,7 +194,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 243 | Atlantis | `bally.atlantis.1989` | 13% |
 | 244 | Jungle Lord | `williams.jungle-lord.1981` | 13% |
 | 245 | Indiana Jones | `stern.indiana-jones.2008` | 19% |
-| 246 | Gladiators | `gottlieb.gladiators.1993` | 13% |
+| 246 | Gladiators | `gottlieb.gladiators.1993` | 94% |
 | 247 | Genesis | `gottlieb.genesis.1986` | 13% |
 | 247 | World Poker Tour | `stern.world-poker-tour.2006` | 75% |
 | 249 | Galaxy | `stern.galaxy.1980` | 19% |

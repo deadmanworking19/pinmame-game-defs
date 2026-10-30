@@ -1,0 +1,355 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "One game from the initialized NVRAM with the ramp motor switch (30) open: the trough holds balls (33 closed), two coins on chute 1 (0), Start (4) and a plunge (24, 100). The host then idles until the ROM's ball search energizes the RAMP MOTOR RELAY (B), closes 30, opens it, closes it again and idles through the next ball search.",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 8,
+      "label": "trough switch 33 closed (balls in trough)"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ball on shooter lane rollover"
+    },
+    {
+      "type": "set_switch",
+      "switch": 100,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball at shooter lane opto"
+    },
+    {
+      "type": "set_switch",
+      "switch": 100,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves shooter lane opto"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 1,
+      "label": "ball plunged"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 00"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 01"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 02"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 03"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 04"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 05"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 06"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 07"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 08"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 09"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 12"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 13"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ramp motor switch 30 closes while the motor runs"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 closed 5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ramp motor switch 30 opens"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 2"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 3"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 4"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "30 open 5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ramp motor switch 30 closes again"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 00"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 01"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 02"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 03"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 04"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 05"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 06"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 07"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 08"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 09"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 12"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 13"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 17"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 18"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 19"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 20"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 21"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 22"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 23"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "30 closed again 24"
+    }
+  ]
+}

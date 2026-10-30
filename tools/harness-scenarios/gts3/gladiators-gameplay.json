@@ -1,0 +1,488 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "One game from the initialized NVRAM. The catapult ramp starts at home (30 closed) and the trough holds balls (33 closed). Two coins on chute 1 (0) and Start (4); the host answers with static switch changes (shooter lane rollover 24 and opto 100), pulses each CPU-fired switch, drops the 3-bank, fills each hole and upkicker, spins the spinner, presses both flipper buttons, idles until the ROM's ball search runs, opens and recloses the ramp motor switch (30) and drains the ball to the outhole (23).",
+  "switch_converter": "gts3",
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ramp motor switch 30 closed (catapult ramp at home)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 8,
+      "label": "trough switch 33 closed (balls in trough)"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "coin chute 1 again"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 3,
+      "label": "start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ball on shooter lane rollover"
+    },
+    {
+      "type": "set_switch",
+      "switch": 100,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball at shooter lane opto"
+    },
+    {
+      "type": "set_switch",
+      "switch": 100,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves shooter lane opto"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button 143 after plunge",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button 141 after plunge",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top left pop bumper switch 10 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top left pop bumper switch 10 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top left pop bumper switch 10 pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top right pop bumper switch 11 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top right pop bumper switch 11 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "top right pop bumper switch 11 pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "bottom pop bumper switch 12 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "bottom pop bumper switch 12 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "bottom pop bumper switch 12 pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "left kicking target switch 13 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "left kicking target switch 13 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "left kicking target switch 13 pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "right kicking target switch 14 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "right kicking target switch 14 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 100,
+      "settle_s": 0.7,
+      "label": "right kicking target switch 14 pulse 3"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "drop target 1 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "drop target 2 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 6,
+      "label": "drop target 3 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "drop target 1 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "drop target 2 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2,
+      "label": "drop target 3 up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in left hole 31"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 2,
+      "label": "left hole empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in top hole 21"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2,
+      "label": "top hole empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in center upkicker 22"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 2,
+      "label": "center upkicker empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in right upkicker 32"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 2,
+      "label": "right upkicker empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 60,
+      "settle_s": 0.3,
+      "label": "spinner 20 pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 60,
+      "settle_s": 1.0,
+      "label": "spinner 20 pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 143,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "left flipper button 143",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "pulse",
+      "switch": 141,
+      "hold_ms": 500,
+      "settle_s": 1.0,
+      "label": "right flipper button 141",
+      "snapshot_while_held": true
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 00"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 01"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 02"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 03"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 04"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 05"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 06"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 07"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 08"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 09"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 10"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 11"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 12"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 13"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 14"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 15"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 16"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 17"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 18"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 19"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 20"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 21"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 22"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 23"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 24"
+    },
+    {
+      "type": "wait",
+      "seconds": 1,
+      "label": "idle 25"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "ramp motor switch 30 opens (catapult ramp leaves home)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ramp motor switch 30 closes (catapult ramp back home)"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "after ramp home"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 2,
+      "label": "ball drains to outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole kicked"
+    },
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "after drain"
+    }
+  ]
+}

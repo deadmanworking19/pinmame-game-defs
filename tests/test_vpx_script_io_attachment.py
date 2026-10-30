@@ -32,9 +32,10 @@ CORPUS_REPOSITORIES = (
 # TX-Sector replaces its 30 imported candidate devices from two scripts.
 # Gold replaces 57 candidates from one script with its own complete definition.
 # Firepower II replaces its 87 imported candidate devices from one script.
-EXPECTED_ATTACHED_MACHINES = 260
-EXPECTED_ATTACHED_DEVICES = 11937
-EXPECTED_ATTACHED_SCRIPTS = 321
+# Gladiators replaces its 111 imported candidate devices from two scripts.
+EXPECTED_ATTACHED_MACHINES = 259
+EXPECTED_ATTACHED_DEVICES = 11826
+EXPECTED_ATTACHED_SCRIPTS = 319
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

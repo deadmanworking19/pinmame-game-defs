@@ -178,7 +178,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 172 | 1993 | Jurassic Park | Data East | partial | 81% |
 | 173 | 1993 | Last Action Hero | Data East | partial | 19% |
 | 174 | 1993 | Tales from the Crypt | Data East | partial | 81% |
-| 175 | 1993 | Gladiators | Gottlieb | partial | 13% |
+| 175 | 1993 | Gladiators | Gottlieb | partial | 94% |
 | 176 | 1993 | Street Fighter II | Gottlieb | partial | 19% |
 | 177 | 1993 | Tee'd Off | Gottlieb | partial | 13% |
 | 178 | 1993 | Wipe Out | Gottlieb | partial | 13% |
