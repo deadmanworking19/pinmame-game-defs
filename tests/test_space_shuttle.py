@@ -192,7 +192,9 @@ class SpaceShuttleTests(unittest.TestCase):
 
 	def test_spatial_placements(self):
 		report = load_json(ROOT / curator.REPORT)
-		self.assertEqual({"switch.playfield-tilt", "flasher.insert-flash-lamps"}, {r["id"] for r in report["unplaced"]})
+		self.assertEqual({"switch.playfield-tilt", "switch.long-ramp-lower-switch", "flasher.insert-flash-lamps"}, {r["id"] for r in report["unplaced"]})
+		self.assertNotIn("45", load_json(ROOT / curator.GEOMETRY)["anchors"]["switch"])
+		self.assertIn("carries no placement", self.switches[45]["physical"]["notes"])
 		self.assertIsNone(report["callout_check"])
 		for record in report["located"]:
 			for placement in record["placements"]:

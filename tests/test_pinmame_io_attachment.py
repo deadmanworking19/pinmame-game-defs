@@ -22,7 +22,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	# Seawitch now declares its platform through its game-specific curator.
 	"pinmame.stern-mpu200": 20,
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.
-	"pinmame.system-11": 20,  # Swords of Fury and Sorcerer now cite their pinned game-specific core sources.
+	# Space Shuttle now cites its pinned game-specific core source.
+	"pinmame.system-11": 19,  # Swords of Fury and Sorcerer now cite their pinned game-specific core sources.
 	# The Champion Pub and WHO dunnit now cite their dedicated curators' core sources, and Jack*Bot and Safe Cracker (both curated
 	# 2026-10-09) declare their platform from the curated definition.
 	"pinmame.wpc-95": 2,

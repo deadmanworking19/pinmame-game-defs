@@ -2,13 +2,14 @@
   "blockers": [
     "No factory drawing callout check has been run against the switch (PDF 19), solenoid (PDF 4) and lamp (PDF 20) location drawings, so every table placement stays observed rather than validated.",
     "Solenoid 14 (insert flash lamps) has no placement: its physical location is the open conflict conflict.insert-flash-lamps-location.",
+    "Switch 45 (long ramp lower switch) has no placement: the switch-location drawing puts it beside the spinner at the ramp entrance, in front of switch 32, while the retained table's sw45 trigger sits further up the ramp behind sw32. Measuring balloon 45 on the drawing, or a table object at that spot, would place it.",
     "Switch 49 (playfield tilt) has no placement: no drawing balloon or table object locates the mechanism."
   ],
   "callout_check": null,
   "coordinate_convention": "x=0 left, x=1 right; y=0 rear/backglass, y=1 apron; normalized VPX/player view",
   "format": "pinmame-spatial-blockers",
   "geometry_seed": "tools/seeds/williams/space-shuttle-1984-geometry.json",
-  "geometry_seed_sha256": "77a28057d9496201745702bb458130df16d4516518ffb7f713d0d22edb37fd67",
+  "geometry_seed_sha256": "1813b46903860ec20697a31dbac6715788b1db632165191f26cb6b06db80e47c",
   "located": [
     {
       "binding": {
@@ -907,31 +908,6 @@
           "space": "playfield",
           "x": 0.074709,
           "y": 0.287836
-        }
-      ]
-    },
-    {
-      "binding": {
-        "device": 45,
-        "group": "pinmame.input.switch"
-      },
-      "id": "switch.long-ramp-lower-switch",
-      "label": "Long Ramp Lower Switch",
-      "placements": [
-        {
-          "id": "switch.long-ramp-lower-switch.sensor.1",
-          "provenance": {
-            "source_refs": [
-              "vpx-table.space-shuttle.bord",
-              "vpx-script.space-shuttle.2-0",
-              "manual.williams.space-shuttle.1984"
-            ],
-            "status": "observed"
-          },
-          "role": "sensor",
-          "space": "playfield",
-          "x": 0.580499,
-          "y": 0.111218
         }
       ]
     },
@@ -3420,6 +3396,14 @@
     "unresolved_conflicts": 1
   },
   "unplaced": [
+    {
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.long-ramp-lower-switch",
+      "label": "Long Ramp Lower Switch"
+    },
     {
       "binding": {
         "device": 49,

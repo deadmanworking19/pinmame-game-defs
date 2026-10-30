@@ -151,6 +151,10 @@ follow their own switches 39 and 40 in both the machine and PinMAME.
   on their dome meshes.
 - No factory drawing callout check has been run, so every placement is `observed`, not `validated`. The playfield
   tilt (49) and the insert flash lamps (14) have no placement.
+- The long ramp's lower switch (45) has no placement either. The switch-location drawing draws it dashed beside
+  the spinner at the ramp entrance, in front of the upper switch 32; the retained table's `sw45` is an invisible
+  trigger on a raised wall further up the ramp, behind its `sw32`, so it marks where the table scores the shot
+  rather than where the contact is.
 - The switch-location drawing numbers the three trough positions 12, 11, 10 left to right under the apron, the
   reverse of the list's `Upper Left`/`Lower Right` names; the list, the script (12 next to the ball release) and
   the ROM's serve logic agree, so placements follow them.

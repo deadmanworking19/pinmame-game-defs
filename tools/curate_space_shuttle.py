@@ -191,7 +191,10 @@ SWITCH_NOTES = {
 		"Lane change switch B-9951; the switch-location drawing's balloon 41 points at the right flipper, so it is a contact operated with the right flipper rather than a cabinet button, and the ROM moves the lit lane on it (IPDB lists a lane change). "
 		"The driver declares FLIP_SWNO(0,41) with no FLIP_SOL, so with keyboard handling off core_updateSw copies PinMAME flipper-column button 82 into this address on every update: drive 82, not 41. The gameplay run shows 41 following 82."
 	),
-	45: "The long ramp's lower switch, under the ramp entrance.",
+	45: (
+		"The long ramp's lower switch. The switch-location drawing draws it dashed (under the ramp) beside the spinner at the ramp entrance, in front of the upper switch 32. "
+		"The retained table's sw45 is an invisible trigger on its raised rampswitchwall further up the ramp, behind its sw32, so it marks where the table scores the ramp rather than where the contact is, and this switch carries no placement."
+	),
 	49: "Playfield tilt. In the L-7 gameplay run two closures did not tilt the ball and the third did, dropping the game-on enable 23 and turning the GI off; the manual's tilt paragraph says the first closure tilts. A recreation follows the ROM. The retained script does not model it.",
 }
 STANDUPS = {42: "bottom left", 43: "left lower", 44: "left upper", 46: "centre", 47: "upper right", 48: "lower right"}
@@ -747,6 +750,7 @@ def build_report(definition: dict, root: Path = ROOT) -> dict:
 		"blockers": [
 			"No factory drawing callout check has been run against the switch (PDF 19), solenoid (PDF 4) and lamp (PDF 20) location drawings, so every table placement stays observed rather than validated.",
 			"Solenoid 14 (insert flash lamps) has no placement: its physical location is the open conflict conflict.insert-flash-lamps-location.",
+			"Switch 45 (long ramp lower switch) has no placement: the switch-location drawing puts it beside the spinner at the ramp entrance, in front of switch 32, while the retained table's sw45 trigger sits further up the ramp behind sw32. Measuring balloon 45 on the drawing, or a table object at that spot, would place it.",
 			"Switch 49 (playfield tilt) has no placement: no drawing balloon or table object locates the mechanism.",
 		],
 		"readiness": {"status": definition["coverage"]["status"], "missing": definition["coverage"]["missing"], "unresolved_conflicts": len(unresolved_conflicts(definition))},

@@ -571,7 +571,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# TX-Sector's retained S-label record is ignored: its public branch routing is settled.
 		# Firepower II records the unresolved physical Ball in Play6/40 routing.
 		# Scared Stiff's development notes and ROM probe settle its auxiliary lamp-column conflict, removing one.
-		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Space Shuttle records where its insert flash lamps (solenoid 14) are mounted.
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

@@ -35,9 +35,10 @@ CORPUS_REPOSITORIES = (
 # Gladiators replaces its 111 imported candidate devices from two scripts.
 # South Park replaces its 48 candidate devices from one script with its own curated definition.
 # RoboCop replaces its 31 imported candidate devices from one script.
-EXPECTED_ATTACHED_MACHINES = 257
-EXPECTED_ATTACHED_DEVICES = 11747
-EXPECTED_ATTACHED_SCRIPTS = 317
+# Space Shuttle replaces its 101 imported candidate devices from three scripts.
+EXPECTED_ATTACHED_MACHINES = 256
+EXPECTED_ATTACHED_DEVICES = 11646
+EXPECTED_ATTACHED_SCRIPTS = 314
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

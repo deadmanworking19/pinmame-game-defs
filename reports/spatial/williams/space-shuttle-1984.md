@@ -4,12 +4,13 @@
 
 x=0 left, x=1 right; y=0 rear/backglass, y=1 apron; normalized VPX/player view.
 
-Geometry seed `tools/seeds/williams/space-shuttle-1984-geometry.json` SHA-256 `77a28057d9496201745702bb458130df16d4516518ffb7f713d0d22edb37fd67`.
+Geometry seed `tools/seeds/williams/space-shuttle-1984-geometry.json` SHA-256 `1813b46903860ec20697a31dbac6715788b1db632165191f26cb6b06db80e47c`.
 
 ## Blockers
 
 - No factory drawing callout check has been run against the switch (PDF 19), solenoid (PDF 4) and lamp (PDF 20) location drawings, so every table placement stays observed rather than validated.
 - Solenoid 14 (insert flash lamps) has no placement: its physical location is the open conflict conflict.insert-flash-lamps-location.
+- Switch 45 (long ramp lower switch) has no placement: the switch-location drawing puts it beside the spinner at the ramp entrance, in front of switch 32, while the retained table's sw45 trigger sits further up the ramp behind sw32. Measuring balloon 45 on the drawing, or a table object at that spot, would place it.
 - Switch 49 (playfield tilt) has no placement: no drawing balloon or table object locates the mechanism.
 
 ## Placed devices
@@ -52,7 +53,6 @@ Geometry seed `tools/seeds/williams/space-shuttle-1984-geometry.json` SHA-256 `7
 | `switch.bottom-left-standup` | pinmame.input.switch 42 | (0.091311, 0.592296) observed |
 | `switch.left-lower-standup` | pinmame.input.switch 43 | (0.159192, 0.367541) observed |
 | `switch.left-upper-standup` | pinmame.input.switch 44 | (0.074709, 0.287836) observed |
-| `switch.long-ramp-lower-switch` | pinmame.input.switch 45 | (0.580499, 0.111218) observed |
 | `switch.center-standup` | pinmame.input.switch 46 | (0.366667, 0.287652) observed |
 | `switch.upper-right-standup` | pinmame.input.switch 47 | (0.675574, 0.270135) observed |
 | `switch.lower-right-standup` | pinmame.input.switch 48 | (0.82281, 0.58346) observed |
@@ -173,5 +173,6 @@ Geometry seed `tools/seeds/williams/space-shuttle-1984-geometry.json` SHA-256 `7
 
 | Device | Label |
 | --- | --- |
+| `switch.long-ramp-lower-switch` | Long Ramp Lower Switch |
 | `switch.playfield-tilt` | Playfield Tilt |
 | `flasher.insert-flash-lamps` | Insert Flash Lamps |
