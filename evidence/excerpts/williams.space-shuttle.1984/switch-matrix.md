@@ -1,7 +1,7 @@
 # Literal transcription — System 9 Switch-Matrix Table
 
 `reviewed: true`; transcribed by the curator from a 300 dpi render and visually checked against it on 2026-10-30
-`source: Instruction Manual PDF page 16 (the switch matrix, upper half of the page)`
+`source: Instruction Manual PDF page 16 (the switch matrix, lower half of the page)`
 
 Retained render: `external:pinmame-manuals/by-machine/williams.space-shuttle.1984/rendered-300/p-16.png` (pdftoppm 23.05.0 -r 300 -gray).
 

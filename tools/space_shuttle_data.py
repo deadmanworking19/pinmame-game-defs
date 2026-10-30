@@ -182,18 +182,26 @@ LAMPS = {
 	50: ("Bonus 1,000", "Bonus 1,000", "1,000 Bonus", "B-9558-33", "playfield"),
 	51: ("Bonus 2,000", "Bonus 2,000", "2,000 Bonus", "B-9558-32", "playfield"),
 	52: ("Bonus 3,000", "Bonus 3,000", "3,000 Bonus", "B-9558-33", "playfield"),
-	53: ("Bonus 4,000", "Bonus 4,000", "See 50", "B-9558-33", "playfield"),
-	54: ("Bonus 5,000", "Bonus 5,000", "See 51", "B-9558-32", "playfield"),
-	55: ("Bonus 6,000", "Bonus 6,000", "See 52", "B-9558-33", "playfield"),
-	56: ("Bonus 7,000", "Bonus 7,000", "See 50", "B-9558-33", "playfield"),
-	57: ("Bonus 8,000", "Bonus 8,000", "See 51", "B-9558-32", "playfield"),
-	58: ("Bonus 9,000", "Bonus 9,000", "See 52", "B-9558-33", "playfield"),
-	59: ("Bonus 10,000", "Bonus 10,000", "See 50", "B-9558-33", "playfield"),
-	60: ("Bonus 20,000", "Bonus 20,000", "See 51", "B-9558-32", "playfield"),
-	61: ("Bonus 30,000", "Bonus 30,000", "See 52", "B-9558-33", "playfield"),
-	62: ("Bonus 40,000", "Bonus 40,000", "See 50", "B-9558-33", "playfield"),
-	63: ("Bonus 50,000", "Bonus 50,000", "See 51", "B-9558-32", "playfield"),
-	64: ("Bonus 60,000", "Bonus 60,000", "See 52", "B-9558-33", "playfield"),
+	53: ("Bonus 4,000", "Bonus 4,000", "4,000 Bonus", "B-9558-33", "playfield"),
+	54: ("Bonus 5,000", "Bonus 5,000", "5,000 Bonus", "B-9558-32", "playfield"),
+	55: ("Bonus 6,000", "Bonus 6,000", "6,000 Bonus", "B-9558-33", "playfield"),
+	56: ("Bonus 7,000", "Bonus 7,000", "7,000 Bonus", "B-9558-33", "playfield"),
+	57: ("Bonus 8,000", "Bonus 8,000", "8,000 Bonus", "B-9558-32", "playfield"),
+	58: ("Bonus 9,000", "Bonus 9,000", "9,000 Bonus", "B-9558-33", "playfield"),
+	59: ("Bonus 10,000", "Bonus 10,000", "10,000 Bonus", "B-9558-33", "playfield"),
+	60: ("Bonus 20,000", "Bonus 20,000", "20,000 Bonus", "B-9558-32", "playfield"),
+	61: ("Bonus 30,000", "Bonus 30,000", "30,000 Bonus", "B-9558-33", "playfield"),
+	62: ("Bonus 40,000", "Bonus 40,000", "40,000 Bonus", "B-9558-33", "playfield"),
+	63: ("Bonus 50,000", "Bonus 50,000", "50,000 Bonus", "B-9558-32", "playfield"),
+	64: ("Bonus 60,000", "Bonus 60,000", "60,000 Bonus", "B-9558-33", "playfield"),
+}
+# Lamp-location assembly cells printed as something other than the part number: a ditto mark repeating the
+# nearest assembly above, or a 'See NN' reference to the first lamp of the same bonus-ladder column.
+LAMP_ASSEMBLY_PRINTED = {
+	2: '"', 3: '"', 4: '"', 10: '"', 11: '"', 12: '"', 13: '"', 14: '"', 16: '"', 18: '"',
+	19: '"', 22: '"', 23: '"', 27: '"', 30: '"', 31: '"', 33: '"', 35: '"', 37: '"', 40: '"',
+	43: '"', 44: '"', 45: '"', 47: '"', 48: '"', 53: "See 50", 54: "See 51", 55: "See 52", 56: "See 50", 57: "See 51",
+	58: "See 52", 59: "See 50", 60: "See 51", 61: "See 52", 62: "See 50", 63: "See 51", 64: "See 52",
 }
 # Lamps the playfield lamp-location drawing shows twice (two sockets on one matrix address).
 TWIN_LAMPS = {15: ("left", "right"), 41: ("left", "right")}

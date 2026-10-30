@@ -59,10 +59,10 @@ RUNTIME_MANIFEST_SHA256 = "1b5e297daab34a7533a3ebe57979f755d0741a10637007b337feb
 
 # excerpt id: (file, locator)
 EXCERPT_FILES = {
-	"switch-matrix": ("switch-matrix.md", "Instruction Manual PDF16 (upper half), complete System 9 Switch-Matrix Table"),
-	"lamp-matrix": ("lamp-matrix.md", "Instruction Manual PDF16 (lower half), complete System 9 Lamp-Matrix Table"),
+	"switch-matrix": ("switch-matrix.md", "Instruction Manual PDF16 (lower half), complete System 9 Switch-Matrix Table"),
+	"lamp-matrix": ("lamp-matrix.md", "Instruction Manual PDF16 (upper half), complete System 9 Lamp-Matrix Table"),
 	"solenoid-table": ("solenoid-table.md", "Instruction Manual PDF14, complete System-9 Solenoid Table and notes"),
-	"location-parts-lists": ("location-parts-lists.md", "Instruction Manual PDF19 Switch Locations, PDF4 Solenoid Location Diagram and PDF20 Lamp Locations parts lists"),
+	"location-parts-lists": ("location-parts-lists.md", "Instruction Manual PDF19 Switch Location Diagram, PDF4 Solenoid Location Diagram and PDF20 Lamp Location Diagram parts lists"),
 	"playfield-solenoid-wiring": ("playfield-solenoid-wiring.md", "Instruction Manual PDF17, System 9 Playfield-Solenoid & Special-Switch Wiring Diagram"),
 	"cpu-connectors": ("cpu-connectors.md", "Instruction Manual PDF18 Back Box Wiring Diagram and PDF25 CPU schematic: 1J6, 1J7, 1J8 and 1J10"),
 	"operation-and-diagnostics": ("operation-and-diagnostics.md", "Instruction Manual PDF3 corrections, PDF7 ROM summary, PDF8 game play, PDF10-11 adjustments, PDF13 test procedures"),
@@ -71,10 +71,10 @@ EXCERPT_FILES = {
 	"script-library": ("script-library.md", "s11.vbs lines 23-40 cabinet and flipper constants"),
 }
 EXCERPT_DIGESTS = {
-	"switch-matrix": "e3f36e70a599a6b6f4d59518cba7f7d4ca46e1278b2602c84eb136f5b9ab2b63",
-	"lamp-matrix": "829558ecb83e96b022a76249f508d42f0a33d9f1b887214b4a6054705c47293d",
+	"switch-matrix": "9c5393945bda6c3bc15eb2c84a30b84b32266dc16122ea0b4114679347881dc6",
+	"lamp-matrix": "920e9e009133f3938b0c58df229799bb25b431a6a33a2e8f107842f200f605de",
 	"solenoid-table": "49e5da8383f304448f7fac38880d841889ae9ccc3ffaba128085359098f4c604",
-	"location-parts-lists": "0135c70a8fa0c368b311f985fd49994548fcfbbeb72b33dd296c6ea30f05e597",
+	"location-parts-lists": "bcea4f955bcb639600aa7e6593d1aaf0b2e2748e213c44f765e065e62fa702b4",
 	"playfield-solenoid-wiring": "dd2ce4b2bc3d499816233af1b12b36cdd55493c889574d52486b3623f4f5c80b",
 	"cpu-connectors": "d8f187cd52c3253470a1cf34a27f539ed2163716637a2be479a3e6f74a779de3",
 	"operation-and-diagnostics": "0bb519fd823caa714c8d245a2b1eb40468a3d5ce0f15daad3402bacffdc3b96a",
@@ -170,7 +170,7 @@ SWITCH_NOTES = {
 	6: "Coin-door left coin chute; S11.VBS calls it swCoin1. The gameplay runs coin up with it.",
 	7: "Coin-door slam tilt; the manual says it returns the game to the Game-Over mode.",
 	8: "High-score reset button.",
-	9: "Outhole switch. A ball resting here makes the ROM fire the outhole kicker (1), which lifts it onto the ball ramp (gameplay run: one pulse for each of three outhole closures).",
+	9: "Outhole switch. A ball resting here makes the ROM fire the outhole kicker (1), which lifts it onto the ball ramp (gameplay run: one pulse for each of three outhole closures). The switch-location list prints its assembly as A-10417- with a trailing dash and no suffix.",
 	10: "The top of the three ball-ramp (trough) positions. The list names it Upper Left Ball Ramp; the switch-location drawing's trough balloons run 12, 11, 10 left to right under the apron, the reverse of the list's names, and the list, the script and the ROM's serve logic agree on 12 being the release position. The retained script holds 10, 11 and 12 closed at boot with three balls home.",
 	11: "The middle ball-ramp (trough) position.",
 	12: "The lower ball-ramp position next to the ball-ramp release (the list's Lower Right Ball Ramp). The ROM serves from here with the ball-ramp release (2) into the shooter lane.",
@@ -269,7 +269,7 @@ def build_inputs(geometry: dict | None) -> tuple[list[dict], dict[int, str]]:
 		wiring, printed = switch_wiring(address)
 		if address in data.UNUSED_SWITCHES:
 			identifier = f"switch.unused-{address}"
-			note = ("The switch matrix prints no switch here and the switch-location list ends at 49. "
+			note = ("The switch matrix prints no switch here and the switch-location list prints 50-64 as Not Used. "
 			        "The ROM's switch test shows nothing for a closure here (switch-test run), so the ROM does not scan this position.")
 			result.append({"id": identifier, "label": f"Not Used ({address})", "kind": "switch",
 			               "binding": {"group": "pinmame.input.switch", "device": address}, "aliases": aliases("pinmame.switch", address),
@@ -507,6 +507,11 @@ def build_outputs(geometry: dict | None) -> list[dict]:
 		return_wire, ret = data.LAMP_ROWS[row]
 		identifier = "lamp." + slug(label)
 		note = f"Lamp matrix cell '{literal}', lamp-location item '{function}'."
+		printed = data.LAMP_ASSEMBLY_PRINTED.get(address)
+		if printed == '"':
+			note += f" The lamp-location list prints its assembly as a ditto mark under {assembly}."
+		elif printed:
+			note += f" The lamp-location list prints its assembly as '{printed}', lamp {printed.split()[1]}'s {assembly}."
 		if location == "backbox":
 			note += " A backbox lamp: the playfield lamp-location drawing carries no balloon for it, and the retained script binds it to a backglass object."
 		if address in LAMP_QUANTITY:
