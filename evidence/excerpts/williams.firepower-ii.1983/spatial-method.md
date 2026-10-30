@@ -109,7 +109,7 @@ centers/drag-point centroids. None of these coordinates changes a public binding
 Original sources remain external and source-owned. No redistribution permission
 is asserted. Williams Electronics owns the manual; community authors own the
 table. Measurements and corrected final point reads were visually verified by
-the primary curator against the original native scans. Parent independently
+the primary curator against the original native scans. A source reviewer independently
 checked the source controls and the final corrected native overlays. Original
 readings, corrections and overlay derivations remain in the external spatial
 session. This source check is separate from the independent contribution review.

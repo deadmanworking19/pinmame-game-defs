@@ -14,15 +14,16 @@ from pinmame_game_defs.jsonio import load_json
 from pinmame_game_defs.spatial import _round_point
 
 SEED = Path("tools/seeds/williams/firepower-ii-1983-spatial.json")
-SEED_SHA = "c69ff28e00f35760f1a0f4e50087f0d7fe91b9323ce21efd137a3db324a22206"
+SEED_SHA = "459700d3a8d95c313f247bb70af8e4653a3a8756fdb81370fc94cf4f65d6d5c7"
 EXCERPT = Path("evidence/excerpts/williams.firepower-ii.1983/spatial-method.md")
-EXCERPT_SHA = "681c2491037ebd2fb70a300a5715920797b344bc42e6df81515dc65543355c34"
+EXCERPT_SHA = "0a346afd45be7285163f6401b04c7952b02a61596ab80065f5cafff529b4e755"
 RETENTION_SHA = "9c3eba2a39e77ff90a6cc62c341ad330f44be59c1a9fea9d9b2179dd1338af17"
 SESSION = Path("williams.firepower-ii.1983/session-20261030-spatial")
 TABLE = "geometry.firepower-ii-1-1"
 SCRIPT = "script.firepower-ii-embedded-1-1"
 MANUAL = "manual.firepower-ii-spatial"
 MACHINE_ID = "williams.firepower-ii.1983"
+LAMP_DISCLAIMER = "Bulb count and exact center need geometry/physical-image review; render doubles do not prove additional bulbs."
 
 
 def sha(path: Path) -> str:
@@ -197,8 +198,15 @@ def apply(definition: dict[str, Any], root: Path) -> dict[str, Any]:
             # load prevents quantity=1 on public 6.
             if row["address"] != 6:
                 physical["quantity"] = 1
-            physical["notes"] = physical["notes"].replace("Bulb count and exact center need geometry/physical-image review; render doubles do not prove additional bulbs.",
-                "Figure 2 has one located lamp symbol; the placement is its playfield-plane projection. Render doubles do not add physical bulbs.")
+            notes = physical["notes"]
+            count = notes.count(LAMP_DISCLAIMER)
+            if count != 1:
+                raise RuntimeError(f"lamp {d['id']} (public {row['address']}): expected one bulb-count/center disclaimer, found {count}")
+            if row["classification"] == "bulb_mesh":
+                replacement = "Figure 2 shows one located lamp symbol at the jet bumper; the placement is the retained table's own bulb-mesh center. Render doubles do not add physical bulbs."
+            else:
+                replacement = "Figure 2 has one located lamp symbol; the placement is its manual playfield-plane projection. Render doubles do not add physical bulbs."
+            physical["notes"] = notes.replace(LAMP_DISCLAIMER, replacement)
         note = f" Spatial: {row['classification'].replace('_', ' ')} from {row['coordinate_source']}; object {row['object']}, {row['method']}; see the spatial report."
         if row["extrapolated"]:
             note += " Outside the mechanical controls' convex hull; remains observed."

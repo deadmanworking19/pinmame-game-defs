@@ -438,8 +438,8 @@ def sources(root: Path) -> list[dict[str, Any]]:
          "acquired_at": "2026-10-29T23:57:07Z", "license": "NOASSERTION", "rights": "Copyright Williams Electronics, Inc.; IPDB-hosted scan retained externally for research. No redistribution permission asserted; repository MIT licence does not apply to the source PDF.", "attribution": "Williams Electronics, Inc.; scan hosted by the Internet Pinball Database",
          "excerpts": [excerpt(n) for n in EXCERPTS if n not in {"script-bindings.md", "identity-and-wild-texas.md", "physical-photos.md"}]},
         {"id": "ipdb.firepower-ii", "kind": "human_review", "uri": "https://www.ipdb.org/machine.cgi?id=857", "sha256": IPDB_SHA,
-         "locator": f"Identity interactively verified by parent orchestrator; retained external:pinmame-manuals/by-machine/{MACHINE_ID}/ipdb-857.html. Firepower II, August 1983, model 521, System 7, two flippers and four bumpers.",
-         "acquired_at": "2026-10-29T23:58:33Z", "license": "NOASSERTION", "attribution": "The Internet Pinball Database; acquisition and identity check by parent orchestrator; acquired_at is retained capture persistence time",
+         "locator": f"Identity interactively verified by the source curator; retained external:pinmame-manuals/by-machine/{MACHINE_ID}/ipdb-857.html. Firepower II, August 1983, model 521, System 7, two flippers and four bumpers.",
+         "acquired_at": "2026-10-29T23:58:33Z", "license": "NOASSERTION", "attribution": "The Internet Pinball Database; acquisition and identity check by the source curator; acquired_at is retained capture persistence time",
          "excerpts": [excerpt("identity-and-wild-texas.md")]},
         {"id": "ipdb.wild-texas", "kind": "human_review", "uri": "https://www.ipdb.org/machine.cgi?id=5500",
          "sha256": "49b41f922729a0dc7b9a12c1359b40207eff24fe3a0b664bc4e3bc2d9f5a9c4f", "acquired_at": "2026-10-30T00:07:40Z",
@@ -461,7 +461,7 @@ def sources(root: Path) -> list[dict[str, Any]]:
     for number, label, image_file, digest, acquired_at in PHOTOS:
         records.append({"id": f"photo.firepower-ii-{number}", "kind": "human_review", "uri": f"https://www.ipdb.org/images/857/{image_file}",
                         "source_id": "ipdb:857", "sha256": digest, "acquired_at": acquired_at,
-                        "locator": f"Machine https://www.ipdb.org/machine.cgi?id=857; photo page https://www.ipdb.org/showpic.pl?id=857&picno={number}; retained external:pinmame-manuals/by-machine/{MACHINE_ID}/photos/ipdb-{number}-{label}.jpg. Parent-acquired original photograph, primary author visual check. No coordinates measured.",
+                        "locator": f"Machine https://www.ipdb.org/machine.cgi?id=857; photo page https://www.ipdb.org/showpic.pl?id=857&picno={number}; retained external:pinmame-manuals/by-machine/{MACHINE_ID}/photos/ipdb-{number}-{label}.jpg. Original photograph retained by the source curator and visually checked by the primary curator. No coordinates measured.",
                         "license": "NOASSERTION", "rights": "Photographer retains copyright; original retained externally only, no redistribution permission asserted.",
                         "attribution": "Jonathan Selavka, photograph hosted by the Internet Pinball Database", "excerpts": [excerpt("physical-photos.md")]})
     for identifier, (filename, digest) in zip([SCRIPT, OLD_SCRIPT], SCRIPT_FILES.items()):
@@ -479,10 +479,10 @@ def sources(root: Path) -> list[dict[str, Any]]:
     records.append({"id": "custody.firepower-ii", "kind": "human_review", "uri": "repo:" + RETAINED.as_posix(),
                     "sha256": RETAINED_SHA, "revision": BASE,
                     "locator": "Deterministic custody metadata for72 retained external source files and all 16 gallery previews. Fenced JSON parsed by the curator; no physical assertions arise from hashes alone.",
-                    "license": "NOASSERTION", "attribution": "Source authors/photographers and parent acquisition process, individually recorded in the manifest; source-owned originals remain outside Git.",
+                    "license": "NOASSERTION", "attribution": "Source authors/photographers and acquisition process, individually recorded in the manifest; source-owned originals remain outside Git.",
                     "excerpts": [{"id": "excerpt.retained-inputs", "path": RETAINED.as_posix(), "sha256": RETAINED_SHA,
                                   "locator": "Complete retained-input custody manifest; filesystem hashes/sizes and acquisition metadata, no physical fitment assertions.",
-                                  "method": "mixed", "transcribed_by": "Primary author filesystem hashing; parent acquisition metadata retained verbatim", "reviewed": False}]})
+                                  "method": "mixed", "transcribed_by": "Primary curator filesystem hashing; acquisition metadata retained verbatim", "reviewed": False}]})
     retained = retained_inputs(root)
     for spec in retained["photo_acquisition"]:
         number = spec["photo_id"]
@@ -781,7 +781,7 @@ are created and no stock bulb quantity is inferred. Lamp6's photographed
 playfield member is placed, while possible parallel backbox load and lamp40
 remain conflicted. No coverage requirement is removed for this continuation.
 
-Independent parent source and overlay inspection identified four flipper-pivot
+Independent source and overlay inspection identified four flipper-pivot
 control reads above their inner circles. Primary native-crop inspection corrected
 PDF14 left/right to approximately (540,2550)/(980,2550) and PDF17 to
 (645,2545)/(1085,2545), at five-pixel precision; PDF15 controls were retained.
@@ -790,7 +790,7 @@ seed. The PDF14 refit recomputes all fifty manual lamp-symbol projections at
 three-decimal normalized precision. PDF15 leaderless sling labels17/18 and
 PDF17 storage/shooter labels9/12 are retained as excluded raw observations and
 cannot enter precise callout fits. Their observed table assembly/sensor
-placements remain. Parent then verified the corrected native overlays and
+placements remain. The source reviewer then verified the corrected native overlays and
 source controls. This source check is separate from the independent
 contribution review and does not assert tested play.
 

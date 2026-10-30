@@ -221,7 +221,7 @@ are created and no stock bulb quantity is inferred. Lamp6's photographed
 playfield member is placed, while possible parallel backbox load and lamp40
 remain conflicted. No coverage requirement is removed for this continuation.
 
-Independent parent source and overlay inspection identified four flipper-pivot
+Independent source and overlay inspection identified four flipper-pivot
 control reads above their inner circles. Primary native-crop inspection corrected
 PDF14 left/right to approximately (540,2550)/(980,2550) and PDF17 to
 (645,2545)/(1085,2545), at five-pixel precision; PDF15 controls were retained.
@@ -230,7 +230,7 @@ seed. The PDF14 refit recomputes all fifty manual lamp-symbol projections at
 three-decimal normalized precision. PDF15 leaderless sling labels17/18 and
 PDF17 storage/shooter labels9/12 are retained as excluded raw observations and
 cannot enter precise callout fits. Their observed table assembly/sensor
-placements remain. Parent then verified the corrected native overlays and
+placements remain. The source reviewer then verified the corrected native overlays and
 source controls. This source check is separate from the independent
 contribution review and does not assert tested play.
 

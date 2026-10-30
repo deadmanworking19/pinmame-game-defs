@@ -75,6 +75,39 @@ class FirepowerIISpatialTests(unittest.TestCase):
             method = "world_bounds" if "world_bounds_center" in item else "center"
             self.assertEqual(item["normalized_center"],list(spatial.normalized(self.seed,spatial.object_point(self.seed,item["object"],method))))
 
+    def test_lamp_notes_name_each_coordinate_source(self):
+        lamps = {d["binding"]["device"]: d for d in self.game["outputs"]
+                 if d["binding"]["group"] == "pinmame.output.lamp"}
+        rows = [r for r in self.rows if r["group"] == "lamp"]
+        self.assertEqual({r["address"] for r in rows if r["classification"] == "bulb_mesh"}, {41, 42, 43, 44})
+        self.assertEqual(sum(r["method"] == "drawing_symbol" for r in rows), 50)
+        for row in rows:
+            with self.subTest(lamp=row["address"]):
+                notes = lamps[row["address"]]["physical"]["notes"]
+                self.assertNotIn(spatial.LAMP_DISCLAIMER, notes)
+                if row["classification"] == "bulb_mesh":
+                    self.assertIn("Figure 2 shows one located lamp symbol at the jet bumper", notes)
+                    self.assertIn("retained table's own bulb-mesh center", notes)
+                    self.assertNotIn("manual playfield-plane projection", notes)
+                else:
+                    self.assertEqual(row["method"], "drawing_symbol")
+                    self.assertIn("manual playfield-plane projection", notes)
+                    self.assertNotIn("retained table's own bulb-mesh center", notes)
+
+    def test_curator_rejects_missing_or_duplicate_lamp_disclaimer(self):
+        original_outputs = curator.outputs
+        for address in (6, 41):
+            for occurrences in (0, 2):
+                with self.subTest(address=address, occurrences=occurrences):
+                    outputs = original_outputs()
+                    lamp = next(d for d in outputs if d["binding"]["group"] == "pinmame.output.lamp"
+                                and d["binding"]["device"] == address)
+                    lamp["physical"]["notes"] = lamp["physical"]["notes"].replace(
+                        spatial.LAMP_DISCLAIMER, " ".join([spatial.LAMP_DISCLAIMER] * occurrences))
+                    with patch.object(curator, "outputs", return_value=outputs):
+                        with self.assertRaisesRegex(RuntimeError, rf"lamp {re.escape(lamp['id'])} \(public {address}\).*found {occurrences}"):
+                            curator.build()
+
     def test_independent_controls_callout_uniqueness_and_leave_one_out(self):
         calls, candidates = spatial.callout_seed(self.seed)
         for key,page in calls["pages"].items():
