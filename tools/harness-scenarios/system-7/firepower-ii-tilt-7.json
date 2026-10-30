@@ -1,0 +1,84 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "fpwr2_l2",
+  "notes": "Isolated comparison of physical tilt inputs. Fresh directory seeded only with initialization NVRAM; identical setup for each address. No physical fitment inferred from runtime.",
+  "watch_switches": [
+    1,
+    7,
+    49,
+    10,
+    11
+  ],
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "boot with two stored balls"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "right coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 3,
+      "label": "start game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 1,
+      "label": "served ball leaves storage"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "tilt 7 closure 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "tilt 7 closure 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "tilt 7 closure 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "bumper after tilt sequence"
+    },
+    {
+      "type": "wait",
+      "seconds": 5,
+      "label": "settled result"
+    }
+  ]
+}

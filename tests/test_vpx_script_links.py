@@ -18,6 +18,8 @@ STANDALONE_REVISION = "15d112648a1b94b9f59eb8b3c335d57283653c50"
 # revision, repository, or path requires an evidence review rather than a
 # silent link rewrite.
 PINNED_SCRIPTS = {
+	"8a310e2e3773312d2f78c4370a1bd032c2aa194c6d3db175f56e252230c4d4f6": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "FirePower II (Williams 1983) 1.1.vbs"),
+	"a348a21d346f3f4be38c682a03fe677a8b7b598042dc0a24720c02e6b3765918": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Firepower2v1.1.vbs"),
 	"092611fc754374d11d032b81b63638b5a2dc2f43464ee6c7c3cd27874c77e5c3": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "special_audiopan_and_audiofade_patched/Mustang (Stern 2014) v1.27.vbs"),
 	"1bbcc5873a1db87fe59d1daefbb69b68872cf58f029320a9d7d9410db7c59d97": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Terminator 2 (Williams 1991).vbs"),
 	"1c6bc48c74e7bb8e48293152ee226318a9a8dce230bd6b63554f9c92075dbff0": (STANDALONE_REPOSITORY, STANDALONE_REVISION, "Batman [The Dark Knight] (Stern 2008) 1.16/Batman [The Dark Knight] (Stern 2008) 1.16.vbs"),

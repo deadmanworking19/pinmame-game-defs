@@ -1,0 +1,223 @@
+{
+  "driver_ids": [
+    "fpwr2_l2"
+  ],
+  "extractor": {
+    "id": "firepower-ii-controlled-tilt-comparison",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.firepower-ii.1983"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 1,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Identical fresh L-2 game setup: plumb1 gives GI11 warnings twice and drops25/lights Tilt3/clears40 on third closure; slam7 drops25 and resumes Game Over/attract on first; playfield49 tilts on first. No trace establishes physical switch construction or lamp fitment. Newer corpus script sets TiltSwitch7, an erroneous mechanical-tilt route under the separately retained installed s7/core library. Binary/ROM/init identities match original evidence."
+    }
+  ],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <working-root>/builds/pinmame-46e1a01a/Release/pinmame64.dll --game fpwr2_l2 --rom-path <read-only-authorized-rom-root> --work-dir <fresh-session-harness-state-dir> --scenario <scenario_path> --output <session>/tilt-probes/<name>.json",
+    "emulator": {
+      "binary": "builds/pinmame-46e1a01a/Release/pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "fpwr2_l2",
+    "observations": {
+      "runs": {
+        "tilt-1": {
+          "named_action_observations": [
+            {
+              "label": "tilt 1 closure 1",
+              "input_kind": "switch",
+              "input_address": 1,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "active_solenoid_addresses": [
+                11
+              ],
+              "transitioned_solenoid_addresses": [
+                11
+              ],
+              "result": "observed"
+            },
+            {
+              "label": "tilt 1 closure 2",
+              "input_kind": "switch",
+              "input_address": 1,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "active_solenoid_addresses": [
+                11
+              ],
+              "transitioned_solenoid_addresses": [
+                11
+              ],
+              "result": "observed"
+            },
+            {
+              "label": "tilt 1 closure 3",
+              "input_kind": "switch",
+              "input_address": 1,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                1
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [
+                25
+              ],
+              "result": "observed"
+            }
+          ],
+          "note": "First and second closures pulse GI11 [1,0]; third drops enable25 [0], lights Tilt3 [1] and clears40 [0].",
+          "limitation": "Host switch stimuli are not autonomous ROM observations; no bulb fitment is inferred."
+        },
+        "tilt-7": {
+          "named_action_observations": [
+            {
+              "label": "tilt 7 closure 1",
+              "input_kind": "switch",
+              "input_address": 7,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [
+                25
+              ],
+              "result": "observed"
+            },
+            {
+              "label": "tilt 7 closure 2",
+              "input_kind": "switch",
+              "input_address": 7,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [],
+              "result": "no_matching_transition"
+            },
+            {
+              "label": "tilt 7 closure 3",
+              "input_kind": "switch",
+              "input_address": 7,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                7
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [],
+              "result": "no_matching_transition"
+            }
+          ],
+          "note": "First closure drops enable25 [0], clears40 [0] and resumes Game Over1 blinking/attract.",
+          "limitation": "Host switch stimuli are not autonomous ROM observations; no bulb fitment is inferred."
+        },
+        "tilt-49": {
+          "named_action_observations": [
+            {
+              "label": "tilt 49 closure 1",
+              "input_kind": "switch",
+              "input_address": 49,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [
+                25
+              ],
+              "result": "observed"
+            },
+            {
+              "label": "tilt 49 closure 2",
+              "input_kind": "switch",
+              "input_address": 49,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [],
+              "result": "no_matching_transition"
+            },
+            {
+              "label": "tilt 49 closure 3",
+              "input_kind": "switch",
+              "input_address": 49,
+              "observed_switch_addresses": [],
+              "host_stimulus_switch_addresses": [
+                49
+              ],
+              "active_solenoid_addresses": [],
+              "transitioned_solenoid_addresses": [],
+              "result": "no_matching_transition"
+            }
+          ],
+          "note": "First closure drops enable25 [0], lights Tilt3 [1] and clears40 [0].",
+          "limitation": "Host switch stimuli are not autonomous ROM observations; no bulb fitment is inferred."
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 9,
+        "name": "tilt-1",
+        "nvram_initialization": "Fresh state seeded only from initialization NVRAM SHA256 3c0377666fb6e5c7d238544e121a930425849448df4bcaba8f65d7fafab82996; initialization trace retained in original harness bundle.",
+        "scenario_path": "tools/harness-scenarios/system-7/firepower-ii-tilt-1.json",
+        "scenario_sha256": "3195ea8010c29987cfde69bdae75c142043a83662d076fce8f3e7143600b7e5b",
+        "sha256": "a6363853b2d12ee76e0eb7c054b07f5757fb66f682a9f462951195b82981af1c",
+        "snapshot_count": 10,
+        "self_test_pulses": 0
+      },
+      {
+        "action_count": 9,
+        "name": "tilt-7",
+        "nvram_initialization": "Fresh state seeded only from initialization NVRAM SHA256 3c0377666fb6e5c7d238544e121a930425849448df4bcaba8f65d7fafab82996; initialization trace retained in original harness bundle.",
+        "scenario_path": "tools/harness-scenarios/system-7/firepower-ii-tilt-7.json",
+        "scenario_sha256": "fb1b3c7728e9afc167fb7e8fde17bd9c841d5c7dac40526e17a99a0799492694",
+        "sha256": "02a9fa20c06c3e33b720a3209a7ed2be544f16f979f53a00ea9c4ff1997043ca",
+        "snapshot_count": 10,
+        "self_test_pulses": 0
+      },
+      {
+        "action_count": 9,
+        "name": "tilt-49",
+        "nvram_initialization": "Fresh state seeded only from initialization NVRAM SHA256 3c0377666fb6e5c7d238544e121a930425849448df4bcaba8f65d7fafab82996; initialization trace retained in original harness bundle.",
+        "scenario_path": "tools/harness-scenarios/system-7/firepower-ii-tilt-49.json",
+        "scenario_sha256": "9d9ad97187523e7112f85fbb4c8b4fa45bf06511f4e089daec8e099232c00301",
+        "sha256": "82cdc4d5043ae47018f79995d0457668239c4ffb8f69c8bc319d7bcb8489b197",
+        "snapshot_count": 10,
+        "self_test_pulses": 0
+      }
+    ],
+    "rom_archive_sha256": "2f31b97fbaefa7071288850f777ac0f602b3531038293497fcddb8c4843c78e1"
+  },
+  "source": {
+    "attribution": "pinmame-game-defs curator",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "tools/build_external_evidence_manifest.py: all relative POSIX paths, byte sizes and SHA256 sorted case-sensitively; exclude only manifest.json and manifest.sha256; canonical sorted-key compact UTF-8 JSON plus LF; SHA256 of those manifest bytes",
+    "path": "external:pinmame-review-artifacts/williams.firepower-ii.1983/session-20261029/tilt-probes/manifest.json",
+    "quality": "observed",
+    "repository": "pinmame-game-defs",
+    "revision": "8e8b27143a0889c57efaee40df88b03480e61d7f",
+    "sha256": "90ff7bf8e2d7157b8cb1e0ce56c8dfecf4e3330d7d30e69642c75884f6c51003"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

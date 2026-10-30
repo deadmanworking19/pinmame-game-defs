@@ -489,7 +489,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 483 | 1983 | Le King | Jeutel | partial | 13% |
 | 484 | 1983 | Ice Cold Beer | Taito | partial | 6% |
 | 485 | 1983 | Big Strike (Shuffle) (L-1) | Williams | partial | 6% |
-| 486 | 1983 | Firepower II | Williams | partial | 13% |
+| 486 | 1983 | Firepower II | Williams | partial | 75% |
 | 487 | 1983 | Joust | Williams | partial | 13% |
 | 488 | 1983 | Rat Race (L-1) | Williams | partial | 6% |
 | 489 | 1983 | Time Fantasy | Williams | partial | 19% |
@@ -815,3 +815,4 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 809 | unknown | Polar Explorer | Taito | partial | 6% |
 | 810 | unknown | Volley | Taito | partial | 6% |
 | 811 | unknown | Big Ball Bowling (Bowler) | United(?) | partial | 6% |
+| 812 | unknown | Wild Texas | Unknown Manufacturer | partial | 25% |

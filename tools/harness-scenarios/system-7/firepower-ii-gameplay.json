@@ -1,0 +1,257 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "fpwr2_l2",
+  "notes": "Fresh state seeded only with the retained initialization NVRAM. Direct writes exercise two-ball storage, saucer lock/release, each special coil, flipper synthesis/lane change, and tilt. Physical causality remains distinct from host ball moves.",
+  "watch_switches": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    23,
+    82,
+    84
+  ],
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    }
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "boot with two stored balls"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "right coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 120,
+      "settle_s": 3,
+      "label": "start game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "ball thrown from right ramp"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "served ball in shooter trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "manual plunge"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "special scoring switch 48"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1,
+      "label": "right flipper held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "right flipper released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 1,
+      "label": "left flipper held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "left flipper released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "one write to matrix lane change is overwritten"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "matrix lane change cleared"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "orbit spinner"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "orbit entrance"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "orbit completion"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 4,
+      "label": "ball held in eject hole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "second ball thrown from left ramp"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 120,
+      "settle_s": 3,
+      "label": "release target"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "locked ball leaves after release"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "ramp entrance"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "ramp exit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball rests in outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "ball leaves outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "ball returned to storage"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "plumb tilt warning one"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "plumb tilt warning two"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 3,
+      "label": "plumb tilt warning three"
+    }
+  ]
+}

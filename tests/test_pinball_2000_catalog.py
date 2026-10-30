@@ -72,14 +72,15 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# The current SPIKE baseline adds thirteen partial definitions and nine system parents;
 		# the unrelated new roots and unclaimed conversion variants remain explicit residual stubs.
 		# Dr. Dude's factory WPC hardware batch is a separate partial physical-machine record.
+		# Wild Texas is a separate physical conversion rather than Firepower II firmware.
 		self.assertEqual(
 			{
 				"author_ready_count": 42,
 				"driver_count": 2981,
-				"game_count": 811,
-				"machine_count": 834,
+				"game_count": 812,
+				"machine_count": 835,
 				"non_game_count": 23,
-				"partial_count": 766,
+				"partial_count": 767,
 				"root_driver_count": 819,
 				"stub_count": 26,
 			},

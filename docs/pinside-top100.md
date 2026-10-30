@@ -175,7 +175,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 225 | Count-Down | `gottlieb.count-down.1979` | 19% |
 | 226 | The Avengers | `stern.avengers-pro.2012` | 100% |
 | 226 | The Avengers | `stern.avengers-limited-edition.2012` | 94% |
-| 227 | Firepower II | `williams.firepower-ii.1983` | 13% |
+| 227 | Firepower II | `williams.firepower-ii.1983` | 75% |
 | 228 | Comet | `williams.comet.1985` | 19% |
 | 229 | Nascar | `stern.nascar.2005` | 13% |
 | 230 | Pharaoh | `williams.pharaoh.1981` | 13% |

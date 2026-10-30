@@ -1,0 +1,693 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "fpwr2_l2",
+  "notes": "Initialized by the retained empty-CMOS boot. Test 03 switch sweep, one address at a time with all others open; only ROM displays establish switch recognition. No keyboard handling.",
+  "watch_switches": [
+    13,
+    57,
+    58,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "settle initialized boot"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "Manual-Down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "enter display digits test"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "Auto-Up"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "Test 00 sound"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "Test 01 lamps"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 1,
+      "label": "Test 02 solenoids"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 120,
+      "settle_s": 2,
+      "label": "Test 03 switches"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 450,
+      "settle_s": 0.2,
+      "snapshot_while_held": true,
+      "label": "matrix 64"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 81 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 81 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 82 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 82 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 83 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 83 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 84 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 84 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 85 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 85,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 85 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 86,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 86 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 86,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 86 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 87,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 87 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 87,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 87 released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 0.8,
+      "label": "flipper column 88 held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "flipper column 88 released"
+    }
+  ]
+}

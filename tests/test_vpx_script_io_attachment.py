@@ -31,9 +31,10 @@ CORPUS_REPOSITORIES = (
 # Medusa's factory/source/runtime curation replaces 111 candidate devices from three scripts.
 # TX-Sector replaces its 30 imported candidate devices from two scripts.
 # Gold replaces 57 candidates from one script with its own complete definition.
-EXPECTED_ATTACHED_MACHINES = 261
-EXPECTED_ATTACHED_DEVICES = 12024
-EXPECTED_ATTACHED_SCRIPTS = 322
+# Firepower II replaces its 87 imported candidate devices from one script.
+EXPECTED_ATTACHED_MACHINES = 260
+EXPECTED_ATTACHED_DEVICES = 11937
+EXPECTED_ATTACHED_SCRIPTS = 321
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
