@@ -568,5 +568,119 @@ class ScaredStiffRetainedEvidenceTests(unittest.TestCase):
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(transcription))
 
 
+EXCERPT_DIRECTORY = ROOT / "evidence" / "excerpts" / "bally.scared-stiff.1996"
+
+
+def _table_rows(text: str, columns: int) -> list[list[str]]:
+	"""Return the cells of every Markdown table row with ``columns`` cells whose first cell is a driver id."""
+	rows = []
+	for line in text.splitlines():
+		cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+		if len(cells) == columns and cells[0].startswith("`ss_"):
+			rows.append(cells)
+	return rows
+
+
+@unittest.skipUnless(os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT"), "review-artifacts root is not configured")
+class ScaredStiffRuntimeAndCaptureEvidenceTests(unittest.TestCase):
+	"""Re-derive the excerpts' harness tables and capture hashes from the retained raw evidence."""
+
+	@classmethod
+	def setUpClass(cls) -> None:
+		from pinmame_game_defs.workspace import resolve_working_root
+
+		cls.runtime_root = resolve_working_root(ROOT) / "runtime-evidence" / "scared-stiff-1996"
+		cls.captures = Path(os.environ["PINMAME_REVIEW_ARTIFACTS_ROOT"]) / "scared-stiff-1996" / "aux-lamp-sources"
+		cls.sources = {source["id"]: source for source in load_json(DEFINITION_PATH)["sources"]}
+
+	def run_directory(self, name: str) -> tuple[Path, dict[str, object]]:
+		import hashlib
+
+		from build_external_evidence_manifest import check_manifest
+
+		directory = self.runtime_root / name
+		digest = check_manifest(directory, name.split("-", 1)[0])
+		manifest = load_json(directory / "manifest.json")
+		self.assertEqual(digest, hashlib.sha256((directory / "manifest.json").read_bytes()).hexdigest(), name)
+		return directory, {
+			"manifest": digest,
+			"files": len(manifest["files"]),
+			"bytes": sum(item["size"] for item in manifest["files"]),
+			"run": hashlib.sha256((directory / "run.json").read_bytes()).hexdigest(),
+		}
+
+	def test_aux_lamp_probe_tables_are_recomputed_from_the_six_runs(self) -> None:
+		text = (EXCERPT_DIRECTORY / "aux-lamp-probe.md").read_text(encoding="utf-8")
+		counts = _table_rows(text, 7)
+		identities = _table_rows(text, 5)
+		self.assertEqual(6, len(counts))
+		self.assertEqual([row[0] for row in counts], [row[0] for row in identities])
+		for count_row, identity_row in zip(counts, identities):
+			driver = count_row[0].strip("`")
+			directory, identity = self.run_directory(f"{driver}-aux-lamp-probe")
+			self.assertEqual(
+				[f"`{identity['run']}`", f"`{identity['manifest']}`", str(identity["files"]), str(identity["bytes"])],
+				identity_row[1:],
+				driver,
+			)
+			run = load_json(directory / "run.json")
+			self.assertEqual(driver, run["game"])
+			self.assertIsNone(run["failure"], driver)
+			self.assertEqual("8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5", run["library_sha256"])
+			self.assertEqual("0b7367d8040988cde7c1b4182522845492479e152ded91617504379edf353ce8", run["scenario"]["sha256"])
+			lamp_events = [event for event in run["events"] if event["event"] == "lamp" and event["number"] in AUX_LAMP_ADDRESSES]
+			solenoid_counts: dict[int, int] = {}
+			for event in run["events"]:
+				if event["event"] == "solenoid" and event["number"] in {37, 38, 41, 42}:
+					solenoid_counts[event["number"]] = solenoid_counts.get(event["number"], 0) + 1
+			recomputed = [
+				str(len({event["number"] for event in lamp_events})),
+				str(len(lamp_events)),
+				", ".join(f"{number}: {solenoid_counts[number]}" for number in sorted(solenoid_counts)) or "0",
+				f"{lamp_events[0]['time_s']:.3f} s" if lamp_events else "-",
+			]
+			self.assertEqual(recomputed, count_row[3:], driver)
+
+	def test_flipper_button_events_are_recomputed_from_the_run(self) -> None:
+		import re
+
+		directory, identity = self.run_directory("ss_15-flipper-button-polarity")
+		self.assertEqual(self.sources["runtime.scared-stiff.flipper-button-polarity"]["sha256"], identity["run"])
+		text = (EXCERPT_DIRECTORY / "flipper-button-polarity.md").read_text(encoding="utf-8")
+		flat = " ".join(text.split())
+		self.assertIn(f"`run.json` SHA-256 `{identity['run']}`", flat)
+		self.assertIn(f"(SHA-256 `{identity['manifest']}`, {identity['files']} files, {identity['bytes']} bytes)", flat)
+		run = load_json(directory / "run.json")
+		self.assertIsNone(run["failure"])
+		self.assertEqual("fddec3f6677aa7eadb0000c301e2fd9527b30598800cc66447c93cb1fd684f80", run["scenario"]["sha256"])
+		eject = next(event["time_s"] for event in run["events"] if event["event"] == "solenoid" and event["number"] == 9 and event["state"])
+		self.assertIn(f"first fires at {eject:.3f} s", flat)
+		rows: dict[float, tuple[list[str], list[str]]] = {}
+		for event in run["events"]:
+			if event["event"] == "switch" and event["number"] in {112, 114} and not event.get("initial"):
+				rows.setdefault(event["time_s"], ([], []))[0].append(f"switch {event['number']} written {event['state']}")
+			elif event["event"] == "solenoid" and event["number"] in {45, 46, 47, 48}:
+				rows.setdefault(event["time_s"], ([], []))[1].append(f"solenoid {event['number']} {event['state']}")
+		recomputed = [[f"{time:.3f}", "; ".join(", ".join(part) for part in parts if part)] for time, parts in sorted(rows.items())]
+		printed = []
+		for line in text.splitlines():
+			match = re.fullmatch(r"\| (\d+\.\d{3}) \| (.+) \|", line.strip())
+			if match:
+				printed.append([match.group(1), re.sub(r" \([^)]*\)", "", match.group(2))])
+		self.assertEqual(recomputed, printed)
+
+	def test_retained_captures_match_the_manifest_and_source_hashes(self) -> None:
+		import hashlib
+
+		from build_external_evidence_manifest import check_manifest
+
+		self.assertEqual("292cedb949dc7898378f3573d6c8ce028592d5b02561a56fbe835908a0c6bde4", check_manifest(self.captures, "ss_15"))
+		for source_id, filename in (
+			("manufacturer-notes.bally.scared-stiff.1996", "pinball-wms-com-games-stiff-dev.wayback-19970129085638.htm"),
+			("owner-reports.bally.scared-stiff.1996.skull-driver", "pinside-scared-stiff-club-page-82.html"),
+		):
+			self.assertEqual(self.sources[source_id]["sha256"], hashlib.sha256((self.captures / filename).read_bytes()).hexdigest(), source_id)
+
+
 if __name__ == "__main__":
 	unittest.main()
