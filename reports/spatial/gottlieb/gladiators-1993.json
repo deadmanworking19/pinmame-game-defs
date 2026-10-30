@@ -1,13 +1,33 @@
 {
   "blockers": [
-    "No VPX table of the machine is retained: the known-working script is held only as the pinned corpus copy, and the table it belongs to (Kiwi's Gladiators (Premier 1993) VPX v1.1.1) has not been acquired, so no playfield object coordinate is available for any switch, lamp, coil or flasher.",
-    "No factory drawing is retained: IPDB lists the instruction manual pages and the coil, fuse and switch charts without hosting them, and no other attributable copy was found, so no placement could be taken or checked from the machine's own location drawings.",
-    "The known-working script places solenoids 8, 9, 22 and 24 and lamps 112-117 in its backbox; the lamps' ROM name (LIGHTBOX) settles theirs, but the flashers' location rests on the script and their backglass-art names alone, so they are not classified."
+    "No factory drawing is retained: IPDB lists the instruction manual pages and the coil, fuse and switch charts without hosting them, and no other attributable copy was found, so no placement can be checked against the machine's own switch, lamp or coil location drawings.",
+    "Only one table is retained, the VR edit of Kiwi's VPX v1.1.1, and the pinned v1.0.1 script is the same author's earlier release of it, so no independently built geometry can confirm a placement. Every placement comes from that table and stays observed.",
+    "Solenoid 31 (Tilt Relay, playfield G.I.): the 19 placements are the bulb lights the table's GIRelay switches; a table's grouping is not the machine's wiring and the bulb count is unknown, so they stay observed without a quantity.",
+    "Solenoids 8, 9, 22 and 24 are drawn in the script's backbox and solenoids 19-21 only as flasher sprites, so none of the seven is placed or classified; the lamps 112-117 are lightbox lamps by the ROM's own names.",
+    "Ramp motor switch 30 and trough switch 33 have no table object of their own and are projected onto the catapult ramp and the ball release."
   ],
   "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
     "space": "playfield",
-    "x": "0=left, 1=right",
-    "y": "0=rear/backglass, 1=apron/player"
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "Bulb<n>a Light doubles of the G.I. bulbs, and Bulb8T15, Bulb8T25 and Bulb8T35 beside the drop targets: Bulb1-Bulb19, the members with a bulb mesh, are the placements",
+    "giB1-giB3 and LR1-LR3 Light objects, which model no bulb",
+    "Flasher sprites: fgit, the f<n> lamp and flasher overlays, and f19-f21; a sprite is a render helper, not a socket",
+    "The l197a companion light the script fades with l197, and the LEDR primitives of the apron LEDs, which sit at their l<n> lights",
+    "VR room, cabinet and backbox objects"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 2052,
+    "source_ref": "vpx-extraction.gladiators-kiwi-1-1-1-vr"
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "gottlieb.gladiators.1993",
@@ -185,7 +205,104 @@
       }
     ]
   },
-  "omitted_inputs": [
+  "omitted_inputs": [],
+  "omitted_outputs": [
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 153,
+  "placement_status_counts": {
+    "observed": 153
+  },
+  "projections": [
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the catapult ramp (Primitive RMotor, world mesh centre), the moving rail the script turns about its top end and whose home step writes this switch (.AddSw 30, 0, 0); the sensor has no object of its own."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the ball release (Kicker BallRelease), the trough exit the script's four-ball stack kicks from; the script keeps the trough as a virtual stack and has no object for this switch."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the left kicking target it drives (the script's KickingT primitive, which it swings on the target's hit); the coil has no object of its own."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right kicking target it drives (the script's KickingT primitive, which it swings on the target's hit); the coil has no object of its own."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the left hole the script ejects from; the coil has no object of its own."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top hole the script ejects from; the coil has no object of its own."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the bank's middle drop target; the reset coil sits below the bank and has no object of its own."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the center upkicker the script lifts the ball from; the coil has no object of its own."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right upkicker the script ejects from; the coil has no object of its own."
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the catapult ramp its motor turns; the relay and motor have no object of their own."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the trough exit the script releases balls from; the coil has no object of its own."
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the outhole kicker the script receives drained balls on; the coil has no object of its own."
+    }
+  ],
+  "resolved_input_addresses": [
     10,
     11,
     12,
@@ -217,7 +334,7 @@
     103,
     104
   ],
-  "omitted_outputs": [
+  "resolved_output_bindings": [
     {
       "address": 0,
       "group": "pinmame.output.lamp"
@@ -587,14 +704,6 @@
       "group": "pinmame.output.solenoid"
     },
     {
-      "address": 8,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 9,
-      "group": "pinmame.output.solenoid"
-    },
-    {
       "address": 10,
       "group": "pinmame.output.solenoid"
     },
@@ -631,27 +740,7 @@
       "group": "pinmame.output.solenoid"
     },
     {
-      "address": 19,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 20,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 21,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 22,
-      "group": "pinmame.output.solenoid"
-    },
-    {
       "address": 23,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 24,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -667,8 +756,12 @@
       "group": "pinmame.output.solenoid"
     }
   ],
-  "placement_count": 0,
-  "status": "unknown",
+  "source_hashes": {
+    "embedded_script_sha256": "0c8c67f2e39b62597bc4b067fd9b1fb092a402deba8e673067b877d718f2380f",
+    "obj_export_sha256": "33f6ef95d046df9dc83942642396e6a136aa345757a16d27f0bb4dbd4b37e1c2",
+    "table_sha256": "b2925083424e053ebf9149657301b4358ef5448008ba41f3fd7e747c1d126ef9"
+  },
+  "status": "observed",
   "unresolved": [],
   "version": 1
 }

@@ -10,8 +10,10 @@ and Front Door on public 0-6), cabinet-wired flippers copied into matrix switche
 (public 143 and 141), and ``hw.lampCol = 4``, so no auxiliary driver board and no lamps 120-127. No service manual is
 retained: IPDB lists its charts without hosting them. The ROM's own service tests name every switch, lamp and solenoid,
 and a harness run of each pairs the name with the public address it drives or reads
-(``evidence/runtime/gts3/gladiators-gladiatr-service-tests.json``). No VPX table is retained, so no playfield device is
-placed.
+(``evidence/runtime/gts3/gladiators-gladiatr-service-tests.json``). Playfield positions come from the retained VR edit
+of Kiwi's VPX v1.1.1 table, whose embedded script binds every controller address exactly as the pinned v1.1.1 script
+does; with one table and no factory drawing they stay ``observed``. The object coordinates are literals here, and
+``verify_retained_table`` re-derives each one from the retained extraction and OBJ export.
 """
 
 from __future__ import annotations
@@ -59,6 +61,31 @@ IPDB_PAGE_SHA256 = "1cc4a4c44942e0ecf9f253047398abe9d5f63ef5f2e11becc9db8ffbf813
 SCRIPT_SHA256 = "25060187b97e5a57499429689be0c247003d26342bed632961d0cd9ba02cfe69"
 SCRIPT_CHECKOUT_SHA256 = "5f6892eee612ded70df23c88d51813145572495395e807c000851d132f128853"
 OLDER_SCRIPT_SHA256 = "13b45d7e9a4ead26633cb0dd6ed1adf2e25fdcb0785360b3bcdddc7db5ba45e7"
+
+# The retained table: MaX's 2024 VR edit of Kiwi's VPX v1.1.1, under the working root's vpx-sources.
+VPX_TABLE_SOURCE = "vpx-table.gladiators-kiwi-1-1-1-vr"
+VPX_EXTRACTION_SOURCE = "vpx-extraction.gladiators-kiwi-1-1-1-vr"
+VPX_OBJ_SOURCE = "vpx-obj-export.gladiators-kiwi-1-1-1-vr"
+VPX_DIRECTORY = Path("gottlieb/gladiators-1993/kiwi-v1.1.1-vr")
+TABLE_FILENAME = "Gladiators (Premier 1993) v1.1.1 VR.vpx"
+TABLE_RELATIVE_PATH = VPX_DIRECTORY / "source" / TABLE_FILENAME
+TABLE_SHA256 = "b2925083424e053ebf9149657301b4358ef5448008ba41f3fd7e747c1d126ef9"
+TABLE_BYTES = 108167168
+# The embedded script as vpxtool extracts it (CRLF, 51,298 bytes).
+EMBEDDED_SCRIPT_SHA256 = "0c8c67f2e39b62597bc4b067fd9b1fb092a402deba8e673067b877d718f2380f"
+EXTRACTION_RELATIVE_PATH = VPX_DIRECTORY / "extracted-vpxtool"
+EXTRACTION_MANIFEST_RELATIVE_PATH = VPX_DIRECTORY / "extracted-vpxtool.manifest.json"
+EXTRACTION_FILE_COUNT = 2052
+EXTRACTION_TOTAL_BYTES = 203551065
+# SHA-256 of the canonical manifest bytes, so a changed extraction with a refreshed manifest is refused.
+EXTRACTION_MANIFEST_SHA256 = "9433e0a06daafaa1170dc81cecfc2f9c0c6342e27eb6091d49351c279e3d2f05"
+OBJ_RELATIVE_PATH = VPX_DIRECTORY / "export-obj-vpu" / "Gladiators (Premier 1993) v1.1.1 VR.obj"
+OBJ_SHA256 = "33f6ef95d046df9dc83942642396e6a136aa345757a16d27f0bb4dbd4b37e1c2"
+VPXTOOL_VERSION = "vpxtool git:v0.33.3"
+
+PLAYFIELD_WIDTH = 952.0
+PLAYFIELD_HEIGHT = 2162.0
+TABLE_BOUNDS = "left=0 top=0 right=952 bottom=2162"
 
 # (left, right) in the driver's own FLIP_SWNO macro order (FLIP8283).
 FLIP_SWNO = (82, 83)
@@ -269,6 +296,113 @@ SCRIPT_LAMPS = frozenset(address for address in ROM_LAMP_NAMES if address != 1)
 SCRIPT_FLASH_LAMPS = frozenset((84, 85, 86, 87, 94, 95, 96, 97))
 WORD_EXPANSIONS = {"L": "Left", "R": "Right", "C": "Center", "TAR.": "Target", "UPKICK": "Upkicker", "R.O.": "Rollover"}
 
+# --- Placements. Retained-table objects as (item type, x, y) in VPX units: a Wall's drag-point mean, a HitTarget's or
+# Primitive's stored position, otherwise the stored centre. verify_retained_table re-derives every value.
+TABLE_POINTS: dict[str, tuple[str, float, float]] = {
+	"Bumper1": ("Bumper", 504.0, 256.25), "Bumper2": ("Bumper", 716.75, 192.0), "Bumper3": ("Bumper", 677.75, 406.75),
+	"LeftSlingshot": ("Wall", 233.8338625, 1553.35235), "RightSlingshot": ("Wall", 631.618045, 1553.35235),
+	"sw15": ("HitTarget", 462.32104, 971.5609), "sw25": ("HitTarget", 520.5886, 988.3476), "sw35": ("HitTarget", 577.74634, 1004.4406),
+	"sw20": ("Spinner", 758.118, 824.6247),
+	"sw21": ("Kicker", 534.0, 134.0), "sw22": ("Kicker", 635.125, 914.5), "sw31": ("Kicker", 321.65, 658.0),
+	"sw32": ("Kicker", 747.0, 1166.4), "Drain": ("Kicker", 454.0, 2031.0), "BallRelease": ("Kicker", 819.0, 1833.0),
+	"sw24": ("Trigger", 896.0, 1865.0), "sw80": ("Trigger", 115.0, 266.0), "sw81": ("Trigger", 370.0, 204.0),
+	"Gate90": ("Gate", 89.0, 132.0), "sw91": ("Trigger", 252.875, 166.0), "sw92": ("Trigger", 52.992188, 1522.8281),
+	"sw93": ("Trigger", 811.6172, 1520.9688), "sw94": ("Trigger", 573.375, 482.25), "sw95": ("HitTarget", 87.86694, 1101.6996),
+	"sw100": ("Trigger", 859.0, 168.0), "sw101": ("Trigger", 520.5, 296.0), "sw102": ("Trigger", 123.25, 1555.5),
+	"sw103": ("Trigger", 742.0, 1555.5), "sw104": ("HitTarget", 60.95288, 1126.2096),
+	"Perno": ("Wall", 252.875, 187.796876875),
+	"fl14": ("Light", 43.69995, 1067.5), "fl15": ("Light", 125.5, 590.5), "fl16": ("Light", 727.5, 654.7281),
+	"fl17": ("Light", 805.0, 1065.5), "l197": ("Light", 813.0, 932.0),
+	"l0": ("Light", 565.25, 1637.6719),
+	"l2": ("Light", 78.5, 1886.0), "l3": ("Light", 108.75, 1886.0), "l4": ("Light", 139.0, 1886.0),
+	"l5": ("Light", 169.25, 1886.0), "l6": ("Light", 199.5, 1886.0), "l7": ("Light", 229.75, 1886.0),
+	"l10": ("Light", 824.16797, 670.0996), "l11": ("Light", 852.75586, 599.21094),
+	"l12": ("Light", 514.0, 1943.75), "l13": ("Light", 556.5, 1919.5), "l14": ("Light", 598.75, 1895.5),
+	"l15": ("Light", 640.5, 1872.0), "l16": ("Light", 683.0, 1847.75), "l17": ("Light", 724.25, 1824.0),
+	"l20": ("Light", 175.01367, 1330.875), "l21": ("Light", 148.16895, 1269.748), "l22": ("Light", 115.62988, 1196.5352),
+	"l23": ("Light", 399.30078, 1609.7988), "l24": ("Light", 399.5332, 1560.793), "l25": ("Light", 399.30078, 1511.2695),
+	"l26": ("Light", 399.5332, 1461.7285), "l27": ("Light", 399.30078, 1412.7051),
+	"l30": ("Light", 896.6836, 1403.8555), "l31": ("Light", 896.4512, 1310.8867), "l32": ("Light", 896.6836, 1217.4531),
+	"l33": ("Light", 464.3789, 1609.7988), "l34": ("Light", 464.61133, 1560.793), "l35": ("Light", 464.3789, 1511.2695),
+	"l36": ("Light", 464.61133, 1461.7285), "l37": ("Light", 464.61133, 1412.4727),
+	"l40": ("Light", 234.7461, 1487.2949), "l41": ("Light", 321.09082, 897.87305), "l42": ("Light", 321.67188, 830.2383),
+	"l43": ("Light", 321.67188, 751.9121), "l44": ("Light", 251.48047, 1284.623), "l45": ("Light", 231.72461, 1226.0527),
+	"l46": ("Light", 209.2959, 1155.3965), "l47": ("Light", 182.56738, 1079.627),
+	"l50": ("Light", 299.82422, 1637.207), "l51": ("Light", 430.56152, 655.9219), "l52": ("Light", 495.63965, 631.05273),
+	"l53": ("Light", 569.08496, 602.9297), "l54": ("Light", 609.17773, 1232.793), "l55": ("Light", 629.63086, 1173.7578),
+	"l56": ("Light", 653.4541, 1103.1016), "l57": ("Light", 679.834, 1026.8672),
+	"l60": ("Light", 51.83008, 1422.6816), "l61": ("Light", 140.15039, 1487.7598), "l62": ("Light", 391.74707, 496.7129),
+	"l63": ("Light", 391.9795, 429.31055), "l64": ("Light", 392.2119, 349.82227), "l65": ("Light", 186.05371, 473.70312),
+	"l66": ("Light", 162.34668, 408.625), "l67": ("Light", 133.75879, 332.39062),
+	"l70": ("Light", 292.38672, 1055.9199), "l71": ("Light", 351.6543, 1055.9199), "l72": ("Light", 336.40625, 1331.3398),
+	"l73": ("Light", 431.4668, 1331.3398), "l74": ("Light", 526.0625, 1331.3398), "l75": ("Light", 384.05273, 1279.5098),
+	"l76": ("Light", 478.88086, 1279.7422), "l77": ("Light", 431.23438, 1226.75),
+	"l81": ("Light", 417.94885, 1122.0284), "l82": ("Light", 476.4181, 1139.1476), "l83": ("Light", 532.5166, 1156.0042),
+	"l91": ("Light", 430.91016, 813.0117), "l92": ("Light", 414.64062, 850.1992), "l93": ("Light", 436.7207, 885.2949),
+	"l100": ("Light", 630.56055, 1487.5273), "l101": ("Light", 724.9238, 1487.7598), "l102": ("Light", 813.24414, 1422.6816),
+	"l103": ("Light", 628.9336, 1392.4668), "l104": ("Light", 688.2012, 1421.2871), "l105": ("Light", 658.6836, 1333.8965),
+	"l106": ("Light", 718.416, 1362.7168), "l107": ("Light", 720.5078, 1283.4609),
+	"Bulb1": ("Light", 153.0, 1685.0), "Bulb2": ("Light", 691.0, 1697.0), "Bulb3": ("Light", 209.5, 1594.5),
+	"Bulb4": ("Light", 657.0, 1594.5), "Bulb5": ("Light", 49.5, 1224.5), "Bulb6": ("Light", 74.0, 1057.0),
+	"Bulb7": ("Light", 762.0, 1002.0), "Bulb8": ("Light", 535.75, 943.75), "Bulb9": ("Light", 823.0, 815.0),
+	"Bulb10": ("Light", 669.0, 818.0), "Bulb11": ("Light", 158.5, 639.0), "Bulb12": ("Light", 757.0, 622.0),
+	"Bulb13": ("Light", 625.25, 506.5), "Bulb14": ("Light", 815.0, 445.0), "Bulb15": ("Light", 89.5, 390.5),
+	"Bulb16": ("Light", 768.0, 312.0), "Bulb17": ("Light", 263.0, 451.0), "Bulb18": ("Light", 288.0, 394.0),
+	"Bulb19": ("Light", 297.0, 295.0),
+}
+# Primitives whose stored position is not the part's centre: the world bounding-box centre of each in the retained
+# `export obj --units vpu` (OBJ x and y are playfield x and y), rounded to six decimals.
+MESH_POINTS: dict[str, tuple[float, float]] = {
+	"LeftKicking": (236.502745, 1551.78445), "RightKicking": (628.99727, 1551.78445), "RMotor": (258.08785, 457.26481),
+	"LEDR84": (698.51999, 105.6652), "LEDR85": (752.10285, 153.430315), "LEDR86": (805.84445, 200.832395),
+	"LEDR87": (868.33945, 256.60192), "LEDR94": (56.838067, 802.661195), "LEDR95": (88.09173, 781.16167),
+	"LEDR96": (125.2763, 754.97985), "LEDR97": (156.061805, 733.32457),
+}
+# The object the embedded script binds to each playfield switch.
+SWITCH_OBJECTS = {
+	10: "Bumper1", 11: "Bumper2", 12: "Bumper3", 13: "LeftSlingshot", 14: "RightSlingshot", 15: "sw15", 20: "sw20",
+	21: "sw21", 22: "sw22", 23: "Drain", 24: "sw24", 25: "sw25", 31: "sw31", 32: "sw32", 35: "sw35", 80: "sw80",
+	81: "sw81", 90: "Gate90", 91: "sw91", 92: "sw92", 93: "sw93", 94: "sw94", 95: "sw95", 100: "sw100", 101: "sw101",
+	102: "sw102", 103: "sw103", 104: "sw104",
+}
+SWITCH_PROJECTIONS = {
+	30: ("RMotor", (
+		"Projected onto the catapult ramp (Primitive RMotor, world mesh centre), the moving rail the script turns about its "
+		"top end and whose home step writes this switch (.AddSw 30, 0, 0); the sensor has no object of its own."
+	)),
+	33: ("BallRelease", (
+		"Projected onto the ball release (Kicker BallRelease), the trough exit the script's four-ball stack kicks from; the "
+		"script keeps the trough as a virtual stack and has no object for this switch."
+	)),
+}
+SOLENOID_OBJECTS = {
+	1: "Bumper1", 2: "Bumper2", 3: "Bumper3", 4: "LeftKicking", 5: "RightKicking", 6: "sw31", 7: "sw21", 10: "sw25",
+	11: "sw22", 12: "sw32", 13: "Perno", 14: "fl14", 15: "fl15", 16: "fl16", 17: "fl17", 18: "l197", 23: "RMotor",
+	28: "BallRelease", 29: "Drain",
+}
+SOLENOID_PROJECTED = {
+	4: "the left kicking target it drives (the script's KickingT primitive, which it swings on the target's hit); the coil has no object of its own",
+	5: "the right kicking target it drives (the script's KickingT primitive, which it swings on the target's hit); the coil has no object of its own",
+	6: "the left hole the script ejects from; the coil has no object of its own",
+	7: "the top hole the script ejects from; the coil has no object of its own",
+	10: "the bank's middle drop target; the reset coil sits below the bank and has no object of its own",
+	11: "the center upkicker the script lifts the ball from; the coil has no object of its own",
+	12: "the right upkicker the script ejects from; the coil has no object of its own",
+	23: "the catapult ramp its motor turns; the relay and motor have no object of their own",
+	28: "the trough exit the script releases balls from; the coil has no object of its own",
+	29: "the outhole kicker the script receives drained balls on; the coil has no object of its own",
+}
+# Flashers placed on the Light under a modelled dome, or a bulb light, rather than on a Flasher sprite.
+FLASHER_LIGHTS = {
+	14: "Light fl14 under the Flasher24B14 dome", 15: "Light fl15 under the Flasher24B15 dome",
+	16: "Light fl16 under the Flasher24B16 dome", 17: "Light fl17 under the Flasher24B17 dome",
+	18: "Light l197, a bulb light beside the spinner (the script drives it as its lamp 198)",
+}
+# Playfield lamps placed on a bulb primitive instead of their Light: the billboard LEDs on the two raised signs.
+LAMP_MESH_OBJECTS = {address: f"LEDR{address}" for address in (84, 85, 86, 87, 94, 95, 96, 97)}
+# Playfield G.I.: the bulb lights the script drives as its lamp 150, which GIRelay switches with relay 31.
+GI_BULBS = tuple(f"Bulb{index}" for index in range(1, 20))
+
 
 def _file_sha256(path: Path) -> str:
 	digest = hashlib.sha256()
@@ -276,6 +410,77 @@ def _file_sha256(path: Path) -> str:
 		while chunk := stream.read(1024 * 1024):
 			digest.update(chunk)
 	return digest.hexdigest()
+
+
+def _uri_path(path: Path) -> str:
+	return path.as_posix().replace(" ", "%20").replace("(", "%28").replace(")", "%29")
+
+
+def build_extraction_manifest(extraction_root: Path) -> dict[str, Any]:
+	if not extraction_root.is_dir():
+		raise RuntimeError(f"Gladiators retained extraction is missing: {extraction_root}")
+	paths = sorted((path for path in extraction_root.rglob("*") if path.is_file()), key=lambda path: path.relative_to(extraction_root).as_posix())
+	return {
+		"format": "pinmame-vpx-extraction-manifest",
+		"version": 1,
+		"files": [
+			{"path": path.relative_to(extraction_root).as_posix(), "size": path.stat().st_size, "sha256": _file_sha256(path)}
+			for path in paths
+		],
+	}
+
+
+def _table_object_point(extraction_root: Path, kind: str, name: str) -> tuple[float, float]:
+	path = extraction_root / "gameitems" / f"{kind}.{name}.json"
+	if not path.is_file():
+		raise RuntimeError(f"Gladiators retained table has no {kind} {name}: {path}")
+	item = load_json(path)[kind]
+	if kind == "Wall":
+		points = item["drag_points"]
+		return (sum(point["x"] for point in points) / len(points), sum(point["y"] for point in points) / len(points))
+	if kind in ("Primitive", "HitTarget"):
+		return (item["position"]["x"], item["position"]["y"])
+	return (item["center"]["x"], item["center"]["y"])
+
+
+def _obj_mesh_centres(obj_path: Path, names: set[str]) -> dict[str, tuple[float, float]]:
+	bounds: dict[str, list[float]] = {}
+	current = None
+	with obj_path.open("r", encoding="utf-8", errors="replace") as stream:
+		for line in stream:
+			if line.startswith(("o ", "g ")):
+				current = line[2:].strip() if line[2:].strip() in names else None
+			elif current and line.startswith("v "):
+				x, y = map(float, line.split()[1:3])
+				box = bounds.setdefault(current, [x, x, y, y])
+				box[:] = [min(box[0], x), max(box[1], x), min(box[2], y), max(box[3], y)]
+	return {name: (round((box[0] + box[1]) / 2, 6), round((box[2] + box[3]) / 2, 6)) for name, box in bounds.items()}
+
+
+def verify_retained_table(source_root: Path) -> None:
+	"""Re-derive every placement literal from the retained table; raise on any difference."""
+	table = source_root / TABLE_RELATIVE_PATH
+	if not table.is_file() or table.stat().st_size != TABLE_BYTES or _file_sha256(table) != TABLE_SHA256:
+		raise RuntimeError(f"Gladiators retained table is missing or not the pinned one: {table}")
+	manifest_path = source_root / EXTRACTION_MANIFEST_RELATIVE_PATH
+	if not manifest_path.is_file() or _file_sha256(manifest_path) != EXTRACTION_MANIFEST_SHA256:
+		raise RuntimeError(f"Gladiators retained extraction manifest is missing or not the pinned one: {manifest_path}")
+	extraction = source_root / EXTRACTION_RELATIVE_PATH
+	manifest = load_json(manifest_path)
+	if canonical_bytes(manifest) != canonical_bytes(build_extraction_manifest(extraction)):
+		raise RuntimeError("Gladiators retained extraction does not match its manifest")
+	if len(manifest["files"]) != EXTRACTION_FILE_COUNT or sum(item["size"] for item in manifest["files"]) != EXTRACTION_TOTAL_BYTES:
+		raise RuntimeError("Gladiators retained extraction file count or byte total is not the pinned one")
+	if _file_sha256(extraction / "script.vbs") != EMBEDDED_SCRIPT_SHA256:
+		raise RuntimeError("Gladiators retained table's embedded script is not the pinned one")
+	for name, (kind, x, y) in TABLE_POINTS.items():
+		if _table_object_point(extraction, kind, name) != (x, y):
+			raise RuntimeError(f"Gladiators table point {name} does not match the retained {kind}")
+	obj = source_root / OBJ_RELATIVE_PATH
+	if not obj.is_file() or _file_sha256(obj) != OBJ_SHA256:
+		raise RuntimeError(f"Gladiators retained OBJ export is missing or not the pinned one: {obj}")
+	if _obj_mesh_centres(obj, set(MESH_POINTS)) != MESH_POINTS:
+		raise RuntimeError("Gladiators mesh points do not match the retained OBJ export")
 
 
 def slug(value: str) -> str:
@@ -293,6 +498,40 @@ def provenance(*source_refs: str, status: str = "validated") -> dict[str, Any]:
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
+
+
+TABLE_REFS = (VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE, SCRIPT_SOURCE)
+
+
+def norm(x: float, y: float) -> tuple[float, float]:
+	"""Normalize a retained-table coordinate (VPX units) into the canonical playfield space."""
+	return (round(x / PLAYFIELD_WIDTH, 6), round(y / PLAYFIELD_HEIGHT, 6))
+
+
+def object_point(name: str) -> tuple[float, float]:
+	if name in MESH_POINTS:
+		return MESH_POINTS[name]
+	_, x, y = TABLE_POINTS[name]
+	return (x, y)
+
+
+def object_label(name: str) -> str:
+	return f"Primitive {name} (world mesh centre)" if name in MESH_POINTS else f"{TABLE_POINTS[name][0]} {name}"
+
+
+def object_refs(*names: str) -> tuple[str, ...]:
+	return TABLE_REFS + ((VPX_OBJ_SOURCE,) if any(name in MESH_POINTS for name in names) else ())
+
+
+def located(identifier: str, role: str, names: list[str]) -> dict[str, Any]:
+	placements = []
+	for index, name in enumerate(names, start=1):
+		x, y = norm(*object_point(name))
+		placements.append({
+			"id": f"{identifier}.{role}" + (f".{index}" if len(names) > 1 else ""), "role": role, "space": "playfield",
+			"x": x, "y": y, "provenance": provenance(*object_refs(name), status="observed"),
+		})
+	return {"status": "observed", "placements": placements}
 
 
 def _excerpt(identifier: str, locator: str, filename: str, method: str, transcribed_by: str, reviewed: bool = True) -> dict[str, Any]:
@@ -376,7 +615,8 @@ def source_records() -> list[dict[str, Any]]:
 				f"{SCRIPT_CHECKOUT_SHA256}. Runtime authority: cGameName = \"gladiatr\" (line 53), LoadVPM gts3.VBS (line 193), "
 				"UseSolenoids = 2 (line 200), the trough, saucer, drop-bank and ramp-motor objects (lines 260-324), the key "
 				"handlers (lines 470-524), the switch writers (lines 584-685), the solenoid callbacks (lines 706-871) and "
-				"UpdateLamps (lines 940-1204). The table itself is not retained."
+				"UpdateLamps (lines 940-1204). The retained VR edit of the table embeds the same script with only VR-room "
+				"additions, so its bindings are these."
 			),
 			"license": "NOASSERTION", "attribution": "Kiwi; pinned copy in jsm174/vpx-standalone-scripts", "rights": "NOASSERTION",
 			"excerpts": [
@@ -392,6 +632,52 @@ def source_records() -> list[dict[str, Any]]:
 				"so it corroborates and never independently confirms; it is cited only for that."
 			),
 			"license": "NOASSERTION", "attribution": "Kiwi; pinned copy in sverrewl/vpxtable_scripts", "rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_TABLE_SOURCE, "kind": "vpx_table",
+			"uri": f"external:pinmame-vpx-sources/{_uri_path(TABLE_RELATIVE_PATH)}",
+			"original_filename": TABLE_FILENAME, "sha256": TABLE_SHA256, "acquired_at": "2026-10-30T15:58:00Z",
+			"locator": (
+				f"Retained VR edit of Kiwi's Gladiators (Premier 1993) VPX v1.1.1 ({TABLE_BYTES:,} bytes; script header \"VR room "
+				"added by MaX in 2024 with permission\"), copied on 2026-10-30 from the contributor's table collection, where "
+				"the file is dated 2024-04-06. Its embedded script "
+				f"(SHA-256 {EMBEDDED_SCRIPT_SHA256}) differs from the pinned v1.1.1 script only by the VR-room additions, so it "
+				"binds every controller address to the same objects; line numbers differ. Exact playfield bounds are "
+				f"{TABLE_BOUNDS}; normalized coordinates are x/952 and y/2162. Geometry authority for script-bound table objects."
+			),
+			"license": "NOASSERTION", "attribution": "Kiwi; VR room by MaX", "rights": "NOASSERTION",
+			"excerpts": [
+				_excerpt(
+					"excerpt.gladiators.vpx-table-objects", "gameitems/*.json and the OBJ export, placed objects and their bindings",
+					"vpx-table-objects.md", "mixed", "curator, generated from the retained extraction and checked against an overlay on the playfield image",
+				),
+			],
+		},
+		{
+			"id": VPX_EXTRACTION_SOURCE, "kind": "vpx_table",
+			"uri": f"external:pinmame-vpx-sources/{_uri_path(EXTRACTION_MANIFEST_RELATIVE_PATH)}",
+			"sha256": EXTRACTION_MANIFEST_SHA256, "acquired_at": "2026-10-30T16:02:52Z",
+			"locator": (
+				f"Retained {VPXTOOL_VERSION} extraction of the VR table, {EXTRACTION_FILE_COUNT} files and "
+				f"{EXTRACTION_TOTAL_BYTES:,} bytes, with a full sorted path/size/SHA-256 manifest whose own SHA-256 is this "
+				f"record's sha256. Bounds are {TABLE_BOUNDS}. A Wall is placed at the mean of its drag points, a HitTarget or "
+				"Primitive at its stored position, every other object at its stored centre."
+			),
+			"license": "NOASSERTION", "attribution": "vpxtool extraction",
+		},
+		{
+			"id": VPX_OBJ_SOURCE, "kind": "vpx_table",
+			"uri": f"external:pinmame-vpx-sources/{_uri_path(OBJ_RELATIVE_PATH)}",
+			"sha256": OBJ_SHA256, "acquired_at": "2026-10-30T16:04:35Z",
+			"locator": (
+				f"{VPXTOOL_VERSION} `export obj --units vpu` of the VR table, the world-space mesh of every object (OBJ x is "
+				"playfield x, OBJ y is playfield y). Used only for primitives whose stored position is not the part's centre: "
+				"the kicking targets LeftKicking and RightKicking, the catapult ramp RMotor (its stored position is the pivot at "
+				"the ramp's top end) and the billboard LED bulbs LEDR84-87 and LEDR94-97, each placed at its world bounding-box "
+				"centre. Control: the same export's apron LED bulb LEDR2 centres at (78.50004, 1886.0), within 0.0001 units of "
+				"its stored position (78.5, 1886.0), which is also Light l2's centre."
+			),
+			"license": "NOASSERTION", "attribution": "vpxtool export of the retained table",
 		},
 		{
 			"id": VPM_LIBRARY_SOURCE, "kind": "vpx_script", "uri": VPM_LIBRARY_URI, "original_filename": "gts3.vbs", "sha256": VPM_GTS3_SHA256,
@@ -551,8 +837,9 @@ def input_devices() -> list[dict[str, Any]]:
 		if address in (13, 14):
 			notes += (
 				" The ROM calls it a kicking target and fires its own coil from it; the known-working script models it as the "
-				f"{'left' if address == 13 else 'right'} slingshot. Without a manual or the table, which of the two the "
-				"playfield part is stays a matter of the names."
+				f"{'left' if address == 13 else 'right'} slingshot. The retained table draws a kicking target there, Primitive "
+				f"{'LeftKicking' if address == 13 else 'RightKicking'} (mesh KickingT), which the script swings when the slingshot "
+				"wall is hit, so the part is a kicking target in the slingshot position; no manual confirms it."
 			)
 		if address in (21, 22, 31, 32):
 			notes += f" The ROM's coil {dict(((21, 7), (22, 11), (31, 6), (32, 12)))[address]} kicks the ball out (run gameplay, above)."
@@ -564,6 +851,16 @@ def input_devices() -> list[dict[str, Any]]:
 				"closes it at its start step. In the retained runs the ROM did not release 23 when the host changed 30, and "
 				"held at 1 in attract mode it drew no response, so the runs do not show how the ROM uses it."
 			)
+		if address in SWITCH_OBJECTS:
+			name = SWITCH_OBJECTS[address]
+			notes += f" Placed at the retained table's {object_label(name)}, which the script binds to this address."
+			extra["spatial"] = located(identifier, "sensor", [name])
+			refs += tuple(ref for ref in object_refs(name) if ref not in refs)
+		elif address in SWITCH_PROJECTIONS:
+			name, reason = SWITCH_PROJECTIONS[address]
+			notes += f" {reason}"
+			extra["spatial"] = located(identifier, "sensor", [name])
+			refs += tuple(ref for ref in object_refs(name) if ref not in refs)
 		physical["notes"] = notes
 		if address in CABINET_SWITCH_ROLES:
 			extra["roles"] = [CABINET_SWITCH_ROLES[address]]
@@ -725,9 +1022,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		if address == 31:
 			notes += (
 				" PinMAME's System 3 init types it as the 'T' relay, general illumination. The ROM calls it the tilt relay: it "
-				"switches the playfield G.I. off when energized, which the known-working script reproduces. No manual or table "
-				"is retained, so the G.I. bulbs it switches are not placed."
+				"switches the playfield G.I. off when energized, which the known-working script reproduces. The placements are "
+				f"the {len(GI_BULBS)} bulb lights Bulb1-Bulb{len(GI_BULBS)} of the retained table, which the script's GIRelay "
+				"switches with this relay; without a manual no G.I. bulb count or layout is known, and a table's grouping is not "
+				"the machine's wiring, so they stay observed without a quantity."
 			)
+			refs += (VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE)
 		if address == 32:
 			notes += (
 				" PinMAME's System 3 init types it as the 'Q' relay, game on, and passes its state to core_updateSw as the "
@@ -738,13 +1038,34 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			refs += (VPM_LIBRARY_SOURCE,)
 		kind = "flasher" if address in FLASHER_SOLENOIDS else SOLENOID_KIND.get(address, "coil")
 		availability = "optional" if address == 27 else "used"
-		physical: dict[str, Any] = {"notes": notes}
+		identifier = f"device.{slug(SOLENOID_LABELS[address])}"
+		physical: dict[str, Any] = {}
 		extra: dict[str, Any] = {}
 		if address in CABINET_SOLENOIDS:
 			physical["location"] = CABINET_SOLENOIDS[address]
 			extra["spatial"] = not_applicable("cabinet_or_service", CORE_SOURCE, RUNTIME_SOURCE)
+		elif address in SOLENOID_OBJECTS:
+			obj = SOLENOID_OBJECTS[address]
+			if address in FLASHER_LIGHTS:
+				notes += f" Placed at the retained table's {FLASHER_LIGHTS[address]}."
+			elif address in SOLENOID_PROJECTED:
+				notes += f" Projected onto {SOLENOID_PROJECTED[address]} ({object_label(obj)})."
+			else:
+				notes += f" Placed at the retained table's {object_label(obj)}."
+			extra["spatial"] = located(identifier, "emitter" if kind == "flasher" else "effect", [obj])
+			refs += tuple(ref for ref in object_refs(obj) if ref not in refs)
+		elif address == 31:
+			physical["location"] = "relay in the cabinet or backbox; the placements are the playfield G.I. it switches"
+			extra["spatial"] = located(identifier, "emitter", list(GI_BULBS))
+		elif address in (19, 20, 21):
+			notes += (
+				f" The retained table draws it only as the Flasher sprite f{address}, a render helper at the top edge of the "
+				"playfield, and models no bulb light or socket for it, so the output is not placed."
+			)
+			refs += (VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE)
+		physical["notes"] = notes
 		items.append(_device(
-			f"device.{slug(SOLENOID_LABELS[address])}", SOLENOID_LABELS[address], kind, "pinmame.output.solenoid", address,
+			identifier, SOLENOID_LABELS[address], kind, "pinmame.output.solenoid", address,
 			availability, refs, physical=physical, **extra,
 		))
 	synthetic = {
@@ -834,7 +1155,20 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			notes += f" The known-working script's UpdateLamps binds its object {binding} to it."
 			if address in SCRIPT_FLASH_LAMPS:
 				notes += " The script draws the billboard lamps as flasher objects (Flashm, lines 1033-1047)."
-			refs += (SCRIPT_SOURCE,)
+			obj = LAMP_MESH_OBJECTS.get(address, f"l{address}")
+			if address in LAMP_MESH_OBJECTS:
+				notes += (
+					f" Placed at the retained table's {object_label(obj)}, the LED bulb on the raised billboard the script "
+					f"also flashes from this lamp (FlashDL); the f{address} flasher sprite is a render helper."
+				)
+			elif address in LED_LAMPS:
+				notes += (
+					f" Placed at the retained table's Light l{address}, which sits on LEDR{address} in the apron card holder."
+				)
+			else:
+				notes += f" Placed at the retained table's Light l{address}."
+			extra["spatial"] = located(identifier, "emitter", [obj])
+			refs += (SCRIPT_SOURCE,) + tuple(ref for ref in object_refs(obj) if ref != SCRIPT_SOURCE)
 		physical["notes"] = notes
 		items.append(_device(identifier, _lamp_label(address), "lamp", "pinmame.output.lamp", address, "used", refs, physical=physical, **extra))
 	return items
@@ -869,8 +1203,9 @@ def mechanisms() -> list[dict[str, Any]]:
 			[coil(29), coil(28), coil(13)], [switch(23), switch(33), switch(24), switch(100)],
 			"The machine holds four balls (the power-up screen reads Install 4 Balls). A drained ball lands on the OUTHOLE "
 			"switch (23); the OUTHOLE coil (29) kicks it into the trough, whose TROUGH switch (33) reports a ball, and the BALL "
-			"RELEASE coil (28) feeds the lead ball into the shooter lane, where the SHOOTER LANE ROLLOVER (24) and the SHOOTER "
-			"LANE (OPTO) (100) see it before the player plunges it. The PLUNGER GATE (13) is a post the known-working script "
+			"RELEASE coil (28) feeds the lead ball into the shooter lane, where the SHOOTER LANE ROLLOVER (24) sees it waiting "
+			"at the plunger; the SHOOTER LANE (OPTO) (100) sits at the top of the lane, where the retained table puts its "
+			"trigger sw100, so it sees the ball after the plunge. The PLUNGER GATE (13) is a post the known-working script "
 			"drops while the output is on (lines 740-750). In the scripted game the ROM pulsed 13 at Start and served nothing "
 			"from the trough, so the run does not show how the first ball reaches the shooter lane; when 23 rose it reset the 3-bank (10), energized 28 "
 			"for about 0.7 s, fired 29 and energized the game-over relay (32) (run gameplay). The script models the trough as "
@@ -979,6 +1314,7 @@ def build() -> dict[str, Any]:
 		"machine": {
 			"id": MACHINE_ID, "name": "Gladiators", "manufacturer": "Gottlieb", "year": 1993, "kind": "physical_pinball",
 			"model_number": "737", "ipdb_id": 1011, "opdb_id": "G4P9q-MLnOY",
+			"playfield": {"width": PLAYFIELD_WIDTH, "height": PLAYFIELD_HEIGHT, "units": "vpx", "provenance": provenance(VPX_TABLE_SOURCE, status="observed")},
 		},
 		"coverage": {
 			"status": STATUS,
@@ -986,7 +1322,7 @@ def build() -> dict[str, Any]:
 			"dimensions": {
 				"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated",
 				"physical_wiring": "unknown", "mechanisms": "observed", "variant_coverage": "validated",
-				"recreation_knowledge": "validated", "display_inventory": "validated", "spatial_placement": "unknown",
+				"recreation_knowledge": "validated", "display_inventory": "validated", "spatial_placement": "observed",
 			},
 		},
 		"controller": {"platform": "pinmame.gts3", "hardware_generation": "0x20000000000", "inversion_applied_by_emulator": True},
@@ -1012,47 +1348,77 @@ def build() -> dict[str, Any]:
 
 
 SPATIAL_BLOCKERS = [
-	"No VPX table of the machine is retained: the known-working script is held only as the pinned corpus copy, and the "
-	"table it belongs to (Kiwi's Gladiators (Premier 1993) VPX v1.1.1) has not been acquired, so no playfield object "
-	"coordinate is available for any switch, lamp, coil or flasher.",
 	"No factory drawing is retained: IPDB lists the instruction manual pages and the coil, fuse and switch charts without "
-	"hosting them, and no other attributable copy was found, so no placement could be taken or checked from the machine's "
-	"own location drawings.",
-	"The known-working script places solenoids 8, 9, 22 and 24 and lamps 112-117 in its backbox; the lamps' ROM name "
-	"(LIGHTBOX) settles theirs, but the flashers' location rests on the script and their backglass-art names alone, so "
-	"they are not classified.",
+	"hosting them, and no other attributable copy was found, so no placement can be checked against the machine's own "
+	"switch, lamp or coil location drawings.",
+	"Only one table is retained, the VR edit of Kiwi's VPX v1.1.1, and the pinned v1.0.1 script is the same author's "
+	"earlier release of it, so no independently built geometry can confirm a placement. Every placement comes from that "
+	"table and stays observed.",
+	"Solenoid 31 (Tilt Relay, playfield G.I.): the 19 placements are the bulb lights the table's GIRelay switches; a "
+	"table's grouping is not the machine's wiring and the bulb count is unknown, so they stay observed without a quantity.",
+	"Solenoids 8, 9, 22 and 24 are drawn in the script's backbox and solenoids 19-21 only as flasher sprites, so none of "
+	"the seven is placed or classified; the lamps 112-117 are lightbox lamps by the ROM's own names.",
+	"Ramp motor switch 30 and trough switch 33 have no table object of their own and are projected onto the catapult ramp "
+	"and the ball release.",
 ]
 
 
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
-	omitted_inputs, omitted_outputs = [], []
+	located_inputs, located_outputs, omitted_inputs, omitted_outputs = [], [], [], []
 	na_inputs: dict[str, list[int]] = {}
 	na_outputs: dict[str, list[dict[str, Any]]] = {}
-	for device in definition["inputs"]:
-		spatial = device.get("spatial")
-		if spatial is None:
-			omitted_inputs.append(device["binding"]["device"])
-		else:
-			na_inputs.setdefault(spatial["reason"], []).append(device["binding"]["device"])
-	for device in definition["outputs"]:
-		binding = {"group": device["binding"]["group"], "address": device["binding"]["device"]}
-		spatial = device.get("spatial")
-		if spatial is None:
-			omitted_outputs.append(binding)
-		else:
-			na_outputs.setdefault(spatial["reason"], []).append(binding)
+	statuses: dict[str, int] = {}
+	placement_count = 0
+	for collection, located_list, omitted in (("inputs", located_inputs, omitted_inputs), ("outputs", located_outputs, omitted_outputs)):
+		for device in definition[collection]:
+			binding: Any = device["binding"]["device"] if collection == "inputs" else {"group": device["binding"]["group"], "address": device["binding"]["device"]}
+			spatial = device.get("spatial")
+			if spatial is None:
+				omitted.append(binding)
+			elif spatial["status"] == "not_applicable":
+				(na_inputs if collection == "inputs" else na_outputs).setdefault(spatial["reason"], []).append(binding)
+			else:
+				located_list.append(binding)
+				for item in spatial["placements"]:
+					placement_count += 1
+					statuses[item["provenance"]["status"]] = statuses.get(item["provenance"]["status"], 0) + 1
+
+	def output_key(item: dict[str, Any]) -> tuple[str, int]:
+		return (item["group"], item["address"])
+
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": MACHINE_ID,
-		"status": "unknown",
+		"status": "observed",
 		"blockers": SPATIAL_BLOCKERS,
-		"coordinate_convention": {"space": "playfield", "x": "0=left, 1=right", "y": "0=rear/backglass, 1=apron/player"},
-		"placement_count": 0,
-		"omitted_inputs": sorted(omitted_inputs),
-		"omitted_outputs": sorted(omitted_outputs, key=lambda item: (item["group"], item["address"])),
+		"coordinate_convention": {
+			"space": "playfield",
+			"source_bounds": {"left": 0.0, "top": 0.0, "right": PLAYFIELD_WIDTH, "bottom": PLAYFIELD_HEIGHT},
+			"x": "x/952; 0=left, 1=right",
+			"y": "y/2162; 0=rear/backglass, 1=apron/player",
+		},
+		"extraction": {"fail_closed": True, "file_count": EXTRACTION_FILE_COUNT, "source_ref": VPX_EXTRACTION_SOURCE},
+		"source_hashes": {"embedded_script_sha256": EMBEDDED_SCRIPT_SHA256, "table_sha256": TABLE_SHA256, "obj_export_sha256": OBJ_SHA256},
+		"placement_count": placement_count,
+		"placement_status_counts": dict(sorted(statuses.items())),
+		"resolved_input_addresses": sorted(located_inputs),
+		"resolved_output_bindings": sorted(located_outputs, key=output_key),
 		"not_applicable_inputs": {reason: sorted(values) for reason, values in sorted(na_inputs.items())},
-		"not_applicable_outputs": {reason: sorted(values, key=lambda item: (item["group"], item["address"])) for reason, values in sorted(na_outputs.items())},
+		"not_applicable_outputs": {reason: sorted(values, key=output_key) for reason, values in sorted(na_outputs.items())},
+		"omitted_inputs": sorted(omitted_inputs),
+		"omitted_outputs": sorted(omitted_outputs, key=output_key),
+		"projections": (
+			[{"group": "pinmame.input.switch", "address": address, "reason": reason} for address, (_, reason) in sorted(SWITCH_PROJECTIONS.items())]
+			+ [{"group": "pinmame.output.solenoid", "address": address, "reason": f"Projected onto {reason}."} for address, reason in sorted(SOLENOID_PROJECTED.items())]
+		),
+		"excluded_object_classes": [
+			"Bulb<n>a Light doubles of the G.I. bulbs, and Bulb8T15, Bulb8T25 and Bulb8T35 beside the drop targets: Bulb1-Bulb19, the members with a bulb mesh, are the placements",
+			"giB1-giB3 and LR1-LR3 Light objects, which model no bulb",
+			"Flasher sprites: fgit, the f<n> lamp and flasher overlays, and f19-f21; a sprite is a render helper, not a socket",
+			"The l197a companion light the script fades with l197, and the LEDR primitives of the apron LEDs, which sit at their l<n> lights",
+			"VR room, cabinet and backbox objects",
+		],
 		"unresolved": [],
 	}
 
@@ -1062,20 +1428,41 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Gladiators (Gottlieb, 1993) spatial review",
 		"",
 		f"Status: {report['status']}. The machine record stays `partial` at `machines/partial/gottlieb/gladiators-1993.json`; "
-		f"its spatial dimension stays open because of the {len(report['blockers'])} spatial blockers below. No playfield "
-		"device is placed.",
+		f"its spatial dimension stays open because of the {len(report['blockers'])} spatial blockers below.",
+		"",
+		f"The geometry source is the retained `{TABLE_FILENAME}`, a VR edit of Kiwi's VPX v1.1.1, SHA-256 `{TABLE_SHA256}`. "
+		f"Its embedded script (SHA-256 `{EMBEDDED_SCRIPT_SHA256}`) binds every controller address exactly as the pinned "
+		f"known-working v1.1.1 script does. Bounds are `{TABLE_BOUNDS}`; every coordinate is x/952 and y/2162, rounded to at "
+		"most six places. `evidence/excerpts/gottlieb.gladiators.1993/vpx-table-objects.md` lists each placed object, its "
+		"coordinate and the script lines that bind it, and the curator's `verify_retained_table` re-derives every coordinate "
+		"from the retained extraction and OBJ export.",
 		"",
 		"## Evidence decisions",
 		"",
-		"- A playfield device without a retained table object or factory drawing carries no `spatial` key; nothing is "
-		"projected or estimated.",
+		"- A placement is the table object the script binds to the address: a trigger, target, spinner, gate, kicker, bumper "
+		"or slingshot wall for a switch, the `l<n>` light `UpdateLamps` fades for each lamp, the light under each flasher "
+		"dome, the object a coil moves or kicks from, and each G.I. bulb light `GIRelay` switches.",
+		"- Primitives whose stored position is not the part's centre (the kicking targets, the catapult ramp and the billboard "
+		"LED bulbs) are placed at the centre of their world-space mesh from `vpxtool export obj --units vpu`.",
+		"- Sensors and coils with no table object of their own are documented projections onto their own mechanism's object.",
 		"- Backbox and cabinet devices take controlled `not_applicable` records: the six lightbox lamps, the credit-button "
 		"lamp, the lightbox and game-over relays, the shaker motor, the knocker, the coin meter, the cabinet and "
 		"flipper-button switches, the test inputs and the DMD.",
+		"- No placement is validated: no factory drawing is retained to check it, and only one table is.",
+		"",
+		"## Explicit projections",
+		"",
+	]
+	for entry in report["projections"]:
+		short = "Switch" if entry["group"] == "pinmame.input.switch" else "Solenoid"
+		lines.append(f"- {short} {entry['address']}: {entry['reason']}")
+	lines += [
 		"",
 		"## Counts",
 		"",
-		f"- Placements: {report['placement_count']}",
+		f"- Placements: {report['placement_count']} ({', '.join(f'{k} {v}' for k, v in report['placement_status_counts'].items())})",
+		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
+		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
 		f"- Inputs with an omitted spatial key: {len(report['omitted_inputs'])}",
 		f"- Outputs with an omitted spatial key: {len(report['omitted_outputs'])}",
 	]
@@ -1083,6 +1470,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(values)}")
 	for reason, values in report["not_applicable_outputs"].items():
 		lines.append(f"- Outputs with a controlled `{reason}` record: {len(values)}")
+	lines += ["", "## Excluded table objects", ""] + [f"- {entry}" for entry in report["excluded_object_classes"]]
 	lines += ["", "## Blockers", ""] + [f"- {blocker}" for blocker in report["blockers"]]
 	lines += [
 		"",
@@ -1090,9 +1478,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"Every controller address is enumerated with a semantic disposition taken from the ROM's own service tests, the "
 		"mechanisms are covered, and polarity is settled for every switch by the read path, the ROM's Switch Matrix Test and "
-		"the known-working script. Promotion to `author_ready` is refused because no playfield device has a position, so "
-		"`coverage.missing` is `[\"spatial_placement\"]`. The retained known-working table (Kiwi's VPX v1.1.1) would give "
-		"every script-bound object a coordinate, and the instruction manual's location drawings would check them.",
+		"the known-working script. Promotion to `author_ready` is refused because every playfield placement rests on one "
+		"community table's geometry with nothing independent to check it, so `coverage.missing` is "
+		"`[\"spatial_placement\"]`. The instruction manual's switch, lamp and coil location drawings, or a second table built "
+		"independently from the machine, would close the gap.",
 		"",
 	]
 	return "\n".join(lines)

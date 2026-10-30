@@ -160,16 +160,38 @@ class GladiatorsDefinitionTests(unittest.TestCase):
 		for address in curate_gladiators.LED_LAMPS:
 			self.assertIn("strobed LED", self.lamps[address]["physical"]["notes"])
 
-	def test_no_playfield_device_is_placed(self) -> None:
-		for collection in ("inputs", "outputs"):
-			for device in self.definition[collection]:
-				spatial = device.get("spatial")
-				if spatial is not None:
-					with self.subTest(device=device["id"]):
-						self.assertEqual("not_applicable", spatial["status"])
+	def test_placements_are_observed_in_range_and_only_backbox_flashers_are_omitted(self) -> None:
+		placements = [
+			placement for collection in ("inputs", "outputs") for device in self.definition[collection]
+			for placement in (device.get("spatial") or {}).get("placements", [])
+		]
+		self.assertEqual(153, len(placements))
+		self.assertEqual(len(placements), len({placement["id"] for placement in placements}))
+		for placement in placements:
+			with self.subTest(placement=placement["id"]):
+				self.assertEqual("observed", placement["provenance"]["status"])
+				self.assertTrue(0 <= placement["x"] <= 1 and 0 <= placement["y"] <= 1)
+		omitted = sorted(
+			device["binding"]["device"] for device in self.definition["inputs"] + self.definition["outputs"] if "spatial" not in device
+		)
+		self.assertEqual([8, 9, 19, 20, 21, 22, 24], omitted)
 		self.assertEqual("not_applicable", self.lamps[112]["spatial"]["status"])
-		self.assertNotIn("spatial", self.solenoids[8])
-		self.assertNotIn("spatial", self.switches[30])
+		self.assertEqual(19, len(self.solenoids[31]["spatial"]["placements"]))
+		self.assertNotIn("quantity", self.solenoids[31])
+
+	def test_placements_follow_the_bound_objects(self) -> None:
+		def xy(device):
+			(placement,) = device["spatial"]["placements"]
+			return (placement["x"], placement["y"])
+
+		self.assertEqual((0.902311, 0.077706), xy(self.switches[100]))  # trigger sw100 at the top of the shooter lane
+		self.assertEqual((0.941176, 0.862627), xy(self.switches[24]))
+		self.assertEqual(xy(self.switches[31]), xy(self.solenoids[6]))
+		self.assertEqual(xy(self.switches[30]), xy(self.solenoids[23]))
+		self.assertEqual(curate_gladiators.norm(*curate_gladiators.MESH_POINTS["LEDR84"]), xy(self.lamps[84]))
+		self.assertEqual(curate_gladiators.norm(78.5, 1886.0), xy(self.lamps[2]))
+		self.assertEqual("emitter", self.solenoids[14]["spatial"]["placements"][0]["role"])
+		self.assertEqual("effect", self.solenoids[13]["spatial"]["placements"][0]["role"])
 
 	def test_table_defects_are_recorded_on_devices_not_as_conflicts(self) -> None:
 		self.assertIn("TiltSwitch = 151", self.switches[-7]["physical"]["notes"])
@@ -194,7 +216,7 @@ class GladiatorsDefinitionTests(unittest.TestCase):
 				count += 1
 				path = ROOT / excerpt["path"]
 				self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["path"])
-		self.assertEqual(3, count)
+		self.assertEqual(4, count)
 
 	def test_no_other_machine_identity_leaks_in(self) -> None:
 		catalog = load(ROOT / "catalog" / "pinmame.json")
@@ -217,6 +239,29 @@ class GladiatorsRetainedEvidenceTests(unittest.TestCase):
 		if not (review_root / gladiators_runtime_evidence.RUNTIME_RELATIVE).is_dir():
 			self.skipTest("retained Gladiators runs are not present under this review-artifacts root")
 		self.assertEqual(canonical_bytes(gladiators_runtime_evidence.build(review_root)), curate_gladiators.RUNTIME_EVIDENCE_PATH.read_bytes())
+
+	def test_placements_match_the_retained_table(self) -> None:
+		value = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not value:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT not configured")
+		root = Path(value).expanduser().resolve()
+		if not (root / curate_gladiators.TABLE_RELATIVE_PATH).is_file():
+			self.skipTest("retained Gladiators table is not present under this root")
+		curate_gladiators.verify_retained_table(root)
+
+	def test_retained_table_verifier_refuses_a_moved_point(self) -> None:
+		value = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not value or not (Path(value) / curate_gladiators.TABLE_RELATIVE_PATH).is_file():
+			self.skipTest("retained Gladiators table is not present")
+		kind, x, y = curate_gladiators.TABLE_POINTS["sw24"]
+		original = dict(curate_gladiators.TABLE_POINTS)
+		curate_gladiators.TABLE_POINTS["sw24"] = (kind, x + 1.0, y)
+		try:
+			with self.assertRaisesRegex(RuntimeError, "sw24"):
+				curate_gladiators.verify_retained_table(Path(value).expanduser().resolve())
+		finally:
+			curate_gladiators.TABLE_POINTS.clear()
+			curate_gladiators.TABLE_POINTS.update(original)
 
 
 if __name__ == "__main__":
