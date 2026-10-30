@@ -33,9 +33,10 @@ CORPUS_REPOSITORIES = (
 # Gold replaces 57 candidates from one script with its own complete definition.
 # Firepower II replaces its 87 imported candidate devices from one script.
 # Gladiators replaces its 111 imported candidate devices from two scripts.
-EXPECTED_ATTACHED_MACHINES = 259
-EXPECTED_ATTACHED_DEVICES = 11826
-EXPECTED_ATTACHED_SCRIPTS = 319
+# South Park replaces its 48 candidate devices from one script with its own curated definition.
+EXPECTED_ATTACHED_MACHINES = 258
+EXPECTED_ATTACHED_DEVICES = 11778
+EXPECTED_ATTACHED_SCRIPTS = 318
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -72,14 +73,6 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 				self.assertTrue(source["attribution"], definition["machine"]["id"])
 				self.assertEqual(64, len(source["sha256"]), definition["machine"]["id"])
 				self.assertNotIn("/blob/", source["uri"])
-
-	def test_south_park_candidate_devices_are_candidates(self) -> None:
-		definition = load_json(ROOT / "machines/partial/sega/south-park-1999.json")
-		self.assertEqual(30, len(definition["inputs"]))
-		self.assertEqual(18, len(definition["outputs"]))
-		for device in definition["inputs"] + definition["outputs"]:
-			self.assertEqual("candidate", device["provenance"]["status"])
-			self.assertIn("vpx-script.", device["provenance"]["source_refs"][0])
 
 	def test_lamp_candidates_come_from_the_script(self) -> None:
 		definition = load_json(ROOT / "machines/partial/sega/golden-cue-1998.json")

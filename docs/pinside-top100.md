@@ -208,7 +208,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 258 | The Simpsons | `data-east.the-simpsons.1990` | 19% |
 | 259 | Bobby Orr's Power Play | `bally.bobby-orr-s-power-play.1977` | 13% |
 | 260 | Silverball Mania | `bally.silverball-mania.1978` | 19% |
-| 261 | South Park | `sega.south-park.1999` | 13% |
+| 261 | South Park | `sega.south-park.1999` | 94% |
 | 261 | CSI: Crime Scene Investigation | `stern.csi-crime-scene-investigation.2008` | 19% |
 | 263 | Flash | `williams.flash.1979` | 13% |
 | 264 | Riverboat Gambler | `williams.riverboat-gambler.1990` | 19% |
