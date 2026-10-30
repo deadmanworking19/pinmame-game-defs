@@ -201,7 +201,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 250 | Fire! | `williams.fire.1987` | 19% |
 | 251 | Maverick | `data-east.maverick.1994` | 19% |
 | 252 | Sharkey's Shootout | `stern.sharkey-s-shootout.2000` | 13% |
-| 253 | Robocop | `data-east.robocop.1989` | 19% |
+| 253 | Robocop | `data-east.robocop.1989` | 75% |
 | 254 | The X Files | `sega.the-x-files.1997` | 13% |
 | 255 | Star Wars Episode I | `midway.pinball-2000-star-wars-episode-i-1-50.2003` | 13% |
 | 256 | Genie | `gottlieb.genie.1979` | 13% |

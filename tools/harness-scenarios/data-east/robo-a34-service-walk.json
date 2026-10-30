@@ -1,0 +1,1035 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "robo_a34 service walk. In Data East alpha Switch Test the Player 1/2 displays print the closed switch's ROM name and the Player 3/4 field its wire code and number; NONE marks an address the ROM names as unfitted. Flipper addresses 15/16 are read by holding the flipper keys, because core_updateSw rewrites them from the flipper column. The discrete Lamp Test prints each lamp's ROM name as Start (matrix 3, held 400 ms; a 150 ms hold is not registered) steps it forward once Green is toggled back to Forward; the automatic Coil Test prints each driver's ROM name with its L/R bank number. Display text is PinMAME's decoded segment text; glyphs its decoder does not map appear as '?'.",
+  "watch_switches": [
+    -7,
+    -6,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "pulse the toggled Green service input once to select Reverse"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "SWITCH TEST"
+      ],
+      "max_pulses": 40,
+      "hold_ms": 250,
+      "settle_s": 0.9,
+      "label": "advance through sound and display diagnostics to Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "let the Switch Test title settle"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 1 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 2 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 3 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 4 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 5 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 6 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 7 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 8 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 9 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 10 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 11 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 12 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 13 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 14 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 17 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 18 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 19 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 20 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 21 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 22 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 23 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 24 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 25 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 26 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 27 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 28 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 29 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 30 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 31 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 32 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 33 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 34 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 35 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 36 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 37 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 38 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 39 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 40 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 41 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 42 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 43 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 44 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 45 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 46 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 47 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 48 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 49 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 50 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 51 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 52 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 53 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 54 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 55 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 56 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 57 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 58 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 59 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 60 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 61 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 62 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 63 in Switch Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "close matrix switch 64 in Switch Test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "left_flipper",
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold the left flipper key in Switch Test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "right_flipper",
+      "hold_ms": 700,
+      "settle_s": 0.8,
+      "snapshot_while_held": true,
+      "label": "hold the right flipper key in Switch Test"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "LAMP TEST"
+      ],
+      "max_pulses": 16,
+      "hold_ms": 400,
+      "settle_s": 4.0,
+      "label": "advance through Active/Bad Switch and the lamp group tests to the discrete Lamp Test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.8,
+      "label": "toggle Green back to Forward so Start selects higher-numbered lamps"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "discrete Lamp Test on its first lamp"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 1 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 2 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 3 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 4 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 5 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 6 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 7 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 8 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 9 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 10 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 11 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 12 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 13 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 14 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 15 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 16 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 17 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 18 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 19 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 20 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 21 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 22 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 23 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 24 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 25 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 26 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 27 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 28 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 29 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 30 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 31 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 32 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 33 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 34 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 35 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 36 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 37 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 38 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 39 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 40 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 41 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 42 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 43 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 44 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 45 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 46 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 47 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 48 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 49 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 50 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 51 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 52 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 53 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 54 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 55 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 56 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 57 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 58 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 59 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 60 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 61 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 62 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 63 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 0.6,
+      "label": "Start step 64 in the discrete Lamp Test"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "COIL AUTO"
+      ],
+      "max_pulses": 8,
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "label": "advance to the automatic Coil Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 90.0,
+      "label": "observe the complete automatic Coil Test cycle with each coil name"
+    }
+  ]
+}

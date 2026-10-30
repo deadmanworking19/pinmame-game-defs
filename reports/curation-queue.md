@@ -260,7 +260,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 254 | 1989 | Transporter the Rescue | Bally | partial | 19% |
 | 255 | 1989 | Monday Night Football | Data East | partial | 19% |
 | 256 | 1989 | Playboy 35th Anniversary | Data East | partial | 69% |
-| 257 | 1989 | Robocop | Data East | partial | 19% |
+| 257 | 1989 | Robocop | Data East | partial | 75% |
 | 258 | 1989 | Big House | Gottlieb | partial | 13% |
 | 259 | 1989 | Bone Busters Inc. | Gottlieb | partial | 13% |
 | 260 | 1989 | Hot Shots | Gottlieb | partial | 13% |

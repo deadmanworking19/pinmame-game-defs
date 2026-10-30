@@ -16,7 +16,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.by35": 39,  # Viking and Medusa now cite their game-specific pinned sources rather than the attachment pass.
 	# Kingpin (curated 2026-09-25) now declares its platform from the curated definition.
 	"pinmame.capcom": 3,
-	"pinmame.dataeast": 13,
+	"pinmame.dataeast": 12,  # RoboCop now declares its platform through its game-specific curator.
 	"pinmame.p2k": 1,
 	"pinmame.sam": 6,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
 	# Seawitch now declares its platform through its game-specific curator.
