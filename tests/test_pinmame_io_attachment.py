@@ -18,7 +18,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.capcom": 3,
 	"pinmame.dataeast": 12,  # RoboCop now declares its platform through its game-specific curator.
 	"pinmame.p2k": 1,
-	"pinmame.sam": 6,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
+	# NBA now declares SAM through its game-specific curator.
+	"pinmame.sam": 5,  # World Poker Tour and Family Guy now declare SAM through their game-specific curators.
 	# Seawitch now declares its platform through its game-specific curator.
 	"pinmame.stern-mpu200": 20,
 	# Black Knight 2000 (curated 2026-10-01) and Pin-Bot (curated 2026-10-09) now declare their platform from the curated definition.

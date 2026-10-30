@@ -1,0 +1,176 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA S.A.M. ROM from an empty NVRAM with four balls on trough switches 18-21, insert four coins and press Start, let the team-selection screen time out and model one served and plunged ball, then hit each pop bumper switch (30, 31, 32) and each slingshot switch (26, 27) once, 2.5 s apart, in two passes of opposite order. Each hit is a short host pulse; the observation is which public solenoid the ROM fires in response, which pairs every bumper and slingshot switch with its coil. The scenario names no driver.",
+  "actions": [
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 18 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 19 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 20 closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "initial switch 21 closed"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 300,
+      "settle_s": 0.7,
+      "label": "coin 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 500,
+      "settle_s": 4,
+      "label": "Start button"
+    },
+    {
+      "type": "wait",
+      "seconds": 20,
+      "label": "team selection left to time out"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.05,
+      "label": "trough: the served ball leaves, the stack rolls down and switch 18 opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 3,
+      "label": "ball in shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 3,
+      "label": "ball plunged out of the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "top pop bumper switch 30 hit (first pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "pop bumper switch 31 hit (first pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "pop bumper switch 32 hit (first pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "left slingshot switch 26 hit (first pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "right slingshot switch 27 hit (first pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "pop bumper switch 32 hit (second pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "pop bumper switch 31 hit (second pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "top pop bumper switch 30 hit (second pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "right slingshot switch 27 hit (second pass)"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 40,
+      "settle_s": 2.5,
+      "label": "left slingshot switch 26 hit (second pass)"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "final observation window"
+    }
+  ]
+}

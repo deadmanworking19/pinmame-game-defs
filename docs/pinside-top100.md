@@ -262,7 +262,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 314 | Waterworld | `gottlieb.waterworld.1995` | 13% |
 | 315 | Mr. & Mrs. Pac-Man | `bally.mr-mrs-pac-man.1982` | 19% |
 | 316 | Escape from the Lost World | `bally.escape-from-the-lost-world.1988` | 13% |
-| 317 | NBA | `stern.nba.2009` | 19% |
+| 317 | NBA | `stern.nba.2009` | 81% |
 | 318 | Shaq Attaq | `gottlieb.shaq-attaq.1995` | 13% |
 | 319 | Harley Davidson | `sega.harley-davidson.1999` | 13% |
 | 320 | Raven | `gottlieb.raven.1986` | 13% |

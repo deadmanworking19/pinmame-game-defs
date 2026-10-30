@@ -52,7 +52,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 46 | 2010 | Iron Man | Stern | author_ready | 100% |
 | 47 | 2009 | 24 | Stern | partial | 63% |
 | 48 | 2009 | Lord of the Rings Limited Edition | Stern | author_ready | 100% |
-| 49 | 2009 | NBA | Stern | partial | 19% |
+| 49 | 2009 | NBA | Stern | partial | 81% |
 | 50 | 2008 | Batman: The Dark Knight Pro | Stern | partial | 94% |
 | 51 | 2008 | CSI: Crime Scene Investigation | Stern | partial | 19% |
 | 52 | 2008 | Indiana Jones | Stern | partial | 19% |

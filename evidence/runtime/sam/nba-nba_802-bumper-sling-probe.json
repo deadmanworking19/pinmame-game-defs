@@ -1,0 +1,230 @@
+{
+  "driver_ids": [
+    "nba_802"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.nba.2009"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game nba_802 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --ready-timeout 90 --scenario tools/harness-scenarios/stern/nba-2009-bumper-sling-probe.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Every public switch write is a short host pulse, never a ROM observation. Each bumper hit fires its own coil and lamp (30: Q9 and lamp 60; 31: Q10 and lamp 61; 32: Q11 and lamp 62), the shaker Q8 and the pop-bumper flash Q31; each slingshot hit fires its own coil (26: Q17; 27: Q18) and the slingshot flash Q32. The first top-bumper hit also coincides with the disk motor Q6 and relay Q22 and the orbit post Q21, which the ROM drives on its own timing.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nba_802",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "top pop bumper switch 30 hit (first pass): public 6 changed 1 times, public 8 changed 2 times, public 9 changed 2 times, public 21 changed 1 times, public 22 changed 1 times, public 31 changed 17 times; lamps turned on: 3, 24, 25, 31, 40, 49, 57, 58, 59, 60",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            8,
+            9,
+            21,
+            22,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "pop bumper switch 31 hit (first pass): public 8 changed 2 times, public 10 changed 2 times, public 31 changed 16 times; lamps turned on: 3, 24, 25, 31, 40, 49, 57, 58, 59, 61",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8,
+            10,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "pop bumper switch 32 hit (first pass): public 8 changed 2 times, public 11 changed 2 times, public 31 changed 16 times; lamps turned on: 3, 24, 25, 31, 40, 49, 57, 58, 59, 62",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8,
+            11,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "left slingshot switch 26 hit (first pass): public 17 changed 2 times, public 32 changed 16 times; lamps turned on: 3, 24, 25, 31, 40, 49, 57, 58, 59",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "right slingshot switch 27 hit (first pass): public 18 changed 2 times, public 32 changed 16 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "pop bumper switch 32 hit (second pass): public 8 changed 2 times, public 11 changed 2 times, public 31 changed 17 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59, 62",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8,
+            11,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "pop bumper switch 31 hit (second pass): public 8 changed 2 times, public 10 changed 2 times, public 31 changed 15 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59, 61",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8,
+            10,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "top pop bumper switch 30 hit (second pass): public 8 changed 2 times, public 9 changed 2 times, public 31 changed 16 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59, 60",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8,
+            9,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "right slingshot switch 27 hit (second pass): public 18 changed 2 times, public 32 changed 16 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18,
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "left slingshot switch 26 hit (second pass): public 17 changed 2 times, public 32 changed 16 times; lamps turned on: 24, 25, 31, 40, 49, 57, 58, 59",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            32
+          ]
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 25,
+        "initial_switches": [],
+        "name": "bumper-sling-probe-nba_802",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and the ROM reached attract mode without a factory-reset message to dismiss",
+        "retained_from": "external:pinmame-review-artifacts/nba-2009/harness/bumper-sling-probe-nba_802/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/nba-2009-bumper-sling-probe.json",
+        "scenario_sha256": "19fe19cee4818f1225530e1e36682f1f40f7db2544eef67e8863a89c5a1bf168",
+        "self_test_pulses": 0,
+        "sha256": "1f1d8f311beb42fcca420cb866720d3aac8b45eb45763ea2ae887e937490efa4",
+        "snapshot_count": 26,
+        "watch_switches": [
+          16,
+          18,
+          19,
+          20,
+          21,
+          23,
+          26,
+          27,
+          30,
+          31,
+          32,
+          65
+        ]
+      }
+    ],
+    "rom_archive_sha256": "f39325150fff424c10cbff2f40f941e67e45b14628c25defaffe4e5ed3cccf94"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame cited here was read visually and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest bumper-sling-probe-nba_802/manifest.json SHA-256 a98ca95a80060714bafb2801143187be1fed8eeb372feee716bfe1caa892804b (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-2009/harness/bumper-sling-probe-nba_802",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "1f1d8f311beb42fcca420cb866720d3aac8b45eb45763ea2ae887e937490efa4"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

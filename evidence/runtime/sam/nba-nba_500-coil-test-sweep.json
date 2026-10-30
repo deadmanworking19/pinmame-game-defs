@@ -1,0 +1,875 @@
+{
+  "driver_ids": [
+    "nba_500"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.nba.2009"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game nba_500 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --ready-timeout 90 --scenario tools/harness-scenarios/stern/nba-2009-coil-sweep.json --dmd-dir <external-dmd-dir> --output <external-run.json>. SELECT energizes the coil on display. The selector steps #1-#32 in order and wraps to #1 at position 33. Firing #6 SPINNING DISK MOTOR also changes public 22 (#22 SPINNING DISK MOTOR RELAY); firing #24 OPTIONAL COIL changes no public solenoid.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "nba_500",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "NBA / U.S.A. V5.0 / ENGLISH",
+          "label": "power-up version screen",
+          "nonzero_pixels": 263,
+          "pixel_sha256": "9939e4283731bfaef4f9ae42444029c4e187c48b2b91b2701f8814c8ddfdb750"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "TEST CYC PREV QUIT HELP / SINGLE COIL TEST",
+          "label": "coil menu",
+          "nonzero_pixels": 1639,
+          "pixel_sha256": "bd03d64b8cb98695610d27458099232eeb3af8215f067fbad4a418e0fe7d6db5"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / TROUGH UP-KICKER / #1 / YEL-VIO / BRN-BLK",
+          "label": "selector position 1",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "8b6d6569066b61b1597f5effb18db508a1554f0a3c0898d46f9335228daba8a8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / AUTO LAUNCH / #2 / YEL-VIO / BRN-RED",
+          "label": "selector position 2",
+          "nonzero_pixels": 447,
+          "pixel_sha256": "7378066fe74c59a28687cb434ab0d73677b334441d083b7e7ff9f256f2ea6796"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / BASKET MAGNET / #3 / YEL-VIO / BRN-ORG",
+          "label": "selector position 3",
+          "nonzero_pixels": 463,
+          "pixel_sha256": "4ec8578daeb90bcb851d885ddeb7b869c2c2f9133278b352234ed404f5ed62e9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / LEFT EJECT / #4 / YEL-VIO / BRN-YEL",
+          "label": "selector position 4",
+          "nonzero_pixels": 391,
+          "pixel_sha256": "2c26a84d91dc5571b24331ece9eeacc3b7f5afa8d9bfb608226c70b91ea25d23"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RAMP DIVERTER / #5 / YEL-VIO / BRN-GRN",
+          "label": "selector position 5",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "1619c20f069deb2388d5fefd9b3258b78f6f46d065ef42fa0300078a59f1c21c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / SPINNING DISK MOTOR / #6 / BRN / BRN-BLU",
+          "label": "selector position 6",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "c347a3f2bf8f1456cf0bc377ebbfb55581b5d939f0b63212fe59c7eba370a218"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / 3-BANK DROP TARGET / #7 / YEL-VIO / BRN-VIO",
+          "label": "selector position 7",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "8219e855b07096cf5b99b4b5ec9a62769a2d6aee0aba11fd6ec3fa9544593b57"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / SHAKER MOTOR (OPTIONAL) / #8 / RED-WHT / BRN-GRY",
+          "label": "selector position 8",
+          "nonzero_pixels": 593,
+          "pixel_sha256": "0e52df42b1ece981c662de1f561b6e0b2e637c1b4539bc5363083b3e1d6db35d"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / TOP POP BUMPER / #9 / YEL-VIO / BLU-BRN",
+          "label": "selector position 9",
+          "nonzero_pixels": 473,
+          "pixel_sha256": "bd479c2e6357d060895c501c78ae431990be25436f57b1cea88ffdedc0bfbc92"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / LEFT POP BUMPER / #10 / YEL-VIO / BLU-RED",
+          "label": "selector position 10",
+          "nonzero_pixels": 487,
+          "pixel_sha256": "7d22dc20a5a9d97f732da8f96ee8bff4eb816d3d5f1dd7ef3e71127384753b89"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RIGHT POP BUMPER / #11 / YEL-VIO / BLU-ORG",
+          "label": "selector position 11",
+          "nonzero_pixels": 502,
+          "pixel_sha256": "3d6ffcd51dd7c52b74052d6d3659b7fd831d2b9e03adb298ee6f27dfd5661b62"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / BASKET DIVERTER / #12 / YEL-VIO / BLU-YEL",
+          "label": "selector position 12",
+          "nonzero_pixels": 476,
+          "pixel_sha256": "9888977d6f04b1695faa28d5ba55ee2f581d45a4b558dbcb5aa50cb6c8bf95d4"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: BACKBOARD (X2) / #13 / ORG / BLU-GRN",
+          "label": "selector position 13",
+          "nonzero_pixels": 501,
+          "pixel_sha256": "dc9925c8a2427b1fffa6fdc10faea95377ac62eb7a733c58f97be86881089a2a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: LEFT RAMP (X2) / #14 / ORG / BLU-BLK",
+          "label": "selector position 14",
+          "nonzero_pixels": 470,
+          "pixel_sha256": "90622a5cc26db6bdc94c84d86beba53212cff97fa06e1fde715bacd5d3fd60a2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / LEFT FLIPPER / #15 / GRY-YEL / ORG-GRY",
+          "label": "selector position 15",
+          "nonzero_pixels": 441,
+          "pixel_sha256": "a76caa484b04ac1b7ce8e5027a0c99f0804a09eb7b22bd70bd07cc3d0e6d7246"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RIGHT FLIPPER / #16 / BLU-YEL / ORG-VIO",
+          "label": "selector position 16",
+          "nonzero_pixels": 459,
+          "pixel_sha256": "a930e9f4ef7768ded813caf181536d006ebc8f53b370eef13ae5fe2b2bf6225a"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / LEFT SLINGSHOT / #17 / BRN / VIO-BRN",
+          "label": "selector position 17",
+          "nonzero_pixels": 427,
+          "pixel_sha256": "6ad6d513c2a7ff5a6229109f27b191b77e2c87b8c9e8b23ef2c2f4d9da299fb2"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RIGHT SLINGSHOT / #18 / BRN / VIO-RED",
+          "label": "selector position 18",
+          "nonzero_pixels": 453,
+          "pixel_sha256": "075da12a59c39298affbad77200c026fab1b2350e52f2989b0481564edf6bd50"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: BASKETBALL (X3) / #19 / ORG / VIO-ORG",
+          "label": "selector position 19",
+          "nonzero_pixels": 494,
+          "pixel_sha256": "facfc1e80d133dc9111cefabf897fa7e7dc454d49e91626274427d7ec16eb592"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RIGHT EJECT / #20 / BRN / VIO-WHT",
+          "label": "selector position 20",
+          "nonzero_pixels": 394,
+          "pixel_sha256": "577169ceeec6c756595ff196c61ec4b1b99b1cd8e5c8e02f02037408067f6e22"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / ORBIT UP/DOWN POST / #21 / BRN / VIO-GRN",
+          "label": "selector position 21",
+          "nonzero_pixels": 493,
+          "pixel_sha256": "63a65d1e22ad972ffbb70e1a85320603f0fce08284aa9c060ae21a2926aab285"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / SPINNING DISK MOTOR RELAY / #22 / BRN / VIO-BLU",
+          "label": "selector position 22",
+          "nonzero_pixels": 564,
+          "pixel_sha256": "79ae84742c3134f5795bfdabd407075fa71dbbf5a3b4ef4d88014e68f02b9796"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: LEFT SIDE / #23 / ORG / VIO-BLK",
+          "label": "selector position 23",
+          "nonzero_pixels": 419,
+          "pixel_sha256": "adb27fd527e451d863c83e5e9e108537455142f68384a3dec6b91469d4a06d48"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / OPTIONAL COIL / #24 / RED / VIO-GRY",
+          "label": "selector position 24",
+          "nonzero_pixels": 425,
+          "pixel_sha256": "8b8650de45f88d7697a6ab0eb050ec13ff0692959cc5695e6160874cc726d985"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: LEFT RAMP ARROW / #25 / ORG / BLK-BRN",
+          "label": "selector position 25",
+          "nonzero_pixels": 522,
+          "pixel_sha256": "cb1f1727e49aa386953b266ff4a5920b786360507a4219f94c9ff20fc9ca10c6"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: LEFT EJECT ARROW / #26 / ORG / BLK-RED",
+          "label": "selector position 26",
+          "nonzero_pixels": 514,
+          "pixel_sha256": "e4c1de1f4b76257e99726b526be68a2094b939b532423d893d69599f970dcfca"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: RIGHT EJECT ARROW / #27 / ORG / BLK-ORG",
+          "label": "selector position 27",
+          "nonzero_pixels": 527,
+          "pixel_sha256": "8c1ce97b58b5ec1421c64faaf3b2ef8287ac9fa9c6744f01d87fd2114c28fdbd"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: RIGHT RAMP ARROW / #28 / ORG / BLK-YEL",
+          "label": "selector position 28",
+          "nonzero_pixels": 528,
+          "pixel_sha256": "a00f4bf5149a20e73ff498e5347dd30369696a86ad0466c425b39d057f080796"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: RIGHT SIDE / #29 / ORG / BLK-GRN",
+          "label": "selector position 29",
+          "nonzero_pixels": 450,
+          "pixel_sha256": "d46a2e5b42717d0e6a4ecadca167f1e17f785089cde6bee76253bd3781f39236"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: CAPTIVE BALL / #30 / ORG / BLK-BLU",
+          "label": "selector position 30",
+          "nonzero_pixels": 462,
+          "pixel_sha256": "794537f09ffbbf6ed809a76c65be68af764557dfce1f28db6aefb535c18a63ef"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: POP BUMPER (X3) / #31 / ORG / BLK-VIO",
+          "label": "selector position 31",
+          "nonzero_pixels": 497,
+          "pixel_sha256": "90ee2ee8ec6e417a722139b49f0142eacde0b7aaf640860d6f02ccce361f45a7"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / FLASH: SLINGSHOT (X2) / #32 / ORG / BLK-GRY",
+          "label": "selector position 32",
+          "nonzero_pixels": 481,
+          "pixel_sha256": "c601cff10da1a837712c8a4a3ba81018bfcefcdc5a658c77fd9a6fc6e952f006"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / TROUGH UP-KICKER / #1 / YEL-VIO / BRN-BLK (selector wrapped)",
+          "label": "selector position 33",
+          "nonzero_pixels": 490,
+          "pixel_sha256": "8b6d6569066b61b1597f5effb18db508a1554f0a3c0898d46f9335228daba8a8"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / AUTO LAUNCH / #2 / YEL-VIO / BRN-RED (selector wrapped)",
+          "label": "selector position 34",
+          "nonzero_pixels": 447,
+          "pixel_sha256": "7378066fe74c59a28687cb434ab0d73677b334441d083b7e7ff9f256f2ea6796"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / BASKET MAGNET / #3 / YEL-VIO / BRN-ORG (selector wrapped)",
+          "label": "selector position 35",
+          "nonzero_pixels": 463,
+          "pixel_sha256": "4ec8578daeb90bcb851d885ddeb7b869c2c2f9133278b352234ed404f5ed62e9"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / LEFT EJECT / #4 / YEL-VIO / BRN-YEL (selector wrapped)",
+          "label": "selector position 36",
+          "nonzero_pixels": 391,
+          "pixel_sha256": "2c26a84d91dc5571b24331ece9eeacc3b7f5afa8d9bfb608226c70b91ea25d23"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / RAMP DIVERTER / #5 / YEL-VIO / BRN-GRN (selector wrapped)",
+          "label": "selector position 37",
+          "nonzero_pixels": 472,
+          "pixel_sha256": "1619c20f069deb2388d5fefd9b3258b78f6f46d065ef42fa0300078a59f1c21c"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / SPINNING DISK MOTOR / #6 / BRN / BRN-BLU (selector wrapped)",
+          "label": "selector position 38",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "c347a3f2bf8f1456cf0bc377ebbfb55581b5d939f0b63212fe59c7eba370a218"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / 3-BANK DROP TARGET / #7 / YEL-VIO / BRN-VIO (selector wrapped)",
+          "label": "selector position 39",
+          "nonzero_pixels": 500,
+          "pixel_sha256": "8219e855b07096cf5b99b4b5ec9a62769a2d6aee0aba11fd6ec3fa9544593b57"
+        },
+        {
+          "active_solenoid_addresses": [],
+          "display_index": 0,
+          "interpreted_text": "COIL TEST / SHAKER MOTOR (OPTIONAL) / #8 / RED-WHT / BRN-GRY (selector wrapped)",
+          "label": "selector position 40",
+          "nonzero_pixels": 593,
+          "pixel_sha256": "0e52df42b1ece981c662de1f561b6e0b2e637c1b4539bc5363083b3e1d6db35d"
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 1 (TROUGH UP-KICKER, #1): SELECT fires public solenoid 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 2 (AUTO LAUNCH, #2): SELECT fires public solenoid 2",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 3 (BASKET MAGNET, #3): SELECT fires public solenoid 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 4 (LEFT EJECT, #4): SELECT fires public solenoid 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 5 (RAMP DIVERTER, #5): SELECT fires public solenoid 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 6 (SPINNING DISK MOTOR, #6): SELECT fires public solenoid 6, 22",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 7 (3-BANK DROP TARGET, #7): SELECT fires public solenoid 7",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 8 (SHAKER MOTOR (OPTIONAL), #8): SELECT fires public solenoid 8",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 9 (TOP POP BUMPER, #9): SELECT fires public solenoid 9",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 10 (LEFT POP BUMPER, #10): SELECT fires public solenoid 10",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 11 (RIGHT POP BUMPER, #11): SELECT fires public solenoid 11",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 12 (BASKET DIVERTER, #12): SELECT fires public solenoid 12",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 13 (FLASH: BACKBOARD (X2), #13): SELECT fires public solenoid 13",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 14 (FLASH: LEFT RAMP (X2), #14): SELECT fires public solenoid 14",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 15 (LEFT FLIPPER, #15): SELECT fires public solenoid 15",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 16 (RIGHT FLIPPER, #16): SELECT fires public solenoid 16",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            16
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 17 (LEFT SLINGSHOT, #17): SELECT fires public solenoid 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 18 (RIGHT SLINGSHOT, #18): SELECT fires public solenoid 18",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 19 (FLASH: BASKETBALL (X3), #19): SELECT fires public solenoid 19",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 20 (RIGHT EJECT, #20): SELECT fires public solenoid 20",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            20
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 21 (ORBIT UP/DOWN POST, #21): SELECT fires public solenoid 21",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 22 (SPINNING DISK MOTOR RELAY, #22): SELECT fires public solenoid 22",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 23 (FLASH: LEFT SIDE, #23): SELECT fires public solenoid 23",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            23
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 24 (OPTIONAL COIL, #24): SELECT fires public solenoid none",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 25 (FLASH: LEFT RAMP ARROW, #25): SELECT fires public solenoid 25",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            25
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 26 (FLASH: LEFT EJECT ARROW, #26): SELECT fires public solenoid 26",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 27 (FLASH: RIGHT EJECT ARROW, #27): SELECT fires public solenoid 27",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            27
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 28 (FLASH: RIGHT RAMP ARROW, #28): SELECT fires public solenoid 28",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            28
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 29 (FLASH: RIGHT SIDE, #29): SELECT fires public solenoid 29",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            29
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 30 (FLASH: CAPTIVE BALL, #30): SELECT fires public solenoid 30",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            30
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 31 (FLASH: POP BUMPER (X3), #31): SELECT fires public solenoid 31",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 32 (FLASH: SLINGSHOT (X2), #32): SELECT fires public solenoid 32",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            32
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 33 (TROUGH UP-KICKER, #1): SELECT fires public solenoid 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 34 (AUTO LAUNCH, #2): SELECT fires public solenoid 2",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 35 (BASKET MAGNET, #3): SELECT fires public solenoid 3",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 36 (LEFT EJECT, #4): SELECT fires public solenoid 4",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 37 (RAMP DIVERTER, #5): SELECT fires public solenoid 5",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            5
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 38 (SPINNING DISK MOTOR, #6): SELECT fires public solenoid 6, 22",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            22
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 39 (3-BANK DROP TARGET, #7): SELECT fires public solenoid 7",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_select",
+          "label": "selector position 40 (SHAKER MOTOR (OPTIONAL), #8): SELECT fires public solenoid 8",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        }
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 87,
+        "initial_switches": [],
+        "name": "coil-test-sweep-nba_500",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory and the ROM reached attract mode without a factory-reset message to dismiss",
+        "retained_from": "external:pinmame-review-artifacts/nba-2009/harness/coil-sweep-nba_500/run.json",
+        "scenario_path": "tools/harness-scenarios/stern/nba-2009-coil-sweep.json",
+        "scenario_sha256": "5dc2ba9f39e8e221cd9bf4fca09572e8914da3dc1c12e8601d7f8e551dcba32e",
+        "self_test_pulses": 0,
+        "sha256": "2008204f53d019dec8b570fdb43c4ac85dd67759b41c48fad476fa910f564088",
+        "snapshot_count": 88
+      }
+    ],
+    "rom_archive_sha256": "6c205edb961add5087433a967f90ecd28c082fcbb39d622a2d958371480908cf"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. Public switch writes are host stimuli, never ROM observations. The runner can checkpoint only segment-display text, so the DMD service-menu navigation is counted key pulses; every retained DMD frame cited here was read visually and each diagnostic snapshot's interpreted_text is that reading of its pixel SHA-256. Exact external directory manifest coil-sweep-nba_500/manifest.json SHA-256 7f1ea8cdf8534994c89db3f99daf70b93153297f2e2e6485702ce6c81d8867cb (built by tools/build_external_evidence_manifest.py); it lists the raw trace, the copied scenario, the DMD frames and the isolated mutable state, with no ROM bytes.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/nba-2009/harness/coil-sweep-nba_500",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "2008204f53d019dec8b570fdb43c4ac85dd67759b41c48fad476fa910f564088"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

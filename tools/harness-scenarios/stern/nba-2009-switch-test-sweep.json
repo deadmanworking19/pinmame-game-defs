@@ -1,0 +1,726 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Boot an NBA S.A.M. ROM from an empty NVRAM and enter the switch test with the named Back and Select service keys (Back, then Select five times: service-menu splash, icon menu, diagnostics menu, switch menu, switch test). Every public switch starts at 0. Hold each matrix switch 1-64, then each dedicated-switch address 65-72, 81-88 and -7 to -4, in turn for 1.2 s with a snapshot while held, then release it for 0.6 s. The switch test prints the name the ROM gives a switch while the ROM reads it as active. The named service keys drive the coin-door buttons 0, -1, -2 and -3, so these four are not held directly. The scenario names no driver.",
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 30.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 400,
+      "key": "service_green",
+      "label": "Back",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 1: SERVICE MENU splash",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 2: icon menu, DIAG highlighted",
+      "settle_s": 3.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 3: diagnostics menu, SW highlighted",
+      "settle_s": 5.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 4: switch menu, TEST highlighted",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "hold_ms": 700,
+      "key": "service_select",
+      "label": "Select 5: switch test",
+      "settle_s": 4.0,
+      "type": "pulse_key"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 66,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 66"
+    },
+    {
+      "type": "pulse",
+      "switch": 67,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 67"
+    },
+    {
+      "type": "pulse",
+      "switch": 68,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 68"
+    },
+    {
+      "type": "pulse",
+      "switch": 69,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 69"
+    },
+    {
+      "type": "pulse",
+      "switch": 70,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 71,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 71"
+    },
+    {
+      "type": "pulse",
+      "switch": 72,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 72"
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 81"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 85,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 85"
+    },
+    {
+      "type": "pulse",
+      "switch": 86,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 86"
+    },
+    {
+      "type": "pulse",
+      "switch": 87,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 87"
+    },
+    {
+      "type": "pulse",
+      "switch": 88,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold 88"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold -7"
+    },
+    {
+      "type": "pulse",
+      "switch": -6,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold -6"
+    },
+    {
+      "type": "pulse",
+      "switch": -5,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold -5"
+    },
+    {
+      "type": "pulse",
+      "switch": -4,
+      "hold_ms": 1200,
+      "settle_s": 0.6,
+      "snapshot_while_held": true,
+      "label": "hold -4"
+    }
+  ]
+}
