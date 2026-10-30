@@ -85,7 +85,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 79 | 1999 | Revenge from Mars | Bally | partial | 94% |
 | 80 | 1999 | Harley Davidson | Sega | partial | 13% |
 | 81 | 1999 | South Park | Sega | partial | 94% |
-| 82 | 1999 | Harley Davidson | Stern | partial | 13% |
+| 82 | 1999 | Harley Davidson | Stern | partial | 88% |
 | 83 | 1998 | Cactus Canyon | Bally | author_ready | 100% |
 | 84 | 1998 | The Champion Pub | Bally | partial | 88% |
 | 85 | 1998 | Godzilla | Sega | partial | 50% |

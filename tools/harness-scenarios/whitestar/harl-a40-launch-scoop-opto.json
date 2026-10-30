@@ -1,0 +1,165 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a40",
+  "notes": "Boot harl_a40 with four balls on trough switches 11-14 and the stacking opto 15 at 0, with PinMAME's built-in motorcycle mechanism enabled (--handle-mechanics 1), so the scenario never writes 35 or 36. Insert three coins on the center slot (public 5) and press Start (54). Leave the served ball on the shooter lane switch 16 for 15 s, then press the Launch button 53 once while it is still there, and let it leave. Close the spinner 28 between steps so the ROM sees playfield activity. Hold a ball on the power scoop 46 for 15 s with no other switch closed, then pulse the motorcycle enter opto 37 twice with the scoop empty, and drain the ball.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    35,
+    36,
+    37,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "one ball has left the trough: the left-most trough position 11 empties as the stack shifts toward the up-kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 15.0,
+      "label": "the served ball rests on the shooter lane switch 16 and stays there through the auto-launch kicks"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Launch button (public 53) pressed once with the ball still on the shooter lane switch 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "the ball leaves the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "spinner (public 28) closed once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 15.0,
+      "label": "a ball enters the power scoop (public 46) and stays, with no other switch closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "the power scoop (public 46) empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "spinner (public 28) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "motorcycle enter opto (public 37) pulsed to 1 once, with the power scoop empty"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "spinner (public 28) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "motorcycle enter opto (public 37) pulsed to 1 a second time"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 12.0,
+      "label": "the ball drains: trough position 11 fills again"
+    }
+  ]
+}

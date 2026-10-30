@@ -268,7 +268,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 320 | Raven | `gottlieb.raven.1986` | 13% |
 | 321 | Striker Xtreme | `stern.striker-xtreme.2000` | 13% |
 | 322 | Orbitor 1 | `stern.orbitor-1.1982` | 19% |
-| 323 | Harley Davidson | `stern.harley-davidson.1999` | 13% |
+| 323 | Harley Davidson | `stern.harley-davidson.1999` | 88% |
 | 324 | The Rolling Stones | `stern.the-rolling-stones-standard.2011` | 100% |
 | 324 | The Rolling Stones | `stern.the-rolling-stones-limited-edition.2011` | 100% |
 | 325 | Hardbody | `bally.hardbody.1987` | 13% |

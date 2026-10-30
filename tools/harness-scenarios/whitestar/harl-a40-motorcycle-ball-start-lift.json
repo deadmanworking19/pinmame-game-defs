@@ -1,0 +1,172 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a40",
+  "notes": "Boot harl_a40 with built-in mechanisms disabled (--handle-mechanics 0), four balls on trough switches 11-14, the Motor Down switch 36 at public 1 and the Motor Up switch 35 at 0. Insert three coins, press Start and emulate the serve and the auto launch, then close no playfield switch. Move the bike by hand at fixed times: three seconds after the ball leaves the shooter lane lower 36 and raise 35 three seconds later; 29 s later lower 35 and raise 36 two seconds later; 24 s later lower 36 and raise 35 again. Record when the ROM energizes and drops the motor relay (solenoid 19) against those switch changes.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    },
+    {
+      "switch": 35,
+      "state": 0
+    },
+    {
+      "switch": 36,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    35,
+    36,
+    37,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with the Motor Down switch 36 at 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "one ball has left the trough: the left-most trough position 11 empties as the stack shifts toward the up-kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.6,
+      "label": "the served ball reaches the shooter lane switch 16"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "the auto-launched ball leaves the shooter lane"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "observe the motor relay with 36 at 1 and 35 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the motorcycle leaves the down position: public 36 lowered to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "the motorcycle reaches the up position: public 35 raised to 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "observe with 35 at 1 and 36 at 0 and no playfield switch closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "the motorcycle leaves the up position: public 35 lowered to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "the motorcycle reaches the down position: public 36 raised to 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "observe with 36 at 1 and 35 at 0 and no playfield switch closed"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "the motorcycle leaves the down position a second time: public 36 lowered to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "the motorcycle reaches the up position a second time: public 35 raised to 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 10.0,
+      "label": "observe with 35 at 1 and 36 at 0"
+    }
+  ]
+}

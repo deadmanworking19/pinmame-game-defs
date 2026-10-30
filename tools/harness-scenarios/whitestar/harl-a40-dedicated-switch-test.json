@@ -1,0 +1,31 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a40",
+  "notes": "Boot harl_a40 with four balls on trough switches 11-14 and the stacking opto 15 at 0, with PinMAME's built-in motorcycle mechanism enabled (--handle-mechanics 1), so the scenario never writes 35 or 36. Walk the Portals service menu with the Black ENTER (public 0) and Green RIGHT (public -1) service buttons: Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU (SW), SWITCH TEST MENU (TEST), two steps right to DED, and enter the Dedicated Switch Test, which prints the name and wiring the ROM holds for each closed dedicated switch. Hold the left flipper button 84 as a control, then dedicated input 88 (DS-5), then the right flipper button 82 as a second control, releasing each before the next.",
+  "initial_switches": [
+    {"switch": 11, "state": 1},
+    {"switch": 12, "state": 1},
+    {"switch": 13, "state": 1},
+    {"switch": 14, "state": 1},
+    {"switch": 15, "state": 0}
+  ],
+  "watch_switches": [-2, -1, 0, 81, 82, 83, 84, 88],
+  "actions": [
+    {"type": "wait", "seconds": 25.0, "label": "boot stabilization into attract mode with four balls on trough switches 11-14"},
+    {"type": "pulse", "switch": 0, "hold_ms": 200, "settle_s": 3.0, "label": "Black ENTER button (public 0) pressed: Portals opens"},
+    {"type": "pulse", "switch": 0, "hold_ms": 200, "settle_s": 2.0, "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"},
+    {"type": "pulse", "switch": 0, "hold_ms": 200, "settle_s": 2.0, "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"},
+    {"type": "pulse", "switch": 0, "hold_ms": 200, "settle_s": 2.0, "label": "Black ENTER button (public 0) pressed: SWITCH TEST MENU with TEST selected"},
+    {"type": "pulse", "switch": -1, "hold_ms": 200, "settle_s": 1.5, "label": "Green RIGHT button (public -1) pressed: ACT selected"},
+    {"type": "pulse", "switch": -1, "hold_ms": 200, "settle_s": 1.5, "label": "Green RIGHT button (public -1) pressed: DED selected"},
+    {"type": "pulse", "switch": 0, "hold_ms": 200, "settle_s": 3.0, "label": "Black ENTER button (public 0) pressed: Dedicated Switch Test entered"},
+    {"type": "set_switch", "switch": 84, "state": 1, "settle_s": 2.5, "label": "left flipper button (public 84) held in the Dedicated Switch Test"},
+    {"type": "set_switch", "switch": 84, "state": 0, "settle_s": 2.0, "label": "left flipper button (public 84) released"},
+    {"type": "set_switch", "switch": 88, "state": 1, "settle_s": 2.5, "label": "dedicated input 88 (DS-5) held in the Dedicated Switch Test"},
+    {"type": "wait", "seconds": 2.0, "label": "dedicated input 88 (DS-5) still held"},
+    {"type": "set_switch", "switch": 88, "state": 0, "settle_s": 2.0, "label": "dedicated input 88 (DS-5) released"},
+    {"type": "set_switch", "switch": 82, "state": 1, "settle_s": 2.5, "label": "right flipper button (public 82) held in the Dedicated Switch Test"},
+    {"type": "set_switch", "switch": 82, "state": 0, "settle_s": 2.0, "label": "right flipper button (public 82) released"}
+  ]
+}

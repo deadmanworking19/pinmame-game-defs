@@ -1,0 +1,32 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a40",
+  "notes": "Boot harl_a40 with four balls on trough switches 11-14 and the stacking opto 15 at 0. Hold dedicated input 88 (DS-5, the cabinet wiring diagram's UPPER RIGHT FLIPPER BUTTON on CN6-7) in attract mode, then insert three coins on the center slot (public 5), press Start (54), emulate the serve (trough position 11 empties, the ball rests on the shooter lane switch 16, the Launch button 53 is pressed and the ball leaves), hold 88 twice during play, then hold the right cabinet button 8 (the USA up/down post button) as the control that raises the up/down post 23, and finally hold 88 once more and drain the ball.",
+  "initial_switches": [
+    {"switch": 11, "state": 1},
+    {"switch": 12, "state": 1},
+    {"switch": 13, "state": 1},
+    {"switch": 14, "state": 1},
+    {"switch": 15, "state": 0}
+  ],
+  "watch_switches": [8, 11, 12, 13, 14, 15, 16, 53, 54, 82, 84, 88],
+  "actions": [
+    {"type": "wait", "seconds": 25.0, "label": "boot stabilization into attract mode with four balls on trough switches 11-14"},
+    {"type": "pulse", "switch": 88, "hold_ms": 1500, "settle_s": 4.0, "label": "dedicated input 88 (DS-5) held 1.5 s in attract mode"},
+    {"type": "pulse", "switch": 5, "hold_ms": 120, "settle_s": 1.5, "label": "coin 1 on the center coin slot (public 5)"},
+    {"type": "pulse", "switch": 5, "hold_ms": 120, "settle_s": 1.5, "label": "coin 2 on the center coin slot (public 5)"},
+    {"type": "pulse", "switch": 5, "hold_ms": 120, "settle_s": 1.5, "label": "coin 3 on the center coin slot (public 5)"},
+    {"type": "pulse", "switch": 54, "hold_ms": 300, "settle_s": 4.0, "label": "Start button (public 54)"},
+    {"type": "set_switch", "switch": 11, "state": 0, "settle_s": 0.5, "label": "one ball has left the trough: the left-most trough position 11 empties as the stack shifts toward the up-kicker"},
+    {"type": "set_switch", "switch": 16, "state": 1, "settle_s": 6.0, "label": "the served ball rests on the shooter lane switch 16"},
+    {"type": "pulse", "switch": 53, "hold_ms": 200, "settle_s": 3.0, "label": "Launch button (public 53) pressed once"},
+    {"type": "set_switch", "switch": 16, "state": 0, "settle_s": 4.0, "label": "the ball leaves the shooter lane"},
+    {"type": "pulse", "switch": 88, "hold_ms": 1500, "settle_s": 4.0, "label": "dedicated input 88 (DS-5) held 1.5 s during play"},
+    {"type": "pulse", "switch": 88, "hold_ms": 1500, "settle_s": 4.0, "label": "dedicated input 88 (DS-5) held 1.5 s during play again"},
+    {"type": "pulse", "switch": 8, "hold_ms": 1500, "settle_s": 4.0, "label": "right cabinet button (public 8, the USA up/down post button) held 1.5 s as the control"},
+    {"type": "wait", "seconds": 6.0, "label": "let the up/down post settle after the control"},
+    {"type": "pulse", "switch": 88, "hold_ms": 1500, "settle_s": 4.0, "label": "dedicated input 88 (DS-5) held 1.5 s after the control"},
+    {"type": "set_switch", "switch": 11, "state": 1, "settle_s": 12.0, "label": "the ball drains: trough position 11 fills again"}
+  ]
+}
