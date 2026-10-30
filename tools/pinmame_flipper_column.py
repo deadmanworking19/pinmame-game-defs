@@ -124,6 +124,7 @@ def flipper_column_inputs(
 	button_notes: dict[str, str],
 	unused_notes: dict[int, str] | None = None,
 	unused_note_refs: tuple[str, ...] = (),
+	button_normally_closed: bool | None = None,
 ) -> list[dict[str, Any]]:
 	"""Return the eight flipper-column inputs for a driver declaring ``FLIP_SWNO(left, right)``.
 
@@ -131,7 +132,9 @@ def flipper_column_inputs(
 	pinned PinMAME core and the controller profile; ``button_refs`` add whatever evidence shows a
 	known-working consumer driving 82/84. ``button_notes`` maps ``"left"``/``"right"`` to the
 	machine-specific closing sentence for that button, and ``unused_notes`` may add a sentence to an
-	unused position, citing ``unused_note_refs`` in addition to ``core_refs``.
+	unused position, citing ``unused_note_refs`` in addition to ``core_refs``. ``button_normally_closed``,
+	when given, records the cabinet button contact's construction on 82/84; the button notes must say
+	what establishes it.
 	"""
 	left, right = flip_swno
 	matrix = {"left": left, "right": right}
@@ -152,7 +155,7 @@ def flipper_column_inputs(
 				f"enable is on. Drive this address, not {matrix[side]}: a host write to {matrix[side]} is "
 				f"overwritten on the next update. {button_notes[side]}"
 			).rstrip()
-			items.append({
+			button = {
 				"id": flipper_column_id(address),
 				"label": f"{position} Flipper Button (PinMAME Flipper Column)",
 				"kind": "switch",
@@ -163,7 +166,10 @@ def flipper_column_inputs(
 				"roles": [f"flipper.lower.{side}.button"],
 				"physical": {"location": "cabinet flipper button", "switch_type": "button", "notes": notes},
 				"spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": _provenance(*core_refs)},
-			})
+			}
+			if button_normally_closed is not None:
+				button["normally_closed"] = button_normally_closed
+			items.append(button)
 			continue
 		if kind == "eos":
 			reason = (

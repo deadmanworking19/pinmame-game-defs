@@ -1,8 +1,6 @@
 {
   "blockers": [
-    "Lamp addresses 42, 43 and 44 (Red/Yellow/Green Light (Ramp Stoplight)) are real bulbs in the playfield Traffic Light Assembly B-10921 but have no derivable coordinate: the retained table's Light objects for them are parked at raw x about -2237 and its stoplight primitives sit at position (0,0,0) with the geometry baked into a mesh whose derived centre is off the top of the playfield. Their spatial keys are omitted rather than invented.",
-    "Lamp address 40 (Ramp Earns Hideout Jackpot) is marked a two-bulb circuit by the Lamp-Matrix Table but the manual never says where the second bulb is and the retained table models only one Light object, so its placement count is one against a quantity of two.",
-    "Solenoid address 11 (General Illumination Relay) switches playfield, cabinet and backbox general illumination together per the Power Wiring Diagram, but no page of the manual enumerates a GI bulb count, bulb type or position. The retained table's 68-member playfield GI light collection is not adopted as a placement set: it is unverifiable against the manual, contains three jet-bumper cap lights that belong to those assemblies, duplicates one member, and includes one light above the top playfield edge. The spatial key is omitted."
+    "Lamp address 40 (Ramp Earns Hideout Jackpot) is a two-bulb circuit by the Lamp-Matrix Table, but the manual never says where the second bulb is: neither the Lamp-Matrix Table nor the Lamps list breaks the location down, the lamp drawing prints 40 once, at one Ramp Earns insert, and the retained table models one Light there. One bulb is placed; the second has no placement."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -15,6 +13,94 @@
     "x": "x/952; 0=left, 1=right",
     "y": "y/1974; 0=rear/backglass, 1=apron/player"
   },
+  "drawing_callout_check": {
+    "checked": 0,
+    "limit": 0.07,
+    "not_validated": {},
+    "pages": {
+      "33": {
+        "callout_pairs": 0,
+        "control_loo_max": 0.0063,
+        "control_rms": 0.0025,
+        "controls": 19,
+        "image": {
+          "path": "evidence/excerpts/williams.high-speed.1986/lamp-locations.webp",
+          "pixels": [
+            2232,
+            2954
+          ],
+          "root": "repository",
+          "sha256": "a0c7a71e6965afd533600eb396c3e779a0f711fdc497e855d17100b98c599457"
+        },
+        "locator": "high_speed_instruction_manual.pdf PDF 41, printed 33: Lamps drawing (committed excerpt crop lamp-locations.webp)"
+      }
+    },
+    "read_by": {
+      "date": "2026-10-30",
+      "transcription": "no callout reads: the page is used only to measure the three Ramp Stoplight sockets, which the table does not model where the drawing puts them, so it checks nothing",
+      "verification": "the curator fitted every control on the committed render (verify/circlefit.py: a ring search for the printed circle of each round insert and star rollover, then a circle fit to its outer edge) and checked each on zoomed crops; the controls are the round inserts of lamps 3, 4, 5, 9 (both), 13-15, 17-19, 31-35 and 41 and the star rollovers 51 and 52, paired with their validated table placements, worst residual 0.0047 and worst leave-one-out 0.0063 normalized (verify/affine.py), and their convex hull contains the stoplight housing. The housing outline was measured side by side (verify/housing.py) and the overlay overlay-housing.png checked by eye; the three sockets sit across its width at the B-10921 assembly drawing's bulb spacing (+-0.288 of the width) and halfway through its depth. The switch drawing (printed 32) draws the same outline, unnumbered; fitted the same way on its own inserts and rollovers (verify/switch_page.py), its corners land within 0.003 of the lamp drawing's"
+    },
+    "retained_artifacts": {
+      "directory": "high-speed-1986/callout-check",
+      "manifest_sha256": "f9e6965041f135a2432b5bb17c33c89d93a5ddd225b8f8dad877f49c49c1fd7d"
+    },
+    "rule": "A placement is validated when its own callout on the factory location drawing (each callout paired with at most one placement of its label, nearest first) lands within 0.07 normalized of it under two least-squares fits of that page: one on independently read controls (jet-bumper caps and flipper pivots, or another crisp mechanism feature where balloons hide a pivot), and one, measured leave-one-out, on the page's other callout reads, from which any read beyond the limit is dropped. Placements without such a read keep their table status. Placements measured on a drawing are never checked against it.",
+    "seed": "tools/seeds/williams/high-speed-1986-callouts.json",
+    "seed_sha256": "17d201cbe65f718d728023e6c9574998504cf84ae37621ca022f5063a8a3e223",
+    "validated": 0
+  },
+  "drawing_measurements": [
+    {
+      "corroboration": "photos",
+      "label": "42",
+      "normalized": [
+        0.153,
+        0.183
+      ],
+      "page": "33",
+      "pixel": [
+        1047.7,
+        791.3
+      ],
+      "placement": "lamp.matrix-42.emitter",
+      "point": "outline_fraction",
+      "table_object": "not modelled at the drawn position: Light l42 is parked at raw x about -2237"
+    },
+    {
+      "corroboration": "photos",
+      "label": "43",
+      "normalized": [
+        0.19,
+        0.181
+      ],
+      "page": "33",
+      "pixel": [
+        1081.4,
+        787.0
+      ],
+      "placement": "lamp.matrix-43.emitter",
+      "point": "outline_fraction",
+      "table_object": "not modelled at the drawn position: Light l43 is parked at raw x about -2237"
+    },
+    {
+      "corroboration": "photos",
+      "label": "44",
+      "normalized": [
+        0.228,
+        0.178
+      ],
+      "page": "33",
+      "pixel": [
+        1115.2,
+        782.6
+      ],
+      "placement": "lamp.matrix-44.emitter",
+      "point": "outline_fraction",
+      "table_object": "not modelled at the drawn position: Light l44 is parked at raw x about -2237"
+    }
+  ],
+  "excerpt_count": 12,
+  "excerpt_image_count": 10,
   "excluded_object_classes": [
     "a00-a3f and LED* Light objects: alphanumeric display segment simulation (the script's Digits() and Leds() arrays), not playfield lamps",
     "f109*/f112* Light objects: glow companions clustered on the Flasherbase1-4 flasher dome positions",
@@ -22,6 +108,9 @@
     "Flasherflash*/Flasherlit* objects: Flupper flasher render members of the dome assemblies already placed through their bases or lights",
     "FlasherRed/FlasherBlue/FlRoundRed/FlRoundBlue/FlWideRed/FlWideBlue: the table's police-beacon effect, driven from lamp 41's state rather than from solenoid 4",
     "L1/L2/L3a/L6 Reel objects (the BG collection): backglass indicators, recorded as not_applicable cabinet_or_service lamp records",
+    "l42/l43/l44 Light objects: parked off-table at raw x about -2237; the Ramp Stoplight sockets are measured on the lamp drawing instead",
+    "stoplight_prim/stoplightbracket_prim: the table's stoplight toy and its bracket, whose world-space plan bounds (x 0.208-0.357, y 0.217-0.289) put the toy in front of the drawn housing and over the upper-left stoplight inserts the photographs show it clear of",
+    "GI collection members that draw no bulb mesh (non_bulb_members under general_illumination), including GI_34 above the top rail at raw y -46.1, and the render doubles each kept GI socket absorbs",
     "kicker1-kicker4: subway teleport pairs used by the hideout ball paths, not switch or coil positions",
     "Trigger1-Trigger11 and Trigger111-Trigger113: sound-only triggers with no Controller.Switch call"
   ],
@@ -31,6 +120,243 @@
     "source_ref": "vpx-extraction.high-speed-1986"
   },
   "format": "pinmame-spatial-blockers",
+  "general_illumination": {
+    "address": 11,
+    "collection": "GI",
+    "duplicate_members": [
+      "GI_45"
+    ],
+    "nearest_separate_sockets": {
+      "distance": 35.5,
+      "objects": [
+        "GI_23",
+        "GI_28"
+      ]
+    },
+    "non_bulb_members": [
+      "GI_100",
+      "GI_17",
+      "GI_20",
+      "GI_21",
+      "GI_24",
+      "GI_25",
+      "GI_29",
+      "GI_31",
+      "GI_32",
+      "GI_33",
+      "GI_34",
+      "GI_35",
+      "GI_36",
+      "GI_37",
+      "GI_38",
+      "GI_39",
+      "GI_40",
+      "GI_41",
+      "GI_43",
+      "GI_44",
+      "GI_45",
+      "GI_46",
+      "GI_47",
+      "GI_48",
+      "GI_49",
+      "GI_5",
+      "GI_50",
+      "GI_51",
+      "GI_52",
+      "GI_58",
+      "GI_6",
+      "GI_99",
+      "bumper3light1",
+      "bumper3light5"
+    ],
+    "quantity": "none asserted: the table's grouping is not the machine's wiring, and the manual prints no GI bulb inventory",
+    "render_double_distance": 30.0,
+    "routing": "Power Wiring Diagram (printed page 47): the relay's two contact sets feed every GI string, playfield, cabinet and backbox, and the diagram draws no second GI circuit",
+    "script_binding": "SolCallback(11) = PFGI, which drives the GI collection inverted",
+    "sockets": [
+      {
+        "object": "GI_Bumper_1",
+        "render_doubles": [],
+        "x": 0.465947,
+        "y": 0.102135
+      },
+      {
+        "object": "GI_Bumper_2",
+        "render_doubles": [],
+        "x": 0.655277,
+        "y": 0.138568
+      },
+      {
+        "object": "GI_26",
+        "render_doubles": [],
+        "x": 0.97479,
+        "y": 0.162445
+      },
+      {
+        "object": "GI_22",
+        "render_doubles": [],
+        "x": 0.702413,
+        "y": 0.176474
+      },
+      {
+        "object": "GI_42",
+        "render_doubles": [],
+        "x": 0.822304,
+        "y": 0.193033
+      },
+      {
+        "object": "GI_Bumper_3",
+        "render_doubles": [],
+        "x": 0.496096,
+        "y": 0.201386
+      },
+      {
+        "object": "GI_18",
+        "render_doubles": [],
+        "x": 0.156634,
+        "y": 0.214862
+      },
+      {
+        "object": "GI_30",
+        "render_doubles": [],
+        "x": 0.972924,
+        "y": 0.222157
+      },
+      {
+        "object": "GI_10",
+        "render_doubles": [],
+        "x": 0.033613,
+        "y": 0.234718
+      },
+      {
+        "object": "GI_19",
+        "render_doubles": [],
+        "x": 0.550818,
+        "y": 0.249216
+      },
+      {
+        "object": "GI_55",
+        "render_doubles": [],
+        "x": 0.05042,
+        "y": 0.279635
+      },
+      {
+        "object": "GI_27",
+        "render_doubles": [
+          "GI_7"
+        ],
+        "x": 0.916667,
+        "y": 0.293144
+      },
+      {
+        "object": "GI_8",
+        "render_doubles": [],
+        "x": 0.237395,
+        "y": 0.309017
+      },
+      {
+        "object": "GI_23",
+        "render_doubles": [],
+        "x": 0.866371,
+        "y": 0.370299
+      },
+      {
+        "object": "GI_28",
+        "render_doubles": [],
+        "x": 0.895415,
+        "y": 0.381602
+      },
+      {
+        "object": "GI_56",
+        "render_doubles": [],
+        "x": 0.073529,
+        "y": 0.423506
+      },
+      {
+        "object": "GI_54",
+        "render_doubles": [],
+        "x": 0.872627,
+        "y": 0.432849
+      },
+      {
+        "object": "GI_57",
+        "render_doubles": [],
+        "x": 0.138655,
+        "y": 0.453901
+      },
+      {
+        "object": "GI_16",
+        "render_doubles": [],
+        "x": 0.081746,
+        "y": 0.498109
+      },
+      {
+        "object": "GI_60",
+        "render_doubles": [
+          "GI_15"
+        ],
+        "x": 0.861811,
+        "y": 0.551728
+      },
+      {
+        "object": "GI_13",
+        "render_doubles": [],
+        "x": 0.049463,
+        "y": 0.573771
+      },
+      {
+        "object": "GI_61",
+        "render_doubles": [
+          "GI_14"
+        ],
+        "x": 0.884221,
+        "y": 0.591805
+      },
+      {
+        "object": "GI_4",
+        "render_doubles": [],
+        "x": 0.17869,
+        "y": 0.671719
+      },
+      {
+        "object": "GI_3",
+        "render_doubles": [],
+        "x": 0.732867,
+        "y": 0.672109
+      },
+      {
+        "object": "GI_11",
+        "render_doubles": [],
+        "x": 0.696374,
+        "y": 0.739188
+      },
+      {
+        "object": "GI_12",
+        "render_doubles": [],
+        "x": 0.216431,
+        "y": 0.742696
+      },
+      {
+        "object": "GI_53",
+        "render_doubles": [
+          "GI_2"
+        ],
+        "x": 0.698179,
+        "y": 0.803107
+      },
+      {
+        "object": "GI_9",
+        "render_doubles": [
+          "GI_1"
+        ],
+        "x": 0.213585,
+        "y": 0.804458
+      }
+    ]
+  },
+  "ignored_conflicts": [
+    "conflict.coin-lockout-relay-part-number"
+  ],
   "machine_id": "williams.high-speed.1986",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -220,25 +546,8 @@
       }
     ]
   },
-  "omitted_outputs": [
-    {
-      "address": 42,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 43,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 11,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
-  "placement_count": 122,
+  "omitted_outputs": [],
+  "placement_count": 153,
   "projections": [
     {
       "address": 9,
@@ -545,6 +854,18 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 45,
       "group": "pinmame.output.lamp"
     },
@@ -657,6 +978,10 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 12,
       "group": "pinmame.output.solenoid"
     },
@@ -694,15 +1019,14 @@
     }
   ],
   "source_hashes": {
+    "callout_seed_sha256": "17d201cbe65f718d728023e6c9574998504cf84ae37621ca022f5063a8a3e223",
     "embedded_script_sha256": "149cab01a1fbe7657ffae87f72fa6982ed631653627b938186d5d8ed893195eb",
     "manual_sha256": "4aa21267d2edf016c2450f35e23b01eea74ff07e25b4b9a9d9c472f5c9e8c1dd",
+    "physical_photo_manifest_sha256": "aef01aca68c2676434a0532f01b999f768e0b77946b592a2a6c4b42b22a7fe8d",
     "table_sha256": "f57801a428f78f85b6cd40f4e47a74bd8e063227355d26ec4f15ef7f11d78af1"
   },
   "status": "validated",
-  "unresolved": [
-    "conflict.upper-flipper-driving-button",
-    "conflict.coin-lockout-relay-part-number"
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/williams.high-speed.1986/",

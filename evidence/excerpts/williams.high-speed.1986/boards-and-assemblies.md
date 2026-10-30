@@ -133,6 +133,18 @@ This is the playfield fixture holding lamps 42, 43 and 44 (Ramp Stoplight Red/Ye
 list gives no bulb type and no bulb count; "Light Socket & Cable Assembly" is one part covering all
 three sockets.
 
+The assembly drawing above the parts list has two views. The larger draws the housing in section across
+its width: three bulbs standing in a row in three sockets on one board, each under its own lens window
+in the housing face, with the cable bundle leaving the right-hand side through a connector and the
+mounting plate (item 1) hanging below the housing. The smaller, to its right, is a section through the
+housing's depth and shows a single bulb standing midway between the housing's front and back walls.
+Measured on the page's 300 dpi native scan (`pdftoppm -r 300`, page 2575 x 3321 px), the bulb glasses'
+edges put the three bulb axes at x = 880.5, 1098 and 1315.5 px, 217.5 px apart, and the housing's outer
+walls at x = 722 and 1477 px at the height of the bulb bases (y = 400 px), 755 px across with its centre
+line at 1099.5 px. The outer bulbs therefore sit 0.288 of the housing's width either side of the middle
+one, which is on the centre line. The drawing carries no dimensions, so these are proportions of the
+drawing, not measurements of the part.
+
 ## HIGH SPEED Ramp Gate Assembly, printed page 37 (PDF page 45), verbatim
 
 `D-10884`: 1 `23-6577` Plug Bumper, 5/8 dia.; 2 `20-8712-25` E-Ring, 1/4 in. shaft; 3 `A-10886` Drive

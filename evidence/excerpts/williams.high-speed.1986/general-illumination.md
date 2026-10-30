@@ -46,9 +46,9 @@ whole game's general illumination, not the backbox alone.**
 
 The bulb rows are drawn with three bulb symbols each and a dashed continuation, so the diagram states
 neither the bulb count per string nor any bulb position. No page of this manual carries a GI bulb
-inventory, a GI bulb type, or a GI location drawing. That is why this definition records solenoid 11 as
-a playfield-and-backbox-and-cabinet GI device but omits its spatial record rather than adopting the
-retained table's 68-object playfield `GI` light collection as if it were the manual's own set.
+inventory, a GI bulb type, or a GI location drawing. What the diagram does settle is membership:
+every GI string it draws, playfield, cabinet and backbox alike, runs through the one relay, and it draws
+no second GI circuit that a playfield GI bulb could belong to.
 
 ## Cross-reference: All Lamps Test text, printed page 23 (PDF page 31), verbatim
 

@@ -59,7 +59,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 97 | Flash Gordon | `bally.flash-gordon.1980` | 88% |
 | 98 | No Good Gofers | `williams.no-good-gofers.1997` | 94% |
 | 99 | KISS | `stern.kiss-limited-edition.2015` | 50% |
-| 100 | High Speed | `williams.high-speed.1986` | 88% |
+| 100 | High Speed | `williams.high-speed.1986` | 94% |
 | 101 | Ripley's Believe It or Not! | `stern.ripley-s-believe-it-or-not.2004` | 88% |
 | 102 | Indianapolis 500 | `bally.indianapolis-500.1995` | 94% |
 | 103 | Pirates of the Caribbean | `stern.pirates-of-the-caribbean.2006` | 75% |

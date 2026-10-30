@@ -1,6 +1,6 @@
 # High Speed (Williams, 1986) spatial review
 
-Status: validated. The physical machine record itself remains `partial` at `machines/partial/williams/high-speed-1986.json` because of the three spatial gaps and two unresolved conflicts named below; see the promotion decision.
+Status: validated. The physical machine record remains `partial` at `machines/partial/williams/high-speed-1986.json` because of the blocker below.
 
 The matching source is the retained known-working `High Speed (Williams 1986).vpx` at SHA-256 `f57801a428f78f85b6cd40f4e47a74bd8e063227355d26ec4f15ef7f11d78af1`. The retained vpxtool extraction produced the embedded script at SHA-256 `149cab01a1fbe7657ffae87f72fa6982ed631653627b938186d5d8ed893195eb`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=1974`, and every canonical coordinate is x/952 and y/1974 rounded to at most six fractional places. The y bound of 1974 is much shorter than the 2115-2594 of the later machines curated in this project, which is what a mid-1980s playfield measures.
 
@@ -8,7 +8,8 @@ The matching source is the retained known-working `High Speed (Williams 1986).vp
 
 - The embedded VPX script is the runtime address and causality authority; the Williams instruction manual is the physical inventory, quantity, wiring and location authority; pinned PinMAME owns controller topology and the System 11 address-space rules; the retained table supplies geometry, but only where the manual's own numbered locations drawings agree with it.
 - That last qualification matters on this machine. The retained table binds switch 34 to the rightmost jet bumper and switch 35 to the lowest, which is the opposite of both of the manual's own numbered locations drawings; the coordinates recorded here follow the manual, and the disagreement is disclosed on all three bumper switches.
-- System 11 has no separate GI address space: general illumination is one ordinary solenoid address (11) whose per-game bulb-type metadata happens to be a continuous AC GI type, resolved from pinned PinMAME's own per-game MACHINE_INIT block. High Speed has one GI relay where Whirlwind has two.
+- The Ramp Stoplight bulbs (lamps 42-44) are measured on the lamp drawing, because the table does not model them where the manual draws them: its Lights for them are parked off-table and its stoplight toy stands in front of the drawn housing. The drawing's own round inserts and star rollovers fix the page to the playfield, the housing outline is measured side by side, and the B-10921 assembly drawing's bulb spacing places the three sockets across it. Physical photographs corroborate the box, its red-amber-green order from left to right and where it stands.
+- System 11 has no separate GI address space: general illumination is one ordinary solenoid address (11). High Speed has one GI relay where Whirlwind has two, and the Power Wiring Diagram feeds every GI string through it. Its playfield placements are the bulb Lights of the table's one GI collection, which the script drives from solenoid 11, with render doubles collapsed onto one bulb; the table's grouping gives no quantity.
 - High Speed declares no A/C select relay (`sxx.muxSol = 0`) and no sound-overlay board (`hw.gameSpecific1 = 0`), so the platform's 25-32 alias bank and 37-44 overlay range are both enumerated as unpopulated rather than mapped to devices. This is the largest single difference from the project's other System 11 machine.
 - Switches 9-12 (outhole and trough), 37/38 (flipper lane change) and 49/50 (slingshot scoring) have no object of their own in the retained table and are documented projections onto their own mechanism's retained object; switches 39 and 47 take their coordinates from two unbound triggers whose positions are corroborated by the manual's own upper-above-lower ordering in each hideout lane.
 - Cabinet and backbox devices get controlled `not_applicable` records rather than coordinates: the eight cabinet switches, the four diagnostic buttons, the Country jumper, the police-light relay, the insert-board flashers, the knocker, the coin-lockout relay, the three backglass lamps and all six displays.
@@ -38,12 +39,53 @@ The matching source is the retained known-working `High Speed (Williams 1986).vp
 - Solenoid 18: Projected onto the centroid of Wall.RightSlingShot's four drag points; see solenoid 17.
 - Solenoid 22: Placed at the two Light members of the two Flupper flasher assemblies the retained script drives for this address (Light.Flasherlight5 and Light.Flasherlight6). Their dome base and lit primitives (Flasherbase5/6, Flasherlit5/6) are parked off-table at raw x about -2000, so only the lights carry usable coordinates; both sit along the top edge of the playfield, matching the manual's own item-22 callout to a slot along the top edge.
 
+## Drawing measurements
+
+Seed `tools/seeds/williams/high-speed-1986-callouts.json` (SHA-256 `17d201cbe65f718d728023e6c9574998504cf84ae37621ca022f5063a8a3e223`). The lamp drawing's control fit uses 19 controls, RMS 0.0025 and worst leave-one-out 0.0063 normalized; the page checks no placement. Every measurement lies inside the convex hull of the page's controls.
+
+- `lamp.matrix-42.emitter`: lamp 42, drawing pixel (1047.7, 791.3), (0.153, 0.183); corroborated by the physical photographs. Table: not modelled at the drawn position: Light l42 is parked at raw x about -2237.
+- `lamp.matrix-43.emitter`: lamp 43, drawing pixel (1081.4, 787.0), (0.19, 0.181); corroborated by the physical photographs. Table: not modelled at the drawn position: Light l43 is parked at raw x about -2237.
+- `lamp.matrix-44.emitter`: lamp 44, drawing pixel (1115.2, 782.6), (0.228, 0.178); corroborated by the physical photographs. Table: not modelled at the drawn position: Light l44 is parked at raw x about -2237.
+
+## General illumination
+
+Solenoid 11, the relay; SolCallback(11) = PFGI, which drives the GI collection inverted. Routing: Power Wiring Diagram (printed page 47): the relay's two contact sets feed every GI string, playfield, cabinet and backbox, and the diagram draws no second GI circuit. Lights within 30 table units of each other are render doubles of one bulb; the member that shows its own bulb mesh is kept, then the smallest falloff radius. 28 sockets; the nearest two kept apart are GI_23 and GI_28, 35.5 units. 34 members draw no bulb and make no socket; GI_45 is listed twice. Quantity: none asserted: the table's grouping is not the machine's wiring, and the manual prints no GI bulb inventory.
+
+- `GI_Bumper_1` (0.465947, 0.102135)
+- `GI_Bumper_2` (0.655277, 0.138568)
+- `GI_26` (0.97479, 0.162445)
+- `GI_22` (0.702413, 0.176474)
+- `GI_42` (0.822304, 0.193033)
+- `GI_Bumper_3` (0.496096, 0.201386)
+- `GI_18` (0.156634, 0.214862)
+- `GI_30` (0.972924, 0.222157)
+- `GI_10` (0.033613, 0.234718)
+- `GI_19` (0.550818, 0.249216)
+- `GI_55` (0.05042, 0.279635)
+- `GI_27` (0.916667, 0.293144) (absorbs GI_7)
+- `GI_8` (0.237395, 0.309017)
+- `GI_23` (0.866371, 0.370299)
+- `GI_28` (0.895415, 0.381602)
+- `GI_56` (0.073529, 0.423506)
+- `GI_54` (0.872627, 0.432849)
+- `GI_57` (0.138655, 0.453901)
+- `GI_16` (0.081746, 0.498109)
+- `GI_60` (0.861811, 0.551728) (absorbs GI_15)
+- `GI_13` (0.049463, 0.573771)
+- `GI_61` (0.884221, 0.591805) (absorbs GI_14)
+- `GI_4` (0.17869, 0.671719)
+- `GI_3` (0.732867, 0.672109)
+- `GI_11` (0.696374, 0.739188)
+- `GI_12` (0.216431, 0.742696)
+- `GI_53` (0.698179, 0.803107) (absorbs GI_2)
+- `GI_9` (0.213585, 0.804458) (absorbs GI_1)
+
 ## Counts
 
-- Placements: 122
+- Placements: 153
 - Located input addresses: 43
-- Located output bindings: 75
-- Outputs with an intentionally omitted spatial key: 4
+- Located output bindings: 79
+- Outputs with an omitted spatial key: 0
 - Inputs with a controlled `cabinet_or_service` record: 15
 - Inputs with a controlled `dip_switch` record: 1
 - Inputs with a controlled `unused` record: 18
@@ -52,19 +94,19 @@ The matching source is the retained known-working `High Speed (Williams 1986).vp
 
 ## Blockers
 
-- Lamp addresses 42, 43 and 44 (Red/Yellow/Green Light (Ramp Stoplight)) are real bulbs in the playfield Traffic Light Assembly B-10921 but have no derivable coordinate: the retained table's Light objects for them are parked at raw x about -2237 and its stoplight primitives sit at position (0,0,0) with the geometry baked into a mesh whose derived centre is off the top of the playfield. Their spatial keys are omitted rather than invented.
-- Lamp address 40 (Ramp Earns Hideout Jackpot) is marked a two-bulb circuit by the Lamp-Matrix Table but the manual never says where the second bulb is and the retained table models only one Light object, so its placement count is one against a quantity of two.
-- Solenoid address 11 (General Illumination Relay) switches playfield, cabinet and backbox general illumination together per the Power Wiring Diagram, but no page of the manual enumerates a GI bulb count, bulb type or position. The retained table's 68-member playfield GI light collection is not adopted as a placement set: it is unverifiable against the manual, contains three jet-bumper cap lights that belong to those assemblies, duplicates one member, and includes one light above the top playfield edge. The spatial key is omitted.
+- Lamp address 40 (Ramp Earns Hideout Jackpot) is a two-bulb circuit by the Lamp-Matrix Table, but the manual never says where the second bulb is: neither the Lamp-Matrix Table nor the Lamps list breaks the location down, the lamp drawing prints 40 once, at one Ramp Earns insert, and the retained table models one Light there. One bulb is placed; the second has no placement.
 
 ## Promotion decision
 
 Every controller address is enumerated and given a semantic disposition, every printed wiring detail is recorded, and the whole mechanism inventory is covered. Polarity is not a gap on this machine: `hsGameData`'s `wpc` struct is zero-initialised by its own `{{0}}` positional initializer so `wpc.invSw` is entirely unset and PinMAME normalizes no address, and the manual documents no opto and no normally-closed matrix switch anywhere -- no row of the Switches parts list carries an opto part number or is printed blank, and neither copy of the Switch-Matrix Table has an opto legend or a single shaded cell.
 
-Promotion to `author_ready` is nonetheless refused. Three addresses have real bulbs with no derivable coordinate (lamps 42-44), one has a manual-stated bulb quantity its placement count cannot meet (lamp 40), one has no enumerable emitter set at all (solenoid 11), and the definition carries two unresolved `conflicts` entries. `coverage.missing` is therefore `["spatial_placement", "unresolved_conflicts"]` and the record stays `partial` until a second independent recreation or a photograph of an unrestored playfield places the Traffic Light Assembly and lamp 40's second bulb, a GI bulb inventory turns up, and the Section 3 flipper schematic settles which button feeds the upper-right flipper coil.
+Every located placement is validated: the three Ramp Stoplight sockets through the lamp-drawing measurement and the photographs, and the general-illumination relay's playfield sockets through the table's bulb Lights and the Power Wiring Diagram's single-relay routing. The Power Wiring Diagram's flipper circuits settle which button fires the upper-right flipper (the right one, through a second contact), so that conflict is gone. The coin-lockout relay's two printed part numbers stay recorded but do not block: nothing a recreation consumes depends on them. Unresolved conflicts: 0. Promotion to `author_ready` is refused: lamp 40's second bulb has no recorded location, so `coverage.missing` is `["spatial_placement"]`.
 
 ## Retained evidence
 
 - Retained vpxtool extraction, 1712 files.
 - Manual reading log with the verified page offset and the questions the manual does not answer, SHA-256 `7ec30ad943a45cf4407cc0ce6001c6dad1b6f5eaf28c7420f349cd531551aa98`.
 - VPX script/geometry cross-reference, SHA-256 `58b98d92fc633c8b5ef2f02adda885d8195a2d63dc76cd018041a338fb7f2c0f`.
-- Nine transcribed manual excerpts and three rendered crops under `evidence/excerpts/williams.high-speed.1986/`.
+- Lamp-drawing fits, housing measurement and overlay: `high-speed-1986/callout-check`, manifest SHA-256 `f9e6965041f135a2432b5bb17c33c89d93a5ddd225b8f8dad877f49c49c1fd7d`.
+- Physical photographs: `high-speed-1986/physical-photos`, manifest SHA-256 `aef01aca68c2676434a0532f01b999f768e0b77946b592a2a6c4b42b22a7fe8d`.
+- 12 transcribed excerpts and 10 rendered manual crops under `evidence/excerpts/williams.high-speed.1986/`.

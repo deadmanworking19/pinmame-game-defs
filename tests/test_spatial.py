@@ -573,7 +573,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Scared Stiff's development notes and ROM probe settle its auxiliary lamp-column conflict, removing one.
 		# Space Shuttle records where its insert flash lamps (solenoid 14) are mounted.
 		# NBA records which side each lower pop bumper is on.
-		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# High Speed's upper-flipper wiring reading settles one conflict and its coin-lockout part number
+		# is recorded as not blocking, removing one.
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.

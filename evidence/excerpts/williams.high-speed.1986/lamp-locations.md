@@ -1,10 +1,11 @@
-# High Speed — Lamps parts list
+# High Speed — Lamps parts list and lamp-locations drawing
 
 Transcribed from `high_speed_instruction_manual.pdf`, PDF page 41 (printed page 33, Section 2), read
 from a 300 dpi `pdftoppm` render. Unlike the Switches and Solenoids/Flashers pages, this page has no
-Part No. column at all: it is a two-column `Lamp | Location/Description` list, with a small playfield
-thumbnail drawing in the middle-right of the page that carries no legible lamp callout numbers at this
-scan quality.
+Part No. column at all: it is a two-column `Lamp | Location/Description` list, with a numbered playfield
+lamp-locations drawing on the right-hand half of the page. The drawing is transcribed in its own section
+below, read on the committed crop `lamp-locations.webp` at its full 2232 x 2954 resolution, where every
+number is legible.
 
 This page is the label authority for lamp semantics and is the only source that states which lamps are
 on the backglass rather than the playfield.
@@ -95,3 +96,31 @@ on the backglass rather than the playfield.
 - **Lamp 41 is a stoplight-related insert but not one of the Ramp Stoplight trio** (42-44); the trio is
   the three bulbs of the playfield Traffic Light Assembly, `B-10921`, item 9 of the Playfield Parts
   list.
+
+## The numbered lamp-locations drawing
+
+A plan view of the playfield inside a rectangular frame, the same artwork as the switch-locations
+drawing on printed page 32. Lamp numbers are printed with no leader lines: inside the round inserts
+(`3`, `4`, `5`, `9`, `13`-`15`, `17`-`19`, `31`-`35`, `41`, each a number in a printed circle) and beside
+the arrow, triangle and bar-shaped inserts. Swept over the whole drawing, the numbers printed are `3`,
+`4`, `5` and `7` to `64`, each once, except `9`, which is printed twice: once in a circle at the foot of
+the left flipper return lane and once at the foot of the right. `1`, `2` and `6`, the backglass-only
+lamps, do not appear. `40` is printed once, beside one arrow insert in the Ramp Earns row
+(`36`-`40`).
+
+Upper left, between the left orbit and the upper-left stoplight target bank (`17`-`19`), the drawing
+draws a four-sided outline about 125 x 90 pixels, wider than it is deep, with the ramp's dashed lines
+crossing it. `42`, `43` and `44` are printed around it with no leaders: `42` outside its lower-left
+corner, `43` inside it just above its bottom side, and `44` outside just below its lower-right corner.
+No other part on the drawing carries those three numbers. The switch-locations drawing (printed page 32)
+draws the same outline in the same place, unnumbered.
+
+## What the drawing adds
+
+- **Lamp 40 is printed once.** Lamp 9, whose two bulbs the Lamps list puts in the two flipper return
+  lanes, is printed at both. Lamp 40's two-lamp circuit is printed at one Ramp Earns insert, which
+  locates one bulb. Nothing on the page locates the second: whether it shares that insert, lights
+  another part of the playfield or is not on the playfield is not recorded.
+- **The Ramp Stoplight is the outlined housing.** The three stoplight lamps are the only numbers
+  printed on and around that outline, and the Playfield Parts list's Traffic Light Assembly (`B-10921`)
+  is the only three-bulb fixture on the machine.

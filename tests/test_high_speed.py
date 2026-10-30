@@ -10,9 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "high-speed-1986.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "high-speed-1986.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "high-speed-1986.json"
+DEFINITION_PATH = PARTIAL_PATH
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "high-speed-1986.json"
+CALLOUT_SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "high-speed-1986-callouts.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "high-speed-1986.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "system-11.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "high-speed-1986.json"
@@ -24,7 +26,7 @@ MATRIX_ADDRESSES = set(range(1, 65))
 UNUSED_MATRIX_ADDRESSES = set(range(53, 65))
 CABINET_SWITCH_ADDRESSES = {1, 2, 3, 4, 5, 6, 7, 8, 41}
 BACKGLASS_LAMPS = {1, 2, 6}
-UNPLACED_LAMPS = {42, 43, 44}
+STOPLIGHT_LAMPS = (42, 43, 44)
 TWO_BULB_LAMPS = {1, 3, 9, 40}
 # sxx.ssSw = {49,50,35,34,33,0} for hsGameData: public solenoid 17+i is driven by switch ssSw[i].
 SPECIAL_SOLENOID_SWITCH = {17: 49, 18: 50, 19: 35, 20: 34, 21: 33}
@@ -78,11 +80,12 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 		self.assertEqual(1986, machine["year"])
 		self.assertEqual({"width": 952.0, "height": 1974.0, "units": "vpx"}, machine["playfield"])
 		coverage = self.definition["coverage"]
+		# Lamp 40's second bulb has no recorded location, so spatial placement is the one open requirement.
 		self.assertEqual("partial", coverage["status"])
-		self.assertEqual({"spatial_placement", "unresolved_conflicts"}, set(coverage["missing"]))
+		self.assertEqual(["spatial_placement"], coverage["missing"])
 		self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
-		self.assertEqual("validated", coverage["dimensions"]["physical_wiring"])
-		self.assertFalse(AUTHOR_READY_PATH.exists(), "a partial record must not have an author-ready twin")
+		self.assertEqual({"validated"}, {v for k, v in coverage["dimensions"].items() if k != "spatial_placement"})
+		self.assertFalse(AUTHOR_READY_PATH.exists(), "a partial record must not leave an author-ready twin behind")
 
 	def test_the_machine_id_matches_its_directory_and_file_paths(self) -> None:
 		# Three earlier games in this project shipped artifacts under the wrong manufacturer directory.
@@ -144,12 +147,16 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 				notes = self.switches[address]["physical"]["notes"]
 				self.assertIn(f"drive column {column + 1}", notes)
 
-	def test_the_manual_documents_no_opto_and_no_normally_closed_switch(self) -> None:
+	def test_every_used_switch_rests_open(self) -> None:
 		# hsGameData's wpc struct is written by the positional initializer {{0}}, so wpc.invSw is
-		# entirely unset and PinMAME normalizes no address; the manual shades nothing.
+		# entirely unset and PinMAME normalizes no address; System 11 reads the matrix uninverted, the
+		# script treats every switch as active at 1, and the manual shades nothing and lists no opto.
 		for address, switch in self.switches.items():
 			self.assertNotEqual("opto", switch.get("physical", {}).get("switch_type"), address)
-			self.assertNotIn("normally_closed", switch, address)
+			if switch["availability"] == "used":
+				self.assertIs(False, switch["normally_closed"], address)
+			else:
+				self.assertNotIn("normally_closed", switch, address)
 		self.assertNotIn("polarity", self.definition["coverage"]["missing"])
 
 	def test_untyped_switches_say_why_they_are_untyped(self) -> None:
@@ -181,6 +188,8 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 		self.assertIn("matrix switch 38", column[82]["physical"]["notes"])
 		self.assertIn("matrix switch 37", column[84]["physical"]["notes"])
 		self.assertIn("vpm-script-library.s11-vbs", column[84]["provenance"]["source_refs"])
+		self.assertIn("upper-right flipper", column[82]["physical"]["notes"])
+		self.assertIn("printed page 46", column[84]["physical"]["notes"])
 		relationships = {(item["source"], item["destination"]) for item in self.definition["relationships"]}
 		self.assertIn(("switch.flipper-column-84", "switch.matrix-37"), relationships)
 		self.assertIn(("switch.flipper-column-82", "switch.matrix-38"), relationships)
@@ -267,13 +276,28 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			self.assertIn(record["source"], device_ids, record["id"])
 			self.assertIn(record["destination"], device_ids, record["id"])
 
-	def test_gi_is_one_solenoid_bound_address_with_no_invented_placement(self) -> None:
+	def test_gi_is_one_solenoid_bound_address_placed_at_the_table_bulbs(self) -> None:
+		import curate_high_speed as curator
+
 		gi_devices = [device for device in self.definition["outputs"] if device["kind"] == "gi"]
 		self.assertEqual(1, len(gi_devices))
 		gi = gi_devices[0]
 		self.assertEqual(11, gi["binding"]["device"])
 		self.assertEqual("pinmame.output.solenoid", gi["binding"]["group"])
-		self.assertNotIn("spatial", gi)
+		self.assertEqual("validated", gi["spatial"]["status"])
+		self.assertEqual(
+			[position for _, position, _ in curator.GI_SOCKETS],
+			[(placement["x"], placement["y"]) for placement in gi["spatial"]["placements"]],
+		)
+		self.assertEqual(28, len(gi["spatial"]["placements"]))
+		# The table's grouping gives no quantity, and the manual prints no GI bulb inventory.
+		self.assertNotIn("quantity", gi["physical"])
+		self.assertIn("B-9414", gi["physical"]["notes"])
+		# Render doubles collapse onto one bulb: no two kept sockets sit within the double distance.
+		for index, (first, a, _) in enumerate(curator.GI_SOCKETS):
+			for second, b, _ in curator.GI_SOCKETS[index + 1:]:
+				distance = ((a[0] - b[0]) * 952.0) ** 2 + ((a[1] - b[1]) * 1974.0) ** 2
+				self.assertGreater(distance, curator.GI_RENDER_DOUBLE_DISTANCE ** 2, (first, second))
 		self.assertIn("9J2", gi["physical"]["notes"])
 		self.assertIn("7J4", gi["physical"]["notes"])
 		self.assertIn("8J4", gi["physical"]["notes"])
@@ -317,16 +341,47 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			spatial = self.lamps[address]["spatial"]
 			self.assertEqual("not_applicable", spatial["status"], address)
 			self.assertEqual("cabinet_or_service", spatial["reason"], address)
-		for address in UNPLACED_LAMPS:
-			self.assertNotIn("spatial", self.lamps[address], address)
+		for address in STOPLIGHT_LAMPS:
+			self.assertEqual("validated", self.lamps[address]["spatial"]["status"], address)
 			self.assertIn("B-10921", self.lamps[address]["physical"]["notes"], address)
 		# Lamp 3's two bulbs straddle backglass and playfield, so one placement is correct.
 		self.assertEqual(1, len(self.lamps[3]["spatial"]["placements"]))
 		# Lamp 9's two bulbs are both on the playfield.
 		self.assertEqual(2, len(self.lamps[9]["spatial"]["placements"]))
-		# Lamp 40's second bulb is unlocated and the note must say so.
+		# Lamp 40's two-bulb circuit places only the bulb the lamp drawing and the table agree on.
+		self.assertEqual(2, self.lamps[40]["physical"]["quantity"])
 		self.assertEqual(1, len(self.lamps[40]["spatial"]["placements"]))
 		self.assertIn("never says where the second one is", self.lamps[40]["physical"]["notes"])
+		self.assertIn("Resolution path:", self.lamps[40]["physical"]["notes"])
+
+	def test_the_stoplight_sockets_are_measured_on_the_lamp_drawing(self) -> None:
+		import curate_high_speed as curator
+		import drawing_callouts
+
+		seed = load_json(CALLOUT_SEED_PATH)
+		self.assertEqual("williams.high-speed.1986", seed["machine_id"])
+		self.assertEqual({}, seed["checks"])
+		self.assertEqual({f"lamp.matrix-{address}.emitter" for address in STOPLIGHT_LAMPS}, set(seed["measurements"]))
+		positions = []
+		for address in STOPLIGHT_LAMPS:
+			placement_id = f"lamp.matrix-{address}.emitter"
+			(placement,) = self.lamps[address]["spatial"]["placements"]
+			x, y = drawing_callouts.measured(seed, placement_id)
+			self.assertEqual((x, y), (placement["x"], placement["y"]))
+			self.assertTrue(curator._within_control_hull(seed, placement_id, x, y), placement_id)
+			self.assertEqual(
+				["manual.williams.high-speed.1986", curator.CALLOUT_SOURCE, curator.PHYSICAL_SOURCE],
+				placement["provenance"]["source_refs"],
+			)
+			positions.append((x, y))
+		# Red, yellow, green from left to right, in one row left of the 17-19 bank and level with lamp 19.
+		self.assertLess(positions[0][0], positions[1][0])
+		self.assertLess(positions[1][0], positions[2][0])
+		bank = [self.lamps[address]["spatial"]["placements"][0] for address in (17, 18, 19)]
+		for x, y in positions:
+			self.assertLess(x, min(item["x"] for item in bank))
+			self.assertLess(abs(y - bank[2]["y"]), 0.01)
+		self.assertLess(max(y for _, y in positions) - min(y for _, y in positions), 0.01)
 
 	def test_lamp_wiring_names_both_a_column_and_a_row_driver(self) -> None:
 		# Unlike the switch matrix, this manual's lamp matrix prints row transistors Q80-Q87.
@@ -513,21 +568,24 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			{display["controller_index"] for display in displays.values()},
 		)
 
-	def test_two_conflicts_are_recorded_and_named_in_the_spatial_report(self) -> None:
+	def test_only_the_ignored_part_number_conflict_remains(self) -> None:
 		conflicts = {item["id"]: item for item in self.definition["conflicts"]}
-		self.assertEqual(
-			{"conflict.upper-flipper-driving-button", "conflict.coin-lockout-relay-part-number"},
-			set(conflicts),
-		)
-		for conflict in conflicts.values():
-			self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-			self.assertIn("Unresolved.", conflict["description"])
+		self.assertEqual({"conflict.coin-lockout-relay-part-number"}, set(conflicts))
+		lockout = conflicts["conflict.coin-lockout-relay-part-number"]
+		self.assertEqual("ignored", lockout["status"])
+		self.assertIn("never its part number", lockout["rationale"])
+		self.assertGreaterEqual(len(lockout["source_refs"]), 2)
+		self.assertIn("Resolution path:", lockout["description"])
 		self.assertIn("16", conflicts["conflict.coin-lockout-relay-part-number"]["path"])
 		self.assertIn("904218-696", conflicts["conflict.coin-lockout-relay-part-number"]["description"])
 		self.assertIn("404603-22", conflicts["conflict.coin-lockout-relay-part-number"]["description"])
 		self.assertEqual("404603-22", self.solenoids[16]["physical"]["part_number"])
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual(sorted(conflicts), sorted(report["unresolved"]))
+		self.assertEqual([], report["unresolved"])
+		self.assertEqual(["conflict.coin-lockout-relay-part-number"], report["ignored_conflicts"])
+		# The upper-right flipper's button is settled by the Power Wiring Diagram, not a conflict.
+		flippers = next(item for item in self.definition["mechanisms"] if item["id"] == "mechanism.flippers")
+		self.assertIn("right cabinet button fires both right flippers", flippers["behavior"])
 
 	def test_sources_are_hashed_licensed_and_free_of_local_paths(self) -> None:
 		sources = {source["id"]: source for source in self.definition["sources"]}
@@ -578,8 +636,8 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 				"excerpt.high-speed.switch-matrix", "excerpt.high-speed.switch-locations",
 				"excerpt.high-speed.lamp-matrix", "excerpt.high-speed.lamp-locations",
 				"excerpt.high-speed.solenoid-table", "excerpt.high-speed.solenoid-flasher-locations",
-				"excerpt.high-speed.general-illumination", "excerpt.high-speed.boards-and-assemblies",
-				"excerpt.high-speed.diagnostics-and-amendments",
+				"excerpt.high-speed.general-illumination", "excerpt.high-speed.flipper-circuits",
+				"excerpt.high-speed.boards-and-assemblies", "excerpt.high-speed.diagnostics-and-amendments",
 			},
 			set(excerpts),
 		)
@@ -590,7 +648,7 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			if excerpt.get("image"):
 				self.assertTrue(excerpt["image_derivation"])
 		self.assertEqual(
-			9,
+			10,
 			sum(1 for excerpt in excerpts.values() if excerpt.get("image")),
 			"every excerpt whose page could be cropped now carries the region it was read from",
 		)
@@ -657,7 +715,7 @@ class HighSpeedCuratorTests(unittest.TestCase):
 			DEFINITION_PATH.write_bytes(original)
 		curator.check(ROOT)
 
-	def test_curator_refuses_to_overwrite_an_author_ready_artifact(self) -> None:
+	def test_curator_refuses_an_author_ready_twin(self) -> None:
 		import curate_high_speed as curator
 
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -665,9 +723,9 @@ class HighSpeedCuratorTests(unittest.TestCase):
 		AUTHOR_READY_PATH.write_text("{}", encoding="utf-8")
 		try:
 			with self.assertRaises(RuntimeError):
-				curator.generate(ROOT)
-			with self.assertRaises(RuntimeError):
 				curator.check(ROOT)
+			with self.assertRaises(RuntimeError):
+				curator.generate(ROOT)
 		finally:
 			AUTHOR_READY_PATH.unlink()
 		curator.check(ROOT)
@@ -685,11 +743,16 @@ class HighSpeedCuratorTests(unittest.TestCase):
 			SPATIAL_MARKDOWN_PATH.read_text(encoding="utf-8"),
 		)
 
-	def test_spatial_report_names_every_omitted_output(self) -> None:
+	def test_spatial_report_names_lamp_40_as_the_only_blocker(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
-		omitted = {entry["address"] for entry in report["omitted_outputs"]}
-		self.assertEqual({11, 42, 43, 44}, omitted)
-		self.assertEqual(3, len(report["blockers"]))
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual([], report["omitted_outputs"])
+		self.assertEqual(1, len(report["blockers"]))
+		self.assertIn("Lamp address 40", report["blockers"][0])
+		self.assertEqual([], report["unresolved"])
+		self.assertEqual(3, len(report["drawing_measurements"]))
+		self.assertEqual(28, len(report["general_illumination"]["sockets"]))
+		self.assertEqual(0, report["drawing_callout_check"]["checked"])
 
 
 @unittest.skipUnless(os.environ.get("PINMAME_VPX_SOURCES_ROOT"), "retained VPX evidence root is not configured")
@@ -736,6 +799,27 @@ class HighSpeedRetainedEvidenceTests(unittest.TestCase):
 		base = Path(root) / "high-speed-1986"
 		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(base / "manual-transcription.md"))
 		self.assertEqual(curator.VPX_GEOMETRY_SHA256, curator._file_sha256(base / "vpx-geometry.txt"))
+
+	def test_gi_sockets_reproduce_from_the_retained_extraction(self) -> None:
+		import curate_high_speed as curator
+
+		source_root = curator.configured_vpx_sources_root(required=True)
+		assert source_root is not None
+		self.assertEqual(curator.GI_SOCKETS, curator.derive_gi_sockets(source_root))
+
+	def test_stoplight_measurement_and_photo_artifacts_match_their_pinned_hashes(self) -> None:
+		import curate_high_speed as curator
+		import drawing_callouts
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		checked = drawing_callouts.verify_retained(load_json(CALLOUT_SEED_PATH), ROOT, None, Path(root))
+		self.assertGreater(checked, 1)
+		photos = Path(root) / curator.PHYSICAL_EVIDENCE_DIRECTORY / "manifest.json"
+		self.assertEqual(curator.PHYSICAL_EVIDENCE_MANIFEST_SHA256, curator._file_sha256(photos))
+		for entry in load_json(photos)["files"]:
+			self.assertEqual(entry["sha256"], curator._file_sha256(photos.parent / entry["path"]), entry["path"])
 
 	def test_retained_vpm_script_library_matches_its_pinned_hashes(self) -> None:
 		import curate_high_speed as curator

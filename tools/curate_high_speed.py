@@ -19,12 +19,15 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
+import math
 import os
 import re
 from pathlib import Path
 from typing import Any
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, write_text
+import drawing_callouts
 from pinmame_flipper_column import (
 	VPM_CORE_SHA256,
 	VPM_LIBRARY_SOURCE,
@@ -37,9 +40,15 @@ from pinmame_flipper_column import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/partial/williams/high-speed-1986.json"
+# Author-ready. Every located placement is validated: table objects where the manual's numbered
+# locations drawings agree, the three Ramp Stoplight sockets through a reproducible measurement on the
+# lamp drawing (CALLOUT_SEED_PATH) corroborated by physical photographs, and the general-illumination
+# relay's playfield sockets as the table's G.I. bulbs, which the Power Wiring Diagram puts on one relay.
+PARTIAL_PATH = ROOT / "machines/partial/williams/high-speed-1986.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/high-speed-1986.json"
+DEFINITION_PATH = PARTIAL_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/high-speed-1986.json"
+CALLOUT_SEED_PATH = ROOT / "tools/seeds/williams/high-speed-1986-callouts.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/high-speed-1986.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/high-speed-1986.md"
 
@@ -55,6 +64,12 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.high-speed.1986"
 VPX_TABLE_SOURCE = "vpx-table.high-speed-1986"
 VPX_SCRIPT_SOURCE = "vpx-script.high-speed-1986"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.high-speed-1986"
+CALLOUT_SOURCE = "drawing-callouts.high-speed.2026-10-30"
+PHYSICAL_SOURCE = "human-review.high-speed-physical-corroboration-2026-10-30"
+PHYSICAL_EVIDENCE_DIRECTORY = "high-speed-1986/physical-photos"
+# SHA-256 of the canonical manifest.json (tools/build_external_evidence_manifest.py) over the retained
+# owner photographs; it pins every photograph the corroboration excerpt names.
+PHYSICAL_EVIDENCE_MANIFEST_SHA256 = "aef01aca68c2676434a0532f01b999f768e0b77946b592a2a6c4b42b22a7fe8d"
 VPM_EXCERPT_SHA256 = "7999c781e4547fa99276813bdd1bb08148f5f0a29f5954d581be7e66b75d5df8"
 # (left, right) in the driver's own FLIP_SWNO macro order.
 FLIP_SWNO = (37, 38)
@@ -312,7 +327,9 @@ VIRTUAL_SOLENOID_NOTES = {
 		"is FLIP_SWNO(37,38), which sets FLIP_SW(FLIP_L) only and no FLIP_SW/FLIP_SOL bit for either "
 		"upper position, and core_getSol serves 33-36 only for GEN_ALLWPC/GEN_SAM, so this address reads "
 		"as always zero. High Speed does have a third, upper-right flipper coil, but the manual gives it "
-		"no Sol. No. at all and PinMAME never publishes it here; see conflict.upper-flipper-driving-button."
+		"no Sol. No. at all and PinMAME never publishes it here: the Power Wiring Diagram (printed page "
+		"46) wires it through a second contact of the right cabinet flipper button, so it fires with the "
+		"lower-right flipper; see mechanism.flippers."
 	),
 	45: (
 		"PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL = 45). hsGameData "
@@ -322,7 +339,9 @@ VIRTUAL_SOLENOID_NOTES = {
 		"driver passes in (src/wpc/s11.c core_updateSw(locals.ssEn)). The manual confirms there is no "
 		"driver-board output behind them: its three flipper rows carry no Sol. No. and no driver "
 		"transistor, and note 1 says the CPU-board wire runs to the flipper switch rather than to the "
-		"coil. The retained script binds SolCallback(sLRFlipper) = SolRFlipper, which rotates both the "
+		"coil. The right button's two contacts fire the lower-right and the upper-right coil together "
+		"(Power Wiring Diagram, printed page 46), so the button state 45/46 are fabricated from fires "
+		"both right flipper coils; the retained script binds SolCallback(sLRFlipper) = SolRFlipper, which rotates the "
 		"lower-right flipper and the upper-right flipper together."
 	),
 	49: (
@@ -576,18 +595,59 @@ LAMP_POSITIONS = {
 	60: [(0.599612, 0.706766)], 61: [(0.529745, 0.722432)], 62: [(0.454044, 0.723433)],
 	63: [(0.376786, 0.722476)], 64: [(0.306184, 0.705110)],
 }
-# Lamp addresses with a real bulb per the manual but no derivable playfield coordinate.
-UNPLACED_LAMPS = (42, 43, 44)
-UNPLACED_LAMP_NOTE = (
-	" The three Ramp Stoplight bulbs live in the playfield Traffic Light Assembly (B-10921, item 9 of the "
-	"Playfield Parts list), but no playfield coordinate for it can be derived from the retained "
-	"extraction. UpdateLamps drives this address as NFadeL against a Light object parked at raw x about "
-	"-2237, far off-table, and the commented-out alternative in the same routine addressed "
-	"Primitive.stoplight_prim, which sits at position (0,0,0) with an all-zero rot_and_tra and its "
-	"geometry baked into mesh hslight.ob; deriving that mesh's centroid through the table's own "
-	"position-plus-size convention puts it at raw y about -499, also off-table. Two independent object "
-	"families therefore agree the coordinate is absent, so the spatial key is omitted rather than "
-	"invented. See coverage.missing spatial_placement."
+# The Ramp Stoplight bulbs, which the table does not model where the manual draws them: each socket is
+# measured on the lamp drawing (CALLOUT_SEED_PATH "measurements") through that page's control fit, and
+# corroborated in identity, count and order by the retained physical photographs.
+STOPLIGHT_LAMPS = (42, 43, 44)
+STOPLIGHT_NOTE = (
+	" One of the three bulbs of the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts "
+	"list), which stands on its bracket at the upper left, beside the upper-left stoplight target bank. The "
+	"lamp drawing (printed page 33) draws the assembly's housing there as a four-sided outline and prints "
+	"42, 43 and 44 around it, left to right; the switch drawing (printed page 32) draws the same outline "
+	"unnumbered. The placement is measured on the lamp drawing: the B-10921 assembly drawing (printed page "
+	"36) puts the three bulbs in one row across the housing's width, the outer two 0.288 of the width either "
+	"side of the middle one, and halfway through its depth, and the page's own round inserts and star "
+	"rollovers map the drawing to the playfield. Physical photographs of a production machine show one "
+	"box there with three lenses in a row, red, amber and green from left to right, which is the Lamps "
+	"list's Red (42), Yellow (43) and Green (44) order. The retained table does not model the bulbs: "
+	"UpdateLamps drives Lights l42-l44 parked off-table at raw x about -2237, and a later routine swaps "
+	"the image of its stoplight toy, Primitive.stoplight_prim (mesh hslight.ob at position (0,0,0)), on "
+	"their states. Exported to world space, that toy's plan bounds are x 0.208-0.357 and y 0.217-0.289, "
+	"centred 0.117 from the drawn housing's middle socket, in front of the drawn housing and reaching the "
+	"upper-left stoplight inserts that the photographs show it clear of, so it is not used as this "
+	"bulb's position."
+)
+# The general-illumination relay's playfield sockets: the bulb Lights of the retained table's GI
+# collection, which PFGI drives from solenoid 11. Lights within GI_RENDER_DOUBLE_DISTANCE table units of
+# each other (single linkage) are render doubles of one bulb, of which the one that shows its own bulb
+# mesh is kept, then the smallest falloff radius, then the lowest name (docs/SPATIAL.md, picking the
+# bulb). (table Light, normalized position, the render doubles it absorbs), rear to front.
+# derive_gi_sockets() recomputes this table from the retained extraction.
+GI_COLLECTION = "GI"
+GI_RENDER_DOUBLE_DISTANCE = 30.0
+GI_SOCKETS: tuple[tuple[str, tuple[float, float], tuple[str, ...]], ...] = (
+	("GI_Bumper_1", (0.465947, 0.102135), ()), ("GI_Bumper_2", (0.655277, 0.138568), ()),
+	("GI_26", (0.97479, 0.162445), ()), ("GI_22", (0.702413, 0.176474), ()),
+	("GI_42", (0.822304, 0.193033), ()), ("GI_Bumper_3", (0.496096, 0.201386), ()),
+	("GI_18", (0.156634, 0.214862), ()), ("GI_30", (0.972924, 0.222157), ()),
+	("GI_10", (0.033613, 0.234718), ()), ("GI_19", (0.550818, 0.249216), ()),
+	("GI_55", (0.05042, 0.279635), ()), ("GI_27", (0.916667, 0.293144), ("GI_7",)),
+	("GI_8", (0.237395, 0.309017), ()), ("GI_23", (0.866371, 0.370299), ()),
+	("GI_28", (0.895415, 0.381602), ()), ("GI_56", (0.073529, 0.423506), ()),
+	("GI_54", (0.872627, 0.432849), ()), ("GI_57", (0.138655, 0.453901), ()),
+	("GI_16", (0.081746, 0.498109), ()), ("GI_60", (0.861811, 0.551728), ("GI_15",)),
+	("GI_13", (0.049463, 0.573771), ()), ("GI_61", (0.884221, 0.591805), ("GI_14",)),
+	("GI_4", (0.17869, 0.671719), ()), ("GI_3", (0.732867, 0.672109), ()),
+	("GI_11", (0.696374, 0.739188), ()), ("GI_12", (0.216431, 0.742696), ()),
+	("GI_53", (0.698179, 0.803107), ("GI_2",)), ("GI_9", (0.213585, 0.804458), ("GI_1",)),
+)
+# GI members that make no socket: Lights that draw no bulb mesh (glow and halo helpers, including
+# GI_34, which sits above the top rail at raw y -46.1). The collection also lists GI_45 twice.
+GI_NON_BULB_LIGHTS = (
+	"GI_100", "GI_17", "GI_20", "GI_21", "GI_24", "GI_25", "GI_29", "GI_31", "GI_32", "GI_33", "GI_34",
+	"GI_35", "GI_36", "GI_37", "GI_38", "GI_39", "GI_40", "GI_41", "GI_43", "GI_44", "GI_45", "GI_46",
+	"GI_47", "GI_48", "GI_49", "GI_5", "GI_50", "GI_51", "GI_52", "GI_58", "GI_6", "GI_99",
+	"bumper3light1", "bumper3light5",
 )
 
 
@@ -668,6 +728,84 @@ def located(identifier: str, role: str, positions: list[tuple[float, float]], *s
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
+
+
+def _callout_seed() -> dict[str, Any]:
+	return load_json(CALLOUT_SEED_PATH)
+
+
+def _cross(o: tuple[float, float], a: tuple[float, float], b: tuple[float, float]) -> float:
+	return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+
+def _within_control_hull(seed: dict[str, Any], placement_id: str, x: float, y: float) -> bool:
+	"""Whether a drawing measurement lies strictly inside the convex hull of its page's controls."""
+	points = sorted({tuple(control["xy"]) for control in seed["pages"][seed["measurements"][placement_id]["page"]]["controls"]})
+	lower: list[tuple[float, float]] = []
+	upper: list[tuple[float, float]] = []
+	for point in points:
+		while len(lower) >= 2 and _cross(lower[-2], lower[-1], point) <= 0:
+			lower.pop()
+		lower.append(point)
+	for point in reversed(points):
+		while len(upper) >= 2 and _cross(upper[-2], upper[-1], point) <= 0:
+			upper.pop()
+		upper.append(point)
+	hull = lower[:-1] + upper[:-1]
+	return all(_cross(a, b, (x, y)) > 0 for a, b in zip(hull, hull[1:] + hull[:1]))
+
+
+def measured_on_drawing(identifier: str, role: str) -> dict[str, Any]:
+	"""One placement taken from the callout seed's reproducible drawing measurement."""
+	seed = _callout_seed()
+	placement_id = f"{identifier}.{role}"
+	x, y = drawing_callouts.measured(seed, placement_id)
+	if not _within_control_hull(seed, placement_id, x, y):
+		raise RuntimeError(f"High Speed drawing measurement {placement_id} lies outside its page's control hull")
+	return {
+		"status": "validated",
+		"placements": [{
+			"id": placement_id, "role": role, "space": "playfield", "x": x, "y": y,
+			"provenance": provenance(MANUAL_SOURCE, CALLOUT_SOURCE, PHYSICAL_SOURCE),
+		}],
+	}
+
+
+def derive_gi_sockets(source_root: Path) -> tuple[tuple[str, tuple[float, float], tuple[str, ...]], ...]:
+	"""Recompute GI_SOCKETS from the retained extraction's GI collection."""
+	extraction = source_root / EXTRACTION_RELATIVE_PATH
+	collections = json.loads((extraction / "collections.json").read_text(encoding="utf-8"))
+	members = next(item["items"] for item in collections if item["name"] == GI_COLLECTION)
+	bulbs: dict[str, dict[str, Any]] = {}
+	for name in dict.fromkeys(members):
+		light = json.loads((extraction / "gameitems" / f"Light.{name}.json").read_text(encoding="utf-8"))["Light"]
+		if light["show_bulb_mesh"]:
+			bulbs[name] = light
+		elif name not in GI_NON_BULB_LIGHTS:
+			raise RuntimeError(f"High Speed GI member {name} draws no bulb but is not listed in GI_NON_BULB_LIGHTS")
+	names = sorted(bulbs)
+	parent = {name: name for name in names}
+
+	def root(name: str) -> str:
+		while parent[name] != name:
+			name = parent[name]
+		return name
+
+	for index, first in enumerate(names):
+		for second in names[index + 1:]:
+			a, b = bulbs[first]["center"], bulbs[second]["center"]
+			if math.hypot(a["x"] - b["x"], a["y"] - b["y"]) <= GI_RENDER_DOUBLE_DISTANCE:
+				parent[root(first)] = root(second)
+	clusters: dict[str, list[str]] = {}
+	for name in names:
+		clusters.setdefault(root(name), []).append(name)
+	sockets = []
+	for cluster in clusters.values():
+		kept = min(cluster, key=lambda name: (not bulbs[name]["show_bulb_mesh"], bulbs[name]["falloff_radius"], name))
+		centre = bulbs[kept]["center"]
+		position = (round(centre["x"] / PLAYFIELD_WIDTH, 6), round(centre["y"] / PLAYFIELD_HEIGHT, 6))
+		sockets.append((kept, position, tuple(sorted(name for name in cluster if name != kept))))
+	return tuple(sorted(sockets, key=lambda item: (item[1][1], item[1][0])))
 
 
 def output_id(address: int) -> str:
@@ -754,8 +892,8 @@ def source_records() -> list[dict[str, Any]]:
 				"PDF 40/41/42 are the Switches, Lamps and Solenoids/Flashers parts lists at printed 32/33/34; "
 				"PDF 43-47 are the mechanism assembly pages at printed 35-39; PDF 49 is the Master Display "
 				"Board at printed 41; PDF 55-58 are the four-page Amendments sheet in reverse order (PDF 58 is "
-				"Amendment Page 1); PDF 59 duplicates the Solenoid Table beside the ROM Summary; PDF 81 is the "
-				"Power Wiring Diagram at printed page 47."
+				"Amendment Page 1); PDF 59 duplicates the Solenoid Table beside the ROM Summary; PDF 80 and 81 are "
+				"the two halves of the Power Wiring Diagram at printed pages 46 and 47."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics, Inc.; scan hosted by the Internet Archive",
@@ -803,9 +941,9 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.high-speed.lamp-locations",
-					"locator": "PDF page 41, printed page 33, Lamps list",
+					"locator": "PDF page 41, printed page 33, Lamps list and numbered lamp-locations drawing",
 					"path": "evidence/excerpts/williams.high-speed.1986/lamp-locations.md",
-					"sha256": "e1445fb3a4a43b1a83962f34806288ce2a9449e9970bd56b2b718a045ee2604c",
+					"sha256": "c5a9bfb65eb37832bfaca74de1c439e87b4ca5c615e81780c58df8f4c1eec8bb",
 					"image": "evidence/excerpts/williams.high-speed.1986/lamp-locations.webp",
 					"image_sha256": "a0c7a71e6965afd533600eb396c3e779a0f711fdc497e855d17100b98c599457",
 					"image_derivation": (
@@ -847,7 +985,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.high-speed.general-illumination",
 					"locator": "PDF page 81, printed page 47, Power Wiring Diagram: the general-illumination relay contacts and the 3P8 lamp-string fan-out",
 					"path": "evidence/excerpts/williams.high-speed.1986/general-illumination.md",
-					"sha256": "b327cc5d0b93b253866dcb55a90811e8e321008d34fa8967be9502b173d0b74a",
+					"sha256": "9a6fd01460da7082331506f8ac19454fd0833c1dd266036e3a5e9a251b1a177a",
 					"image": "evidence/excerpts/williams.high-speed.1986/general-illumination.webp",
 					"image_sha256": "937dedf826a1e31813642aa7c0f8ccb249592193a7caeb59e560152ffc477517",
 					"image_derivation": (
@@ -857,10 +995,24 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{
+					"id": "excerpt.high-speed.flipper-circuits",
+					"locator": "PDF page 80, printed page 46, Power Wiring Diagram: the C-9939 flipper power supply and the three flipper circuits through their cabinet buttons to 1P19",
+					"path": "evidence/excerpts/williams.high-speed.1986/flipper-circuits.md",
+					"sha256": "2145cb870c33811c873c5953d11c52dd160d07cb258a512164aa8c5978eb8304",
+					"image": "evidence/excerpts/williams.high-speed.1986/flipper-circuits.webp",
+					"image_sha256": "5f1744e8389dc0796fe63d21ef094086b23446ba6df203d69a98fc111840ef80",
+					"image_derivation": (
+						"high_speed_instruction_manual.pdf page 80, crop box 0.23,0.455,0.745,0.835 of the page, "
+						"scanned page rendered at its native resolution (embedded image xref 346, 2563px across "
+						"8.54in), rendered at 300 dpi grayscale with pdftoppm 23.05.0, 1320x1258 WebP quality 80"
+					),
+					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
+				},
+				{
 					"id": "excerpt.high-speed.boards-and-assemblies",
 					"locator": "PDF pages 10, 39, 43, 44, 45, 46, 47 and 49 (printed pages 2, 31, 35, 36, 37, 38, 39 and 41), board list, Playfield Parts and the mechanism assembly pages",
 					"path": "evidence/excerpts/williams.high-speed.1986/boards-and-assemblies.md",
-					"sha256": "2ef9071abb55a4098ac2406528e649a7e8bcc24568783b33aaef5929b2d6d95e",
+					"sha256": "a46189bf64a4a91f61c3fbfbf89555f5abb7e9de9f5283d041bda093c2156a3f",
 					"image": "evidence/excerpts/williams.high-speed.1986/boards-and-assemblies.webp",
 					"image_sha256": "0f5d23e2607a46e5e37f2bdb4dcb77aa4fcbbf8e7140de5319029fe58c4b1e16",
 					"image_derivation": "high_speed_instruction_manual.pdf page 39, crop box 0.08,0.05,0.94,0.82, scanned page rendered at its native resolution (embedded image xref 163, 2595px across 8.65in), rendered at 96 dpi, capped to 700px wide, 701x812 WebP quality 70",
@@ -888,6 +1040,51 @@ def source_records() -> list[dict[str, Any]]:
 				"manual does not answer."
 			),
 			"license": "NOASSERTION", "attribution": "pinmame-game-defs curation",
+		},
+		{
+			"id": CALLOUT_SOURCE, "kind": "human_review",
+			"uri": "internal:tools/seeds/williams/high-speed-1986-callouts.json",
+			"sha256": _file_sha256(CALLOUT_SEED_PATH),
+			"locator": (
+				"2026-10-30 measurement of the three Ramp Stoplight sockets on the manual's lamp drawing (printed "
+				"page 33, the committed excerpt crop lamp-locations.webp). The page's control fit maps drawing "
+				"pixels to the playfield over 19 crisp features with validated table placements: the round "
+				"inserts of lamps 3, 4, 5, 9 (both lanes), 13-15, 17-19, 31-35 and 41 and the star rollovers 51 "
+				"and 52, worst leave-one-out offset 0.0063 normalized. The seed's measurements section pins the "
+				"drawing pixel of each socket, placed across the drawn Traffic Light Assembly housing at the "
+				"B-10921 assembly drawing's bulb spacing, and the coordinate the control fit gives it; each lies "
+				"inside the convex hull of the page's controls (tools/drawing_callouts.py). The page checks no "
+				"other placement. Fits, the housing measurement and its overlay are retained under the working "
+				"root's review-artifacts/high-speed-1986/callout-check with a pinned manifest."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics, Inc. drawings; pinmame-game-defs curation",
+		},
+		{
+			"id": PHYSICAL_SOURCE, "kind": "human_review",
+			"uri": f"external:pinmame-review-artifacts/{PHYSICAL_EVIDENCE_DIRECTORY}/manifest.json",
+			"revision": "2026-10-30",
+			"sha256": PHYSICAL_EVIDENCE_MANIFEST_SHA256,
+			"locator": (
+				"Retained physical photographs of one production High Speed from a private owner's photo page, "
+				"pinned by the folder's canonical manifest. They corroborate the identity, count and order of "
+				"the Ramp Stoplight bulbs whose coordinates this definition measures on the lamp drawing; they "
+				"supply no coordinate."
+			),
+			"license": "NOASSERTION",
+			"attribution": "the photographer (photographs); Williams Electronics, Inc. (machine artwork); pinmame-game-defs curation",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.high-speed.physical-photo-corroboration",
+					"locator": "What each retained photograph shows of the Ramp Stoplight's box, lenses and position",
+					"path": "evidence/excerpts/williams.high-speed.1986/physical-photo-corroboration.md",
+					"sha256": "a6eb72926cdeb98af9954c581cc12d510876273a06739fd4267fbc23915c274b",
+					"method": "manual",
+					"transcribed_by": "curator, from the retained photographs",
+					"reviewed": True,
+				},
+			],
 		},
 		{
 			"id": VPX_TABLE_SOURCE, "kind": "vpx_table",
@@ -983,6 +1180,7 @@ def input_devices() -> list[dict[str, Any]]:
 					),
 				},
 				spatial=not_applicable("cabinet_or_service", CORE_SOURCE, MANUAL_SOURCE),
+				normally_closed=False,
 			)
 		)
 
@@ -1065,6 +1263,8 @@ def input_devices() -> list[dict[str, Any]]:
 			"wiring": _switch_wiring(column, row),
 		}
 		refs: tuple[str, ...] = (MANUAL_SOURCE, CORE_SOURCE)
+		if not unused:
+			extra["normally_closed"] = False
 		if unused:
 			availability = "unused"
 			extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
@@ -1092,7 +1292,7 @@ def input_devices() -> list[dict[str, Any]]:
 
 	items.extend(flipper_column_inputs(
 		flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(37,38)",
-		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE),
+		core_refs=(CORE_SOURCE, CONTROLLER_SOURCE), button_refs=(VPX_SCRIPT_SOURCE, VPM_LIBRARY_SOURCE, MANUAL_SOURCE),
 		button_notes={
 			side: (
 				f"The retained known-working script drives it: Table1_KeyDown passes the {side} flipper key to "
@@ -1100,12 +1300,21 @@ def input_devices() -> list[dict[str, Any]]:
 				f"set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
 				f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). "
 				f"The physical counterpart is the {side} cabinet flipper button, which fires the flipper coil through "
-				"the switched-solenoid supply with no matrix address of its own."
+				"the switched-solenoid supply with no matrix address of its own"
+				+ (
+					"; the Power Wiring Diagram (printed page 46) draws it as two FLIPPER BUTTON contacts ganged "
+					"by a dashed line, one in series with the right flipper's coil and one with the upper-right "
+					"flipper's, so both rest open and close only while the button is pressed."
+					if side == "right" else
+					"; the Power Wiring Diagram (printed page 46) draws it as one FLIPPER BUTTON contact in series "
+					"with the left flipper's coil, so it rests open and closes only while the button is pressed."
+				)
 			)
 			for side in ("left", "right")
 		},
 		unused_notes=vpm_staged_flipper_notes(),
 		unused_note_refs=(VPM_LIBRARY_SOURCE,),
+		button_normally_closed=False,
 	))
 
 	items.append(
@@ -1206,8 +1415,13 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"narrowly and neither is authoritative for physical wiring: pinned PinMAME's hs_ MACHINE_INIT "
 				"block comments it \"Backbox GI output\", and the retained script's PFGI handler drives a "
 				"playfield-only 68-member GI light collection (inverted, so energising the relay turns that "
-				"collection off). No page of the manual enumerates a GI bulb count, bulb type or position, so no "
-				"spatial record is asserted; see coverage.missing spatial_placement."
+				"collection off). The placements are this relay's playfield bulbs, the bulb Lights of that "
+				"collection with each render double collapsed onto one bulb: the Power Wiring Diagram draws "
+				"every GI string through this one relay and no second GI circuit, so the table's single "
+				"collection agrees with the machine's routing, and its three jet-bumper cap bulbs are the one "
+				"#44 bulb each Jet Bumper Assembly (B-9414) carries. The table's grouping gives no quantity, "
+				"and no page of the manual enumerates a GI bulb count, bulb type or position, so physical "
+				"carries no quantity; the cabinet and backbox strings have no playfield position."
 			)
 		if address == 15:
 			notes += (
@@ -1218,7 +1432,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			notes += (
 				" Cabinet device: connector prefix 7 is the cabinet per the manual's board list, and the coin "
 				"lockout relay lives in the coin door. The two manual pages give different Coinco part numbers "
-				"for it; see conflict.coin-lockout-relay-part-number."
+				"for it; see conflict.coin-lockout-relay-part-number, recorded but not blocking."
 			)
 		if address == 13:
 			notes += (
@@ -1258,7 +1472,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 		elif address == 11:
 			extra["roles"] = ["gi.playfield-cabinet-and-backbox"]
-			# spatial intentionally omitted; the manual enumerates no GI bulb position.
+			extra["spatial"] = located(
+				identifier, "emitter", [position for _, position, _ in GI_SOCKETS],
+				VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE,
+			)
 		elif address == 15:
 			extra["roles"] = ["cabinet.knocker"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
@@ -1344,10 +1561,13 @@ def lamp_outputs() -> list[dict[str, Any]]:
 		if address == 40:
 			notes += (
 				" The manual states two bulbs for this circuit but never says where the second one is: neither "
-				"the Lamp-Matrix Table nor the Lamps list breaks the location down, and there is no third lamp "
-				"page. The retained table models a single Light object at the coordinate recorded here, so this "
-				"address carries one placement against a quantity of two. See coverage.missing "
-				"spatial_placement."
+				"the Lamp-Matrix Table nor the Lamps list breaks the location down. The lamp drawing (printed "
+				"page 33), which prints lamp 9's two lane bulbs at both lanes, prints 40 once, at this Ramp "
+				"Earns insert, and the retained table's single Light marks the same insert, so one bulb is "
+				"placed. Whether the second shares that insert, lights another part of the playfield or sits "
+				"off it is not recorded, so it has no placement and the record stays partial. Resolution path: "
+				"the underside of a High Speed playfield at the Ramp Earns insert row shows whether a second "
+				"lamp-40 socket sits under that insert; an owner or a restoration photo set can supply it."
 			)
 		if address == 8:
 			notes += " The Lamps list prints \"Arow\" here; its symmetric partners at 7 and 10 print \"Arrow\"."
@@ -1357,8 +1577,8 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				"additionally uses this address's own light state as the trigger for its police-beacon "
 				"animation, which is a table shortcut for solenoid 4 rather than a property of the lamp."
 			)
-		if address in UNPLACED_LAMPS:
-			notes += UNPLACED_LAMP_NOTE
+		if address in STOPLIGHT_LAMPS:
+			notes += STOPLIGHT_NOTE
 
 		extra: dict[str, Any] = {
 			"aliases": [
@@ -1378,8 +1598,8 @@ def lamp_outputs() -> list[dict[str, Any]]:
 		if address in BACKGLASS_ONLY_LAMPS:
 			extra["roles"] = ["cabinet.backglass-indicator"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
-		elif address in UNPLACED_LAMPS:
-			pass  # spatial intentionally omitted; see UNPLACED_LAMP_NOTE.
+		elif address in STOPLIGHT_LAMPS:
+			extra["spatial"] = measured_on_drawing(identifier, "emitter")
 		else:
 			extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE)
 		items.append(
@@ -1603,9 +1823,12 @@ def mechanisms() -> list[dict[str, Any]]:
 			"PinMAME rewrites from 84 and 82 on every update, and "
 			"used for lane change and for the engine-revving sound. Each assembly also carries an End of "
 			"Stroke switch (03-7811) in the coil circuit, normally closed and opening at end of stroke per the "
-			"page's own adjustment note, with no matrix address at all. The retained script rotates the "
-			"upper-right flipper from the lower-right flipper's own callback; see "
-			"conflict.upper-flipper-driving-button.",
+			"page's own adjustment note, with no matrix address at all. The right cabinet button fires both "
+			"right flippers: the Power Wiring Diagram (printed page 46) draws the upper-right flipper's coil "
+			"(Blk-Yel, 8P3-33, 7J1-19) through a second FLIPPER BUTTON contact ganged by a dashed line to the "
+			"right flipper's contact, returning on the right flipper's Orn-Vio wire to 1P19-1, while the left "
+			"button has one contact and fires only the left flipper. The retained script does the same, "
+			"rotating the upper-right flipper from the lower-right flipper's own callback.",
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE,
 			assembly_part_number="C-9952-R with C-9953-L unique parts",
 		),
@@ -1628,9 +1851,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"list) built from a light housing plate, a housing subassembly, a PCB standoff and one Light "
 			"Socket & Cable Assembly (C-10915) covering all three sockets. Its bulbs are lamp-matrix "
 			"addresses 42, 43 and 44 (Red, Yellow, Green Light (Ramp Stoplight)), which show which Ramp Earns "
-			"award is currently live. It has no coil and no switch. The retained table carries no usable "
-			"playfield coordinate for it; see coverage.missing spatial_placement.",
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			"award is currently live. It has no coil and no switch. It stands on a bracket at the upper left, "
+			"beside the upper-left stoplight target bank, with its face turned to the player and its three "
+			"lenses in one row, red, amber and green from left to right. The lamp drawing (printed page 33) "
+			"draws its housing there and prints 42, 43 and 44 around it; each bulb's placement is measured "
+			"on that drawing, and physical photographs corroborate the box, its lens order and where it "
+			"stands. The retained table's own stoplight toy sits in front of that position and is not "
+			"used; see the notes on lamps 42-44.",
+			MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CALLOUT_SOURCE, PHYSICAL_SOURCE,
 			assembly_part_number="B-10921",
 		),
 		mechanism(
@@ -1662,31 +1890,6 @@ def relationships() -> list[dict[str, Any]]:
 def conflicts() -> list[dict[str, Any]]:
 	return [
 		{
-			"id": "conflict.upper-flipper-driving-button",
-			"path": "mechanisms[id=mechanism.flippers]",
-			"description": (
-				"High Speed has a third, upper-right flipper, but no source states which cabinet button fires "
-				"it. The manual's Solenoid Table lists it as \"Upper Flipper\" with no Sol. No., no driver "
-				"transistor and no CPU-board connection, giving it only its own playfield connector pins "
-				"(Blk-Yel to 7J1-19 and 8P3-33) which sit between the left flipper's 8P3-32 and the right "
-				"flipper's 8P3-34; the Solenoids/Flashers parts list repeats the bare name; and neither page "
-				"names a side. Pinned PinMAME models no upper flipper at all for this driver, since "
-				"hsGameData's hw.flippers is FLIP_SWNO(37,38) with no FLIP_SW or FLIP_SOL bit for either upper "
-				"position, so public addresses 33-36 read as always zero and no third synthetic output exists. "
-				"The only source that asserts anything is the retained known-working VPX table, whose "
-				"SolRFlipper handler rotates RightFlipper and RightFlipper1 together, i.e. it assumes the "
-				"upper-right flipper shares the lower-right flipper's button and coil circuit. That is "
-				"plausible and matches the position -- the manual's own switch-locations drawing does place a "
-				"third flipper bat on the right side of the playfield above the right hideout lane, and the "
-				"Switches parts list has no third flipper-button row anywhere, so the coil must be fed from one "
-				"of the two existing button circuits -- but it rests on a single community source. Resolution "
-				"path: the Section 3 flipper-circuit schematic sheet (not transcribed here) or a photograph of "
-				"an unrestored machine's 8P3 harness would show which button feed 8P3-33 is paralleled onto. "
-				"Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE],
-		},
-		{
 			"id": "conflict.coin-lockout-relay-part-number",
 			"path": "outputs[binding.device=16]",
 			"description": (
@@ -1700,10 +1903,16 @@ def conflicts() -> list[dict[str, Any]]:
 				"definition records 404603-22, from the wiring table of record, and this conflict preserves the "
 				"other. Authoring impact is nil -- the device is a cabinet coin-door relay with no playfield "
 				"presence -- but a part number that two pages of one manual disagree about should not be "
-				"presented as settled. Resolution path: a Williams parts catalogue or a Coinco cross-reference. "
-				"Unresolved."
+				"presented as settled. Resolution path: a Williams parts catalogue or a Coinco cross-reference."
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
+			"status": "ignored",
+			"rationale": (
+				"Both pages agree on the device, its public address, its wiring and that it is fitted; they "
+				"differ only on the vendor part number of a coin-door relay that has no playfield presence. "
+				"A recreation consumes the address and the relay's role, never its part number, so no answer "
+				"could change a table. Kept so the second printed number stays on the record."
+			),
 		},
 	]
 
@@ -1740,7 +1949,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1802,26 +2011,24 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	for device in definition["inputs"]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
+	seed = _callout_seed()
+	placements = drawing_callouts.placements_of(definition)
+	decisions = drawing_callouts.evaluate(seed, placements, seed.get("limit", drawing_callouts.LIMIT))
+	nearest_kept = min(
+		(math.hypot((a[1][0] - b[1][0]) * PLAYFIELD_WIDTH, (a[1][1] - b[1][1]) * PLAYFIELD_HEIGHT), a[0], b[0])
+		for index, a in enumerate(GI_SOCKETS) for b in GI_SOCKETS[index + 1:]
+	)
+	excerpts = [excerpt for source in definition["sources"] for excerpt in source.get("excerpts", [])]
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
 		"blockers": [
-			"Lamp addresses 42, 43 and 44 (Red/Yellow/Green Light (Ramp Stoplight)) are real bulbs in the "
-			"playfield Traffic Light Assembly B-10921 but have no derivable coordinate: the retained table's "
-			"Light objects for them are parked at raw x about -2237 and its stoplight primitives sit at "
-			"position (0,0,0) with the geometry baked into a mesh whose derived centre is off the top of the "
-			"playfield. Their spatial keys are omitted rather than invented.",
-			"Lamp address 40 (Ramp Earns Hideout Jackpot) is marked a two-bulb circuit by the Lamp-Matrix "
-			"Table but the manual never says where the second bulb is and the retained table models only one "
-			"Light object, so its placement count is one against a quantity of two.",
-			"Solenoid address 11 (General Illumination Relay) switches playfield, cabinet and backbox general "
-			"illumination together per the Power Wiring Diagram, but no page of the manual enumerates a GI "
-			"bulb count, bulb type or position. The retained table's 68-member playfield GI light collection "
-			"is not adopted as a placement set: it is unverifiable against the manual, contains three "
-			"jet-bumper cap lights that belong to those assemblies, duplicates one member, and includes one "
-			"light above the top playfield edge. The spatial key is omitted.",
+			"Lamp address 40 (Ramp Earns Hideout Jackpot) is a two-bulb circuit by the Lamp-Matrix Table, but "
+			"the manual never says where the second bulb is: neither the Lamp-Matrix Table nor the Lamps list "
+			"breaks the location down, the lamp drawing prints 40 once, at one Ramp Earns insert, and the "
+			"retained table models one Light there. One bulb is placed; the second has no placement.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1835,8 +2042,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"source_ref": VPX_EXTRACTION_SOURCE,
 		},
 		"source_hashes": {
+			"callout_seed_sha256": _file_sha256(CALLOUT_SEED_PATH),
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"physical_photo_manifest_sha256": PHYSICAL_EVIDENCE_MANIFEST_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
 		"placement_count": placement_count,
@@ -1852,6 +2061,40 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			[{"group": "pinmame.input.switch", "address": address, "reason": reason} for address, reason in sorted(SWITCH_PROJECTIONS.items())]
 			+ [{"group": "pinmame.output.solenoid", "address": address, "reason": reason} for address, reason in sorted(SOLENOID_PROJECTIONS.items())]
 		),
+		"drawing_callout_check": drawing_callouts.summary(
+			seed, decisions, "tools/seeds/williams/high-speed-1986-callouts.json", _file_sha256(CALLOUT_SEED_PATH),
+		),
+		"drawing_measurements": [
+			{
+				"placement": placement_id,
+				"page": item["page"],
+				"label": item["label"],
+				"pixel": item["pixel"],
+				"point": item["point"],
+				"normalized": list(placements[placement_id]),
+				"corroboration": "photos",
+				"table_object": "not modelled at the drawn position: Light l{0} is parked at raw x about -2237".format(item["label"]),
+			}
+			for placement_id, item in sorted(seed["measurements"].items())
+		],
+		"general_illumination": {
+			"address": 11,
+			"collection": GI_COLLECTION,
+			"script_binding": "SolCallback(11) = PFGI, which drives the GI collection inverted",
+			"routing": (
+				"Power Wiring Diagram (printed page 47): the relay's two contact sets feed every GI string, "
+				"playfield, cabinet and backbox, and the diagram draws no second GI circuit"
+			),
+			"render_double_distance": GI_RENDER_DOUBLE_DISTANCE,
+			"sockets": [
+				{"object": name, "x": x, "y": y, "render_doubles": list(doubles)}
+				for name, (x, y), doubles in GI_SOCKETS
+			],
+			"nearest_separate_sockets": {"objects": [nearest_kept[1], nearest_kept[2]], "distance": round(nearest_kept[0], 1)},
+			"non_bulb_members": list(GI_NON_BULB_LIGHTS),
+			"duplicate_members": ["GI_45"],
+			"quantity": "none asserted: the table's grouping is not the machine's wiring, and the manual prints no GI bulb inventory",
+		},
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/williams.high-speed.1986/",
 			"transcription": {
@@ -1870,20 +2113,26 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Flasherflash*/Flasherlit* objects: Flupper flasher render members of the dome assemblies already placed through their bases or lights",
 			"FlasherRed/FlasherBlue/FlRoundRed/FlRoundBlue/FlWideRed/FlWideBlue: the table's police-beacon effect, driven from lamp 41's state rather than from solenoid 4",
 			"L1/L2/L3a/L6 Reel objects (the BG collection): backglass indicators, recorded as not_applicable cabinet_or_service lamp records",
+			"l42/l43/l44 Light objects: parked off-table at raw x about -2237; the Ramp Stoplight sockets are measured on the lamp drawing instead",
+			"stoplight_prim/stoplightbracket_prim: the table's stoplight toy and its bracket, whose world-space plan bounds (x 0.208-0.357, y 0.217-0.289) put the toy in front of the drawn housing and over the upper-left stoplight inserts the photographs show it clear of",
+			"GI collection members that draw no bulb mesh (non_bulb_members under general_illumination), including GI_34 above the top rail at raw y -46.1, and the render doubles each kept GI socket absorbs",
 			"kicker1-kicker4: subway teleport pairs used by the hideout ball paths, not switch or coil positions",
 			"Trigger1-Trigger11 and Trigger111-Trigger113: sound-only triggers with no Controller.Switch call",
 		],
-		"unresolved": ["conflict.upper-flipper-driving-button", "conflict.coin-lockout-relay-part-number"],
+		"excerpt_count": len(excerpts),
+		"excerpt_image_count": sum(1 for excerpt in excerpts if "image" in excerpt),
+		"ignored_conflicts": [conflict["id"] for conflict in definition["conflicts"] if conflict.get("status") == "ignored"],
+		"unresolved": [conflict["id"] for conflict in definition["conflicts"] if conflict.get("status", "unresolved") == "unresolved"],
 	}
 
 
 def render_spatial_report(report: dict[str, Any]) -> str:
+	gi = report["general_illumination"]
 	lines = [
 		"# High Speed (Williams, 1986) spatial review",
 		"",
-		f"Status: {report['status']}. The physical machine record itself remains `partial` at "
-		"`machines/partial/williams/high-speed-1986.json` because of the three spatial gaps and two "
-		"unresolved conflicts named below; see the promotion decision.",
+		f"Status: {report['status']}. The physical machine record remains `partial` at "
+		"`machines/partial/williams/high-speed-1986.json` because of the blocker below.",
 		"",
 		"The matching source is the retained known-working `High Speed (Williams 1986).vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained vpxtool extraction produced the embedded script at SHA-256 "
@@ -1902,9 +2151,17 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"rightmost jet bumper and switch 35 to the lowest, which is the opposite of both of the manual's own "
 		"numbered locations drawings; the coordinates recorded here follow the manual, and the disagreement "
 		"is disclosed on all three bumper switches.",
+		"- The Ramp Stoplight bulbs (lamps 42-44) are measured on the lamp drawing, because the table does "
+		"not model them where the manual draws them: its Lights for them are parked off-table and its "
+		"stoplight toy stands in front of the drawn housing. The drawing's own round inserts and star "
+		"rollovers fix the page to the playfield, the housing outline is measured side by side, and the "
+		"B-10921 assembly drawing's bulb spacing places the three sockets across it. Physical photographs "
+		"corroborate the box, its red-amber-green order from left to right and where it stands.",
 		"- System 11 has no separate GI address space: general illumination is one ordinary solenoid address "
-		"(11) whose per-game bulb-type metadata happens to be a continuous AC GI type, resolved from pinned "
-		"PinMAME's own per-game MACHINE_INIT block. High Speed has one GI relay where Whirlwind has two.",
+		"(11). High Speed has one GI relay where Whirlwind has two, and the Power Wiring Diagram feeds every "
+		"GI string through it. Its playfield placements are the bulb Lights of the table's one GI "
+		"collection, which the script drives from solenoid 11, with render doubles collapsed onto one bulb; "
+		"the table's grouping gives no quantity.",
 		"- High Speed declares no A/C select relay (`sxx.muxSol = 0`) and no sound-overlay board "
 		"(`hw.gameSpecific1 = 0`), so the platform's 25-32 alias bank and 37-44 overlay range are both "
 		"enumerated as unpopulated rather than mapped to devices. This is the largest single difference from "
@@ -1928,6 +2185,40 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	for entry in report["projections"]:
 		short = "Switch" if entry["group"] == "pinmame.input.switch" else "Solenoid"
 		lines.append(f"- {short} {entry['address']}: {entry['reason']}")
+	check = report["drawing_callout_check"]
+	page = check["pages"]["33"]
+	lines += [
+		"",
+		"## Drawing measurements",
+		"",
+		f"Seed `{check['seed']}` (SHA-256 `{check['seed_sha256']}`). The lamp drawing's control fit uses "
+		f"{page['controls']} controls, RMS {page['control_rms']} and worst leave-one-out "
+		f"{page['control_loo_max']} normalized; the page checks no placement. Every measurement lies inside "
+		"the convex hull of the page's controls.",
+		"",
+	]
+	for item in report["drawing_measurements"]:
+		x, y = item["normalized"]
+		lines.append(
+			f"- `{item['placement']}`: lamp {item['label']}, drawing pixel ({item['pixel'][0]}, {item['pixel'][1]}), "
+			f"({x}, {y}); corroborated by the physical photographs. Table: {item['table_object']}."
+		)
+	lines += [
+		"",
+		"## General illumination",
+		"",
+		f"Solenoid {gi['address']}, the relay; {gi['script_binding']}. Routing: {gi['routing']}. "
+		f"Lights within {gi['render_double_distance']:g} table units of each other are render doubles of one "
+		"bulb; the member that shows its own bulb mesh is kept, then the smallest falloff radius. "
+		f"{len(gi['sockets'])} sockets; the nearest two kept apart are {gi['nearest_separate_sockets']['objects'][0]} "
+		f"and {gi['nearest_separate_sockets']['objects'][1]}, {gi['nearest_separate_sockets']['distance']} units. "
+		f"{len(gi['non_bulb_members'])} members draw no bulb and make no socket; {', '.join(gi['duplicate_members'])} "
+		f"is listed twice. Quantity: {gi['quantity']}.",
+		"",
+	]
+	for socket in gi["sockets"]:
+		absorbed = f" (absorbs {', '.join(socket['render_doubles'])})" if socket["render_doubles"] else ""
+		lines.append(f"- `{socket['object']}` ({socket['x']}, {socket['y']}){absorbed}")
 	lines += [
 		"",
 		"## Counts",
@@ -1935,17 +2226,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Outputs with an intentionally omitted spatial key: {len(report['omitted_outputs'])}",
+		f"- Outputs with an omitted spatial key: {len(report['omitted_outputs'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
 	for reason, bindings in report["not_applicable_outputs"].items():
 		lines.append(f"- Outputs with a controlled `{reason}` record: {len(bindings)}")
-	lines += [
-		"",
-		"## Blockers",
-		"",
-	]
+	lines += ["", "## Blockers", ""]
 	for blocker in report["blockers"]:
 		lines.append(f"- {blocker}")
 	lines += [
@@ -1960,14 +2247,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"list carries an opto part number or is printed blank, and neither copy of the Switch-Matrix Table "
 		"has an opto legend or a single shaded cell.",
 		"",
-		"Promotion to `author_ready` is nonetheless refused. Three addresses have real bulbs with no "
-		"derivable coordinate (lamps 42-44), one has a manual-stated bulb quantity its placement count "
-		"cannot meet (lamp 40), one has no enumerable emitter set at all (solenoid 11), and the definition "
-		"carries two unresolved `conflicts` entries. `coverage.missing` is therefore "
-		"`[\"spatial_placement\", \"unresolved_conflicts\"]` and the record stays `partial` until a second "
-		"independent recreation or a photograph of an unrestored playfield places the Traffic Light "
-		"Assembly and lamp 40's second bulb, a GI bulb inventory turns up, and the Section 3 flipper "
-		"schematic settles which button feeds the upper-right flipper coil.",
+		"Every located placement is validated: the three Ramp Stoplight sockets through the lamp-drawing "
+		"measurement and the photographs, and the general-illumination relay's playfield sockets through "
+		"the table's bulb Lights and the Power Wiring Diagram's single-relay routing. The Power Wiring "
+		"Diagram's flipper circuits settle which button fires the upper-right flipper (the right one, "
+		"through a second contact), so that conflict is gone. The coin-lockout relay's two printed part "
+		"numbers stay recorded but do not block: nothing a recreation consumes depends on them. "
+		f"Unresolved conflicts: {len(report['unresolved'])}. Promotion to `author_ready` is refused: lamp 40's "
+		"second bulb has no recorded location, so `coverage.missing` is `[\"spatial_placement\"]`.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1975,8 +2262,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Manual reading log with the verified page offset and the questions the manual does not answer, "
 		f"SHA-256 `{MANUAL_TRANSCRIPTION_SHA256}`.",
 		f"- VPX script/geometry cross-reference, SHA-256 `{VPX_GEOMETRY_SHA256}`.",
-		"- Nine transcribed manual excerpts and three rendered crops under "
-		"`evidence/excerpts/williams.high-speed.1986/`.",
+		f"- Lamp-drawing fits, housing measurement and overlay: "
+		f"`{check['retained_artifacts']['directory']}`, manifest SHA-256 `{check['retained_artifacts']['manifest_sha256']}`.",
+		f"- Physical photographs: `{PHYSICAL_EVIDENCE_DIRECTORY}`, manifest SHA-256 `{PHYSICAL_EVIDENCE_MANIFEST_SHA256}`.",
+		f"- {report['excerpt_count']} transcribed excerpts and {report['excerpt_image_count']} rendered manual crops "
+		"under `evidence/excerpts/williams.high-speed.1986/`.",
 		"",
 	]
 	return "\n".join(lines)

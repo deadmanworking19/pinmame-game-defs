@@ -1,23 +1,15 @@
 {
   "conflicts": [
     {
-      "description": "High Speed has a third, upper-right flipper, but no source states which cabinet button fires it. The manual's Solenoid Table lists it as \"Upper Flipper\" with no Sol. No., no driver transistor and no CPU-board connection, giving it only its own playfield connector pins (Blk-Yel to 7J1-19 and 8P3-33) which sit between the left flipper's 8P3-32 and the right flipper's 8P3-34; the Solenoids/Flashers parts list repeats the bare name; and neither page names a side. Pinned PinMAME models no upper flipper at all for this driver, since hsGameData's hw.flippers is FLIP_SWNO(37,38) with no FLIP_SW or FLIP_SOL bit for either upper position, so public addresses 33-36 read as always zero and no third synthetic output exists. The only source that asserts anything is the retained known-working VPX table, whose SolRFlipper handler rotates RightFlipper and RightFlipper1 together, i.e. it assumes the upper-right flipper shares the lower-right flipper's button and coil circuit. That is plausible and matches the position -- the manual's own switch-locations drawing does place a third flipper bat on the right side of the playfield above the right hideout lane, and the Switches parts list has no third flipper-button row anywhere, so the coil must be fed from one of the two existing button circuits -- but it rests on a single community source. Resolution path: the Section 3 flipper-circuit schematic sheet (not transcribed here) or a photograph of an unrestored machine's 8P3 harness would show which button feed 8P3-33 is paralleled onto. Unresolved.",
-      "id": "conflict.upper-flipper-driving-button",
-      "path": "mechanisms[id=mechanism.flippers]",
-      "source_refs": [
-        "manual.williams.high-speed.1986",
-        "vpx-script.high-speed-1986",
-        "pinmame.core.4ec52ff0ac13"
-      ]
-    },
-    {
-      "description": "The manual gives two different Coinco part numbers for the same coin-door lockout relay. The Solenoid Table (printed page 25) prints 404603-22 in its Solenoid Part No. column with note 2, \"Solenoid 16 has a Coinco part number\"; the Solenoids/Flashers parts list (printed page 34) prints 904218-696 with the annotation \"Coin-Lockout Relay (Coinco p/n)\". Both pages agree on the device, its address, its wiring (Brn-Gry, 1P12-9, 7P1-7 and 7P2-4, driver Q6) and that the part is Coinco's rather than Williams'; nothing in the manual or in the Amendments sheet reconciles the two numbers, and the retained table has no callback for the address. The definition records 404603-22, from the wiring table of record, and this conflict preserves the other. Authoring impact is nil -- the device is a cabinet coin-door relay with no playfield presence -- but a part number that two pages of one manual disagree about should not be presented as settled. Resolution path: a Williams parts catalogue or a Coinco cross-reference. Unresolved.",
+      "description": "The manual gives two different Coinco part numbers for the same coin-door lockout relay. The Solenoid Table (printed page 25) prints 404603-22 in its Solenoid Part No. column with note 2, \"Solenoid 16 has a Coinco part number\"; the Solenoids/Flashers parts list (printed page 34) prints 904218-696 with the annotation \"Coin-Lockout Relay (Coinco p/n)\". Both pages agree on the device, its address, its wiring (Brn-Gry, 1P12-9, 7P1-7 and 7P2-4, driver Q6) and that the part is Coinco's rather than Williams'; nothing in the manual or in the Amendments sheet reconciles the two numbers, and the retained table has no callback for the address. The definition records 404603-22, from the wiring table of record, and this conflict preserves the other. Authoring impact is nil -- the device is a cabinet coin-door relay with no playfield presence -- but a part number that two pages of one manual disagree about should not be presented as settled. Resolution path: a Williams parts catalogue or a Coinco cross-reference.",
       "id": "conflict.coin-lockout-relay-part-number",
       "path": "outputs[binding.device=16]",
+      "rationale": "Both pages agree on the device, its public address, its wiring and that it is fitted; they differ only on the vendor part number of a coin-door relay that has no playfield presence. A recreation consumes the address and the relay's role, never its part number, so no answer could change a table. Kept so the second printed number stays on the record.",
       "source_refs": [
         "manual.williams.high-speed.1986",
         "pinmame.core.4ec52ff0ac13"
-      ]
+      ],
+      "status": "ignored"
     }
   ],
   "controller": {
@@ -37,8 +29,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
-      "spatial_placement",
-      "unresolved_conflicts"
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -274,6 +265,7 @@
       "id": "switch.diagnostic-7",
       "kind": "switch",
       "label": "Advance (Diagnostic)",
+      "normally_closed": false,
       "physical": {
         "location": "coin door and CPU board diagnostic switches",
         "notes": "System 11 diagnostic input, the upper nibble of the shared S11_COMINPORT keyboard port (core_swSeq2m maps public n to internal matrix index n+7, so these four land in column 0). The manual's Test/Diagnostic Procedures section drives the whole test sequence from the coin-door ADVANCE button and AUTO-UP/MANUAL-DOWN switch and names the CPU board's own SW1 as the Sound Diagnostic switch and SW2 as the CPU Diagnostic switch.",
@@ -317,6 +309,7 @@
       "id": "switch.diagnostic-6",
       "kind": "switch",
       "label": "Up/Down (Diagnostic)",
+      "normally_closed": false,
       "physical": {
         "location": "coin door and CPU board diagnostic switches",
         "notes": "System 11 diagnostic input, the upper nibble of the shared S11_COMINPORT keyboard port (core_swSeq2m maps public n to internal matrix index n+7, so these four land in column 0). The manual's Test/Diagnostic Procedures section drives the whole test sequence from the coin-door ADVANCE button and AUTO-UP/MANUAL-DOWN switch and names the CPU board's own SW1 as the Sound Diagnostic switch and SW2 as the CPU Diagnostic switch.",
@@ -360,6 +353,7 @@
       "id": "switch.diagnostic-5",
       "kind": "switch",
       "label": "CPU Diagnostic (SW2)",
+      "normally_closed": false,
       "physical": {
         "location": "coin door and CPU board diagnostic switches",
         "notes": "System 11 diagnostic input, the upper nibble of the shared S11_COMINPORT keyboard port (core_swSeq2m maps public n to internal matrix index n+7, so these four land in column 0). The manual's Test/Diagnostic Procedures section drives the whole test sequence from the coin-door ADVANCE button and AUTO-UP/MANUAL-DOWN switch and names the CPU board's own SW1 as the Sound Diagnostic switch and SW2 as the CPU Diagnostic switch.",
@@ -403,6 +397,7 @@
       "id": "switch.diagnostic-4",
       "kind": "switch",
       "label": "Sound Diagnostic (SW1)",
+      "normally_closed": false,
       "physical": {
         "location": "coin door and CPU board diagnostic switches",
         "notes": "System 11 diagnostic input, the upper nibble of the shared S11_COMINPORT keyboard port (core_swSeq2m maps public n to internal matrix index n+7, so these four land in column 0). The manual's Test/Diagnostic Procedures section drives the whole test sequence from the coin-door ADVANCE button and AUTO-UP/MANUAL-DOWN switch and names the CPU board's own SW1 as the Sound Diagnostic switch and SW2 as the CPU Diagnostic switch.",
@@ -450,6 +445,7 @@
       "id": "switch.matrix-1",
       "kind": "switch",
       "label": "Plumb Bob Tilt",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 1.",
         "part_number": "A-8476",
@@ -503,6 +499,7 @@
       "id": "switch.matrix-2",
       "kind": "switch",
       "label": "Ball Roll Tilt",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 2. hsGameData's hw.gameSpecific1 is 0, so S11_MUXSW2 is unset and SWITCH_UPDATE(s11) does not overwrite this address with mux-relay feedback the way it does on a System 11B game that sets that flag. The manual's own label for the position is a real device, the Ball Roll Tilt.",
         "part_number": "B-6572",
@@ -556,6 +553,7 @@
       "id": "switch.matrix-3",
       "kind": "switch",
       "label": "Credit Button",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 3.",
         "part_number": "SW-1A-126",
@@ -609,6 +607,7 @@
       "id": "switch.matrix-4",
       "kind": "switch",
       "label": "Right Coin Chute",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 4.",
         "part_number": "904845",
@@ -662,6 +661,7 @@
       "id": "switch.matrix-5",
       "kind": "switch",
       "label": "Center Coin Chute",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 5.",
         "part_number": "904845",
@@ -715,6 +715,7 @@
       "id": "switch.matrix-6",
       "kind": "switch",
       "label": "Left Coin Chute",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 6.",
         "part_number": "904845",
@@ -768,6 +769,7 @@
       "id": "switch.matrix-7",
       "kind": "switch",
       "label": "Slam Tilt",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 7.",
         "part_number": "904704",
@@ -821,6 +823,7 @@
       "id": "switch.matrix-8",
       "kind": "switch",
       "label": "High Score Reset",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 1, return row 8.",
         "part_number": "5641-09369-00",
@@ -874,6 +877,7 @@
       "id": "switch.matrix-9",
       "kind": "switch",
       "label": "Outhole",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 1. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell. Projected onto the Drain kicker (Kicker.Drain, table object centre): the outhole switch has no dedicated VPX object because the retained script's cvpmBallStack helper manages it abstractly (bsTrough.InitSw 9,12,11,10) and Drain_Hit is what feeds the stack. The manual's own switch-locations drawing puts switch 9 at the left end of the outhole/trough tube.",
         "part_number": "17-1067"
@@ -933,6 +937,7 @@
       "id": "switch.matrix-10",
       "kind": "switch",
       "label": "Left Trough",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 2. The Switch-Matrix Table prints this position \"Ball Trough #3 (Upper Left)\"; the label here is the Switches parts list wording. Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre): the three trough positions have no individual VPX objects, the retained script managing all four trough switches through one cvpmBallStack against the single BallRelease exit kicker (bsTrough.InitKick BallRelease,90,10).",
         "part_number": "5647-09957-00",
@@ -993,6 +998,7 @@
       "id": "switch.matrix-11",
       "kind": "switch",
       "label": "Center Trough",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 3. The Switch-Matrix Table prints this position \"Ball Trough #2 (Center)\"; the label here is the Switches parts list wording. Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre); see switch 10.",
         "part_number": "5647-09957-00",
@@ -1053,6 +1059,7 @@
       "id": "switch.matrix-12",
       "kind": "switch",
       "label": "Right Trough",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 4. The Switch-Matrix Table prints this position \"Ball Trough #1 (Lower Right)\"; the label here is the Switches parts list wording. Projected onto the BallRelease kicker (Kicker.BallRelease, table object centre); see switch 10.",
         "part_number": "5647-09933-00",
@@ -1113,6 +1120,7 @@
       "id": "switch.matrix-13",
       "kind": "switch",
       "label": "Red Target (Lower Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 5. The Switch-Matrix Table prints this position \"Lower Left Stoplight Bank - Red Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11022",
@@ -1173,6 +1181,7 @@
       "id": "switch.matrix-14",
       "kind": "switch",
       "label": "Yellow Target (Lower Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 6. The Switch-Matrix Table prints this position \"Lower Left Stoplight Bank - Yel Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11054",
@@ -1233,6 +1242,7 @@
       "id": "switch.matrix-15",
       "kind": "switch",
       "label": "Green Target (Lower Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 7. The Switch-Matrix Table prints this position \"Lower Left Stoplight Bank - Grn Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11055",
@@ -1293,6 +1303,7 @@
       "id": "switch.matrix-16",
       "kind": "switch",
       "label": "Eject Hole",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 2, return row 8. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell.",
         "part_number": "17-1012"
@@ -1352,6 +1363,7 @@
       "id": "switch.matrix-17",
       "kind": "switch",
       "label": "Red Target (Upper Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 1. The Switch-Matrix Table prints this position \"Upper Left Stoplight Bank - Red Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11022",
@@ -1412,6 +1424,7 @@
       "id": "switch.matrix-18",
       "kind": "switch",
       "label": "Yellow Target (Upper Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 2. The Switch-Matrix Table prints this position \"Upper Left Stoplight Bank - Yel Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11054",
@@ -1472,6 +1485,7 @@
       "id": "switch.matrix-19",
       "kind": "switch",
       "label": "Green Target (Upper Left Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 3. The Switch-Matrix Table prints this position \"Upper Left Stoplight Bank - Grn Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11055",
@@ -1532,6 +1546,7 @@
       "id": "switch.matrix-20",
       "kind": "switch",
       "label": "Left Flipper Return Lane",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 4.",
         "part_number": "SW-1A-124",
@@ -1592,6 +1607,7 @@
       "id": "switch.matrix-21",
       "kind": "switch",
       "label": "Right Flipper Return Lane",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 5.",
         "part_number": "SW-1A-124",
@@ -1652,6 +1668,7 @@
       "id": "switch.matrix-22",
       "kind": "switch",
       "label": "Red Target (Right Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 6. The Switch-Matrix Table prints this position \"Right Stoplight Bank - Red Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11022",
@@ -1712,6 +1729,7 @@
       "id": "switch.matrix-23",
       "kind": "switch",
       "label": "Yellow Target (Right Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 7. The Switch-Matrix Table prints this position \"Right Stoplight Bank - Yellow Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11054",
@@ -1772,6 +1790,7 @@
       "id": "switch.matrix-24",
       "kind": "switch",
       "label": "Green Target (Right Stoplight Bank)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 3, return row 8. The Switch-Matrix Table prints this position \"Right Stoplight Bank - Green Target\"; the label here is the Switches parts list wording.",
         "part_number": "A-11055",
@@ -1832,6 +1851,7 @@
       "id": "switch.matrix-25",
       "kind": "switch",
       "label": "Standup Target Arrow 1",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 1.",
         "part_number": "A-8253",
@@ -1892,6 +1912,7 @@
       "id": "switch.matrix-26",
       "kind": "switch",
       "label": "Standup Target Arrow 2",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 2.",
         "part_number": "A-8253",
@@ -1952,6 +1973,7 @@
       "id": "switch.matrix-27",
       "kind": "switch",
       "label": "Standup Target Arrow 3",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 3.",
         "part_number": "A-8253",
@@ -2012,6 +2034,7 @@
       "id": "switch.matrix-28",
       "kind": "switch",
       "label": "Standup Target Arrow 4",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 4.",
         "part_number": "A-8253",
@@ -2072,6 +2095,7 @@
       "id": "switch.matrix-29",
       "kind": "switch",
       "label": "Standup Target Arrow 5",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 5.",
         "part_number": "A-8253",
@@ -2132,6 +2156,7 @@
       "id": "switch.matrix-30",
       "kind": "switch",
       "label": "Standup Target Arrow 6",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 6.",
         "part_number": "A-8253",
@@ -2192,6 +2217,7 @@
       "id": "switch.matrix-31",
       "kind": "switch",
       "label": "Left Outlane",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 7.",
         "part_number": "SW-1A-124",
@@ -2252,6 +2278,7 @@
       "id": "switch.matrix-32",
       "kind": "switch",
       "label": "Right Outlane",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 4, return row 8.",
         "part_number": "SW-1A-124",
@@ -2312,6 +2339,7 @@
       "id": "switch.matrix-33",
       "kind": "switch",
       "label": "Upper Left Jet Bumper",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 1. The retained VPX table binds this bumper group to the wrong two addresses and the manual resolves it: both of the manual's own numbered locations drawings (switches 33/34/35 on printed page 32, solenoids 21/20/19 on printed page 34) place the Upper Left bumper highest and leftmost, the Lower Left bumper directly below it, and the Right bumper to the right of both, whereas the retained script binds Bumper2_Hit (the rightmost object) to switch 34 and Bumper3_Hit (the lowest object) to switch 35. The coordinate recorded here follows the manual. This switch also fires solenoid 21 directly in hardware: it is entry 5 of hsGameData's sxx.ssSw array, so whenever the switched-solenoid enable is active PinMAME asserts that special solenoid from this switch's own state rather than from any CPU write (src/wpc/s11.c lines 191-200).",
         "part_number": "A-7459-7",
@@ -2372,6 +2400,7 @@
       "id": "switch.matrix-34",
       "kind": "switch",
       "label": "Lower Left Jet Bumper",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 2. The retained VPX table binds this bumper group to the wrong two addresses and the manual resolves it: both of the manual's own numbered locations drawings (switches 33/34/35 on printed page 32, solenoids 21/20/19 on printed page 34) place the Upper Left bumper highest and leftmost, the Lower Left bumper directly below it, and the Right bumper to the right of both, whereas the retained script binds Bumper2_Hit (the rightmost object) to switch 34 and Bumper3_Hit (the lowest object) to switch 35. The coordinate recorded here follows the manual. This switch also fires solenoid 20 directly in hardware: it is entry 4 of hsGameData's sxx.ssSw array, so whenever the switched-solenoid enable is active PinMAME asserts that special solenoid from this switch's own state rather than from any CPU write (src/wpc/s11.c lines 191-200).",
         "part_number": "A-7459-7",
@@ -2432,6 +2461,7 @@
       "id": "switch.matrix-35",
       "kind": "switch",
       "label": "Right Jet Bumper",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 3. The retained VPX table binds this bumper group to the wrong two addresses and the manual resolves it: both of the manual's own numbered locations drawings (switches 33/34/35 on printed page 32, solenoids 21/20/19 on printed page 34) place the Upper Left bumper highest and leftmost, the Lower Left bumper directly below it, and the Right bumper to the right of both, whereas the retained script binds Bumper2_Hit (the rightmost object) to switch 34 and Bumper3_Hit (the lowest object) to switch 35. The coordinate recorded here follows the manual. This switch also fires solenoid 19 directly in hardware: it is entry 3 of hsGameData's sxx.ssSw array, so whenever the switched-solenoid enable is active PinMAME asserts that special solenoid from this switch's own state rather than from any CPU write (src/wpc/s11.c lines 191-200).",
         "part_number": "A-7459-7",
@@ -2492,6 +2522,7 @@
       "id": "switch.matrix-36",
       "kind": "switch",
       "label": "Ball Shooter",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 4.",
         "part_number": "SW-1A-138",
@@ -2552,6 +2583,7 @@
       "id": "switch.matrix-37",
       "kind": "switch",
       "label": "Left Flipper Lane Change (Engine Revs)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 5. The Switch-Matrix Table prints this position \"Left Flipper Engine Revving (EOS)\"; the label here is the Switches parts list wording. The two manual pages disagree about this switch and the parts list wins: the Switch-Matrix Table annotates it \"(EOS)\", but the Switches parts list gives part SW-1A-150-1 (left) / SW-1A-150 (right), and the C-9952-R Flipper Assemblies parts list identifies SW-1A-150 as item 2b, the Lane Change Switch, a different part from that same assembly's item 2a End of Stroke (EOS) Switch 03-7811, which carries no matrix address anywhere in the manual. Pinned PinMAME agrees with the parts list by construction: because hw.flippers carries no FLIP_SOL bit no EOS bit is ever added to locals.flipMask, so PinMAME models no EOS switch at all here. hsGameData's FLIP_SWNO(37,38) instead makes core_updateSw rewrite this address on every update from PinMAME's flipper column, public 84 (the left cabinet button, CORE_SWLLFLIPBUTBIT), so a consumer cannot drive it: it drives 84 and the ROM reads that bit here, 1 while the button is pressed. PinMAME copies the button bit whether or not the flippers are enabled; the physical switch sits on the flipper base assembly, and no source here states whether it follows the button or the moving flipper. Projected onto the left flipper's own assembly (Flipper.LeftFlipper, table object centre). The Lane Change switch is item 2b of the C-9952-R Flipper Base/Lane Change Assembly, mounted below the playfield as part of that assembly, and the manual's own switch-locations drawing places callout 37 at the left flipper. The retained script never drives this address; it drives public 84 through S11.VBS, which core_updateSw copies here.",
         "part_number": "SW-1A-150-1",
@@ -2612,6 +2644,7 @@
       "id": "switch.matrix-38",
       "kind": "switch",
       "label": "Right Flipper Lane Change (Engine Revs)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 6. The Switch-Matrix Table prints this position \"Right Flipper Engine Revving (EOS)\"; the label here is the Switches parts list wording. The two manual pages disagree about this switch and the parts list wins: the Switch-Matrix Table annotates it \"(EOS)\", but the Switches parts list gives part SW-1A-150-1 (left) / SW-1A-150 (right), and the C-9952-R Flipper Assemblies parts list identifies SW-1A-150 as item 2b, the Lane Change Switch, a different part from that same assembly's item 2a End of Stroke (EOS) Switch 03-7811, which carries no matrix address anywhere in the manual. Pinned PinMAME agrees with the parts list by construction: because hw.flippers carries no FLIP_SOL bit no EOS bit is ever added to locals.flipMask, so PinMAME models no EOS switch at all here. hsGameData's FLIP_SWNO(37,38) instead makes core_updateSw rewrite this address on every update from PinMAME's flipper column, public 82 (the right cabinet button, CORE_SWLRFLIPBUTBIT), so a consumer cannot drive it: it drives 82 and the ROM reads that bit here, 1 while the button is pressed. PinMAME copies the button bit whether or not the flippers are enabled; the physical switch sits on the flipper base assembly, and no source here states whether it follows the button or the moving flipper. Projected onto the right flipper's own assembly (Flipper.RightFlipper, table object centre); see switch 37, with callout 38 at the right flipper.",
         "part_number": "SW-1A-150",
@@ -2672,6 +2705,7 @@
       "id": "switch.matrix-39",
       "kind": "switch",
       "label": "Upper Left Hideout",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 7. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell. Taken from the retained table's Trigger.sw39, an object with no _Hit handler anywhere in the script. It is used rather than discarded because three things agree: its name matches this address, it sits directly above Kicker.LKick which the script does bind to switch 40 (bsLeftLock.InitSaucer LKick,40), and the manual's own switch-locations drawing draws callout 39 above callout 40 in the same left ball chute.",
         "part_number": "A-11047"
@@ -2731,6 +2765,7 @@
       "id": "switch.matrix-40",
       "kind": "switch",
       "label": "Lower Left Hideout",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 5, return row 8. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell.",
         "part_number": "17-1085"
@@ -2790,6 +2825,7 @@
       "id": "switch.matrix-41",
       "kind": "switch",
       "label": "Playfield Tilt",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 1.",
         "part_number": "SW-1A-117",
@@ -2843,6 +2879,7 @@
       "id": "switch.matrix-42",
       "kind": "switch",
       "label": "Left Ramp",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 2.",
         "part_number": "SW-1A-160",
@@ -2903,6 +2940,7 @@
       "id": "switch.matrix-43",
       "kind": "switch",
       "label": "Right Ramp",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 3.",
         "part_number": "SW-1A-160",
@@ -2963,6 +3001,7 @@
       "id": "switch.matrix-44",
       "kind": "switch",
       "label": "Left Spinner",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 4.",
         "part_number": "SW-1A-118",
@@ -3023,6 +3062,7 @@
       "id": "switch.matrix-45",
       "kind": "switch",
       "label": "Center Spinner",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 5.",
         "part_number": "SW-1A-118",
@@ -3083,6 +3123,7 @@
       "id": "switch.matrix-46",
       "kind": "switch",
       "label": "Right Spinner",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 6.",
         "part_number": "SW-1A-118",
@@ -3143,6 +3184,7 @@
       "id": "switch.matrix-47",
       "kind": "switch",
       "label": "Upper Right Hideout",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 7. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell. Taken from the retained table's Trigger.sw37, whose name is a misnomer -- switch 37 is the left flipper's Lane Change switch at the bottom of the playfield, and this object sits high on the right side. It is the exact mirror of Trigger.sw39: it lies directly above Kicker.RKick, which the script binds to switch 48 (bsRightLock.InitSaucer RKick,48), and the manual draws callout 47 above callout 48 in the right ball chute. The coordinate is therefore derived from the mirror geometry of the right hideout lane plus the manual's own ordering, not from the object's name.",
         "part_number": "A-11047"
@@ -3202,6 +3244,7 @@
       "id": "switch.matrix-48",
       "kind": "switch",
       "label": "Lower Right Hideout",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 6, return row 8. The Switches parts list prints only a part number for this position and never states the switch construction, so no switch_type is asserted here. It is certainly neither an opto nor a documented normally-closed contact: no row of that list carries an opto or photo-transistor part number, no row is printed blank, and neither copy of the Switch-Matrix Table carries an opto legend or a single shaded cell.",
         "part_number": "17-1085"
@@ -3261,6 +3304,7 @@
       "id": "switch.matrix-49",
       "kind": "switch",
       "label": "Left Kicker (scoring)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 7, return row 1. The Switch-Matrix Table prints this position \"Left Kicker\"; the label here is the Switches parts list wording. This switch also fires solenoid 17 directly in hardware: it is entry 1 of hsGameData's sxx.ssSw array, so whenever the switched-solenoid enable is active PinMAME asserts that special solenoid from this switch's own state rather than from any CPU write (src/wpc/s11.c lines 191-200). Kicker (slingshot) scoring switch, projected onto the centroid of its own slingshot wall's four drag points (Wall.LeftSlingShot), the assembly the switch is part of; the script's LeftSlingShot_Slingshot handler is what pulses this address.",
         "part_number": "SW-1A-122",
@@ -3321,6 +3365,7 @@
       "id": "switch.matrix-50",
       "kind": "switch",
       "label": "Right Kicker (scoring)",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 7, return row 2. The Switch-Matrix Table prints this position \"Right Kicker\"; the label here is the Switches parts list wording. This switch also fires solenoid 18 directly in hardware: it is entry 2 of hsGameData's sxx.ssSw array, so whenever the switched-solenoid enable is active PinMAME asserts that special solenoid from this switch's own state rather than from any CPU write (src/wpc/s11.c lines 191-200). Kicker (slingshot) scoring switch, projected onto the centroid of Wall.RightSlingShot's four drag points; see switch 49.",
         "part_number": "SW-1A-122",
@@ -3381,6 +3426,7 @@
       "id": "switch.matrix-51",
       "kind": "switch",
       "label": "Left Star Rollover",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 7, return row 3.",
         "part_number": "SW-1A-157",
@@ -3441,6 +3487,7 @@
       "id": "switch.matrix-52",
       "kind": "switch",
       "label": "Right Star Rollover",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix drive column 7, return row 4.",
         "part_number": "SW-1A-157",
@@ -4113,9 +4160,10 @@
       "id": "switch.flipper-column-82",
       "kind": "switch",
       "label": "Lower Right Flipper Button (PinMAME Flipper Column)",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPBUTBIT = 0x02, published at 82 through core_swSeq2m(n) = n + 7. This is the lower right cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(37,38) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 38 through core_setSw and fabricates the synthetic 45/46 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 38: a host write to 38 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown passes the right flipper key to S11.VBS vpmKeyDown and Table1_KeyUp to KeyUpHandler, which core.vbs routes to vpmKeyUp, and those set Controller.Switch(swLRFlip) with swLRFlip = 82 (excerpt vpm-script-library-flippers). The physical counterpart is the right cabinet flipper button, which fires the flipper coil through the switched-solenoid supply with no matrix address of its own.",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPBUTBIT = 0x02, published at 82 through core_swSeq2m(n) = n + 7. This is the lower right cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(37,38) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 38 through core_setSw and fabricates the synthetic 45/46 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 38: a host write to 38 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown passes the right flipper key to S11.VBS vpmKeyDown and Table1_KeyUp to KeyUpHandler, which core.vbs routes to vpmKeyUp, and those set Controller.Switch(swLRFlip) with swLRFlip = 82 (excerpt vpm-script-library-flippers). The physical counterpart is the right cabinet flipper button, which fires the flipper coil through the switched-solenoid supply with no matrix address of its own; the Power Wiring Diagram (printed page 46) draws it as two FLIPPER BUTTON contacts ganged by a dashed line, one in series with the right flipper's coil and one with the upper-right flipper's, so both rest open and close only while the button is pressed.",
         "switch_type": "button"
       },
       "provenance": {
@@ -4123,7 +4171,8 @@
           "pinmame.core.4ec52ff0ac13",
           "controller-profile.pinmame-system-11",
           "vpx-script.high-speed-1986",
-          "vpm-script-library.s11-vbs"
+          "vpm-script-library.s11-vbs",
+          "manual.williams.high-speed.1986"
         ],
         "status": "validated"
       },
@@ -4197,9 +4246,10 @@
       "id": "switch.flipper-column-84",
       "kind": "switch",
       "label": "Lower Left Flipper Button (PinMAME Flipper Column)",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPBUTBIT = 0x08, published at 84 through core_swSeq2m(n) = n + 7. This is the lower left cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(37,38) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 37 through core_setSw and fabricates the synthetic 47/48 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 37: a host write to 37 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown passes the left flipper key to S11.VBS vpmKeyDown and Table1_KeyUp to KeyUpHandler, which core.vbs routes to vpmKeyUp, and those set Controller.Switch(swLLFlip) with swLLFlip = 84 (excerpt vpm-script-library-flippers). The physical counterpart is the left cabinet flipper button, which fires the flipper coil through the switched-solenoid supply with no matrix address of its own.",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPBUTBIT = 0x08, published at 84 through core_swSeq2m(n) = n + 7. This is the lower left cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(37,38) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 37 through core_setSw and fabricates the synthetic 47/48 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 37: a host write to 37 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown passes the left flipper key to S11.VBS vpmKeyDown and Table1_KeyUp to KeyUpHandler, which core.vbs routes to vpmKeyUp, and those set Controller.Switch(swLLFlip) with swLLFlip = 84 (excerpt vpm-script-library-flippers). The physical counterpart is the left cabinet flipper button, which fires the flipper coil through the switched-solenoid supply with no matrix address of its own; the Power Wiring Diagram (printed page 46) draws it as one FLIPPER BUTTON contact in series with the left flipper's coil, so it rests open and closes only while the button is pressed.",
         "switch_type": "button"
       },
       "provenance": {
@@ -4207,7 +4257,8 @@
           "pinmame.core.4ec52ff0ac13",
           "controller-profile.pinmame-system-11",
           "vpx-script.high-speed-1986",
-          "vpm-script-library.s11-vbs"
+          "vpm-script-library.s11-vbs",
+          "manual.williams.high-speed.1986"
         ],
         "status": "validated"
       },
@@ -4710,7 +4761,7 @@
     {
       "actuators": [],
       "assembly_part_number": "C-9952-R with C-9953-L unique parts",
-      "behavior": "Three FL 23/600-30/2600-50VDC flipper coils: lower left, lower right, and an upper-right flipper the manual's Solenoids/Flashers list calls simply \"Upper Flipper\". None of the three has a Sol. No. or a driver transistor in the Solenoid Table, and note 1 says the CPU-board wires that do appear (Orn-Vio at 1P19-1, Orn-Gry at 1P19-2) run to the flipper switch rather than to a coil, with a second wire running from the switch on to the coil (note 3): the coils are fired by the cabinet button through the switched-solenoid supply, which is why PinMAME's public flipper addresses 45-48 are fabricated from button state rather than read from hardware; PinMAME takes that state from its flipper column, public 82 (right) and 84 (left). What the CPU does read is a Lane Change switch on each lower flipper's own base assembly (C-9954-R Flipper Base/Lane Change Assembly, switch SW-1A-150), reported at matrix 37 (left) and 38 (right), which PinMAME rewrites from 84 and 82 on every update, and used for lane change and for the engine-revving sound. Each assembly also carries an End of Stroke switch (03-7811) in the coil circuit, normally closed and opening at end of stroke per the page's own adjustment note, with no matrix address at all. The retained script rotates the upper-right flipper from the lower-right flipper's own callback; see conflict.upper-flipper-driving-button.",
+      "behavior": "Three FL 23/600-30/2600-50VDC flipper coils: lower left, lower right, and an upper-right flipper the manual's Solenoids/Flashers list calls simply \"Upper Flipper\". None of the three has a Sol. No. or a driver transistor in the Solenoid Table, and note 1 says the CPU-board wires that do appear (Orn-Vio at 1P19-1, Orn-Gry at 1P19-2) run to the flipper switch rather than to a coil, with a second wire running from the switch on to the coil (note 3): the coils are fired by the cabinet button through the switched-solenoid supply, which is why PinMAME's public flipper addresses 45-48 are fabricated from button state rather than read from hardware; PinMAME takes that state from its flipper column, public 82 (right) and 84 (left). What the CPU does read is a Lane Change switch on each lower flipper's own base assembly (C-9954-R Flipper Base/Lane Change Assembly, switch SW-1A-150), reported at matrix 37 (left) and 38 (right), which PinMAME rewrites from 84 and 82 on every update, and used for lane change and for the engine-revving sound. Each assembly also carries an End of Stroke switch (03-7811) in the coil circuit, normally closed and opening at end of stroke per the page's own adjustment note, with no matrix address at all. The right cabinet button fires both right flippers: the Power Wiring Diagram (printed page 46) draws the upper-right flipper's coil (Blk-Yel, 8P3-33, 7J1-19) through a second FLIPPER BUTTON contact ganged by a dashed line to the right flipper's contact, returning on the right flipper's Orn-Vio wire to 1P19-1, while the left button has one contact and fires only the left flipper. The retained script does the same, rotating the upper-right flipper from the lower-right flipper's own callback.",
       "id": "mechanism.flippers",
       "kind": "other",
       "label": "Three flippers, none CPU-driven",
@@ -4748,14 +4799,16 @@
     {
       "actuators": [],
       "assembly_part_number": "B-10921",
-      "behavior": "A three-bulb playfield fixture (Traffic Light Assembly B-10921, item 9 of the Playfield Parts list) built from a light housing plate, a housing subassembly, a PCB standoff and one Light Socket & Cable Assembly (C-10915) covering all three sockets. Its bulbs are lamp-matrix addresses 42, 43 and 44 (Red, Yellow, Green Light (Ramp Stoplight)), which show which Ramp Earns award is currently live. It has no coil and no switch. The retained table carries no usable playfield coordinate for it; see coverage.missing spatial_placement.",
+      "behavior": "A three-bulb playfield fixture (Traffic Light Assembly B-10921, item 9 of the Playfield Parts list) built from a light housing plate, a housing subassembly, a PCB standoff and one Light Socket & Cable Assembly (C-10915) covering all three sockets. Its bulbs are lamp-matrix addresses 42, 43 and 44 (Red, Yellow, Green Light (Ramp Stoplight)), which show which Ramp Earns award is currently live. It has no coil and no switch. It stands on a bracket at the upper left, beside the upper-left stoplight target bank, with its face turned to the player and its three lenses in one row, red, amber and green from left to right. The lamp drawing (printed page 33) draws its housing there and prints 42, 43 and 44 around it; each bulb's placement is measured on that drawing, and physical photographs corroborate the box, its lens order and where it stands. The retained table's own stoplight toy sits in front of that position and is not used; see the notes on lamps 42-44.",
       "id": "mechanism.traffic-light",
       "kind": "other",
       "label": "Playfield ramp traffic light",
       "provenance": {
         "source_refs": [
           "manual.williams.high-speed.1986",
-          "vpx-script.high-speed-1986"
+          "vpx-script.high-speed-1986",
+          "drawing-callouts.high-speed.2026-10-30",
+          "human-review.high-speed-physical-corroboration-2026-10-30"
         ],
         "status": "validated"
       },
@@ -5382,7 +5435,7 @@
       "kind": "gi",
       "label": "General Illumination Relay",
       "physical": {
-        "notes": "Printed Solenoid Table entry 11, Solenoid Type \"Controlled\". The Solenoid Table's Function column reads \"General Illumination Relay\"; the label here is the Solenoids/Flashers parts list wording. Retained script callback: PFGI. The game's single general-illumination relay, described by the Solenoids/Flashers list as a \"Pwr Sup Bd Relay\" and wired to 3P7-1 on the Power Supply Board (D-8345-541). The Power Wiring Diagram (printed page 47) shows its two contact sets in series with the supply legs feeding 3J6/3P8, whose eight fused lines fan out to the backbox Insert Board (9J2 pins 1-4), the cabinet (7J6-2/7J6-3 through 7J4-1/7J4-2) and the playfield (8J4 pins 3-6), so this one address switches playfield, cabinet and backbox general illumination together. Two other sources describe it more narrowly and neither is authoritative for physical wiring: pinned PinMAME's hs_ MACHINE_INIT block comments it \"Backbox GI output\", and the retained script's PFGI handler drives a playfield-only 68-member GI light collection (inverted, so energising the relay turns that collection off). No page of the manual enumerates a GI bulb count, bulb type or position, so no spatial record is asserted; see coverage.missing spatial_placement.",
+        "notes": "Printed Solenoid Table entry 11, Solenoid Type \"Controlled\". The Solenoid Table's Function column reads \"General Illumination Relay\"; the label here is the Solenoids/Flashers parts list wording. Retained script callback: PFGI. The game's single general-illumination relay, described by the Solenoids/Flashers list as a \"Pwr Sup Bd Relay\" and wired to 3P7-1 on the Power Supply Board (D-8345-541). The Power Wiring Diagram (printed page 47) shows its two contact sets in series with the supply legs feeding 3J6/3P8, whose eight fused lines fan out to the backbox Insert Board (9J2 pins 1-4), the cabinet (7J6-2/7J6-3 through 7J4-1/7J4-2) and the playfield (8J4 pins 3-6), so this one address switches playfield, cabinet and backbox general illumination together. Two other sources describe it more narrowly and neither is authoritative for physical wiring: pinned PinMAME's hs_ MACHINE_INIT block comments it \"Backbox GI output\", and the retained script's PFGI handler drives a playfield-only 68-member GI light collection (inverted, so energising the relay turns that collection off). The placements are this relay's playfield bulbs, the bulb Lights of that collection with each render double collapsed onto one bulb: the Power Wiring Diagram draws every GI string through this one relay and no second GI circuit, so the table's single collection agrees with the machine's routing, and its three jet-bumper cap bulbs are the one #44 bulb each Jet Bumper Assembly (B-9414) carries. The table's grouping gives no quantity, and no page of the manual enumerates a GI bulb count, bulb type or position, so physical carries no quantity; the cabinet and backbox strings have no playfield position.",
         "part_number": "5580-09555-00"
       },
       "provenance": {
@@ -5396,6 +5449,431 @@
       "roles": [
         "gi.playfield-cabinet-and-backbox"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.general-illumination-relay.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.465947,
+            "y": 0.102135
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.655277,
+            "y": 0.138568
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.97479,
+            "y": 0.162445
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.4",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.702413,
+            "y": 0.176474
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.5",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.822304,
+            "y": 0.193033
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.6",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.496096,
+            "y": 0.201386
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.7",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.156634,
+            "y": 0.214862
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.8",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.972924,
+            "y": 0.222157
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.9",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.033613,
+            "y": 0.234718
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.10",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.550818,
+            "y": 0.249216
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.11",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.05042,
+            "y": 0.279635
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.12",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.916667,
+            "y": 0.293144
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.13",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.237395,
+            "y": 0.309017
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.14",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.866371,
+            "y": 0.370299
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.15",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.895415,
+            "y": 0.381602
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.16",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.073529,
+            "y": 0.423506
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.17",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.872627,
+            "y": 0.432849
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.18",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.138655,
+            "y": 0.453901
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.19",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.081746,
+            "y": 0.498109
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.20",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.861811,
+            "y": 0.551728
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.21",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.049463,
+            "y": 0.573771
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.22",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.884221,
+            "y": 0.591805
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.23",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.17869,
+            "y": 0.671719
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.24",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.732867,
+            "y": 0.672109
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.25",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.696374,
+            "y": 0.739188
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.26",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.216431,
+            "y": 0.742696
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.27",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.698179,
+            "y": 0.803107
+          },
+          {
+            "id": "device.general-illumination-relay.emitter.28",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.high-speed-1986",
+                "vpx-script.high-speed-1986",
+                "manual.williams.high-speed.1986"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.213585,
+            "y": 0.804458
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "System 11 CPU board",
         "control_connection": "1P12-4",
@@ -5664,7 +6142,7 @@
       "kind": "relay",
       "label": "Coin-Lockout Relay",
       "physical": {
-        "notes": "Printed Solenoid Table entry 16, Solenoid Type \"Controlled\". Cabinet device: connector prefix 7 is the cabinet per the manual's board list, and the coin lockout relay lives in the coin door. The two manual pages give different Coinco part numbers for it; see conflict.coin-lockout-relay-part-number.",
+        "notes": "Printed Solenoid Table entry 16, Solenoid Type \"Controlled\". Cabinet device: connector prefix 7 is the cabinet per the manual's board list, and the coin lockout relay lives in the coin door. The two manual pages give different Coinco part numbers for it; see conflict.coin-lockout-relay-part-number, recorded but not blocking.",
         "part_number": "404603-22"
       },
       "provenance": {
@@ -6483,7 +6961,7 @@
       "kind": "virtual",
       "label": "Unused Upper Flipper Coil 33",
       "physical": {
-        "notes": "Platform generic upper-flipper-coil address (CORE_FIRSTUFLIPSOL = 33). hsGameData's hw.flippers is FLIP_SWNO(37,38), which sets FLIP_SW(FLIP_L) only and no FLIP_SW/FLIP_SOL bit for either upper position, and core_getSol serves 33-36 only for GEN_ALLWPC/GEN_SAM, so this address reads as always zero. High Speed does have a third, upper-right flipper coil, but the manual gives it no Sol. No. at all and PinMAME never publishes it here; see conflict.upper-flipper-driving-button."
+        "notes": "Platform generic upper-flipper-coil address (CORE_FIRSTUFLIPSOL = 33). hsGameData's hw.flippers is FLIP_SWNO(37,38), which sets FLIP_SW(FLIP_L) only and no FLIP_SW/FLIP_SOL bit for either upper position, and core_getSol serves 33-36 only for GEN_ALLWPC/GEN_SAM, so this address reads as always zero. High Speed does have a third, upper-right flipper coil, but the manual gives it no Sol. No. at all and PinMAME never publishes it here: the Power Wiring Diagram (printed page 46) wires it through a second contact of the right cabinet flipper button, so it fires with the lower-right flipper; see mechanism.flippers."
       },
       "provenance": {
         "source_refs": [
@@ -6951,7 +7429,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Power",
       "physical": {
-        "notes": "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL = 45). hsGameData declares FLIP_SWNO(37,38) with no FLIP_SOL bit, so core_updateSw's 'fake solenoids if not CPU controlled' branch fabricates 45/46 from the lower-right button bit at public 82 and 47/48 from the lower-left bit at public 84 (PinMAME's flipper column), gated by the same ssEn the driver passes in (src/wpc/s11.c core_updateSw(locals.ssEn)). The manual confirms there is no driver-board output behind them: its three flipper rows carry no Sol. No. and no driver transistor, and note 1 says the CPU-board wire runs to the flipper switch rather than to the coil. The retained script binds SolCallback(sLRFlipper) = SolRFlipper, which rotates both the lower-right flipper and the upper-right flipper together."
+        "notes": "PinMAME's synthetic lower-right-flipper power output (CORE_FIRSTLFLIPSOL = 45). hsGameData declares FLIP_SWNO(37,38) with no FLIP_SOL bit, so core_updateSw's 'fake solenoids if not CPU controlled' branch fabricates 45/46 from the lower-right button bit at public 82 and 47/48 from the lower-left bit at public 84 (PinMAME's flipper column), gated by the same ssEn the driver passes in (src/wpc/s11.c core_updateSw(locals.ssEn)). The manual confirms there is no driver-board output behind them: its three flipper rows carry no Sol. No. and no driver transistor, and note 1 says the CPU-board wire runs to the flipper switch rather than to the coil. The right button's two contacts fire the lower-right and the upper-right coil together (Power Wiring Diagram, printed page 46), so the button state 45/46 are fabricated from fires both right flipper coils; the retained script binds SolCallback(sLRFlipper) = SolRFlipper, which rotates the lower-right flipper and the upper-right flipper together."
       },
       "provenance": {
         "source_refs": [
@@ -9490,7 +9968,7 @@
       "kind": "lamp",
       "label": "Ramp Earns Hideout Jackpot",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 5, return row 8. The Lamp-Matrix Table marks this address with its boxed \"[2] Two lamps in circuit\" legend; sweeping all 64 cells of the rendered page, that marker appears on addresses 1, 3, 9 and 40 and nowhere else. The manual states two bulbs for this circuit but never says where the second one is: neither the Lamp-Matrix Table nor the Lamps list breaks the location down, and there is no third lamp page. The retained table models a single Light object at the coordinate recorded here, so this address carries one placement against a quantity of two. See coverage.missing spatial_placement.",
+        "notes": "Printed lamp-matrix drive column 5, return row 8. The Lamp-Matrix Table marks this address with its boxed \"[2] Two lamps in circuit\" legend; sweeping all 64 cells of the rendered page, that marker appears on addresses 1, 3, 9 and 40 and nowhere else. The manual states two bulbs for this circuit but never says where the second one is: neither the Lamp-Matrix Table nor the Lamps list breaks the location down. The lamp drawing (printed page 33), which prints lamp 9's two lane bulbs at both lanes, prints 40 once, at this Ramp Earns insert, and the retained table's single Light marks the same insert, so one bulb is placed. Whether the second shares that insert, lights another part of the playfield or sits off it is not recorded, so it has no placement and the record stays partial. Resolution path: the underside of a High Speed playfield at the Ramp Earns insert row shows whether a second lamp-40 socket sits under that insert; an owner or a restoration photo set can supply it.",
         "quantity": 2
       },
       "provenance": {
@@ -9608,7 +10086,7 @@
       "kind": "lamp",
       "label": "Red Light (Ramp Stoplight)",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 6, return row 2. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Red Light\"; the label here is the Lamps list wording. The three Ramp Stoplight bulbs live in the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), but no playfield coordinate for it can be derived from the retained extraction. UpdateLamps drives this address as NFadeL against a Light object parked at raw x about -2237, far off-table, and the commented-out alternative in the same routine addressed Primitive.stoplight_prim, which sits at position (0,0,0) with an all-zero rot_and_tra and its geometry baked into mesh hslight.ob; deriving that mesh's centroid through the table's own position-plus-size convention puts it at raw y about -499, also off-table. Two independent object families therefore agree the coordinate is absent, so the spatial key is omitted rather than invented. See coverage.missing spatial_placement.",
+        "notes": "Printed lamp-matrix drive column 6, return row 2. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Red Light\"; the label here is the Lamps list wording. One of the three bulbs of the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), which stands on its bracket at the upper left, beside the upper-left stoplight target bank. The lamp drawing (printed page 33) draws the assembly's housing there as a four-sided outline and prints 42, 43 and 44 around it, left to right; the switch drawing (printed page 32) draws the same outline unnumbered. The placement is measured on the lamp drawing: the B-10921 assembly drawing (printed page 36) puts the three bulbs in one row across the housing's width, the outer two 0.288 of the width either side of the middle one, and halfway through its depth, and the page's own round inserts and star rollovers map the drawing to the playfield. Physical photographs of a production machine show one box there with three lenses in a row, red, amber and green from left to right, which is the Lamps list's Red (42), Yellow (43) and Green (44) order. The retained table does not model the bulbs: UpdateLamps drives Lights l42-l44 parked off-table at raw x about -2237, and a later routine swaps the image of its stoplight toy, Primitive.stoplight_prim (mesh hslight.ob at position (0,0,0)), on their states. Exported to world space, that toy's plan bounds are x 0.208-0.357 and y 0.217-0.289, centred 0.117 from the drawn housing's middle socket, in front of the drawn housing and reaching the upper-left stoplight inserts that the photographs show it clear of, so it is not used as this bulb's position.",
         "quantity": 1
       },
       "provenance": {
@@ -9616,6 +10094,26 @@
           "manual.williams.high-speed.1986",
           "vpx-script.high-speed-1986",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-42.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.high-speed.1986",
+                "drawing-callouts.high-speed.2026-10-30",
+                "human-review.high-speed-physical-corroboration-2026-10-30"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.153,
+            "y": 0.183
+          }
         ],
         "status": "validated"
       },
@@ -9648,7 +10146,7 @@
       "kind": "lamp",
       "label": "Yellow Light (Ramp Stoplight)",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 6, return row 3. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Yellow Light\"; the label here is the Lamps list wording. The three Ramp Stoplight bulbs live in the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), but no playfield coordinate for it can be derived from the retained extraction. UpdateLamps drives this address as NFadeL against a Light object parked at raw x about -2237, far off-table, and the commented-out alternative in the same routine addressed Primitive.stoplight_prim, which sits at position (0,0,0) with an all-zero rot_and_tra and its geometry baked into mesh hslight.ob; deriving that mesh's centroid through the table's own position-plus-size convention puts it at raw y about -499, also off-table. Two independent object families therefore agree the coordinate is absent, so the spatial key is omitted rather than invented. See coverage.missing spatial_placement.",
+        "notes": "Printed lamp-matrix drive column 6, return row 3. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Yellow Light\"; the label here is the Lamps list wording. One of the three bulbs of the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), which stands on its bracket at the upper left, beside the upper-left stoplight target bank. The lamp drawing (printed page 33) draws the assembly's housing there as a four-sided outline and prints 42, 43 and 44 around it, left to right; the switch drawing (printed page 32) draws the same outline unnumbered. The placement is measured on the lamp drawing: the B-10921 assembly drawing (printed page 36) puts the three bulbs in one row across the housing's width, the outer two 0.288 of the width either side of the middle one, and halfway through its depth, and the page's own round inserts and star rollovers map the drawing to the playfield. Physical photographs of a production machine show one box there with three lenses in a row, red, amber and green from left to right, which is the Lamps list's Red (42), Yellow (43) and Green (44) order. The retained table does not model the bulbs: UpdateLamps drives Lights l42-l44 parked off-table at raw x about -2237, and a later routine swaps the image of its stoplight toy, Primitive.stoplight_prim (mesh hslight.ob at position (0,0,0)), on their states. Exported to world space, that toy's plan bounds are x 0.208-0.357 and y 0.217-0.289, centred 0.117 from the drawn housing's middle socket, in front of the drawn housing and reaching the upper-left stoplight inserts that the photographs show it clear of, so it is not used as this bulb's position.",
         "quantity": 1
       },
       "provenance": {
@@ -9656,6 +10154,26 @@
           "manual.williams.high-speed.1986",
           "vpx-script.high-speed-1986",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-43.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.high-speed.1986",
+                "drawing-callouts.high-speed.2026-10-30",
+                "human-review.high-speed-physical-corroboration-2026-10-30"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.19,
+            "y": 0.181
+          }
         ],
         "status": "validated"
       },
@@ -9688,7 +10206,7 @@
       "kind": "lamp",
       "label": "Green Light (Ramp Stoplight)",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 6, return row 4. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Green Light\"; the label here is the Lamps list wording. The three Ramp Stoplight bulbs live in the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), but no playfield coordinate for it can be derived from the retained extraction. UpdateLamps drives this address as NFadeL against a Light object parked at raw x about -2237, far off-table, and the commented-out alternative in the same routine addressed Primitive.stoplight_prim, which sits at position (0,0,0) with an all-zero rot_and_tra and its geometry baked into mesh hslight.ob; deriving that mesh's centroid through the table's own position-plus-size convention puts it at raw y about -499, also off-table. Two independent object families therefore agree the coordinate is absent, so the spatial key is omitted rather than invented. See coverage.missing spatial_placement.",
+        "notes": "Printed lamp-matrix drive column 6, return row 4. The Lamp-Matrix Table prints this insert \"Ramp Stoplight Green Light\"; the label here is the Lamps list wording. One of the three bulbs of the playfield Traffic Light Assembly (B-10921, item 9 of the Playfield Parts list), which stands on its bracket at the upper left, beside the upper-left stoplight target bank. The lamp drawing (printed page 33) draws the assembly's housing there as a four-sided outline and prints 42, 43 and 44 around it, left to right; the switch drawing (printed page 32) draws the same outline unnumbered. The placement is measured on the lamp drawing: the B-10921 assembly drawing (printed page 36) puts the three bulbs in one row across the housing's width, the outer two 0.288 of the width either side of the middle one, and halfway through its depth, and the page's own round inserts and star rollovers map the drawing to the playfield. Physical photographs of a production machine show one box there with three lenses in a row, red, amber and green from left to right, which is the Lamps list's Red (42), Yellow (43) and Green (44) order. The retained table does not model the bulbs: UpdateLamps drives Lights l42-l44 parked off-table at raw x about -2237, and a later routine swaps the image of its stoplight toy, Primitive.stoplight_prim (mesh hslight.ob at position (0,0,0)), on their states. Exported to world space, that toy's plan bounds are x 0.208-0.357 and y 0.217-0.289, centred 0.117 from the drawn housing's middle socket, in front of the drawn housing and reaching the upper-left stoplight inserts that the photographs show it clear of, so it is not used as this bulb's position.",
         "quantity": 1
       },
       "provenance": {
@@ -9696,6 +10214,26 @@
           "manual.williams.high-speed.1986",
           "vpx-script.high-speed-1986",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-44.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.high-speed.1986",
+                "drawing-callouts.high-speed.2026-10-30",
+                "human-review.high-speed-physical-corroboration-2026-10-30"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.228,
+            "y": 0.178
+          }
         ],
         "status": "validated"
       },
@@ -11053,11 +11591,11 @@
           "image": "evidence/excerpts/williams.high-speed.1986/lamp-locations.webp",
           "image_derivation": "high_speed_instruction_manual.pdf page 41, crop box 0.045,0.045,0.92,0.94 of the page, scanned page rendered at its native resolution (embedded image xref 171, 2575px across 8.58in), rendered at 300 dpi, 2232x2954 WebP quality 80",
           "image_sha256": "a0c7a71e6965afd533600eb396c3e779a0f711fdc497e855d17100b98c599457",
-          "locator": "PDF page 41, printed page 33, Lamps list",
+          "locator": "PDF page 41, printed page 33, Lamps list and numbered lamp-locations drawing",
           "method": "manual",
           "path": "evidence/excerpts/williams.high-speed.1986/lamp-locations.md",
           "reviewed": true,
-          "sha256": "e1445fb3a4a43b1a83962f34806288ce2a9449e9970bd56b2b718a045ee2604c",
+          "sha256": "c5a9bfb65eb37832bfaca74de1c439e87b4ca5c615e81780c58df8f4c1eec8bb",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11093,7 +11631,19 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.high-speed.1986/general-illumination.md",
           "reviewed": true,
-          "sha256": "b327cc5d0b93b253866dcb55a90811e8e321008d34fa8967be9502b173d0b74a",
+          "sha256": "9a6fd01460da7082331506f8ac19454fd0833c1dd266036e3a5e9a251b1a177a",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.high-speed.flipper-circuits",
+          "image": "evidence/excerpts/williams.high-speed.1986/flipper-circuits.webp",
+          "image_derivation": "high_speed_instruction_manual.pdf page 80, crop box 0.23,0.455,0.745,0.835 of the page, scanned page rendered at its native resolution (embedded image xref 346, 2563px across 8.54in), rendered at 300 dpi grayscale with pdftoppm 23.05.0, 1320x1258 WebP quality 80",
+          "image_sha256": "5f1744e8389dc0796fe63d21ef094086b23446ba6df203d69a98fc111840ef80",
+          "locator": "PDF page 80, printed page 46, Power Wiring Diagram: the C-9939 flipper power supply and the three flipper circuits through their cabinet buttons to 1P19",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.high-speed.1986/flipper-circuits.md",
+          "reviewed": true,
+          "sha256": "2145cb870c33811c873c5953d11c52dd160d07cb258a512164aa8c5978eb8304",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11105,7 +11655,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.high-speed.1986/boards-and-assemblies.md",
           "reviewed": true,
-          "sha256": "2ef9071abb55a4098ac2406528e649a7e8bcc24568783b33aaef5929b2d6d95e",
+          "sha256": "a46189bf64a4a91f61c3fbfbf89555f5abb7e9de9f5283d041bda093c2156a3f",
           "transcribed_by": "curator, read from the rendered pages"
         },
         {
@@ -11124,7 +11674,7 @@
       "id": "manual.williams.high-speed.1986",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "92-page scan of the Williams High Speed Instruction Manual (title page dated February 24, 1986; inner title page 16-541-101, January 28, 1986) with an Acrobat Paper-Capture OCR text layer. For Sections 1 and 2, printed page = PDF page - 8, verified against the printed footers. The copy is rebound and partly out of order: PDF page 4 is an unpaginated quick-reference foldout carrying both the Switch-Matrix Table and the Lamp-Matrix Table; PDF 34 repeats the Switch-Matrix Table at printed page 26; PDF 33 is the Solenoid Table at printed page 25; PDF 40/41/42 are the Switches, Lamps and Solenoids/Flashers parts lists at printed 32/33/34; PDF 43-47 are the mechanism assembly pages at printed 35-39; PDF 49 is the Master Display Board at printed 41; PDF 55-58 are the four-page Amendments sheet in reverse order (PDF 58 is Amendment Page 1); PDF 59 duplicates the Solenoid Table beside the ROM Summary; PDF 81 is the Power Wiring Diagram at printed page 47.",
+      "locator": "92-page scan of the Williams High Speed Instruction Manual (title page dated February 24, 1986; inner title page 16-541-101, January 28, 1986) with an Acrobat Paper-Capture OCR text layer. For Sections 1 and 2, printed page = PDF page - 8, verified against the printed footers. The copy is rebound and partly out of order: PDF page 4 is an unpaginated quick-reference foldout carrying both the Switch-Matrix Table and the Lamp-Matrix Table; PDF 34 repeats the Switch-Matrix Table at printed page 26; PDF 33 is the Solenoid Table at printed page 25; PDF 40/41/42 are the Switches, Lamps and Solenoids/Flashers parts lists at printed 32/33/34; PDF 43-47 are the mechanism assembly pages at printed 35-39; PDF 49 is the Master Display Board at printed 41; PDF 55-58 are the four-page Amendments sheet in reverse order (PDF 58 is Amendment Page 1); PDF 59 duplicates the Solenoid Table beside the ROM Summary; PDF 80 and 81 are the two halves of the Power Wiring Diagram at printed pages 46 and 47.",
       "original_filename": "high_speed_instruction_manual.pdf",
       "rights": "NOASSERTION",
       "sha256": "4aa21267d2edf016c2450f35e23b01eea74ff07e25b4b9a9d9c472f5c9e8c1dd",
@@ -11139,6 +11689,37 @@
       "revision": "2026-08-08",
       "sha256": "7ec30ad943a45cf4407cc0ce6001c6dad1b6f5eaf28c7420f349cd531551aa98",
       "uri": "external:pinmame-review-artifacts/high-speed-1986/manual-transcription.md"
+    },
+    {
+      "attribution": "Williams Electronics, Inc. drawings; pinmame-game-defs curation",
+      "id": "drawing-callouts.high-speed.2026-10-30",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "2026-10-30 measurement of the three Ramp Stoplight sockets on the manual's lamp drawing (printed page 33, the committed excerpt crop lamp-locations.webp). The page's control fit maps drawing pixels to the playfield over 19 crisp features with validated table placements: the round inserts of lamps 3, 4, 5, 9 (both lanes), 13-15, 17-19, 31-35 and 41 and the star rollovers 51 and 52, worst leave-one-out offset 0.0063 normalized. The seed's measurements section pins the drawing pixel of each socket, placed across the drawn Traffic Light Assembly housing at the B-10921 assembly drawing's bulb spacing, and the coordinate the control fit gives it; each lies inside the convex hull of the page's controls (tools/drawing_callouts.py). The page checks no other placement. Fits, the housing measurement and its overlay are retained under the working root's review-artifacts/high-speed-1986/callout-check with a pinned manifest.",
+      "sha256": "17d201cbe65f718d728023e6c9574998504cf84ae37621ca022f5063a8a3e223",
+      "uri": "internal:tools/seeds/williams/high-speed-1986-callouts.json"
+    },
+    {
+      "attribution": "the photographer (photographs); Williams Electronics, Inc. (machine artwork); pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.high-speed.physical-photo-corroboration",
+          "locator": "What each retained photograph shows of the Ramp Stoplight's box, lenses and position",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.high-speed.1986/physical-photo-corroboration.md",
+          "reviewed": true,
+          "sha256": "a6eb72926cdeb98af9954c581cc12d510876273a06739fd4267fbc23915c274b",
+          "transcribed_by": "curator, from the retained photographs"
+        }
+      ],
+      "id": "human-review.high-speed-physical-corroboration-2026-10-30",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained physical photographs of one production High Speed from a private owner's photo page, pinned by the folder's canonical manifest. They corroborate the identity, count and order of the Ramp Stoplight bulbs whose coordinates this definition measures on the lamp drawing; they supply no coordinate.",
+      "revision": "2026-10-30",
+      "rights": "NOASSERTION",
+      "sha256": "aef01aca68c2676434a0532f01b999f768e0b77946b592a2a6c4b42b22a7fe8d",
+      "uri": "external:pinmame-review-artifacts/high-speed-1986/physical-photos/manifest.json"
     },
     {
       "attribution": "32assassin",
