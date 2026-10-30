@@ -1,0 +1,25 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "ss_15",
+  "notes": "Prove the public polarity of the Scared Stiff Fliptronic cabinet flipper-button optos (public 112 lower right, 114 lower left) on GEN_WPC95. Direct switch writes only, so PinMAME keyboard handling, the flipper-key path, and the built-in simulator stay off. Four balls are presented on the normalized trough optos (public 32-35), the fresh-NVRAM notice is cleared with one service Escape, the coin door is closed, credits are added through coin switch 1 and a game is started; once the trough eject (public solenoid 9) proves a game is running, each button address is held at public level 1 and then released while the lower flipper outputs 45-48 are recorded. The driver declares FLIP_SOL(FLIP_L), so 45-48 carry the ROM's own Fliptronic flipper-coil writes rather than PinMAME's synthetic button-derived states. This scenario proves emulator-facing polarity and causality only, not physical opto construction or coil force.",
+  "initial_switches": [
+    {"switch": 32, "state": 1},
+    {"switch": 33, "state": 1},
+    {"switch": 34, "state": 1},
+    {"switch": 35, "state": 1}
+  ],
+  "watch_switches": [13, 22, 32, 111, 112, 113, 114],
+  "actions": [
+    {"type": "wait", "seconds": 12.0, "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages"},
+    {"type": "pulse", "switch": 5, "hold_ms": 200, "settle_s": 20.0, "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts into attract mode"},
+    {"type": "set_switch", "switch": 22, "state": 1, "settle_s": 2.0, "label": "close the coin door"},
+    {"type": "pulse", "switch": 1, "hold_ms": 100, "settle_s": 1.0, "label": "coin 1"},
+    {"type": "pulse", "switch": 1, "hold_ms": 100, "settle_s": 1.0, "label": "coin 2"},
+    {"type": "pulse_until_output", "switch": 13, "channel": "solenoid", "addresses": [9], "max_pulses": 3, "hold_ms": 150, "settle_s": 4.0, "label": "start a game and observe the trough eject"},
+    {"type": "set_switch", "switch": 112, "state": 1, "settle_s": 1.0, "label": "hold the lower right flipper button at public 1"},
+    {"type": "set_switch", "switch": 112, "state": 0, "settle_s": 1.0, "label": "release the lower right flipper button to public 0"},
+    {"type": "set_switch", "switch": 114, "state": 1, "settle_s": 1.0, "label": "hold the lower left flipper button at public 1"},
+    {"type": "set_switch", "switch": 114, "state": 0, "settle_s": 1.0, "label": "release the lower left flipper button to public 0"}
+  ]
+}

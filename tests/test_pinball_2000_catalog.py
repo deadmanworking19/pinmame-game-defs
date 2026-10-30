@@ -73,12 +73,14 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# the unrelated new roots and unclaimed conversion variants remain explicit residual stubs.
 		# Dr. Dude's factory WPC hardware batch is a separate partial physical-machine record.
 		# Wild Texas is a separate physical conversion rather than Firepower II firmware.
+		# The Scared Stiff promotion moves one partial to author_ready and splits the D.01R
+		# prototype drivers into a partial record of their own.
 		self.assertEqual(
 			{
-				"author_ready_count": 42,
+				"author_ready_count": 43,
 				"driver_count": 2981,
-				"game_count": 812,
-				"machine_count": 835,
+				"game_count": 813,
+				"machine_count": 836,
 				"non_game_count": 23,
 				"partial_count": 767,
 				"root_driver_count": 819,

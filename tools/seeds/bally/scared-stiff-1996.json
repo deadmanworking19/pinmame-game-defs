@@ -1,16 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Pinned ss.c declares core_tGameData.hw.lampCol = 2, publishing two driver-side auxiliary lamp columns beyond the standard 8x8 matrix at public addresses 91-98 and 101-108, driven through a pair of HC4094 serial shift registers that ss.c's own ss_wpc_w handler clocks from solenoids 37/38 (WPC_SOLENOID1 bit5/bit4 for data/clock, WPC_SOLENOID3 bit3 for strobe/output-enable). The driver's own source comment says the matching '16 LED Skull driver board assembly A-20781' belongs only to a 'Prototype 0.1' and 'was not kept in production build'. The retained production manual (part 16-50048-101, September 1996 FINAL, 1.5 ROM) disagrees: its Solenoid/Flasher Table still prints solenoids 37 ('AUX LAMP CLOCK') and 38 ('AUX LAMP DATA') with real J110-1/J110-3 connectors and Brn-Wht/Org-Wht wire colors, not NOT USED, and its Lower Playfield Parts page still lists item 6, 'A-21287-1 16-LED Skull Driver PCB Assy.', with no not-shown or deleted annotation. Neither source is preferred by fiat: the driver comment is not self-verifying (a stale driver comment or macro name is not automatically correct, the same lesson Star Trek: The Next Generation's CORE_CUSTSWNO/CORE_CUSTSOLNO comments already established), but the retained known-working VPX table also implements no Light object at any of these sixteen addresses (confirmed by an exhaustive name sweep of the extraction), and the sixteen-lamp 'Web Award' ring the board's own name suggests is already fully and exactly accounted for on the ordinary 8x8 matrix (addresses 64-68, 71-78, and 81-83), leaving no obvious sixteen-lamp gap for a second board to fill. Resolution path: a LibPinMAME gameplay-harness trace against a legal ss_15 ROM driving solenoids 37/38 and reading lamp addresses 91-98/101-108 directly, or an unrestored machine's own J110 harness photograph/continuity check. Unresolved.",
-      "id": "conflict.aux-lamp-column-fitment",
-      "path": "outputs[binding.device=91,92,93,94,95,96,97,98,101,102,103,104,105,106,107,108]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "manual.bally.scared-stiff.1996",
-        "vpx-script.ss-vpw-1-0"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x80",
     "inversion_applied_by_emulator": true,
@@ -23,16 +12,12 @@
       "mechanisms": "validated",
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
-      "semantic_naming": "conflicted",
-      "spatial_placement": "candidate",
+      "semantic_naming": "validated",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "output_semantics",
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -119,27 +104,7 @@
       "id": "ss_03",
       "manufacturer": "Bally",
       "physical_compatibility": "identical",
-      "variant_notes": "Bally 0.3 prototype game ROM for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged.",
-      "year": "1996"
-    },
-    {
-      "clone_of": "ss_15",
-      "description": "Scared Stiff (D.01R Prototype, Sound 0.25)",
-      "flags": 0,
-      "id": "ss_01",
-      "manufacturer": "Bally",
-      "physical_compatibility": "identical",
-      "variant_notes": "Bally D.01R prototype game ROM (Sound 0.25) for the same physical machine.",
-      "year": "1996"
-    },
-    {
-      "clone_of": "ss_15",
-      "description": "Scared Stiff (D.01R Prototype Coin Play, Sound 0.25)",
-      "flags": 0,
-      "id": "ss_01b",
-      "manufacturer": "Bally",
-      "physical_compatibility": "identical",
-      "variant_notes": "Bally D.01R prototype coin-play game ROM (Sound 0.25) for the same physical machine as ss_01.",
+      "variant_notes": "Bally 0.3 prototype game ROM for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. In the retained auxiliary lamp probe it, like the 1.2, 1.4 and 1.5 ROMs, never drives the auxiliary lamp columns 91-108 or their clock and data lines 37/38, so it expects no 16-LED Skull Driver PCB.",
       "year": "1996"
     }
   ],
@@ -644,7 +609,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.spider-wheel.index"
+        "cabinet.backbox-toy.spider-wheel-index"
       ],
       "spatial": {
         "provenance": {
@@ -4027,18 +3992,19 @@
       "id": "switch.generic-112",
       "kind": "switch",
       "label": "Lower Right Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F2. The matrix-page wiring is drawn as a plain (non-opto) end-of-stroke leaf for the EOS position and a printed opto for the button position.",
+        "notes": "Printed Fliptronic grounded switch F2. The matrix-page wiring is drawn as a plain (non-opto) end-of-stroke leaf for the EOS position and a printed opto for the button position. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix), and the ROM treats public 1 as the pressed button: in the retained flipper-button polarity run on ss_15 a write of 1 during a game pulses Lower Right Flipper Power (45) and holds Lower Right Flipper Hold (46) until the write of 0. The contact the matrix sees is therefore open at rest, so normally_closed is false; the A-17316 opto construction does not change that.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.scared-stiff.1996",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.scared-stiff.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -4133,18 +4099,19 @@
       "id": "switch.generic-114",
       "kind": "switch",
       "label": "Lower Left Flipper Button",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "assembly_part_number": "A-17316",
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F4. The matrix-page wiring is drawn as a plain (non-opto) end-of-stroke leaf for the EOS position and a printed opto for the button position.",
+        "notes": "Printed Fliptronic grounded switch F4. The matrix-page wiring is drawn as a plain (non-opto) end-of-stroke leaf for the EOS position and a printed opto for the button position. WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix), and the ROM treats public 1 as the pressed button: in the retained flipper-button polarity run on ss_15 a write of 1 during a game pulses Lower Left Flipper Power (47) and holds Lower Left Flipper Hold (48) until the write of 0. The contact the matrix sees is therefore open at rest, so normally_closed is false; the A-17316 opto construction does not change that.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.bally.scared-stiff.1996",
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.scared-stiff.flipper-button-polarity"
         ],
         "status": "validated"
       },
@@ -4694,7 +4661,7 @@
   ],
   "knowledge": {
     "path": "knowledge/bally/scared-stiff-1996.md",
-    "status": "partial"
+    "status": "complete"
   },
   "machine": {
     "id": "bally.scared-stiff.1996",
@@ -7055,7 +7022,7 @@
           "value": "37"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 37,
         "group": "pinmame.output.solenoid"
@@ -7064,28 +7031,30 @@
       "kind": "control_signal",
       "label": "Aux Lamp Clock",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 37 (Low Power Device Controls). Serial clock/data line for a pair of HC4094 shift registers (ss.c's ss_wpc_w intercepts WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for strobe/output-enable) that feed the driver-declared auxiliary lamp columns (public 91-98, 101-108); it is a data signal, not a discrete mechanical actuator, so it has no playfield placement of its own. See conflict.aux-lamp-column-fitment for the unresolved fitment of the lamps it drives.",
-        "part_number": "A-20781"
+        "notes": "Printed solenoid/flasher table entry 37 (Low Power Device Controls). Serial clock/data line for the pair of HC4094 shift registers on the 16-LED Skull Driver PCB (ss.c's ss_wpc_w intercepts WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for strobe/output-enable), which fed the driver-declared auxiliary lamp columns (public 91-98, 101-108). The printed table still names the line, its J110 connector and wire colour, and prints the board's part A-20781 in its part column, but no load is fitted on a production machine: Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25), and pinned ss.c says the A-20781 board of 'Prototype 0.1' 'was not kept in production build'. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never toggle this line, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, clock it from attract mode on; whatever a ROM publishes here is that board's serial protocol, and nothing on a production machine receives it."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.scared-stiff.1996",
-          "pinmame.core.4ec52ff0ac13"
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.scared-stiff.aux-lamp-probe"
         ],
         "status": "validated"
       },
       "roles": [
-        "internal.backbox-mechanism"
+        "internal.unused.skull-driver-line"
       ],
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual.bally.scared-stiff.1996",
-            "vpx-script.ss-vpw-1-0"
+            "manufacturer-notes.bally.scared-stiff.1996",
+            "pinmame.core.4ec52ff0ac13"
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "unused",
         "status": "not_applicable"
       },
       "wiring": {
@@ -7105,7 +7074,7 @@
           "value": "38"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 38,
         "group": "pinmame.output.solenoid"
@@ -7114,28 +7083,30 @@
       "kind": "control_signal",
       "label": "Aux Lamp Data",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 38 (Low Power Device Controls). Serial clock/data line for a pair of HC4094 shift registers (ss.c's ss_wpc_w intercepts WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for strobe/output-enable) that feed the driver-declared auxiliary lamp columns (public 91-98, 101-108); it is a data signal, not a discrete mechanical actuator, so it has no playfield placement of its own. See conflict.aux-lamp-column-fitment for the unresolved fitment of the lamps it drives.",
-        "part_number": "A-20781"
+        "notes": "Printed solenoid/flasher table entry 38 (Low Power Device Controls). Serial clock/data line for the pair of HC4094 shift registers on the 16-LED Skull Driver PCB (ss.c's ss_wpc_w intercepts WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for strobe/output-enable), which fed the driver-declared auxiliary lamp columns (public 91-98, 101-108). The printed table still names the line, its J110 connector and wire colour, and prints the board's part A-20781 in its part column, but no load is fitted on a production machine: Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25), and pinned ss.c says the A-20781 board of 'Prototype 0.1' 'was not kept in production build'. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never toggle this line, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, clock it from attract mode on; whatever a ROM publishes here is that board's serial protocol, and nothing on a production machine receives it."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.scared-stiff.1996",
-          "pinmame.core.4ec52ff0ac13"
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.scared-stiff.aux-lamp-probe"
         ],
         "status": "validated"
       },
       "roles": [
-        "internal.backbox-mechanism"
+        "internal.unused.skull-driver-line"
       ],
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual.bally.scared-stiff.1996",
-            "vpx-script.ss-vpw-1-0"
+            "manufacturer-notes.bally.scared-stiff.1996",
+            "pinmame.core.4ec52ff0ac13"
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "unused",
         "status": "not_applicable"
       },
       "wiring": {
@@ -7176,7 +7147,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.backbox-mechanism"
+        "cabinet.backbox-toy"
       ],
       "spatial": {
         "provenance": {
@@ -7227,7 +7198,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.backbox-mechanism"
+        "cabinet.backbox-toy"
       ],
       "spatial": {
         "provenance": {
@@ -7257,7 +7228,7 @@
           "value": "41"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 41,
         "group": "pinmame.output.solenoid"
@@ -7266,12 +7237,14 @@
       "kind": "virtual",
       "label": "Aux Lamp Clock LPDC Mirror",
       "physical": {
-        "notes": "PinMAME's backward-compatibility mirror of LPDC output 37 (Aux Lamp Clock). It reports the same physical shift-register clock line and is not an additional device."
+        "notes": "PinMAME's backward-compatibility mirror of LPDC output 37 (Aux Lamp Clock). It reports the same shift-register clock line, which has no fitted load on a production machine, and is not an additional device. The production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype leave it at zero in the retained auxiliary lamp probe; only the D.01R prototype ROMs toggle it."
       },
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "runtime.scared-stiff.aux-lamp-probe"
         ],
         "status": "validated"
       },
@@ -7300,7 +7273,7 @@
           "value": "42"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 42,
         "group": "pinmame.output.solenoid"
@@ -7314,7 +7287,9 @@
       "provenance": {
         "source_refs": [
           "controller-profile.pinmame-wpc-95",
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "runtime.scared-stiff.aux-lamp-probe"
         ],
         "status": "validated"
       },
@@ -11375,24 +11350,42 @@
           "value": "91"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 91,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-91",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 1",
+      "label": "Not Fitted Skull Driver Column 9 Position 1",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11402,24 +11395,42 @@
           "value": "92"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 92,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-92",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 2",
+      "label": "Not Fitted Skull Driver Column 9 Position 2",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11429,24 +11440,42 @@
           "value": "93"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 93,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-93",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 3",
+      "label": "Not Fitted Skull Driver Column 9 Position 3",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11456,24 +11485,42 @@
           "value": "94"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 94,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-94",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 4",
+      "label": "Not Fitted Skull Driver Column 9 Position 4",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11483,24 +11530,42 @@
           "value": "95"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 95,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-95",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 5",
+      "label": "Not Fitted Skull Driver Column 9 Position 5",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11510,24 +11575,42 @@
           "value": "96"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 96,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-96",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 6",
+      "label": "Not Fitted Skull Driver Column 9 Position 6",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11537,24 +11620,42 @@
           "value": "97"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 97,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-97",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 7",
+      "label": "Not Fitted Skull Driver Column 9 Position 7",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11564,24 +11665,42 @@
           "value": "98"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 98,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-98",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 9 Position 8",
+      "label": "Not Fitted Skull Driver Column 9 Position 8",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11591,24 +11710,42 @@
           "value": "101"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 101,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-101",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 1",
+      "label": "Not Fitted Skull Driver Column 10 Position 1",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11618,24 +11755,42 @@
           "value": "102"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 102,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-102",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 2",
+      "label": "Not Fitted Skull Driver Column 10 Position 2",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11645,24 +11800,42 @@
           "value": "103"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 103,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-103",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 3",
+      "label": "Not Fitted Skull Driver Column 10 Position 3",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11672,24 +11845,42 @@
           "value": "104"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 104,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-104",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 4",
+      "label": "Not Fitted Skull Driver Column 10 Position 4",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11699,24 +11890,42 @@
           "value": "105"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 105,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-105",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 5",
+      "label": "Not Fitted Skull Driver Column 10 Position 5",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11726,24 +11935,42 @@
           "value": "106"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 106,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-106",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 6",
+      "label": "Not Fitted Skull Driver Column 10 Position 6",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11753,24 +11980,42 @@
           "value": "107"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 107,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-107",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 7",
+      "label": "Not Fitted Skull Driver Column 10 Position 7",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -11780,24 +12025,42 @@
           "value": "108"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 108,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.aux-108",
       "kind": "lamp",
-      "label": "Unresolved Auxiliary Lamp Column 10 Position 8",
+      "label": "Not Fitted Skull Driver Column 10 Position 8",
       "physical": {
-        "notes": "ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept in the production build', but the retained production manual (16-50048-101, Sept. 1996) still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The retained VPX table implements no Light object at this address (confirmed by an exhaustive name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See conflict.aux-lamp-column-fitment; unresolved."
+        "location": "not installed",
+        "notes": "ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', published beyond the standard 8x8 matrix and fed through the HC4094 shift registers clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board assembly A-20781 which was not kept in production build'. Midway's own 1996 development notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual (16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, 'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints 37/38; owners of physical machines do not recognise the board. No load is fitted at this address on a production machine. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). Which of the board's outputs lit which skull eye is not recorded anywhere retained."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "manual.bally.scared-stiff.1996",
+          "manufacturer-notes.bally.scared-stiff.1996",
+          "owner-reports.bally.scared-stiff.1996.skull-driver",
+          "runtime.scared-stiff.aux-lamp-probe",
           "vpx-script.ss-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "internal.unused.skull-driver-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manufacturer-notes.bally.scared-stiff.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -12631,6 +12894,15 @@
           "reviewed": true,
           "sha256": "36f653c442f9b77202985f3520b9d00b2b415216707e5566b49af1df9a6c1c64",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.scared-stiff.lower-playfield-parts",
+          "locator": "PDF page 105, printed 2-40, Lower Playfield Parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/lower-playfield-parts.md",
+          "reviewed": true,
+          "sha256": "bbd31b1493049d444d64f62cf543c44e40df33444cca00671697456aa107baf6",
+          "transcribed_by": "curator, read from a 250 dpi render of the page"
         }
       ],
       "id": "manual.bally.scared-stiff.1996",
@@ -12682,6 +12954,91 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 8cf07f3cef5678fdac96b27b0974a2c8653a7070ed69ea364ca5ebffd386756d; 2302 files, 937624764 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=952.941 bottom=2164.706.",
       "uri": "external:pinmame-vpx-sources/bally/scared-stiff-1996/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Midway Manufacturing Company; capture hosted by the Internet Archive",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.development-notes-pile-o-skulls",
+          "locator": "dev.htm sections 'Pile-o-Skulls' and the first sentence of 'Break the Deadheads'",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/development-notes-pile-o-skulls.md",
+          "reviewed": true,
+          "sha256": "68180df22da2f675e02969eaeabd4eacdc6d452ce50a0c76b42f85ab0d2e3609",
+          "transcribed_by": "curator, quoted from the retained capture"
+        }
+      ],
+      "id": "manufacturer-notes.bally.scared-stiff.1996",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Midway Manufacturing Company's Scared Stiff development page 'So just how did we get Scared Stiff anyway?' (games/stiff/dev.htm on www.pinball.wms.com, header date 02/Oct/1996), Internet Archive capture of 1997-01-29, sections 'Pile-o-Skulls' and 'Break the Deadheads'. The capture, its leds.gif illustration and a later planetarypinball.com mirror of the same text are retained under external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/, pinned by that directory's external evidence manifest (SHA-256 292cedb949dc7898378f3573d6c8ce028592d5b02561a56fbe835908a0c6bde4).",
+      "revision": "19970129085638",
+      "rights": "NOASSERTION",
+      "sha256": "29b617dd43df7139cabc9c01966d1fc44219d3cb705dc2f0d1ba4b1cd990d182",
+      "uri": "https://web.archive.org/web/19970129085638id_/http://www.pinball.wms.com:80/games/stiff/dev.htm"
+    },
+    {
+      "attribution": "Pinside forum members GKW and Jrotten",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.skull-driver-owner-reports",
+          "locator": "page 82, posts #4053-#4056",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/skull-driver-owner-reports.md",
+          "reviewed": true,
+          "sha256": "9418b6cbb3553ece4ae99fd6a91b766198b590b3cfd8bc63f5863d57cba93550",
+          "transcribed_by": "curator, quoted from the retained page"
+        }
+      ],
+      "id": "owner-reports.bally.scared-stiff.1996.skull-driver",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Pinside topic 'SCARED STIFF Club...Members Only', page 82, posts #4053-#4056 (post IDs 7417309, 7417397, 7420019, 7420213). The rendered page is retained under external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/, pinned by the same manifest. Owner forum posts: leads that corroborate the manufacturer's notes, never authority.",
+      "revision": "2026-10-30",
+      "rights": "NOASSERTION",
+      "sha256": "355ef47b79c3a18322d15e8a04218d6acd0b52083bf076810750151cea71810b",
+      "uri": "https://pinside.com/pinball/forum/topic/scared-stiff-clubmembers-only/page/82"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.aux-lamp-probe",
+          "locator": "run.json output-change events for lamps 91-98/101-108 and solenoids 37/38/41/42, all six runs",
+          "method": "mixed",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/aux-lamp-probe.md",
+          "reviewed": true,
+          "sha256": "b55bef9523834eaf8265e9e4f913c3b4e8046b39dcc456fba0b2e51657ab0215",
+          "transcribed_by": "curator; counts computed by script from the retained run.json files, reading written by hand"
+        }
+      ],
+      "id": "runtime.scared-stiff.aux-lamp-probe",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Six LibPinMAME harness runs, one per locally held ROM (ss_15, ss_14, ss_12, ss_03, ss_01, ss_01b), each from a new, empty state directory with the committed scenario tools/harness-scenarios/wpc-95/ss-aux-lamp-probe.json and --handle-mechanics 1: attract mode, a started game and six skull-lane rolls, recording auxiliary lamp addresses 91-98 and 101-108 and solenoids 37, 38, 41 and 42. pinmame64.dll SHA-256 8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5 built from the pinned revision. Each run directory <driver>-aux-lamp-probe/ is pinned by its own external evidence manifest; the excerpt lists every run.json and manifest digest. ss_11 and ss_11s10 are not in the local ROM library.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "external:pinmame-runtime-evidence/scared-stiff-1996/"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.flipper-button-polarity",
+          "locator": "run.json events for switches 112/114 and solenoids 9 and 45-48",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/flipper-button-polarity.md",
+          "reviewed": true,
+          "sha256": "8ead4b070e346c208333e09e56038d6d4fa6a28204683abc9bf14b7aa8f83e8e",
+          "transcribed_by": "curator, event rows read from the retained run.json"
+        }
+      ],
+      "id": "runtime.scared-stiff.flipper-button-polarity",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "LibPinMAME harness run of ss_15 from a new, empty state directory with the committed scenario tools/harness-scenarios/wpc-95/ss-flipper-button-polarity.json and --handle-mechanics 1: one service Escape, coin door closed, two coins, Start until the trough eject (solenoid 9) fires, then public 112 and 114 each written 1 and back to 0 by direct switch writes. pinmame64.dll SHA-256 8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5 built from the pinned revision. The run directory is pinned by its own external evidence manifest. It proves emulator-facing polarity and causality only.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "38f3fe6a7bfa5eb1dbf2c207497e82536e3f344519524bfacaca58f971c91cca",
+      "uri": "external:pinmame-runtime-evidence/scared-stiff-1996/ss_15-flipper-button-polarity/run.json"
     }
   ]
 }

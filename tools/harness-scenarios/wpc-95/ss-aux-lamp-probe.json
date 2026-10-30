@@ -1,0 +1,27 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Scared Stiff auxiliary lamp probe. Boot from an empty NVRAM with four balls in the trough (public 32-35), press service Escape once to leave the fresh-NVRAM FACTORY SETTINGS RESTORED / BOOKKEEPING TOTALS CLEARED loop, observe attract mode for 120 s, close the coin door, insert two coins and press Start, then roll each skull lane (public 71-73) twice. Midway's 1996 development notes say the prototype lit a pair of skull eyes when a skull lane was rolled, so the run records whether the driver-declared auxiliary lamp addresses 91-98 and 101-108 and their shift-register drive lines 37/38 (mirrors 41/42) change. Run it unchanged on the production and prototype drivers and compare. A transition proves only that the ROM wrote the address; silence on one driver proves nothing about the physical machine on its own.",
+  "initial_switches": [
+    {"switch": 32, "state": 1},
+    {"switch": 33, "state": 1},
+    {"switch": 34, "state": 1},
+    {"switch": 35, "state": 1}
+  ],
+  "actions": [
+    {"type": "wait", "seconds": 12.0, "label": "boot stabilization; a fresh NVRAM shows the factory-settings and bookkeeping messages"},
+    {"type": "pulse", "switch": 5, "hold_ms": 200, "settle_s": 20.0, "label": "service Escape leaves the fresh-NVRAM message loop; the ROM restarts into attract mode"},
+    {"type": "wait", "seconds": 120.0, "label": "observe attract mode"},
+    {"type": "set_switch", "switch": 22, "state": 1, "settle_s": 2.0, "label": "close the coin door"},
+    {"type": "pulse", "switch": 1, "hold_ms": 100, "settle_s": 1.0, "label": "coin 1"},
+    {"type": "pulse", "switch": 1, "hold_ms": 100, "settle_s": 1.0, "label": "coin 2"},
+    {"type": "pulse", "switch": 13, "hold_ms": 150, "settle_s": 8.0, "label": "Start: begin a game"},
+    {"type": "pulse", "switch": 71, "hold_ms": 60, "settle_s": 4.0, "label": "roll the left skull lane"},
+    {"type": "pulse", "switch": 72, "hold_ms": 60, "settle_s": 4.0, "label": "roll the center skull lane"},
+    {"type": "pulse", "switch": 73, "hold_ms": 60, "settle_s": 4.0, "label": "roll the right skull lane"},
+    {"type": "pulse", "switch": 71, "hold_ms": 60, "settle_s": 4.0, "label": "roll the left skull lane again"},
+    {"type": "pulse", "switch": 72, "hold_ms": 60, "settle_s": 4.0, "label": "roll the center skull lane again"},
+    {"type": "pulse", "switch": 73, "hold_ms": 60, "settle_s": 4.0, "label": "roll the right skull lane again"},
+    {"type": "wait", "seconds": 30.0, "label": "observe the game after the skull lanes"}
+  ]
+}

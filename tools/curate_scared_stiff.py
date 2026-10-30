@@ -4,7 +4,9 @@ The builder is side-effect free and deterministic: it embeds every reviewed
 label, wiring detail, and normalized coordinate as a literal, so regeneration
 reproduces the canonical artifact byte-for-byte without reading the external
 evidence roots. ``--check`` refuses drift, and ``--regenerate`` is the only
-path that writes the canonical definition and its pinned seed.
+path that writes the canonical definition and its pinned seed. It also writes
+the partial record for the D.01R prototype, whose ROMs drive a board that
+production machines do not carry.
 """
 
 from __future__ import annotations
@@ -20,14 +22,17 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# Kept partial 2026-08-07: sixteen driver-declared auxiliary lamp addresses (91-98, 101-108)
-# have no resolvable semantic identity or spatial placement (conflict.aux-lamp-column-fitment),
-# so the record cannot honestly promote past machines/partial.
+# Promoted 2026-10-30: the sixteen driver-declared auxiliary lamp addresses (91-98, 101-108)
+# belong to the prototype-only 16-LED Skull Driver PCB, which Midway's own development notes say
+# was removed for cost, so production machines leave them unused. The D.01R prototype ROMs that
+# still drive that board moved to their own record.
 PARTIAL_PATH = ROOT / "machines/partial/bally/scared-stiff-1996.json"
-DEFINITION_PATH = PARTIAL_PATH
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/scared-stiff-1996.json"
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/bally/scared-stiff-1996.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/scared-stiff-1996.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/bally/scared-stiff-1996.md"
+PROTOTYPE_PATH = ROOT / "machines/partial/bally/scared-stiff-d01r-prototype-1996.json"
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
@@ -38,6 +43,20 @@ MANUAL_SUPPORT_SOURCE = "manual-support.bally.scared-stiff.1996"
 VPX_TABLE_SOURCE = "vpx-table.ss-vpw-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.ss-vpw-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.ss-vpw-1-0"
+DEV_NOTES_SOURCE = "manufacturer-notes.bally.scared-stiff.1996"
+OWNER_REPORTS_SOURCE = "owner-reports.bally.scared-stiff.1996.skull-driver"
+AUX_PROBE_SOURCE = "runtime.scared-stiff.aux-lamp-probe"
+FLIPPER_PROBE_SOURCE = "runtime.scared-stiff.flipper-button-polarity"
+
+# Harness runs were made with a library built from the current pinned PinMAME revision; the
+# driver data they exercise (ss.c, the WPC-95 flipper-column read) is unchanged since the
+# revision the rest of this definition cites.
+RUNTIME_PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+RUNTIME_LIBRARY_SHA256 = "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+AUX_LAMP_SOURCES_MANIFEST_SHA256 = "292cedb949dc7898378f3573d6c8ce028592d5b02561a56fbe835908a0c6bde4"
+DEV_NOTES_CAPTURE_SHA256 = "29b617dd43df7139cabc9c01966d1fc44219d3cb705dc2f0d1ba4b1cd990d182"
+OWNER_REPORTS_PAGE_SHA256 = "355ef47b79c3a18322d15e8a04218d6acd0b52083bf076810750151cea71810b"
+FLIPPER_PROBE_RUN_SHA256 = "38f3fe6a7bfa5eb1dbf2c207497e82536e3f344519524bfacaca58f971c91cca"
 
 TABLE_SHA256 = "bede6f6c5b7592c4610af444a196c42432949468f708e79b4b112a73692cdc1e"
 SCRIPT_SHA256 = "4c9a63e77e10ea65d1146e33f81197bb41b719d70027d8fa0c2d258f823211b4"
@@ -54,16 +73,21 @@ PLAYFIELD_WIDTH = 952.941
 PLAYFIELD_HEIGHT = 2164.706
 TABLE_BOUNDS = f"left=0 top=0 right={PLAYFIELD_WIDTH} bottom={PLAYFIELD_HEIGHT}"
 
-DRIVER_IDS = ("ss_15", "ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03", "ss_01", "ss_01b")
+DRIVER_IDS = ("ss_15", "ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03")
 DRIVER_COMPATIBILITY = {
 	"ss_15": ("identical", "Bally 1.5 game ROM shipped with the physical machine. This is the driver the retained known-working VPW table binds to (Const cGameName = \"SS_15\")."),
 	"ss_14": ("identical", "Bally 1.4 game ROM; a firmware revision of the same physical machine with no controller-address or playfield change."),
 	"ss_12": ("identical", "Bally 1.2 game ROM; a firmware revision of the same physical machine with no controller-address or playfield change."),
 	"ss_11": ("identical", "Bally 1.1 game ROM; a firmware revision of the same physical machine with no controller-address or playfield change."),
 	"ss_11s10": ("identical", "Bally 1.1 game ROM paired with the earlier 1.0 sound ROM set; same physical machine and controller addresses as ss_11."),
-	"ss_03": ("identical", "Bally 0.3 prototype game ROM for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged."),
-	"ss_01": ("identical", "Bally D.01R prototype game ROM (Sound 0.25) for the same physical machine."),
-	"ss_01b": ("identical", "Bally D.01R prototype coin-play game ROM (Sound 0.25) for the same physical machine as ss_01."),
+	"ss_03": ("identical", "Bally 0.3 prototype game ROM for the same physical machine; the switch matrix, lamp matrix, solenoid/flasher table, and playfield hardware are unchanged. In the retained auxiliary lamp probe it, like the 1.2, 1.4 and 1.5 ROMs, never drives the auxiliary lamp columns 91-108 or their clock and data lines 37/38, so it expects no 16-LED Skull Driver PCB."),
+}
+# The D.01R prototype ROMs clock the 16-LED Skull Driver PCB that production machines do not
+# carry, so they need hardware this machine lacks and belong to their own prototype record.
+PROTOTYPE_DRIVER_IDS = ("ss_01", "ss_01b")
+PROTOTYPE_DRIVER_COMPATIBILITY = {
+	"ss_01": ("identical", "Bally D.01R prototype game ROM (Sound 0.25). In the retained auxiliary lamp probe it drives all sixteen auxiliary lamp addresses 91-98 and 101-108 through the 16-LED Skull Driver PCB's shift registers, clocking solenoids 37 and 38 from attract mode on."),
+	"ss_01b": ("identical", "Bally D.01R prototype coin-play game ROM (Sound 0.25), the coin-play build of ss_01. In the retained auxiliary lamp probe it drives the same sixteen auxiliary lamp addresses and clock and data lines as ss_01."),
 }
 
 # --- Printed switch matrix (manual page 2-44 locations, 2-44/2-45 wiring; PDF pages 109-110).
@@ -356,8 +380,11 @@ LAMP_ROW_WIRING = {
 	7: ("Red-Violet", "J125-8", "Q101"), 8: ("Red-Gray", "J125-9", "Q105"),
 }
 # ss.c declares hw.lampCol = 2 (two auxiliary lamp columns, public 91-98 and 101-108), driven by
-# a pair of HC4094 shift registers clocked through solenoids 37/38. Unresolved: see conflicts().
+# a pair of HC4094 shift registers clocked through solenoids 37/38. They are the outputs of the
+# prototype-only 16-LED Skull Driver PCB A-20781, which production machines do not carry.
 AUX_LAMP_ADDRESSES = (91, 92, 93, 94, 95, 96, 97, 98, 101, 102, 103, 104, 105, 106, 107, 108)
+# Aux Lamp Clock and Aux Lamp Data, the serial lines that fed that board.
+SKULL_DRIVER_LINES = {37, 38}
 
 GI_STRINGS = {
 	0: ("Upper Playfield", "J105-1", "Q5", "J105-7", "#44", True),
@@ -678,6 +705,15 @@ def source_records() -> list[dict[str, Any]]:
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
 				},
+				{
+					"id": "excerpt.scared-stiff.lower-playfield-parts",
+					"locator": "PDF page 105, printed 2-40, Lower Playfield Parts list",
+					"path": "evidence/excerpts/bally.scared-stiff.1996/lower-playfield-parts.md",
+					"sha256": "bbd31b1493049d444d64f62cf543c44e40df33444cca00671697456aa107baf6",
+					"method": "manual",
+					"transcribed_by": "curator, read from a 250 dpi render of the page",
+					"reviewed": True,
+				},
 			],
 		},
 		{
@@ -741,6 +777,126 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
+		},
+		*skull_driver_source_records(),
+		{
+			"id": FLIPPER_PROBE_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-runtime-evidence/scared-stiff-1996/ss_15-flipper-button-polarity/run.json",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"sha256": FLIPPER_PROBE_RUN_SHA256,
+			"locator": (
+				"LibPinMAME harness run of ss_15 from a new, empty state directory with the committed scenario "
+				"tools/harness-scenarios/wpc-95/ss-flipper-button-polarity.json and --handle-mechanics 1: one "
+				"service Escape, coin door closed, two coins, Start until the trough eject (solenoid 9) fires, then "
+				"public 112 and 114 each written 1 and back to 0 by direct switch writes. pinmame64.dll SHA-256 "
+				f"{RUNTIME_LIBRARY_SHA256} built from the pinned revision. The run directory is pinned by its own "
+				"external evidence manifest. It proves emulator-facing polarity and causality only."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation",
+			"excerpts": [
+				{
+					"id": "excerpt.scared-stiff.flipper-button-polarity",
+					"locator": "run.json events for switches 112/114 and solenoids 9 and 45-48",
+					"path": "evidence/excerpts/bally.scared-stiff.1996/flipper-button-polarity.md",
+					"sha256": "8ead4b070e346c208333e09e56038d6d4fa6a28204683abc9bf14b7aa8f83e8e",
+					"method": "manual",
+					"transcribed_by": "curator, event rows read from the retained run.json",
+					"reviewed": True,
+				},
+			],
+		},
+	]
+
+
+def skull_driver_source_records() -> list[dict[str, Any]]:
+	"""Sources that settle the fitment of the 16-LED Skull Driver PCB; the prototype record cites them too."""
+	return [
+		{
+			"id": DEV_NOTES_SOURCE,
+			"kind": "human_review",
+			"uri": "https://web.archive.org/web/19970129085638id_/http://www.pinball.wms.com:80/games/stiff/dev.htm",
+			"revision": "19970129085638",
+			"sha256": DEV_NOTES_CAPTURE_SHA256,
+			"locator": (
+				"Midway Manufacturing Company's Scared Stiff development page 'So just how did we get Scared Stiff "
+				"anyway?' (games/stiff/dev.htm on www.pinball.wms.com, header date 02/Oct/1996), Internet Archive "
+				"capture of 1997-01-29, sections 'Pile-o-Skulls' and 'Break the Deadheads'. The capture, its "
+				"leds.gif illustration and a later planetarypinball.com mirror of the same text are retained under "
+				"external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/, pinned by that directory's "
+				f"external evidence manifest (SHA-256 {AUX_LAMP_SOURCES_MANIFEST_SHA256})."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Midway Manufacturing Company; capture hosted by the Internet Archive",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.scared-stiff.development-notes-pile-o-skulls",
+					"locator": "dev.htm sections 'Pile-o-Skulls' and the first sentence of 'Break the Deadheads'",
+					"path": "evidence/excerpts/bally.scared-stiff.1996/development-notes-pile-o-skulls.md",
+					"sha256": "68180df22da2f675e02969eaeabd4eacdc6d452ce50a0c76b42f85ab0d2e3609",
+					"method": "manual",
+					"transcribed_by": "curator, quoted from the retained capture",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": OWNER_REPORTS_SOURCE,
+			"kind": "human_review",
+			"uri": "https://pinside.com/pinball/forum/topic/scared-stiff-clubmembers-only/page/82",
+			"revision": "2026-10-30",
+			"sha256": OWNER_REPORTS_PAGE_SHA256,
+			"locator": (
+				"Pinside topic 'SCARED STIFF Club...Members Only', page 82, posts #4053-#4056 (post IDs 7417309, "
+				"7417397, 7420019, 7420213). The rendered page is retained under "
+				"external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/, pinned by the same "
+				"manifest. Owner forum posts: leads that corroborate the manufacturer's notes, never authority."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Pinside forum members GKW and Jrotten",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.scared-stiff.skull-driver-owner-reports",
+					"locator": "page 82, posts #4053-#4056",
+					"path": "evidence/excerpts/bally.scared-stiff.1996/skull-driver-owner-reports.md",
+					"sha256": "9418b6cbb3553ece4ae99fd6a91b766198b590b3cfd8bc63f5863d57cba93550",
+					"method": "manual",
+					"transcribed_by": "curator, quoted from the retained page",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": AUX_PROBE_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-runtime-evidence/scared-stiff-1996/",
+			"revision": RUNTIME_PINMAME_REVISION,
+			"locator": (
+				"Six LibPinMAME harness runs, one per locally held ROM (ss_15, ss_14, ss_12, ss_03, ss_01, ss_01b), "
+				"each from a new, empty state directory with the committed scenario "
+				"tools/harness-scenarios/wpc-95/ss-aux-lamp-probe.json and --handle-mechanics 1: attract mode, a "
+				"started game and six skull-lane rolls, recording auxiliary lamp addresses 91-98 and 101-108 and "
+				"solenoids 37, 38, 41 and 42. pinmame64.dll SHA-256 "
+				f"{RUNTIME_LIBRARY_SHA256} built from the pinned revision. Each run directory "
+				"<driver>-aux-lamp-probe/ is pinned by its own external evidence manifest; the excerpt lists every "
+				"run.json and manifest digest. ss_11 and ss_11s10 are not in the local ROM library."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation",
+			"excerpts": [
+				{
+					"id": "excerpt.scared-stiff.aux-lamp-probe",
+					"locator": "run.json output-change events for lamps 91-98/101-108 and solenoids 37/38/41/42, all six runs",
+					"path": "evidence/excerpts/bally.scared-stiff.1996/aux-lamp-probe.md",
+					"sha256": "b55bef9523834eaf8265e9e4f913c3b4e8046b39dcc456fba0b2e51657ab0215",
+					"method": "mixed",
+					"transcribed_by": "curator; counts computed by script from the retained run.json files, reading written by hand",
+					"reviewed": True,
+				},
+			],
 		},
 	]
 
@@ -879,7 +1035,7 @@ def input_devices() -> list[dict[str, Any]]:
 						SLAM_TILT_ADDRESS: "cabinet.slam-tilt",
 						22: "cabinet.coin-door",
 						23: "cabinet.buy-in",
-						12: "internal.spider-wheel.index",
+						12: "cabinet.backbox-toy.spider-wheel-index",
 					}[address]
 					extra["roles"] = [role]
 					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
@@ -898,9 +1054,9 @@ def input_devices() -> list[dict[str, Any]]:
 
 	flipper_inputs = {
 		111: ("Lower Right Flipper EOS", "internal.flipper.lower.right.eos", "used", False, "leaf", "SW-1A-194", None),
-		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", True, "opto", None, "A-17316"),
+		112: ("Lower Right Flipper Button", "flipper.lower.right.button", "used", False, "opto", None, "A-17316"),
 		113: ("Lower Left Flipper EOS", "internal.flipper.lower.left.eos", "used", False, "leaf", "SW-1A-194", None),
-		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", True, "opto", None, "A-17316"),
+		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", False, "opto", None, "A-17316"),
 		115: ("Not Used Upper Right Flipper EOS", "internal.unused.flipper", "unused", None, None, None, None),
 		116: ("Not Used Upper Right Flipper Button", "internal.unused.flipper", "unused", None, None, None, None),
 		117: ("Not Used Upper Left Flipper EOS", "internal.unused.flipper", "unused", None, None, None, None),
@@ -925,6 +1081,17 @@ def input_devices() -> list[dict[str, Any]]:
 			physical["location"] = "not installed"
 		else:
 			notes += " The matrix-page wiring is drawn as a plain (non-opto) end-of-stroke leaf for the EOS position and a printed opto for the button position."
+		if address in {112, 114}:
+			side = "right" if address == 112 else "left"
+			power, hold = (45, 46) if address == 112 else (47, 48)
+			notes += (
+				f" WPC-95 reads the flipper column complemented (WPC_FLIPPERSW95 returns ~swMatrix), and the ROM "
+				f"treats public 1 as the pressed button: in the retained flipper-button polarity run on ss_15 a "
+				f"write of 1 during a game pulses Lower {side.capitalize()} Flipper Power ({power}) and holds "
+				f"Lower {side.capitalize()} Flipper Hold ({hold}) until the write of 0. The contact the matrix "
+				f"sees is therefore open at rest, so normally_closed is false; the A-17316 opto construction "
+				f"does not change that."
+			)
 		physical["notes"] = notes
 		extra = {
 			"aliases": [
@@ -951,7 +1118,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"pinmame.input.switch",
 				address,
 				availability,
-				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
+				(MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE, FLIPPER_PROBE_SOURCE) if address in {112, 114} else (MANUAL_SOURCE, CONTROLLER_SOURCE, CORE_SOURCE),
 				**extra,
 			)
 		)
@@ -1003,7 +1170,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				kind = "control_signal"
 			physical: dict[str, Any] = {}
 			part_number = wiring_data.get("part_number")
-			if part_number and kind != "flasher":
+			# 37/38's printed part, A-20781, is the skull driver board the line fed, not a fitted load.
+			if part_number and kind != "flasher" and address not in SKULL_DRIVER_LINES:
 				physical["part_number"] = part_number
 			if address in SOLENOID_ASSEMBLIES:
 				physical["assembly_part_number"] = SOLENOID_ASSEMBLIES[address]
@@ -1030,13 +1198,21 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					"'SEE ABOVE'), but the game-specific table names these plain Lower Left/Right Flashers driven "
 					"through the WPC-95 Low Power Device Controls (DLPDC)."
 				)
-			if address in {37, 38}:
+			if address in SKULL_DRIVER_LINES:
 				notes += (
-					" Serial clock/data line for a pair of HC4094 shift registers (ss.c's ss_wpc_w intercepts "
-					"WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for strobe/output-enable) that "
-					"feed the driver-declared auxiliary lamp columns (public 91-98, 101-108); it is a data signal, "
-					"not a discrete mechanical actuator, so it has no playfield placement of its own. See "
-					"conflict.aux-lamp-column-fitment for the unresolved fitment of the lamps it drives."
+					" Serial clock/data line for the pair of HC4094 shift registers on the 16-LED Skull Driver PCB "
+					"(ss.c's ss_wpc_w intercepts WPC_SOLENOID1 bit5/bit4 for data/clock and WPC_SOLENOID3 bit3 for "
+					"strobe/output-enable), which fed the driver-declared auxiliary lamp columns (public 91-98, "
+					"101-108). The printed table still names the line, its J110 connector and wire colour, and "
+					"prints the board's part A-20781 in its part column, but no load is fitted on a production "
+					"machine: Midway's own 1996 development notes say the skull pile's red LED eyes were removed "
+					"for cost and two flashers placed behind the skulls (Skull Flasher Left/Right, solenoids 21 and "
+					"25), and pinned ss.c says the A-20781 board of 'Prototype 0.1' 'was not kept in production "
+					"build'. In the retained auxiliary lamp probe the production 1.2, 1.4 and 1.5 ROMs and the 0.3 "
+					"prototype never toggle this line, while the D.01R prototype ROMs, held by "
+					"bally.scared-stiff-d01r-prototype.1996, clock it from attract mode on; whatever a ROM "
+					"publishes here is that board's serial protocol, and nothing on a production machine "
+					"receives it."
 				)
 			if address in {39, 40}:
 				notes += (
@@ -1061,15 +1237,18 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				wiring["control_wire"] = FLIPPER_DRIVE_WIRE[address]
 			aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}, {"namespace": "manual.address", "value": f"{address:02d}"}]
 			extra: dict[str, Any] = {"aliases": aliases, "physical": physical, "wiring": wiring}
-			availability = "used"
+			availability = "unused" if address in SKULL_DRIVER_LINES else "used"
 			role = "emitter" if kind == "flasher" else ("effect" if kind in {"motor", "control_signal"} else None)
 			if role:
 				extra["roles"] = [role]
 			if address == 7:
 				extra["roles"] = ["cabinet.knocker"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			elif address in {37, 38, 39, 40}:
-				extra["roles"] = ["internal.backbox-mechanism"]
+			elif address in SKULL_DRIVER_LINES:
+				extra["roles"] = ["internal.unused.skull-driver-line"]
+				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE, DEV_NOTES_SOURCE, CORE_SOURCE)
+			elif address in {39, 40}:
+				extra["roles"] = ["cabinet.backbox-toy"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				coordinate_refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE) if address in SOLENOID_PROJECTIONS else (VPX_TABLE_SOURCE,)
@@ -1079,18 +1258,20 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS or address in {39, 40}:
 				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			if address in SKULL_DRIVER_LINES:
+				refs = (MANUAL_SOURCE, DEV_NOTES_SOURCE, CORE_SOURCE, AUX_PROBE_SOURCE)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 41, 42, 43, 44} else "unused"
+		availability = "used" if address in {29, 30, 31, 43, 44} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Scared Stiff playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Scared Stiff playfield device.",
 			31: "PinMAME's synthetic game-on state. Scared Stiff sets wpc_set_fastflip_addr(0x81), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
 			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
-			41: "PinMAME's backward-compatibility mirror of LPDC output 37 (Aux Lamp Clock). It reports the same physical shift-register clock line and is not an additional device.",
+			41: "PinMAME's backward-compatibility mirror of LPDC output 37 (Aux Lamp Clock). It reports the same shift-register clock line, which has no fitted load on a production machine, and is not an additional device. The production 1.2, 1.4 and 1.5 ROMs and the 0.3 prototype leave it at zero in the retained auxiliary lamp probe; only the D.01R prototype ROMs toggle it.",
 			42: "PinMAME's backward-compatibility mirror of LPDC output 38 (Aux Lamp Data); see 41.",
 			43: "PinMAME's backward-compatibility mirror of LPDC output 39 (Spider Wheel 1); it reports the same physical motor-phase drive line and is not an additional device.",
 			44: "PinMAME's backward-compatibility mirror of LPDC output 40 (Spider Wheel 2); see 43.",
@@ -1109,7 +1290,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"pinmame.output.solenoid",
 				address,
 				availability,
-				(CONTROLLER_SOURCE, CORE_SOURCE),
+				(CONTROLLER_SOURCE, CORE_SOURCE, DEV_NOTES_SOURCE, AUX_PROBE_SOURCE) if address in {41, 42} else (CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=virtual_aliases,
 				roles=roles,
 				physical={"notes": notes},
@@ -1187,33 +1368,39 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			)
 
 	for address in AUX_LAMP_ADDRESSES:
-		column = address // 10 - (7 if address >= 100 else 0)
 		row = address % 10
 		identifier = f"lamp.aux-{address}"
 		items.append(
 			_device(
 				identifier,
-				f"Unresolved Auxiliary Lamp Column {9 if address < 100 else 10} Position {row}",
+				f"Not Fitted Skull Driver Column {9 if address < 100 else 10} Position {row}",
 				"lamp",
 				"pinmame.output.lamp",
 				address,
-				"unknown",
-				(CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE),
+				"unused",
+				(CORE_SOURCE, MANUAL_SOURCE, DEV_NOTES_SOURCE, OWNER_REPORTS_SOURCE, AUX_PROBE_SOURCE, VPX_SCRIPT_SOURCE),
 				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}],
+				roles=["internal.unused.skull-driver-output"],
 				physical={
+					"location": "not installed",
 					"notes": (
-						"ssGameData declares hw.lampCol=2 (two driver-published auxiliary lamp columns beyond the "
-						"standard 8x8 matrix), driven through the HC4094 shift registers clocked by solenoids 37/38. "
-						"The driver's own comment calls the matching 16-LED board a rev-0.1-prototype part 'not kept "
-						"in the production build', but the retained production manual (16-50048-101, Sept. 1996) "
-						"still prints solenoids 37/38 with real connectors and wire colors, not NOT USED, and its "
-						"Lower Playfield Parts page still lists an A-21287-1 16-LED Skull Driver PCB Assembly. The "
-						"retained VPX table implements no Light object at this address (confirmed by an exhaustive "
-						"name sweep), and the sixteen-lamp Web Award ring is already fully accounted for on the "
-						"ordinary matrix (64-68/71-78/81-83), leaving no obvious gap for this board to fill. See "
-						"conflict.aux-lamp-column-fitment; unresolved."
-					)
+						"ssGameData declares hw.lampCol=2, '2 extra lamp columns for the LEDs of rev. 0.1', "
+						"published beyond the standard 8x8 matrix and fed through the HC4094 shift registers "
+						"clocked by solenoids 37/38. ss.c says 'Prototype 0.1 had a 16 LED Skull driver board "
+						"assembly A-20781 which was not kept in production build'. Midway's own 1996 development "
+						"notes say the skull pile's red LED eyes were removed for cost and two flashers placed behind "
+						"the skulls (Skull Flasher Left/Right, solenoids 21 and 25). The production manual "
+						"(16-50048-101, September 1996) still lists the board as Lower Playfield Parts item 7, "
+						"'A-20781-1 16-LED Skull Driver PCB Assy.', with no not-fitted marking, and still prints "
+						"37/38; owners of physical machines do not recognise the board. No load is fitted at this "
+						"address on a production machine. In the retained auxiliary lamp probe the production 1.2, "
+						"1.4 and 1.5 ROMs and the 0.3 prototype never change it, while the D.01R prototype ROMs, "
+						"held by bally.scared-stiff-d01r-prototype.1996, drive all sixteen of these addresses; the "
+						"retained VPX table implements no Light object here (confirmed by an exhaustive name sweep). "
+						"Which of the board's outputs lit which skull eye is not recorded anywhere retained."
+					),
 				},
+				spatial=not_applicable("unused", CORE_SOURCE, DEV_NOTES_SOURCE),
 			)
 		)
 	return items
@@ -1508,48 +1695,16 @@ def relationships() -> list[dict[str, Any]]:
 	]
 
 
-def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.aux-lamp-column-fitment",
-			"path": "outputs[binding.device=91,92,93,94,95,96,97,98,101,102,103,104,105,106,107,108]",
-			"description": (
-				"Pinned ss.c declares core_tGameData.hw.lampCol = 2, publishing two driver-side auxiliary lamp "
-				"columns beyond the standard 8x8 matrix at public addresses 91-98 and 101-108, driven through a pair "
-				"of HC4094 serial shift registers that ss.c's own ss_wpc_w handler clocks from solenoids 37/38 "
-				"(WPC_SOLENOID1 bit5/bit4 for data/clock, WPC_SOLENOID3 bit3 for strobe/output-enable). The driver's "
-				"own source comment says the matching '16 LED Skull driver board assembly A-20781' belongs only to "
-				"a 'Prototype 0.1' and 'was not kept in production build'. The retained production manual (part "
-				"16-50048-101, September 1996 FINAL, 1.5 ROM) disagrees: its Solenoid/Flasher Table still prints "
-				"solenoids 37 ('AUX LAMP CLOCK') and 38 ('AUX LAMP DATA') with real J110-1/J110-3 connectors and "
-				"Brn-Wht/Org-Wht wire colors, not NOT USED, and its Lower Playfield Parts page still lists item 6, "
-				"'A-21287-1 16-LED Skull Driver PCB Assy.', with no not-shown or deleted annotation. Neither source "
-				"is preferred by fiat: the driver comment is not self-verifying (a stale driver comment or macro name "
-				"is not automatically correct, the same lesson Star Trek: The Next Generation's CORE_CUSTSWNO/"
-				"CORE_CUSTSOLNO comments already established), but the retained known-working VPX table also "
-				"implements no Light object at any of these sixteen addresses (confirmed by an exhaustive name sweep "
-				"of the extraction), and the sixteen-lamp 'Web Award' ring the board's own name suggests is already "
-				"fully and exactly accounted for on the ordinary 8x8 matrix (addresses 64-68, 71-78, and 81-83), "
-				"leaving no obvious sixteen-lamp gap for a second board to fill. Resolution path: a LibPinMAME "
-				"gameplay-harness trace against a legal ss_15 ROM driving solenoids 37/38 and reading lamp addresses "
-				"91-98/101-108 directly, or an unrestored machine's own J110 harness photograph/continuity check. "
-				"Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
-
-
-def drivers() -> list[dict[str, Any]]:
+def drivers(driver_ids: tuple[str, ...] = DRIVER_IDS, compatibility_table: dict[str, tuple[str, str]] = DRIVER_COMPATIBILITY) -> list[dict[str, Any]]:
 	catalog = load_json(ROOT / "catalog/pinmame.json")
 	by_id = {record["id"]: record for record in catalog["drivers"]}
 	items: list[dict[str, Any]] = []
-	for driver_id in DRIVER_IDS:
+	for driver_id in driver_ids:
 		record = by_id[driver_id]
 		item = {key: record[key] for key in ("id", "description", "year", "manufacturer", "flags")}
 		if record.get("clone_of"):
 			item["clone_of"] = record["clone_of"]
-		compatibility, notes = DRIVER_COMPATIBILITY[driver_id]
+		compatibility, notes = compatibility_table[driver_id]
 		item["physical_compatibility"] = compatibility
 		item["variant_notes"] = notes
 		items.append(item)
@@ -1571,17 +1726,17 @@ def build() -> dict[str, Any]:
 			"opdb_id": "G4xbP-Mp45Y",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["output_semantics", "spatial_placement", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "conflicted",
+				"semantic_naming": "validated",
 				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1596,14 +1751,72 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/bally/scared-stiff-1996.md", "status": "partial"},
-		"conflicts": conflicts(),
+		"knowledge": {"path": "knowledge/bally/scared-stiff-1996.md", "status": "complete"},
+		"conflicts": [],
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
 	duplicates = sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1})
 	if duplicates:
 		raise RuntimeError(f"Scared Stiff device identifiers are not unique: {duplicates}")
 	return definition
+
+
+def build_prototype() -> dict[str, Any]:
+	"""The D.01R prototype: identity, drivers and the skull-driver evidence, nothing more yet."""
+	return {
+		"format": "pinmame-machine-definition",
+		"schema_version": 2,
+		"machine": {
+			"id": "bally.scared-stiff-d01r-prototype.1996",
+			"name": "Scared Stiff (D.01R Prototype)",
+			"manufacturer": "Bally",
+			"year": 1996,
+			"kind": "physical_pinball",
+		},
+		"coverage": {
+			"status": "partial",
+			"missing": [
+				"identity",
+				"input_enumeration",
+				"input_semantics",
+				"output_enumeration",
+				"output_semantics",
+				"display_inventory",
+				"mechanism_inventory",
+				"mechanism_behavior",
+				"polarity",
+				"variant_differences",
+				"recreation_notes",
+				"provenance",
+				"spatial_placement",
+			],
+			"dimensions": {
+				"catalog_identity": "candidate",
+				"address_enumeration": "unknown",
+				"semantic_naming": "unknown",
+				"physical_wiring": "unknown",
+				"mechanisms": "unknown",
+				"variant_coverage": "candidate",
+				"recreation_knowledge": "candidate",
+				"spatial_placement": "unknown",
+			},
+		},
+		"controller": {
+			"platform": "pinmame.wpc-95",
+			"hardware_generation": "0x80",
+			"inversion_applied_by_emulator": True,
+		},
+		"drivers": drivers(PROTOTYPE_DRIVER_IDS, PROTOTYPE_DRIVER_COMPATIBILITY),
+		"inputs": [],
+		"outputs": [],
+		"displays": [],
+		"mechanisms": [],
+		"relationships": [],
+		"sources": [source for source in source_records() if source["id"] in {CATALOG_SOURCE, CORE_SOURCE}]
+		+ [source for source in skull_driver_source_records() if source["id"] != OWNER_REPORTS_SOURCE],
+		"knowledge": {"path": "knowledge/bally/scared-stiff-d01r-prototype-1996.md", "status": "partial"},
+		"conflicts": [],
+	}
 
 
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
@@ -1621,14 +1834,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			located_inputs.append(address)
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
-	unresolved_outputs: list[dict[str, Any]] = []
 	placement_count = 0
 	for device in definition["outputs"]:
 		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
 		spatial = device.get("spatial")
 		if spatial is None:
-			unresolved_outputs.append(binding)
-			continue
+			raise RuntimeError(f"Scared Stiff output has no spatial record: {device['id']}")
 		if spatial["status"] == "not_applicable":
 			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
 		else:
@@ -1639,16 +1850,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if spatial is not None and spatial["status"] != "not_applicable":
 			placement_count += len(spatial["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Sixteen driver-declared auxiliary lamp addresses (91-98, 101-108) have no spatial key at all -- the "
-			"retained VPX table implements no Light object at any of them, and their fitted status is a genuine, "
-			"unresolved two-source disagreement (conflict.aux-lamp-column-fitment). This is the sole reason the "
-			"record stays partial; every other spatial dimension this report audits is complete.",
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": PLAYFIELD_WIDTH, "bottom": PLAYFIELD_HEIGHT},
@@ -1678,7 +1883,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"unresolved_outputs": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
@@ -1707,13 +1911,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"handlers to carry no Controller.Switch binding (wire-ramp detection and flipper live-catch timing "
 			"helpers only).",
 		],
-		"unresolved": [
-			{
-				"group": "pinmame.output.lamp",
-				"addresses": list(AUX_LAMP_ADDRESSES),
-				"reason": "conflict.aux-lamp-column-fitment; no spatial key recorded (schema has no third spatial status for this case).",
-			}
-		],
+		"unresolved": [],
 	}
 
 
@@ -1721,9 +1919,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Scared Stiff (Bally, 1996) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete except the sixteen "
-		"driver-declared auxiliary lamp addresses (91-98, 101-108), which carry no spatial key at all because "
-		"their fitted status is itself unresolved (see the promotion decision below).",
+		f"Status: {report['status']}. Every spatial dimension audited here is complete. The sixteen "
+		"driver-declared auxiliary lamp addresses (91-98, 101-108) and their clock and data lines (37/38) take a "
+		"controlled `unused` record: they belong to the prototype-only 16-LED Skull Driver PCB, which production "
+		"machines do not carry (see the promotion decision below).",
 		"",
 		"The matching source is the retained known-working `Scared Stiff (Bally 1996) VPW v1.0.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 "
@@ -1759,6 +1958,12 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"- Solenoids 41-44 are PinMAME's LPDC mirrors of physical drive lines 37-40 (aux lamp clock/data, Spider "
 		"Wheel motor phases) and are declared virtual with a `virtual` spatial record so no duplicate device is ever "
 		"placed on the playfield.",
+		"- Auxiliary lamp addresses 91-98 and 101-108 and their clock and data lines 37/38 take a controlled "
+		"`unused` record. Midway's own 1996 development notes say the skull pile's LED eyes were removed for cost "
+		"and two flashers (21 and 25) placed behind the skulls, pinned `ss.c` calls the matching 16-LED Skull Driver "
+		"PCB A-20781 a 'Prototype 0.1' part 'not kept in production build', and the production ROMs never drive "
+		"those addresses in the retained auxiliary lamp probe. The retained table implements no Light object at "
+		"any of them, so no coordinate is invented.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both "
 		"PinMAME core and manual provenance.",
 		"- Flasher addresses 21, 22, 25, and 27 sit at normalized y between 0.0014 and 0.0015 -- within the y<0.005 "
@@ -1782,7 +1987,6 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Outputs with no spatial key at all (unresolved fitment): {len(report['unresolved_outputs'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
@@ -1792,19 +1996,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No authoring-critical placement, quantity, or semantic question remains unresolved for any address this "
-		"audit could resolve, and the deterministic curator reproduces the canonical artifact and its pinned seed "
-		"byte-for-byte. However, sixteen driver-declared auxiliary lamp addresses (91-98, 101-108) remain genuinely "
-		"unresolved: pinned PinMAME's ss.c declares them (hw.lampCol=2) and the retained production manual still "
-		"prints their driving solenoids (37/38) as wired with real connectors, while the driver's own source "
-		"comment calls the matching board a deleted prototype-only part, and the retained known-working VPX table "
-		"implements no Light object at any of the sixteen addresses -- recorded as "
-		"`conflict.aux-lamp-column-fitment`, unresolved. The definition therefore carries a non-empty `conflicts` "
-		"array, `coverage.dimensions.semantic_naming = \"conflicted\"`, and sixteen output records with `availability: "
-		"\"unknown\"` and no `spatial` key at all, so promotion to `author_ready` is refused; the record stays "
-		"`partial` with `coverage.missing = [\"output_semantics\", \"spatial_placement\", \"unresolved_conflicts\"]` "
-		"until a LibPinMAME harness trace against a legal `ss_15` ROM, or a physical machine's own J110 harness "
-		"inspection, settles what (if anything) is fitted there.",
+		"Promoted to `author_ready`. No authoring-critical placement, quantity, or semantic question remains "
+		"unresolved, and the deterministic curator reproduces the canonical artifact and its pinned seed "
+		"byte-for-byte. The one question that held the record partial, whether a production machine carries the "
+		"board behind auxiliary lamp addresses 91-98 and 101-108, is settled by Midway's own development notes: "
+		"the skull LEDs were removed for cost before production, so those addresses and their clock and data lines "
+		"37/38 are recorded `unused`. The D.01R prototype ROMs (`ss_01`, `ss_01b`), which still drive that board, "
+		"moved to `bally.scared-stiff-d01r-prototype.1996`.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1812,6 +2010,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
+		f"- Midway's development notes with their illustration and later mirror, and the owner reports, pinned by the external manifest "
+		f"`external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/manifest.json`, SHA-256 "
+		f"`{AUX_LAMP_SOURCES_MANIFEST_SHA256}`.",
+		"- Auxiliary lamp probe and flipper-button polarity runs under "
+		"`external:pinmame-runtime-evidence/scared-stiff-1996/`, each pinned by its own manifest.",
 		"",
 	]
 	return "\n".join(lines)
@@ -1824,6 +2027,10 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
+	write_json(root / PROTOTYPE_PATH.relative_to(ROOT), build_prototype())
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
@@ -1834,6 +2041,12 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"Scared Stiff definition is missing: {definition_path}")
 	if not seed_path.is_file():
 		raise RuntimeError(f"Scared Stiff seed is missing: {seed_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Scared Stiff partial definition is still present: {stale_partial_path}")
+	prototype_path = root / PROTOTYPE_PATH.relative_to(ROOT)
+	if not prototype_path.is_file() or prototype_path.read_bytes() != canonical_bytes(build_prototype()):
+		raise RuntimeError(f"Scared Stiff D.01R prototype definition drifted from its deterministic curator: {prototype_path}")
 	definition = build()
 	expected = canonical_bytes(definition)
 	if definition_path.read_bytes() != expected:
@@ -1847,7 +2060,7 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"Scared Stiff spatial audit drifted from its deterministic curator: {report_path}")
 	if not markdown_path.is_file() or markdown_path.read_text(encoding="utf-8") != render_spatial_report(report):
 		raise RuntimeError(f"Scared Stiff spatial review drifted from its deterministic curator: {markdown_path}")
-	print("Scared Stiff definition, seed, and spatial audit match the deterministic curator.")
+	print("Scared Stiff definition, seed, spatial audit and D.01R prototype record match the deterministic curator.")
 
 
 def main() -> None:

@@ -10,13 +10,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "scared-stiff-1996.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "scared-stiff-1996.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "bally" / "scared-stiff-1996.json"
+PROTOTYPE_PATH = ROOT / "machines" / "partial" / "bally" / "scared-stiff-d01r-prototype-1996.json"
+PROTOTYPE_KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "scared-stiff-d01r-prototype-1996.md"
+CATALOG_PATH = ROOT / "catalog" / "pinmame.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "bally" / "scared-stiff-1996.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "scared-stiff-1996.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "scared-stiff-1996.json"
 
-DRIVER_IDS = {"ss_15", "ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03", "ss_01", "ss_01b"}
+DRIVER_IDS = {"ss_15", "ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03"}
+PROTOTYPE_DRIVER_IDS = {"ss_01", "ss_01b"}
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {11, 15, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88}
 OPTO_ADDRESSES = {12, 31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48}
@@ -58,19 +63,14 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(
-			["output_semantics", "spatial_placement", "unresolved_conflicts"],
-			self.definition["coverage"]["missing"],
-		)
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["semantic_naming"])
-		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
+		self.assertEqual([], self.definition["conflicts"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"semantic_naming", "spatial_placement"}:
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertEqual("bally.scared-stiff.1996", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(1996, self.definition["machine"]["year"])
@@ -78,21 +78,33 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-95", self.definition["controller"]["platform"])
 		self.assertEqual("0x80", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual(952.941, self.definition["machine"]["playfield"]["width"])
 		self.assertEqual(2164.706, self.definition["machine"]["playfield"]["height"])
 		self.assertEqual("vpx", self.definition["machine"]["playfield"]["units"])
 
-	def test_the_aux_lamp_column_conflict_is_recorded_and_unresolved(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.aux-lamp-column-fitment"}, set(conflicts))
-		conflict = conflicts["conflict.aux-lamp-column-fitment"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		description = conflict["description"].lower()
-		self.assertIn("unresolved", description)
-		self.assertIn("harness", description)
+	def test_the_skull_driver_board_is_recorded_unused_from_the_manufacturer_notes(self) -> None:
+		# The 16-LED Skull Driver PCB was removed before production (Midway's development notes),
+		# so its sixteen lamp outputs, its clock/data lines and their LPDC mirrors are unused.
 		for address in AUX_LAMP_ADDRESSES:
-			self.assertIn(str(address), conflict["path"])
+			lamp = self.lamps[address]
+			self.assertEqual("unused", lamp["availability"], address)
+			self.assertEqual("not_applicable", lamp["spatial"]["status"], address)
+			self.assertEqual("unused", lamp["spatial"]["reason"], address)
+			self.assertTrue(lamp["label"].startswith("Not Fitted Skull Driver"), address)
+			self.assertIn("manufacturer-notes.bally.scared-stiff.1996", lamp["provenance"]["source_refs"], address)
+			self.assertIn("runtime.scared-stiff.aux-lamp-probe", lamp["provenance"]["source_refs"], address)
+			self.assertNotIn("A-21287", lamp["physical"]["notes"], address)
+			self.assertIn("A-20781", lamp["physical"]["notes"], address)
+		for address in (37, 38):
+			line = self.solenoids[address]
+			self.assertEqual("unused", line["availability"], address)
+			self.assertEqual("unused", line["spatial"]["reason"], address)
+			self.assertNotIn("part_number", line["physical"], address)
+			self.assertIn("manufacturer-notes.bally.scared-stiff.1996", line["provenance"]["source_refs"], address)
+		for address in (41, 42):
+			self.assertEqual("unused", self.solenoids[address]["availability"], address)
+			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
 
 	def test_knowledge_note_exists(self) -> None:
 		self.assertTrue(DEFINITION_PATH.is_file())
@@ -104,7 +116,7 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 			self.assertEqual("identical", driver["physical_compatibility"], driver["id"])
 			self.assertTrue(driver["variant_notes"].strip(), driver["id"])
 		by_id = {driver["id"]: driver for driver in self.definition["drivers"]}
-		for clone_id in ("ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03", "ss_01", "ss_01b"):
+		for clone_id in ("ss_14", "ss_12", "ss_11", "ss_11s10", "ss_03"):
 			self.assertEqual("ss_15", by_id[clone_id]["clone_of"], clone_id)
 		self.assertNotIn("clone_of", by_id["ss_15"])
 
@@ -155,8 +167,12 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 			self.assertEqual("unused", self.switches[address]["availability"], address)
 			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
 			self.assertNotIn("wiring", self.switches[address])
-		self.assertTrue(self.switches[112]["normally_closed"])
-		self.assertTrue(self.switches[114]["normally_closed"])
+		# WPC-95 reads the flipper column complemented and the ROM treats public 1 as pressed, so
+		# the button contacts rest open whatever their opto construction.
+		self.assertFalse(self.switches[112]["normally_closed"])
+		self.assertFalse(self.switches[114]["normally_closed"])
+		for address in (112, 114):
+			self.assertIn("runtime.scared-stiff.flipper-button-polarity", self.switches[address]["provenance"]["source_refs"], address)
 		self.assertFalse(self.switches[111]["normally_closed"])
 		self.assertFalse(self.switches[113]["normally_closed"])
 
@@ -175,12 +191,14 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
 			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
 		for address in AUX_LAMP_ADDRESSES:
-			self.assertEqual("unknown", self.lamps[address]["availability"], address)
-			self.assertNotIn("spatial", self.lamps[address], address)
+			self.assertEqual("unused", self.lamps[address]["availability"], address)
+			self.assertEqual("unused", self.lamps[address]["spatial"]["reason"], address)
 
-	def test_solenoid_1_40_has_no_unfitted_gap_unlike_monster_bash(self) -> None:
-		for address in list(range(1, 29)) + [33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 47, 48]:
+	def test_solenoid_1_40_has_no_unfitted_gap_but_the_skull_driver_lines(self) -> None:
+		for address in list(range(1, 29)) + [33, 34, 35, 36, 39, 40, 45, 46, 47, 48]:
 			self.assertEqual("used", self.solenoids[address]["availability"], address)
+		for address in (37, 38):
+			self.assertEqual("unused", self.solenoids[address]["availability"], address)
 
 	def test_left_diverter_and_repurposed_flashers_have_no_translation(self) -> None:
 		for address in (33, 34, 35, 36):
@@ -208,7 +226,7 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 		self.assertEqual("Spider Wheel 2 LPDC Mirror", self.solenoids[44]["label"])
 		for address in (41, 42, 43, 44):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
-			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			self.assertEqual("used" if address in {43, 44} else "unused", self.solenoids[address]["availability"], address)
 			self.assertNotIn("wiring", self.solenoids[address], address)
 
 	def test_no_solenoid_is_labelled_a_motorized_crate(self) -> None:
@@ -281,9 +299,12 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
 				self.assertEqual("validated", placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("pinmame-spatial-audit", report["format"])
 		self.assertEqual("validated", report["status"])
 		self.assertEqual(located, report["placement_count"])
-		self.assertEqual(len(AUX_LAMP_ADDRESSES), len(report["unresolved"][0]["addresses"]))
+		self.assertEqual([], report["unresolved"])
+		unused_lamps = {item["address"] for item in report["not_applicable_outputs"]["unused"] if item["group"] == "pinmame.output.lamp"}
+		self.assertEqual(AUX_LAMP_ADDRESSES, unused_lamps)
 
 	def test_trough_and_flippers_land_near_the_front_and_top_lanes_near_the_rear(self) -> None:
 		# Sanity check demanded by the task brief: trough/flipper y near 1.0, top lanes near 0.0.
@@ -383,8 +404,15 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 			"f96109c68c7e0cc008f72e9be9f18405a216d5c40165aed130f1e87b65c44b09",
 			sources["manual.bally.scared-stiff.1996"]["sha256"],
 		)
+		self.assertEqual(
+			{"runtime.scared-stiff.aux-lamp-probe", "runtime.scared-stiff.flipper-button-polarity"},
+			{source["id"] for source in self.definition["sources"] if source["kind"] == "runtime_scenario"},
+		)
+		self.assertEqual(
+			"29b617dd43df7139cabc9c01966d1fc44219d3cb705dc2f0d1ba4b1cd990d182",
+			sources["manufacturer-notes.bally.scared-stiff.1996"]["sha256"],
+		)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])
@@ -412,6 +440,37 @@ class ScaredStiffDefinitionTests(unittest.TestCase):
 
 		for device in list(self.definition["inputs"]) + list(self.definition["outputs"]):
 			self.assertTrue(allowed(device["binding"]["group"], device["binding"]["device"]), device["id"])
+
+
+class ScaredStiffPrototypeTests(unittest.TestCase):
+	@classmethod
+	def setUpClass(cls) -> None:
+		cls.prototype = load_json(PROTOTYPE_PATH)
+
+	def test_the_d01r_drivers_live_in_their_own_partial_record(self) -> None:
+		self.assertEqual("bally.scared-stiff-d01r-prototype.1996", self.prototype["machine"]["id"])
+		self.assertEqual("partial", self.prototype["coverage"]["status"])
+		self.assertNotIn("driver_mapping", self.prototype["coverage"]["missing"])
+		self.assertIn("identity", self.prototype["coverage"]["missing"])
+		self.assertEqual(PROTOTYPE_DRIVER_IDS, {driver["id"] for driver in self.prototype["drivers"]})
+		for driver in self.prototype["drivers"]:
+			self.assertEqual("ss_15", driver["clone_of"], driver["id"])
+			self.assertIn("auxiliary lamp", driver["variant_notes"], driver["id"])
+		self.assertEqual([], self.prototype["inputs"])
+		self.assertEqual([], self.prototype["outputs"])
+		self.assertTrue(PROTOTYPE_KNOWLEDGE_PATH.is_file())
+		source_ids = {source["id"] for source in self.prototype["sources"]}
+		self.assertIn("manufacturer-notes.bally.scared-stiff.1996", source_ids)
+		self.assertIn("runtime.scared-stiff.aux-lamp-probe", source_ids)
+
+	def test_the_catalog_maps_every_ss_driver_exactly_once(self) -> None:
+		catalog = load_json(CATALOG_PATH)
+		owners = {driver["id"]: driver["machine_id"] for driver in catalog["drivers"] if driver["id"].startswith("ss_")}
+		self.assertEqual(DRIVER_IDS | PROTOTYPE_DRIVER_IDS, set(owners))
+		for driver_id in DRIVER_IDS:
+			self.assertEqual("bally.scared-stiff.1996", owners[driver_id], driver_id)
+		for driver_id in PROTOTYPE_DRIVER_IDS:
+			self.assertEqual("bally.scared-stiff-d01r-prototype.1996", owners[driver_id], driver_id)
 
 
 def _positions(devices: dict[int, dict[str, object]]) -> dict[int, tuple[float, float]]:
@@ -457,6 +516,17 @@ class ScaredStiffCuratorTests(unittest.TestCase):
 				curator.check(ROOT)
 		finally:
 			DEFINITION_PATH.write_bytes(original)
+		curator.check(ROOT)
+
+	def test_curator_check_mode_refuses_a_stale_partial(self) -> None:
+		import curate_scared_stiff as curator
+
+		PARTIAL_PATH.write_bytes(DEFINITION_PATH.read_bytes())
+		try:
+			with self.assertRaises(RuntimeError):
+				curator.check(ROOT)
+		finally:
+			PARTIAL_PATH.unlink()
 		curator.check(ROOT)
 
 	def test_spatial_report_is_regenerated_from_the_definition(self) -> None:

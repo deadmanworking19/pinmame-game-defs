@@ -26,7 +26,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 36 | AC/DC | `stern.ac-dc-pro.2012` | 100% |
 | 38 | Tales of the Arabian Nights | `williams.tales-of-the-arabian-nights.1996` | 94% |
 | 39 | Theatre of Magic | `bally.theatre-of-magic.1995` | 94% |
-| 40 | Scared Stiff | `bally.scared-stiff.1996` | 81% |
+| 40 | Scared Stiff | `bally.scared-stiff.1996` | 100% |
 | 42 | The Simpsons Pinball Party | `stern.the-simpsons-pinball-party.2003` | 100% |
 | 43 | White Water | `williams.white-water.1993` | 94% |
 | 44 | Spider-Man | `stern.spider-man-vault-edition.2016` | 100% |

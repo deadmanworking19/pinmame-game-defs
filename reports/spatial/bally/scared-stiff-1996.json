@@ -1,7 +1,4 @@
 {
-  "blockers": [
-    "Sixteen driver-declared auxiliary lamp addresses (91-98, 101-108) have no spatial key at all -- the retained VPX table implements no Light object at any of them, and their fitted status is a genuine, unresolved two-source disagreement (conflict.aux-lamp-column-fitment). This is the sole reason the record stays partial; every other spatial dimension this report audits is complete."
-  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2164.706,
@@ -29,7 +26,7 @@
     "total_bytes": 937624764,
     "vpxtool_version": "vpxtool git:v0.33.3"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "bally.scared-stiff.1996",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -175,19 +172,85 @@
         "group": "pinmame.output.solenoid"
       },
       {
-        "address": 37,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 38,
-        "group": "pinmame.output.solenoid"
-      },
-      {
         "address": 39,
         "group": "pinmame.output.solenoid"
       },
       {
         "address": 40,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 91,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 92,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 93,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 94,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 95,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 96,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 97,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 98,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 101,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 102,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 103,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 104,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 105,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 106,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 107,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 108,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
         "group": "pinmame.output.solenoid"
       }
     ],
@@ -656,96 +719,7 @@
     "table_sha256": "bede6f6c5b7592c4610af444a196c42432949468f708e79b4b112a73692cdc1e"
   },
   "status": "validated",
-  "unresolved": [
-    {
-      "addresses": [
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        101,
-        102,
-        103,
-        104,
-        105,
-        106,
-        107,
-        108
-      ],
-      "group": "pinmame.output.lamp",
-      "reason": "conflict.aux-lamp-column-fitment; no spatial key recorded (schema has no third spatial status for this case)."
-    }
-  ],
-  "unresolved_outputs": [
-    {
-      "address": 91,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 92,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 93,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 94,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 95,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 96,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 97,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 98,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 101,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 102,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 103,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 104,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 105,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 106,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 107,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 108,
-      "group": "pinmame.output.lamp"
-    }
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/bally.scared-stiff.1996/",

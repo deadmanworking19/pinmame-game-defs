@@ -1,0 +1,138 @@
+{
+  "conflicts": [],
+  "controller": {
+    "hardware_generation": "0x80",
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.wpc-95"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "unknown",
+      "catalog_identity": "candidate",
+      "mechanisms": "unknown",
+      "physical_wiring": "unknown",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "unknown",
+      "spatial_placement": "unknown",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "ss_15",
+      "description": "Scared Stiff (D.01R Prototype, Sound 0.25)",
+      "flags": 0,
+      "id": "ss_01",
+      "manufacturer": "Bally",
+      "physical_compatibility": "identical",
+      "variant_notes": "Bally D.01R prototype game ROM (Sound 0.25). In the retained auxiliary lamp probe it drives all sixteen auxiliary lamp addresses 91-98 and 101-108 through the 16-LED Skull Driver PCB's shift registers, clocking solenoids 37 and 38 from attract mode on.",
+      "year": "1996"
+    },
+    {
+      "clone_of": "ss_15",
+      "description": "Scared Stiff (D.01R Prototype Coin Play, Sound 0.25)",
+      "flags": 0,
+      "id": "ss_01b",
+      "manufacturer": "Bally",
+      "physical_compatibility": "identical",
+      "variant_notes": "Bally D.01R prototype coin-play game ROM (Sound 0.25), the coin-play build of ss_01. In the retained auxiliary lamp probe it drives the same sixteen auxiliary lamp addresses and clock and data lines as ss_01.",
+      "year": "1996"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [],
+  "knowledge": {
+    "path": "knowledge/bally/scared-stiff-d01r-prototype-1996.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "bally.scared-stiff-d01r-prototype.1996",
+    "kind": "physical_pinball",
+    "manufacturer": "Bally",
+    "name": "Scared Stiff (D.01R Prototype)",
+    "year": 1996
+  },
+  "mechanisms": [],
+  "outputs": [],
+  "relationships": [],
+  "schema_version": 2,
+  "sources": [
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "Pinned catalog driver records for the ss_* clone tree",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.4ec52ff0ac13",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/sims/wpc/full/ss.c ssGameData GEN_WPC95 with wpc_dispDMD, the inverted-switch mask {0x00,0x02,0x00,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00}, FLIP_SW(FLIP_L|FLIP_U)|FLIP_SOL(FLIP_L), hw.lampCol=2, sw*/s* defines, ss_wheelMech (mech_add(0,&ss_wheelMech): Sol1/Sol2 39/40, MECH_LINEAR|MECH_CIRCLE|MECH_TWOSTEPSOL|MECH_FAST, 200-step range, home switch swWheelIndex=12 at steps 25-199), ss_wpc_w's HC4094 aux-lamp shift-register handling on WPC_SOLENOID1/WPC_SOLENOID3, and init_ss's wpc_set_fastflip_addr(0x81); src/wpc/core.h WPC solenoid numbering and CORE_FIRSTLFLIPSOL=45/CORE_FIRSTUFLIPSOL=33; src/wpc/core.c core_getSol WPC95 37..40 to 41..44 duplication; src/wpc/wpc.c WPC_FLIPPERSW95 inversion; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_WPC95=0x80",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Midway Manufacturing Company; capture hosted by the Internet Archive",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.development-notes-pile-o-skulls",
+          "locator": "dev.htm sections 'Pile-o-Skulls' and the first sentence of 'Break the Deadheads'",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/development-notes-pile-o-skulls.md",
+          "reviewed": true,
+          "sha256": "68180df22da2f675e02969eaeabd4eacdc6d452ce50a0c76b42f85ab0d2e3609",
+          "transcribed_by": "curator, quoted from the retained capture"
+        }
+      ],
+      "id": "manufacturer-notes.bally.scared-stiff.1996",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Midway Manufacturing Company's Scared Stiff development page 'So just how did we get Scared Stiff anyway?' (games/stiff/dev.htm on www.pinball.wms.com, header date 02/Oct/1996), Internet Archive capture of 1997-01-29, sections 'Pile-o-Skulls' and 'Break the Deadheads'. The capture, its leds.gif illustration and a later planetarypinball.com mirror of the same text are retained under external:pinmame-review-artifacts/scared-stiff-1996/aux-lamp-sources/, pinned by that directory's external evidence manifest (SHA-256 292cedb949dc7898378f3573d6c8ce028592d5b02561a56fbe835908a0c6bde4).",
+      "revision": "19970129085638",
+      "rights": "NOASSERTION",
+      "sha256": "29b617dd43df7139cabc9c01966d1fc44219d3cb705dc2f0d1ba4b1cd990d182",
+      "uri": "https://web.archive.org/web/19970129085638id_/http://www.pinball.wms.com:80/games/stiff/dev.htm"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "excerpts": [
+        {
+          "id": "excerpt.scared-stiff.aux-lamp-probe",
+          "locator": "run.json output-change events for lamps 91-98/101-108 and solenoids 37/38/41/42, all six runs",
+          "method": "mixed",
+          "path": "evidence/excerpts/bally.scared-stiff.1996/aux-lamp-probe.md",
+          "reviewed": true,
+          "sha256": "b55bef9523834eaf8265e9e4f913c3b4e8046b39dcc456fba0b2e51657ab0215",
+          "transcribed_by": "curator; counts computed by script from the retained run.json files, reading written by hand"
+        }
+      ],
+      "id": "runtime.scared-stiff.aux-lamp-probe",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Six LibPinMAME harness runs, one per locally held ROM (ss_15, ss_14, ss_12, ss_03, ss_01, ss_01b), each from a new, empty state directory with the committed scenario tools/harness-scenarios/wpc-95/ss-aux-lamp-probe.json and --handle-mechanics 1: attract mode, a started game and six skull-lane rolls, recording auxiliary lamp addresses 91-98 and 101-108 and solenoids 37, 38, 41 and 42. pinmame64.dll SHA-256 8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5 built from the pinned revision. Each run directory <driver>-aux-lamp-probe/ is pinned by its own external evidence manifest; the excerpt lists every run.json and manifest digest. ss_11 and ss_11s10 are not in the local ROM library.",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "uri": "external:pinmame-runtime-evidence/scared-stiff-1996/"
+    }
+  ]
+}

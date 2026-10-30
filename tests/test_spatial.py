@@ -369,7 +369,7 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(42, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(43, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
@@ -383,8 +383,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Limited Edition as a record of its own, and the 2026-10-23 Limited Edition curation promotes that record.
 		# Dr. Dude's documented WPC batch adds one separate partial physical record.
 		# Wild Texas's physical conversion adds another separate partial record.
-		self.assertEqual(812, report["machine_count"])
-		self.assertEqual(42, report["author_ready_count"])
+		# Scared Stiff's promotion moves one partial to author_ready and its D.01R prototype split adds one partial.
+		self.assertEqual(813, report["machine_count"])
+		self.assertEqual(43, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
@@ -394,7 +395,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(753, report["partial_count"])
 		self.assertEqual(17, report["stub_count"])
 		self.assertEqual(23, report["non_game_record_count"])
-		self.assertEqual(835, report["catalog_record_count"])
+		self.assertEqual(836, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
@@ -566,14 +567,16 @@ class SpatialMigrationTests(unittest.TestCase):
 		# playfield bulb count.
 		# TX-Sector's retained S-label record is ignored: its public branch routing is settled.
 		# Firepower II records the unresolved physical Ball in Play6/40 routing.
-		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Scared Stiff's development notes and ROM probe settle its auxiliary lamp-column conflict, removing one.
+		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
 		# The Lord of the Rings promotion splits off its 2009 Limited Edition, adding one record.
 		# Dr. Dude's WPC batch adds a second physical hardware record without adding drivers.
 		# Wild Texas likewise separates a physical conversion without adding drivers.
-		self.assertEqual(835, len(catalog["machines"]))
-		self.assertEqual(812, catalog["summary"]["game_count"])
-		self.assertEqual(835, catalog["summary"]["machine_count"])
-		self.assertEqual(42, catalog["summary"]["author_ready_count"])
+		# Scared Stiff's D.01R prototype split adds one record, and its promotion one author_ready.
+		self.assertEqual(836, len(catalog["machines"]))
+		self.assertEqual(813, catalog["summary"]["game_count"])
+		self.assertEqual(836, catalog["summary"]["machine_count"])
+		self.assertEqual(43, catalog["summary"]["author_ready_count"])
 		self.assertEqual(26, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
