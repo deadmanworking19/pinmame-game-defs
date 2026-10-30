@@ -318,7 +318,7 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
         return "".join("".join(glyph[v & 127] for v in displays[i]["segments"]) for i in indexes)
 
     def _configured(self, variable):
-        # Called inside a subTest, so only the checks that need this root are skipped.
+        # Skips the enclosing subTest, or the whole test when called outside one.
         value = os.environ.get(variable)
         if not value:
             self.skipTest(f"{variable} not configured")
@@ -406,7 +406,7 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
             self.assertIn("If vpmKeyDown(KeyCode) Then Exit Sub", script)
 
     def test_every_retained_physical_input_hash_is_guarded(self):
-        source = Path(os.environ["PINMAME_MANUALS_ROOT"])/"by-machine"/curator.MACHINE_ID
+        source = self._configured("PINMAME_MANUALS_ROOT")/"by-machine"/curator.MACHINE_ID
         specs = curator.retained_inputs()["files"]
         with tempdir() as t:
             target=Path(t)/"by-machine"/curator.MACHINE_ID
