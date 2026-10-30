@@ -925,7 +925,8 @@ def gi_outputs() -> list[dict[str, Any]]:
 		"collection lights, Gis11-13, sit on the turbo bumper caps' bulbs, which are matrix lamps 38-40 (one #555 per Turbo Bumper "
 		f"Assembly, printed page 68), so they are table rendering proxies and are not G.I. sockets. That leaves {len(entries)} placed sockets "
 		"against the 31 playfield bulbs the page prints. They are placed as playfield bulbs, observed only; "
-		"the mirrored bottom-view drawing gives no per-string assignment. The two coin-door bulbs are counted but not placed."
+		"the page's mirrored bottom-view drawing labels each socket with its circuit (B, Y, G or V), but the placements have not yet been matched "
+		"to it, so no placement carries a string. The two coin-door bulbs are counted but not placed."
 	)
 	return [_device(
 		"gi.relay", "General Illumination Relay", "gi", GI_GROUP, 0, "used", (MANUAL_SOURCE, CORE_SOURCE, CONTROLLER_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE, RUNTIME_SOURCE),
@@ -1347,7 +1348,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"The UK-only coils 21-23 are projections from the coil location drawing onto US-table objects.",
 			"The toy coils (5, 6, 13, 14, 19, 20) and the Kenny flasher bulb are placed on the primitives the script animates, not on the coil bodies under the playfield.",
 			"No placement has been checked against the factory location drawings by a callout fit, so every placement stays observed.",
-			"The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); the mirrored bottom-view drawing does not place the two it lacks.",
+			"The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); matching the 29 table bulbs to the circuit-labelled sockets of the page's mirrored bottom-view drawing, which would locate the two the table lacks, is not done.",
 		],
 		"promotion_decision": "partial: every used device has a placement or a controlled not-applicable record, but projections and placements the drawings do not yet confirm keep spatial_placement in coverage.missing.",
 	}

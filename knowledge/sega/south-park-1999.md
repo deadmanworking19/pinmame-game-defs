@@ -130,7 +130,9 @@ Placements come from the retained table's script-bound objects, normalized again
   and DR. 7), whose crops are in the excerpts.
 - **G.I.** The table models 29 G.I. sockets, each a bulb-drawing light with its glow double merged, against the 31
   playfield bulbs the G.I. page prints; three more GI-collection lights sit in the turbo bumper caps on matrix lamps 38-40
-  and are not G.I. sockets. The bottom-view drawing assigns no socket to a string and does not place the two the table lacks.
+  and are not G.I. sockets. The page's mirrored bottom-view drawing
+  labels every socket with its circuit (B, Y, G, V); matching the 29 table bulbs to it, which would also locate the two the
+  table lacks, is not done.
 
 Nothing here is a disagreement about the machine; the blockers are missing geometry, so the record carries no conflicts.
 

@@ -26,7 +26,7 @@ Bounds: `left=0 top=0 right=952 bottom=2162`. Every canonical coordinate is x/95
 - The UK-only coils 21-23 are projections from the coil location drawing onto US-table objects.
 - The toy coils (5, 6, 13, 14, 19, 20) and the Kenny flasher bulb are placed on the primitives the script animates, not on the coil bodies under the playfield.
 - No placement has been checked against the factory location drawings by a callout fit, so every placement stays observed.
-- The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); the mirrored bottom-view drawing does not place the two it lacks.
+- The table models 29 G.I. sockets against the 31 playfield bulbs the G.I. page prints (its three GI lights in the turbo bumper caps sit on matrix lamps 38-40 and are excluded); matching the 29 table bulbs to the circuit-labelled sockets of the page's mirrored bottom-view drawing, which would locate the two the table lacks, is not done.
 
 ## Promotion decision
 
