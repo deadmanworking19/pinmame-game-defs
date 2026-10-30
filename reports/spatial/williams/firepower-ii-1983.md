@@ -1,10 +1,10 @@
-# Firepower II (1983) spatial blockers
+# Firepower II (1983) spatial continuation
 
-Coverage remains **partial**. No normalized positions have been inferred.
+Coverage remains **partial**. Located 36 switch sensors/projections, 9 controlled-device effects and 54 playfield emitters. The detailed JSON records each coordinate source, projection, extrapolation, drawing check and unresolved device.
 
-- Exact Firepower II VPX has not been retained/extracted/verified; Firepower 1980 is a different game.
-- No manual drawing pixels/frame have been measured or reconciled to exact VPX controls; no coordinates are asserted.
-- Count and place Type 83 orbit flash bulbs and every stock GI socket. Continued/grouped schematic symbols and all retained top-view/gallery images do not identify a complete socket inventory.
-- Trace original model 521 Ball in Play socket to 9P1/matrix bit: PDF 41 column 1/row 6 disagrees with matrix 6/40 and PDF 51 NOT USED. Photos 50030/50054 and ROM transitions cannot settle physical wiring.
+- Stock GI sockets per branch and individual Type 83 orbit-flash bulbs remain unidentified/unplaced; table GI grouping is not a factory inventory and System 7 supplies no separate GI callback.
+- Ball-ramp sensors10/11 and playfield tilt49 lack defensible individual contact geometry; exact reasons are enumerated.
+- Ball in Play public6/40 physical routing remains conflicted, including a possible parallel backbox load on6; table omission of40 and runtime transitions settle no socket wiring.
+- Drawing measurements, assembly projections, extrapolations and failed drawing checks remain observed. The supplied table has no confirmed successful launch/play report.
 
-The JSON report enumerates every unplaced device, every controlled not_applicable disposition, and transport holes excluded from legal bindings. Manual drawing crops retain native raster resolution. No VPX extraction or manifest is claimed.
+Native drawing crops, grid inspections and the world-space OBJ remain in the external spatial session; the original table and full extraction are immutable. The measurement seed pins every source/transform. Fifty lamp-symbol projections are measured on Figure 2; four bumper emitters use their own bulb meshes. Table insert centers are checked for reconciliation only; measured lamps are not validated against their own drawing. The corrected native flipper-pivot control reads and all old/new pixel corrections are retained in the seed/report. PDF15 regional sling17/18 and PDF17 storage/shooter9/12 observations are explicitly excluded from precise fits; their observed table placements remain. No public GI bindings or stock socket counts are invented.

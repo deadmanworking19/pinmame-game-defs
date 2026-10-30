@@ -1,8 +1,9 @@
 """Deterministic, deliberately partial Firepower II (1983) curation.
 
 Manual = physical construction; pinned source = public transport; retained
-ROM runs = observed behavior. Corpus scripts remain candidates until the exact
-table is verified. No coordinate or Wild Texas compatibility is inferred.
+ROM runs = observed behavior. Corpus and embedded scripts remain candidates
+until play is confirmed. Spatial evidence is pinned separately; Wild Texas
+compatibility is not inferred.
 """
 from __future__ import annotations
 
@@ -18,6 +19,7 @@ from urllib.parse import quote
 
 from pinmame_game_defs.jsonio import canonical_bytes, load_json
 from build_external_evidence_manifest import check_manifest
+import firepower_ii_spatial as spatial
 
 ROOT = Path(__file__).resolve().parents[1]
 MACHINE_ID = "williams.firepower-ii.1983"
@@ -464,7 +466,7 @@ def sources(root: Path) -> list[dict[str, Any]]:
                         "attribution": "Jonathan Selavka, photograph hosted by the Internet Pinball Database", "excerpts": [excerpt("physical-photos.md")]})
     for identifier, (filename, digest) in zip([SCRIPT, OLD_SCRIPT], SCRIPT_FILES.items()):
         records.append({"id": identifier, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/" + SCRIPT_REVISION + "/" + quote(filename, safe="/"),
-                        "revision": SCRIPT_REVISION, "sha256": digest, "locator": f"{filename}; source-text comparison, no exact VPX geometry/launch verification yet",
+                        "revision": SCRIPT_REVISION, "sha256": digest, "locator": f"{filename}; corpus candidate; embedded-script comparison in spatial-method.md; no successful launch/play confirmation",
                         "license": "NOASSERTION", "attribution": "Community table authors credited in the script; Walamab and contributors for FirePower II 1.1; Thalamus and original authors for Firepower2v1.1",
                         "known_working": False, "excerpts": [excerpt("script-bindings.md")]})
     records.append({**next(s for s in records if s["id"] == MANUAL), "id": INSERT,
@@ -496,7 +498,7 @@ def sources(root: Path) -> list[dict[str, Any]]:
         ("photo.wild-texas-42932", "https://www.ipdb.org/images/5500/image-8.jpg", "photos/ipdb-42932-wild-texas-mpu.jpg", "Tony Turner; IPDB 5500 photo42932 https://www.ipdb.org/showpic.pl?id=5500&picno=42932"),
         ("pinside.firepower-ii-gallery", "https://pinside.com/pinball/machine/firepower-ii/gallery", "pinside-firepower-ii-gallery.html", "Pinside and respective photographers;16 retained previews, individual resource URLs/hashes/acquisition times in retained-input manifest"),
         ("pinside.firepower-ii", "https://pinside.com/pinball/machine/firepower-ii", "pinside-firepower-ii.html", "Pinside contributors; June 1983 is a month disagreement with IPDB August 1983, canonical year agrees"),
-        ("vpf.firepower-ii-1-1", "https://www.vpforums.org/index.php?showtopic=47652", "vpf-goldchicco-release-47652.html", "Goldchicco, Walamab, Apophis; VPForums release metadata v1.1, download16123; geometry/download unavailable")]:
+        ("vpf.firepower-ii-1-1", "https://www.vpforums.org/index.php?showtopic=47652", "vpf-goldchicco-release-47652.html", "Goldchicco, Walamab, Apophis; VPForums release metadata v1.1, download16123; capture predates the user-supplied table and supplies no geometry")]:
         spec = next(f for f in retained["files"] if f["path"] == filename)
         records.append({"id": identifier, "kind": "human_review", "uri": uri, "sha256": spec["sha256"],
                         "acquired_at": spec["acquired_at"], "source_id": "ipdb:5500" if "wild-texas" in identifier else "ipdb:857" if "photo." in identifier else identifier,
@@ -531,7 +533,7 @@ def build(root: Path = ROOT) -> dict[str, Any]:
                       "destination": solenoid_id(address), "provenance": provenance(CORE, SOURCE, RUN)} for address, sensor in SPECIAL_SWITCHES.items()]
     relationships.append({"id": "relationship.right-button-lane-change", "kind": "direct", "source": "switch.right-flipper-button",
                           "destination": switch_id(13), "provenance": provenance(CORE, SOURCE, RUN)})
-    return {"format": "pinmame-machine-definition", "schema_version": 2,
+    return spatial.apply({"format": "pinmame-machine-definition", "schema_version": 2,
             "machine": {"id": MACHINE_ID, "name": "Firepower II", "manufacturer": "Williams", "year": 1983,
                         "model_number": "521", "kind": "physical_pinball", "ipdb_id": 857, "opdb_id": "GRWYk-Mb5OV"},
             "controller": {"platform": "pinmame.system-7", "hardware_generation": "0x10000", "inversion_applied_by_emulator": True},
@@ -545,27 +547,15 @@ def build(root: Path = ROOT) -> dict[str, Any]:
             "conflicts": [{"id": "lamp6-40-insert-routing", "path": "outputs",
                            "description": "PDF 13/14 name 6 playfield Shoot Again and 40 Ball in Play; PDF 51 marks 40 NOT USED, while PDF 41 draws backbox 9B6 BALL IN PLAY on column 1/row 6 (public 6). These are different pages of one manual, not independent corroboration. Photos 50030/50054 do not identify socket wiring, and the meaningful runtime 40 bit establishes no fitment. Resolution path: an owner or technician must trace an original model 521 insert-board Ball in Play socket to 9P1 and matrix columns/rows, including whether 6 has a shared backbox load; this requires physical access unavailable in the retained above-playfield/backglass photographs.",
                            "source_refs": [MANUAL, INSERT, "photo.firepower-ii-50038", "photo.firepower-ii-50054", "photo.firepower-ii-50030", RUN]}],
-            "sources": sources(root), "knowledge": {"path": KNOWLEDGE.as_posix(), "status": "partial"}}
+            "sources": sources(root), "knowledge": {"path": KNOWLEDGE.as_posix(), "status": "partial"}}, root)
 
 
-def spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
-    missing = [d["id"] for group in ["inputs", "outputs"] for d in definition[group] if "spatial" not in d]
-    na_records = {d["id"]: d["spatial"]["reason"] for group in ["inputs", "outputs", "displays"] for d in definition[group] if "spatial" in d}
-    return {"format": "pinmame-spatial-blockers", "version": 1, "machine_id": MACHINE_ID,
-            "decision": "partial", "coordinate_convention": "x 0 left / 1 right; y 0 rear / 1 apron, player view",
-            "placements": [], "table_geometry": None, "extraction_manifest": None,
-            "manual": {"sha256": MANUAL_SHA, "drawings": [14, 15, 17, 48, 49, 50, 51, 52, 53, 54, 55]},
-            "unplaced_devices": missing, "not_applicable": na_records,
-            "resolved_dispositions": ["Wild Texas is separately owned by unknown-manufacturer.wild-texas.", "CPU F/D banks are optional emulated Master Command scaffolding, not fitted switches on the drawn CPU assembly.", "Lamp 40 retains cabinet applicability but physical routing is conflicted; runtime activity is not fitment evidence."],
-            "transport_holes": {"solenoid": [*range(26, 45), 49, 50], "switch": [*range(-2, 1), *range(65, 81)], "dip": list(range(3, 9))},
-            "blockers": ["Exact Firepower II VPX has not been retained/extracted/verified; Firepower 1980 is a different game.",
-                         "No manual drawing pixels/frame have been measured or reconciled to exact VPX controls; no coordinates are asserted.",
-                         "Count and place Type 83 orbit flash bulbs and every stock GI socket. Continued/grouped schematic symbols and all retained top-view/gallery images do not identify a complete socket inventory.",
-                         "Trace original model 521 Ball in Play socket to 9P1/matrix bit: PDF 41 column 1/row 6 disagrees with matrix 6/40 and PDF 51 NOT USED. Photos 50030/50054 and ROM transitions cannot settle physical wiring."]}
+def spatial_report(definition: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
+    return spatial.report(definition, root)
 
 
 def report_markdown(report: dict[str, Any]) -> str:
-    return "# Firepower II (1983) spatial blockers\n\nCoverage remains **partial**. No normalized positions have been inferred.\n\n" + "\n".join("- " + s for s in report["blockers"]) + "\n\nThe JSON report enumerates every unplaced device, every controlled not_applicable disposition, and transport holes excluded from legal bindings. Manual drawing crops retain native raster resolution. No VPX extraction or manifest is claimed.\n"
+    return spatial.report_markdown(report)
 
 
 KNOWLEDGE_TEXT = """# Firepower II (Williams, 1983)
@@ -710,8 +700,8 @@ or geometry estimate substitutes for that missing physical evidence.
 
 ## Recreation artifacts and evidence
 
-Two exact pinned corpus scripts remain candidates until the exact table is
-retained and launched. Newer 1.1 has ChangedLamps 6-39/41-60, virtual render
+Two exact pinned corpus scripts remain candidates; the supplied table has
+not been confirmed to launch or play. Newer 1.1 has ChangedLamps 6-39/41-60, virtual render
 doubles and callbacks 1/2/3/4/11/15. It writes unfitted 57/58 for flippers
 and clears 57 on left release. S7 library writes 82/84 correctly first.
 The older script says unverified and pulses 39 from both outlane handlers;
@@ -750,13 +740,59 @@ button 82 display establish the actual copy path. Keyboard/simulator are off.
 - output_semantics and unresolved_conflicts: Ball in Play 6/40 routing above.
   The ROM probes and available photographs were exhausted for this question;
   only physical tracing can settle which bulb is wired to which bit.
-- spatial_placement: no exact VPX is present in Tables, its Archive or
-  Downloads. VPU 7485 and VPF 16123 require signed-in download. Retain the
-  Goldchicco/Walamab/Apophis 1.1 table, extract/hash it and verify its script
-  before reconciling physical controls and individual emitters. Firepower
-  (1980) files, including the misnamed 1983 directb2s, are another game.
-  Manual drawings have not been measured into a reproducible coordinate
-  frame; no positions or fake spatial credit are asserted.
+- spatial_placement: the exact supplied Goldchicco/Apophis 1.1 table is now
+  retained and extracted. The spatial report enumerates normalized sensor,
+  effect and emitter placements and each projection/extrapolation. Fifty
+  lamp locations are measured from Figure 2 rather than its table's insert
+  render lights; four bumper lamps use their own modeled bulb meshes.
+  Ball-ramp contacts 10/11, playfield tilt 49, individual orbit-flash bulbs
+  and stock GI sockets still lack defensible placement. Their absence keeps
+  this dimension missing. Original-machine underside/branch/socket evidence
+  is needed; table grouping is not a stock inventory.
+
+## Retained spatial continuation
+
+The read-only user-supplied FirePower II (Williams 1983) 1.1.vpx is pinned
+at SHA256 225acbf289239139e069886ebc1c7ba9754905a348ca2aba9f1a3822b1564eeb.
+The full extraction manifest and native manual control readings are in the
+spatial report and its seed. Bounds are x0..1000/y0..2000, normalized in
+player view with y increasing toward the apron. Six independent bumper and
+flipper controls reconcile each of PDF14/15/17 with leave-one-out checks;
+all drawings, projections, extrapolations and rejected candidates are named.
+Fifty manual emitter projections retain three-decimal scan precision.
+The four NFadeLm bumper doubles collapse onto L41a-L44a, each showing its
+own bulb mesh. Assembly sensor/effect projections remain observed; they do
+not claim the exact contact or winding axis. Sensors 10/11 cannot both be
+put on the one abstract BallRelease kicker, and 49 has no located symbol.
+The baked OrbitGate mesh supplies only an observed gate-assembly projection;
+its stored origin and the broad Trigger1 routing helper are rejected as
+physical contact centers. Sling effects use exported world-space mesh bounds.
+
+The embedded Windows-1252 script has SHA256
+7a177b7170ea7113eccd11ba0c8ba232b534dcd92162495dc44b77bfdcf17922.
+Its dampener scales x/y once, whereas the corpus version scales x/y/z twice.
+I/O bindings agree; byte differences are not dismissed as encoding alone.
+The contributor confirms the exact table has not been tested in play. Earlier
+controller and runtime facts, including the nudge7 and flipper57/58 defects,
+are preserved. Light62 has no identified bulb mesh, so callback4 still has
+no individual emitter placement. The GI collection and visible unbound bulb
+primitives document table geometry only; no new GI callbacks or relay aliases
+are created and no stock bulb quantity is inferred. Lamp6's photographed
+playfield member is placed, while possible parallel backbox load and lamp40
+remain conflicted. No coverage requirement is removed for this continuation.
+
+Independent parent source and overlay inspection identified four flipper-pivot
+control reads above their inner circles. Primary native-crop inspection corrected
+PDF14 left/right to approximately (540,2550)/(980,2550) and PDF17 to
+(645,2545)/(1085,2545), at five-pixel precision; PDF15 controls were retained.
+Old/new readings, crop boxes, frame/crop hashes and reasons are in the spatial
+seed. The PDF14 refit recomputes all fifty manual lamp-symbol projections at
+three-decimal normalized precision. PDF15 leaderless sling labels17/18 and
+PDF17 storage/shooter labels9/12 are retained as excluded raw observations and
+cannot enter precise callout fits. Their observed table assembly/sensor
+placements remain. Parent then verified the corrected native overlays and
+source controls. This source check is separate from the independent
+contribution review and does not assert tested play.
 
 Driver mapping, input semantics, mechanism inventory/behavior, polarity,
 variant separation, recreation notes and provenance have source-backed
@@ -818,6 +854,7 @@ def conversion(root: Path = ROOT) -> dict[str, Any]:
             "knowledge": {"path": CONVERSION_KNOWLEDGE.as_posix(), "status": "partial"}}
 
 def verify_files(root: Path = ROOT) -> None:
+    spatial.read_seed(root)
     for relative, digest in [(TILT, TILT_SHA), (RETAINED, RETAINED_SHA)]:
         if not (root / relative).is_file() or sha(root / relative) != digest:
             raise RuntimeError(f"retained evidence manifest absent or changed: {relative}")
@@ -840,7 +877,7 @@ def verify_files(root: Path = ROOT) -> None:
 def expected_artifacts(root: Path = ROOT) -> dict[Path, bytes]:
     verify_files(root)
     definition = build(root)
-    report = spatial_report(definition)
+    report = spatial_report(definition, root)
     return {DEFINITION: canonical_bytes(definition), SEED: canonical_bytes(definition),
             CONVERSION: canonical_bytes(conversion(root)), CONVERSION_SEED: canonical_bytes(conversion(root)),
             CONVERSION_KNOWLEDGE: CONVERSION_TEXT.encode("utf-8"),
@@ -949,6 +986,7 @@ def verify_external(root: Path = ROOT) -> None:
             members = {m.filename: (m.file_size, hashlib.sha1(z.read(m)).hexdigest()) for m in z.infolist()}
         if members != ROM_MEMBERS:
             raise RuntimeError("ROM members differ from pinned s7games.c declarations")
+    spatial.verify_external(root, configured_root)
 
 
 def main() -> None:

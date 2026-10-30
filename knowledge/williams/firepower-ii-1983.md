@@ -140,8 +140,8 @@ or geometry estimate substitutes for that missing physical evidence.
 
 ## Recreation artifacts and evidence
 
-Two exact pinned corpus scripts remain candidates until the exact table is
-retained and launched. Newer 1.1 has ChangedLamps 6-39/41-60, virtual render
+Two exact pinned corpus scripts remain candidates; the supplied table has
+not been confirmed to launch or play. Newer 1.1 has ChangedLamps 6-39/41-60, virtual render
 doubles and callbacks 1/2/3/4/11/15. It writes unfitted 57/58 for flippers
 and clears 57 on left release. S7 library writes 82/84 correctly first.
 The older script says unverified and pulses 39 from both outlane handlers;
@@ -180,13 +180,59 @@ button 82 display establish the actual copy path. Keyboard/simulator are off.
 - output_semantics and unresolved_conflicts: Ball in Play 6/40 routing above.
   The ROM probes and available photographs were exhausted for this question;
   only physical tracing can settle which bulb is wired to which bit.
-- spatial_placement: no exact VPX is present in Tables, its Archive or
-  Downloads. VPU 7485 and VPF 16123 require signed-in download. Retain the
-  Goldchicco/Walamab/Apophis 1.1 table, extract/hash it and verify its script
-  before reconciling physical controls and individual emitters. Firepower
-  (1980) files, including the misnamed 1983 directb2s, are another game.
-  Manual drawings have not been measured into a reproducible coordinate
-  frame; no positions or fake spatial credit are asserted.
+- spatial_placement: the exact supplied Goldchicco/Apophis 1.1 table is now
+  retained and extracted. The spatial report enumerates normalized sensor,
+  effect and emitter placements and each projection/extrapolation. Fifty
+  lamp locations are measured from Figure 2 rather than its table's insert
+  render lights; four bumper lamps use their own modeled bulb meshes.
+  Ball-ramp contacts 10/11, playfield tilt 49, individual orbit-flash bulbs
+  and stock GI sockets still lack defensible placement. Their absence keeps
+  this dimension missing. Original-machine underside/branch/socket evidence
+  is needed; table grouping is not a stock inventory.
+
+## Retained spatial continuation
+
+The read-only user-supplied FirePower II (Williams 1983) 1.1.vpx is pinned
+at SHA256 225acbf289239139e069886ebc1c7ba9754905a348ca2aba9f1a3822b1564eeb.
+The full extraction manifest and native manual control readings are in the
+spatial report and its seed. Bounds are x0..1000/y0..2000, normalized in
+player view with y increasing toward the apron. Six independent bumper and
+flipper controls reconcile each of PDF14/15/17 with leave-one-out checks;
+all drawings, projections, extrapolations and rejected candidates are named.
+Fifty manual emitter projections retain three-decimal scan precision.
+The four NFadeLm bumper doubles collapse onto L41a-L44a, each showing its
+own bulb mesh. Assembly sensor/effect projections remain observed; they do
+not claim the exact contact or winding axis. Sensors 10/11 cannot both be
+put on the one abstract BallRelease kicker, and 49 has no located symbol.
+The baked OrbitGate mesh supplies only an observed gate-assembly projection;
+its stored origin and the broad Trigger1 routing helper are rejected as
+physical contact centers. Sling effects use exported world-space mesh bounds.
+
+The embedded Windows-1252 script has SHA256
+7a177b7170ea7113eccd11ba0c8ba232b534dcd92162495dc44b77bfdcf17922.
+Its dampener scales x/y once, whereas the corpus version scales x/y/z twice.
+I/O bindings agree; byte differences are not dismissed as encoding alone.
+The contributor confirms the exact table has not been tested in play. Earlier
+controller and runtime facts, including the nudge7 and flipper57/58 defects,
+are preserved. Light62 has no identified bulb mesh, so callback4 still has
+no individual emitter placement. The GI collection and visible unbound bulb
+primitives document table geometry only; no new GI callbacks or relay aliases
+are created and no stock bulb quantity is inferred. Lamp6's photographed
+playfield member is placed, while possible parallel backbox load and lamp40
+remain conflicted. No coverage requirement is removed for this continuation.
+
+Independent parent source and overlay inspection identified four flipper-pivot
+control reads above their inner circles. Primary native-crop inspection corrected
+PDF14 left/right to approximately (540,2550)/(980,2550) and PDF17 to
+(645,2545)/(1085,2545), at five-pixel precision; PDF15 controls were retained.
+Old/new readings, crop boxes, frame/crop hashes and reasons are in the spatial
+seed. The PDF14 refit recomputes all fifty manual lamp-symbol projections at
+three-decimal normalized precision. PDF15 leaderless sling labels17/18 and
+PDF17 storage/shooter labels9/12 are retained as excluded raw observations and
+cannot enter precise callout fits. Their observed table assembly/sensor
+placements remain. Parent then verified the corrected native overlays and
+source controls. This source check is separate from the independent
+contribution review and does not assert tested play.
 
 Driver mapping, input semantics, mechanism inventory/behavior, polarity,
 variant separation, recreation notes and provenance have source-backed

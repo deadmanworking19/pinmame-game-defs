@@ -1,28 +1,1402 @@
 {
   "blockers": [
-    "Exact Firepower II VPX has not been retained/extracted/verified; Firepower 1980 is a different game.",
-    "No manual drawing pixels/frame have been measured or reconciled to exact VPX controls; no coordinates are asserted.",
-    "Count and place Type 83 orbit flash bulbs and every stock GI socket. Continued/grouped schematic symbols and all retained top-view/gallery images do not identify a complete socket inventory.",
-    "Trace original model 521 Ball in Play socket to 9P1/matrix bit: PDF 41 column 1/row 6 disagrees with matrix 6/40 and PDF 51 NOT USED. Photos 50030/50054 and ROM transitions cannot settle physical wiring."
+    "Stock GI sockets per branch and individual Type 83 orbit-flash bulbs remain unidentified/unplaced; table GI grouping is not a factory inventory and System 7 supplies no separate GI callback.",
+    "Ball-ramp sensors10/11 and playfield tilt49 lack defensible individual contact geometry; exact reasons are enumerated.",
+    "Ball in Play public6/40 physical routing remains conflicted, including a possible parallel backbox load on6; table omission of40 and runtime transitions settle no socket wiring.",
+    "Drawing measurements, assembly projections, extrapolations and failed drawing checks remain observed. The supplied table has no confirmed successful launch/play report."
   ],
-  "coordinate_convention": "x 0 left / 1 right; y 0 rear / 1 apron, player view",
+  "coordinate_convention": "x 0 left / 1 right; y 0 rear / 1 apron, player view; VPX normalized with shared six-decimal rounding; manual readings three decimals",
+  "counts": {
+    "lamp": 54,
+    "solenoid": 9,
+    "switch": 36
+  },
   "decision": "partial",
-  "extraction_manifest": null,
+  "drawing_seed": {
+    "path": "tools/seeds/williams/firepower-ii-1983-spatial.json",
+    "sha256": "c69ff28e00f35760f1a0f4e50087f0d7fe91b9323ce21efd137a3db324a22206"
+  },
+  "export_geometry_controls": [
+    {
+      "exported_base_bounds_center": [
+        342.408965,
+        389.82771
+      ],
+      "normalized_offset": 0.000185,
+      "object": "Bumper1",
+      "table_center": [
+        342.41486,
+        390.19885
+      ]
+    },
+    {
+      "exported_base_bounds_center": [
+        580.3530000000001,
+        438.39119
+      ],
+      "normalized_offset": 0.000185,
+      "object": "Bumper2",
+      "table_center": [
+        580.3589,
+        438.76233
+      ]
+    },
+    {
+      "exported_base_bounds_center": [
+        575.0913,
+        643.591705
+      ],
+      "normalized_offset": 0.000185,
+      "object": "Bumper3",
+      "table_center": [
+        575.09717,
+        643.9628
+      ]
+    },
+    {
+      "exported_base_bounds_center": [
+        358.19867,
+        595.0685149999999
+      ],
+      "normalized_offset": 0.000186,
+      "object": "Bumper4",
+      "table_center": [
+        358.20456,
+        595.43964
+      ]
+    }
+  ],
+  "extraction_manifest": {
+    "algorithm": "tools/build_external_evidence_manifest.py canonical sorted POSIX path/size/SHA256 entries, compact sorted-key JSON plus LF; exclude only manifest.json/manifest.sha256",
+    "byte_count": 82666546,
+    "file_count": 1209,
+    "sha256": "3331a0e3d69886c1c37f68ee5895469f7352e033611fa0164206e827a9337bc9"
+  },
   "format": "pinmame-spatial-blockers",
+  "layout_photo_refs": [
+    "photo.firepower-ii-50035",
+    "photo.firepower-ii-50038",
+    "photo.firepower-ii-50042"
+  ],
   "machine_id": "williams.firepower-ii.1983",
   "manual": {
-    "drawings": [
-      14,
-      15,
-      17,
-      48,
-      49,
-      50,
-      51,
-      52,
-      53,
-      54,
-      55
+    "correction_crops": [
+      {
+        "box": [
+          475,
+          2480,
+          610,
+          2615
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "left-pivot",
+        "page": 14,
+        "path": "primary/corrections/pdf-14-left-pivot-native.png",
+        "render": "native-pages/page-014.png",
+        "sha256": "ef1ef188bc9b1bab8be98b535c92f826a639b2a8185e6a0ab8853ad60f846d0c",
+        "source_sha256": "98106cd8c88633e2243380e65fccb439b3efffce50247d42eac449017471f218",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          915,
+          2480,
+          1050,
+          2615
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "right-pivot",
+        "page": 14,
+        "path": "primary/corrections/pdf-14-right-pivot-native.png",
+        "render": "native-pages/page-014.png",
+        "sha256": "2c341c88353f116dab3bed3472ea3a8024ebb763739df8af38624bd9f68af646",
+        "source_sha256": "98106cd8c88633e2243380e65fccb439b3efffce50247d42eac449017471f218",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          580,
+          2480,
+          715,
+          2615
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "left-pivot",
+        "page": 17,
+        "path": "primary/corrections/pdf-17-left-pivot-native.png",
+        "render": "native-pages/page-017.png",
+        "sha256": "657d75ccd6f1a5677c4641cf6d0fcd2dc01b569080b5f210ec5cb09cad67bca4",
+        "source_sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          1020,
+          2480,
+          1155,
+          2615
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "right-pivot",
+        "page": 17,
+        "path": "primary/corrections/pdf-17-right-pivot-native.png",
+        "render": "native-pages/page-017.png",
+        "sha256": "c88f14cab7231226d3ac74d7746289abe9a12477a6f969ff24b8d2cc2c48a5aa",
+        "source_sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          480,
+          2470,
+          615,
+          2605
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "left-pivot-control",
+        "page": 15,
+        "path": "primary/corrections/pdf-15-left-pivot-control-native.png",
+        "render": "native-pages/page-015.png",
+        "sha256": "56e4b7f664847f9b1c6eb9143a2fcac771e55d6c053bfc57670f21d01292bfb9",
+        "source_sha256": "a2438f7966518d2fc9bbd60b18e97beeec3088df9993ef0a0197e90194d029ef",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          920,
+          2470,
+          1055,
+          2605
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "right-pivot-control",
+        "page": 15,
+        "path": "primary/corrections/pdf-15-right-pivot-control-native.png",
+        "render": "native-pages/page-015.png",
+        "sha256": "025bbc60d554efede8835abf9e4a5601944576a35d84cb148e071462aeb49077",
+        "source_sha256": "a2438f7966518d2fc9bbd60b18e97beeec3088df9993ef0a0197e90194d029ef",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          350,
+          2000,
+          1130,
+          2380
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "regional-sling-labels",
+        "page": 15,
+        "path": "primary/corrections/pdf-15-regional-sling-labels-native.png",
+        "render": "native-pages/page-015.png",
+        "sha256": "10ae32d29f4f6ddaaa89514b5f360677299fb7527fbb482234b0eb8f36a3d839",
+        "source_sha256": "a2438f7966518d2fc9bbd60b18e97beeec3088df9993ef0a0197e90194d029ef",
+        "source_size": [
+          3300,
+          4317
+        ]
+      },
+      {
+        "box": [
+          780,
+          2500,
+          1580,
+          2960
+        ],
+        "derivation": "Pillow crop from original retained native frame; no resize, threshold or rotation. Separate pivot grid inspection is enlarged 4x with nearest-neighbor only.",
+        "name": "storage-and-shooter-labels",
+        "page": 17,
+        "path": "primary/corrections/pdf-17-storage-and-shooter-labels-native.png",
+        "render": "native-pages/page-017.png",
+        "sha256": "ce967acdd3dddd567bd1794373d03e1fb3f0021cb2461581127193caa70ba028",
+        "source_sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2",
+        "source_size": [
+          3300,
+          4317
+        ]
+      }
+    ],
+    "correction_review": {
+      "known_working": false,
+      "play_confirmation": "Contributor confirms the exact supplied table has not been tested in play.",
+      "precision": "Corrected pivot centers visually read from original scan pixels, rounded to 5-pixel precision; no table coordinates used to read source pixels.",
+      "source_inspection": "Parent completed independent native source/grid/overlay inspection of the preceding candidate. Primary author independently rechecked the tight original native crops and corrected the final point reads. Parent then verified the corrected native overlays and source controls; this source check is separate from the independent contribution review."
+    },
+    "pages": {
+      "pdf-14": {
+        "controls": [
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper1",
+            "pixel": [
+              620,
+              862
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper2",
+            "pixel": [
+              925,
+              925
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper4",
+            "pixel": [
+              642,
+              1132
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper3",
+            "pixel": [
+              915,
+              1190
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "LeftFlipper",
+            "pixel": [
+              540,
+              2550
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "RightFlipper",
+            "pixel": [
+              980,
+              2550
+            ]
+          }
+        ],
+        "excluded": {},
+        "external_crop": {
+          "box": [
+            100,
+            230,
+            1540,
+            3080
+          ],
+          "path": "primary/page-014-drawing.png",
+          "sha256": "4f595d444086ef8c550cec9e2414afb17ca8e226b13e179e5613f7734737a02c"
+        },
+        "frame_corners": [
+          [
+            130,
+            263
+          ],
+          [
+            1520,
+            263
+          ],
+          [
+            1520,
+            3054
+          ],
+          [
+            130,
+            3054
+          ]
+        ],
+        "page": 14,
+        "pixel_size": [
+          3300,
+          4317
+        ],
+        "reads": [
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "6",
+            "pixel": [
+              574,
+              2405
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "7",
+            "pixel": [
+              899,
+              2288
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "8",
+            "pixel": [
+              435,
+              1470
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "9",
+            "pixel": [
+              759,
+              2448
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "10",
+            "pixel": [
+              760,
+              2374
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "11",
+            "pixel": [
+              757,
+              2292
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "12",
+            "pixel": [
+              762,
+              2214
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "13",
+            "pixel": [
+              761,
+              2140
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "14",
+            "pixel": [
+              759,
+              2062
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "15",
+            "pixel": [
+              761,
+              1983
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "16",
+            "pixel": [
+              762,
+              1900
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "17",
+            "pixel": [
+              760,
+              1820
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "18",
+            "pixel": [
+              762,
+              1741
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "19",
+            "pixel": [
+              642,
+              1646
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "20",
+            "pixel": [
+              722,
+              1646
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "21",
+            "pixel": [
+              803,
+              1646
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "22",
+            "pixel": [
+              883,
+              1646
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "23",
+            "pixel": [
+              762,
+              1562
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "24",
+            "pixel": [
+              764,
+              1467
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "25",
+            "pixel": [
+              519,
+              1460
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "26",
+            "pixel": [
+              585,
+              1487
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "27",
+            "pixel": [
+              649,
+              1516
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "28",
+            "pixel": [
+              894,
+              1527
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "29",
+            "pixel": [
+              965,
+              1497
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "30",
+            "pixel": [
+              1033,
+              1474
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "31",
+            "pixel": [
+              1094,
+              1645
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "32",
+            "pixel": [
+              1096,
+              1737
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "33",
+            "pixel": [
+              1095,
+              1823
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "34",
+            "pixel": [
+              553,
+              480
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "35",
+            "pixel": [
+              690,
+              505
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "36",
+            "pixel": [
+              862,
+              540
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "37",
+            "pixel": [
+              999,
+              566
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "38",
+            "pixel": [
+              250,
+              2160
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "39",
+            "pixel": [
+              1276,
+              2158
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "41",
+            "pixel": [
+              642,
+              1132
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "42",
+            "pixel": [
+              925,
+              925
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "43",
+            "pixel": [
+              620,
+              862
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "44",
+            "pixel": [
+              915,
+              1190
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "45",
+            "pixel": [
+              336,
+              2090
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "46",
+            "pixel": [
+              1189,
+              2092
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "47",
+            "pixel": [
+              448,
+              1973
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "48",
+            "pixel": [
+              405,
+              1886
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "49",
+            "pixel": [
+              921,
+              1820
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "50",
+            "pixel": [
+              975,
+              1876
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "51",
+            "pixel": [
+              1032,
+              1934
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "52",
+            "pixel": [
+              1188,
+              1338
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "53",
+            "pixel": [
+              1197,
+              1260
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "54",
+            "pixel": [
+              1211,
+              1180
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "55",
+            "pixel": [
+              1228,
+              1074
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "56",
+            "pixel": [
+              775,
+              1075
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "57",
+            "pixel": [
+              776,
+              990
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "58",
+            "pixel": [
+              775,
+              912
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "59",
+            "pixel": [
+              775,
+              785
+            ]
+          },
+          {
+            "feature": "lamp symbol center (bumper part center for 41-44)",
+            "label": "60",
+            "pixel": [
+              396,
+              1360
+            ]
+          }
+        ],
+        "render": "native-pages/page-014.png",
+        "sha256": "98106cd8c88633e2243380e65fccb439b3efffce50247d42eac449017471f218"
+      },
+      "pdf-15": {
+        "controls": [
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper1",
+            "pixel": [
+              629,
+              830
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper2",
+            "pixel": [
+              936,
+              897
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper4",
+            "pixel": [
+              650,
+              1102
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper3",
+            "pixel": [
+              925,
+              1167
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "LeftFlipper",
+            "pixel": [
+              548,
+              2522
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "RightFlipper",
+            "pixel": [
+              987,
+              2525
+            ]
+          }
+        ],
+        "excluded": {
+          "1": "Leaderless number near outhole; use assembly projection, not number.",
+          "17": "Leaderless regional number beside the left sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+          "18": "Leaderless regional number beside the right sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+          "2": "Number names storage thrower assembly; no exact winding center.",
+          "3": "Number beside saucer; use assembly projection.",
+          "4": "Dashed group marker does not identify individual Type 83 sockets."
+        },
+        "excluded_reads": [
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "17",
+            "pixel": [
+              531,
+              2170
+            ],
+            "reason": "Leaderless regional number beside the left sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+            "use": "Retained raw source observation only; prohibited from precise callout fits."
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "18",
+            "pixel": [
+              999,
+              2173
+            ],
+            "reason": "Leaderless regional number beside the right sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+            "use": "Retained raw source observation only; prohibited from precise callout fits."
+          }
+        ],
+        "external_crop": {
+          "box": [
+            100,
+            200,
+            1550,
+            3060
+          ],
+          "path": "primary/page-015-drawing.png",
+          "sha256": "7332f02051a7e56839c9a55dd02dcc6b89b002459e12c2d3683b382c0398c5be"
+        },
+        "frame_corners": [
+          [
+            130,
+            252
+          ],
+          [
+            1520,
+            252
+          ],
+          [
+            1520,
+            3015
+          ],
+          [
+            130,
+            3015
+          ]
+        ],
+        "page": 15,
+        "pixel_size": [
+          3300,
+          4317
+        ],
+        "reads": [
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "19",
+            "pixel": [
+              650,
+              1102
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "20",
+            "pixel": [
+              936,
+              897
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "21",
+            "pixel": [
+              629,
+              830
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "22",
+            "pixel": [
+              925,
+              1167
+            ]
+          }
+        ],
+        "render": "native-pages/page-015.png",
+        "sha256": "a2438f7966518d2fc9bbd60b18e97beeec3088df9993ef0a0197e90194d029ef"
+      },
+      "pdf-17": {
+        "controls": [
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper1",
+            "pixel": [
+              713,
+              858
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper2",
+            "pixel": [
+              1022,
+              917
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper4",
+            "pixel": [
+              736,
+              1127
+            ]
+          },
+          {
+            "feature": "bumper concentric-circle center",
+            "object": "Bumper3",
+            "pixel": [
+              1010,
+              1185
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "LeftFlipper",
+            "pixel": [
+              645,
+              2545
+            ]
+          },
+          {
+            "feature": "flipper pivot center",
+            "object": "RightFlipper",
+            "pixel": [
+              1085,
+              2545
+            ]
+          }
+        ],
+        "excluded": {
+          "10": "Text in storage ramp; no discrete sensor symbol.",
+          "11": "Text in storage ramp; no discrete sensor symbol.",
+          "12": "Shooter-lane label without a drawn contact symbol. Retain the observed script-bound sw12 table sensor geometry without this precise drawing check.",
+          "13": "Virtual matrix copy; dashed circle by flipper is not a separate sensor.",
+          "40": "Dashed number above orbit hinge; contact position not resolved by leader.",
+          "47": "Dashed assembly label, sensor projection rather than directly drawn scoring contact.",
+          "48": "Dashed assembly label, sensor projection rather than directly drawn scoring contact.",
+          "49": "Legend names Playfield Tilt but no located symbol appears.",
+          "9": "Leaderless label within the broad storage-ramp drawing; no discrete contact symbol. Retain the observed table Drain assembly sensor projection without this precise drawing check."
+        },
+        "excluded_reads": [
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "9",
+            "pixel": [
+              960,
+              2875
+            ],
+            "reason": "Leaderless label within the broad storage-ramp drawing; no discrete contact symbol. Retain the observed table Drain assembly sensor projection without this precise drawing check.",
+            "use": "Retained raw source observation only; prohibited from precise callout fits."
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "12",
+            "pixel": [
+              1500,
+              2600
+            ],
+            "reason": "Shooter-lane label without a drawn contact symbol. Retain the observed script-bound sw12 table sensor geometry without this precise drawing check.",
+            "use": "Retained raw source observation only; prohibited from precise callout fits."
+          }
+        ],
+        "external_crop": {
+          "box": [
+            80,
+            180,
+            1600,
+            3260
+          ],
+          "path": "primary/page-017-drawing.png",
+          "sha256": "988a3f227ec7593bab7b34db55b5d184fe2e243a227fe687498240feb8bb4c67"
+        },
+        "frame_corners": [
+          [
+            237,
+            254
+          ],
+          [
+            1630,
+            254
+          ],
+          [
+            1630,
+            3050
+          ],
+          [
+            237,
+            3050
+          ]
+        ],
+        "page": 17,
+        "pixel_size": [
+          3300,
+          4317
+        ],
+        "reads": [
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "14",
+            "pixel": [
+              420,
+              1790
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "15",
+            "pixel": [
+              1325,
+              1860
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "16",
+            "pixel": [
+              414,
+              1157
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "17",
+            "pixel": [
+              480,
+              1490
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "18",
+            "pixel": [
+              410,
+              1035
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "19",
+            "pixel": [
+              320,
+              615
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "20",
+            "pixel": [
+              598,
+              720
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "22",
+            "pixel": [
+              1185,
+              910
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "23",
+            "pixel": [
+              1285,
+              763
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "24",
+            "pixel": [
+              875,
+              625
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "25",
+            "pixel": [
+              610,
+              1290
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "26",
+            "pixel": [
+              685,
+              1300
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "27",
+            "pixel": [
+              770,
+              1320
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "28",
+            "pixel": [
+              1010,
+              1350
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "29",
+            "pixel": [
+              1095,
+              1355
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "30",
+            "pixel": [
+              1165,
+              1345
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "31",
+            "pixel": [
+              1295,
+              1550
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "32",
+            "pixel": [
+              1295,
+              1635
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "33",
+            "pixel": [
+              1295,
+              1720
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "34",
+            "pixel": [
+              646,
+              584
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "35",
+            "pixel": [
+              785,
+              605
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "36",
+            "pixel": [
+              955,
+              650
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "37",
+            "pixel": [
+              1093,
+              670
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "38",
+            "pixel": [
+              349,
+              2280
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "39",
+            "pixel": [
+              1380,
+              2280
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "41",
+            "pixel": [
+              736,
+              1127
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "42",
+            "pixel": [
+              1022,
+              917
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "43",
+            "pixel": [
+              713,
+              858
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "44",
+            "pixel": [
+              1010,
+              1185
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "45",
+            "pixel": [
+              445,
+              2215
+            ]
+          },
+          {
+            "feature": "part center or adjacent printed part number; coarse callout check",
+            "label": "46",
+            "pixel": [
+              1285,
+              2215
+            ]
+          }
+        ],
+        "render": "native-pages/page-017.png",
+        "sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2"
+      }
+    },
+    "read_corrections": [
+      {
+        "labels": [
+          "17",
+          "18"
+        ],
+        "page": "pdf-15",
+        "reason": "Native grid inspection: the callout centers are x531/999; initial notes omitted the crop x-offset."
+      },
+      {
+        "labels": [
+          "23"
+        ],
+        "page": "pdf-17",
+        "reason": "Native saucer circle center is x1285; initial notes omitted the crop x-offset."
+      },
+      {
+        "native_crop": "primary/corrections/pdf-14-left-pivot-native.png",
+        "native_crop_box": [
+          475,
+          2480,
+          610,
+          2615
+        ],
+        "native_crop_sha256": "ef1ef188bc9b1bab8be98b535c92f826a639b2a8185e6a0ab8853ad60f846d0c",
+        "new_pixel": [
+          540,
+          2550
+        ],
+        "object": "LeftFlipper",
+        "old_pixel": [
+          542,
+          2534
+        ],
+        "page": "pdf-14",
+        "precision_pixels": 5,
+        "reason": "Prior read sits above the inner pivot circle. Corrected to its visually inspected center on the original native scan, using a 5-pixel reading grid; no table-derived pixel coordinates.",
+        "source_render": "native-pages/page-014.png",
+        "source_sha256": "98106cd8c88633e2243380e65fccb439b3efffce50247d42eac449017471f218"
+      },
+      {
+        "native_crop": "primary/corrections/pdf-14-right-pivot-native.png",
+        "native_crop_box": [
+          915,
+          2480,
+          1050,
+          2615
+        ],
+        "native_crop_sha256": "2c341c88353f116dab3bed3472ea3a8024ebb763739df8af38624bd9f68af646",
+        "new_pixel": [
+          980,
+          2550
+        ],
+        "object": "RightFlipper",
+        "old_pixel": [
+          978,
+          2538
+        ],
+        "page": "pdf-14",
+        "precision_pixels": 5,
+        "reason": "Prior read sits above the inner pivot circle. Corrected to its visually inspected center on the original native scan, using a 5-pixel reading grid; no table-derived pixel coordinates.",
+        "source_render": "native-pages/page-014.png",
+        "source_sha256": "98106cd8c88633e2243380e65fccb439b3efffce50247d42eac449017471f218"
+      },
+      {
+        "native_crop": "primary/corrections/pdf-17-left-pivot-native.png",
+        "native_crop_box": [
+          580,
+          2480,
+          715,
+          2615
+        ],
+        "native_crop_sha256": "657d75ccd6f1a5677c4641cf6d0fcd2dc01b569080b5f210ec5cb09cad67bca4",
+        "new_pixel": [
+          645,
+          2545
+        ],
+        "object": "LeftFlipper",
+        "old_pixel": [
+          645,
+          2536
+        ],
+        "page": "pdf-17",
+        "precision_pixels": 5,
+        "reason": "Prior read sits above the inner pivot circle. Corrected to its visually inspected center on the original native scan, using a 5-pixel reading grid; no table-derived pixel coordinates.",
+        "source_render": "native-pages/page-017.png",
+        "source_sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2"
+      },
+      {
+        "native_crop": "primary/corrections/pdf-17-right-pivot-native.png",
+        "native_crop_box": [
+          1020,
+          2480,
+          1155,
+          2615
+        ],
+        "native_crop_sha256": "c88f14cab7231226d3ac74d7746289abe9a12477a6f969ff24b8d2cc2c48a5aa",
+        "new_pixel": [
+          1085,
+          2545
+        ],
+        "object": "RightFlipper",
+        "old_pixel": [
+          1085,
+          2534
+        ],
+        "page": "pdf-17",
+        "precision_pixels": 5,
+        "reason": "Prior read sits above the inner pivot circle. Corrected to its visually inspected center on the original native scan, using a 5-pixel reading grid; no table-derived pixel coordinates.",
+        "source_render": "native-pages/page-017.png",
+        "source_sha256": "647d6e714da76c8408cfaca05492a3a225155b1db242e5932958c884960186a2"
+      }
     ],
     "sha256": "c601834cd57c8cf01423355304d487f3143d92ef1374187344d264eab7e6e6d8"
   },
@@ -163,13 +1537,4302 @@
     "virtual.unused-solenoid-8": "unused",
     "virtual.unused-solenoid-9": "unused"
   },
-  "placements": [],
-  "resolved_dispositions": [
-    "Wild Texas is separately owned by unknown-manufacturer.wild-texas.",
-    "CPU F/D banks are optional emulated Master Command scaffolding, not fitted switches on the drawn CPU assembly.",
-    "Lamp 40 retains cabinet applicability but physical routing is conflicted; runtime activity is not fitment evidence."
+  "placements": [
+    {
+      "address": 6,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.shoot-again-playfield",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L6",
+      "page": "pdf-14",
+      "pixel": [
+        574,
+        2405
+      ],
+      "placement_id": "placement.lamp-6",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0058,
+        "label": "6",
+        "page": "pdf-14",
+        "pixel": [
+          574,
+          2405
+        ],
+        "point": "symbol_centre",
+        "read": 0
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.315,
+      "y": 0.78
+    },
+    {
+      "address": 7,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.double-score",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L7",
+      "page": "pdf-14",
+      "pixel": [
+        899,
+        2288
+      ],
+      "placement_id": "placement.lamp-7",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0023,
+        "control_offset": 0.0026,
+        "label": "7",
+        "page": "pdf-14",
+        "pixel": [
+          899,
+          2288
+        ],
+        "point": "symbol_centre",
+        "read": 1
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.564,
+      "y": 0.736
+    },
+    {
+      "address": 8,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.bonus-holdover-orbit",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L8",
+      "page": "pdf-14",
+      "pixel": [
+        435,
+        1470
+      ],
+      "placement_id": "placement.lamp-8",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0105,
+        "control_offset": 0.0123,
+        "label": "8",
+        "page": "pdf-14",
+        "pixel": [
+          435,
+          1470
+        ],
+        "point": "symbol_centre",
+        "read": 2
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.204,
+      "y": 0.425
+    },
+    {
+      "address": 9,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.1-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L9",
+      "page": "pdf-14",
+      "pixel": [
+        759,
+        2448
+      ],
+      "placement_id": "placement.lamp-9",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0033,
+        "label": "9",
+        "page": "pdf-14",
+        "pixel": [
+          759,
+          2448
+        ],
+        "point": "symbol_centre",
+        "read": 3
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.457,
+      "y": 0.796
+    },
+    {
+      "address": 10,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.2-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L10",
+      "page": "pdf-14",
+      "pixel": [
+        760,
+        2374
+      ],
+      "placement_id": "placement.lamp-10",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0014,
+        "control_offset": 0.0019,
+        "label": "10",
+        "page": "pdf-14",
+        "pixel": [
+          760,
+          2374
+        ],
+        "point": "symbol_centre",
+        "read": 4
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.458,
+      "y": 0.768
+    },
+    {
+      "address": 11,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.3-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L11",
+      "page": "pdf-14",
+      "pixel": [
+        757,
+        2292
+      ],
+      "placement_id": "placement.lamp-11",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0012,
+        "control_offset": 0.0021,
+        "label": "11",
+        "page": "pdf-14",
+        "pixel": [
+          757,
+          2292
+        ],
+        "point": "symbol_centre",
+        "read": 5
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.455,
+      "y": 0.737
+    },
+    {
+      "address": 12,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.4-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L12",
+      "page": "pdf-14",
+      "pixel": [
+        762,
+        2214
+      ],
+      "placement_id": "placement.lamp-12",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0014,
+        "control_offset": 0.0024,
+        "label": "12",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          2214
+        ],
+        "point": "symbol_centre",
+        "read": 6
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.459,
+      "y": 0.708
+    },
+    {
+      "address": 13,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.5-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L13",
+      "page": "pdf-14",
+      "pixel": [
+        761,
+        2140
+      ],
+      "placement_id": "placement.lamp-13",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.002,
+        "control_offset": 0.0009,
+        "label": "13",
+        "page": "pdf-14",
+        "pixel": [
+          761,
+          2140
+        ],
+        "point": "symbol_centre",
+        "read": 7
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.458,
+      "y": 0.68
+    },
+    {
+      "address": 14,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.6-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L14",
+      "page": "pdf-14",
+      "pixel": [
+        759,
+        2062
+      ],
+      "placement_id": "placement.lamp-14",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.002,
+        "control_offset": 0.0005,
+        "label": "14",
+        "page": "pdf-14",
+        "pixel": [
+          759,
+          2062
+        ],
+        "point": "symbol_centre",
+        "read": 8
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.456,
+      "y": 0.65
+    },
+    {
+      "address": 15,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.7-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L15",
+      "page": "pdf-14",
+      "pixel": [
+        761,
+        1983
+      ],
+      "placement_id": "placement.lamp-15",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0019,
+        "label": "15",
+        "page": "pdf-14",
+        "pixel": [
+          761,
+          1983
+        ],
+        "point": "symbol_centre",
+        "read": 9
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.457,
+      "y": 0.62
+    },
+    {
+      "address": 16,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.8-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L16",
+      "page": "pdf-14",
+      "pixel": [
+        762,
+        1900
+      ],
+      "placement_id": "placement.lamp-16",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0024,
+        "control_offset": 0.0009,
+        "label": "16",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1900
+        ],
+        "point": "symbol_centre",
+        "read": 10
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.457,
+      "y": 0.589
+    },
+    {
+      "address": 17,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.9-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L17",
+      "page": "pdf-14",
+      "pixel": [
+        760,
+        1820
+      ],
+      "placement_id": "placement.lamp-17",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0034,
+        "control_offset": 0.003,
+        "label": "17",
+        "page": "pdf-14",
+        "pixel": [
+          760,
+          1820
+        ],
+        "point": "symbol_centre",
+        "read": 11
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.455,
+      "y": 0.559
+    },
+    {
+      "address": 18,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.10-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L18",
+      "page": "pdf-14",
+      "pixel": [
+        762,
+        1741
+      ],
+      "placement_id": "placement.lamp-18",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0032,
+        "control_offset": 0.002,
+        "label": "18",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1741
+        ],
+        "point": "symbol_centre",
+        "read": 12
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.457,
+      "y": 0.529
+    },
+    {
+      "address": 19,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.20-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L19",
+      "page": "pdf-14",
+      "pixel": [
+        642,
+        1646
+      ],
+      "placement_id": "placement.lamp-19",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0044,
+        "control_offset": 0.0022,
+        "label": "19",
+        "page": "pdf-14",
+        "pixel": [
+          642,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 13
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.364,
+      "y": 0.493
+    },
+    {
+      "address": 20,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.40-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L20",
+      "page": "pdf-14",
+      "pixel": [
+        722,
+        1646
+      ],
+      "placement_id": "placement.lamp-20",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0031,
+        "label": "20",
+        "page": "pdf-14",
+        "pixel": [
+          722,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 14
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.425,
+      "y": 0.493
+    },
+    {
+      "address": 21,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.60-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L21",
+      "page": "pdf-14",
+      "pixel": [
+        803,
+        1646
+      ],
+      "placement_id": "placement.lamp-21",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0038,
+        "label": "21",
+        "page": "pdf-14",
+        "pixel": [
+          803,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 15
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.488,
+      "y": 0.493
+    },
+    {
+      "address": 22,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.80-000-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L22",
+      "page": "pdf-14",
+      "pixel": [
+        883,
+        1646
+      ],
+      "placement_id": "placement.lamp-22",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.0035,
+        "label": "22",
+        "page": "pdf-14",
+        "pixel": [
+          883,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 16
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.549,
+      "y": 0.493
+    },
+    {
+      "address": 23,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.bonus-holdover-bonus",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L23",
+      "page": "pdf-14",
+      "pixel": [
+        762,
+        1562
+      ],
+      "placement_id": "placement.lamp-23",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0047,
+        "control_offset": 0.0043,
+        "label": "23",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1562
+        ],
+        "point": "symbol_centre",
+        "read": 17
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.456,
+      "y": 0.461
+    },
+    {
+      "address": 24,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.fire-power-special",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L24",
+      "page": "pdf-14",
+      "pixel": [
+        764,
+        1467
+      ],
+      "placement_id": "placement.lamp-24",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.004,
+        "label": "24",
+        "page": "pdf-14",
+        "pixel": [
+          764,
+          1467
+        ],
+        "point": "symbol_centre",
+        "read": 18
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.457,
+      "y": 0.425
+    },
+    {
+      "address": 25,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.f",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L25",
+      "page": "pdf-14",
+      "pixel": [
+        519,
+        1460
+      ],
+      "placement_id": "placement.lamp-25",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0053,
+        "label": "25",
+        "page": "pdf-14",
+        "pixel": [
+          519,
+          1460
+        ],
+        "point": "symbol_centre",
+        "read": 19
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.268,
+      "y": 0.422
+    },
+    {
+      "address": 26,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.i",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L26",
+      "page": "pdf-14",
+      "pixel": [
+        585,
+        1487
+      ],
+      "placement_id": "placement.lamp-26",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0035,
+        "control_offset": 0.0058,
+        "label": "26",
+        "page": "pdf-14",
+        "pixel": [
+          585,
+          1487
+        ],
+        "point": "symbol_centre",
+        "read": 20
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.319,
+      "y": 0.432
+    },
+    {
+      "address": 27,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.r-first",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L27",
+      "page": "pdf-14",
+      "pixel": [
+        649,
+        1516
+      ],
+      "placement_id": "placement.lamp-27",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0048,
+        "label": "27",
+        "page": "pdf-14",
+        "pixel": [
+          649,
+          1516
+        ],
+        "point": "symbol_centre",
+        "read": 21
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.369,
+      "y": 0.443
+    },
+    {
+      "address": 28,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.e-first",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L28",
+      "page": "pdf-14",
+      "pixel": [
+        894,
+        1527
+      ],
+      "placement_id": "placement.lamp-28",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0025,
+        "control_offset": 0.004,
+        "label": "28",
+        "page": "pdf-14",
+        "pixel": [
+          894,
+          1527
+        ],
+        "point": "symbol_centre",
+        "read": 22
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.557,
+      "y": 0.448
+    },
+    {
+      "address": 29,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.p",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L29",
+      "page": "pdf-14",
+      "pixel": [
+        965,
+        1497
+      ],
+      "placement_id": "placement.lamp-29",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0045,
+        "label": "29",
+        "page": "pdf-14",
+        "pixel": [
+          965,
+          1497
+        ],
+        "point": "symbol_centre",
+        "read": 23
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.612,
+      "y": 0.437
+    },
+    {
+      "address": 30,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.o",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L30",
+      "page": "pdf-14",
+      "pixel": [
+        1033,
+        1474
+      ],
+      "placement_id": "placement.lamp-30",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.003,
+        "control_offset": 0.0029,
+        "label": "30",
+        "page": "pdf-14",
+        "pixel": [
+          1033,
+          1474
+        ],
+        "point": "symbol_centre",
+        "read": 24
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.664,
+      "y": 0.428
+    },
+    {
+      "address": 31,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.w",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L31",
+      "page": "pdf-14",
+      "pixel": [
+        1094,
+        1645
+      ],
+      "placement_id": "placement.lamp-31",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0138,
+        "control_offset": 0.0126,
+        "label": "31",
+        "page": "pdf-14",
+        "pixel": [
+          1094,
+          1645
+        ],
+        "point": "symbol_centre",
+        "read": 25
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.712,
+      "y": 0.493
+    },
+    {
+      "address": 32,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.e-second",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L32",
+      "page": "pdf-14",
+      "pixel": [
+        1096,
+        1737
+      ],
+      "placement_id": "placement.lamp-32",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0129,
+        "control_offset": 0.0117,
+        "label": "32",
+        "page": "pdf-14",
+        "pixel": [
+          1096,
+          1737
+        ],
+        "point": "symbol_centre",
+        "read": 26
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.714,
+      "y": 0.528
+    },
+    {
+      "address": 33,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.r-last",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L33",
+      "page": "pdf-14",
+      "pixel": [
+        1095,
+        1823
+      ],
+      "placement_id": "placement.lamp-33",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0141,
+        "control_offset": 0.0129,
+        "label": "33",
+        "page": "pdf-14",
+        "pixel": [
+          1095,
+          1823
+        ],
+        "point": "symbol_centre",
+        "read": 27
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.713,
+      "y": 0.561
+    },
+    {
+      "address": 34,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.a",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L34",
+      "page": "pdf-14",
+      "pixel": [
+        553,
+        480
+      ],
+      "placement_id": "placement.lamp-34",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0055,
+        "label": "34",
+        "page": "pdf-14",
+        "pixel": [
+          553,
+          480
+        ],
+        "point": "symbol_centre",
+        "read": 28
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.29,
+      "y": 0.051
+    },
+    {
+      "address": 35,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.b",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L35",
+      "page": "pdf-14",
+      "pixel": [
+        690,
+        505
+      ],
+      "placement_id": "placement.lamp-35",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.005,
+        "label": "35",
+        "page": "pdf-14",
+        "pixel": [
+          690,
+          505
+        ],
+        "point": "symbol_centre",
+        "read": 29
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.396,
+      "y": 0.061
+    },
+    {
+      "address": 36,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.c",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L36",
+      "page": "pdf-14",
+      "pixel": [
+        862,
+        540
+      ],
+      "placement_id": "placement.lamp-36",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0022,
+        "control_offset": 0.0051,
+        "label": "36",
+        "page": "pdf-14",
+        "pixel": [
+          862,
+          540
+        ],
+        "point": "symbol_centre",
+        "read": 30
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.529,
+      "y": 0.074
+    },
+    {
+      "address": 37,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.d",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L37",
+      "page": "pdf-14",
+      "pixel": [
+        999,
+        566
+      ],
+      "placement_id": "placement.lamp-37",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.001,
+        "control_offset": 0.0043,
+        "label": "37",
+        "page": "pdf-14",
+        "pixel": [
+          999,
+          566
+        ],
+        "point": "symbol_centre",
+        "read": 31
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.634,
+      "y": 0.084
+    },
+    {
+      "address": 38,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.left-drain-special",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L38",
+      "page": "pdf-14",
+      "pixel": [
+        250,
+        2160
+      ],
+      "placement_id": "placement.lamp-38",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0036,
+        "control_offset": 0.0043,
+        "label": "38",
+        "page": "pdf-14",
+        "pixel": [
+          250,
+          2160
+        ],
+        "point": "symbol_centre",
+        "read": 32
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.064,
+      "y": 0.686
+    },
+    {
+      "address": 39,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.right-drain-special",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L39",
+      "page": "pdf-14",
+      "pixel": [
+        1276,
+        2158
+      ],
+      "placement_id": "placement.lamp-39",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.0037,
+        "label": "39",
+        "page": "pdf-14",
+        "pixel": [
+          1276,
+          2158
+        ],
+        "point": "symbol_centre",
+        "read": 33
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.854,
+      "y": 0.688
+    },
+    {
+      "address": 41,
+      "classification": "bulb_mesh",
+      "coordinate_source": "retained table geometry",
+      "device_id": "lamp.lower-left-jet-bumper",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "center",
+      "object": "L41a",
+      "page": "pdf-14",
+      "pixel": null,
+      "placement_id": "placement.lamp-41",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.006,
+        "control_offset": 0.0033,
+        "label": "41",
+        "page": "pdf-14",
+        "pixel": [
+          642,
+          1132
+        ],
+        "point": "symbol_centre",
+        "read": 34
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "validated",
+      "x": 0.358395,
+      "y": 0.29729
+    },
+    {
+      "address": 42,
+      "classification": "bulb_mesh",
+      "coordinate_source": "retained table geometry",
+      "device_id": "lamp.upper-right-jet-bumper",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "center",
+      "object": "L42a",
+      "page": "pdf-14",
+      "pixel": null,
+      "placement_id": "placement.lamp-42",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0015,
+        "label": "42",
+        "page": "pdf-14",
+        "pixel": [
+          925,
+          925
+        ],
+        "point": "symbol_centre",
+        "read": 35
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.579404,
+      "y": 0.218845
+    },
+    {
+      "address": 43,
+      "classification": "bulb_mesh",
+      "coordinate_source": "retained table geometry",
+      "device_id": "lamp.upper-left-jet-bumper",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "center",
+      "object": "L43a",
+      "page": "pdf-14",
+      "pixel": null,
+      "placement_id": "placement.lamp-43",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0012,
+        "label": "43",
+        "page": "pdf-14",
+        "pixel": [
+          620,
+          862
+        ],
+        "point": "symbol_centre",
+        "read": 36
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "validated",
+      "x": 0.342415,
+      "y": 0.195431
+    },
+    {
+      "address": 44,
+      "classification": "bulb_mesh",
+      "coordinate_source": "retained table geometry",
+      "device_id": "lamp.lower-right-jet-bumper",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "center",
+      "object": "L44a",
+      "page": "pdf-14",
+      "pixel": null,
+      "placement_id": "placement.lamp-44",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0016,
+        "control_offset": 0.0033,
+        "label": "44",
+        "page": "pdf-14",
+        "pixel": [
+          915,
+          1190
+        ],
+        "point": "symbol_centre",
+        "read": 37
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "validated",
+      "x": 0.575311,
+      "y": 0.321164
+    },
+    {
+      "address": 45,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.left-flipper-return-lane",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L45",
+      "page": "pdf-14",
+      "pixel": [
+        336,
+        2090
+      ],
+      "placement_id": "placement.lamp-45",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0035,
+        "control_offset": 0.0045,
+        "label": "45",
+        "page": "pdf-14",
+        "pixel": [
+          336,
+          2090
+        ],
+        "point": "symbol_centre",
+        "read": 38
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.13,
+      "y": 0.66
+    },
+    {
+      "address": 46,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.right-flipper-return-lane",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L46",
+      "page": "pdf-14",
+      "pixel": [
+        1189,
+        2092
+      ],
+      "placement_id": "placement.lamp-46",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0025,
+        "label": "46",
+        "page": "pdf-14",
+        "pixel": [
+          1189,
+          2092
+        ],
+        "point": "symbol_centre",
+        "read": 39
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.787,
+      "y": 0.663
+    },
+    {
+      "address": 47,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.mystery",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L47",
+      "page": "pdf-14",
+      "pixel": [
+        448,
+        1973
+      ],
+      "placement_id": "placement.lamp-47",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0055,
+        "control_offset": 0.0046,
+        "label": "47",
+        "page": "pdf-14",
+        "pixel": [
+          448,
+          1973
+        ],
+        "point": "symbol_centre",
+        "read": 40
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.216,
+      "y": 0.616
+    },
+    {
+      "address": 48,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.extra-ball",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L48",
+      "page": "pdf-14",
+      "pixel": [
+        405,
+        1886
+      ],
+      "placement_id": "placement.lamp-48",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0132,
+        "control_offset": 0.0143,
+        "label": "48",
+        "page": "pdf-14",
+        "pixel": [
+          405,
+          1886
+        ],
+        "point": "symbol_centre",
+        "read": 41
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.182,
+      "y": 0.583
+    },
+    {
+      "address": 49,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.2x",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L49",
+      "page": "pdf-14",
+      "pixel": [
+        921,
+        1820
+      ],
+      "placement_id": "placement.lamp-49",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0034,
+        "control_offset": 0.0033,
+        "label": "49",
+        "page": "pdf-14",
+        "pixel": [
+          921,
+          1820
+        ],
+        "point": "symbol_centre",
+        "read": 42
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.579,
+      "y": 0.559
+    },
+    {
+      "address": 50,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.3x",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L50",
+      "page": "pdf-14",
+      "pixel": [
+        975,
+        1876
+      ],
+      "placement_id": "placement.lamp-50",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.006,
+        "control_offset": 0.0059,
+        "label": "50",
+        "page": "pdf-14",
+        "pixel": [
+          975,
+          1876
+        ],
+        "point": "symbol_centre",
+        "read": 43
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.621,
+      "y": 0.58
+    },
+    {
+      "address": 51,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.5x",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L51",
+      "page": "pdf-14",
+      "pixel": [
+        1032,
+        1934
+      ],
+      "placement_id": "placement.lamp-51",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0041,
+        "control_offset": 0.0038,
+        "label": "51",
+        "page": "pdf-14",
+        "pixel": [
+          1032,
+          1934
+        ],
+        "point": "symbol_centre",
+        "read": 44
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.665,
+      "y": 0.602
+    },
+    {
+      "address": 52,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.eject-hole-10k",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L52",
+      "page": "pdf-14",
+      "pixel": [
+        1188,
+        1338
+      ],
+      "placement_id": "placement.lamp-52",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0008,
+        "control_offset": 0.0018,
+        "label": "52",
+        "page": "pdf-14",
+        "pixel": [
+          1188,
+          1338
+        ],
+        "point": "symbol_centre",
+        "read": 45
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.783,
+      "y": 0.377
+    },
+    {
+      "address": 53,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.eject-hole-20k",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L53",
+      "page": "pdf-14",
+      "pixel": [
+        1197,
+        1260
+      ],
+      "placement_id": "placement.lamp-53",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0047,
+        "label": "53",
+        "page": "pdf-14",
+        "pixel": [
+          1197,
+          1260
+        ],
+        "point": "symbol_centre",
+        "read": 46
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.789,
+      "y": 0.348
+    },
+    {
+      "address": 54,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.eject-hole-50k",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L54",
+      "page": "pdf-14",
+      "pixel": [
+        1211,
+        1180
+      ],
+      "placement_id": "placement.lamp-54",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0048,
+        "label": "54",
+        "page": "pdf-14",
+        "pixel": [
+          1211,
+          1180
+        ],
+        "point": "symbol_centre",
+        "read": 47
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.8,
+      "y": 0.317
+    },
+    {
+      "address": 55,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.eject-hole-lock-arrow",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L55",
+      "page": "pdf-14",
+      "pixel": [
+        1228,
+        1074
+      ],
+      "placement_id": "placement.lamp-55",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0073,
+        "control_offset": 0.0077,
+        "label": "55",
+        "page": "pdf-14",
+        "pixel": [
+          1228,
+          1074
+        ],
+        "point": "symbol_centre",
+        "read": 48
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.812,
+      "y": 0.277
+    },
+    {
+      "address": 56,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.release-target-50k",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L56",
+      "page": "pdf-14",
+      "pixel": [
+        775,
+        1075
+      ],
+      "placement_id": "placement.lamp-56",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0017,
+        "control_offset": 0.0016,
+        "label": "56",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          1075
+        ],
+        "point": "symbol_centre",
+        "read": 49
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.464,
+      "y": 0.277
+    },
+    {
+      "address": 57,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.release-target-100k",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L57",
+      "page": "pdf-14",
+      "pixel": [
+        776,
+        990
+      ],
+      "placement_id": "placement.lamp-57",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0011,
+        "control_offset": 0.0017,
+        "label": "57",
+        "page": "pdf-14",
+        "pixel": [
+          776,
+          990
+        ],
+        "point": "symbol_centre",
+        "read": 50
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.464,
+      "y": 0.244
+    },
+    {
+      "address": 58,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.release-target-150k",
+      "extrapolated": false,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L58",
+      "page": "pdf-14",
+      "pixel": [
+        775,
+        912
+      ],
+      "placement_id": "placement.lamp-58",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0005,
+        "control_offset": 0.0025,
+        "label": "58",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          912
+        ],
+        "point": "symbol_centre",
+        "read": 51
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.463,
+      "y": 0.215
+    },
+    {
+      "address": 59,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.release-arrow",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L59",
+      "page": "pdf-14",
+      "pixel": [
+        775,
+        785
+      ],
+      "placement_id": "placement.lamp-59",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.009,
+        "control_offset": 0.0108,
+        "label": "59",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          785
+        ],
+        "point": "symbol_centre",
+        "read": 52
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.463,
+      "y": 0.167
+    },
+    {
+      "address": 60,
+      "classification": "manual_lamp_symbol_projection",
+      "coordinate_source": "factory lamp-location symbol",
+      "device_id": "lamp.spinner",
+      "extrapolated": true,
+      "group": "lamp",
+      "method": "drawing_symbol",
+      "object": "L60",
+      "page": "pdf-14",
+      "pixel": [
+        396,
+        1360
+      ],
+      "placement_id": "placement.lamp-60",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0022,
+        "control_offset": 0.0026,
+        "label": "60",
+        "page": "pdf-14",
+        "pixel": [
+          396,
+          1360
+        ],
+        "point": "symbol_centre",
+        "read": 53
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.173,
+      "y": 0.384
+    },
+    {
+      "address": 1,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.outhole",
+      "extrapolated": true,
+      "group": "solenoid",
+      "method": "center",
+      "object": "Drain",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-1",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Leaderless number near outhole; use assembly projection, not number.",
+      "status": "observed",
+      "x": 0.536,
+      "y": 0.9495
+    },
+    {
+      "address": 2,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.ball-ramp-thrower",
+      "extrapolated": true,
+      "group": "solenoid",
+      "method": "center",
+      "object": "BallRelease",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-2",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Number names storage thrower assembly; no exact winding center.",
+      "status": "observed",
+      "x": 0.868762,
+      "y": 0.854979
+    },
+    {
+      "address": 3,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.eject-hole",
+      "extrapolated": true,
+      "group": "solenoid",
+      "method": "center",
+      "object": "sw23",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-3",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Number beside saucer; use assembly projection.",
+      "status": "observed",
+      "x": 0.779654,
+      "y": 0.161536
+    },
+    {
+      "address": 17,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "world-space OBJ bounds",
+      "device_id": "coil.left-kicker",
+      "extrapolated": true,
+      "group": "solenoid",
+      "method": "world_bounds",
+      "object": "SLING2",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-17",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Leaderless regional number beside the left sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+      "status": "observed",
+      "x": 0.220663,
+      "y": 0.708546
+    },
+    {
+      "address": 18,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "world-space OBJ bounds",
+      "device_id": "coil.right-kicker",
+      "extrapolated": true,
+      "group": "solenoid",
+      "method": "world_bounds",
+      "object": "SLING1",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-18",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Leaderless regional number beside the right sling outline; no actuator axis or individual component is drawn. Retain only the observed world-mesh sling assembly effect projection.",
+      "status": "observed",
+      "x": 0.690724,
+      "y": 0.708215
+    },
+    {
+      "address": 19,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.lower-left-jet-bumper",
+      "extrapolated": false,
+      "group": "solenoid",
+      "method": "center",
+      "object": "Bumper4",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-19",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0037,
+        "control_offset": 0.0026,
+        "label": "19",
+        "page": "pdf-15",
+        "pixel": [
+          650,
+          1102
+        ],
+        "point": "label_beside_part",
+        "read": 0
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.358205,
+      "y": 0.29772
+    },
+    {
+      "address": 20,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.upper-right-jet-bumper",
+      "extrapolated": false,
+      "group": "solenoid",
+      "method": "center",
+      "object": "Bumper2",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-20",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.001,
+        "label": "20",
+        "page": "pdf-15",
+        "pixel": [
+          936,
+          897
+        ],
+        "point": "label_beside_part",
+        "read": 1
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.580359,
+      "y": 0.219381
+    },
+    {
+      "address": 21,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.upper-left-jet-bumper",
+      "extrapolated": false,
+      "group": "solenoid",
+      "method": "center",
+      "object": "Bumper1",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-21",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0009,
+        "label": "21",
+        "page": "pdf-15",
+        "pixel": [
+          629,
+          830
+        ],
+        "point": "label_beside_part",
+        "read": 2
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.342415,
+      "y": 0.195099
+    },
+    {
+      "address": 22,
+      "classification": "assembly_effect_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "coil.lower-right-jet-bumper",
+      "extrapolated": false,
+      "group": "solenoid",
+      "method": "center",
+      "object": "Bumper3",
+      "page": "pdf-15",
+      "pixel": null,
+      "placement_id": "placement.solenoid-22",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0038,
+        "control_offset": 0.0027,
+        "label": "22",
+        "page": "pdf-15",
+        "pixel": [
+          925,
+          1167
+        ],
+        "point": "label_beside_part",
+        "read": 3
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.575097,
+      "y": 0.321981
+    },
+    {
+      "address": 9,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.outhole",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "Drain",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-9",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Leaderless label within the broad storage-ramp drawing; no discrete contact symbol. Retain the observed table Drain assembly sensor projection without this precise drawing check.",
+      "status": "observed",
+      "x": 0.536,
+      "y": 0.9495
+    },
+    {
+      "address": 12,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.ball-shooter-trough",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw12",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-12",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Shooter-lane label without a drawn contact symbol. Retain the observed script-bound sw12 table sensor geometry without this precise drawing check.",
+      "status": "observed",
+      "x": 0.942172,
+      "y": 0.877966
+    },
+    {
+      "address": 14,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.ramp-in-roll-under",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "Gate2",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-14",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0337,
+        "control_offset": 0.0249,
+        "label": "14",
+        "page": "pdf-17",
+        "pixel": [
+          420,
+          1790
+        ],
+        "point": "label_beside_part",
+        "read": 0
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.142519,
+      "y": 0.543815
+    },
+    {
+      "address": 15,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.ramp-out-roll-under",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "Gate3",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-15",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0391,
+        "control_offset": 0.039,
+        "label": "15",
+        "page": "pdf-17",
+        "pixel": [
+          1325,
+          1860
+        ],
+        "point": "label_beside_part",
+        "read": 1
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.847441,
+      "y": 0.593697
+    },
+    {
+      "address": 16,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.center-left-standup",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "drag_point_centroid",
+      "object": "sw16",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-16",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0278,
+        "control_offset": 0.0276,
+        "label": "16",
+        "page": "pdf-17",
+        "pixel": [
+          414,
+          1157
+        ],
+        "point": "label_beside_part",
+        "read": 2
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.088677,
+      "y": 0.319426
+    },
+    {
+      "address": 17,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.standup",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "drag_point_centroid",
+      "object": "sw17",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-17",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0323,
+        "control_offset": 0.0328,
+        "label": "17",
+        "page": "pdf-17",
+        "pixel": [
+          480,
+          1490
+        ],
+        "point": "label_beside_part",
+        "read": 3
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.140729,
+      "y": 0.411435
+    },
+    {
+      "address": 18,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.spinner",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw18",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-18",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0254,
+        "control_offset": 0.0252,
+        "label": "18",
+        "page": "pdf-17",
+        "pixel": [
+          410,
+          1035
+        ],
+        "point": "label_beside_part",
+        "read": 4
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.110633,
+      "y": 0.236697
+    },
+    {
+      "address": 19,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.orbit-in-roll-under",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "Gate4",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-19",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0494,
+        "control_offset": 0.0367,
+        "label": "19",
+        "page": "pdf-17",
+        "pixel": [
+          320,
+          615
+        ],
+        "point": "label_beside_part",
+        "read": 5
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.077197,
+      "y": 0.113651
+    },
+    {
+      "address": 20,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.upper-left-standup",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "drag_point_centroid",
+      "object": "sw20",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-20",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0274,
+        "control_offset": 0.0272,
+        "label": "20",
+        "page": "pdf-17",
+        "pixel": [
+          598,
+          720
+        ],
+        "point": "label_beside_part",
+        "read": 6
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.228344,
+      "y": 0.14018
+    },
+    {
+      "address": 22,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.upper-right-standup",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "drag_point_centroid",
+      "object": "sw22",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-22",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.033,
+        "control_offset": 0.0334,
+        "label": "22",
+        "page": "pdf-17",
+        "pixel": [
+          1185,
+          910
+        ],
+        "point": "label_beside_part",
+        "read": 7
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.738712,
+      "y": 0.214595
+    },
+    {
+      "address": 23,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.eject-hole",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw23",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-23",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0079,
+        "control_offset": 0.0027,
+        "label": "23",
+        "page": "pdf-17",
+        "pixel": [
+          1285,
+          763
+        ],
+        "point": "label_beside_part",
+        "read": 8
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.779654,
+      "y": 0.161536
+    },
+    {
+      "address": 24,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.release-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw24",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-24",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0127,
+        "control_offset": 0.01,
+        "label": "24",
+        "page": "pdf-17",
+        "pixel": [
+          875,
+          625
+        ],
+        "point": "label_beside_part",
+        "read": 9
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.465059,
+      "y": 0.11792
+    },
+    {
+      "address": 25,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.f-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw25",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-25",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0115,
+        "control_offset": 0.0116,
+        "label": "25",
+        "page": "pdf-17",
+        "pixel": [
+          610,
+          1290
+        ],
+        "point": "label_beside_part",
+        "read": 10
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.26494,
+      "y": 0.347613
+    },
+    {
+      "address": 26,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.i-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw26",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-26",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0088,
+        "control_offset": 0.0101,
+        "label": "26",
+        "page": "pdf-17",
+        "pixel": [
+          685,
+          1300
+        ],
+        "point": "label_beside_part",
+        "read": 11
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.311612,
+      "y": 0.361355
+    },
+    {
+      "address": 27,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.r-target",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "sw27",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-27",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0225,
+        "control_offset": 0.0227,
+        "label": "27",
+        "page": "pdf-17",
+        "pixel": [
+          770,
+          1320
+        ],
+        "point": "label_beside_part",
+        "read": 12
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.365025,
+      "y": 0.364726
+    },
+    {
+      "address": 28,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.e-target-first",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "sw28",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-28",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0056,
+        "control_offset": 0.0065,
+        "label": "28",
+        "page": "pdf-17",
+        "pixel": [
+          1010,
+          1350
+        ],
+        "point": "label_beside_part",
+        "read": 13
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.573921,
+      "y": 0.388935
+    },
+    {
+      "address": 29,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.p-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw29",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-29",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0121,
+        "control_offset": 0.0095,
+        "label": "29",
+        "page": "pdf-17",
+        "pixel": [
+          1095,
+          1355
+        ],
+        "point": "label_beside_part",
+        "read": 14
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.62653,
+      "y": 0.385335
+    },
+    {
+      "address": 30,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.o-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw30",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-30",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0244,
+        "control_offset": 0.0201,
+        "label": "30",
+        "page": "pdf-17",
+        "pixel": [
+          1165,
+          1345
+        ],
+        "point": "label_beside_part",
+        "read": 15
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.672493,
+      "y": 0.371491
+    },
+    {
+      "address": 31,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.w-target",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw31",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-31",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0064,
+        "control_offset": 0.0066,
+        "label": "31",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1550
+        ],
+        "point": "label_beside_part",
+        "read": 16
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.788785,
+      "y": 0.466463
+    },
+    {
+      "address": 32,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.e-target-second",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw32",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-32",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0045,
+        "control_offset": 0.0016,
+        "label": "32",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1635
+        ],
+        "point": "label_beside_part",
+        "read": 17
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.788785,
+      "y": 0.493598
+    },
+    {
+      "address": 33,
+      "classification": "target_contact_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.r-target-last",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw33",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-33",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0073,
+        "control_offset": 0.003,
+        "label": "33",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1720
+        ],
+        "point": "label_beside_part",
+        "read": 18
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.789338,
+      "y": 0.521286
+    },
+    {
+      "address": 34,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.a-rollover",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw34",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-34",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.005,
+        "control_offset": 0.0027,
+        "label": "34",
+        "page": "pdf-17",
+        "pixel": [
+          646,
+          584
+        ],
+        "point": "label_beside_part",
+        "read": 19
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.294967,
+      "y": 0.091633
+    },
+    {
+      "address": 35,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.b-rollover",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw35",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-35",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0047,
+        "control_offset": 0.0029,
+        "label": "35",
+        "page": "pdf-17",
+        "pixel": [
+          785,
+          605
+        ],
+        "point": "label_beside_part",
+        "read": 20
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.401278,
+      "y": 0.102034
+    },
+    {
+      "address": 36,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.c-rollover",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw36",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-36",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0028,
+        "control_offset": 0.0042,
+        "label": "36",
+        "page": "pdf-17",
+        "pixel": [
+          955,
+          650
+        ],
+        "point": "label_beside_part",
+        "read": 21
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.533125,
+      "y": 0.116466
+    },
+    {
+      "address": 37,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.d-rollover",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw37",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-37",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0025,
+        "control_offset": 0.0046,
+        "label": "37",
+        "page": "pdf-17",
+        "pixel": [
+          1093,
+          670
+        ],
+        "point": "label_beside_part",
+        "read": 22
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.639609,
+      "y": 0.12669
+    },
+    {
+      "address": 38,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.left-outlane",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw38",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-38",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0125,
+        "control_offset": 0.0098,
+        "label": "38",
+        "page": "pdf-17",
+        "pixel": [
+          349,
+          2280
+        ],
+        "point": "label_beside_part",
+        "read": 23
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.059468,
+      "y": 0.742139
+    },
+    {
+      "address": 39,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.right-outlane",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw39",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-39",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0045,
+        "control_offset": 0.0024,
+        "label": "39",
+        "page": "pdf-17",
+        "pixel": [
+          1380,
+          2280
+        ],
+        "point": "label_beside_part",
+        "read": 24
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.854648,
+      "y": 0.738826
+    },
+    {
+      "address": 40,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "world-space OBJ bounds",
+      "device_id": "switch.orbit-out-gate",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "world_bounds",
+      "object": "OrbitGate",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-40",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Dashed number above orbit hinge; contact position not resolved by leader.",
+      "status": "observed",
+      "x": 0.840621,
+      "y": 0.12051
+    },
+    {
+      "address": 41,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.lower-left-jet-bumper",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "Bumper4",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-41",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0019,
+        "control_offset": 0.0027,
+        "label": "41",
+        "page": "pdf-17",
+        "pixel": [
+          736,
+          1127
+        ],
+        "point": "label_beside_part",
+        "read": 25
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.358205,
+      "y": 0.29772
+    },
+    {
+      "address": 42,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.upper-right-jet-bumper",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "Bumper2",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-42",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0019,
+        "control_offset": 0.0001,
+        "label": "42",
+        "page": "pdf-17",
+        "pixel": [
+          1022,
+          917
+        ],
+        "point": "label_beside_part",
+        "read": 26
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.580359,
+      "y": 0.219381
+    },
+    {
+      "address": 43,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.upper-left-jet-bumper",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "Bumper1",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-43",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0009,
+        "control_offset": 0.0013,
+        "label": "43",
+        "page": "pdf-17",
+        "pixel": [
+          713,
+          858
+        ],
+        "point": "label_beside_part",
+        "read": 27
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.342415,
+      "y": 0.195099
+    },
+    {
+      "address": 44,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.lower-right-jet-bumper",
+      "extrapolated": false,
+      "group": "switch",
+      "method": "center",
+      "object": "Bumper3",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-44",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.003,
+        "control_offset": 0.0043,
+        "label": "44",
+        "page": "pdf-17",
+        "pixel": [
+          1010,
+          1185
+        ],
+        "point": "label_beside_part",
+        "read": 28
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.575097,
+      "y": 0.321981
+    },
+    {
+      "address": 45,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.left-flipper-return-lane",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw45",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-45",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0137,
+        "control_offset": 0.0132,
+        "label": "45",
+        "page": "pdf-17",
+        "pixel": [
+          445,
+          2215
+        ],
+        "point": "label_beside_part",
+        "read": 29
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.128614,
+      "y": 0.719167
+    },
+    {
+      "address": 46,
+      "classification": "direct_sensor",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.right-flipper-return-lane",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "center",
+      "object": "sw46",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-46",
+      "reconciliation": {
+        "agrees": true,
+        "callout_offset": 0.0057,
+        "control_offset": 0.0089,
+        "label": "46",
+        "page": "pdf-17",
+        "pixel": [
+          1285,
+          2215
+        ],
+        "point": "label_beside_part",
+        "read": 30
+      },
+      "reconciliation_excluded_reason": null,
+      "status": "observed",
+      "x": 0.788592,
+      "y": 0.716511
+    },
+    {
+      "address": 47,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.left-kicker",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "slingshot_edge_midpoint",
+      "object": "LeftSlingShot",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-47",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Dashed assembly label, sensor projection rather than directly drawn scoring contact.",
+      "status": "observed",
+      "x": 0.234676,
+      "y": 0.708487
+    },
+    {
+      "address": 48,
+      "classification": "assembly_sensor_projection",
+      "coordinate_source": "retained table geometry",
+      "device_id": "switch.right-kicker",
+      "extrapolated": true,
+      "group": "switch",
+      "method": "slingshot_edge_midpoint",
+      "object": "RightSlingShot",
+      "page": "pdf-17",
+      "pixel": null,
+      "placement_id": "placement.switch-48",
+      "reconciliation": null,
+      "reconciliation_excluded_reason": "Dashed assembly label, sensor projection rather than directly drawn scoring contact.",
+      "status": "observed",
+      "x": 0.67412,
+      "y": 0.70709
+    }
   ],
-  "table_geometry": null,
+  "reconciliation": {
+    "limit": 0.07,
+    "pages": {
+      "pdf-14": {
+        "callout_fit": [
+          [
+            0.000770213,
+            2.08e-06,
+            -0.133403792
+          ],
+          [
+            -1.592e-06,
+            0.000378389,
+            -0.127252541
+          ]
+        ],
+        "callout_fit_pairs": 54,
+        "callout_loo_max": 0.0141,
+        "callout_pairs": 54,
+        "control_fit": [
+          [
+            0.000769703,
+            4.231e-06,
+            -0.137256494
+          ],
+          [
+            2.158e-06,
+            0.000378709,
+            -0.132220734
+          ]
+        ],
+        "control_loo_max": 0.0134,
+        "control_rms": 0.0028,
+        "controls": 6
+      },
+      "pdf-15": {
+        "callout_fit": [
+          [
+            0.000779976,
+            5.104e-06,
+            -0.15336136
+          ],
+          [
+            -2.544e-06,
+            0.000378695,
+            -0.117773878
+          ]
+        ],
+        "callout_fit_pairs": 4,
+        "callout_loo_max": 0.0043,
+        "callout_pairs": 4,
+        "control_fit": [
+          [
+            0.000768092,
+            5.242e-06,
+            -0.144206695
+          ],
+          [
+            -2.497e-06,
+            0.000378113,
+            -0.117236841
+          ]
+        ],
+        "control_loo_max": 0.0098,
+        "control_rms": 0.0021,
+        "controls": 6
+      },
+      "pdf-17": {
+        "callout_fit": [
+          [
+            0.00077588,
+            -1.728e-06,
+            -0.209221424
+          ],
+          [
+            7.601e-06,
+            0.000380839,
+            -0.137889891
+          ]
+        ],
+        "callout_fit_pairs": 31,
+        "callout_loo_max": 0.0494,
+        "callout_pairs": 31,
+        "control_fit": [
+          [
+            0.000767106,
+            -8.25e-07,
+            -0.202804216
+          ],
+          [
+            3.421e-06,
+            0.000378553,
+            -0.131271462
+          ]
+        ],
+        "control_loo_max": 0.0108,
+        "control_rms": 0.0026,
+        "controls": 6
+      }
+    },
+    "placements": {
+      "reconcile.lamp-10": {
+        "agrees": true,
+        "callout_offset": 0.0014,
+        "control_offset": 0.0019,
+        "label": "10",
+        "page": "pdf-14",
+        "pixel": [
+          760,
+          2374
+        ],
+        "point": "symbol_centre",
+        "read": 4
+      },
+      "reconcile.lamp-11": {
+        "agrees": true,
+        "callout_offset": 0.0012,
+        "control_offset": 0.0021,
+        "label": "11",
+        "page": "pdf-14",
+        "pixel": [
+          757,
+          2292
+        ],
+        "point": "symbol_centre",
+        "read": 5
+      },
+      "reconcile.lamp-12": {
+        "agrees": true,
+        "callout_offset": 0.0014,
+        "control_offset": 0.0024,
+        "label": "12",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          2214
+        ],
+        "point": "symbol_centre",
+        "read": 6
+      },
+      "reconcile.lamp-13": {
+        "agrees": true,
+        "callout_offset": 0.002,
+        "control_offset": 0.0009,
+        "label": "13",
+        "page": "pdf-14",
+        "pixel": [
+          761,
+          2140
+        ],
+        "point": "symbol_centre",
+        "read": 7
+      },
+      "reconcile.lamp-14": {
+        "agrees": true,
+        "callout_offset": 0.002,
+        "control_offset": 0.0005,
+        "label": "14",
+        "page": "pdf-14",
+        "pixel": [
+          759,
+          2062
+        ],
+        "point": "symbol_centre",
+        "read": 8
+      },
+      "reconcile.lamp-15": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0019,
+        "label": "15",
+        "page": "pdf-14",
+        "pixel": [
+          761,
+          1983
+        ],
+        "point": "symbol_centre",
+        "read": 9
+      },
+      "reconcile.lamp-16": {
+        "agrees": true,
+        "callout_offset": 0.0024,
+        "control_offset": 0.0009,
+        "label": "16",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1900
+        ],
+        "point": "symbol_centre",
+        "read": 10
+      },
+      "reconcile.lamp-17": {
+        "agrees": true,
+        "callout_offset": 0.0034,
+        "control_offset": 0.003,
+        "label": "17",
+        "page": "pdf-14",
+        "pixel": [
+          760,
+          1820
+        ],
+        "point": "symbol_centre",
+        "read": 11
+      },
+      "reconcile.lamp-18": {
+        "agrees": true,
+        "callout_offset": 0.0032,
+        "control_offset": 0.002,
+        "label": "18",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1741
+        ],
+        "point": "symbol_centre",
+        "read": 12
+      },
+      "reconcile.lamp-19": {
+        "agrees": true,
+        "callout_offset": 0.0044,
+        "control_offset": 0.0022,
+        "label": "19",
+        "page": "pdf-14",
+        "pixel": [
+          642,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 13
+      },
+      "reconcile.lamp-20": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0031,
+        "label": "20",
+        "page": "pdf-14",
+        "pixel": [
+          722,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 14
+      },
+      "reconcile.lamp-21": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0038,
+        "label": "21",
+        "page": "pdf-14",
+        "pixel": [
+          803,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 15
+      },
+      "reconcile.lamp-22": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.0035,
+        "label": "22",
+        "page": "pdf-14",
+        "pixel": [
+          883,
+          1646
+        ],
+        "point": "symbol_centre",
+        "read": 16
+      },
+      "reconcile.lamp-23": {
+        "agrees": true,
+        "callout_offset": 0.0047,
+        "control_offset": 0.0043,
+        "label": "23",
+        "page": "pdf-14",
+        "pixel": [
+          762,
+          1562
+        ],
+        "point": "symbol_centre",
+        "read": 17
+      },
+      "reconcile.lamp-24": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.004,
+        "label": "24",
+        "page": "pdf-14",
+        "pixel": [
+          764,
+          1467
+        ],
+        "point": "symbol_centre",
+        "read": 18
+      },
+      "reconcile.lamp-25": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0053,
+        "label": "25",
+        "page": "pdf-14",
+        "pixel": [
+          519,
+          1460
+        ],
+        "point": "symbol_centre",
+        "read": 19
+      },
+      "reconcile.lamp-26": {
+        "agrees": true,
+        "callout_offset": 0.0035,
+        "control_offset": 0.0058,
+        "label": "26",
+        "page": "pdf-14",
+        "pixel": [
+          585,
+          1487
+        ],
+        "point": "symbol_centre",
+        "read": 20
+      },
+      "reconcile.lamp-27": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0048,
+        "label": "27",
+        "page": "pdf-14",
+        "pixel": [
+          649,
+          1516
+        ],
+        "point": "symbol_centre",
+        "read": 21
+      },
+      "reconcile.lamp-28": {
+        "agrees": true,
+        "callout_offset": 0.0025,
+        "control_offset": 0.004,
+        "label": "28",
+        "page": "pdf-14",
+        "pixel": [
+          894,
+          1527
+        ],
+        "point": "symbol_centre",
+        "read": 22
+      },
+      "reconcile.lamp-29": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0045,
+        "label": "29",
+        "page": "pdf-14",
+        "pixel": [
+          965,
+          1497
+        ],
+        "point": "symbol_centre",
+        "read": 23
+      },
+      "reconcile.lamp-30": {
+        "agrees": true,
+        "callout_offset": 0.003,
+        "control_offset": 0.0029,
+        "label": "30",
+        "page": "pdf-14",
+        "pixel": [
+          1033,
+          1474
+        ],
+        "point": "symbol_centre",
+        "read": 24
+      },
+      "reconcile.lamp-31": {
+        "agrees": true,
+        "callout_offset": 0.0138,
+        "control_offset": 0.0126,
+        "label": "31",
+        "page": "pdf-14",
+        "pixel": [
+          1094,
+          1645
+        ],
+        "point": "symbol_centre",
+        "read": 25
+      },
+      "reconcile.lamp-32": {
+        "agrees": true,
+        "callout_offset": 0.0129,
+        "control_offset": 0.0117,
+        "label": "32",
+        "page": "pdf-14",
+        "pixel": [
+          1096,
+          1737
+        ],
+        "point": "symbol_centre",
+        "read": 26
+      },
+      "reconcile.lamp-33": {
+        "agrees": true,
+        "callout_offset": 0.0141,
+        "control_offset": 0.0129,
+        "label": "33",
+        "page": "pdf-14",
+        "pixel": [
+          1095,
+          1823
+        ],
+        "point": "symbol_centre",
+        "read": 27
+      },
+      "reconcile.lamp-34": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0055,
+        "label": "34",
+        "page": "pdf-14",
+        "pixel": [
+          553,
+          480
+        ],
+        "point": "symbol_centre",
+        "read": 28
+      },
+      "reconcile.lamp-35": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.005,
+        "label": "35",
+        "page": "pdf-14",
+        "pixel": [
+          690,
+          505
+        ],
+        "point": "symbol_centre",
+        "read": 29
+      },
+      "reconcile.lamp-36": {
+        "agrees": true,
+        "callout_offset": 0.0022,
+        "control_offset": 0.0051,
+        "label": "36",
+        "page": "pdf-14",
+        "pixel": [
+          862,
+          540
+        ],
+        "point": "symbol_centre",
+        "read": 30
+      },
+      "reconcile.lamp-37": {
+        "agrees": true,
+        "callout_offset": 0.001,
+        "control_offset": 0.0043,
+        "label": "37",
+        "page": "pdf-14",
+        "pixel": [
+          999,
+          566
+        ],
+        "point": "symbol_centre",
+        "read": 31
+      },
+      "reconcile.lamp-38": {
+        "agrees": true,
+        "callout_offset": 0.0036,
+        "control_offset": 0.0043,
+        "label": "38",
+        "page": "pdf-14",
+        "pixel": [
+          250,
+          2160
+        ],
+        "point": "symbol_centre",
+        "read": 32
+      },
+      "reconcile.lamp-39": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.0037,
+        "label": "39",
+        "page": "pdf-14",
+        "pixel": [
+          1276,
+          2158
+        ],
+        "point": "symbol_centre",
+        "read": 33
+      },
+      "reconcile.lamp-41": {
+        "agrees": true,
+        "callout_offset": 0.006,
+        "control_offset": 0.0033,
+        "label": "41",
+        "page": "pdf-14",
+        "pixel": [
+          642,
+          1132
+        ],
+        "point": "symbol_centre",
+        "read": 34
+      },
+      "reconcile.lamp-42": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0015,
+        "label": "42",
+        "page": "pdf-14",
+        "pixel": [
+          925,
+          925
+        ],
+        "point": "symbol_centre",
+        "read": 35
+      },
+      "reconcile.lamp-43": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0012,
+        "label": "43",
+        "page": "pdf-14",
+        "pixel": [
+          620,
+          862
+        ],
+        "point": "symbol_centre",
+        "read": 36
+      },
+      "reconcile.lamp-44": {
+        "agrees": true,
+        "callout_offset": 0.0016,
+        "control_offset": 0.0033,
+        "label": "44",
+        "page": "pdf-14",
+        "pixel": [
+          915,
+          1190
+        ],
+        "point": "symbol_centre",
+        "read": 37
+      },
+      "reconcile.lamp-45": {
+        "agrees": true,
+        "callout_offset": 0.0035,
+        "control_offset": 0.0045,
+        "label": "45",
+        "page": "pdf-14",
+        "pixel": [
+          336,
+          2090
+        ],
+        "point": "symbol_centre",
+        "read": 38
+      },
+      "reconcile.lamp-46": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0025,
+        "label": "46",
+        "page": "pdf-14",
+        "pixel": [
+          1189,
+          2092
+        ],
+        "point": "symbol_centre",
+        "read": 39
+      },
+      "reconcile.lamp-47": {
+        "agrees": true,
+        "callout_offset": 0.0055,
+        "control_offset": 0.0046,
+        "label": "47",
+        "page": "pdf-14",
+        "pixel": [
+          448,
+          1973
+        ],
+        "point": "symbol_centre",
+        "read": 40
+      },
+      "reconcile.lamp-48": {
+        "agrees": true,
+        "callout_offset": 0.0132,
+        "control_offset": 0.0143,
+        "label": "48",
+        "page": "pdf-14",
+        "pixel": [
+          405,
+          1886
+        ],
+        "point": "symbol_centre",
+        "read": 41
+      },
+      "reconcile.lamp-49": {
+        "agrees": true,
+        "callout_offset": 0.0034,
+        "control_offset": 0.0033,
+        "label": "49",
+        "page": "pdf-14",
+        "pixel": [
+          921,
+          1820
+        ],
+        "point": "symbol_centre",
+        "read": 42
+      },
+      "reconcile.lamp-50": {
+        "agrees": true,
+        "callout_offset": 0.006,
+        "control_offset": 0.0059,
+        "label": "50",
+        "page": "pdf-14",
+        "pixel": [
+          975,
+          1876
+        ],
+        "point": "symbol_centre",
+        "read": 43
+      },
+      "reconcile.lamp-51": {
+        "agrees": true,
+        "callout_offset": 0.0041,
+        "control_offset": 0.0038,
+        "label": "51",
+        "page": "pdf-14",
+        "pixel": [
+          1032,
+          1934
+        ],
+        "point": "symbol_centre",
+        "read": 44
+      },
+      "reconcile.lamp-52": {
+        "agrees": true,
+        "callout_offset": 0.0008,
+        "control_offset": 0.0018,
+        "label": "52",
+        "page": "pdf-14",
+        "pixel": [
+          1188,
+          1338
+        ],
+        "point": "symbol_centre",
+        "read": 45
+      },
+      "reconcile.lamp-53": {
+        "agrees": true,
+        "callout_offset": 0.0033,
+        "control_offset": 0.0047,
+        "label": "53",
+        "page": "pdf-14",
+        "pixel": [
+          1197,
+          1260
+        ],
+        "point": "symbol_centre",
+        "read": 46
+      },
+      "reconcile.lamp-54": {
+        "agrees": true,
+        "callout_offset": 0.0031,
+        "control_offset": 0.0048,
+        "label": "54",
+        "page": "pdf-14",
+        "pixel": [
+          1211,
+          1180
+        ],
+        "point": "symbol_centre",
+        "read": 47
+      },
+      "reconcile.lamp-55": {
+        "agrees": true,
+        "callout_offset": 0.0073,
+        "control_offset": 0.0077,
+        "label": "55",
+        "page": "pdf-14",
+        "pixel": [
+          1228,
+          1074
+        ],
+        "point": "symbol_centre",
+        "read": 48
+      },
+      "reconcile.lamp-56": {
+        "agrees": true,
+        "callout_offset": 0.0017,
+        "control_offset": 0.0016,
+        "label": "56",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          1075
+        ],
+        "point": "symbol_centre",
+        "read": 49
+      },
+      "reconcile.lamp-57": {
+        "agrees": true,
+        "callout_offset": 0.0011,
+        "control_offset": 0.0017,
+        "label": "57",
+        "page": "pdf-14",
+        "pixel": [
+          776,
+          990
+        ],
+        "point": "symbol_centre",
+        "read": 50
+      },
+      "reconcile.lamp-58": {
+        "agrees": true,
+        "callout_offset": 0.0005,
+        "control_offset": 0.0025,
+        "label": "58",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          912
+        ],
+        "point": "symbol_centre",
+        "read": 51
+      },
+      "reconcile.lamp-59": {
+        "agrees": true,
+        "callout_offset": 0.009,
+        "control_offset": 0.0108,
+        "label": "59",
+        "page": "pdf-14",
+        "pixel": [
+          775,
+          785
+        ],
+        "point": "symbol_centre",
+        "read": 52
+      },
+      "reconcile.lamp-6": {
+        "agrees": true,
+        "callout_offset": 0.0046,
+        "control_offset": 0.0058,
+        "label": "6",
+        "page": "pdf-14",
+        "pixel": [
+          574,
+          2405
+        ],
+        "point": "symbol_centre",
+        "read": 0
+      },
+      "reconcile.lamp-60": {
+        "agrees": true,
+        "callout_offset": 0.0022,
+        "control_offset": 0.0026,
+        "label": "60",
+        "page": "pdf-14",
+        "pixel": [
+          396,
+          1360
+        ],
+        "point": "symbol_centre",
+        "read": 53
+      },
+      "reconcile.lamp-7": {
+        "agrees": true,
+        "callout_offset": 0.0023,
+        "control_offset": 0.0026,
+        "label": "7",
+        "page": "pdf-14",
+        "pixel": [
+          899,
+          2288
+        ],
+        "point": "symbol_centre",
+        "read": 1
+      },
+      "reconcile.lamp-8": {
+        "agrees": true,
+        "callout_offset": 0.0105,
+        "control_offset": 0.0123,
+        "label": "8",
+        "page": "pdf-14",
+        "pixel": [
+          435,
+          1470
+        ],
+        "point": "symbol_centre",
+        "read": 2
+      },
+      "reconcile.lamp-9": {
+        "agrees": true,
+        "callout_offset": 0.0027,
+        "control_offset": 0.0033,
+        "label": "9",
+        "page": "pdf-14",
+        "pixel": [
+          759,
+          2448
+        ],
+        "point": "symbol_centre",
+        "read": 3
+      },
+      "reconcile.solenoid-19": {
+        "agrees": true,
+        "callout_offset": 0.0037,
+        "control_offset": 0.0026,
+        "label": "19",
+        "page": "pdf-15",
+        "pixel": [
+          650,
+          1102
+        ],
+        "point": "label_beside_part",
+        "read": 0
+      },
+      "reconcile.solenoid-20": {
+        "agrees": true,
+        "callout_offset": 0.0043,
+        "control_offset": 0.001,
+        "label": "20",
+        "page": "pdf-15",
+        "pixel": [
+          936,
+          897
+        ],
+        "point": "label_beside_part",
+        "read": 1
+      },
+      "reconcile.solenoid-21": {
+        "agrees": true,
+        "callout_offset": 0.0042,
+        "control_offset": 0.0009,
+        "label": "21",
+        "page": "pdf-15",
+        "pixel": [
+          629,
+          830
+        ],
+        "point": "label_beside_part",
+        "read": 2
+      },
+      "reconcile.solenoid-22": {
+        "agrees": true,
+        "callout_offset": 0.0038,
+        "control_offset": 0.0027,
+        "label": "22",
+        "page": "pdf-15",
+        "pixel": [
+          925,
+          1167
+        ],
+        "point": "label_beside_part",
+        "read": 3
+      },
+      "reconcile.switch-14": {
+        "agrees": true,
+        "callout_offset": 0.0337,
+        "control_offset": 0.0249,
+        "label": "14",
+        "page": "pdf-17",
+        "pixel": [
+          420,
+          1790
+        ],
+        "point": "label_beside_part",
+        "read": 0
+      },
+      "reconcile.switch-15": {
+        "agrees": true,
+        "callout_offset": 0.0391,
+        "control_offset": 0.039,
+        "label": "15",
+        "page": "pdf-17",
+        "pixel": [
+          1325,
+          1860
+        ],
+        "point": "label_beside_part",
+        "read": 1
+      },
+      "reconcile.switch-16": {
+        "agrees": true,
+        "callout_offset": 0.0278,
+        "control_offset": 0.0276,
+        "label": "16",
+        "page": "pdf-17",
+        "pixel": [
+          414,
+          1157
+        ],
+        "point": "label_beside_part",
+        "read": 2
+      },
+      "reconcile.switch-17": {
+        "agrees": true,
+        "callout_offset": 0.0323,
+        "control_offset": 0.0328,
+        "label": "17",
+        "page": "pdf-17",
+        "pixel": [
+          480,
+          1490
+        ],
+        "point": "label_beside_part",
+        "read": 3
+      },
+      "reconcile.switch-18": {
+        "agrees": true,
+        "callout_offset": 0.0254,
+        "control_offset": 0.0252,
+        "label": "18",
+        "page": "pdf-17",
+        "pixel": [
+          410,
+          1035
+        ],
+        "point": "label_beside_part",
+        "read": 4
+      },
+      "reconcile.switch-19": {
+        "agrees": true,
+        "callout_offset": 0.0494,
+        "control_offset": 0.0367,
+        "label": "19",
+        "page": "pdf-17",
+        "pixel": [
+          320,
+          615
+        ],
+        "point": "label_beside_part",
+        "read": 5
+      },
+      "reconcile.switch-20": {
+        "agrees": true,
+        "callout_offset": 0.0274,
+        "control_offset": 0.0272,
+        "label": "20",
+        "page": "pdf-17",
+        "pixel": [
+          598,
+          720
+        ],
+        "point": "label_beside_part",
+        "read": 6
+      },
+      "reconcile.switch-22": {
+        "agrees": true,
+        "callout_offset": 0.033,
+        "control_offset": 0.0334,
+        "label": "22",
+        "page": "pdf-17",
+        "pixel": [
+          1185,
+          910
+        ],
+        "point": "label_beside_part",
+        "read": 7
+      },
+      "reconcile.switch-23": {
+        "agrees": true,
+        "callout_offset": 0.0079,
+        "control_offset": 0.0027,
+        "label": "23",
+        "page": "pdf-17",
+        "pixel": [
+          1285,
+          763
+        ],
+        "point": "label_beside_part",
+        "read": 8
+      },
+      "reconcile.switch-24": {
+        "agrees": true,
+        "callout_offset": 0.0127,
+        "control_offset": 0.01,
+        "label": "24",
+        "page": "pdf-17",
+        "pixel": [
+          875,
+          625
+        ],
+        "point": "label_beside_part",
+        "read": 9
+      },
+      "reconcile.switch-25": {
+        "agrees": true,
+        "callout_offset": 0.0115,
+        "control_offset": 0.0116,
+        "label": "25",
+        "page": "pdf-17",
+        "pixel": [
+          610,
+          1290
+        ],
+        "point": "label_beside_part",
+        "read": 10
+      },
+      "reconcile.switch-26": {
+        "agrees": true,
+        "callout_offset": 0.0088,
+        "control_offset": 0.0101,
+        "label": "26",
+        "page": "pdf-17",
+        "pixel": [
+          685,
+          1300
+        ],
+        "point": "label_beside_part",
+        "read": 11
+      },
+      "reconcile.switch-27": {
+        "agrees": true,
+        "callout_offset": 0.0225,
+        "control_offset": 0.0227,
+        "label": "27",
+        "page": "pdf-17",
+        "pixel": [
+          770,
+          1320
+        ],
+        "point": "label_beside_part",
+        "read": 12
+      },
+      "reconcile.switch-28": {
+        "agrees": true,
+        "callout_offset": 0.0056,
+        "control_offset": 0.0065,
+        "label": "28",
+        "page": "pdf-17",
+        "pixel": [
+          1010,
+          1350
+        ],
+        "point": "label_beside_part",
+        "read": 13
+      },
+      "reconcile.switch-29": {
+        "agrees": true,
+        "callout_offset": 0.0121,
+        "control_offset": 0.0095,
+        "label": "29",
+        "page": "pdf-17",
+        "pixel": [
+          1095,
+          1355
+        ],
+        "point": "label_beside_part",
+        "read": 14
+      },
+      "reconcile.switch-30": {
+        "agrees": true,
+        "callout_offset": 0.0244,
+        "control_offset": 0.0201,
+        "label": "30",
+        "page": "pdf-17",
+        "pixel": [
+          1165,
+          1345
+        ],
+        "point": "label_beside_part",
+        "read": 15
+      },
+      "reconcile.switch-31": {
+        "agrees": true,
+        "callout_offset": 0.0064,
+        "control_offset": 0.0066,
+        "label": "31",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1550
+        ],
+        "point": "label_beside_part",
+        "read": 16
+      },
+      "reconcile.switch-32": {
+        "agrees": true,
+        "callout_offset": 0.0045,
+        "control_offset": 0.0016,
+        "label": "32",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1635
+        ],
+        "point": "label_beside_part",
+        "read": 17
+      },
+      "reconcile.switch-33": {
+        "agrees": true,
+        "callout_offset": 0.0073,
+        "control_offset": 0.003,
+        "label": "33",
+        "page": "pdf-17",
+        "pixel": [
+          1295,
+          1720
+        ],
+        "point": "label_beside_part",
+        "read": 18
+      },
+      "reconcile.switch-34": {
+        "agrees": true,
+        "callout_offset": 0.005,
+        "control_offset": 0.0027,
+        "label": "34",
+        "page": "pdf-17",
+        "pixel": [
+          646,
+          584
+        ],
+        "point": "label_beside_part",
+        "read": 19
+      },
+      "reconcile.switch-35": {
+        "agrees": true,
+        "callout_offset": 0.0047,
+        "control_offset": 0.0029,
+        "label": "35",
+        "page": "pdf-17",
+        "pixel": [
+          785,
+          605
+        ],
+        "point": "label_beside_part",
+        "read": 20
+      },
+      "reconcile.switch-36": {
+        "agrees": true,
+        "callout_offset": 0.0028,
+        "control_offset": 0.0042,
+        "label": "36",
+        "page": "pdf-17",
+        "pixel": [
+          955,
+          650
+        ],
+        "point": "label_beside_part",
+        "read": 21
+      },
+      "reconcile.switch-37": {
+        "agrees": true,
+        "callout_offset": 0.0025,
+        "control_offset": 0.0046,
+        "label": "37",
+        "page": "pdf-17",
+        "pixel": [
+          1093,
+          670
+        ],
+        "point": "label_beside_part",
+        "read": 22
+      },
+      "reconcile.switch-38": {
+        "agrees": true,
+        "callout_offset": 0.0125,
+        "control_offset": 0.0098,
+        "label": "38",
+        "page": "pdf-17",
+        "pixel": [
+          349,
+          2280
+        ],
+        "point": "label_beside_part",
+        "read": 23
+      },
+      "reconcile.switch-39": {
+        "agrees": true,
+        "callout_offset": 0.0045,
+        "control_offset": 0.0024,
+        "label": "39",
+        "page": "pdf-17",
+        "pixel": [
+          1380,
+          2280
+        ],
+        "point": "label_beside_part",
+        "read": 24
+      },
+      "reconcile.switch-41": {
+        "agrees": true,
+        "callout_offset": 0.0019,
+        "control_offset": 0.0027,
+        "label": "41",
+        "page": "pdf-17",
+        "pixel": [
+          736,
+          1127
+        ],
+        "point": "label_beside_part",
+        "read": 25
+      },
+      "reconcile.switch-42": {
+        "agrees": true,
+        "callout_offset": 0.0019,
+        "control_offset": 0.0001,
+        "label": "42",
+        "page": "pdf-17",
+        "pixel": [
+          1022,
+          917
+        ],
+        "point": "label_beside_part",
+        "read": 26
+      },
+      "reconcile.switch-43": {
+        "agrees": true,
+        "callout_offset": 0.0009,
+        "control_offset": 0.0013,
+        "label": "43",
+        "page": "pdf-17",
+        "pixel": [
+          713,
+          858
+        ],
+        "point": "label_beside_part",
+        "read": 27
+      },
+      "reconcile.switch-44": {
+        "agrees": true,
+        "callout_offset": 0.003,
+        "control_offset": 0.0043,
+        "label": "44",
+        "page": "pdf-17",
+        "pixel": [
+          1010,
+          1185
+        ],
+        "point": "label_beside_part",
+        "read": 28
+      },
+      "reconcile.switch-45": {
+        "agrees": true,
+        "callout_offset": 0.0137,
+        "control_offset": 0.0132,
+        "label": "45",
+        "page": "pdf-17",
+        "pixel": [
+          445,
+          2215
+        ],
+        "point": "label_beside_part",
+        "read": 29
+      },
+      "reconcile.switch-46": {
+        "agrees": true,
+        "callout_offset": 0.0057,
+        "control_offset": 0.0089,
+        "label": "46",
+        "page": "pdf-17",
+        "pixel": [
+          1285,
+          2215
+        ],
+        "point": "label_beside_part",
+        "read": 30
+      }
+    }
+  },
+  "reconciliation_rule": "Independent native pixel reads; one-to-one labels and two affine fits using drawing_callouts at 0.07 normalized. Table proxy checks never validate manual measurements on the same page. Assembly projections and convex-hull extrapolations remain observed.",
+  "rejected_geometry": {
+    "L41-L44": "Render doubles; use each corresponding a-member showing its own bulb mesh.",
+    "L6-L39/L45-L60": "No own bulb mesh; table insert overlays are reconciliation candidates, not socket coordinate sources.",
+    "Light62": "FLOrbitFlasher drives Light62, a non-mesh light with no identifiable bulb primitive. Figure 5 uses a dashed group marker; stock Type 83 socket count and individual centers remain unknown.",
+    "OrbitGate.position": "Stored origin differs from baked world bounds; never used as a coordinate.",
+    "Trigger1": "Broad routing helper; switch40 is only an observed projection onto the actual animated OrbitGate world mesh."
+  },
+  "table_geometry": {
+    "acquired_at": "2026-10-30T10:33:07.819936+00:00",
+    "bounds": {
+      "bottom": 2000.0,
+      "left": 0.0,
+      "right": 1000.0,
+      "top": 0.0
+    },
+    "byte_count": 82666546,
+    "extractor": "vpxtool git:v0.33.3",
+    "file_count": 1209,
+    "filename": "FirePower II (Williams 1983) 1.1.vpx",
+    "inputs": {
+      "collections.json": "0db7be19102cd0b567f055d939325eea678c84c3f0b02f047cde78708f555c3d",
+      "gamedata.json": "3ee6e742cc57580ea5d5c204c607e885391ac4a787b570140de219aea756a50f",
+      "info.json": "d9b0e0387b478c64491cef6bc475801d00db3b6c4299e1ee80bf8ce68dd5ddf4",
+      "script.vbs": "7a177b7170ea7113eccd11ba0c8ba232b534dcd92162495dc44b77bfdcf17922"
+    },
+    "known_working": false,
+    "manifest_sha256": "3331a0e3d69886c1c37f68ee5895469f7352e033611fa0164206e827a9337bc9",
+    "path": "williams/firepower-ii-1983/goldchicco-1.1",
+    "retention_sha256": "9c3eba2a39e77ff90a6cc62c341ad330f44be59c1a9fea9d9b2179dd1338af17",
+    "script_sha256": "7a177b7170ea7113eccd11ba0c8ba232b534dcd92162495dc44b77bfdcf17922",
+    "sha256": "225acbf289239139e069886ebc1c7ba9754905a348ca2aba9f1a3822b1564eeb",
+    "size": 77561856
+  },
   "transport_holes": {
     "dip": [
       3,
@@ -224,110 +5887,538 @@
       80
     ]
   },
+  "unbound_gi_geometry": {
+    "authority": "Table render grouping only, not stock socket quantity or branch membership.",
+    "collection": "GI",
+    "lights": [
+      "Light24",
+      "Light11",
+      "Light18",
+      "Light10",
+      "Light12",
+      "Light13",
+      "Light14",
+      "Light5",
+      "Light8",
+      "Light20",
+      "Light21",
+      "Light9",
+      "Light16",
+      "Light17",
+      "Light15",
+      "Light4",
+      "Light2",
+      "Light1",
+      "Light3",
+      "Light6"
+    ],
+    "model_bulb_geometry": [
+      {
+        "normalized_center": [
+          0.889863,
+          0.433168
+        ],
+        "object": "P_L001",
+        "role": "visible model bulb; public binding and stock wiring unverified",
+        "world_bounds_center": [
+          889.8630499999999,
+          866.3365650000001
+        ]
+      },
+      {
+        "normalized_center": [
+          0.889863,
+          0.481497
+        ],
+        "object": "P_L002",
+        "role": "visible model bulb; public binding and stock wiring unverified",
+        "world_bounds_center": [
+          889.8630499999999,
+          962.994905
+        ]
+      },
+      {
+        "normalized_center": [
+          0.890126,
+          0.521531
+        ],
+        "object": "P_L003",
+        "role": "visible model bulb; public binding and stock wiring unverified",
+        "world_bounds_center": [
+          890.126495,
+          1043.0611
+        ]
+      },
+      {
+        "normalized_center": [
+          0.890126,
+          0.560642
+        ],
+        "object": "P_L004",
+        "role": "visible model bulb; public binding and stock wiring unverified",
+        "world_bounds_center": [
+          890.12645,
+          1121.2834
+        ]
+      },
+      {
+        "normalized_center": [
+          0.841501,
+          0.450617
+        ],
+        "object": "P_L019",
+        "role": "visible model bulb; public binding and stock wiring unverified",
+        "world_bounds_center": [
+          841.5008499999999,
+          901.2336150000001
+        ]
+      }
+    ],
+    "model_bulb_primitives": [
+      "P_L001",
+      "P_L002",
+      "P_L003",
+      "P_L004",
+      "P_L019"
+    ],
+    "render_light_geometry": [
+      {
+        "normalized_center": [
+          0.137379,
+          0.149627
+        ],
+        "object": "Light24",
+        "raw_center": [
+          137.37935,
+          299.2543
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.584028,
+          0.116436
+        ],
+        "object": "Light11",
+        "raw_center": [
+          584.0283,
+          232.87122
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.946406,
+          0.032402
+        ],
+        "object": "Light18",
+        "raw_center": [
+          946.4062,
+          64.804146
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.684894,
+          0.127123
+        ],
+        "object": "Light10",
+        "raw_center": [
+          684.8944,
+          254.24612
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.464856,
+          0.105278
+        ],
+        "object": "Light12",
+        "raw_center": [
+          464.8558,
+          210.55525
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.345579,
+          0.092605
+        ],
+        "object": "Light13",
+        "raw_center": [
+          345.57886,
+          185.21036
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.245617,
+          0.09101
+        ],
+        "object": "Light14",
+        "raw_center": [
+          245.61732,
+          182.0201
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.301274,
+          0.339811
+        ],
+        "object": "Light5",
+        "raw_center": [
+          301.27374,
+          679.62225
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.337386,
+          0.346632
+        ],
+        "object": "Light8",
+        "raw_center": [
+          337.386,
+          693.26404
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.638109,
+          0.363575
+        ],
+        "object": "Light20",
+        "raw_center": [
+          638.1094,
+          727.1505
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.604007,
+          0.371534
+        ],
+        "object": "Light21",
+        "raw_center": [
+          604.00696,
+          743.0683
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.84092,
+          0.449815
+        ],
+        "object": "Light9",
+        "raw_center": [
+          840.92,
+          899.6302
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.891007,
+          0.520428
+        ],
+        "object": "Light16",
+        "raw_center": [
+          891.0066,
+          1040.855
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.888611,
+          0.479998
+        ],
+        "object": "Light17",
+        "raw_center": [
+          888.6115,
+          959.99634
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.890143,
+          0.559162
+        ],
+        "object": "Light15",
+        "raw_center": [
+          890.1433,
+          1118.3245
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.727517,
+          0.69011
+        ],
+        "object": "Light4",
+        "raw_center": [
+          727.517,
+          1380.2206
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.695349,
+          0.732936
+        ],
+        "object": "Light2",
+        "raw_center": [
+          695.34937,
+          1465.8711
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.185371,
+          0.691457
+        ],
+        "object": "Light1",
+        "raw_center": [
+          185.37082,
+          1382.9135
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.216469,
+          0.735191
+        ],
+        "object": "Light3",
+        "raw_center": [
+          216.46913,
+          1470.3829
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      },
+      {
+        "normalized_center": [
+          0.047293,
+          0.537589
+        ],
+        "object": "Light6",
+        "raw_center": [
+          47.292652,
+          1075.1777
+        ],
+        "role": "unbound rendering geometry; no stock socket or branch assertion",
+        "show_bulb_mesh": false
+      }
+    ]
+  },
   "unplaced_devices": [
-    "switch.outhole",
-    "switch.right-ball-ramp",
-    "switch.left-ball-ramp",
-    "switch.ball-shooter-trough",
-    "switch.ramp-in-roll-under",
-    "switch.ramp-out-roll-under",
-    "switch.center-left-standup",
-    "switch.standup",
-    "switch.spinner",
-    "switch.orbit-in-roll-under",
-    "switch.upper-left-standup",
-    "switch.upper-right-standup",
-    "switch.eject-hole",
-    "switch.release-target",
-    "switch.f-target",
-    "switch.i-target",
-    "switch.r-target",
-    "switch.e-target-first",
-    "switch.p-target",
-    "switch.o-target",
-    "switch.w-target",
-    "switch.e-target-second",
-    "switch.r-target-last",
-    "switch.a-rollover",
-    "switch.b-rollover",
-    "switch.c-rollover",
-    "switch.d-rollover",
-    "switch.left-outlane",
-    "switch.right-outlane",
-    "switch.orbit-out-gate",
-    "switch.lower-left-jet-bumper",
-    "switch.upper-right-jet-bumper",
-    "switch.upper-left-jet-bumper",
-    "switch.lower-right-jet-bumper",
-    "switch.left-flipper-return-lane",
-    "switch.right-flipper-return-lane",
-    "switch.left-kicker",
-    "switch.right-kicker",
-    "switch.playfield-tilt",
-    "lamp.shoot-again-playfield",
-    "lamp.double-score",
-    "lamp.bonus-holdover-orbit",
-    "lamp.1-000-bonus",
-    "lamp.2-000-bonus",
-    "lamp.3-000-bonus",
-    "lamp.4-000-bonus",
-    "lamp.5-000-bonus",
-    "lamp.6-000-bonus",
-    "lamp.7-000-bonus",
-    "lamp.8-000-bonus",
-    "lamp.9-000-bonus",
-    "lamp.10-000-bonus",
-    "lamp.20-000-bonus",
-    "lamp.40-000-bonus",
-    "lamp.60-000-bonus",
-    "lamp.80-000-bonus",
-    "lamp.bonus-holdover-bonus",
-    "lamp.fire-power-special",
-    "lamp.f",
-    "lamp.i",
-    "lamp.r-first",
-    "lamp.e-first",
-    "lamp.p",
-    "lamp.o",
-    "lamp.w",
-    "lamp.e-second",
-    "lamp.r-last",
-    "lamp.a",
-    "lamp.b",
-    "lamp.c",
-    "lamp.d",
-    "lamp.left-drain-special",
-    "lamp.right-drain-special",
-    "lamp.lower-left-jet-bumper",
-    "lamp.upper-right-jet-bumper",
-    "lamp.upper-left-jet-bumper",
-    "lamp.lower-right-jet-bumper",
-    "lamp.left-flipper-return-lane",
-    "lamp.right-flipper-return-lane",
-    "lamp.mystery",
-    "lamp.extra-ball",
-    "lamp.2x",
-    "lamp.3x",
-    "lamp.5x",
-    "lamp.eject-hole-10k",
-    "lamp.eject-hole-20k",
-    "lamp.eject-hole-50k",
-    "lamp.eject-hole-lock-arrow",
-    "lamp.release-target-50k",
-    "lamp.release-target-100k",
-    "lamp.release-target-150k",
-    "lamp.release-arrow",
-    "lamp.spinner",
-    "coil.outhole",
-    "coil.ball-ramp-thrower",
-    "coil.eject-hole",
     "flasher.orbit-complete-flash-lamps",
-    "coil.left-kicker",
-    "coil.right-kicker",
-    "coil.lower-left-jet-bumper",
-    "coil.upper-right-jet-bumper",
-    "coil.upper-left-jet-bumper",
-    "coil.lower-right-jet-bumper"
+    "switch.left-ball-ramp",
+    "switch.playfield-tilt",
+    "switch.right-ball-ramp"
   ],
-  "version": 1
+  "unplaced_reasons": {
+    "flasher.orbit-complete-flash-lamps": "FLOrbitFlasher drives Light62, a non-mesh light with no identifiable bulb primitive. Figure 5 uses a dashed group marker; stock Type 83 socket count and individual centers remain unknown.",
+    "switch.left-ball-ramp": "Ball-stack InitSw abstracts 10/11; no separate sensor geometry. Figure 4 prints leaderless 10/11 within the storage ramp, without discrete contact symbols. Do not duplicate BallRelease onto both sensors.",
+    "switch.playfield-tilt": "Switch 49 exists in the matrix and legend but has no located Figure 4 symbol or script-bound physical object. Its contact cannot be placed from a cabinet tilt or a script nudge helper.",
+    "switch.right-ball-ramp": "Ball-stack InitSw abstracts 10/11; no separate sensor geometry. Figure 4 prints leaderless 10/11 within the storage ramp, without discrete contact symbols. Do not duplicate BallRelease onto both sensors."
+  },
+  "version": 2,
+  "world_obj": {
+    "bounds": {
+      "Bumper1Base": {
+        "maximum": [
+          388.36047,
+          434.35748,
+          0.31824
+        ],
+        "minimum": [
+          296.45746,
+          345.29794,
+          -69.93496
+        ],
+        "vertices": 517
+      },
+      "Bumper2Base": {
+        "maximum": [
+          626.3045,
+          482.92096,
+          0.31824
+        ],
+        "minimum": [
+          534.4015,
+          393.86142,
+          -69.93496
+        ],
+        "vertices": 517
+      },
+      "Bumper3Base": {
+        "maximum": [
+          621.0428,
+          688.12146,
+          0.31824
+        ],
+        "minimum": [
+          529.1398,
+          599.06195,
+          -69.93496
+        ],
+        "vertices": 517
+      },
+      "Bumper4Base": {
+        "maximum": [
+          404.15018,
+          639.59827,
+          0.31824
+        ],
+        "minimum": [
+          312.24716,
+          550.53876,
+          -69.93496
+        ],
+        "vertices": 517
+      },
+      "OrbitGate": {
+        "maximum": [
+          962.4352,
+          358.26385,
+          -0.08309986
+        ],
+        "minimum": [
+          718.80707,
+          123.777145,
+          -41.0517
+        ],
+        "vertices": 2594
+      },
+      "P_L001": {
+        "maximum": [
+          899.7111,
+          876.18463,
+          0.593964
+        ],
+        "minimum": [
+          880.015,
+          856.4885,
+          -11.406036
+        ],
+        "vertices": 116
+      },
+      "P_L002": {
+        "maximum": [
+          899.7111,
+          972.84296,
+          0.593964
+        ],
+        "minimum": [
+          880.015,
+          953.14685,
+          -11.406036
+        ],
+        "vertices": 116
+      },
+      "P_L003": {
+        "maximum": [
+          899.97455,
+          1052.9092,
+          0.593964
+        ],
+        "minimum": [
+          880.27844,
+          1033.213,
+          -11.406036
+        ],
+        "vertices": 116
+      },
+      "P_L004": {
+        "maximum": [
+          899.9745,
+          1131.1315,
+          0.593964
+        ],
+        "minimum": [
+          880.2784,
+          1111.4353,
+          -11.406036
+        ],
+        "vertices": 116
+      },
+      "P_L019": {
+        "maximum": [
+          851.3489,
+          911.08167,
+          0.593964
+        ],
+        "minimum": [
+          831.6528,
+          891.38556,
+          -11.406036
+        ],
+        "vertices": 116
+      },
+      "SLING1": {
+        "maximum": [
+          705.9342,
+          1427.6038,
+          -2.5
+        ],
+        "minimum": [
+          675.5137,
+          1405.2544,
+          -41.5
+        ],
+        "vertices": 130
+      },
+      "SLING2": {
+        "maximum": [
+          235.89314,
+          1428.3276,
+          -2.5
+        ],
+        "minimum": [
+          205.43277,
+          1405.8551,
+          -41.5
+        ],
+        "vertices": 130
+      }
+    },
+    "command": "vpxtool export obj <retained-vpx> --units vpu -o <session>/primary/world-obj",
+    "path": "primary/world-obj/FirePower II (Williams 1983) 1.1.obj",
+    "sha256": "2bab139578675b91fe000b6e5cb281590655baa288aeea96377bcb6c0dfa4687",
+    "size": 12627549
+  }
 }

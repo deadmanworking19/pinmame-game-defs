@@ -30,7 +30,8 @@ class FirepowerIICurationTests(unittest.TestCase):
         cls.lamps = {d["binding"]["device"]: d for d in cls.game["outputs"] if d["binding"]["group"] == "pinmame.output.lamp"}
 
     def test_identity_and_conversion_are_not_collapsed(self):
-        self.assertEqual(self.game["machine"], {"id": "williams.firepower-ii.1983", "name": "Firepower II", "manufacturer": "Williams", "year": 1983,
+        identity = {k:v for k,v in self.game["machine"].items() if k != "playfield"}
+        self.assertEqual(identity, {"id": "williams.firepower-ii.1983", "name": "Firepower II", "manufacturer": "Williams", "year": 1983,
                          "model_number": "521", "kind": "physical_pinball", "ipdb_id": 857, "opdb_id": "GRWYk-Mb5OV"})
         drivers = {d["id"]: d for d in self.game["drivers"]}
         self.assertEqual(set(drivers), {"fpwr2_l2"})
@@ -201,13 +202,13 @@ class FirepowerIICurationTests(unittest.TestCase):
         self.assertEqual(self.game["coverage"]["missing"], curator.MISSING)
         report = curator.spatial_report(self.game)
         self.assertEqual(report["format"], "pinmame-spatial-blockers")
-        self.assertEqual(report["placements"], [])
+        self.assertEqual(report["counts"], {"lamp": 54, "solenoid": 9, "switch": 36})
         for group in ["inputs", "outputs"]:
             for d in self.game[group]:
                 if d["availability"] == "unused" or d["kind"] in {"virtual", "dip_switch"} or d.get("roles") in [["cabinet"], ["service"], ["backbox"], ["internal"]]:
                     self.assertEqual(d["spatial"]["status"], "not_applicable", d["id"])
                 else:
-                    self.assertIn(d["id"], report["unplaced_devices"])
+                    self.assertTrue(d["id"] in report["unplaced_devices"] or d.get("spatial", {}).get("placements"), d["id"])
         promoted = copy.deepcopy(self.game)
         promoted["coverage"]["status"] = "author_ready"
         promoted["coverage"]["missing"] = []
@@ -217,6 +218,7 @@ class FirepowerIICurationTests(unittest.TestCase):
 
     def _fixture(self, destination):
         files = [*curator.expected_artifacts(), curator.RUNTIME, curator.TILT, curator.RETAINED]
+        files.extend([curator.spatial.SEED, curator.spatial.EXCERPT])
         files.extend(Path("evidence/excerpts") / curator.MACHINE_ID / n for n in curator.EXCERPTS)
         files.extend(Path("evidence/excerpts") / curator.MACHINE_ID / spec[0] for spec in curator.IMAGES.values())
         files.extend(Path(r["scenario_path"]) for relative in [curator.RUNTIME, curator.TILT]
@@ -244,6 +246,7 @@ class FirepowerIICurationTests(unittest.TestCase):
                     curator.check(root)
                 (root/rel).write_bytes(original)
             guarded = [curator.RUNTIME, curator.TILT, curator.RETAINED]
+            guarded += [curator.spatial.SEED, curator.spatial.EXCERPT]
             guarded += [Path("evidence/excerpts")/curator.MACHINE_ID/n for n in curator.EXCERPTS]
             guarded += [Path("evidence/excerpts")/curator.MACHINE_ID/spec[0] for spec in curator.IMAGES.values()]
             guarded += [Path(r["scenario_path"]) for relative in [curator.RUNTIME, curator.TILT]
@@ -267,7 +270,7 @@ class FirepowerIICurationTests(unittest.TestCase):
                 curator.check(root)
 
     def test_missing_configured_external_root_fails(self):
-        for name in ["PINMAME_MANUALS_ROOT", "PINMAME_REVIEW_ARTIFACTS_ROOT", "PINMAME_SOURCE_ROOT", "PINMAME_VPX_SCRIPTS_ROOT", "PINMAME_ROM_LIBRARY_ROOT"]:
+        for name in ["PINMAME_VPX_SOURCES_ROOT", "PINMAME_MANUALS_ROOT", "PINMAME_REVIEW_ARTIFACTS_ROOT", "PINMAME_SOURCE_ROOT", "PINMAME_VPX_SCRIPTS_ROOT", "PINMAME_ROM_LIBRARY_ROOT"]:
             with self.subTest(root=name), patch.dict(os.environ, {name:""}, clear=True):
                 with self.assertRaisesRegex(RuntimeError, "configured evidence root unavailable"):
                     curator.verify_external()
@@ -422,6 +425,12 @@ class FirepowerIIRuntimeEvidenceTests(unittest.TestCase):
             (target/snapshot).parent.mkdir(parents=True)
             shutil.copyfile(source/snapshot,target/snapshot)
             guarded=[snapshot,*(curator.SESSION/"installed-vbs"/name for name in curator.VBS_FILES)]
+            spatial_seed = curator.spatial.read_seed(ROOT)
+            for spec in [spatial_seed["world_obj"], *(p["external_crop"] for p in spatial_seed["pages"].values()), *spatial_seed["correction_crops"]]:
+                relative = curator.spatial.SESSION/spec["path"]
+                (target/relative).parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(source/relative,target/relative)
+                guarded.append(relative)
             for relative,folder in [(curator.RUNTIME,"harness"),(curator.TILT,"tilt-probes")]:
                 guarded += [curator.SESSION/folder/(r["name"]+".json") for r in load_json(ROOT/relative)["runtime"]["raw_runs"]]
                 guarded += [curator.SESSION/folder/name for name in ["manifest.json","manifest.sha256"]]
