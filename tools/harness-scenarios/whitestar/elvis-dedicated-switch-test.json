@@ -1,0 +1,164 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "elvis",
+  "notes": "Boot elvis (5.00) with four balls on trough switches 11-14 and the stacking opto 15 at 0, built-in mechanisms off. Walk the Portals service menu with the Black ENTER (public 0) and Green RIGHT (public -1) buttons: Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU (SW), SWITCH TEST MENU (TEST), two steps right to DED, and enter the Dedicated Switch Test, which prints the name and wiring the ROM holds for each closed dedicated switch. Hold and release, one at a time, the flipper-column inputs 84, 83, 82, 81 and 88.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0,
+    81,
+    82,
+    83,
+    84,
+    88
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: SWITCH TEST MENU with TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: ACT selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: DED selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Dedicated Switch Test entered"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "left flipper button (public 84) held in the Dedicated Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "left flipper button (public 84) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "left flipper end-of-stroke (public 83) held in the Dedicated Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "left flipper end-of-stroke (public 83) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "right flipper button (public 82) held in the Dedicated Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "right flipper button (public 82) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "right flipper end-of-stroke (public 81) held in the Dedicated Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 81,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "right flipper end-of-stroke (public 81) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 1,
+      "settle_s": 2.5,
+      "label": "dedicated input 88 (DS-5) (public 88) held in the Dedicated Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 88,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "dedicated input 88 (DS-5) (public 88) released"
+    }
+  ]
+}

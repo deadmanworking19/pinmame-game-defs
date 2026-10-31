@@ -1,0 +1,606 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "elvis",
+  "notes": "Boot elvis (5.00) with four balls on trough switches 11-14 and the stacking opto 15 at 0, built-in mechanisms off. Enter the Switch Test as in elvis-switch-test and, for 63 (a control), 64 and 3 in turn: close the switch for 3 s, open it for 3 s and pulse it for 100 ms, reading the display every 0.25 s, to see when and on which edge the ROM prints each name.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0,
+    3,
+    63,
+    64
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: SWITCH TEST MENU with TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "Black ENTER button (public 0) pressed: Switch Test entered"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 0.25,
+      "label": "switch 63 closed and held"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 0.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 0.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 1.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 1.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 1.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 1.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 2.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 2.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 2.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 2.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 held, 3.00 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 0.25,
+      "label": "switch 63 opened"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 0.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 0.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 1.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 1.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 1.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 1.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 2.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 2.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 2.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 2.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 open, 3.00 s after its release"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "switch 63 pulsed for 100 ms"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 0.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 0.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 1.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 1.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 1.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 1.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 2.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 2.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 63 2.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 0.25,
+      "label": "switch 64 closed and held"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 0.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 0.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 1.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 1.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 1.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 1.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 2.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 2.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 2.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 2.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 held, 3.00 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 0.25,
+      "label": "switch 64 opened"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 0.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 0.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 1.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 1.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 1.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 1.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 2.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 2.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 2.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 2.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 open, 3.00 s after its release"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "switch 64 pulsed for 100 ms"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 0.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 0.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 1.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 1.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 1.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 1.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 2.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 2.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 64 2.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 0.25,
+      "label": "switch 3 closed and held"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 0.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 0.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 1.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 1.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 1.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 1.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 2.00 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 2.25 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 2.50 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 2.75 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 held, 3.00 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 0.25,
+      "label": "switch 3 opened"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 0.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 0.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 1.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 1.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 1.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 1.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 2.00 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 2.25 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 2.50 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 2.75 s after its release"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 open, 3.00 s after its release"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "switch 3 pulsed for 100 ms"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 0.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 0.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 1.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 1.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 1.50 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 1.75 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 2.00 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 2.25 s after the 100 ms pulse began"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25,
+      "label": "switch 3 2.50 s after the 100 ms pulse began"
+    }
+  ]
+}

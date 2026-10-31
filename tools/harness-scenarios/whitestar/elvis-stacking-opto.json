@@ -1,0 +1,65 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "elvis",
+  "notes": "Boot elvis (5.00) with four balls on trough switches 11-14 and the stacking opto 15 at 0, built-in mechanisms off. After attract mode is reached, raise public 15 to 1, lower it, and raise it again, 20 s apart, recording every solenoid transition.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    33
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14 and the stacking opto 15 at public 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 in attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 20.0,
+      "label": "public 15 lowered back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 a second time"
+    }
+  ]
+}

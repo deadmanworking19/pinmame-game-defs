@@ -1,0 +1,216 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "elvis",
+  "notes": "Boot elvis (5.00) with four balls on trough switches 11-14 and the stacking opto 15 at 0, built-in mechanisms off. Walk the Portals service menu with the Black ENTER (public 0), Green RIGHT (public -1) and Red LEFT (public -2) buttons: Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU, eleven steps right through COIL, LAMP, FLASH, CLR, TECH, PLAY, KNOCKER, SPKR, BURN and DOT TEST to ELVIS, and enter the ELVIS test (STEPPER MOTOR TEST), whose cursor starts on RUN. Press RUN twice, 20 s apart; move to PULSE and pulse three times; move to LEGS and press once; move to ARMS and press once. The scenario never writes 33: LibPinMAME's elvis.c writes it from its own count of the stepper phases (1 at its home count 0), so every level of 33 in this run is the emulator's, not the ROM's or the host's.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0,
+    33
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: COIL selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: LAMP selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: FLASH selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: CLR selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: TECH selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: PLAY selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: KNOCKER selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: SPKR selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: BURN selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: DOT TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: ELVIS selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "Black ENTER button (public 0) pressed: ELVIS test (STEPPER MOTOR TEST) entered with RUN selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 20.0,
+      "label": "Black ENTER button (public 0) pressed on RUN: the stepper motor runs one full cycle"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 20.0,
+      "label": "Black ENTER button (public 0) pressed on RUN a second time"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Red LEFT button (public -2) pressed: PULSE selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed on PULSE: stepper pulse 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed on PULSE: stepper pulse 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed on PULSE: stepper pulse 3"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Red LEFT button (public -2) pressed: LEGS selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed on LEGS: legs coil energized"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Red LEFT button (public -2) pressed: ARMS selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed on ARMS: arms coil energized"
+    }
+  ]
+}

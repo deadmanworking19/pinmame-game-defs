@@ -1,0 +1,1380 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "elvis",
+  "notes": "Boot elvis (5.00) with four balls on trough switches 11-14 and the stacking opto 15 at 0, with built-in mechanisms off (--handle-mechanics 0). Walk the Portals service menu with the Black ENTER button (public 0): Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU (SW), SWITCH TEST MENU (TEST), and enter the Switch Test, which prints after each closure the name, the drive and return wire colours and the number the ROM holds for that switch. Close every matrix address 1-64 once and read the display 0.7 s and 1.5 s after the closure; an address closed at boot is first opened and is left closed again afterwards. That includes 33: LibPinMAME's elvis.c sets 33 to 1 on the boot write to the stepper phases 25-28 and writes it again only on a later nonzero phase write, which this run never sees after boot, so the 33 edges in the Switch Test are the scenario's own.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: SWITCH TEST MENU with TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "Black ENTER button (public 0) pressed: Switch Test entered"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 1 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 1 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 1 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 2 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 2 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 2,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 2 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 3 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 3 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 3,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 3 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 4 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 4 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 4,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 4 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 5 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 5 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 5,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 5 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 6 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 6 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 6,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 6 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 7 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 7 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 7,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 7 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 8 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 8 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 8 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 9 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 9 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 9 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 10 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 10 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 10 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 11 opened before its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 11 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 11 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.6,
+      "label": "switch 11 left closed again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 12 opened before its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 12 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 12 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.6,
+      "label": "switch 12 left closed again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 13 opened before its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 13 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 13 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.6,
+      "label": "switch 13 left closed again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 14 opened before its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 14 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 14 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.6,
+      "label": "switch 14 left closed again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 15 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 15 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 15 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 16 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 16 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 16 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 17 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 17 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 17,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 17 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 18 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 18 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 18 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 19 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 19 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 19 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 20 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 20 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 20 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 21 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 21 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 21 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 22 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 22 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 22 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 23 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 23 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 23 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 24 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 24 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 24 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 25 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 25 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 25 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 26 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 26 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 26 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 27 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 27 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 27 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 28 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 28 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 28 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 29 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 29 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 29,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 29 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 30 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 30 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 30 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 31 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 31 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 31,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 31 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 32 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 32 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 32,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 32 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 33 opened before its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 33 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 33 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.6,
+      "label": "switch 33 left closed again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 34 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 34 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 34 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 35 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 35 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 35 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 36 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 36 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 36 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 37 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 37 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 37 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 38 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 38 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 38 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 39 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 39 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 39 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 40 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 40 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 40 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 41 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 41 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 41 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 42 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 42 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 42 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 43 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 43 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 43 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 44 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 44 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 44 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 45 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 45 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 45 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 46 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 46 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 46 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 47 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 47 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 47 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 48 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 48 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 48 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 49 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 49 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 49,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 49 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 50 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 50 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 50 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 51 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 51 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 51,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 51 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 52 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 52 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 52,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 52 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 53 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 53 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 53,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 53 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 54 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 54 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 54,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 54 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 55 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 55 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 55,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 55 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 56 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 56 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 56,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 56 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 57 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 57 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 57 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 58 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 58 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 58,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 58 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 59 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 59 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 59 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 60 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 60 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 60,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 60 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 61 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 61 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 61,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 61 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 62 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 62 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 62,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 62 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 63 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 63 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 63,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 63 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 1,
+      "settle_s": 0.7,
+      "label": "switch 64 closed in the Switch Test"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.8,
+      "label": "switch 64 still closed 1.5 s after its closure"
+    },
+    {
+      "type": "set_switch",
+      "switch": 64,
+      "state": 0,
+      "settle_s": 1.6,
+      "label": "switch 64 opened"
+    }
+  ]
+}

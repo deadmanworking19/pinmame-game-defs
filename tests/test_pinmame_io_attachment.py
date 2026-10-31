@@ -152,7 +152,7 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 		# Sega Whitestar machines carry de_m modules but no reviewed profile, and
 		# System 3-7 has no profile either; their controller_platform must stay
 		# honestly missing.
-		definition = load_json(ROOT / "machines/partial/stern/elvis-2004.json")
+		definition = load_json(ROOT / "machines/partial/stern/grand-prix-2005.json")
 		self.assertNotIn("controller", definition)
 		self.assertIn("controller_platform", definition["coverage"]["missing"])
 		self.assertTrue(any(device["binding"]["group"] == "pinmame.input.switch" for device in definition["inputs"]))

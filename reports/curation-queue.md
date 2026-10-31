@@ -67,7 +67,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 61 | 2005 | Grand Prix | Stern | partial | 13% |
 | 62 | 2005 | Nascar | Stern | partial | 13% |
 | 63 | 2005 | The Sopranos | Stern | partial | 94% |
-| 64 | 2004 | Elvis | Stern | partial | 13% |
+| 64 | 2004 | Elvis | Stern | partial | 94% |
 | 65 | 2004 | Ripley's Believe It or Not! | Stern | partial | 88% |
 | 66 | 2003 | Pinball 2000: Star Wars Episode I (1.50) | Midway | partial | 13% |
 | 67 | 2003 | Lord of the Rings | Stern | author_ready | 100% |
