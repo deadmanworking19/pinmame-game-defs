@@ -41,9 +41,10 @@ CORPUS_REPOSITORIES = (
 # Cyclone replaces its 52 candidate devices from two scripts.
 # Barracora replaces its 53 imported candidate devices from two scripts.
 # Mousin' Around replaces its 45 candidate devices from one script with its own curated definition.
-EXPECTED_ATTACHED_MACHINES = 251
-EXPECTED_ATTACHED_DEVICES = 11357
-EXPECTED_ATTACHED_SCRIPTS = 306
+# Nine Ball replaces its 75 imported candidate devices from one script.
+EXPECTED_ATTACHED_MACHINES = 250
+EXPECTED_ATTACHED_DEVICES = 11282
+EXPECTED_ATTACHED_SCRIPTS = 305
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

@@ -614,7 +614,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 608 | 1980 | Cheetah | Stern | partial | 19% |
 | 609 | 1980 | Flight 2000 | Stern | partial | 19% |
 | 610 | 1980 | Galaxy | Stern | partial | 19% |
-| 611 | 1980 | Nine Ball | Stern | partial | 19% |
+| 611 | 1980 | Nine Ball | Stern | partial | 88% |
 | 612 | 1980 | Quicksilver | Stern | partial | 88% |
 | 613 | 1980 | Seawitch | Stern | partial | 88% |
 | 614 | 1980 | Star Gazer | Stern | partial | 88% |

@@ -1,0 +1,834 @@
+{
+  "blockers": [
+    "No playfield lamp is placed (56 of the 60): the retained table, the only Nine Ball table available, draws every insert with lights that show no bulb mesh, and the manual prints no lamp-location drawing, so no source marks a socket (docs/SPATIAL.md, Picking the bulb).",
+    "The trough switches 33, 36 and 37 and the outhole kicker (public 7) are not placed: both known-working scripts and the table model the trough as a virtual ball stack with no object at the switches, and the location drawing prints the three switch numbers under the apron without arrows.",
+    "Every switch, coil and general-illumination placement is `observed` from the one table; no factory-drawing callout check was made, and the manual's location drawings are 72 dpi scans.",
+    "Lock-lane switches 38 and 39 rest on the table's triggers where the drawing puts them, but the table binds neither correctly (its sw38 writes 39 and its sw1 has no handler)."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1927.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1927; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "L<n>, L<n>a-c, L<n>b and l<n>a-b lights, the Bumper1Light and the f11, f29 and f30 flashers: insert lights and glows the script binds to lamp numbers; none of the table's 188 lights shows a bulb mesh, so none marks a socket",
+    "LDrop<bank><n> lights (collection dtLeftLights): drop-target glows the script switches from the target hit events, not lamp outputs",
+    "GI_<n> and Light<n> lights (collection GI): placed through the BulbFil<n> bulb-filament primitive each GI_<n> light sits on, not on their own",
+    "BulbTop<n> primitives: the glass tops of the same 25 general-illumination bulbs",
+    "LED and led display-segment flashers, the BG backglass flashers and the Flasher<n> lighting overlays, none of them bound to a lamp number: backbox and render helpers, not playfield devices",
+    "Drain and BallRelease kickers: the virtual trough's entry and its shooter-lane exit, not physical trough positions",
+    "Gate1, Gate2, Gate6, BallReleaseGate and the hidden Gate3: passive or helper gates with no controller binding"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1303,
+    "manifest_algorithm": "format pinmame-vpx-extraction-manifest v1: every file as sorted relative POSIX path, size and SHA-256, canonical JSON (tools/curate_nine_ball.py)",
+    "manifest_sha256": "4a4b69caf8ad25f5e082e8581a5cbe97b9c453ea1d8b84f19d6cd309e2019f4f",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/nine-ball-1980/archive/extracted-vpxtool.manifest.json",
+    "script_sha256": "db63ad0f77f1361e34ee49b13ad852ae34a972de6d64c6331d1f6cfba181e902",
+    "source_ref": "vpx-extraction.nine-ball-bord-1-0",
+    "table_sha256": "fdd7e6c53a9046e29d96b4acbbf01743d892447851b28f880df5367af2759270",
+    "total_bytes": 93067588,
+    "vpxtool_version": "git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "located_records": [
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "id": "device.center-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-1-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-2-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-3-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-4-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-5-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-6-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "id": "device.drop-target-7-knock-down",
+      "placements": 1
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "id": "device.eight-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "id": "device.kick-out-hole",
+      "placements": 1
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-flipper",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "id": "device.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "id": "device.loop-drop-target-reset",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "id": "device.pop-bumper",
+      "placements": 1
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-bank-reset",
+      "placements": 1
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-flipper",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "id": "device.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "physical.output.gi",
+      "id": "gi.general-illumination",
+      "placements": 25
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "id": "switch.advance-spinner-target",
+      "placements": 1
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "id": "switch.center-bank-left-target",
+      "placements": 1
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "id": "switch.center-bank-middle-target",
+      "placements": 1
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "id": "switch.center-bank-right-target",
+      "placements": 1
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-1",
+      "placements": 1
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-2",
+      "placements": 1
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-3",
+      "placements": 1
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-4",
+      "placements": 1
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-5",
+      "placements": 1
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-6",
+      "placements": 1
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-7",
+      "placements": 1
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "id": "switch.drop-target-8",
+      "placements": 1
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "id": "switch.kick-out-hole",
+      "placements": 1
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "id": "switch.left-flipper-end-of-stroke-contact",
+      "placements": 1
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-lane-lower",
+      "placements": 1
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-lane-middle",
+      "placements": 1
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-lane-top",
+      "placements": 1
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-outlane",
+      "placements": 1
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "id": "switch.loop-drop-target",
+      "placements": 1
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "id": "switch.loop-roll-under",
+      "placements": 1
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "id": "switch.pop-bumper",
+      "placements": 1
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-bottom-target",
+      "placements": 1
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-middle-target",
+      "placements": 1
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-bank-top-target",
+      "placements": 1
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "id": "switch.right-flipper-end-of-stroke-contact",
+      "placements": 1
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-outlane",
+      "placements": 1
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-return-lane",
+      "placements": 1
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "id": "switch.right-slingshot",
+      "placements": 1
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "id": "switch.shooter-lane",
+      "placements": 1
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "id": "switch.spinner",
+      "placements": 1
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "id": "switch.top-dead-bumper",
+      "placements": 1
+    }
+  ],
+  "machine_id": "stern.nine-ball.1980",
+  "not_applicable_records": {
+    "cabinet_or_service": [
+      "device.coin-lockout",
+      "device.knocker",
+      "display.credits",
+      "display.match-ball-in-play",
+      "display.player-1-score",
+      "display.player-2-score",
+      "display.player-3-score",
+      "display.player-4-score",
+      "lamp.game-over",
+      "lamp.high-score-to-date",
+      "lamp.match",
+      "lamp.tilt",
+      "switch.coin-chute-1",
+      "switch.coin-chute-2",
+      "switch.coin-chute-3",
+      "switch.cpu-diagnostic-button",
+      "switch.credit-button",
+      "switch.left-flipper-button",
+      "switch.remote-memory-clear",
+      "switch.right-flipper-button",
+      "switch.self-test-button",
+      "switch.slam",
+      "switch.sound-diagnostic-button",
+      "switch.tilt"
+    ],
+    "dip_switch": [
+      "dip.option-switch-1",
+      "dip.option-switch-10",
+      "dip.option-switch-11",
+      "dip.option-switch-12",
+      "dip.option-switch-13",
+      "dip.option-switch-14",
+      "dip.option-switch-15",
+      "dip.option-switch-16",
+      "dip.option-switch-17",
+      "dip.option-switch-18",
+      "dip.option-switch-19",
+      "dip.option-switch-2",
+      "dip.option-switch-20",
+      "dip.option-switch-21",
+      "dip.option-switch-22",
+      "dip.option-switch-23",
+      "dip.option-switch-24",
+      "dip.option-switch-25",
+      "dip.option-switch-26",
+      "dip.option-switch-27",
+      "dip.option-switch-28",
+      "dip.option-switch-29",
+      "dip.option-switch-3",
+      "dip.option-switch-30",
+      "dip.option-switch-31",
+      "dip.option-switch-32",
+      "dip.option-switch-4",
+      "dip.option-switch-5",
+      "dip.option-switch-6",
+      "dip.option-switch-7",
+      "dip.option-switch-8",
+      "dip.option-switch-9"
+    ],
+    "internal_nonvisual": [
+      "device.flipper-enable-relay"
+    ],
+    "unused": [
+      "switch.upper-left-flipper-position",
+      "switch.upper-right-flipper-position"
+    ],
+    "virtual": [
+      "output.left-flipper-power-state",
+      "output.right-flipper-power-state"
+    ]
+  },
+  "placement_statuses": {
+    "observed": 75
+  },
+  "projections": [
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the right slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position; the script reports the switch from the wall's own hit event."
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "reason": "Placed at the mean of the left slingshot wall's own drag points, a projection onto the rubber, not a measured leaf-switch position; the script reports the switch from the wall's own hit event."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "The retained script mis-binds the lock lane: trigger `sw38`, in the middle of the lane where the manual's switch drawing puts 38, writes switch 39, so that table never closes 38. Placed on trigger `sw38`, whose position and name agree with the drawing; the binding is a defect of the table."
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "reason": "The retained table has no trigger bound to 39 at the top of the lock lane: its `sw39` handler has no object, and the trigger there is named `sw1` and has no handler. Placed on that trigger, at the top of the lane where the manual's switch drawing puts 39; a projection resting on the drawing, not on a script binding."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the right slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the mean of the left slingshot wall's drag points, the rubber the coil kicks; the coil sits under it."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right three-bank it resets: the mean of the table's own three target objects. The reset coil sits under the bank and has no object."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the center three-bank it resets: the mean of the table's own three target objects."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw15`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw14`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw13`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw12`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw11`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw10`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the drop target it knocks down (table `sw9`); the coil sits behind the target and has no object."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the eight-target bank it resets: the mean of the table's own eight target objects."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on the loop drop target it raises (table `sw21`); the coil sits under the target and has no object."
+    },
+    {
+      "address": 1,
+      "group": "physical.input.direct",
+      "reason": "Placed on the left flipper pivot: the end-of-stroke contact is mounted on its flipper assembly."
+    },
+    {
+      "address": 2,
+      "group": "physical.input.direct",
+      "reason": "Placed on the right flipper pivot: the end-of-stroke contact is mounted on its flipper assembly."
+    }
+  ],
+  "readiness": {
+    "missing": [
+      "spatial_placement",
+      "unresolved_conflicts"
+    ],
+    "status": "partial",
+    "unresolved_conflicts": 1
+  },
+  "unplaced_records": [
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "id": "device.outhole-kicker"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-1"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-2"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-3"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-4"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-5-and-capture-ball"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-6"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-7"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-8-and-left-bank"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.bonus-9"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.center-bank-left-wow"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.center-bank-right-wow"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-1"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-2"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-3"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-4"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-5"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-6"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-7"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.drop-target-8"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.left-bank-7000-and-right-outlane"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.left-return-lane-spot-number"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.loop-10k"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.loop-20k"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.loop-30k"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.loop-40k"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.loop-top-value"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-1x"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-2x"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.multiplier-4x"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.one-to-eight-lites-special"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-bank-7000-and-left-outlane"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-bank-bottom-wow"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-bank-top-wow"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.right-return-lane-spot-number"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.shoot-again"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-2"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-3"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-4"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-5"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-6"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-7"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.special-target-8"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-1"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-2"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-3"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.spinner-4"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.super-bonus"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.top-dead-bumper"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-1"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-2"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-3"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-4"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-5"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-6"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-7"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "id": "lamp.wow-target-8"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "id": "switch.left-outhole"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "id": "switch.middle-outhole"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "id": "switch.outhole"
+    }
+  ],
+  "version": 1
+}

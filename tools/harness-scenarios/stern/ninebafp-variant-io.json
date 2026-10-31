@@ -1,0 +1,158 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "ninebafp",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33,
+    34,
+    36,
+    37,
+    40
+  ],
+  "notes": "Fresh-state ninebafp (Free Play) output check. Three balls start in the trough; a coin and the credit button start a game, the serve is modelled by the trough switches and the shooter lane, then both slingshots, the pop bumper, the top dead bumper, the kick-out hole, both flipper buttons, a drain and a tilt are exercised, so the public outputs that answer can be compared with the nineball runs.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 (left)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 3,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 1: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 1: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 1: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: ball is plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right slingshot sw29"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left slingshot sw30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "pop bumper sw31"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "top dead bumper sw17"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "ball enters the kick-out hole before object 5 is lit"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "kick-out hole empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "left flipper button 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "right flipper button 82"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 10.0,
+      "label": "ball 1 drains into the trough"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "settle_s": 5.0,
+      "label": "tilt sw7"
+    }
+  ]
+}

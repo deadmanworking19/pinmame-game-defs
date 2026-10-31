@@ -1,0 +1,14 @@
+Source: `Stern_1980_Nine_Ball_Schematic_Diagrams_paginated.pdf` (IPDB machine 1678), PDF page 4, `LAMP DRIVER SCHEMATIC`, drawing number `12B-431S-128`, `SHEET 1 OF 3`, with `NINE BALL` lettered into the title block's `FOR` blank. Notes at the upper left, verbatim: `1. ▲ INDICATES MCR106-1 TRANSISTOR.` `2. THIS DOCUMENT FOR LDA-100 REV. A AND LDA-REV. B SINGLE SIDED P.C. BOARDS.` The typed lamp list at the right of this sheet does not describe Nine Ball: its rows name roll-over lanes, bonus values 1,000-10,000, multipliers 1X-5X, `RELEASE NEXT ROCKET`, `SPOT BLAST`, `FIRST STAGE`, `SECOND STAGE` and `ALL SYSTEMS GO` lamps, and the drawing number's suffix differs from Nine Ball's model number 125. That list is not transcribed and nothing in the definition rests on it; only the LDA-100 board's own wiring, which every game with this board shares, is read from this sheet. Nine Ball's own lamp-to-pin assignment is the `NINE BALL LDA LIGHT LOCATION` list on PDF page 2.
+
+Each of the four decoders `U1`-`U4` drives fifteen output lines `S0`-`S14`; each line runs through a resistor `R<n>` to the gate of SCR `Q<n>`. The resistor labels printed above the lines were read; the SCR labels beside the symbols were checked against them. Decoder output to SCR, as drawn:
+
+| Decoder | S0 | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10 | S11 | S12 | S13 | S14 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| U1 | R14 / Q14 | R12 / Q12 | R13 / Q13 | R8 / Q8 | R9 / Q9 | R10 / Q10 | R11 / Q11 | R4 / Q4 | R1 / Q1 | R2 / Q2 | R3 / Q3 | R7 / Q7 | R16 / Q16 | R5 / Q5 | R6 / Q6 |
+| U2 | R29 / Q29 | R27 / Q27 | R28 / Q28 | R35 / Q35 | R34 / Q34 | R22 / Q22 | R26 / Q26 | R25 / Q25 | R24 / Q24 | R17 / Q17 | R23 / Q23 | R21 / Q21 | R15 / Q15 | R18 / Q18 | R19 / Q19 |
+| U3 | R36 / Q36 | R38 / Q38 | R44 / Q44 | R49 / Q49 | R48 / Q48 | R37 / Q37 | R32 / Q32 | R20 / Q20 | R42 / Q42 | R41 / Q41 | R40 / Q40 | R39 / Q39 | R33 / Q33 | R30 / Q30 | R31 / Q31 |
+| U4 | R57 / Q57 | R50 / Q50 | R51 / Q51 | R54 / Q54 | R55 / Q55 | R60 / Q60 | R59 / Q59 | R58 / Q58 | R56 / Q56 | R46 / Q46 | R52 / Q52 | R53 / Q53 | R47 / Q47 | R43 / Q43 | R45 / Q45 |
+
+Line S15 of each decoder is not drawn to an SCR. The four lamp-data and strobe inputs, the four `MC14514`-family decoders and the SCR driver stages are not transcribed.
+
+PinMAME's MPU-200 lamp strobe publishes decoder `U(k+1)` output `S(a)` as public lamp `16 * k + a + 1`. Read that way, two pairs are crossed against the board's otherwise ascending pattern: `U2` S7 drives Q25 and S8 drives Q24, and `U3` S9 drives Q41 while `U4` S9 drives Q46. The retained lock-lane harness run settles both crossings from the ROM: the bonus-object lamps the ROM lights in order are public 58, 42, 26, 10, 57, 41 and 25, which are Q46, Q41, Q17, Q2, Q56, Q42 and Q24, the transistors the LDA LIGHT LOCATION list names for BONUS TARGET 1-7.

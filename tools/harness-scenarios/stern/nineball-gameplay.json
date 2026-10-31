@@ -1,0 +1,505 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "nineball",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33,
+    36,
+    37,
+    40
+  ],
+  "notes": "Fresh-state Nine Ball gameplay switch exercise. Three balls start in the trough (public 33, 36 and 37 closed). Three coins and the credit button start a game, the out-hole kicker serve is modelled by opening 37 and crossing the shooter lane 40, then each playfield switch is closed alone; both three-target banks, the loop drop target and the eight-target bank are held down in order, the left-lane kick-out and the left-lane middle and top switches are closed, the flipper positions are pressed, a ball drains into the trough and is served again, and a tilt ends the ball.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 (left)"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 2 (center)"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 3 (right)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 1,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 1: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 1: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 1: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: ball is plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "loop roll-under sw4"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "spinner sw5"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "top dead bumper sw17"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "advance spinner to end stand-up sw35"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left lane lower switch sw32"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right outlane sw25"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left outlane sw26"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right slingshot sw29"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left slingshot sw30"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "pop bumper sw31"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "right return lane sw27"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "left return lane sw28"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "center bank: 18 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "center bank: 19 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "center bank: 20 down completes the center bank"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "right bank: 22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "right bank: 23 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "right bank: 24 down completes both three-target banks"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "center bank: 18 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "center bank: 19 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "center bank: 20 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right bank: 22 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "right bank: 23 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "right bank: 24 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "loop drop target sw21 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 21,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "loop drop target sw21 raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 1 (sw9) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 2 (sw10) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 3 (sw11) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 4 (sw12) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 5 (sw13) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 6 (sw14) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "eight bank: object 7 (sw15) down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "eight bank: object 8 (sw16) down completes the bank"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 1 (sw9) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 2 (sw10) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 3 (sw11) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 4 (sw12) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 5 (sw13) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 6 (sw14) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 7 (sw15) raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "eight bank: object 8 (sw16) raised"
+    },
+    {
+      "type": "wait",
+      "seconds": 2,
+      "label": "eight bank raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "ball enters the left-lane kick-out hole sw34"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "left-lane kick-out hole empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "left lane middle switch sw38"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 200,
+      "settle_s": 4.0,
+      "label": "left lane top switch sw39"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "left flipper button 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "right flipper button 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "unused flipper position 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 1000,
+      "settle_s": 1.5,
+      "label": "unused flipper position 81"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 1,
+      "settle_s": 10.0,
+      "label": "ball 1 drains into the trough"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 2: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 2: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 2: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 2: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 2: ball is plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 300,
+      "settle_s": 5.0,
+      "label": "tilt sw7"
+    }
+  ]
+}

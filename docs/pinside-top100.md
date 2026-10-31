@@ -121,7 +121,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 170 | Black Rose | `bally.black-rose.1992` | 88% |
 | 171 | Barracora | `williams.barracora.1981` | 94% |
 | 171 | Mousin' Around! | `bally.mousin-around.1989` | 88% |
-| 173 | Nine Ball | `stern.nine-ball.1980` | 19% |
+| 173 | Nine Ball | `stern.nine-ball.1980` | 88% |
 | 174 | Batman Forever | `sega.batman-forever.1995` | 81% |
 | 175 | Star Wars | `data-east.star-wars.1992` | 81% |
 | 176 | Spirit | `gottlieb.spirit.1982` | 13% |

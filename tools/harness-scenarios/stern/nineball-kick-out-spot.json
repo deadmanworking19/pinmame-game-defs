@@ -1,0 +1,320 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "nineball",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    33,
+    34,
+    36,
+    37,
+    40
+  ],
+  "notes": "Fresh-state Nine Ball kick-out spot handshake. A coin and the credit button start a game with three balls in the trough and the serve is modelled. A ball is put in the left-lane kick-out hole (34) before object 5 is lit; each time the ROM fires a drop-target knock-down coil the scenario closes that target's switch, in the order coil 9 (object 7) to coil 15 (object 1), standing in for the target falling. A coil the ROM does not fire in that order ends the run with a timeout. When the kick-out fires the hole empties; when the ROM then pulses the eight-bank reset the scenario opens every target switch, standing in for the bank rising, and answers the knock-down coil that follows.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 (left)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 1,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 1: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 1: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 1: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: ball is plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "ball enters the kick-out hole before object 5 is lit"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 7 (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 7 target (sw15) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        10
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 6 (public 10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 6 target (sw14) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 5 (public 11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 5 target (sw13) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 4 (public 12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 4 target (sw12) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "wait for the knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.05,
+      "label": "object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        8
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the kick-out hole fires once every programmable target is down (public 8)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "the ball leaves the kick-out hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 7 (sw15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 6 (sw14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 5 (sw13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 4 (sw12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 3 (sw11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "reset raises object 1 (sw9)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "the ROM knocks the spotted lit object 1 down again (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "observe the bank after the kick-out"
+    }
+  ]
+}

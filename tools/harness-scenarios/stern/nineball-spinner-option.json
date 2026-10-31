@@ -1,0 +1,129 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "nineball",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    33,
+    36,
+    37,
+    40
+  ],
+  "notes": "Fresh-state Nine Ball probe of option switch 17 at PinMAME's default setting (every option switch OFF). A coin and the credit button start a game and the serve is modelled as in the gameplay scenario; then the two three-target banks are knocked down one target at a time, the two center targets first and the four outside targets after them, each held down for 3 s, so the spinner value lamps show which targets the ROM lets advance the spinner value.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 (left)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 1,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 1: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 1: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 1: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: ball is plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 19,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "center bank: center target 19 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 23,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "right bank: center target 23 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "center bank: outside target 18 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "center bank: outside target 20 down completes the center bank"
+    },
+    {
+      "type": "set_switch",
+      "switch": 22,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "right bank: outside target 22 down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 24,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "right bank: outside target 24 down completes both three-target banks"
+    }
+  ]
+}

@@ -1,0 +1,1202 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "nineball",
+  "initial_switches": [
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    33,
+    34,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "notes": "Fresh-state Nine Ball lock-lane probe. A coin and the credit button start a game with three balls in the trough, and the serve is modelled by the trough switches and the shooter lane 40. Objects 1-4 are made in order; each time the ROM pulses the eight-bank reset (17) the scenario opens every target that is down, standing in for the bank rising, and answers each knock-down coil the ROM then fires by closing that target's switch. With object 5 lit, ball 1 enters the left-lane kick-out hole (34); ball 2 is served and stops on the lane's middle switch (38), ball 3 on its top switch (39), and each spot and release the ROM performs is answered the same way. A coil the ROM does not fire in the expected order ends the run with a timeout.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "power-up test and boot stabilization"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2,
+      "label": "coin chute 1 (left)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 6,
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "hold_ms": 150,
+      "settle_s": 8,
+      "max_pulses": 3,
+      "label": "credit button starts a game and the out-hole kicker serves"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 1: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 37,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 1: trough balls roll right, left trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball 1: next trough ball rests on the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 1: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 1: ball is plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball hits object 1 (sw9) in order"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 1 made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 1 made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 1 made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 1 made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "object 1 made: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball hits object 2 (sw10) in order"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 2 made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 2 made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 2 made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 2 made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 2 made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 2 made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 2 made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "object 2 made: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball hits object 3 (sw11) in order"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 3 made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 3 made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 3 made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 3 made: reset raises object 3 (sw11)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 3 made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 3 made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 3 made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 3 made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 3 made: knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 3 made: object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "object 3 made: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball hits object 4 (sw12) in order"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 4 made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 4 made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 4 made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 4 made: reset raises object 3 (sw11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 4 made: reset raises object 4 (sw12)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 4 made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 4 made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 4 made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 4 made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 4 made: knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 4 made: object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 4 made: knock-down coil of object 4 (public 12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 4 made: object 4 target (sw12) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "object 4 made: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball 1 enters the kick-out hole with object 5 lit"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "kick-out spots object 7 (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 target (sw15) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        10
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "kick-out spots object 6 (public 10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 target (sw14) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "kick-out spots object 5 (public 11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 target (sw13) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the out-hole kicker serves a second ball while the first stays in the kick-out hole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.4,
+      "label": "ball 2: served ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball 2: last trough ball rolls onto the outhole, middle trough position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball 2: last trough ball rests on the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 3 (sw11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 4 (sw12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 5 (sw13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 6 (sw14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: reset raises object 7 (sw15)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: knock-down coil of object 4 (public 12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: object 4 target (sw12) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 5 counted as made: knock-down coil of object 5 (public 11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 5 counted as made: object 5 target (sw13) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "spotted objects counted: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 12.0,
+      "label": "ball 2: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 2: ball is plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball 2 stops on the left lane middle switch behind the captured ball"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "left lane middle switch spots object 7 (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 target (sw15) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        10
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "left lane middle switch spots object 6 (public 10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 target (sw14) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        7
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the out-hole kicker serves a third ball while two stay in the lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "ball 3: served ball leaves the outhole; the trough is empty"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 3 (sw11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 4 (sw12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 5 (sw13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 6 (sw14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: reset raises object 7 (sw15)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 4 (public 12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 4 target (sw12) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 5 (public 11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 5 target (sw13) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        10
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 6 counted as made: knock-down coil of object 6 (public 10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 6 counted as made: object 6 target (sw14) falls"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.0,
+      "label": "object 6 counted: settle"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball 3: ball rests in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball 3: ball is plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball 3 stops on the left lane top switch behind the other two"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "left lane top switch spots object 7 (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 target (sw15) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: eight-bank reset (public 17)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 1 (sw9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 2 (sw10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 3 (sw11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 4 (sw12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 5 (sw13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 6 (sw14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: reset raises object 7 (sw15)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        15
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 1 (public 15)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 1 target (sw9) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 2 (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 2 target (sw10) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 3 (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 3 target (sw11) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 4 (public 12)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 4 target (sw12) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 5 (public 11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 5 target (sw13) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        10
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 6 (public 10)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 6 target (sw14) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        9
+      ],
+      "timeout_s": 4,
+      "active_only": true,
+      "label": "object 7 counted as made: knock-down coil of object 7 (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "object 7 counted as made: object 7 target (sw15) falls"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        8
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the kick-out hole fires to release the lane (public 8)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "release: ball 1 leaves the kick-out hole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 38,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "release: ball 2 rolls off the left lane middle switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "release: ball 2 drops into the kick-out hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        8
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the kick-out hole fires again (public 8)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "release: ball 2 leaves the kick-out hole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 39,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "release: ball 3 rolls off the left lane top switch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "release: ball 3 drops into the kick-out hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        8
+      ],
+      "timeout_s": 6,
+      "active_only": true,
+      "label": "the kick-out hole fires a third time (public 8)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "release: ball 3 leaves the kick-out hole; all three balls are in play"
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "observe three balls in play"
+    }
+  ]
+}
