@@ -1,0 +1,85 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute I (public 10) 1",
+      "settle_s": 1.5,
+      "switch": 10,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute I (public 10) 2",
+      "settle_s": 1.5,
+      "switch": 10,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 23 1st in-line drop target down: opens the gate",
+      "settle_s": 2.5,
+      "state": 1,
+      "switch": 23,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 23 1st in-line drop target raised",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 23,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6): add player 2 on ball 1",
+      "settle_s": 4.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "drain: ball enters the outhole",
+      "settle_s": 9.0,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "drain: ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "game": "frontier",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 8
+    }
+  ],
+  "notes": "Gate probe for the Gate Fix ROM's change: open the gate with the 1st in-line target on ball 1, add a second player, then drain the ball, to see whether the gate output (public 17) survives the player addition and the drain on the original ROM. The harness sets no option switch, so the run uses the driver's input-port defaults (src/wpc/by35.h BY35_COMPORTS: S20 and S21 on, every other switch off; S24, gate recall, is off).",
+  "version": 1,
+  "watch_switches": [
+    8
+  ]
+}

@@ -581,7 +581,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 575 | 1980 | Continental (Bingo) | Bally | partial | 6% |
 | 576 | 1980 | Fireball II | Bally | partial | 19% |
 | 577 | 1980 | Flash Gordon | Bally | partial | 88% |
-| 578 | 1980 | Frontier | Bally | partial | 19% |
+| 578 | 1980 | Frontier | Bally | partial | 88% |
 | 579 | 1980 | Mystic | Bally | partial | 19% |
 | 580 | 1980 | Nitro Ground Shaker | Bally | partial | 19% |
 | 581 | 1980 | Skateball | Bally | partial | 19% |

@@ -1,0 +1,197 @@
+{
+  "coordinate_convention": {
+    "space": "playfield",
+    "x": "0=left, 1=right in player view",
+    "y": "0=rear/backglass end, 1=apron end in player view"
+  },
+  "coverage": {
+    "missing": [
+      "input_semantics",
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "definition_sha256": "f129220316f6fde18e9ebfc6d9158b4864dd60a6a1e7ac50b1f008496032e4c8",
+  "format": "pinmame-spatial-blockers",
+  "lamp_bulb_audit": {
+    "bulb_mode_lamp_lights": [
+      "L10",
+      "L26",
+      "L42"
+    ],
+    "bulb_primitive_nearest_lights": [
+      "GI_1",
+      "GI_10",
+      "GI_11",
+      "GI_12a",
+      "GI_13a",
+      "GI_14a",
+      "GI_15",
+      "GI_16",
+      "GI_17",
+      "GI_18",
+      "GI_19",
+      "GI_2",
+      "GI_20",
+      "GI_21",
+      "GI_22",
+      "GI_23",
+      "GI_3",
+      "GI_4",
+      "GI_5",
+      "GI_6",
+      "GI_7",
+      "GI_8",
+      "GI_9",
+      "Light8"
+    ],
+    "bulb_primitives": 54,
+    "lamp_lights": 55,
+    "lamp_lights_showing_bulb_mesh": [],
+    "max_bulb_primitive_to_nearest_light": 6.427,
+    "nearest_lamp_light_to_any_bulb_primitive": {
+      "distance": 64.6,
+      "light": "L9"
+    }
+  },
+  "machine_id": "bally.frontier.1980",
+  "not_applicable_counts": {
+    "cabinet_or_service": 20,
+    "dip_switch": 32,
+    "unused": 27,
+    "virtual": 2
+  },
+  "placement_status_counts": {
+    "observed": 42
+  },
+  "projection_disclosures": [
+    {
+      "class": "hidden assembly projected onto the mean of the three in-line target positions sw21-sw23",
+      "devices": [
+        "device.in-line-drop-target-reset"
+      ]
+    },
+    {
+      "class": "hidden assembly projected onto the right bank's middle target sw34",
+      "devices": [
+        "device.right-drop-target-reset"
+      ]
+    },
+    {
+      "class": "four parallel contacts on one address, one placement per rebound rubber wall",
+      "devices": [
+        "switch.30-point-rebound"
+      ]
+    }
+  ],
+  "promotion_decision": "Not promotable: no lamp light of the retained table marks a bulb (the bulb primitives all sit on general-illumination lights), so the 54 playfield lamps are unplaced, and the switch, coil and flipper placements are observed table objects that no factory-drawing check has validated.",
+  "source_hashes": {
+    "extraction_manifest_sha256": "a463dacd3606d3ecc9920adb64223b9c2b9d2d5a79f76209a7571efbad7950ec",
+    "manual_sha256": "e45e64c4e5946fe30b7b9edf9deabb581ea283263e6c20adf8643f54148c8b26",
+    "schematic_sha256": "4f8e723eba888c5c17b2ebc8694bc47759097d459212949565d8ce9c5f8e2ce8",
+    "spatial_seed_sha256": "6ecdb5ff3d4b94bceab46650cfdcd687ecc075e539ddb4ea5a7e78fa71193e72",
+    "vpx_table_sha256": "39a399a28bff018efc10e91109bf455f2702516c10b10c18764ac31a12a8dbf2"
+  },
+  "transformation": "x = raw_x / 952.0, y = raw_y / 1974.0, rounded to six places. Wall objects use the mean of their drag points; Trigger, Bumper, Flipper, Spinner, Gate and Kicker objects their stored centre; HitTarget objects their stored position. Lamp lights and bulb primitives are recorded raw: the lights with their is_bulb_light and show_bulb_mesh flags, the BulbFil/BulbTop primitives at their stored position with the nearest Light object by Euclidean distance in table units. Objects are frozen in tools/seeds/bally/frontier-1980-spatial.json.",
+  "unplaced_physical_devices": [
+    "lamp.snake-left",
+    "lamp.hawk-left",
+    "lamp.lion-left",
+    "lamp.wolf-left",
+    "lamp.bear-left",
+    "lamp.a-rollover-lane",
+    "lamp.10k-frontier",
+    "lamp.50k-frontier",
+    "lamp.left-target-arrow",
+    "lamp.left-thumper-bumper",
+    "lamp.right-flipper-feed-lane",
+    "lamp.2x-drop-target",
+    "lamp.gate-arrow",
+    "lamp.snake-center",
+    "lamp.hawk-center",
+    "lamp.lion-center",
+    "lamp.wolf-center",
+    "lamp.bear-center",
+    "lamp.b-rollover-lane",
+    "lamp.20k-frontier",
+    "lamp.60k-frontier",
+    "lamp.center-target-arrow",
+    "lamp.bottom-thumper-bumper",
+    "lamp.left-flipper-feed-lane",
+    "lamp.3x-drop-target",
+    "lamp.2x-predators",
+    "lamp.snake-right",
+    "lamp.hawk-right",
+    "lamp.lion-right",
+    "lamp.wolf-right",
+    "lamp.bear-right",
+    "lamp.c-rollover-lane",
+    "lamp.30k-frontier",
+    "lamp.spinner-1000",
+    "lamp.right-target-arrow",
+    "lamp.right-thumper-bumper",
+    "lamp.same-player-shoots-again",
+    "lamp.right-out-special",
+    "lamp.4x-drop-target",
+    "lamp.3x-predators",
+    "lamp.a-b-c-extra-ball",
+    "lamp.a-b-c-special",
+    "lamp.45k-predators",
+    "lamp.4x-frontier",
+    "lamp.predators-special",
+    "lamp.4x-grizzly-target",
+    "lamp.40k-frontier",
+    "lamp.30k-grizzly-target",
+    "lamp.2x-frontier",
+    "lamp.3x-frontier",
+    "lamp.credit-indicator",
+    "lamp.left-out-special",
+    "lamp.special-drop-target",
+    "lamp.4x-predators"
+  ],
+  "unvalidated_placements": [
+    "device.bottom-thumper-bumper.effect",
+    "device.gate.effect",
+    "device.in-line-drop-target-reset.effect",
+    "device.left-flipper.effect",
+    "device.left-slingshot.effect",
+    "device.left-thumper-bumper.effect",
+    "device.outhole-kicker.effect",
+    "device.right-drop-target-reset.effect",
+    "device.right-flipper.effect",
+    "device.right-slingshot.effect",
+    "device.right-thumper-bumper.effect",
+    "device.saucer-kicker.effect",
+    "switch.1st-in-line-drop-target.sensor",
+    "switch.2nd-in-line-drop-target.sensor",
+    "switch.30-point-rebound.left-side-rebound",
+    "switch.30-point-rebound.top-right-rebound",
+    "switch.30-point-rebound.upper-left-rebound-lower",
+    "switch.30-point-rebound.upper-left-rebound-upper",
+    "switch.3rd-in-line-drop-target.sensor",
+    "switch.a-rollover-lane.sensor",
+    "switch.b-rollover-lane.sensor",
+    "switch.bottom-side-drop-target.sensor",
+    "switch.bottom-thumper-bumper.sensor",
+    "switch.c-rollover-lane.sensor",
+    "switch.center-target.sensor",
+    "switch.grizzly-target.sensor",
+    "switch.left-flipper-feed-lane.sensor",
+    "switch.left-outlane.sensor",
+    "switch.left-slingshot.sensor",
+    "switch.left-target.sensor",
+    "switch.left-thumper-bumper.sensor",
+    "switch.middle-side-drop-target.sensor",
+    "switch.outhole.sensor",
+    "switch.right-flipper-feed-lane.sensor",
+    "switch.right-outlane.sensor",
+    "switch.right-slingshot.sensor",
+    "switch.right-target.sensor",
+    "switch.right-thumper-bumper.sensor",
+    "switch.saucer-rollover-button.sensor",
+    "switch.saucer.sensor",
+    "switch.spinner.sensor",
+    "switch.top-side-drop-target.sensor"
+  ],
+  "version": 1
+}
