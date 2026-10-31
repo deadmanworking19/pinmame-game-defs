@@ -4,6 +4,7 @@ import json
 import ntpath
 import os
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -15,6 +16,14 @@ import simpsons_party_harness as adapter
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'tools/seeds/stern/the-simpsons-pinball-party-2003/lamp-service.json'
 RETAINED = Path('the-simpsons-pinball-party-2003/completion-20261029')
+HARNESS_PATH = 'tools/run_pinmame_harness.py'
+# The runner bytes recorded by the lamp-service evidence come from this commit.
+HARNESS_REVISION = '3552ec1db9dd6c658058f3bd52918bb3f02c4e01'
+LIVE_INPUTS = {
+    'tools/harness-scenarios/whitestar/simpprty-lamp-service.json',
+    'tools/simpsons_party_harness.py',
+    'tools/simpsons_party_header_templates.json',
+}
 
 
 def sha(path):
@@ -52,8 +61,27 @@ class HarnessEvidenceTests(unittest.TestCase):
             self.assertEqual(e['observations'][field], expected)
         self.assertEqual(e['observations']['single_walk_steps'], 82)
         self.assertEqual([c['title'] for c in e['observations']['checkpoints']], list(adapter.TEMPLATES))
-        for pin in e['repo_inputs']:
-            self.assertEqual(sha(ROOT / pin['path']), pin['sha256'])
+        pins = {pin['path']: pin['sha256'] for pin in e['repo_inputs']}
+        self.assertEqual(len(pins), len(e['repo_inputs']))
+        self.assertEqual(set(pins), LIVE_INPUTS | {HARNESS_PATH})
+        for path in LIVE_INPUTS:
+            self.assertEqual(sha(ROOT / path), pins[path], path)
+
+    def test_recorded_harness_revision(self):
+        e = json.loads(EVIDENCE.read_text(encoding='utf-8'))
+        pin = next(pin for pin in e['repo_inputs'] if pin['path'] == HARNESS_PATH)
+        try:
+            revision = subprocess.run(
+                ['git', 'cat-file', '-e', f'{HARNESS_REVISION}^{{commit}}'],
+                cwd=ROOT, capture_output=True, timeout=10)
+        except FileNotFoundError:
+            self.skipTest('git is unavailable for the historical harness check')
+        if revision.returncode:
+            self.skipTest(f'historical harness commit {HARNESS_REVISION} is unavailable')
+        runner = subprocess.run(
+            ['git', 'show', f'{HARNESS_REVISION}:{HARNESS_PATH}'],
+            cwd=ROOT, capture_output=True, timeout=10, check=True)
+        self.assertEqual(hashlib.sha256(runner.stdout).hexdigest(), pin['sha256'])
 
     def test_adapter_rejects_corruption_and_unknown_screens(self):
         for title, template in adapter.TEMPLATES.items():
