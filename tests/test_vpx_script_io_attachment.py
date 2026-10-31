@@ -43,9 +43,10 @@ CORPUS_REPOSITORIES = (
 # Mousin' Around replaces its 45 candidate devices from one script with its own curated definition.
 # Nine Ball replaces its 75 imported candidate devices from one script.
 # Frontier replaces its 27 candidate devices from two scripts with its own curated definition.
-EXPECTED_ATTACHED_MACHINES = 249
-EXPECTED_ATTACHED_DEVICES = 11255
-EXPECTED_ATTACHED_SCRIPTS = 303
+# Blackout replaces its 30 imported candidate devices from one script.
+EXPECTED_ATTACHED_MACHINES = 248
+EXPECTED_ATTACHED_DEVICES = 11225
+EXPECTED_ATTACHED_SCRIPTS = 302
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

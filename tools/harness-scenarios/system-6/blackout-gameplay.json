@@ -1,0 +1,396 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blkou_l1",
+  "notes": "Blackout gameplay causality with direct public switch writes only (keyboard handling and the driver's simulator stay off). The ball rests in the outhole (switch 9); a coin must fire the credit knocker (14) and the credit button must start a game, reset both 3-banks (4, 5) and fire the ball release (1). The jet bumper and kicker scoring switches 22, 21, 23, 44 and 43 must each publish their switch-driven special solenoid 17-21 at once. A 1 rollover and the synthetic flipper buttons 82 and 84 show the lane-change rotation and outputs 45-48. The five green targets are made, then each 3-bank is worked with its three targets held down first and its series switch (28 or 36) closed afterwards, so the run shows which closure the ROM resets the bank on. A ball in the eject hole (40) with BLACKOUT lit must be kicked out by solenoid 6, the outhole drain must count bonus and serve the next ball with solenoid 1, and a single ball roll tilt closure must drop game-on 23. The host moves the ball itself; that movement is not ROM evidence. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "initial_switches": [
+    {
+      "switch": 9,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    9,
+    25,
+    26,
+    27,
+    28,
+    33,
+    34,
+    35,
+    36,
+    40,
+    45,
+    46,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode with the ball resting in the outhole"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 4,
+      "channel": "solenoid",
+      "addresses": [
+        14
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 1,
+      "label": "coin on the right coin switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.0,
+      "label": "credit button: start a one-player game"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 10.0,
+      "label": "the ball release serves the outhole ball"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "outhole empties; the served ball is plunged"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 22,
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "left jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 21,
+      "channel": "solenoid",
+      "addresses": [
+        18
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "right jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 23,
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "bottom jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 44,
+      "channel": "solenoid",
+      "addresses": [
+        20
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "left kicker scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 43,
+      "channel": "solenoid",
+      "addresses": [
+        21
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "right kicker scoring switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "1 rollover"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "right flipper button (synthetic 82): lane change"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "left flipper button (synthetic 84)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "right flipper button (synthetic 82) again: lane change"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "green target #1 (bottom)"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "green target #2"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "green target #3"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "green target #4"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "green target #5 (top)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "centre 3-bank: left target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "centre 3-bank: centre target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "centre 3-bank: right target down, series switch still open"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "centre 3-bank: observe whether the bank is reset before the series switch closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "centre 3-bank series switch closes"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "centre 3-bank: observe the bank reset after the series switch closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "centre 3-bank: left target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "centre 3-bank: centre target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 27,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "centre 3-bank: right target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 28,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "centre 3-bank: series switch opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "top 3-bank: left target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "top 3-bank: centre target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "top 3-bank: right target down, series switch still open"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "top 3-bank: observe whether the bank is reset before the series switch closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "top 3-bank series switch closes"
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0,
+      "label": "top 3-bank: observe the bank reset after the series switch closes"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top 3-bank: left target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top 3-bank: centre target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "top 3-bank: right target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "top 3-bank: series switch opens"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball enters the eject hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        6
+      ],
+      "timeout_s": 15.0,
+      "label": "the eject hole kicks the ball out"
+    },
+    {
+      "type": "set_switch",
+      "switch": 40,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "eject hole empties"
+    },
+    {
+      "type": "wait",
+      "seconds": 8.0,
+      "label": "observe the outputs after the eject hole award"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 30.0,
+      "label": "bonus counted and the next ball served from the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "outhole empties; the second ball is plunged"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 2,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "max_pulses": 1,
+      "label": "ball roll tilt, first closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "observe the tilted ball"
+    }
+  ]
+}

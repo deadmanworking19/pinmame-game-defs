@@ -129,7 +129,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 178 | Space Shuttle | `williams.space-shuttle.1984` | 88% |
 | 179 | Harlem Globetrotters On Tour | `bally.harlem-globetrotters-on-tour.1979` | 94% |
 | 180 | Frontier | `bally.frontier.1980` | 88% |
-| 181 | Blackout | `williams.blackout.1980` | 13% |
+| 181 | Blackout | `williams.blackout.1980` | 94% |
 | 182 | Radical! | `bally.radical.1990` | 19% |
 | 183 | Royal Rumble (WWF) | `data-east.wwf-royal-rumble.1994` | 19% |
 | 184 | Alien Poker | `williams.alien-poker.1980` | 13% |

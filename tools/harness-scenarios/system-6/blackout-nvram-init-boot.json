@@ -1,0 +1,18 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "blkou_l1",
+  "notes": "Blackout first power-up from empty CMOS. A System 6 CPU with no valid CMOS stops on the game-identification screen instead of entering attract mode; this run writes the NVRAM, high-score and cfg files every later Blackout run starts from.",
+  "watch_switches": [
+    -7,
+    -6,
+    9
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "observe boot"
+    }
+  ]
+}
