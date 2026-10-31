@@ -15,11 +15,14 @@ from pathlib import Path, PureWindowsPath
 import zipfile
 
 from build_external_evidence_manifest import canonical_bytes, check_manifest
+from recorded_repository_source import verify_recorded_source
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "tools/seeds/sega/batman-forever-1995-runtime-readings.json"
 OUTPUT = ROOT / "evidence/runtime/data-east/batman-forever-batmanf-service-tests.json"
 REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+# Repository revision whose runner bytes were recorded in the runtime seed.
+HARNESS_REVISION = "3552ec1db9dd6c658058f3bd52918bb3f02c4e01"
 KEY = "sega.batman-forever.1995"
 MANIFEST_SHA = "153f5ea6e48d7722d0f15f8d1a78fd9040b4ea3a129a282b710bbfe9e39f3ee2"
 GAMEPLAY = {
@@ -60,8 +63,7 @@ def verify_rom(seed):
 def verified_runs(review_root):
     seed = read_json(SEED)
     base = review_root / KEY / "final"
-    if digest(ROOT / "tools/run_pinmame_harness.py") != seed["base_harness_sha256"]:
-        raise ValueError("Batman Forever harness implementation changed")
+    verify_recorded_source(ROOT, HARNESS_REVISION, "tools/run_pinmame_harness.py", seed["base_harness_sha256"])
     if check_manifest(base, "batmanf") != MANIFEST_SHA:
         raise ValueError("Batman Forever raw evidence manifest changed")
     runs = {}

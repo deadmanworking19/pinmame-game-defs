@@ -14,11 +14,14 @@ from pathlib import Path, PureWindowsPath
 import zipfile
 
 from build_external_evidence_manifest import canonical_bytes, check_manifest
+from recorded_repository_source import verify_recorded_source
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "tools/baywatch_runtime_readings.json"
 OUTPUT = ROOT / "evidence/runtime/data-east/baywatch-usa-400-service-tests.json"
 REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
+# Repository revision whose runner bytes were recorded in the runtime seed.
+HARNESS_REVISION = "3552ec1db9dd6c658058f3bd52918bb3f02c4e01"
 KEY = "sega.baywatch.1995"
 
 
@@ -55,9 +58,9 @@ def verify_rom(seed):
 def verified_runs(review_root):
     seed = read_json(SEED)
     base = review_root / KEY
-    if (digest(base / "probe_harness.py") != seed["harness_script_sha256"]
-            or digest(ROOT / "tools/run_pinmame_harness.py") != seed["base_harness_sha256"]):
+    if digest(base / "probe_harness.py") != seed["harness_script_sha256"]:
         raise ValueError("Baywatch harness implementation changed")
+    verify_recorded_source(ROOT, HARNESS_REVISION, "tools/run_pinmame_harness.py", seed["base_harness_sha256"])
     manifest = check_manifest(base / "harness", "baywatch")
     if manifest != seed["manifest_sha256"]:
         raise ValueError("Baywatch raw evidence manifest changed")
