@@ -119,7 +119,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 168 | Safe Cracker | `bally.safe-cracker.1996` | 88% |
 | 169 | Jack*Bot | `williams.jackbot.1995` | 88% |
 | 170 | Black Rose | `bally.black-rose.1992` | 88% |
-| 171 | Barracora | `williams.barracora.1981` | 13% |
+| 171 | Barracora | `williams.barracora.1981` | 94% |
 | 171 | Mousin' Around! | `bally.mousin-around.1989` | 13% |
 | 173 | Nine Ball | `stern.nine-ball.1980` | 19% |
 | 174 | Batman Forever | `sega.batman-forever.1995` | 81% |

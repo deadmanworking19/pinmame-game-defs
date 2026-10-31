@@ -571,7 +571,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 565 | 1981 | Fire Action | Taito | partial | 6% |
 | 566 | 1981 | Lady Luck (Taito) | Taito | partial | 6% |
 | 567 | 1981 | Sure Shot | Taito | partial | 6% |
-| 568 | 1981 | Barracora | Williams | partial | 13% |
+| 568 | 1981 | Barracora | Williams | partial | 94% |
 | 569 | 1981 | HyperBall (L-4) | Williams | partial | 6% |
 | 570 | 1981 | Jungle Lord | Williams | partial | 13% |
 | 571 | 1981 | Pharaoh | Williams | partial | 13% |

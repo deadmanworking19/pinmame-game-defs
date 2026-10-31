@@ -39,9 +39,10 @@ CORPUS_REPOSITORIES = (
 # Harley-Davidson (Stern) replaces its 44 candidate devices from two scripts with its own curated definition.
 # The Adventures of Rocky and Bullwinkle replaces its 95 candidate devices from one script with its own curated definition.
 # Cyclone replaces its 52 candidate devices from two scripts.
-EXPECTED_ATTACHED_MACHINES = 253
-EXPECTED_ATTACHED_DEVICES = 11455
-EXPECTED_ATTACHED_SCRIPTS = 309
+# Barracora replaces its 53 imported candidate devices from two scripts.
+EXPECTED_ATTACHED_MACHINES = 252
+EXPECTED_ATTACHED_DEVICES = 11402
+EXPECTED_ATTACHED_SCRIPTS = 307
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

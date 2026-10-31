@@ -1,0 +1,499 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "barra_l1",
+  "notes": "Barracora gameplay causality with direct public switch writes only (keyboard handling and the driver's simulator stay off). Three balls rest on ball ramp switches 13, 14 and 15; a coin and the credit button start a game, which must throw a ball (solenoid 12) towards the shooter (switch 16), and the upper eject hole gate (17) must energize after the plunge. The jet bumper and kicker scoring switches 20, 21, 22, 29 and 30 must each publish their switch-driven special solenoid 18-22 at once. A top lane and the synthetic flipper buttons 82 and 84 show outputs 45-48 and the lane-change copies 35 and 34. The drop banks are worked out of and in sequence with targets held down until the ROM resets them (real drop targets stay down), the lit eject holes lock two balls for 3-ball Multi-Ball, one ball drains into the outhole, and a single ball roll tilt closure must drop game-on 25. The host moves balls between ramp positions itself; that movement is not ROM evidence. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "watch_switches": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    34,
+    35,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "boot and settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the left ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "ball resting on the centre ball ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "ball resting on the right ball ramp position, at the thrower"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin on the right coin switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "max_pulses": 1,
+      "label": "credit button: start a one-player game; the ball ramp thrower serves a ball"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the ramp balls roll down: left position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "served ball rests on the ball shooter trough rollover"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 8.0,
+      "label": "upper eject hole gate energizes after the plunge"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 20,
+      "channel": "solenoid",
+      "addresses": [
+        18
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "left jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 21,
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "right jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 22,
+      "channel": "solenoid",
+      "addresses": [
+        20
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "bottom jet bumper scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 29,
+      "channel": "solenoid",
+      "addresses": [
+        21
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "left kicker scoring switch"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 30,
+      "channel": "solenoid",
+      "addresses": [
+        22
+      ],
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "max_pulses": 1,
+      "label": "right kicker scoring switch"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "1/4 top lane rollover"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "right flipper button (synthetic 82): lane change"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 400,
+      "settle_s": 1.5,
+      "snapshot_while_held": true,
+      "label": "left flipper button (synthetic 84): lane change"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "B-A-RR bank: RR target down out of sequence"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "timeout_s": 8.0,
+      "label": "the out-of-sequence RR target is reset"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "RR target raised again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "B-A-RR bank: B target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "B-A-RR bank: A target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "B-A-RR bank: RR target down, bank complete in sequence"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1,
+        2,
+        3
+      ],
+      "timeout_s": 8.0,
+      "label": "the completed B-A-RR bank is reset"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "observe the B-A-RR resets"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "B target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "A target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "RR target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "A-C-O-R-A bank: first A target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "A-C-O-R-A bank: C target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "A-C-O-R-A bank: O target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "A-C-O-R-A bank: R target down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "A-C-O-R-A bank: last A target down, bank complete in sequence"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "timeout_s": 8.0,
+      "label": "the completed A-C-O-R-A bank is reset"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "observe the A-C-O-R-A resets"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "first A target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "C target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "O target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "R target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 48,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "last A target raised"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball enters the lit upper eject hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 6.0,
+      "label": "the upper eject hole locks the ball and a new ball is thrown"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the ramp ball rolls down: centre position empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "second ball rests on the ball shooter trough rollover"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "second ball plunged"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball enters the lit lower eject hole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        12
+      ],
+      "timeout_s": 6.0,
+      "label": "the lower eject hole locks the ball and the last ball is thrown"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "after the throw the ball ramp is empty"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "third ball rests on the ball shooter trough rollover"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "third ball plunged"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13,
+        14
+      ],
+      "timeout_s": 10.0,
+      "label": "3-ball Multi-Ball: both eject holes kick out their balls"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "upper eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "lower eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "one ball drains into the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "timeout_s": 6.0,
+      "label": "ball release kicks the outhole ball onto the ball ramp"
+    },
+    {
+      "type": "set_switch",
+      "switch": 12,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "outhole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "kicked ball rolls to the thrower end of the ball ramp"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 2,
+      "channel": "solenoid",
+      "addresses": [
+        25
+      ],
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "max_pulses": 1,
+      "label": "ball roll tilt, first closure"
+    },
+    {
+      "type": "wait",
+      "seconds": 4.0,
+      "label": "observe the tilted ball"
+    }
+  ]
+}
