@@ -45,8 +45,10 @@ record in this repository, and it introduced the `pinmame.gts80` controller prof
   fabricates synthetic outputs 45/46 and 47/48 from them while solenoid 10 is set.
 - **Solenoids.** There are nine solenoid drivers, 1-9. Solenoid 10 is synthetic: lamp 0 (the Q game-over relay) gated
   by lamp 1 (the T tilt relay), which is the game-on and flipper-enable state. Solenoid 11 is synthetic too: lamp 1.
-  PinMAME publishes both only in binary solenoid mode. With physical or modulated solenoid output enabled they read 0,
-  and a consumer takes game on as lamp 0 on while lamp 1 is off, and the tilt state as lamp 1.
+  At the pinned PinMAME 46e1a01a both read the same with physical or modulated solenoid output enabled as in binary
+  mode. At 97aa922b, the revision of the harness runs, PinMAME published them only in binary solenoid mode: with
+  physical or modulated output enabled they read 0, and a consumer took game on as lamp 0 on while lamp 1 is off, and
+  the tilt state as lamp 1.
 - **Lamps.** Lamps are twelve latched four-bit columns, numbered 0-47 exactly as the manual's "L" numbers. Lamps 48-51
   are the inverted outputs of the latch that holds 44-47. That inversion is real driver-board hardware (Z12's Q-bar
   outputs), not an emulator artefact.

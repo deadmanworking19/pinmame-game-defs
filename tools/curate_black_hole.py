@@ -64,6 +64,11 @@ RETIRED_ARTIFACTS = (
 PINMAME_REVISION = "97aa922bf8e4b6970126192ec1ac1fb0305a4f62"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
+# The harness runs and the catalog trace stay at 97aa922b; the transport facts that changed since are
+# cited at the pinned baseline.
+CURRENT_PINMAME_REVISION = "46e1a01a0f73dc5ce163d98db1ae435883ecc450"
+CURRENT_PINMAME_COMMITTED = "2026-10-25T20:16:49Z"
+CURRENT_CORE_SOURCE = f"pinmame.core.{CURRENT_PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-gts80"
 MANUAL_SOURCE = "manual.gottlieb.black-hole.1981.scribd"
 MANUAL_IDOC_SOURCE = "manual.gottlieb.black-hole.1981.idoc"
@@ -497,6 +502,18 @@ def source_records() -> list[dict[str, Any]]:
 				"GEN_GTS80 (0x200000000); src/wpc/core.c core_updateSw and core_getSol"
 			),
 			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
+		},
+		{
+			"id": CURRENT_CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": CURRENT_PINMAME_REVISION,
+			"locator": (
+				"Pinned baseline. src/wpc/gts80.c lines 94-97 GTS80_vblank (solenoid 10 = relays == 0x01 for GEN_GTS80, solenoid 11 = lamp 1, "
+				"solenoid 10 also written as physical output), lines 403-408 riot6532_2b_w (GI 0 and the solenoid 11 physical output from lamp "
+				"1's latch bit), lines 624-629 MACHINE_INIT(gts80) (one CORE_MODOUT_BULB_44_6_3V_AC_REV GI output); src/wpc/core.c lines "
+				"2456-2464 core_getSol (physical read of 1-32 with CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS or CORE_MODOUT_ENABLE_MODSOL, binary "
+				"0/1 otherwise); src/wpc/vpintf.c lines 59-65 vp_getGI"
+			),
+			"license": "BSD-3-Clause", "attribution": "PinMAME contributors",
+			"acquired_at": CURRENT_PINMAME_COMMITTED,
 		},
 		{
 			"id": CONTROLLER_SOURCE, "kind": "human_review", "uri": "internal:controllers/pinmame/gts80.json", "revision": "repository",
@@ -1051,11 +1068,13 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 						"synthetic flipper outputs 45-48. On the machine the Q and T relay contacts switch the +38V flipper and +24V kicking-rubber "
 						"supplies (page 45). sys80.vbs names it GameOnSolenoid; the retained table binds it to nothing (its sEnable constant is 19, "
 						"which System 80 never publishes)."
-						" PinMAME publishes it only in binary solenoid mode: with physical or modulated solenoid output enabled, core_getSol reads solenoids 1-28 from physicOutputState, which System 80 writes only for 1-9, so this address reads 0 and a consumer takes the state from the physical lamp outputs as lamp 0 on while lamp 1 is off. The synthetic flipper outputs "
-						"45-48 are unaffected."
+						" At the pinned 46e1a01a GTS80_vblank also writes this state to physical solenoid output 10, so it reads the same with "
+						"physical or modulated solenoid output enabled. At 97aa922b, the revision of the harness runs, only binary mode published it: "
+						"core_getSol then read solenoids 1-28 from physicOutputState, which System 80 wrote only for 1-9, so this address read 0 "
+						"in that mode."
 					),
 				},
-				"provenance": provenance(CORE_SOURCE, CONTROLLER_SOURCE, RUN_SOURCE["gameplay-causality"], RUN_SOURCE["tilt-26"], VPM_LIBRARY_SOURCE),
+				"provenance": provenance(CORE_SOURCE, CURRENT_CORE_SOURCE, CONTROLLER_SOURCE, RUN_SOURCE["gameplay-causality"], RUN_SOURCE["tilt-26"], VPM_LIBRARY_SOURCE),
 				"spatial": not_applicable("virtual", CORE_SOURCE, CONTROLLER_SOURCE),
 			})
 		else:
@@ -1063,8 +1082,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"id": "virtual.tilt-relay-state", "label": "Tilt Relay State (T Relay)", "kind": "virtual",
 				"binding": {"group": SOLENOID, "device": 11},
 				"aliases": aliases, "availability": "used",
-				"physical": {"notes": "Synthetic: GTS80_vblank publishes lamp 1's driver state, the T (tilt) relay, here. It rises on a tilt (tilt-26 and tilt-57 runs) and is pulsed in the lamp-driver test with lamp 1. PinMAME publishes it only in binary solenoid mode: with physical or modulated solenoid output enabled, core_getSol reads solenoids 1-28 from physicOutputState, which System 80 writes only for 1-9, so this address reads 0 and a consumer takes lamp 1 instead."},
-				"provenance": provenance(CORE_SOURCE, CONTROLLER_SOURCE, RUN_SOURCE["tilt-26"], RUN_SOURCE["lamp-driver-test"]),
+				"physical": {"notes": "Synthetic: GTS80_vblank publishes lamp 1's driver state, the T (tilt) relay, here. It rises on a tilt (tilt-26 and tilt-57 runs) and is pulsed in the lamp-driver test with lamp 1. At the pinned 46e1a01a riot6532_2b_w also writes lamp 1's latch bit to physical solenoid output 11, so it reads the same with physical or modulated solenoid output enabled. At 97aa922b, the revision of the harness runs, only binary mode published it: core_getSol then read solenoids 1-28 from physicOutputState, which System 80 wrote only for 1-9, so this address read 0 in that mode."},
+				"provenance": provenance(CORE_SOURCE, CURRENT_CORE_SOURCE, CONTROLLER_SOURCE, RUN_SOURCE["tilt-26"], RUN_SOURCE["lamp-driver-test"]),
 				"spatial": not_applicable("virtual", CORE_SOURCE, CONTROLLER_SOURCE),
 			})
 	for address, identifier, label, button in (
@@ -1325,20 +1344,21 @@ def lamp_outputs() -> list[dict[str, Any]]:
 
 def gi_outputs() -> list[dict[str, Any]]:
 	return [{
-		"id": "virtual.gi-0-lamp-0-model", "label": "PinMAME GI Channel 0 (Lamp 0 Model)", "kind": "virtual",
+		"id": "virtual.gi-0-tilt-relay-model", "label": "PinMAME GI Channel 0 (Tilt Relay Model)", "kind": "virtual",
 		"binding": {"group": GI, "device": 0},
 		"aliases": [{"namespace": "pinmame.gi", "value": "0"}],
 		"availability": "optional",
 		"physical": {
 			"notes": (
-				"MACHINE_INIT(gts80) declares one GI output that riot6532_2b_w fills from lamp 0's latch bit as a reversed #44 bulb (lit while the Q "
-				"relay is released), in physical-output mode only; in binary mode it is constant 0. It is not a Black Hole G.I. string: the upper "
+				"MACHINE_INIT(gts80) declares one GI output that riot6532_2b_w fills from lamp 1's latch bit at the pinned 46e1a01a, as a reversed "
+				"#44 bulb lit while the T (tilt) relay is released, in physical-GI mode only; in binary mode it is constant 0. At 97aa922b it "
+				"copied lamp 0, the Q relay, instead. It is not a Black Hole G.I. string: the upper "
 				"playfield illumination runs on 6.3 V AC through the T and U relay contacts and the lower playfield illumination through the L relay "
 				"(page 45), so a recreation lights them from lamps 1, 16 and 17."
 			),
 		},
-		"provenance": provenance(CORE_SOURCE, CONTROLLER_SOURCE, MANUAL_SOURCE),
-		"spatial": not_applicable("virtual", CORE_SOURCE, CONTROLLER_SOURCE),
+		"provenance": provenance(CORE_SOURCE, CURRENT_CORE_SOURCE, CONTROLLER_SOURCE, MANUAL_SOURCE),
+		"spatial": not_applicable("virtual", CURRENT_CORE_SOURCE, CONTROLLER_SOURCE),
 	}]
 
 

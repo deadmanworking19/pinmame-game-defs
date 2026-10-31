@@ -221,7 +221,29 @@ class BlackHoleDefinitionTests(unittest.TestCase):
 		self.assertIn("strobe `n/10`, return `n%10`", self.groups[SWITCH]["notes"])
 		self.assertIn("`lampMatrix[6] = data ^ 0x0f`", self.groups[LAMP]["notes"])
 		self.assertIn("`10` | Synthetic", self.groups[SOLENOID]["notes"])
-		self.assertEqual(curator.PINMAME_REVISION, self.profile["sources"][0]["revision"])
+		revisions = [source["revision"] for source in self.profile["sources"]]
+		self.assertEqual(curator.CURRENT_PINMAME_REVISION, revisions[0], "the profile leads with the pinned baseline")
+		self.assertIn(curator.PINMAME_REVISION, revisions, "the harness runs' revision stays cited")
+
+	def test_transport_notes_follow_the_pinned_baseline(self) -> None:
+		# 46e1a01a publishes 10 and 11 as physical outputs too, and its GI channel copies lamp 1, not lamp 0.
+		sources = {source["id"]: source for source in self.definition["sources"]}
+		current = sources[curator.CURRENT_CORE_SOURCE]
+		self.assertEqual((curator.CURRENT_PINMAME_REVISION, curator.CURRENT_PINMAME_COMMITTED), (current["revision"], current["acquired_at"]))
+		for address in (10, 11):
+			notes = self.solenoids[address]["physical"]["notes"]
+			self.assertIn("reads the same with physical or modulated solenoid output enabled", notes, address)
+			self.assertIn(curator.CURRENT_CORE_SOURCE, self.solenoids[address]["provenance"]["source_refs"], address)
+		gi = {device["binding"]["device"]: device for device in self.definition["outputs"] if device["binding"]["group"] == "pinmame.output.gi"}
+		self.assertEqual("virtual.gi-0-tilt-relay-model", gi[0]["id"])
+		self.assertIn("lamp 1's latch bit", gi[0]["physical"]["notes"])
+		self.assertIn("writes lamp 1's latch bit", self.groups["pinmame.output.gi"]["notes"])
+		self.assertIn("`10` and `11` carry the same states as in binary mode", self.groups[SOLENOID]["notes"])
+		self.assertIn("integrate every GI slot (`core_update_pwm_gis`)", self.groups["pinmame.output.gi"]["notes"])
+		self.assertIn("integrated only slot `CORE_MODOUT_GI0 + giNo - 1`", self.groups["pinmame.output.gi"]["notes"])
+		knowledge = (ROOT / curator.KNOWLEDGE_PATH).read_bytes().decode("utf-8")
+		self.assertIn("At the pinned PinMAME 46e1a01a both read the same", knowledge)
+		self.assertIn("At 97aa922b, the revision of the harness runs, PinMAME published them only in binary", knowledge)
 
 	def test_committed_scenarios_match_their_pinned_hashes(self) -> None:
 		for name, (game, _run_sha, scenario, scenario_sha) in curator.HARNESS_RUNS.items():

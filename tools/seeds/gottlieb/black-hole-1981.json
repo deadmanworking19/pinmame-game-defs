@@ -8080,11 +8080,12 @@
       "kind": "virtual",
       "label": "Game On (Q Relay Energized, T Relay Released)",
       "physical": {
-        "notes": "Synthetic: GTS80_vblank publishes lamp 0's driver state (the Q, game-over relay) while lamp 1 (the T, tilt relay) is off. It is high during play and drops on a tilt (tilt runs) or a slam (slam run). It is also the flipper enable that gates the synthetic flipper outputs 45-48. On the machine the Q and T relay contacts switch the +38V flipper and +24V kicking-rubber supplies (page 45). sys80.vbs names it GameOnSolenoid; the retained table binds it to nothing (its sEnable constant is 19, which System 80 never publishes). PinMAME publishes it only in binary solenoid mode: with physical or modulated solenoid output enabled, core_getSol reads solenoids 1-28 from physicOutputState, which System 80 writes only for 1-9, so this address reads 0 and a consumer takes the state from the physical lamp outputs as lamp 0 on while lamp 1 is off. The synthetic flipper outputs 45-48 are unaffected."
+        "notes": "Synthetic: GTS80_vblank publishes lamp 0's driver state (the Q, game-over relay) while lamp 1 (the T, tilt relay) is off. It is high during play and drops on a tilt (tilt runs) or a slam (slam run). It is also the flipper enable that gates the synthetic flipper outputs 45-48. On the machine the Q and T relay contacts switch the +38V flipper and +24V kicking-rubber supplies (page 45). sys80.vbs names it GameOnSolenoid; the retained table binds it to nothing (its sEnable constant is 19, which System 80 never publishes). At the pinned 46e1a01a GTS80_vblank also writes this state to physical solenoid output 10, so it reads the same with physical or modulated solenoid output enabled. At 97aa922b, the revision of the harness runs, only binary mode published it: core_getSol then read solenoids 1-28 from physicOutputState, which System 80 wrote only for 1-9, so this address read 0 in that mode."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.97aa922bf8e4",
+          "pinmame.core.46e1a01a0f73",
           "controller-profile.pinmame-gts80",
           "runtime.black-hole.gameplay-causality",
           "runtime.black-hole.tilt-26",
@@ -8120,11 +8121,12 @@
       "kind": "virtual",
       "label": "Tilt Relay State (T Relay)",
       "physical": {
-        "notes": "Synthetic: GTS80_vblank publishes lamp 1's driver state, the T (tilt) relay, here. It rises on a tilt (tilt-26 and tilt-57 runs) and is pulsed in the lamp-driver test with lamp 1. PinMAME publishes it only in binary solenoid mode: with physical or modulated solenoid output enabled, core_getSol reads solenoids 1-28 from physicOutputState, which System 80 writes only for 1-9, so this address reads 0 and a consumer takes lamp 1 instead."
+        "notes": "Synthetic: GTS80_vblank publishes lamp 1's driver state, the T (tilt) relay, here. It rises on a tilt (tilt-26 and tilt-57 runs) and is pulsed in the lamp-driver test with lamp 1. At the pinned 46e1a01a riot6532_2b_w also writes lamp 1's latch bit to physical solenoid output 11, so it reads the same with physical or modulated solenoid output enabled. At 97aa922b, the revision of the harness runs, only binary mode published it: core_getSol then read solenoids 1-28 from physicOutputState, which System 80 wrote only for 1-9, so this address read 0 in that mode."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.97aa922bf8e4",
+          "pinmame.core.46e1a01a0f73",
           "controller-profile.pinmame-gts80",
           "runtime.black-hole.tilt-26",
           "runtime.black-hole.lamp-driver-test"
@@ -12095,15 +12097,16 @@
         "device": 0,
         "group": "pinmame.output.gi"
       },
-      "id": "virtual.gi-0-lamp-0-model",
+      "id": "virtual.gi-0-tilt-relay-model",
       "kind": "virtual",
-      "label": "PinMAME GI Channel 0 (Lamp 0 Model)",
+      "label": "PinMAME GI Channel 0 (Tilt Relay Model)",
       "physical": {
-        "notes": "MACHINE_INIT(gts80) declares one GI output that riot6532_2b_w fills from lamp 0's latch bit as a reversed #44 bulb (lit while the Q relay is released), in physical-output mode only; in binary mode it is constant 0. It is not a Black Hole G.I. string: the upper playfield illumination runs on 6.3 V AC through the T and U relay contacts and the lower playfield illumination through the L relay (page 45), so a recreation lights them from lamps 1, 16 and 17."
+        "notes": "MACHINE_INIT(gts80) declares one GI output that riot6532_2b_w fills from lamp 1's latch bit at the pinned 46e1a01a, as a reversed #44 bulb lit while the T (tilt) relay is released, in physical-GI mode only; in binary mode it is constant 0. At 97aa922b it copied lamp 0, the Q relay, instead. It is not a Black Hole G.I. string: the upper playfield illumination runs on 6.3 V AC through the T and U relay contacts and the lower playfield illumination through the L relay (page 45), so a recreation lights them from lamps 1, 16 and 17."
       },
       "provenance": {
         "source_refs": [
           "pinmame.core.97aa922bf8e4",
+          "pinmame.core.46e1a01a0f73",
           "controller-profile.pinmame-gts80",
           "manual.gottlieb.black-hole.1981.scribd"
         ],
@@ -12112,7 +12115,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.97aa922bf8e4",
+            "pinmame.core.46e1a01a0f73",
             "controller-profile.pinmame-gts80"
           ],
           "status": "validated"
@@ -12300,6 +12303,16 @@
       "license": "BSD-3-Clause",
       "locator": "src/wpc/gts80games.c lines 34-39 dispNumeric2 (four 6-digit player displays at memory 2, 9, 22 and 29, DISP_SEG_CREDIT(40,41), DISP_SEG_BALLS(42,43) and a fifth 6-digit display at 50) and dispNumeric4 (the same with 7-digit player displays and the fifth display at layout column 9), lines 53-79 INIT_S80 and INIT_S80D7 (GEN_GTS80, hw.flippers 0, zero invSw, lampCol 0, the stock u2_80/u3_80 or Oliver u2g807dc/u3g807dc system ROMs), lines 433-481: INIT_S80(blckhole, dispNumeric2, SNDBRD_GTS80SS_VOTRAX) with 668-4.cpu, INIT_S80D7(blkhole7, dispNumeric4, SNDBRD_GTS80SS_VOTRAX), INIT_S80(blkhole2, ...) with 668-2.cpu, INIT_S80(blkholea, dispNumeric2, SNDBRD_GTS80S) with 668-a2.cpu and 668-a-s.snd, INIT_S80D7(blkhol7s, dispNumeric4, SNDBRD_GTS80S) and their CORE_CLONEDEFNV lines; src/wpc/gts80.c GTS80_vblank (lamps 0 and 1 published as solenoids 10 and 11, core_updateSw(gameOn & 1)), GTS80_sw2m/GTS80_m2sw, GTS80_lamp2m/GTS80_m2lamp, SWITCH_UPDATE(GTS80), riot6532_0a_r, slam_sw_r, riot6532_2a_w (solenoids 1-9, sound command with lamp 9 as Sound 16), riot6532_2b_w (twelve lamp latches and the inverted twelfth column at 48-51), MACHINE_INIT(gts80); src/wpc/gts80.h GTS80_COMPORTS, GTS80_DIPS, GTS80_SNDDIPS, GTS80_SWSLAMTILT; src/wpc/gts80s.c gts80s_init and gts80ss_init DIP reads; src/wpc/gen.h GEN_GTS80 (0x200000000); src/wpc/core.c core_updateSw and core_getSol",
       "revision": "97aa922bf8e4b6970126192ec1ac1fb0305a4f62",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "acquired_at": "2026-10-25T20:16:49Z",
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.46e1a01a0f73",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "Pinned baseline. src/wpc/gts80.c lines 94-97 GTS80_vblank (solenoid 10 = relays == 0x01 for GEN_GTS80, solenoid 11 = lamp 1, solenoid 10 also written as physical output), lines 403-408 riot6532_2b_w (GI 0 and the solenoid 11 physical output from lamp 1's latch bit), lines 624-629 MACHINE_INIT(gts80) (one CORE_MODOUT_BULB_44_6_3V_AC_REV GI output); src/wpc/core.c lines 2456-2464 core_getSol (physical read of 1-32 with CORE_MODOUT_ENABLE_PHYSOUT_SOLENOIDS or CORE_MODOUT_ENABLE_MODSOL, binary 0/1 otherwise); src/wpc/vpintf.c lines 59-65 vp_getGI",
+      "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
       "uri": "https://github.com/vpinball/pinmame"
     },
     {
