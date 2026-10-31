@@ -1,0 +1,188 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 Laser Kick Test: which playfield switch closures fire which coil while the test waits; each candidate switch is closed alone for 1.5 s with a snapshot while held.",
+ "watch_switches": [
+  -7,
+  -6,
+  3
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": -6,
+   "state": 1,
+   "settle_s": 0.6,
+   "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "LASER KICK TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the LASER KICK TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "let the test start waiting for its switches"
+  },
+  {
+   "type": "pulse",
+   "switch": 32,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 32 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 40,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 40 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 10,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 10 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 13,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 13 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 14,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 14 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 29,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 29 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 52,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 52 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 30,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 30 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 38,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 38 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 44,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 44 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 45,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 45 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 46,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 46 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 31,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 31 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 39,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 39 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 37,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 37 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 22 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 23 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 24 for 1500 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 1500,
+   "settle_s": 2.0,
+   "snapshot_while_held": true,
+   "label": "Laser Kick Test: close public switch 9 for 1500 ms"
+  }
+ ]
+}

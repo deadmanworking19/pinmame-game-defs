@@ -1,0 +1,704 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game in play from a fresh state: the five drop targets 17-21 knocked down and reset twice, which starts the saw motor relay 9, then 60 s of top-lane rollovers (41-43) with no drop target hit: how long the ROM holds relay 9 when Nell is not saved. Only direct public switch writes; the host moves the balls and targets itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  11,
+  12,
+  13,
+  14,
+  17,
+  18,
+  19,
+  20,
+  21,
+  41,
+  42,
+  43
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 17 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 18 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 19 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 20 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 21 closes as its target falls"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 17 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 18 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 19 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 20 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 21 opens as the bank is reset"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 8"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 17 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 18 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 19 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 20 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 21 closes as its target falls"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 17 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 18 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 19 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 20 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 21 opens as the bank is reset"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 8"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (1)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (2)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (3)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (4)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (5)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (6)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (7)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (8)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (9)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (10)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (11)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (12)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (13)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (14)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (15)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (16)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (17)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (18)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (19)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (20)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (21)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (22)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (23)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (24)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (25)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (26)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (27)"
+  },
+  {
+   "type": "pulse",
+   "switch": 42,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 42 (28)"
+  },
+  {
+   "type": "pulse",
+   "switch": 43,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 43 (29)"
+  },
+  {
+   "type": "pulse",
+   "switch": 41,
+   "hold_ms": 80,
+   "settle_s": 2.0,
+   "label": "unsaved Nell timer: the ball rolls through top lane 41 (30)"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the unsaved timer tick 8"
+  }
+ ]
+}

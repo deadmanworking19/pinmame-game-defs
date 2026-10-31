@@ -1,0 +1,241 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game in play from a fresh state, then each of the three hat target switches 22, 23 and 24 closed alone for 120 ms, twice in order, with the lamp and output transitions that follow each hit: which hat target lamp (57 top, 58 middle, 59 bottom) the ROM pairs with each switch. Only direct public switch writes; the host moves the balls itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  11,
+  12,
+  13,
+  14,
+  22,
+  23,
+  24
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 1: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 1: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 1: the ball hits hat target switch 24"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 2: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 2: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.5,
+   "label": "round 2: the ball hits hat target switch 24"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after the hat targets tick 6"
+  }
+ ]
+}

@@ -1,0 +1,2925 @@
+{
+ "driver_ids": [
+  "rab_320"
+ ],
+ "extractor": {
+  "id": "tools/build_rab_runtime_evidence.py",
+  "version": 1
+ },
+ "format": "pinmame-machine-evidence",
+ "machine_ids": [
+  "data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993"
+ ],
+ "mechanisms": [],
+ "outputs": [],
+ "recreation_notes": [],
+ "runtime": {
+  "command_template": "python tools/rab_harness.py --library <libpinmame> --game rab_320 --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/data-east/rab-320-<run>.json --boot-wait 8 --dmd-dir <external-dmd-dir> --output <external-run.json>. No keyboard handling: every stimulus is a direct public switch write (the Black Advance button at -7, the Green input at -6, then playfield and cabinet addresses). tools/rab_harness.py replaces only the display-title checkpoint with exact title-band matches of visually read retained frames (tools/rab_header_templates.json). Each DMD reading in diagnostic_snapshots was read by a curator from the retained 128x32 frame whose pixel digest is recorded beside it.",
+  "emulator": {
+   "binary": "pinmame64.dll",
+   "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+   "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+  },
+  "game": "rab_320",
+  "observations": {
+   "diagnostic_snapshots": [
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Screen active-switch-baseline",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: OUTHOLE | BRN VIO-BRN #1L",
+     "label": "Screen coil-test-wrap",
+     "nonzero_pixels": 629,
+     "pixel_sha256": "56a036c8e5814db94ef1e9d2375fd5612b5aad5c0e09528b6bcd9e2226e91d38"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-CYCLING COILS- | COIL: OUTHOLE",
+     "label": "Screen cycling-coils-first-step",
+     "nonzero_pixels": 446,
+     "pixel_sha256": "49e3e6444bca05f48f160d98ca32ebfec7de94902404ca37cb723de66518d5f9"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST-",
+     "label": "Screen lamp-test-baseline",
+     "nonzero_pixels": 176,
+     "pixel_sha256": "5c9d484389ebb712efaa0db5bbbe0a2f3698812757fa30f87a2bdb3f9b5265d1"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP BLUE | YEL-BRN RED-BRN #01",
+     "label": "Screen lamp-test-wrap",
+     "nonzero_pixels": 658,
+     "pixel_sha256": "a13bdfaa49c9d9f10ed43ac214df9299385b11e5c4121b60110c8e26c2afcd0b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-LASER KICK TEST- | >PLACE BALL IN OUTLANE<",
+     "label": "Screen laser-kick-waiting",
+     "nonzero_pixels": 658,
+     "pixel_sha256": "ae7511951ba0adbb593c011a69bde964016dd496505e8d557a29358d4e7a4047"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Screen tour-active-switch-test",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-ALL LAMPS ON-",
+     "label": "Screen tour-all-lamps-on",
+     "nonzero_pixels": 221,
+     "pixel_sha256": "fa0c6cbfadec9932178075289386affa3e573ea8fcf0c9020433148c7e68a677"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-BURN IN TIME- | 00 MINUTES | > PUSH START <",
+     "label": "Screen tour-burn-in-time",
+     "nonzero_pixels": 610,
+     "pixel_sha256": "46d084b6df941d15068d97a02f37870675b1baed34a62a0bb018ba3357a5e126"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST-",
+     "label": "Screen tour-coil-test",
+     "nonzero_pixels": 159,
+     "pixel_sha256": "3a8ea295bc1bafc95234d1f64bb145c871389c101e18bb60110a3f722d907be4"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-COLUMN LAMPS ON-",
+     "label": "Screen tour-column-lamps-on",
+     "nonzero_pixels": 286,
+     "pixel_sha256": "5b10088b310a1c281fda7a9e8682f5f8fd512fab970bc845f387b7c101312f75"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-CYCLING COILS- | COIL: OUTHOLE",
+     "label": "Screen tour-cycling-coils",
+     "nonzero_pixels": 446,
+     "pixel_sha256": "49e3e6444bca05f48f160d98ca32ebfec7de94902404ca37cb723de66518d5f9"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23,
+      32
+     ],
+     "display_index": 0,
+     "interpreted_text": "-CYCLING FLASHERS-",
+     "label": "Screen tour-cycling-flashers",
+     "nonzero_pixels": 312,
+     "pixel_sha256": "7d1e364afc5ebe1c420e124349dbcc8dd423abfc95d463972147513574c66b8e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "DIAGNOSTICS",
+     "label": "Screen tour-diagnostics",
+     "nonzero_pixels": 804,
+     "pixel_sha256": "c624ef15703c49f8f1e98d404a973207b64f19bdaf5f61e5921fd153d9e06c3e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-DISPLAY VERSION- | BULLWINKLE A3.00 | 5/24/1993",
+     "label": "Screen tour-display-version",
+     "nonzero_pixels": 729,
+     "pixel_sha256": "3ce3fe9af3460ffd8fab306c7945f63452f644a5dfcc39ca5b568ce7b9146c3a"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST-",
+     "label": "Screen tour-lamp-test",
+     "nonzero_pixels": 176,
+     "pixel_sha256": "5c9d484389ebb712efaa0db5bbbe0a2f3698812757fa30f87a2bdb3f9b5265d1"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-LASER KICK TEST- | >PLACE BALL IN OUTLANE<",
+     "label": "Screen tour-laser-kick-test",
+     "nonzero_pixels": 658,
+     "pixel_sha256": "ae7511951ba0adbb593c011a69bde964016dd496505e8d557a29358d4e7a4047"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-PLAYFIELD STATUS- | PINBALL MISSING",
+     "label": "Screen tour-playfield-status",
+     "nonzero_pixels": 592,
+     "pixel_sha256": "9f87e77d61fbc6bac0d76b5b04fc12c4741f9c5ac1d7c969171c403414bd48a0"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-ROW LAMPS ON-",
+     "label": "Screen tour-row-lamps-on",
+     "nonzero_pixels": 234,
+     "pixel_sha256": "bdb22f7cb9d39b435a457aaa1cbc00a5660c6a9213225417eb21874a19530e43"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "00 | SERVICE CREDITS: | > PUSH START <",
+     "label": "Screen tour-service-credits",
+     "nonzero_pixels": 530,
+     "pixel_sha256": "cda991fa892f02738b838d65072d03f20a8b7c4e95a81feaa38fafb28e282e14"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-SPEAKER TEST- | LEFT SPEAKER",
+     "label": "Screen tour-speaker-test",
+     "nonzero_pixels": 477,
+     "pixel_sha256": "ac2b9e289e6def02910fb3da0dc8e3b44539d312da1584154786bd2e4ee13048"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | PLUMB TILT | GRN-BRN WHT-BRN #01",
+     "label": "Active Switch Test, public switch 1 held 900 ms",
+     "nonzero_pixels": 849,
+     "pixel_sha256": "5d8933be57d43efe0b9571aab47d97ddb5f92986fe5573c23ff56f1067815cd0"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | 4TH COIN | GRN-BRN WHT-RED #02",
+     "label": "Active Switch Test, public switch 2 held 900 ms",
+     "nonzero_pixels": 805,
+     "pixel_sha256": "90bcea13a10ae8bb883a7facb1fea26908f0004613836a69318caa3f2b8dc2db"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | CREDIT BUTTON | GRN-BRN WHT-ORN #03",
+     "label": "Active Switch Test, public switch 3 held 900 ms",
+     "nonzero_pixels": 916,
+     "pixel_sha256": "1d32be3a82dd13ecb8cf21c4a1afdcc0ce4fb207e18f2119bf1f243430f47f78"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT COIN | GRN-BRN WHT-YEL #04",
+     "label": "Active Switch Test, public switch 4 held 900 ms",
+     "nonzero_pixels": 834,
+     "pixel_sha256": "2e7b75e7cd15502a1b085fc83aa8810a273a072a6764c9f9bed4695dca369000"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | CENTER COIN | GRN-BRN WHT-GRN #05",
+     "label": "Active Switch Test, public switch 5 held 900 ms",
+     "nonzero_pixels": 875,
+     "pixel_sha256": "d5e1dd3f85518845eda5275885bb35c257b88b52457b5e013b994f335ad7625f"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT COIN | GRN-BRN WHT-BLU #06",
+     "label": "Active Switch Test, public switch 6 held 900 ms",
+     "nonzero_pixels": 820,
+     "pixel_sha256": "0d02c894c60ac7a96802d208119a132b4a618fd74d753bfe223addb1e807f7c0"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SLAM TILT | GRN-BRN WHT-VIO #07",
+     "label": "Active Switch Test, public switch 7 held 900 ms",
+     "nonzero_pixels": 809,
+     "pixel_sha256": "b6e081085ad501fcc41697ccdc98df067f92abdbe4d146ae0c97de45a73899a6"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-BRN WHT-GRY #08",
+     "label": "Active Switch Test, public switch 8 held 900 ms",
+     "nonzero_pixels": 817,
+     "pixel_sha256": "ed50cb1bd131991e7b4a50da8e955c62ada62b5bc4b0903172f70f0e02969684"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LAUNCH BUTTON | GRN-RED WHT-BRN #09",
+     "label": "Active Switch Test, public switch 9 held 900 ms",
+     "nonzero_pixels": 927,
+     "pixel_sha256": "b7d4cbee2e32259f9cd3fc0df279bbfb384023bc5ba946eaaf4624f166ba71c6"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | OUTHOLE | GRN-RED WHT-RED #10",
+     "label": "Active Switch Test, public switch 10 held 900 ms",
+     "nonzero_pixels": 808,
+     "pixel_sha256": "d59655f36c0376d57a54c8399d61128474f7f4ab1dfcde7c9c33a39b465ba2ba"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | TROUGH #1 LEFT | GRN-RED WHT-ORN #11",
+     "label": "Active Switch Test, public switch 11 held 900 ms",
+     "nonzero_pixels": 898,
+     "pixel_sha256": "653e66a46176d343185fad047033d22766a27938f1e38c1f5249d4037e4a5aad"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | TROUGH #2 CENTER | GRN-RED WHT-YEL #12",
+     "label": "Active Switch Test, public switch 12 held 900 ms",
+     "nonzero_pixels": 942,
+     "pixel_sha256": "fd83345cfd01a97fc3d9402514a6b84ebe56d4939036757447e606ee3cc34cdb"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | TROUGH #3 RIGHT | GRN-RED WHT-GRN #13",
+     "label": "Active Switch Test, public switch 13 held 900 ms",
+     "nonzero_pixels": 928,
+     "pixel_sha256": "1c3dd2bb8bb75e62cd2dd046c557086754670c25648afe11c77fba38e309a3e2"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SHOOTER LANE | GRN-RED WHT-BLU #14",
+     "label": "Active Switch Test, public switch 14 held 900 ms",
+     "nonzero_pixels": 893,
+     "pixel_sha256": "3bb888b76d0ea00b1bd9d2f2e966049c17a9a2967e81c02a546f85ff62e90dc7"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT FLIPPER | GRN-RED WHT-VIO #15",
+     "label": "Active Switch Test, public switch 15 held 900 ms",
+     "nonzero_pixels": 863,
+     "pixel_sha256": "8ba65eae15ea55e4caab1324a7308a2a24f242d12633e12045ae4d9527299580"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT FLIPPER | GRN-RED WHT-GRY #16",
+     "label": "Active Switch Test, public switch 16 held 900 ms",
+     "nonzero_pixels": 899,
+     "pixel_sha256": "d52ecb18f028e63c0ca111a2863327ee3b5ce68d08a07965ff9648fb30373428"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | DROP TARGET TOP | GRN-ORN WHT-BRN #17",
+     "label": "Active Switch Test, public switch 17 held 900 ms",
+     "nonzero_pixels": 943,
+     "pixel_sha256": "18d761cc95bc1d15be7b876f8f7bd45be05e4c0503ec8cbb72d8a33c0c727de0"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | DROP TARGET TOP/MID | GRN-ORN WHT-RED #18",
+     "label": "Active Switch Test, public switch 18 held 900 ms",
+     "nonzero_pixels": 1008,
+     "pixel_sha256": "8d141824b9168e5289913dab2d9ecca90e652a2332c604f1a47e8aeae8495971"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | DROP TARGET MIDDLE | GRN-ORN WHT-ORN #19",
+     "label": "Active Switch Test, public switch 19 held 900 ms",
+     "nonzero_pixels": 1004,
+     "pixel_sha256": "16974f75d93b60c14f5bfd79861fceabb9a64905290eedf31169f381d440766e"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | DROP TARGET BOT/MID | GRN-ORN WHT-YEL #20",
+     "label": "Active Switch Test, public switch 20 held 900 ms",
+     "nonzero_pixels": 1003,
+     "pixel_sha256": "034ad066338c12ce5a4f9776045cef3fd3ff29567cdd9eaab07c2e674b62bf0d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | DROP TARGET BOTTOM | GRN-ORN WHT-GRN #21",
+     "label": "Active Switch Test, public switch 21 held 900 ms",
+     "nonzero_pixels": 1008,
+     "pixel_sha256": "01faa94165fe2d90a507edbedfabce2e8a359fc06250b0edb621b189ad114cb6"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | TOP HAT TARGET | GRN-ORN WHT-BLU #22",
+     "label": "Active Switch Test, public switch 22 held 900 ms",
+     "nonzero_pixels": 914,
+     "pixel_sha256": "d670590125c98ed24b8e160a8447284fbc3d79ccb8ce353d7a6f0baa0ee1cf5a"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | MIDDLE HAT TARGET | GRN-ORN WHT-VIO #23",
+     "label": "Active Switch Test, public switch 23 held 900 ms",
+     "nonzero_pixels": 967,
+     "pixel_sha256": "247fb332953fcd7dd23b0661b26ccb573c51a843788a2409f8ddcbccec6f9a92"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | BOTTOM HAT TARGET | GRN-ORN WHT-GRY #24",
+     "label": "Active Switch Test, public switch 24 held 900 ms",
+     "nonzero_pixels": 980,
+     "pixel_sha256": "baa6a530c4722dde41f2d4d2fb838e759bf2139cf4196d946dd7455db006cdea"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SMALL TARGET B | GRN-YEL WHT-BRN #25",
+     "label": "Active Switch Test, public switch 25 held 900 ms",
+     "nonzero_pixels": 917,
+     "pixel_sha256": "506a92d06021d9e969e7b006747ce5dc6c175d74d32596e88eff54e7d03f8e0b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SMALL TARGET O | GRN-YEL WHT-RED #26",
+     "label": "Active Switch Test, public switch 26 held 900 ms",
+     "nonzero_pixels": 909,
+     "pixel_sha256": "5b1db35e287c032e6fbeb6b055810c26d8d67d374138bea3ddb5b76b2885aeb8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SMALL TARGET M | GRN-YEL WHT-ORN #27",
+     "label": "Active Switch Test, public switch 27 held 900 ms",
+     "nonzero_pixels": 908,
+     "pixel_sha256": "330cce07f532c6d49755e0378776905c284c498b4086f90851e1a0cb5ee679e2"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SMALL TARGET B | GRN-YEL WHT-YEL #28",
+     "label": "Active Switch Test, public switch 28 held 900 ms",
+     "nonzero_pixels": 902,
+     "pixel_sha256": "36b2b8c7217063eb4de97ff95b28f7b38072a260df9072c8c990961603259561"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | SUPER VUK | GRN-YEL WHT-GRN #29",
+     "label": "Active Switch Test, public switch 29 held 900 ms",
+     "nonzero_pixels": 825,
+     "pixel_sha256": "384909ec930ffb6ee0041e9adcfd08c22e0ebd373d03cd20003ff4bff2f90087"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT SLINGSHOT | GRN-YEL WHT-BLU #30",
+     "label": "Active Switch Test, public switch 30 held 900 ms",
+     "nonzero_pixels": 906,
+     "pixel_sha256": "86b44dd997e355362e400fbbf286c1eafeb97ac5609e07cbfe9cfa895917e549"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT RETURN | GRN-YEL WHT-VIO #31",
+     "label": "Active Switch Test, public switch 31 held 900 ms",
+     "nonzero_pixels": 844,
+     "pixel_sha256": "7e428a17fd4a415f0e7eced4f52125bd1ca3a6f868623880152dd3c0d1f4e319"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT OUTLANE | GRN-YEL WHT-GRY #32",
+     "label": "Active Switch Test, public switch 32 held 900 ms",
+     "nonzero_pixels": 871,
+     "pixel_sha256": "8b35d335d098a383aea80d919c269a43f7069d81aea68f64ffc8a5110c4290ee"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT ORBIT BOTTOM | GRN-BLK WHT-BRN #33",
+     "label": "Active Switch Test, public switch 33 held 900 ms",
+     "nonzero_pixels": 971,
+     "pixel_sha256": "dd0682c9f1dae0d523ee2952621fa4fd7bd758815cf5da05cacae42a51fbc815"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT ORBIT TOP | GRN-BLK WHT-RED #34",
+     "label": "Active Switch Test, public switch 34 held 900 ms",
+     "nonzero_pixels": 897,
+     "pixel_sha256": "c144b4795bc469b158a8a899c5daceb3276346e71f361e0e467fae5c9d6a9e59"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT ORBIT TOP | GRN-BLK WHT-ORN #35",
+     "label": "Active Switch Test, public switch 35 held 900 ms",
+     "nonzero_pixels": 924,
+     "pixel_sha256": "8bab683e0dbd192ed90cc7a6084a04672a432916d5f6cc854a33b999b8e5cc64"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT ORBIT BOTTOM | GRN-BLK WHT-YEL #36",
+     "label": "Active Switch Test, public switch 36 held 900 ms",
+     "nonzero_pixels": 982,
+     "pixel_sha256": "15da6b9b43b4c26b485835d6831b8c93f8f4f761c577fb51428eb40c70eeef98"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | UNDER TROUGH | GRN-BLK WHT-GRN #37",
+     "label": "Active Switch Test, public switch 37 held 900 ms",
+     "nonzero_pixels": 901,
+     "pixel_sha256": "53645d507cba065f2648cf86cd1365655896f24f514dc3b66a4bc6b8955c2284"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT SLINGSHOT | GRN-BLK WHT-BLU #38",
+     "label": "Active Switch Test, public switch 38 held 900 ms",
+     "nonzero_pixels": 938,
+     "pixel_sha256": "787995c9b7e86ab944900d50e5927c156ceaac2f3e22748d83e53b3195fff9c5"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT RETURN | GRN-BLK WHT-VIO #39",
+     "label": "Active Switch Test, public switch 39 held 900 ms",
+     "nonzero_pixels": 880,
+     "pixel_sha256": "e448120b467d08d4f6a812a32d13e954992edccd04293c8d3d976c391a153090"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT OUTLANE | GRN-BLK WHT-GRY #40",
+     "label": "Active Switch Test, public switch 40 held 900 ms",
+     "nonzero_pixels": 903,
+     "pixel_sha256": "4d6b6ca23c32f01ebd95bfa708f6cef46abfd373ea711d8e0bc4c898dbb4c7df"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT TOP LANE | GRN-BLU WHT-BRN #41",
+     "label": "Active Switch Test, public switch 41 held 900 ms",
+     "nonzero_pixels": 883,
+     "pixel_sha256": "0879f2c63db86d4d06b51ad2ac20076651abebf3f5ad290216f343681659959e"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | CENTER TOP LANE | GRN-BLU WHT-RED #42",
+     "label": "Active Switch Test, public switch 42 held 900 ms",
+     "nonzero_pixels": 932,
+     "pixel_sha256": "6992c5e60e1250ed4fb476a1ba43097b65dd40e721a39150f0733267ddcdf4a9"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT TOP LANE | GRN-BLU WHT-ORN #43",
+     "label": "Active Switch Test, public switch 43 held 900 ms",
+     "nonzero_pixels": 905,
+     "pixel_sha256": "977dfcc6a837b0b3aaa526f7ed85ab4f834192094f862c81a455e4733e80361d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT TURBO BUMPER | GRN-BLU WHT-YEL #44",
+     "label": "Active Switch Test, public switch 44 held 900 ms",
+     "nonzero_pixels": 968,
+     "pixel_sha256": "5620c31c4cf9f259f3fb1e68aa9cd34863c63cf3596bd37256da7fec9cc69c93"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | CENTER TURBO BUMPER | GRN-BLU WHT-GRN #45",
+     "label": "Active Switch Test, public switch 45 held 900 ms",
+     "nonzero_pixels": 1034,
+     "pixel_sha256": "b2823c07a36cc3bf6253145ec094ac7018ef6a740ae419ed755d0f63163d176d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT TURBO BUMPER | GRN-BLU WHT-BLU #46",
+     "label": "Active Switch Test, public switch 46 held 900 ms",
+     "nonzero_pixels": 1004,
+     "pixel_sha256": "27cd1191d40706c93ea1b248b0d3454fb39111f436f6c39b49ec20fafcd2b049"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT RAMP ENTER | GRN-BLU WHT-VIO #47",
+     "label": "Active Switch Test, public switch 47 held 900 ms",
+     "nonzero_pixels": 921,
+     "pixel_sha256": "b563bbef0253ad0d565ca781cfe3dfffc9991f20336bad17956d1ef7acf141d8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT RAMP EXIT | GRN-BLU WHT-GRY #48",
+     "label": "Active Switch Test, public switch 48 held 900 ms",
+     "nonzero_pixels": 898,
+     "pixel_sha256": "6ec73907fd81b5c07e6b846646ed7796069d3e97a82729d4c65748fbede0daa9"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT RAMP ENTER | GRN-VIO WHT-BRN #49",
+     "label": "Active Switch Test, public switch 49 held 900 ms",
+     "nonzero_pixels": 958,
+     "pixel_sha256": "62f1ec6026d37423f43d4a3918a0523bc13802cc7210b20d0dc4998d34c5019b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT RAMP EXIT | GRN-VIO WHT-RED #50",
+     "label": "Active Switch Test, public switch 50 held 900 ms",
+     "nonzero_pixels": 921,
+     "pixel_sha256": "5dee45ef2355f02f05e95b3b8830c9a863e7cb9f091c52c5f7dd2039103ebee1"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-VIO WHT-ORN #51",
+     "label": "Active Switch Test, public switch 51 held 900 ms",
+     "nonzero_pixels": 797,
+     "pixel_sha256": "9b34cd84bcf130977e73c78b9772376100b1d9676254875a5ac42e6414697ed8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | VUK | GRN-VIO WHT-YEL #52",
+     "label": "Active Switch Test, public switch 52 held 900 ms",
+     "nonzero_pixels": 700,
+     "pixel_sha256": "1cea4e69d4384c688cd41a8f4f73ed44625a70e8086b8151ae111cde196b913a"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-VIO WHT-GRN #53",
+     "label": "Active Switch Test, public switch 53 held 900 ms",
+     "nonzero_pixels": 800,
+     "pixel_sha256": "e6610fe0d3c40f0ff7953ff6a78fdee0eaf91d3669aee69023b9127ef3f143f9"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-VIO WHT-BLU #54",
+     "label": "Active Switch Test, public switch 54 held 900 ms",
+     "nonzero_pixels": 793,
+     "pixel_sha256": "477a3395be8001e30e0cdd01211a7e004830fccf0919a080e3a0dfce983db581"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-VIO WHT-VIO #55",
+     "label": "Active Switch Test, public switch 55 held 900 ms",
+     "nonzero_pixels": 786,
+     "pixel_sha256": "9c1a5e414a3b2ecb7cf94c47b5664ce47adb9437fe1db27fce9bf265ed89555a"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-VIO WHT-GRY #56",
+     "label": "Active Switch Test, public switch 56 held 900 ms",
+     "nonzero_pixels": 797,
+     "pixel_sha256": "b380e557bfdd2c6bec2d481f767a651a25ca8079baf8bb8e0b7089809efb6c7c"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-BRN #57",
+     "label": "Active Switch Test, public switch 57 held 900 ms",
+     "nonzero_pixels": 813,
+     "pixel_sha256": "de4f4a96d9b1961244886ca26441666bfccab8018306224c2baecc0eeb9842bc"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-RED #58",
+     "label": "Active Switch Test, public switch 58 held 900 ms",
+     "nonzero_pixels": 812,
+     "pixel_sha256": "7976b1b569a9b3b1a99eaf7cebd980dba1f9a46128e068e8e92181211779c089"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-ORN #59",
+     "label": "Active Switch Test, public switch 59 held 900 ms",
+     "nonzero_pixels": 811,
+     "pixel_sha256": "49771d7c47ce915f1ee763728452fdc74b03f440aa53f25e7a47de1c8d714a1a"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-YEL #60",
+     "label": "Active Switch Test, public switch 60 held 900 ms",
+     "nonzero_pixels": 801,
+     "pixel_sha256": "70e54a4e60bb1a5d259161f03d15f49c84f9b7c8790a1c48465f3042200e8d6d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-GRN #61",
+     "label": "Active Switch Test, public switch 61 held 900 ms",
+     "nonzero_pixels": 809,
+     "pixel_sha256": "f1b5282e8cf2ef78f3e7307b46a9a1a4129bc328ec024192a101a9bd5fcff14d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-BLU #62",
+     "label": "Active Switch Test, public switch 62 held 900 ms",
+     "nonzero_pixels": 806,
+     "pixel_sha256": "557f88cc1ad22aebafe4bb7f140afa9c901c8974f1db7f682e3b580663b496d9"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-VIO #63",
+     "label": "Active Switch Test, public switch 63 held 900 ms",
+     "nonzero_pixels": 796,
+     "pixel_sha256": "fd4c9022a3e7c913b98903b5a533e19f256c46192ea5e26af35519d13b90f12b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NOT USED | GRN-GRY WHT-GRY #64",
+     "label": "Active Switch Test, public switch 64 held 900 ms",
+     "nonzero_pixels": 804,
+     "pixel_sha256": "6ae7ab8bb651a4d97ecf8dac1b0a530f11f3faddad1b483fc3fd25ec6e71b8d6"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 81 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23,
+      45,
+      46
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | RIGHT FLIPPER | GRN-RED WHT-GRY #16",
+     "label": "Active Switch Test, flipper-column public switch 82 held 900 ms",
+     "nonzero_pixels": 899,
+     "pixel_sha256": "d52ecb18f028e63c0ca111a2863327ee3b5ce68d08a07965ff9648fb30373428"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 83 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23,
+      47,
+      48
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | LEFT FLIPPER | GRN-RED WHT-VIO #15",
+     "label": "Active Switch Test, flipper-column public switch 84 held 900 ms",
+     "nonzero_pixels": 863,
+     "pixel_sha256": "8ba65eae15ea55e4caab1324a7308a2a24f242d12633e12045ae4d9527299580"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 85 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 86 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 87 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-ACTIVE SWITCH TEST- | NONE",
+     "label": "Active Switch Test, flipper-column public switch 88 held 900 ms",
+     "nonzero_pixels": 415,
+     "pixel_sha256": "2f830153ede748d0644eb0c192453383277583a67b323bf71305ed7403141fa8"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP BLUE | YEL-BRN RED-BRN #01",
+     "label": "Lamp Test, lamp 1 selected",
+     "nonzero_pixels": 658,
+     "pixel_sha256": "a13bdfaa49c9d9f10ed43ac214df9299385b11e5c4121b60110c8e26c2afcd0b"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MIDDLE BLUE | YEL-BRN RED-BLK #02",
+     "label": "Lamp Test, lamp 2 selected",
+     "nonzero_pixels": 714,
+     "pixel_sha256": "13b9f74811c13bf1fa244b389570a33d3ec2e32acbdeed1438043347cf43bfc9"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOTTOM BLUE | YEL-BRN RED-ORN #03",
+     "label": "Lamp Test, lamp 3 selected",
+     "nonzero_pixels": 723,
+     "pixel_sha256": "9d03976359c52d379a729d8112d8709d8818f92457b88b11af1ba614a2b552f3"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP YELLOW | YEL-BRN RED-YEL #04",
+     "label": "Lamp Test, lamp 4 selected",
+     "nonzero_pixels": 678,
+     "pixel_sha256": "1f385a50d5b74b9e75a9c2cbff823603e8decc773dbf4b36c2113c5ec108ea96"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MIDDLE YELLOW | YEL-BRN RED-GRN #05",
+     "label": "Lamp Test, lamp 5 selected",
+     "nonzero_pixels": 756,
+     "pixel_sha256": "e81b42fc671b34520a06efcb58e0cdc0bd9a9845afb1858170507a21f38e5d04"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOTTOM YELLOW | YEL-BRN RED-BLU #06",
+     "label": "Lamp Test, lamp 6 selected",
+     "nonzero_pixels": 757,
+     "pixel_sha256": "6d4072f070d0b6d2b2539bd3764110edd5ff185220a5bc14b7ed280ee8d23d9a"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOTTOM RED | YEL-BRN RED-VIO #07",
+     "label": "Lamp Test, lamp 7 selected",
+     "nonzero_pixels": 691,
+     "pixel_sha256": "d734417299399a1b21dcd1e4c33edd34749694bd836756a2f0e100c5892782c9"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MIDDLE RED | YEL-BRN RED-GRY #08",
+     "label": "Lamp Test, lamp 8 selected",
+     "nonzero_pixels": 699,
+     "pixel_sha256": "53830827d37e43d08eca835a1594d657752b66b1fc1e31f70125a2c2652421a3"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP RED | YEL-RED RED-BRN #09",
+     "label": "Lamp Test, lamp 9 selected",
+     "nonzero_pixels": 641,
+     "pixel_sha256": "d76c76c84769e0ba8d08a054494257b087fd8ac1268c3d7f4e7714fa1332eff1"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOTTOM GREEN | YEL-RED RED-BLK #10",
+     "label": "Lamp Test, lamp 10 selected",
+     "nonzero_pixels": 740,
+     "pixel_sha256": "1df8da19c547e39cf00bfb77fcf58aae39477f80ace7b58a8607442f438e9224"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MIDDLE GREEN | YEL-RED RED-ORN #11",
+     "label": "Lamp Test, lamp 11 selected",
+     "nonzero_pixels": 735,
+     "pixel_sha256": "9095342463d40af0ccac75a42364a4f26e0fab07f6beda2e6b0031a3b582cc32"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP GREEN | YEL-RED RED-YEL #12",
+     "label": "Lamp Test, lamp 12 selected",
+     "nonzero_pixels": 663,
+     "pixel_sha256": "af4fb735ef62a49ae8f68a425d93399279c6b79bff4b7123a61e1e7071c6a30a"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | PIE TRIBALL | YEL-RED RED-GRN #13",
+     "label": "Lamp Test, lamp 13 selected",
+     "nonzero_pixels": 700,
+     "pixel_sha256": "823531803500a22ae73b5f4996681f406752bee198eac3301c069db930faafc9"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | SPIN & WIN | YEL-RED RED-BLU #14",
+     "label": "Lamp Test, lamp 14 selected",
+     "nonzero_pixels": 653,
+     "pixel_sha256": "bd5125f6564cfb91835645ba78eb4869e6b2be50d911c7bad802a5b1bfd4fb80"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | CREDIT BUTTON | YEL-RED RED-VIO #15",
+     "label": "Lamp Test, lamp 15 selected",
+     "nonzero_pixels": 734,
+     "pixel_sha256": "c8381fb9960c5b2781f72cac530dbfe27b656f39303fb03a3dc6a72b97965139"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LEFT RAMP ENTRANCE | YEL-RED RED-GRY #16",
+     "label": "Lamp Test, lamp 16 selected",
+     "nonzero_pixels": 844,
+     "pixel_sha256": "7f1179c6eb3265125054cc3343f5731ebe8a50a00a382e3dafa9703cccb589b1"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DROP TARGET TOP | YEL-ORN RED-BRN #17",
+     "label": "Lamp Test, lamp 17 selected",
+     "nonzero_pixels": 782,
+     "pixel_sha256": "d16398d8bcd5d54cf78624d0e9820ede40e9000dc8a62a66e0ae441f8ecbccd4"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DROP TARGET TOP/MID | YEL-ORN RED-BLK #18",
+     "label": "Lamp Test, lamp 18 selected",
+     "nonzero_pixels": 842,
+     "pixel_sha256": "895fa5db77e10836557053e7855957bbc65ef154343283f21fc3d82945b46df8"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DROP TARGET MIDDLE | YEL-ORN RED-ORN #19",
+     "label": "Lamp Test, lamp 19 selected",
+     "nonzero_pixels": 843,
+     "pixel_sha256": "ccb6aae5059d378b086ae517b8105962a1792411574ddae80ee7057bcfcbbc16"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DROP TARGET BOT/MID | YEL-ORN RED-YEL #20",
+     "label": "Lamp Test, lamp 20 selected",
+     "nonzero_pixels": 842,
+     "pixel_sha256": "10a5e57957832250388d9f1db630be94ea8b652d79ba77b7aef7ac9e5f403f15"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DROP TARGET BOTTOM | YEL-ORN RED-GRN #21",
+     "label": "Lamp Test, lamp 21 selected",
+     "nonzero_pixels": 847,
+     "pixel_sha256": "80bd97fe0614b7885bf15f1b4f0b5c3571a0ece0c647c4fa6a42be083c63242e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LEFT RETURN | YEL-ORN RED-BLU #22",
+     "label": "Lamp Test, lamp 22 selected",
+     "nonzero_pixels": 706,
+     "pixel_sha256": "b7890a480ccf12ac9ea9ac0f9ac66e8d2fb25e40fec07433e6342709e2f16383"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | RIGHT RETURN | YEL-ORN RED-VIO #23",
+     "label": "Lamp Test, lamp 23 selected",
+     "nonzero_pixels": 721,
+     "pixel_sha256": "3f49919856235ec8e5dd33fafee35c49eae8623496c15fab3a63d00098c1fe07"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | RIGHT OUTLANE | YEL-ORN RED-GRY #24",
+     "label": "Lamp Test, lamp 24 selected",
+     "nonzero_pixels": 744,
+     "pixel_sha256": "80f621690d235bad48efea35fcbbdce4625b3547b21cd7b03347dc540009316d"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | B LIGHT | YEL-BLK RED-BRN #25",
+     "label": "Lamp Test, lamp 25 selected",
+     "nonzero_pixels": 624,
+     "pixel_sha256": "991a705caa0ca3b322c4d6ee761ff1a55d38c3db146df0f2c84123c5001cfc2a"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | O LIGHT | YEL-BLK RED-BLK #26",
+     "label": "Lamp Test, lamp 26 selected",
+     "nonzero_pixels": 611,
+     "pixel_sha256": "52c90ba40343c43eb305710b5e307afe3895d1deac168ec9ace373e68fd2c2e8"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | M LIGHT | YEL-BLK RED-ORN #27",
+     "label": "Lamp Test, lamp 27 selected",
+     "nonzero_pixels": 615,
+     "pixel_sha256": "820caef9b2c69afe5f8eadbcaa8ab44242297a78914aaf4d333c8c0f344b015a"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | B LIGHT | YEL-BLK RED-YEL #28",
+     "label": "Lamp Test, lamp 28 selected",
+     "nonzero_pixels": 609,
+     "pixel_sha256": "9f3c56f04ec3493f88a312b9fe8c00341f279d3248741620cdfa24b3915ddda3"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LASER KICK 1 MIL | YEL-BLK RED-GRN #29",
+     "label": "Lamp Test, lamp 29 selected",
+     "nonzero_pixels": 756,
+     "pixel_sha256": "5357ed310191b50a1ba613a44822574aa05798927146bc74c557e87c2bef057e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LASER KICK 3 MIL | YEL-BLK RED-BLU #30",
+     "label": "Lamp Test, lamp 30 selected",
+     "nonzero_pixels": 753,
+     "pixel_sha256": "92235368084b6eb349ebb8567889315ae0060e5aa8ebf33798605db1f274bc51"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LASER KICK 5 MIL | YEL-BLK RED-VIO #31",
+     "label": "Lamp Test, lamp 31 selected",
+     "nonzero_pixels": 740,
+     "pixel_sha256": "9ca753265946c51bb1a0a3009e72eb223a2355816bcf4743a432a35680ad067e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | ADVANCE X | YEL-BLK RED-GRY #32",
+     "label": "Lamp Test, lamp 32 selected",
+     "nonzero_pixels": 668,
+     "pixel_sha256": "a98c329c855b69152b721538b081de823291eca9a435dcb4109287c1656f4151"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | ??? | YEL-GRN RED-BRN #33",
+     "label": "Lamp Test, lamp 33 selected",
+     "nonzero_pixels": 541,
+     "pixel_sha256": "522abf10fe3dc106ad07d38b46382215e5240027909615b2fd1da486ea5b2657"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LOOPING | YEL-GRN RED-BLK #34",
+     "label": "Lamp Test, lamp 34 selected",
+     "nonzero_pixels": 636,
+     "pixel_sha256": "1c121ed4324007d2e267f058632edd79e273cdb0f2f82197e97bd2231571f711"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | INSTANT TRIBALL | YEL-GRN RED-ORN #35",
+     "label": "Lamp Test, lamp 35 selected",
+     "nonzero_pixels": 787,
+     "pixel_sha256": "e0356c43e422a45c26e598e11fc8578b38e1b25e18723b6d98b8637d3d79ab32"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | 10 MILLION | YEL-GRN RED-YEL #36",
+     "label": "Lamp Test, lamp 36 selected",
+     "nonzero_pixels": 662,
+     "pixel_sha256": "4095a16c41ee2dde657b315053815176d8ac3fe4b6e55de220471e62997fb653"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LITE MYSTERY SELECT | YEL-GRN RED-GRN #37",
+     "label": "Lamp Test, lamp 37 selected",
+     "nonzero_pixels": 837,
+     "pixel_sha256": "f3f5ac70498aa7d5cd19ea7ee0a4ee23437705009d684c5f6a0c52bb1d2b4f24"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LOOSE MOOSE | YEL-GRN RED-BLU #38",
+     "label": "Lamp Test, lamp 38 selected",
+     "nonzero_pixels": 712,
+     "pixel_sha256": "473ec3b4ea80edba2892a6e7993fee73d25bc2d749ff47cef03187a4d07cddfd"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOMB MILLIONS | YEL-GRN RED-VIO #39",
+     "label": "Lamp Test, lamp 39 selected",
+     "nonzero_pixels": 739,
+     "pixel_sha256": "42ceeaf4e7add96f7dfcbc081ca56f73252974d29a3e241808f3797e78393175"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | SUPER POPS | YEL-GRN RED-GRY #40",
+     "label": "Lamp Test, lamp 40 selected",
+     "nonzero_pixels": 692,
+     "pixel_sha256": "c64508f3997a000065ddeff8458afb23229fcb4e6c7cddbe7d28ab2c30f81908"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY S | YEL-BLU RED-BRN #41",
+     "label": "Lamp Test, lamp 41 selected",
+     "nonzero_pixels": 621,
+     "pixel_sha256": "1e3e48f3ae1949ff521196611f5afdf8c40e65fc238e53cd0fd41a5af7324273"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY E | YEL-BLU RED-BLK #42",
+     "label": "Lamp Test, lamp 42 selected",
+     "nonzero_pixels": 615,
+     "pixel_sha256": "8d14e0a8f5c29bf5c324e3826417c39d77d6e76c83945e294bea326e3477d7d3"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY L | YEL-BLU RED-ORN #43",
+     "label": "Lamp Test, lamp 43 selected",
+     "nonzero_pixels": 614,
+     "pixel_sha256": "cefa0af405e3f6bc1ea63731fdda449e2e82553e39812f0723790970796e9273"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY E | YEL-BLU RED-YEL #44",
+     "label": "Lamp Test, lamp 44 selected",
+     "nonzero_pixels": 606,
+     "pixel_sha256": "ffb6018192e3c5c74bcfbb9cdf067e93a37ec948b7bca9f77e8dcc6afff19bd6"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY C | YEL-BLU RED-GRN #45",
+     "label": "Lamp Test, lamp 45 selected",
+     "nonzero_pixels": 617,
+     "pixel_sha256": "759fb349d2a5cd43a78274f3bc5777bacc89dc2edd47fd0441680111dde33bd7"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | DAISY T | YEL-BLU RED-BLU #46",
+     "label": "Lamp Test, lamp 46 selected",
+     "nonzero_pixels": 613,
+     "pixel_sha256": "6050327b1217df709eafb761c7bdcfbf7f022974f7cb19398ec9ba97274bbf12"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | EXTRA BALL | YEL-BLU RED-VIO #47",
+     "label": "Lamp Test, lamp 47 selected",
+     "nonzero_pixels": 674,
+     "pixel_sha256": "602a7e940284c065df1daff6014b9c3e6a63ac41abb534bdb237174b47c0ded7"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LAUNCH BUTTON | YEL-BLU RED-GRY #48",
+     "label": "Lamp Test, lamp 48 selected",
+     "nonzero_pixels": 748,
+     "pixel_sha256": "86e7c26e8babde9c1f0e39803cf4459cdcbbb6e8e3ff869f27108e16ed8935f7"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LEFT TOP LANE | YEL-VIO RED-BRN #49",
+     "label": "Lamp Test, lamp 49 selected",
+     "nonzero_pixels": 716,
+     "pixel_sha256": "f751247611bfd305cddfbdd948600ad1b061eaff5e13afaec1d642188b42f6dc"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | CENTER TOP LANE | YEL-VIO RED-BLK #50",
+     "label": "Lamp Test, lamp 50 selected",
+     "nonzero_pixels": 761,
+     "pixel_sha256": "7bc50244372d5414d0a40914a5e27a9c3fc9abeaaed4a2c0436a7d5eb451a910"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | RIGHT TOP LANE | YEL-VIO RED-ORN #51",
+     "label": "Lamp Test, lamp 51 selected",
+     "nonzero_pixels": 735,
+     "pixel_sha256": "241f766c566dcc00141fe663abf3b13790dd2d3fb47872d6c1298b0ec01af000"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TRIBALL | YEL-VIO RED-YEL #52",
+     "label": "Lamp Test, lamp 52 selected",
+     "nonzero_pixels": 619,
+     "pixel_sha256": "6df82853b91e44a5f4238a931f6cba738e26bf0f32e06ffae378306377519cd4"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | RIGHT RAMP ENTRANCE | YEL-VIO RED-GRN #53",
+     "label": "Lamp Test, lamp 53 selected",
+     "nonzero_pixels": 860,
+     "pixel_sha256": "b72e10ec3bf49ad37979d74ffc254fd23859e232e037b32ba0e02b853ed3ec51"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | JACKPOT | YEL-VIO RED-BLU #54",
+     "label": "Lamp Test, lamp 54 selected",
+     "nonzero_pixels": 625,
+     "pixel_sha256": "5a68740cdca0d480370a6eb9fcea2082b01037ece27f583aad8e04711442f729"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LITE WABAC | YEL-VIO RED-VIO #55",
+     "label": "Lamp Test, lamp 55 selected",
+     "nonzero_pixels": 668,
+     "pixel_sha256": "77bc2555fd6fb8ac47c2fa06889b09e6ca1244e91cd0e0c2deb556d64bfa6f17"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MYSTERY SELECT | YEL-VIO RED-GRY #56",
+     "label": "Lamp Test, lamp 56 selected",
+     "nonzero_pixels": 750,
+     "pixel_sha256": "fc7409d1a33d13c4bf29d0c850a0dc05f845398144590543b353c2cbfd045889"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | TOP HAT TARGET | YEL-GRY RED-BRN #57",
+     "label": "Lamp Test, lamp 57 selected",
+     "nonzero_pixels": 758,
+     "pixel_sha256": "c4c4e43e8778891894cc6ab1f825999ba6a7cd0d380231900156ac6f660ee96e"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | MIDDLE HAT TARGET | YEL-GRY RED-BLK #58",
+     "label": "Lamp Test, lamp 58 selected",
+     "nonzero_pixels": 815,
+     "pixel_sha256": "4627f1984dbd75f7182273866788701b676d23b5d7ea0d0136d75ee8092c5c62"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | BOTTOM HAT TARGET | YEL-GRY RED-ORN #59",
+     "label": "Lamp Test, lamp 59 selected",
+     "nonzero_pixels": 824,
+     "pixel_sha256": "d6d2f8dd15cc6a1505940ff4e60fc05c2b4f993c6caa4f29f85068e63194a79c"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | HAT TRICK | YEL-GRY RED-YEL #60",
+     "label": "Lamp Test, lamp 60 selected",
+     "nonzero_pixels": 652,
+     "pixel_sha256": "c3ebbd06e16212f410e9ad876f51d9bf357ae6d2a68b375df7a8876548e25c60"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | RHINO BONUS | YEL-GRY RED-GRN #61",
+     "label": "Lamp Test, lamp 61 selected",
+     "nonzero_pixels": 716,
+     "pixel_sha256": "7b53bf41d675da2875a30d881a17754fcd332a67091a4d9cadb63fa3bac0e2a9"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | LITE LASER KICK | YEL-GRY RED-BLU #62",
+     "label": "Lamp Test, lamp 62 selected",
+     "nonzero_pixels": 750,
+     "pixel_sha256": "92c5a15839dbd52516960e8ddfee97688b2c2d0f49a8044179d1b92620208253"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | SPECIAL | YEL-GRY RED-VIO #63",
+     "label": "Lamp Test, lamp 63 selected",
+     "nonzero_pixels": 624,
+     "pixel_sha256": "0c55b455ef6c23d8bf8709a8fe929e82b83bc216d3ff09047e25f2ab0c8f4d29"
+    },
+    {
+     "active_solenoid_addresses": [],
+     "display_index": 0,
+     "interpreted_text": "-LAMP TEST- | SHOOT AGAIN | YEL-GRY RED-GRY #64",
+     "label": "Lamp Test, lamp 64 selected",
+     "nonzero_pixels": 707,
+     "pixel_sha256": "6ab0d3553a91c9807b1659555bb7b813c44cd0e8bade4d3da3d43de26d43b73d"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: OUTHOLE | BRN VIO-BRN #1L",
+     "label": "Coil Test, entry 1 #1L",
+     "nonzero_pixels": 629,
+     "pixel_sha256": "56a036c8e5814db94ef1e9d2375fd5612b5aad5c0e09528b6bcd9e2226e91d38"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: PLFD X3, INSERT X1 | ORG BLK-BRN #1R",
+     "label": "Coil Test, entry 2 #1R",
+     "nonzero_pixels": 741,
+     "pixel_sha256": "4be1827bf377cf322378357896464695ec379c647fa932cb51b1950d64c7bd77"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: TROUGH EJECT | BRN VIO-RED #2L",
+     "label": "Coil Test, entry 3 #2L",
+     "nonzero_pixels": 711,
+     "pixel_sha256": "a3efa9e482030ed8374089f3d5f7c825dd597e56ec580c191baf4942eba83cde"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: HAT TRICK X4 | ORG BLK-RED #2R",
+     "label": "Coil Test, entry 4 #2R",
+     "nonzero_pixels": 658,
+     "pixel_sha256": "7eaf6afd276bd811474b66a030b491ef078f4fb5bcc9ef51c3b9067496b2a539"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: LION INSERT | YEL-VIO #3L",
+     "label": "Coil Test, entry 5 #3L",
+     "nonzero_pixels": 596,
+     "pixel_sha256": "1845a0a78ab9ddb2116c3ba1b763de121decbf07b280895803a64ae0308d858b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: PLFD VUK X4 | ORG BLK-ORG #3R",
+     "label": "Coil Test, entry 6 #3R",
+     "nonzero_pixels": 636,
+     "pixel_sha256": "6a60a752dd4e10d1c40ed63be1dc909ae4fa7f55bb622651f62d1447da094d8f"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: PLAYFIELD VUK | YEL-VIO VIO-YEL #4L",
+     "label": "Coil Test, entry 7 #4L",
+     "nonzero_pixels": 750,
+     "pixel_sha256": "706e4570c1f6913c7a86ee5018061070a0c28b17ad6c524956799ceb7cb4f31b"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: POPS X3, INSERT X1 | ORG BLK-YEL #4R",
+     "label": "Coil Test, entry 8 #4R",
+     "nonzero_pixels": 729,
+     "pixel_sha256": "4e8df39d008597f1a44a0189b8805659739bc8cef9c59775b62d25cb8834dc8f"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: SUPER VUK | YEL-VIO #5L",
+     "label": "Coil Test, entry 9 #5L",
+     "nonzero_pixels": 570,
+     "pixel_sha256": "0ef707b1d4aec67ecbff2bb8552174817e66310b37f90f5a57642db07b1100c4"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: PLFD X2, RAMP X2 | ORG BLK-GRN #5R",
+     "label": "Coil Test, entry 10 #5R",
+     "nonzero_pixels": 714,
+     "pixel_sha256": "399871e0825fad1a7d96e416e6a3d598e67e1f410f2542bdb267ce4637f32ca4"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: ROCKY INSERT | BRN VIO-BLU #6L",
+     "label": "Coil Test, entry 11 #6L",
+     "nonzero_pixels": 705,
+     "pixel_sha256": "9eba6ea623bbbd458e095aa97f4af0774bf89f6b0f348c5db636c98246f862c7"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: DROPS X3, INSERT X1 | ORG BLK-BLU #6R",
+     "label": "Coil Test, entry 12 #6R",
+     "nonzero_pixels": 766,
+     "pixel_sha256": "924809b5ecb5cf97e7ccd33b94ed0ae16e74d487f6e94e9eb0ea30009bac85f7"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: RHINO INSERT | BRN VIO-BLK #7L",
+     "label": "Coil Test, entry 13 #7L",
+     "nonzero_pixels": 705,
+     "pixel_sha256": "6e3bfb7833af6d00269257fd6a2395ca84fb78410a08166d5d9f71f2281b74fa"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: PLFD X3, 1 TOP | ORG BLK-VIO #7R",
+     "label": "Coil Test, entry 14 #7R",
+     "nonzero_pixels": 642,
+     "pixel_sha256": "c31f7726c18638ad90775793399146298aa132b710c5ae5907917061039f722e"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: KNOCKER | BRN VIO-GRY #8L",
+     "label": "Coil Test, entry 15 #8L",
+     "nonzero_pixels": 631,
+     "pixel_sha256": "13c84cfd8d5d4fb5e51b64355e92bb4eec2d27adbd876f3a0f63d02b59f2256a"
+    },
+    {
+     "active_solenoid_addresses": [
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | FL: PLFD X2, INSERT X2 | ORG BLK-GRY #8R",
+     "label": "Coil Test, entry 16 #8R",
+     "nonzero_pixels": 738,
+     "pixel_sha256": "71bcf3d875b03624d2ccd6c3eade8508a38a0d05d57a542bd5425d0f17054c77"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | RELAY: SAW MOTOR | RED BRN-BLK #09",
+     "label": "Coil Test, entry 17 #09",
+     "nonzero_pixels": 717,
+     "pixel_sha256": "68a086711e86697b61b5f29d33853aa917449b7cf1e23fe3435e5fc2a918b38f"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | RELAY: G.I. RELAY | RED BRN-ORG #11",
+     "label": "Coil Test, entry 18 #11",
+     "nonzero_pixels": 675,
+     "pixel_sha256": "52035fb2b771227cc0c6137758c7fe7121bf24dfeee9f08cad7bf677c60c2dcc"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: RAMP DIVERTER | RED BRN-YEL #12",
+     "label": "Coil Test, entry 19 #12",
+     "nonzero_pixels": 747,
+     "pixel_sha256": "a8826ca483d06f0154f346d6ed2041491ec6b1af6e590c690b74b1dbb2cadf47"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: PLAYFIELD DIVERTER | RED BRN-GRN #13",
+     "label": "Coil Test, entry 20 #13",
+     "nonzero_pixels": 841,
+     "pixel_sha256": "b5485ad7800e5ad5e425157f911226ad9eb7108109cc208684d74cac9605a39f"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: TOP CONTROL GATE | RED BRN-BLU #14",
+     "label": "Coil Test, entry 21 #14",
+     "nonzero_pixels": 781,
+     "pixel_sha256": "668dc89ad4f6cd8d3cf29c7cd96a7484b51c7937dc321e38b1e0d74539823d64"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: DROP TARGET | RED BRN-VIO #15",
+     "label": "Coil Test, entry 22 #15",
+     "nonzero_pixels": 703,
+     "pixel_sha256": "9eaa08f357fe587893b0df0cc9626daf84166e706b8034b0cdb4443fb5a52b22"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: BALL LAUNCHER | VIO-YEL #16",
+     "label": "Coil Test, entry 23 #16",
+     "nonzero_pixels": 659,
+     "pixel_sha256": "3c6e46f259f0143e49c18c8bdc826fc1c47fc0c4044e93b6c4df6fdfb1f82176"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: LEFT POP | RED BLU-BRN #17",
+     "label": "Coil Test, entry 24 #17",
+     "nonzero_pixels": 632,
+     "pixel_sha256": "886db7bf3c31a50b3150e9bef29556e6057530d837de44b01477523a2f82d396"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: CENTER POP | RED BLU-RED #18",
+     "label": "Coil Test, entry 25 #18",
+     "nonzero_pixels": 682,
+     "pixel_sha256": "2e44aa5f16756f40b2fa7d3a89e640b342711aa4b20286a5ca7f24bbbdbd1de7"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: RIGHT POP | RED BLU-ORN #19",
+     "label": "Coil Test, entry 26 #19",
+     "nonzero_pixels": 655,
+     "pixel_sha256": "757d219135f023f364e406b159d399db65b829a9233962aec9276b144833a30b"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: LEFT SLING | RED BLU-YEL #20",
+     "label": "Coil Test, entry 27 #20",
+     "nonzero_pixels": 655,
+     "pixel_sha256": "8a358bb4094604436d2ca8b132fc96c8f53e2b4d2a6536fe253bd2eaebda1ed9"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: RIGHT SLING | RED BLU-GRN #21",
+     "label": "Coil Test, entry 28 #21",
+     "nonzero_pixels": 688,
+     "pixel_sha256": "cf96c212aaed80d1293844fdbeefb6a341cc192554496c0a763418a8029585d0"
+    },
+    {
+     "active_solenoid_addresses": [
+      10,
+      23
+     ],
+     "display_index": 0,
+     "interpreted_text": "-COIL TEST- | COIL: LASER KICK | VIO-YEL #22",
+     "label": "Coil Test, entry 29 #22",
+     "nonzero_pixels": 584,
+     "pixel_sha256": "45339d68d6f5767428f26c38a831a5c60d8b2005dde2cd3574d659f0ee1b5caa"
+    }
+   ],
+   "lamp_addresses_seen": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+   ],
+   "runs": {
+    "active-switches": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 10,
+       "matched_text": "ACTIVE SWITCH TEST"
+      }
+     ],
+     "solenoid_addresses_seen": [
+      11,
+      23,
+      45,
+      46,
+      47,
+      48
+     ]
+    },
+    "coil-test-fire": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 17,
+       "matched_text": "COIL TEST"
+      }
+     ],
+     "solenoid_addresses_seen": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      45,
+      46
+     ]
+    },
+    "cycling-coils": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 16,
+       "matched_text": "CYCLING COILS"
+      }
+     ],
+     "ordered_solenoid_on_sequence": [
+      1,
+      25,
+      2,
+      26,
+      3,
+      27,
+      4,
+      28,
+      5,
+      29,
+      6,
+      30,
+      7,
+      31,
+      8,
+      32,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+     ],
+     "solenoid_addresses_seen": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "cycling-flashers": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 15,
+       "matched_text": "CYCLING FLASHERS"
+      }
+     ],
+     "ordered_solenoid_on_sequence": [
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ],
+     "solenoid_addresses_seen": [
+      10,
+      11,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "diagnostic-tour": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 1,
+       "matched_text": "DIAGNOSTICS"
+      },
+      {
+       "after_service_pulses": 2,
+       "matched_text": "SERVICE CREDITS"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "PLAYFIELD STATUS"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "BURN IN TIME"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "SPEAKER TEST"
+      },
+      {
+       "after_service_pulses": 2,
+       "matched_text": "LASER KICK TEST"
+      },
+      {
+       "after_service_pulses": 2,
+       "matched_text": "ACTIVE SWITCH TEST"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "ALL LAMPS ON"
+      },
+      {
+       "after_service_pulses": 2,
+       "matched_text": "ROW LAMPS ON"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "COLUMN LAMPS ON"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "LAMP TEST"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "CYCLING FLASHERS"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "CYCLING COILS"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "COIL TEST"
+      },
+      {
+       "after_service_pulses": 1,
+       "matched_text": "DISPLAY VERSION"
+      }
+     ],
+     "solenoid_addresses_seen": [
+      1,
+      10,
+      11,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "game-switches": {
+     "diagnostic_checkpoints": [],
+     "named_action_observations": [
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        44
+       ],
+       "input_address": 44,
+       "input_kind": "switch",
+       "label": "round 1: close switched-solenoid switch 44 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        17
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        45
+       ],
+       "input_address": 45,
+       "input_kind": "switch",
+       "label": "round 1: close switched-solenoid switch 45 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        18
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        46
+       ],
+       "input_address": 46,
+       "input_kind": "switch",
+       "label": "round 1: close switched-solenoid switch 46 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        19
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        30
+       ],
+       "input_address": 30,
+       "input_kind": "switch",
+       "label": "round 1: close switched-solenoid switch 30 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        20
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        38
+       ],
+       "input_address": 38,
+       "input_kind": "switch",
+       "label": "round 1: close switched-solenoid switch 38 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        21
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        44
+       ],
+       "input_address": 44,
+       "input_kind": "switch",
+       "label": "round 2: close switched-solenoid switch 44 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        17
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        45
+       ],
+       "input_address": 45,
+       "input_kind": "switch",
+       "label": "round 2: close switched-solenoid switch 45 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        18
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        46
+       ],
+       "input_address": 46,
+       "input_kind": "switch",
+       "label": "round 2: close switched-solenoid switch 46 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        19
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        30
+       ],
+       "input_address": 30,
+       "input_kind": "switch",
+       "label": "round 2: close switched-solenoid switch 30 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        20
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        38
+       ],
+       "input_address": 38,
+       "input_kind": "switch",
+       "label": "round 2: close switched-solenoid switch 38 for 100 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        21
+       ]
+      }
+     ],
+     "solenoid_addresses_seen": [
+      2,
+      10,
+      11,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "hat-targets": {
+     "diagnostic_checkpoints": [],
+     "note": "Lamp states 57-60 after each hit are in the curator facts; flash-lamp pulses during the hits belong to the ROM's light shows.",
+     "solenoid_addresses_seen": [
+      2,
+      10,
+      11,
+      16,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "hat-trick-award": {
+     "diagnostic_checkpoints": [],
+     "note": "The host held the VUK switch 52 closed from the ball's arrival until the ROM fired 4, and opened it at once. Times are host-clock seconds between the harness's switch and solenoid callbacks, rounded to 0.1 s, so a loaded host can stretch them; the per-award figures are in the curator facts.",
+     "solenoid_addresses_seen": [
+      2,
+      3,
+      4,
+      7,
+      10,
+      11,
+      13,
+      16,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "lamp-test": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 14,
+       "matched_text": "LAMP TEST"
+      }
+     ],
+     "solenoid_addresses_seen": [
+      11,
+      23
+     ]
+    },
+    "laser-kick-test": {
+     "diagnostic_checkpoints": [
+      {
+       "after_service_pulses": 8,
+       "matched_text": "LASER KICK TEST"
+      }
+     ],
+     "named_action_observations": [
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        32
+       ],
+       "input_address": 32,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 32 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        22
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        40
+       ],
+       "input_address": 40,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 40 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        10
+       ],
+       "input_address": 10,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 10 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        13
+       ],
+       "input_address": 13,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 13 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        14
+       ],
+       "input_address": 14,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 14 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        29
+       ],
+       "input_address": 29,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 29 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        5
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        52
+       ],
+       "input_address": 52,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 52 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "observed",
+       "transitioned_solenoid_addresses": [
+        4
+       ]
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        30
+       ],
+       "input_address": 30,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 30 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        38
+       ],
+       "input_address": 38,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 38 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        44
+       ],
+       "input_address": 44,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 44 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        45
+       ],
+       "input_address": 45,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 45 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        46
+       ],
+       "input_address": 46,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 46 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        31
+       ],
+       "input_address": 31,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 31 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        39
+       ],
+       "input_address": 39,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 39 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        37
+       ],
+       "input_address": 37,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 37 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        22
+       ],
+       "input_address": 22,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 22 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        23
+       ],
+       "input_address": 23,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 23 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        24
+       ],
+       "input_address": 24,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 24 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      },
+      {
+       "active_solenoid_addresses": [],
+       "host_stimulus_switch_addresses": [
+        9
+       ],
+       "input_address": 9,
+       "input_kind": "switch",
+       "label": "Laser Kick Test: close public switch 9 for 1500 ms",
+       "observed_switch_addresses": [],
+       "result": "no_matching_transition",
+       "transitioned_solenoid_addresses": []
+      }
+     ],
+     "solenoid_addresses_seen": [
+      4,
+      5,
+      11,
+      22,
+      23
+     ]
+    },
+    "nell-expires": {
+     "diagnostic_checkpoints": [],
+     "note": "The host held each drop target switch closed while its target was down and released all five about 3 s after the bank was completed, so the reset coil 15 retried while they stayed closed. Relay 9 timings are in the curator facts.",
+     "solenoid_addresses_seen": [
+      2,
+      9,
+      10,
+      11,
+      15,
+      16,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "save-nell": {
+     "diagnostic_checkpoints": [],
+     "note": "The host held each drop target switch closed while its target was down and released all five about 3 s after the bank was completed, so the reset coil 15 retried while they stayed closed. Relay 9 timings are in the curator facts.",
+     "solenoid_addresses_seen": [
+      2,
+      9,
+      10,
+      11,
+      15,
+      16,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
+    "trough-serve": {
+     "diagnostic_checkpoints": [],
+     "note": "The host moved the balls: a ball reached or left a switch only when the host wrote it, so the pulse counts measure the ROM's retries, not travel times. Counts exclude the light-show outputs (10, 11, 23 and 25-32).",
+     "solenoid_addresses_seen": [
+      1,
+      2,
+      10,
+      11,
+      16,
+      23,
+      27,
+      28,
+      29,
+      30
+     ]
+    }
+   },
+   "service_language": "US English 3.20 (display ROM A3.00)",
+   "solenoid_addresses_seen": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    45,
+    46,
+    47,
+    48
+   ]
+  },
+  "raw_runs": [
+   {
+    "action_count": 75,
+    "boot_wait_s": 8.0,
+    "name": "active-switches",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-active-switches.json",
+    "scenario_sha256": "9620b898b46a9a1a9a478bb9ef333cc79bc00e047adaf606eb470e75fe89d7b5",
+    "self_test_pulses": 10,
+    "sha256": "87c1b49e54bfec86dee4768de6ee9ab2e6dab834f888362e686ac7f4661e55de",
+    "snapshot_count": 148,
+    "watch_switches": [
+     -7,
+     -6
+    ]
+   },
+   {
+    "action_count": 69,
+    "boot_wait_s": 8.0,
+    "name": "lamp-test",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-lamp-test.json",
+    "scenario_sha256": "399f8a2de60ad0c771ff35bc585a360303c5e40b070d1460a27f8da1c7b3b3c9",
+    "self_test_pulses": 14,
+    "sha256": "aee06fc544e241f8bd4e3b6a9b1b73889a3c5ed71326cc605a16fcdea7be625f",
+    "snapshot_count": 70,
+    "watch_switches": [
+     -7,
+     -6,
+     3
+    ]
+   },
+   {
+    "action_count": 31,
+    "boot_wait_s": 8.0,
+    "name": "diagnostic-tour",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-diagnostic-tour.json",
+    "scenario_sha256": "5a119a20a0ad809d15ee1b8e18fefae6ea2d13f4ffc71f4fda44b4bfaab1fa4e",
+    "self_test_pulses": 19,
+    "sha256": "b532f774a81da11965cdad050aa6c69b25ffe568a74d35d4e6ee8707fb5a9826",
+    "snapshot_count": 32,
+    "watch_switches": [
+     -7,
+     -6,
+     3
+    ]
+   },
+   {
+    "action_count": 342,
+    "boot_wait_s": 8.0,
+    "name": "cycling-coils",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-cycling-coils.json",
+    "scenario_sha256": "fd1465a3d4d7bce79c15f0c85a38a4bb7a6f0756d9691a9636e8b4908974022d",
+    "self_test_pulses": 16,
+    "sha256": "7018f95ad67c26c56dc87070129a6278155912ec654f7f359a95727525ee2f2b",
+    "snapshot_count": 343,
+    "watch_switches": [
+     -7,
+     -6
+    ]
+   },
+   {
+    "action_count": 82,
+    "boot_wait_s": 8.0,
+    "name": "cycling-flashers",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-cycling-flashers.json",
+    "scenario_sha256": "33c45d7406f412f180ae21c67734379eb27e0ed9c8c8bf5cbdd5ac262b938b12",
+    "self_test_pulses": 15,
+    "sha256": "ac184a439117fc52376f9f1ebc5d04eed7448f561b7dd19759607cd982cf4ded",
+    "snapshot_count": 83,
+    "watch_switches": [
+     -7,
+     -6
+    ]
+   },
+   {
+    "action_count": 84,
+    "boot_wait_s": 8.0,
+    "name": "coil-test-fire",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-coil-test-fire.json",
+    "scenario_sha256": "628e2fc03c859c9565e8037deff90dfce6f1938f2a355c53b2b25d953f9ef0c8",
+    "self_test_pulses": 17,
+    "sha256": "65d2692b72d0ad07d8cbcdc54e3b33588cd5586c27012c951bf2d3426859496a",
+    "snapshot_count": 85,
+    "watch_switches": [
+     -7,
+     -6,
+     3,
+     82
+    ]
+   },
+   {
+    "action_count": 22,
+    "boot_wait_s": 8.0,
+    "name": "laser-kick-test",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-laser-kick-test.json",
+    "scenario_sha256": "9c56ae4389c1d0146f4569d4470dc5a7c0a96655be0433c47059d7de272a32b2",
+    "self_test_pulses": 8,
+    "sha256": "b00b36b711fa43b78a830371fa51ea852336f06230eb764779e0c79a5c59b063",
+    "snapshot_count": 42,
+    "watch_switches": [
+     -7,
+     -6,
+     3
+    ]
+   },
+   {
+    "action_count": 55,
+    "boot_wait_s": 8.0,
+    "name": "trough-serve",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-trough-serve.json",
+    "scenario_sha256": "2323e05944e35b8190808c8f738d3ab5db259a5055786542eb605ebf1e352b17",
+    "self_test_pulses": 0,
+    "sha256": "2855be967986c653484d20604b3a37c45a11ce953bc527e843d757f6367afd69",
+    "snapshot_count": 56,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   {
+    "action_count": 37,
+    "boot_wait_s": 8.0,
+    "name": "hat-targets",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-hat-targets.json",
+    "scenario_sha256": "c1db7ab0eb215b78ca68b89a9a94bb53cf18468425a4c57a1af539221ff7610d",
+    "self_test_pulses": 0,
+    "sha256": "d56a75aa61f25b071c3895b0a7c55358a9ba80bb979a1899526c277db1aa29a5",
+    "snapshot_count": 38,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     11,
+     12,
+     13,
+     14,
+     22,
+     23,
+     24
+    ]
+   },
+   {
+    "action_count": 35,
+    "boot_wait_s": 8.0,
+    "name": "game-switches",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-game-switches.json",
+    "scenario_sha256": "d093412bccc243a1993b73d5ca0eb7ce5ab8ea54d7a219e7a2a8c962213e6df9",
+    "self_test_pulses": 0,
+    "sha256": "38ef9c384b1964c54e81a3a48b247d2ddfaa42ae1763bd419358e14f6ed5bc96",
+    "snapshot_count": 36,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     11,
+     12,
+     13,
+     14,
+     30,
+     38,
+     44,
+     45,
+     46
+    ]
+   },
+   {
+    "action_count": 137,
+    "boot_wait_s": 8.0,
+    "name": "hat-trick-award",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-hat-trick-award.json",
+    "scenario_sha256": "22a9a25537d1cfeb9c4d7862300862e23ca3c8805adcdf27ae3f3d0375b16d30",
+    "self_test_pulses": 0,
+    "sha256": "b908b1961c0b18aa3183298e299b5483284ba86c0f675fd03e1a18823ac4293e",
+    "snapshot_count": 138,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     11,
+     12,
+     13,
+     14,
+     22,
+     23,
+     24,
+     33,
+     34,
+     52
+    ]
+   },
+   {
+    "action_count": 96,
+    "boot_wait_s": 8.0,
+    "name": "save-nell",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-save-nell.json",
+    "scenario_sha256": "3fe91ac649f3f1218fdf9b046a3bdbc9b38ccb012b5056ea93cfb21d40c087bc",
+    "self_test_pulses": 0,
+    "sha256": "56f2bfd287e1a24d8dd9af04395eab31e5aed39ff57613fc81cc6a11727a91d3",
+    "snapshot_count": 97,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     11,
+     12,
+     13,
+     14,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   {
+    "action_count": 111,
+    "boot_wait_s": 8.0,
+    "name": "nell-expires",
+    "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+    "scenario_path": "tools/harness-scenarios/data-east/rab-320-nell-expires.json",
+    "scenario_sha256": "5c8e47182c640140f627306d8662488a9dce16ff68a5e6e5c49639d67ef6cbd1",
+    "self_test_pulses": 0,
+    "sha256": "10e11417eb0cfbaaf8eacc9a5ab8c396937a51582d664c0c8204eb3646305ecc",
+    "snapshot_count": 112,
+    "watch_switches": [
+     3,
+     6,
+     9,
+     11,
+     12,
+     13,
+     14,
+     17,
+     18,
+     19,
+     20,
+     21,
+     41,
+     42,
+     43
+    ]
+   }
+  ],
+  "rom_archive_sha256": "efe4c395840d66c2b51b63f38686429d4889e9915f364f1f8471714800c2d788"
+ },
+ "source": {
+  "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+  "kind": "runtime_scenario",
+  "license": "NOASSERTION",
+  "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths.",
+  "path": "external:pinmame-review-artifacts/adventures-of-rocky-and-bullwinkle-and-friends-1993/final/rab_320",
+  "quality": "observed",
+  "repository": "https://github.com/vpinball/pinmame",
+  "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+  "sha256": "5ebc9ac3c499bfb8fc7bbf7fe1ad4562cfae76932d9c4a2df99965757a2d6f9b"
+ },
+ "states": [],
+ "switches": [],
+ "version": 1
+}

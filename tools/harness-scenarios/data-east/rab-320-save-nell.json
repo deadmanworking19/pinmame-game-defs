@@ -1,0 +1,568 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game in play from a fresh state: the five drop targets 17-21 knocked down and reset twice (each switch held closed while its target is down and released after the reset coil 15 has fired), then one drop target hit about 10 s later. How the ROM drives the saw motor relay 9 for the Save Nell timer and its save. Only direct public switch writes; the host moves the balls and targets itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  11,
+  12,
+  13,
+  14,
+  17,
+  18,
+  19,
+  20,
+  21
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 17 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 18 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 19 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 20 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 1: drop target switch 21 closes as its target falls"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: all five down tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 17 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 18 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 19 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 20 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 1: drop target switch 21 opens as the bank is reset"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 1: bank reset tick 8"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 17 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 18 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 19 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 20 closes as its target falls"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 1,
+   "settle_s": 0.4,
+   "label": "bank 2: drop target switch 21 closes as its target falls"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: all five down tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 17,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 17 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 18,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 18 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 19,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 19 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 20,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 20 opens as the bank is reset"
+  },
+  {
+   "type": "set_switch",
+   "switch": 21,
+   "state": 0,
+   "settle_s": 0.02,
+   "label": "bank 2: drop target switch 21 opens as the bank is reset"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "bank 2: bank reset tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 12"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "Nell timer running tick 14"
+  },
+  {
+   "type": "pulse",
+   "switch": 19,
+   "hold_ms": 300,
+   "settle_s": 0.5,
+   "label": "save: drop target switch 19 closes as its target falls, then the bank resets"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "after the save tick 8"
+  }
+ ]
+}

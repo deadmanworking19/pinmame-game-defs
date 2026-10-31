@@ -1,43 +1,101 @@
-# Adventures of Rocky and Bullwinkle and Friends (Data East 1993)
+# The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
-
-This record was promoted from the generated catalog stub `stub.pinmame.rab_320` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+Status: **partial**. The full address map (switches 1-64, the two coin-door buttons, PinMAME's flipper column 81-88, Jumper W7, solenoids 1-50 and lamps 1-64) is named from the manual's printed tables and the ROM's own service tests, the 5 PinMAME drivers are grouped, and the mechanisms are described from the manual, the retained known-working table and in-game harness probes. The record stays partial for six reasons, each listed under "What would complete the record" below: the meaning of Jumper W7 and the identity of hat-target switches 22 and 24 (`input_semantics`, with the hat targets also an `unresolved_conflicts` entry), the CN3 printer lines 37-44 (`output_semantics`), the Green coin-door button's contact (`polarity`), the travel of Nell's log and the backbox Hat Trick figures (`mechanism_behavior`), and placements resting on one community table with the lamps, the G.I., the knocker and six of the eight flash-lamp groups unplaced (`spatial_placement`).
 
 ## Identity
 
-- PinMAME catalog: root driver `rab_320`, description "Adventures of Rocky and Bullwinkle and Friends, The (3.20)", manufacturer
-  "Data East", catalog year "1993".
-- OPDB record `G5vnL-MJP3y` (IPDB 23) names this machine "Adventures of Rocky and Bullwinkle and Friends"
-  (Data East, manufacture date 1993-02-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `rab_320`;
-  whether every listed driver really runs on this physical machine is unverified.
+- Data East Pinball, 1993, model 500-5522-01 (IPDB 23; OPDB G5vnL-MJP3y). IPDB records manufacture from February 1, 1993 to April 23, 1993, 5,500 units, design by Tim Seckel, the DataEast/Sega Version 3 board set, and a mechanical backbox animation in which Bullwinkle pulls Rocky, a rhino or a lion out of his hat.
+- Hardware: Data East CPU Rev 3b with the 128x32 dot-matrix display (PinMAME `GEN_DEDMD32`, hardware generation 0x4000, `de_128x32DMD`, display board `SNDBRD_DEDMD32`, sound board `SNDBRD_DE2S`).
+- One physical machine. The 5 drivers are firmware for the same hardware and share one game-data block (`INITGAMES11(rab, GEN_DEDMD32, de_128x32DMD, FLIP1516, SNDBRD_DE2S, SNDBRD_DEDMD32, S11_PRINTERLINE)`) and the three sound ROMs `rab.u7`, `rab.u17` and `rab.u21`:
+  - `rab_320`: 3.20, CPU `rabcpua.320`, display `rbdspa.300`. Clone-tree root, the set the retained table runs and every harness run used. Its Display Version screen reads `BULLWINKLE A3.00` and `5/24/1993`.
+  - `rab_130`: 1.30, CPU `rabcpua.130`, display `rbdspa.130`.
+  - `rab_110be`: 1.10 Belgian CPU `Rocky-Bull_1.10_Belgium-C5.bin` with the 1.30 display ROM `rbdspa.130`. PinMAME's comment says the Belgian CPU and an Italian display ROM came in one dump that was probably not meant to be used together, so it pairs the CPU with the 1.30 display.
+  - `rab_103it`: 1.03 Italian, CPU `rabcpu.103` (taken from the Spanish dump) with display `Rocky-Bull_1.03_Italian_Disp-rom0.bin`.
+  - `rab_103`: 1.03 Spanish, CPU `rabcpu.103`, display `rabdspsp.103`.
 
-## Drivers this record holds
+## Evidence
 
-- `rab_103` (1993, Data East, clone of `rab_320`).
-- `rab_103it` (1993, Data East, clone of `rab_320`).
-- `rab_110be` (1993, Data East, clone of `rab_320`).
-- `rab_130` (1993, Data East, clone of `rab_320`).
-- `rab_320` (1993, Data East).
+- The manual: IPDB's 1993 Data East scan `Data_East_1993_Adventures_of_Rocky_and_Bullwinkle_and_Friends_Full_Manual.pdf` (SHA-256 `1f50634e743bccf6276e170dcb5da05c92e5c4769a4650147338fab59b36a381`), image-only, retrieved from a Wayback capture because IPDB is Cloudflare-gated. Every cited table is transcribed by hand under `evidence/excerpts/` (switch matrix, lamp matrix, coil drivers and schematics, assemblies and features, and the flipper keys through the script library); OCR was used only to find pages.
+- The retained known-working table: cyberpez's `The Adventures of Rocky and Bullwinkle and Fiends (Data East 1993) 1.0.vpx` (sic, `Fiends`), SHA-256 `eb8806c40a3b1102ef7ee4d706dfb322dcc39b5909ae23b0132a7888f7971fa2`, extracted with vpxtool. Its embedded script (`cGameName = "rab_320"`) is the runtime-binding authority. Two scripts from the pinned community corpus corroborate it: the same lineage's v1.06 (`cGameName = "rab_320"`, the same solenoid map) and an independent lineage, Zedonius's `FS Ver. 0.96` (`Rocky & Bullwinkle And Friends 1.0.vbs`), which binds the same addresses with different code.
+- The ROM's own service tests, run by the LibPinMAME harness on 3.20 from fresh state directories, with only direct public switch writes and every cited DMD frame read by a curator and pinned by its pixel digest: the Active Switch Test of every switch address, the single-lamp test, Cycling Coils, Cycling Flashers, the Coil Test fired entry by entry, the Laser Kick Test, a diagnostics tour, a game start with a ball served and drained, and five in-game probes (the hat targets, the switched-solenoid switches, four Hat Trick awards, a saved and an unsaved Save Nell timer). The compact bundle is `evidence/runtime/data-east/adventures-of-rocky-and-bullwinkle-and-friends-rab_320-service-tests.json`; the raw runs stay under the working root behind a canonical manifest.
+- Pinned PinMAME (`46e1a01a`): `degames.c` (the five drivers), `s11.c`/`s11.h` (the Data East board), `core.c`/`core.h` (public address bands, flipper handling).
 
-## PinMAME source contract (candidate)
+## Address model
 
-- The pinned PinMAME source declares `rab_320` at `src/wpc/degames.c:930` with machine module `de_mDEDMD32S2A`; the definition declares controller platform `pinmame.dataeast` from it.
+### Switches
 
-## VPX script candidates (candidate)
+- The 8 x 8 matrix is **column-major**: public address = (column - 1) x 8 + row, exactly the number the manual prints in each chart cell. Column drives Q55 down to Q48 on CN8, row returns on CN10.
+- 1-7 are the cabinet column: Plumb Tilt, 4th Coin, Credit Button (Start), Right, Center and Left Coin, Slam Tilt. 9 is the cabinet Launch Button. 8, 51 and 53-64 are printed Not Used and the ROM names them NOT USED.
+- The coin-door buttons are outside the matrix: **-7** is the Black Advance button and **-6** the Green Up/Down button (`DE_SWADVANCE`, `DE_SWUPDN`). s11.c hands the PIA `!core_getSw(DE_SWADVANCE)` but `core_getSw(DE_SWUPDN)` uncomplemented, and PinMAME's port declares the Green button as a toggle.
+- Polarity: the matrix chart marks no opto or normally closed position, and with every public switch at 0 the Active Switch Test reads `NONE`, so every fitted matrix contact rests open and public 1 is the closed contact. The Black button is a momentary push-button; public 1 is the pressed button. The Green button's contact is not drawn on any retained page, so its polarity stays open.
+- Jumper W7 is PinMAME's only DIP (`pinmame.input.dip` 0), read on PIA2 PA7. Its meaning is not printed anywhere in the retained sources.
 
-- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 95 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+### Flippers
 
-## What a curator must establish next
+- `FLIP1516 = FLIP_SWNO(15,16)` with no `FLIP_SOL`. With keyboard handling off, `core_updateSw` copies PinMAME's flipper-column bits **84** (left button) and **82** (right button) into matrix switches 15 and 16 on every update and fabricates the flipper outputs 45-48 from them while the game-on line 23 is on. A consumer drives 82 and 84, never 15 or 16: a host write to 15 or 16 is overwritten on the next update.
+- The ROM's Active Switch Test shows `LEFT FLIPPER` #15 for public 84 and `RIGHT FLIPPER` #16 for public 82, and nothing for 81, 83 or 85-88.
+- The manual's switch chart prints 15 and 16 as `Left EOS` and `Right EOS`; its parts table prints `Left Flip. Cab` and `Right Flip. Cab.` (part 180-5048-01, marked as cabinet switches). Both names denote what PinMAME publishes there, the cabinet button state, and PinMAME models no end-of-stroke switch on this platform, so this is not a conflict.
+- The retained table writes 15 and 16 itself from the flipper keys before handing the keys to the script library, which writes 82 and 84. PinMAME rewrites 15 and 16 from 84 and 82 on its next update, so the ROM may catch such a write for an instant but a consumer cannot hold it; drive 82 and 84.
+- The flipper coils (23-900, assemblies 500-5606-75 right and 500-5606-76 left) hang off the Solid State Flipper board. PinMAME synthesises 45/46 (right power/hold) and 47/48 (left power/hold) together from one button bit; they are not independently controllable and must not be modelled as two coils.
 
-Full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+### Solenoids
+
+- **1-8** are the left (coil) half of the **Left/Right relay** pair, **25-32** the right (flash-lamp) half of the same eight drives. The relay itself is solenoid **10**; pinned PinMAME publishes the right set at 25-32 (`muxSol` 10). The Coil Test turns 10 on before firing any right-hand entry, and Cycling Coils fires 1, 25, 2, 26 ... 8, 32 with 10 asserted before each of 25-32.
+- Left set, by the ROM's Coil Test names: 1 Outhole, 2 Trough Eject, 3 Lion Insert, 4 Playfield VUK, 5 Super VUK, 6 Rocky Insert, 7 Rhino Insert, 8 Knocker. 3, 6 and 7 are the three backbox Hat Trick figures; 3, 4 and 5 are 23-800 coils fired at 50 V through TIP 36C boosters on the PPB board.
+- Direct drives: 9 the Saw Motor Relay (Relay Board 520-5010-00, switching 28 VAC from BR2 to Nell's saw motor), 10 the Left/Right relay, 11 the G.I. relay, 12 the Ramp Diverter (27-1400), 13 the Playfield Diverter (23-800), 14 the Top Control Gate (31-1800), 15 the Drop Target reset (22-600), 16 the Ball Launcher (auto launch, through PPB booster Q1 at 50 V).
+- **There is no GI channel** on this platform: the general illumination is solenoid **11**, the G.I. relay on the power-supply board, which s11.c types `CORE_MODOUT_BULB_44_6_3V_AC_REV`, so the G.I. is lit while 11 is off. The retained table's `SolGi` turns its G.I. off while 11 is on.
+- 17-22 are the six CPU-controlled (switched) solenoids: 17-19 the Left, Center and Right Turbo Bumpers, 20/21 the Left and Right Slingshots, 22 the Laser Kick (the left-outlane kickback, 23-800 at 50 V). Data East's PIA permutation publishes them at 17 + ssSolNo; the ROM's Coil Test names 17-22 in that order, so the printed coil numbers are the public addresses.
+- 23 is the game-on line (`S11_GAMEONSOL`), 24 is unused, 33-36 always read 0 on this generation, 45-48 are the synthetic flipper outputs, 49-50 are simulator and reserved slots. There is no custom solenoid.
+- 37-44 are PIA2 port B, the CN3 printer data lines (`S11_PRINTERLINE`). None moved in any harness run, and no retained page shows anything on CN3, so their availability stays unknown.
+- Flash lamps 25-32, four No. 89 bulbs each (`CORE_MODOUT_BULB_89_32V_DC_S11`): 1R playfield x3 and insert x1, 2R the Hat Trick x4, 3R the VUK x4, 4R the pops x3 and insert x1, 5R playfield x2 and left ramp x2, 6R the drops x3 and insert x1, 7R playfield x3 and one more (the schematic says insert, the ROM `1 TOP`), 8R playfield x2 and insert x2. "Insert" is the backbox: the coil location drawing puts 1R, 4R, 6R, 7R and two 8R balloons in the backbox outline.
+
+### Lamps and display
+
+- Lamps 1-64 are a column-major 8 x 8 matrix (columns Q71 down to Q64 on CN7, rows Q72-Q79 on CN6), typed `CORE_MODOUT_BULB_44_18V_DC_S11`. 1-14 are the Spin & Win pie insert at the top right, 15 the Credit (Start) button lamp and 48 the Launch Button lamp. The single-lamp test lights exactly one lamp per address under the name the manual prints (33 reads `???`, the manual `WABAC ???`).
+- The manual's lamp drawing prints callout 16 twice (at the left ramp entrance and at the upper right above 54) and none for 53; only one lamp 16 is claimed. The chart and the ROM name 16 the Left Ramp Entrance and 53 the Right Ramp Entrance. The retained table fades a raised bulb at each ramp entrance but binds 16 to the right one and 53 to the left one, crossed against both; that is a table defect, stated on the two lamps.
+- The display is one 128x32 DMD.
+
+## What the ROM's service tests established
+
+- Every switch name and wire pair in the Active Switch Test agrees with the manual's chart except the hat targets 22 and 24 (below); the ROM spells ORN as `ORG`.
+- The Coil Test names all 29 entries (1L-8L, 1R-8R, 09 and 11-22; there is no entry 10) and fires exactly the matching public address. Its wire colours agree with the coil schematic except where noted on the devices: the schematic prints `BLK-RED` for drive 1's flash return and `BLK-GRN` for drive 6's, where the ROM shows `BLK-BRN` and `BLK-BLU`, and the ROM shows `BRN` as the supply of 6L and 7L where the schematic prints `WHT`.
+- The Laser Kick Test fires the Laser Kick 22 from the left outlane switch 32, the Super VUK 5 from switch 29 and the Playfield VUK 4 from switch 52.
+- In a game, closing the bumper switches 44, 45 and 46 fires 17, 18 and 19, and the slingshot switches 30 and 38 fire 20 and 21, so left, center and right pair across switches and coils.
+- Game start: with balls on 11-13 the ROM pulses the Trough Eject 2 repeatedly while the release position 13 stays closed and fires nothing while the ball waits on the shooter lane switch 14; the Launch Button 9 fires the auto launch 16. A drained ball on the outhole switch 10 gets the Outhole 1 pulsed while 10 stays closed, and once it reaches 11 the ROM serves the next ball with 2.
+
+## Mechanisms and recreation notes
+
+Timings below come from the harness runs, which stamp each switch and output callback with the host clock rather than emulated time (`docs/HARNESS.md`); treat them as approximate.
+
+- **Trough and outhole.** The Outhole Assembly (500-5082-00) kicks a drained ball from the outhole switch 10 into a three-ball trough (11 left, 12 center, 13 right; 13 is the release position), and the Ball Feed Assembly (Trough Eject, 500-5012-01) kicks the ball at 13 into the shooter lane (14). The host moved the balls in the probes, so the pulse counts there are the ROM's retries, not travel times.
+- **Auto launch.** The Ball Launch Assembly (500-5477-01) on drive 16 launches the ball from the shooter lane when the player presses the Launch Button 9. Adjustment 47 (Trigger Enabled) lets the button fire the launcher during the Bomb Fuse animation.
+- **Laser Kick.** The Kick Back Assembly (500-5080-00) on solenoid 22 kicks a ball back out of the left outlane (switch 32); the Laser Kick Test fires 22 from 32. The manual's feature text says return-lane rollovers raise the Laser Kick value and the right orbit relights and collects it. The retained table arms its LaserKick kicker only while 22 is on.
+- **Super VUK and Playfield VUK.** The Super VUK (500-5116-04) on drive 5 raises the ball from switch 29 on the left rail; in the retained table the Under Trough switch 37 sits in a subway entered from the playfield that delivers the ball there. The Vertical Up Kicker (500-5326-00) on drive 4 raises the ball from the Hat Trick hole (switch 52) at the upper left onto the VUK Ramp.
+- **Hat Trick.** Three stacked stand-ups on the left (switches 22-24, lamps 57-59) light Hat Trick (lamp 60) when all three are hit. While Hat Trick is lit, a ball rolling up the left orbit (33 then 34) is diverted into the hole by the Playfield Diverter 13: the ROM turns 13 on as the ball passes 33 and off 0.2-0.3 s after 52 closes. About 0.1 s after 34 closes the ROM energises one backbox figure coil (3 Lion, 6 Rocky or 7 Rhino), and the Playfield VUK 4 kicks the ball out about 2 s after 52 closes. On the first award of a figure the ROM held its coil about 1 s, then switched it on again for about 0.5 s starting just before the VUK fired; a repeated award of the same figure held it once for 0.3 s; awards 1 and 2 used the Lion (Jackpot lamp 54 flashing afterwards), awards 3 and 4 the Rhino (Rhino Bonus lamp 61). The manual's feature text says Rocky lights Extra Ball, Rhino starts the Rhino Bonus countdown and Lion starts the Jackpot; Rocky was not awarded in the probes. The figures' physical motion is not documented in any retained source; the retained table animates a figure up while its coil is on and down when it turns off.
+- **Save Nell.** Completing the five drop targets (17-21, Drop Target Assembly 500-5621-05, reset coil 15) advances a 5-4-3-2-1 value; when the lamps are all flashing the Nell timer starts. In the probes the ROM switched the saw-motor relay 9 on 0.2 s after the second completed bank and held it for the timer: 14.5 s until a drop-target hit saved Nell (the relay dropped 0.2 s after the hit), and 18.1 s when nothing was hit. Adjustment 51 (Any Drop Wins Nell) chooses between any drop target and the whole bank. The Nell's Log Assembly (500-5638-00) is a motor driving a saw disc through an O-ring belt and a gear rack under a log carrier; no switch reports its position, and how the carrier returns is not legible on the drawing. The two recreation lineages disagree: one swings the log back and forth while 9 is on and stops it in place when 9 turns off, the other moves it one way while 9 is on and back when 9 turns off.
+- **Drop target reset.** With the targets held down after a completed bank, the ROM pulsed the reset coil 15 three times; a recreation should raise the bank on each pulse and expect the ROM to retry while a switch stays closed.
+- **Ramp diverter, top gate.** The Ramp Diverter 12 (27-1400) and the Top Control Gate 14 (Gate Lift Coil 515-5711-00) are held outputs in the retained table: the diverter moves while 12 is on, and the gate stops being an obstacle while 14 is on.
+- **Turbo bumpers and slingshots.** Three Turbo Bumper Assemblies (500-5227-00) and two Sling Shot Assemblies (500-5226-00). The center bumper is the lower one between the other two: the manual's switch drawing puts 46 on the upper right bumper and the ROM names 45 CENTER and 46 RIGHT. The retained table pulses 45 from its upper right bumper and 46 from the lower one, swapped against both; that is a table defect and is stated on the devices, not a conflict.
+- **BOMB stand-ups** 25-28 (small targets "B", "O", "M", "B") with lamps 25-28, and the three top lanes 41-43 with lamps 49-51.
+
+## Disagreements and the authority followed
+
+- **Hat targets 22 and 24 (conflict).** The manual's switch chart, its parts table and its switch-location drawing put 22 at the bottom and 24 at the top of the three hat targets. The ROM's Active Switch Test names 22 `TOP HAT TARGET` and 24 `BOTTOM HAT TARGET`, the game lights the Top Hat Target lamp 57 when 22 closes and the Middle Hat Target lamp 58 for 23, and 24, hit last, completes the set (57-59 change and Hat Trick 60 lights), while the retained table pulses 22 from its top target. Labels follow the ROM and the placements follow the table, both marked conflicted. Resolution path: on a physical machine, hit the top hat target in the Active Switch Test and read the switch number, or trace the WHT-BLU row-6 return (CN10-3) to the target it reaches.
+- Wiring-detail disagreements stay in the device notes: the knocker and auto-launch coil types (23-800 on the coil schematic, 22-600 on the wiring diagram), the auto launch's booster wire and pin order, the Laser Kick's control wire (BLU-BLK on two pages, WHT-BRN on the special-coil diagram), the flash-return and supply colours where the ROM disagrees with the schematic, and `Turbo` against `THUMPER`.
+- The retained table's bumper switch swap is a table defect and is recorded on the bumper devices.
+
+## Spatial
+
+- 59 placements, all from the retained table's script-bound objects, normalised against its 952 x 2162 playfield, every one `observed` (22 and 24 `conflicted`). Primitives (the saw blade, both diverters and the flash-lamp bulbs) are placed at the centre of their world-space mesh bounds from a `vpxtool export obj --units vpu` export, never at their stored positions; the diverters' stored positions are their pivots.
+- A lamp or flash-lamp placement needs a bulb. Every flash-lamp Light in the table is a bulb-mode Light that draws no bulb (`show_bulb_mesh` false), so none is a socket on its own. The table models three upright bulbs as primitives (base, filament and glass), which its script fades with 3R and 5R, each with a bound Light inside its glass: flash lamps 27 (3R) and 29 (5R) are placed on those bulbs, one and two of the four bulbs the schematic counts for each.
+- Not placed: the 62 playfield lamps (the table binds only insert overlays, primitives and sprites to them, and the two raised ramp-entrance bulbs it fades are bound crossed against the chart and the ROM); flash lamps 25 (1R), 28 (4R), 30 (6R) and 32 (8R), whose Lights draw no bulb and sit on no modelled bulb, and 26 (2R) and 31 (7R), which the table renders only with insert overlays; and the G.I. relay 11, whose fade drives 84 bulb-mode Lights of which only two draw a bulb, with no retained page counting the G.I. sockets. Cabinet and backbox devices (the cabinet switches, the Credit and Launch Button lamps, the backbox figure coils 3, 6 and 7 and the relay 10) carry a `cabinet_or_service` record. The knocker 8 is unplaced: the coil location drawing carries no 8L balloon and no other retained page locates it.
+- The drop-target reset coil 15 is projected onto the middle drop target.
+
+## What would complete the record
+
+1. **Hat targets 22/24**: the physical check in the conflict's resolution path.
+2. **Jumper W7**: a Data East CPU Rev 3b board document or service note stating what W7 selects.
+3. **CN3 lines 37-44**: a page or board photo showing whether anything is fitted to CN3 on this machine; until then 37-44 stay unknown.
+4. **Green button -6**: the coin-door switch circuit (Interlock and diagnostics switch set) showing which position closes the contact.
+5. **Mechanism behaviour**: Nell's log travel, limits and return, and the backbox Hat Trick figures' motion and return, from the assembly drawings at a legible resolution, a service bulletin or footage of a working machine.
+6. **Spatial**: a callout check of every placement against the manual's switch, lamp and coil location drawings, or a second independent table lineage (an older independent table is retained locally as a candidate but not extracted or used), plus socket positions for the lamps, the G.I., the knocker and flash lamps 1R, 2R, 4R, 6R, 7R and 8R and for the bulbs of 3R and 5R that the table does not model. The lamp-location drawing can settle which ramp-entrance bulb is 16 and which is 53.

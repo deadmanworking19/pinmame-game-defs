@@ -1,0 +1,808 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game in play from a fresh state, then four Hat Trick awards: each completes the hat targets 22, 23 and 24, rolls the ball over the left orbit 33 and 34 and drops it into the hole (VUK switch 52 held closed until the ROM fires the playfield VUK 4), followed by 10 s of half-second snapshots. Records how the ROM drives the backbox hat coils 3, 6 and 7 around the award. Only direct public switch writes; the host moves the balls itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  11,
+  12,
+  13,
+  14,
+  22,
+  23,
+  24,
+  33,
+  34,
+  52
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 1: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 1: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 1: the ball hits hat target switch 24"
+  },
+  {
+   "type": "pulse",
+   "switch": 33,
+   "hold_ms": 60,
+   "settle_s": 0.15,
+   "label": "award 1: the ball rolls over the left orbit bottom 33"
+  },
+  {
+   "type": "pulse",
+   "switch": 34,
+   "hold_ms": 60,
+   "settle_s": 0.3,
+   "label": "award 1: the ball rolls over the left orbit top 34"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "award 1: the ball drops into the hat trick hole, VUK switch 52 closes"
+  },
+  {
+   "type": "wait_until_output",
+   "channel": "solenoid",
+   "addresses": [
+    4
+   ],
+   "timeout_s": 30.0,
+   "active_only": true,
+   "label": "award 1: wait for the playfield VUK 4 to kick"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "award 1: the kicked ball leaves the VUK, 52 opens"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 12"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 14"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 15"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 16"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 17"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 18"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 19"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 1: after the kick tick 20"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 2: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 2: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 2: the ball hits hat target switch 24"
+  },
+  {
+   "type": "pulse",
+   "switch": 33,
+   "hold_ms": 60,
+   "settle_s": 0.15,
+   "label": "award 2: the ball rolls over the left orbit bottom 33"
+  },
+  {
+   "type": "pulse",
+   "switch": 34,
+   "hold_ms": 60,
+   "settle_s": 0.3,
+   "label": "award 2: the ball rolls over the left orbit top 34"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "award 2: the ball drops into the hat trick hole, VUK switch 52 closes"
+  },
+  {
+   "type": "wait_until_output",
+   "channel": "solenoid",
+   "addresses": [
+    4
+   ],
+   "timeout_s": 30.0,
+   "active_only": true,
+   "label": "award 2: wait for the playfield VUK 4 to kick"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "award 2: the kicked ball leaves the VUK, 52 opens"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 12"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 14"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 15"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 16"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 17"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 18"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 19"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 2: after the kick tick 20"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 3: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 3: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 3: the ball hits hat target switch 24"
+  },
+  {
+   "type": "pulse",
+   "switch": 33,
+   "hold_ms": 60,
+   "settle_s": 0.15,
+   "label": "award 3: the ball rolls over the left orbit bottom 33"
+  },
+  {
+   "type": "pulse",
+   "switch": 34,
+   "hold_ms": 60,
+   "settle_s": 0.3,
+   "label": "award 3: the ball rolls over the left orbit top 34"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "award 3: the ball drops into the hat trick hole, VUK switch 52 closes"
+  },
+  {
+   "type": "wait_until_output",
+   "channel": "solenoid",
+   "addresses": [
+    4
+   ],
+   "timeout_s": 30.0,
+   "active_only": true,
+   "label": "award 3: wait for the playfield VUK 4 to kick"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "award 3: the kicked ball leaves the VUK, 52 opens"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 12"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 14"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 15"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 16"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 17"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 18"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 19"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 3: after the kick tick 20"
+  },
+  {
+   "type": "pulse",
+   "switch": 22,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 4: the ball hits hat target switch 22"
+  },
+  {
+   "type": "pulse",
+   "switch": 23,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 4: the ball hits hat target switch 23"
+  },
+  {
+   "type": "pulse",
+   "switch": 24,
+   "hold_ms": 120,
+   "settle_s": 2.0,
+   "label": "award 4: the ball hits hat target switch 24"
+  },
+  {
+   "type": "pulse",
+   "switch": 33,
+   "hold_ms": 60,
+   "settle_s": 0.15,
+   "label": "award 4: the ball rolls over the left orbit bottom 33"
+  },
+  {
+   "type": "pulse",
+   "switch": 34,
+   "hold_ms": 60,
+   "settle_s": 0.3,
+   "label": "award 4: the ball rolls over the left orbit top 34"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "award 4: the ball drops into the hat trick hole, VUK switch 52 closes"
+  },
+  {
+   "type": "wait_until_output",
+   "channel": "solenoid",
+   "addresses": [
+    4
+   ],
+   "timeout_s": 30.0,
+   "active_only": true,
+   "label": "award 4: wait for the playfield VUK 4 to kick"
+  },
+  {
+   "type": "set_switch",
+   "switch": 52,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "award 4: the kicked ball leaves the VUK, 52 opens"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 12"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 14"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 15"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 16"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 17"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 18"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 19"
+  },
+  {
+   "type": "wait",
+   "seconds": 0.5,
+   "label": "award 4: after the kick tick 20"
+  }
+ ]
+}

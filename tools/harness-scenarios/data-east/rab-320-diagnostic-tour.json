@@ -1,0 +1,260 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 diagnostics tour: every titled test reached by a visually read DMD title checkpoint, in the ROM's own order, with a settled snapshot on each. The untitled DMD test pattern, the FOR SERVICE CALL screen and the SWITCH TEST screen (whose title is part of ACTIVE SWITCH TEST, so it cannot be a substring checkpoint) are passed by the Black presses between titles.",
+ "watch_switches": [
+  -7,
+  -6,
+  3
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": -6,
+   "state": 1,
+   "settle_s": 0.6,
+   "label": "hold the Green FORWARD/REVERSE input high (Reverse), which makes the first Black press enter Diagnostics"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "DIAGNOSTICS"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the DIAGNOSTICS title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "DIAGNOSTICS settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "SERVICE CREDITS"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the SERVICE CREDITS title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "SERVICE CREDITS settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "PLAYFIELD STATUS"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the PLAYFIELD STATUS title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "PLAYFIELD STATUS settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "BURN IN TIME"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the BURN IN TIME title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "BURN IN TIME settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "SPEAKER TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the SPEAKER TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "SPEAKER TEST settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "LASER KICK TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the LASER KICK TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "LASER KICK TEST settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "ACTIVE SWITCH TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the ACTIVE SWITCH TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "ACTIVE SWITCH TEST settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "ALL LAMPS ON"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the ALL LAMPS ON title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "ALL LAMPS ON settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "ROW LAMPS ON"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the ROW LAMPS ON title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "ROW LAMPS ON settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "COLUMN LAMPS ON"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the COLUMN LAMPS ON title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "COLUMN LAMPS ON settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "LAMP TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the LAMP TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "LAMP TEST settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "CYCLING FLASHERS"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the CYCLING FLASHERS title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "CYCLING FLASHERS settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "CYCLING COILS"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the CYCLING COILS title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "CYCLING COILS settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "COIL TEST"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the COIL TEST title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "COIL TEST settled"
+  },
+  {
+   "type": "pulse_until_display",
+   "switch": -7,
+   "texts": [
+    "DISPLAY VERSION"
+   ],
+   "hold_ms": 250,
+   "settle_s": 2.0,
+   "max_pulses": 40,
+   "label": "advance with Black until the DISPLAY VERSION title"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.5,
+   "label": "DISPLAY VERSION settled"
+  }
+ ]
+}

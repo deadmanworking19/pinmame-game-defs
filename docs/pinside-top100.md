@@ -134,7 +134,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 183 | Royal Rumble (WWF) | `data-east.wwf-royal-rumble.1994` | 19% |
 | 184 | Alien Poker | `williams.alien-poker.1980` | 13% |
 | 185 | Elvis | `stern.elvis.2004` | 94% |
-| 186 | The Adventures of Rocky and Bullwinkle and Friends | `data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993` | 19% |
+| 186 | The Adventures of Rocky and Bullwinkle and Friends | `data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993` | 63% |
 | 187 | Terminator 3: Rise of the Machines | `stern.terminator-3-rise-of-the-machines.2003` | 88% |
 | 188 | Xenon | `bally.xenon.1980` | 19% |
 | 189 | Catacomb | `stern.catacomb.1981` | 19% |

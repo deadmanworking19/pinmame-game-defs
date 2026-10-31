@@ -1,0 +1,323 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game start from a fresh state with three balls resting on trough switches 11-13: two coins and Start, then what the ROM fires for the trough, the shooter lane, the Launch Button and a drain to the outhole. Only direct public switch writes; the host moves the balls itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 8"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 9"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 10"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 8"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 8"
+  },
+  {
+   "type": "set_switch",
+   "switch": 10,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Drain: the ball reaches the outhole 10"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball on outhole tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball on outhole tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball on outhole tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball on outhole tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball on outhole tick 5"
+  },
+  {
+   "type": "set_switch",
+   "switch": 10,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Drain: the ball leaves the outhole"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Drain: the ball reaches trough position 11"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 6"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 7"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after drain tick 8"
+  }
+ ]
+}

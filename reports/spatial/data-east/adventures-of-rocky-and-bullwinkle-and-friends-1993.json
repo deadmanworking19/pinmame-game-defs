@@ -1,0 +1,928 @@
+{
+  "blockers": [
+    "Every placement comes from one community table (cyberpez's 1.0) and none was checked against the manual's switch, lamp or coil location drawings, so all of them stay observed. Promotion needs a callout check of those drawings or a second, independent table lineage.",
+    "Hat targets 22 and 24 are placed on the retained table's top and bottom targets but stay conflicted: the manual prints 22 at the bottom and 24 at the top, the ROM the other way round (conflict hat-target-switch-order).",
+    "The 62 playfield lamps have no coordinate: the retained script binds only insert overlays, primitives and sprites to them, the raised bulbs it fades for 16 and 53 are bound crossed against the manual's chart and the ROM's names, and the lamp-location drawing was not used for placement.",
+    "Flash lamps 1R (25), 4R (28), 6R (30) and 8R (32) have no coordinate: the script fades only bulb-mode Lights that draw no bulb (show_bulb_mesh false) and sit on no modelled bulb, plus insert overlays and sprites. 2R (26) and 7R (31) have none either: the script binds only insert-overlay Lights to them.",
+    "Flash lamps 3R (27) and 5R (29) are placed on the three bulbs the table models as primitives, one and two of the four bulbs the schematic counts outside the backbox for each group; the rest of their bulbs have no coordinate.",
+    "The G.I. relay 11 has no coordinate: its fade drives 84 bulb-mode Lights of which only gi5a and gi6a draw a bulb, and no retained page counts or locates the G.I. bulbs, so no G.I. emitter survey was made.",
+    "The knocker 8 has no coordinate: page 28's coil location drawing carries no 8L balloon and no other retained page locates it.",
+    "The drop-target reset coil 15 is a projection onto the middle drop target."
+  ],
+  "conflicted_input_addresses": [
+    22,
+    24
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "coordinate_origins": {
+    "computed_centroids": [
+      "Wall LeftSlingShot (switch 30, solenoid 20)",
+      "Wall RightSlingShot (switch 38, solenoid 21)"
+    ],
+    "mesh_bounds_centres": [
+      "Primitive pBulbBase1 (solenoid 29)",
+      "Primitive pBulbBase2 (solenoid 29)",
+      "Primitive pBulbBase3 (solenoid 27)",
+      "Primitive pPFDiverter (solenoid 13)",
+      "Primitive pRampDiverter (solenoid 12)",
+      "Primitive pSawBlade (solenoid 9)"
+    ],
+    "object_centers": "every other placement uses its retained object's own stored center (Light, Kicker, Trigger, Bumper, Gate) or position (HitTarget)"
+  },
+  "excluded_object_classes": [
+    "Bulb-mode Lights that draw no bulb (show_bulb_mesh false) and sit on no modelled bulb, bound to flash lamps 1R, 3R, 4R, 5R, 6R and 8R: a light that sits on no bulb makes no socket.",
+    "Insert-overlay Lights (is_bulb_light false), insert primitives and Flasher sprites bound to lamps or flash lamps: they paint an insert or a glow and are not sockets.",
+    "The raised ramp-entrance bulbs pRbulb and pWBbulb: modelled bulbs, but bound to lamps 16 and 53 crossed against the chart and the ROM.",
+    "The 84 G.I. Lights, of which only gi5a and gi6a draw a bulb; no source counts the G.I. sockets.",
+    "Bulb Lights the script never binds to a lamp, such as the l1-l14 Lights on the spin-and-win surface.",
+    "The manual's switch, lamp and coil location drawings: read and transcribed, but not used for any coordinate."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1374,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "d5df345d6ca4c736a12f0ac5a6c80845a842d16f7985e14a5c377bc525c831f7",
+    "manifest_uri": "external:pinmame-vpx-sources/data-east/adventures-of-rocky-and-bullwinkle-and-friends-1993/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.rocky-and-bullwinkle-cyberpez-1-0",
+    "total_bytes": 131952476,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "data-east.adventures-of-rocky-and-bullwinkle-and-friends.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      15,
+      16,
+      82,
+      84
+    ],
+    "dip_switch": [
+      0
+    ],
+    "unused": [
+      8,
+      51,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      81,
+      83,
+      85,
+      86,
+      87,
+      88
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 15,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "observed_input_addresses": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52
+  ],
+  "observed_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 59,
+  "projections": [
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "The drop-target reset coil is projected onto the middle drop target t19, where the retained table plays its reset sound; the table models no coil."
+    }
+  ],
+  "resolved_input_addresses": [],
+  "resolved_output_bindings": [],
+  "source_hashes": {
+    "embedded_script_sha256": "09f43d857b0a97eb2c6c1384db91e5f2aee6ab55541fcdb64292a77f8b4eb464",
+    "manual_sha256": "1f50634e743bccf6276e170dcb5da05c92e5c4769a4650147338fab59b36a381",
+    "table_sha256": "eb8806c40a3b1102ef7ee4d706dfb322dcc39b5909ae23b0132a7888f7971fa2",
+    "world_obj_sha256": "561cf123e5c23d1a45c03ba2613586ca9fd52b17f9b1d8979c04a236f7055466"
+  },
+  "status": "observed",
+  "unplaced_input_addresses": [],
+  "unplaced_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "unresolved": [
+    {
+      "key": "lamp.1",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB1 and the Flasher sprite s2wF1; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.10",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB10 and the Flasher sprite s2wF10; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.11",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB11 and the Flasher sprite s2wF11; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.12",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB12 and the Flasher sprite s2wF12; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.13",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB13 and the Flasher sprite s2wF13; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.14",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB14 and the Flasher sprite s2wF14; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.15",
+      "reason": "cabinet button lamp: not on the playfield, and the script binds nothing to it"
+    },
+    {
+      "key": "lamp.16",
+      "reason": "ramp entrance lamp: the script fades the raised bulb primitive pRbulb and the Flasher sprite flasher16b, but it binds lamp 16 to the bulb at the right ramp entrance and 53 to the one at the left, crossed against the manual's chart, the lamp drawing's left-ramp callout 16 and the ROM's names (16 LEFT RAMP ENTRANCE, 53 RIGHT RAMP ENTRANCE); the drawing prints no 53, so neither bulb is placed until a drawing check settles which is which"
+    },
+    {
+      "key": "lamp.17",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.18",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.19",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.2",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB2 and the Flasher sprite s2wF2; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.20",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.21",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.22",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.23",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.24",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.25",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.26",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.27",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.28",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.29",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.3",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB3 and the Flasher sprite s2wF3; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.30",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.31",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.32",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.33",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.34",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.35",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.36",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.37",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.38",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.39",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.4",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB4 and the Flasher sprite s2wF4; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.40",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.41",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.42",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.43",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.44",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.45",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.46",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.47",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.48",
+      "reason": "cabinet button lamp: not on the playfield, and the script binds nothing to it"
+    },
+    {
+      "key": "lamp.49",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.5",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB5 and the Flasher sprite s2wF5; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.50",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.51",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.52",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.53",
+      "reason": "ramp entrance lamp: the script fades the raised bulb primitive pWBbulb and the Flasher sprite flasher16a, but it binds lamp 16 to the bulb at the right ramp entrance and 53 to the one at the left, crossed against the manual's chart, the lamp drawing's left-ramp callout 16 and the ROM's names (16 LEFT RAMP ENTRANCE, 53 RIGHT RAMP ENTRANCE); the drawing prints no 53, so neither bulb is placed until a drawing check settles which is which"
+    },
+    {
+      "key": "lamp.54",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.55",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.56",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.57",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.58",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.59",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.6",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB6 and the Flasher sprite s2wF6; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.60",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.61",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.62",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.63",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.64",
+      "reason": "insert lamp: the script binds only an insert-overlay Light (is_bulb_light false), which is never a socket"
+    },
+    {
+      "key": "lamp.7",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB7 and the Flasher sprite s2wF7; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.8",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB8 and the Flasher sprite s2wF8; no bulb is bound to the lamp"
+    },
+    {
+      "key": "lamp.9",
+      "reason": "spin-and-win pie lamp: the script binds only the primitive s2wB9 and the Flasher sprite s2wF9; no bulb is bound to the lamp"
+    },
+    {
+      "key": "solenoid.11",
+      "reason": "general illumination: the G.I. relay's fade drives the 84 bulb-mode Lights of TheGICollection, of which only gi5a and gi6a draw a bulb; no retained page counts or locates the G.I. sockets, so two bulbs of an uncounted string are not placed as a survey"
+    },
+    {
+      "key": "solenoid.25",
+      "reason": "flash lamps 1R: the script fades only the bulb-mode Lights f1a and f1b (show_bulb_mesh false, on no modelled bulb) and the insert overlay l1a"
+    },
+    {
+      "key": "solenoid.26",
+      "reason": "flash lamps 2R (hat trick): the script binds only the insert-overlay Lights l2a-l2d (is_bulb_light false) to 102, no bulb"
+    },
+    {
+      "key": "solenoid.28",
+      "reason": "flash lamps 4R: the script fades only the bulb-mode Light f4a (show_bulb_mesh false, on no modelled bulb) and the insert overlay l4a"
+    },
+    {
+      "key": "solenoid.30",
+      "reason": "flash lamps 6R: the script fades only the bulb-mode Lights f6a and f6b (show_bulb_mesh false, on no modelled bulb), the insert overlays l6a and l6b and the sprite f6c"
+    },
+    {
+      "key": "solenoid.31",
+      "reason": "flash lamps 7R: the script binds only the insert-overlay Lights l7a-l7c (is_bulb_light false) to 107, no bulb"
+    },
+    {
+      "key": "solenoid.32",
+      "reason": "flash lamps 8R: the script fades only the bulb-mode Light f8a (show_bulb_mesh false, on no modelled bulb) and the insert overlay l8a"
+    },
+    {
+      "key": "solenoid.8",
+      "reason": "knocker: the script only plays a sound on it (vpmSolSound Knocker) and the table models no knocker; the coil location drawing carries no 8L balloon"
+    }
+  ],
+  "version": 1,
+  "world_space_export": {
+    "command": "vpxtool export obj --units vpu <retained VPX>",
+    "sha256": "561cf123e5c23d1a45c03ba2613586ca9fd52b17f9b1d8979c04a236f7055466",
+    "uri": "external:pinmame-review-artifacts/adventures-of-rocky-and-bullwinkle-and-friends-1993/world-obj/The Adventures of Rocky and Bullwinkle and Fiends (Data East 1993) 1.0.obj",
+    "use": "x/y mesh bounds of every placed primitive, embedded in tools/build_rab_places.py and re-derived by its --world-obj check"
+  }
+}

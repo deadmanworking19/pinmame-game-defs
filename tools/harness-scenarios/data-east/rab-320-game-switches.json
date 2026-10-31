@@ -1,0 +1,241 @@
+{
+ "format": "pinmame-harness-scenario",
+ "version": 1,
+ "game": "rab_320",
+ "notes": "3.20 game in play from a fresh state, then the three turbo bumper switches 44, 45 and 46 and the slingshot switches 30 and 38 each closed alone for 100 ms, twice in order: which switched solenoid 17-21 the ROM fires for each. Only direct public switch writes; the host moves the balls itself.",
+ "watch_switches": [
+  3,
+  6,
+  9,
+  11,
+  12,
+  13,
+  14,
+  30,
+  38,
+  44,
+  45,
+  46
+ ],
+ "actions": [
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 11"
+  },
+  {
+   "type": "set_switch",
+   "switch": 12,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 12"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.05,
+   "label": "Trough: a ball rests on position 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 6.0,
+   "label": "Trough: idle after power-up with balls on 11-13"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 1 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 6,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Coin 2 on the left coin switch"
+  },
+  {
+   "type": "pulse",
+   "switch": 3,
+   "hold_ms": 150,
+   "settle_s": 1.0,
+   "label": "Press Start"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 3"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 4"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 5"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "after Start tick 6"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball on the release position 13 leaves"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the ball rests in the shooter lane 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 11,
+   "state": 0,
+   "settle_s": 0.05,
+   "label": "Trough: the remaining balls roll down, 11 empties"
+  },
+  {
+   "type": "set_switch",
+   "switch": 13,
+   "state": 1,
+   "settle_s": 0.2,
+   "label": "Trough: the next ball reaches 13"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball in shooter lane tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 9,
+   "hold_ms": 200,
+   "settle_s": 1.0,
+   "label": "press the Launch Button 9 with the ball on 14"
+  },
+  {
+   "type": "set_switch",
+   "switch": 14,
+   "state": 0,
+   "settle_s": 0.2,
+   "label": "Trough: the ball leaves the shooter lane"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 1"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 2"
+  },
+  {
+   "type": "wait",
+   "seconds": 1.0,
+   "label": "ball plunged tick 3"
+  },
+  {
+   "type": "pulse",
+   "switch": 44,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 1: close switched-solenoid switch 44 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 45,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 1: close switched-solenoid switch 45 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 46,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 1: close switched-solenoid switch 46 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 30,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 1: close switched-solenoid switch 30 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 38,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 1: close switched-solenoid switch 38 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 44,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 2: close switched-solenoid switch 44 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 45,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 2: close switched-solenoid switch 45 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 46,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 2: close switched-solenoid switch 46 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 30,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 2: close switched-solenoid switch 30 for 100 ms"
+  },
+  {
+   "type": "pulse",
+   "switch": 38,
+   "hold_ms": 100,
+   "settle_s": 1.5,
+   "label": "round 2: close switched-solenoid switch 38 for 100 ms"
+  }
+ ]
+}

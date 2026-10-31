@@ -175,7 +175,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 169 | 1993 | Punchy the Clown | Alvin G | partial | 13% |
 | 170 | 1993 | Judge Dredd | Bally | partial | 88% |
 | 171 | 1993 | Twilight Zone | Bally | partial | 94% |
-| 172 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 19% |
+| 172 | 1993 | Adventures of Rocky and Bullwinkle and Friends | Data East | partial | 63% |
 | 173 | 1993 | Jurassic Park | Data East | partial | 81% |
 | 174 | 1993 | Last Action Hero | Data East | partial | 19% |
 | 175 | 1993 | Tales from the Crypt | Data East | partial | 81% |
