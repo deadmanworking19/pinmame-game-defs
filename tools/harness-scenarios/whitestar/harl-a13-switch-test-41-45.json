@@ -1,0 +1,156 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a13",
+  "notes": "Boot harl_a13 with four balls on trough switches 11-14, the stacking opto 15 at 0 and the motorcycle down on 36, with PinMAME's built-in motorcycle mechanism off. Walk the Portals service menu with the Black ENTER button (public 0) into the Switch Test as harl-a13-switch-test does, and close the motorcycle trough positions 41-44 and the super VUK 45 one at a time, reading the display 1.2 s after each closure: the full sweep read NONE for these five at 0.7 s, because the ROM prints their names only about a second after they close.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    },
+    {
+      "switch": 36,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0,
+    11,
+    12,
+    13,
+    14,
+    15,
+    35,
+    36
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14 and the motorcycle down on 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: SWITCH TEST MENU with TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "Black ENTER button (public 0) pressed: Switch Test entered"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch 41 closed in the Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch 41 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch 42 closed in the Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 42,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch 42 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch 43 closed in the Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch 43 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch 44 closed in the Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 44,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch 44 opened"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 1,
+      "settle_s": 1.2,
+      "label": "switch 45 closed in the Switch Test"
+    },
+    {
+      "type": "set_switch",
+      "switch": 45,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "switch 45 opened"
+    }
+  ]
+}

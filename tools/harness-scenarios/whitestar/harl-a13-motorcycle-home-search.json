@@ -1,0 +1,83 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a13",
+  "notes": "Boot harl_a13 with built-in mechanisms disabled (--handle-mechanics 0), four balls on trough switches 11-14, and both motorcycle position switches open (35 and 36 at public 0). Wait for the ROM to energize the motor relay (solenoid 19), raise the Motor Down switch 36 to 1 two seconds later and observe whether the relay drops, then observe for 40 s more.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    },
+    {
+      "switch": 35,
+      "state": 0
+    },
+    {
+      "switch": 36,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    35,
+    36,
+    37,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48
+  ],
+  "actions": [
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        19
+      ],
+      "timeout_s": 60.0,
+      "active_only": true,
+      "label": "wait for the motor relay with neither motorcycle position switch closed"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "motor relay on with 35 and 36 at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 15.0,
+      "label": "the motorcycle reaches the down position: public 36 raised to 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 40.0,
+      "label": "observe with 36 at 1 and 35 at 0"
+    }
+  ]
+}

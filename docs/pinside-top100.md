@@ -264,7 +264,7 @@ This is the standing curation priority list: work it highest rank first (see `do
 | 316 | Escape from the Lost World | `bally.escape-from-the-lost-world.1988` | 13% |
 | 317 | NBA | `stern.nba.2009` | 81% |
 | 318 | Shaq Attaq | `gottlieb.shaq-attaq.1995` | 13% |
-| 319 | Harley Davidson | `sega.harley-davidson.1999` | 13% |
+| 319 | Harley Davidson | `sega.harley-davidson.1999` | 88% |
 | 320 | Raven | `gottlieb.raven.1986` | 13% |
 | 321 | Striker Xtreme | `stern.striker-xtreme.2000` | 13% |
 | 322 | Orbitor 1 | `stern.orbitor-1.1982` | 19% |

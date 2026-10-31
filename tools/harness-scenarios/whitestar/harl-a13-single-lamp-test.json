@@ -1,0 +1,667 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a13",
+  "notes": "Boot harl_a13 with four balls on trough switches 11-14, the stacking opto 15 at 0 and the motorcycle down on 36, with PinMAME's built-in motorcycle mechanism off. Walk the Portals service menu with the Black ENTER (public 0) and Green RIGHT (public -1) service buttons: Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU, two steps right to LAMP, LAMP MENU (ONE), and enter the Single Lamp Test, whose cursor starts on the + icon. Press Black 82 times: each press steps to the next lamp, flashes it and prints the name, the drive and return wire colours and the number the ROM holds for it, so the run covers lamps 1-80 and shows what follows the last one.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    },
+    {
+      "switch": 36,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14 and the motorcycle down on 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: COIL selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: LAMP selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: LAMP MENU with ONE selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "Black ENTER button (public 0) pressed: Single Lamp Test entered with the + icon selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 66"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 67"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 68"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 69"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 71"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 72"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 73"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 74"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 75"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 76"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 77"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 78"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 79"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 80"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 81"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: lamp step 82"
+    }
+  ]
+}

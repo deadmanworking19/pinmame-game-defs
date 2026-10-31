@@ -1,0 +1,66 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "harl_a13",
+  "notes": "Control for the motorcycle home probes: boot harl_a13 with built-in mechanisms disabled (--handle-mechanics 0), four balls on trough switches 11-14, the Motor Down switch 36 at public 1 and the Motor Up switch 35 at 0, and observe power-up and attract mode for 60 s with no further input.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    },
+    {
+      "switch": 35,
+      "state": 0
+    },
+    {
+      "switch": 36,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    35,
+    36,
+    37,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "power-up with 36 at 1 and 35 at 0"
+    },
+    {
+      "type": "wait",
+      "seconds": 35.0,
+      "label": "attract mode with 36 at 1 and 35 at 0"
+    }
+  ]
+}

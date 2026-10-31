@@ -83,7 +83,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 77 | 2000 | Sharkey's Shootout | Stern | partial | 13% |
 | 78 | 2000 | Striker Xtreme | Stern | partial | 13% |
 | 79 | 1999 | Revenge from Mars | Bally | partial | 94% |
-| 80 | 1999 | Harley Davidson | Sega | partial | 13% |
+| 80 | 1999 | Harley Davidson | Sega | partial | 88% |
 | 81 | 1999 | South Park | Sega | partial | 94% |
 | 82 | 1999 | Harley Davidson | Stern | partial | 88% |
 | 83 | 1998 | Cactus Canyon | Bally | author_ready | 100% |

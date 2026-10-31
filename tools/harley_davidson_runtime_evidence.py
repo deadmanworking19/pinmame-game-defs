@@ -72,8 +72,10 @@ def review_artifacts_root(required: bool) -> Path | None:
 	return Path(value).expanduser().resolve()
 
 
-def _load_run(root: Path, name: str, game: str, manifest_sha256: str, mechanics: int) -> tuple[dict[str, Any], dict[str, str]]:
-	directory = root / HARNESS_DIRECTORY / name
+def _load_run(
+	root: Path, name: str, game: str, manifest_sha256: str, mechanics: int, harness_directory: str = HARNESS_DIRECTORY,
+) -> tuple[dict[str, Any], dict[str, str]]:
+	directory = root / harness_directory / name
 	manifest = directory / "manifest.json"
 	if _sha256(manifest) != manifest_sha256:
 		raise RuntimeError(f"{name}: retained manifest does not match its pinned SHA-256")
@@ -141,7 +143,10 @@ def _actions(name: str, run: dict[str, Any], mechanics: int) -> list[dict[str, A
 	return observations
 
 
-def _diagnostics(root: Path, name: str, run: dict[str, Any], listed: dict[str, str], pins: dict[str, dict[str, str]]) -> list[dict[str, Any]]:
+def _diagnostics(
+	root: Path, name: str, run: dict[str, Any], listed: dict[str, str], pins: dict[str, dict[str, str]],
+	harness_directory: str = HARNESS_DIRECTORY,
+) -> list[dict[str, Any]]:
 	"""The curator's reading of each pinned frame, in run order, refused unless the retained PGM carries the snapshot's pixels."""
 	snapshots = []
 	for snapshot in run["snapshots"]:
@@ -155,7 +160,7 @@ def _diagnostics(root: Path, name: str, run: dict[str, Any], listed: dict[str, s
 		relative = "dmd/" + Path(displays[0]["artifact"].replace("\\", "/")).name
 		if relative not in listed:
 			raise RuntimeError(f"{name}: the frame for {label!r} is not in the run's manifest")
-		data = (root / HARNESS_DIRECTORY / name / relative).read_bytes()
+		data = (root / harness_directory / name / relative).read_bytes()
 		pixels = data[len(data) - 128 * 32:]
 		if not data.startswith(b"P5\n128 32\n") or hashlib.sha256(pixels).hexdigest() != displays[0]["pixel_sha256"]:
 			raise RuntimeError(f"{name}: the retained frame for {label!r} does not carry the snapshot's pixels")
@@ -180,21 +185,26 @@ def _addresses(run: dict[str, Any], kind: str) -> list[int]:
 	return sorted({event["number"] for event in run["events"] if event["event"] == kind})
 
 
-def build(root: Path, game: str, rom_archive_sha256: str, runs: dict[str, tuple[str, int]]) -> dict[str, Any]:
+def build(
+	root: Path, game: str, rom_archive_sha256: str, runs: dict[str, tuple[str, int]], *, machine_id: str = MACHINE_ID,
+	harness_directory: str = HARNESS_DIRECTORY, frame_readings_path: Path = FRAME_READINGS_PATH,
+	extractor_id: str = "tools/harley_davidson_runtime_evidence.py",
+) -> dict[str, Any]:
+	"""One runtime document; the keyword arguments let the Sega edition's builder reuse it for its own runs."""
 	raw_runs = []
 	observations: list[dict[str, Any]] = []
 	diagnostics: list[dict[str, Any]] = []
-	pins = load_json(FRAME_READINGS_PATH)["runs"]
+	pins = load_json(frame_readings_path)["runs"]
 	lamps: set[int] = set()
 	solenoids: set[int] = set()
 	gis: set[int] = set()
 	displays: set[int] = set()
 	for name, (manifest_sha256, mechanics) in runs.items():
-		run, listed = _load_run(root, name, game, manifest_sha256, mechanics)
+		run, listed = _load_run(root, name, game, manifest_sha256, mechanics, harness_directory)
 		scenario_path = f"{SCENARIO_DIRECTORY}/{name}.json"
 		raw_runs.append({
 			"name": name,
-			"retained_from": f"external:pinmame-review-artifacts/{HARNESS_DIRECTORY}/{name}/run.json",
+			"retained_from": f"external:pinmame-review-artifacts/{harness_directory}/{name}/run.json",
 			"sha256": listed["run.json"],
 			"scenario_path": scenario_path,
 			"scenario_sha256": _sha256(ROOT / scenario_path),
@@ -207,7 +217,7 @@ def build(root: Path, game: str, rom_archive_sha256: str, runs: dict[str, tuple[
 		})
 		observations.extend(_actions(name, run, mechanics))
 		if name in pins:
-			diagnostics.extend(_diagnostics(root, name, run, listed, pins[name]))
+			diagnostics.extend(_diagnostics(root, name, run, listed, pins[name], harness_directory))
 		lamps.update(_addresses(run, "lamp"))
 		solenoids.update(_addresses(run, "solenoid"))
 		gis.update(_addresses(run, "gi"))
@@ -217,9 +227,9 @@ def build(root: Path, game: str, rom_archive_sha256: str, runs: dict[str, tuple[
 	return {
 		"format": "pinmame-machine-evidence",
 		"version": 1,
-		"machine_ids": [MACHINE_ID],
+		"machine_ids": [machine_id],
 		"driver_ids": [game],
-		"extractor": {"id": "tools/harley_davidson_runtime_evidence.py", "version": 1},
+		"extractor": {"id": extractor_id, "version": 1},
 		"switches": [],
 		"outputs": [],
 		"mechanisms": [],
@@ -250,7 +260,7 @@ def build(root: Path, game: str, rom_archive_sha256: str, runs: dict[str, tuple[
 			"kind": "runtime_scenario",
 			"repository": "https://github.com/vpinball/pinmame",
 			"revision": REVISION,
-			"path": f"external:pinmame-review-artifacts/{HARNESS_DIRECTORY}",
+			"path": f"external:pinmame-review-artifacts/{harness_directory}",
 			"sha256": runs[last][0],
 			"license": "NOASSERTION",
 			"quality": "validated",
