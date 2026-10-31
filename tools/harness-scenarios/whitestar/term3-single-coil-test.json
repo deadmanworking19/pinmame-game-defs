@@ -1,0 +1,1202 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "term3",
+  "notes": "Boot term3 with four balls on trough switches 11-14 and the stacking opto 15 at 0. Walk the Portals service menu with the Black ENTER (public 0) and Green RIGHT (public -1) service buttons: Portals, MAIN MENU (DIAG), DIAGNOSTICS MENU, one step right to COIL, COIL MENU (TEST), and enter the Single Coil Test, whose cursor starts on the + icon. 40 times: press Black on + to select the next coil (the display prints the number, the name and the wire colours the ROM holds for it), press Green to move to RUN, press Black to fire it once, and press Red to return to +.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -2,
+    -1,
+    0
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Black ENTER button (public 0) pressed: Portals opens"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: MAIN MENU with DIAG selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: DIAGNOSTICS MENU with SW selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Green RIGHT button (public -1) pressed: COIL selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: COIL MENU with TEST selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 2.0,
+      "label": "Black ENTER button (public 0) pressed: Single Coil Test entered with the + icon selected"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 1 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 1 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 2 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 2 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 3 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 3 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 4 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 4 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 5 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 5 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 6 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 6 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 7 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 7 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 8 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 8 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 9 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 9 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 10 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 10 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 11 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 11 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 12 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 12 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 13 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 13 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 14 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 14 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 15 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 15 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 16 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 16 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 17 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 17 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 18 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 18 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 19 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 19 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 20 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 20 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 21 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 21 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 22 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 22 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 23 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 23 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 24 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 24 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 25 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 25 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 26 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 26 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 27 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 27 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 28 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 28 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 29 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 29 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 30 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 30 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 31 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 31 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 32 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 32 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 33 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 33 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 34 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 34 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 35 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 35 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 36 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 36 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 37 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 37 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 38 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 38 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 39 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 39 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.2,
+      "label": "Black ENTER button (public 0) pressed on +: coil step 40 selected"
+    },
+    {
+      "type": "pulse",
+      "switch": -1,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Green RIGHT button (public -1) pressed: RUN selected for coil step 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 0,
+      "hold_ms": 200,
+      "settle_s": 1.8,
+      "label": "Black ENTER button (public 0) pressed on RUN: coil step 40 fired"
+    },
+    {
+      "type": "pulse",
+      "switch": -2,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Red LEFT button (public -2) pressed: + selected again after coil step 40"
+    }
+  ]
+}

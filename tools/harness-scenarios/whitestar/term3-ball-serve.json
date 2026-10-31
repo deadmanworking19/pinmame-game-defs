@@ -1,0 +1,135 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "term3",
+  "notes": "Boot term3 with four balls on trough switches 11-14 and the stacking opto 15 at 0. Insert four coins on the center slot (public 5), press Start (54) and wait for the trough up-kicker (solenoid 1). Emulate the kicked ball leaving the trough VUK opto (14), the stack rolling forward (11 empties, 14 blocked again) and the ball resting on the shooter lane switch (16) for 10 s, then pull the gun trigger (55) and let the ball leave.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    55,
+    81,
+    82,
+    83,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 4 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 0.2,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 30.0,
+      "active_only": true,
+      "label": "the trough up-kicker (solenoid 1) fires after Start"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "the kicked ball leaves the trough VUK opto (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "the stack rolls toward the up-kicker: trough position 11 empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "the stack rolls toward the up-kicker: the next ball blocks the trough VUK opto (public 14)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 10.0,
+      "label": "the served ball rests on the shooter lane switch 16 for 10 s"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "gun trigger (public 55) pulled once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 4.0,
+      "label": "the ball leaves the shooter lane"
+    }
+  ]
+}

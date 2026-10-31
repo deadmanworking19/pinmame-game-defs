@@ -1,0 +1,472 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "term3",
+  "notes": "Boot term3 with four balls on trough switches 11-14 and the stacking opto 15 at 0. Insert four coins on the center slot (public 5), press Start (54), emulate the serve (trough position 11 empties, the ball rests on the shooter lane switch 16, the gun trigger 55 is pulled and the ball leaves), close each playfield switch once with a 3 s gap so every output response is attributable to one closure, hold the drop target down, rest a ball in the VUK (36) and at lockup 1 (33), close the left outlane (57), hold each UK cabinet button (1, 8), hold each flipper button (writing the left end-of-stroke input while the left button is held), and drain the ball.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    25,
+    33,
+    34,
+    35,
+    36,
+    81,
+    82,
+    83,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 1 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 2 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 3 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "coin 4 on the center coin slot (public 5)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 300,
+      "settle_s": 4.0,
+      "label": "Start button (public 54)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "one ball has left the trough: the left-most trough position 11 empties as the stack shifts toward the up-kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "the served ball rests on the shooter lane switch 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "gun trigger (public 55) pulled once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the ball leaves the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "skill shot (public 52) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left top lane (public 37) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "middle top lane (public 38) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right top lane (public 39) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left bumper (public 49) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right bumper (public 50) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "bottom bumper (public 51) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left slingshot (public 59) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right slingshot (public 62) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left 3-bank bottom (public 17) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left 3-bank middle (public 18) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left 3-bank top (public 19) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right 3-bank top (public 20) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right 3-bank middle (public 21) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right 3-bank bottom (public 22) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "standup (public 10) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "captive ball (public 23) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left orbit bottom (public 28) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left orbit top (public 29) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right orbit top (public 46) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right orbit bottom (public 24) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left ramp (public 30) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "center ramp (public 40) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right ramp (public 32) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "T-X made (public 31) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "backbox 5-bank top (public 41) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "backbox 5-bank 2 (public 42) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "backbox 5-bank 3 (public 43) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "backbox 5-bank 4 (public 44) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "backbox 5-bank bottom (public 45) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left return lane (public 58) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right return lane (public 61) closed once"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "right outlane (public 60) closed once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "drop target (public 25) knocked down and left down"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "drop target (public 25) back up"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 5.0,
+      "label": "a ball rests in the VUK (public 36)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "the VUK (public 36) empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 1,
+      "settle_s": 6.0,
+      "label": "a ball rests at lockup 1 (right), the T-X cannon trough opto (public 33)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "lockup 1 (public 33) empties"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "left outlane (public 57) closed once"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "UK left cabinet button (public 1) held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 1,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "UK left cabinet button (public 1) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "UK right cabinet button (public 8) held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "UK right cabinet button (public 8) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "left flipper button (public 84) held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "host writes 1 to the left end-of-stroke input (public 83) while the left flipper button is held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 83,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "host writes 0 to the left end-of-stroke input (public 83)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "left flipper button (public 84) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "right flipper button (public 82) held"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "right flipper button (public 82) released"
+    },
+    {
+      "type": "set_switch",
+      "switch": 11,
+      "state": 1,
+      "settle_s": 8.0,
+      "label": "drain: the drained ball lands on trough position 11, leaving four balls on 11-14"
+    }
+  ]
+}

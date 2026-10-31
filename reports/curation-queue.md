@@ -71,7 +71,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 65 | 2004 | Ripley's Believe It or Not! | Stern | partial | 88% |
 | 66 | 2003 | Pinball 2000: Star Wars Episode I (1.50) | Midway | partial | 13% |
 | 67 | 2003 | Lord of the Rings | Stern | author_ready | 100% |
-| 68 | 2003 | Terminator 3: Rise of the Machines | Stern | partial | 13% |
+| 68 | 2003 | Terminator 3: Rise of the Machines | Stern | partial | 88% |
 | 69 | 2003 | The Simpsons Pinball Party | Stern | author_ready | 100% |
 | 70 | 2002 | Monopoly (Coin Dropper) | Stern | partial | 6% |
 | 71 | 2002 | Playboy | Stern | partial | 13% |
