@@ -1,0 +1,451 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Mousin' Around gameplay probe from the retained initialized NVRAM with the three trough switches (11-13), both ball-trap up/down switches (33, 34) and the motor bank up switch (43) held from start and Auto-Up (-6 = 1): two coins, the Credit button as Start, a ball served and plunged, the top lanes, jets, kickers and right standup closed one at a time, then M-O-U-S-E and T-R-A-P spelled on the standup targets. When the ROM fires the trap coils the host leaves both up/down switches closed for 2 s, then opens them; when it energizes the Motor Relay (11) after the three center standups are hit, the host opens 43 and closes 50 after 1.0 s of travel. Then the kickback lane, the mouse hole entry and lock, the ramps, three plumb-bob tilt closures and a drain. The host answers drives only with fixed, scripted switch changes; PinMAME's mechanics are off.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 33,
+      "state": 1
+    },
+    {
+      "switch": 34,
+      "state": 1
+    },
+    {
+      "switch": 43,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    1,
+    3,
+    9,
+    11,
+    12,
+    13,
+    14,
+    33,
+    34,
+    41,
+    42,
+    43,
+    50,
+    59
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "max_pulses": 1,
+      "hold_ms": 150,
+      "settle_s": 0.2,
+      "label": "Credit button starts a game and raises game-on (23)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "ball shooter lane feeder fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "the trough drops to two balls as one is served"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball in the shooter lane"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "top lane middle (23)"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "top lane left (22)"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "top lane right (24)"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left jet (52)"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right jet (53)"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "bottom jet (54)"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left sling (55)"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right sling (56)"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right standup (36)"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "MOUSE - M (17)"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "MOUSE - O (18)"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "MOUSE - U (19)"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "MOUSE - S (20)"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "MOUSE - E (21)"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "TRAP - T (25)"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "TRAP - R (26)"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "TRAP - A (27)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 28,
+      "channel": "solenoid",
+      "addresses": [
+        3,
+        4
+      ],
+      "max_pulses": 1,
+      "hold_ms": 120,
+      "settle_s": 0.6,
+      "label": "TRAP - P (28) completes MOUSE TRAP and a trap-up coil fires"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "trap up/down switches left closed: observe repeated trap-up coils"
+    },
+    {
+      "type": "set_switch",
+      "switch": 33,
+      "state": 0,
+      "settle_s": 0.1,
+      "label": "trap 1 leaves its down position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 34,
+      "state": 0,
+      "settle_s": 4.0,
+      "label": "trap 2 leaves its down position"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "center standup left (29)"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "center standup middle (30)"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 31,
+      "channel": "solenoid",
+      "addresses": [
+        11
+      ],
+      "max_pulses": 1,
+      "hold_ms": 120,
+      "settle_s": 0.3,
+      "label": "center standup right (31) energizes the motor relay (11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "bank leaves the up position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 50,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "bank reaches the down position"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "kickback lane (51)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "mouse hole entry (32)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball in mouse hole lock 1 (59)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        16
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "mouse hole exit fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 59,
+      "state": 0,
+      "settle_s": 2.0,
+      "label": "ball leaves the mouse hole"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "left ramp entry (47)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "left ramp made (37)"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 120,
+      "settle_s": 0.5,
+      "label": "right ramp entry (44)"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "right ramp made (46)"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "center ramp (35)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "plumb-bob tilt 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "plumb-bob tilt 2"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 1,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "max_pulses": 1,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "plumb-bob tilt 3 drops game-on"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball drains to the outhole"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "outhole kicker fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.2,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.2,
+      "label": "ball back in the trough"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "active_only": true,
+      "timeout_s": 20,
+      "label": "ball 2: shooter lane feeder fires"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "ball 2 served"
+    }
+  ]
+}

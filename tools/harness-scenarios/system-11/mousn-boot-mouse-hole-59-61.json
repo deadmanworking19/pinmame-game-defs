@@ -1,0 +1,37 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Mousin' Around power-up probe from the retained initialized NVRAM: all three mouse hole lock switches (59-61) held from emulator start. The Auto-Up/Manual-Down switch (-6) is held at Auto-Up (1), the normal play position. No other host input; the harness never moves a ball or a mechanism.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 59,
+      "state": 1
+    },
+    {
+      "switch": 60,
+      "state": 1
+    },
+    {
+      "switch": 61,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    59,
+    60,
+    61
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe power-up sequence"
+    }
+  ]
+}

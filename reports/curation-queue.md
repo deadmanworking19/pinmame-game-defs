@@ -257,7 +257,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 251 | 1990 | Whirlwind | Williams | partial | 81% |
 | 252 | 1989 | Atlantis | Bally | partial | 13% |
 | 253 | 1989 | Elvira and the Party Monsters | Bally | partial | 69% |
-| 254 | 1989 | Mousin' Around! | Bally | partial | 13% |
+| 254 | 1989 | Mousin' Around! | Bally | partial | 88% |
 | 255 | 1989 | Transporter the Rescue | Bally | partial | 19% |
 | 256 | 1989 | Monday Night Football | Data East | partial | 19% |
 | 257 | 1989 | Playboy 35th Anniversary | Data East | partial | 69% |

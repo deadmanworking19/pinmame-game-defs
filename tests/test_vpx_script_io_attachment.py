@@ -40,9 +40,10 @@ CORPUS_REPOSITORIES = (
 # The Adventures of Rocky and Bullwinkle replaces its 95 candidate devices from one script with its own curated definition.
 # Cyclone replaces its 52 candidate devices from two scripts.
 # Barracora replaces its 53 imported candidate devices from two scripts.
-EXPECTED_ATTACHED_MACHINES = 252
-EXPECTED_ATTACHED_DEVICES = 11402
-EXPECTED_ATTACHED_SCRIPTS = 307
+# Mousin' Around replaces its 45 candidate devices from one script with its own curated definition.
+EXPECTED_ATTACHED_MACHINES = 251
+EXPECTED_ATTACHED_DEVICES = 11357
+EXPECTED_ATTACHED_SCRIPTS = 306
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

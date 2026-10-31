@@ -1,0 +1,61 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Mousin' Around Motor Bank Test (lower display 09) with the bank-up switch (43) held closed from emulator start and never released, observed for 25 s. The manual's Motor Bank Test says switch 43 tells the CPU that the motorized center target bank is up and switch 50 that it is down. The host answers the Motor Relay (11) only with fixed, scripted switch changes after the relay is observed energized; PinMAME's mechanics are off, so no switch moves on its own.",
+  "initial_switches": [
+    {
+      "switch": 43,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    43,
+    50
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests (MUSIC TEST)"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "MOTOR"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate MOTOR BANK TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "observe the test with 43 held"
+    }
+  ]
+}

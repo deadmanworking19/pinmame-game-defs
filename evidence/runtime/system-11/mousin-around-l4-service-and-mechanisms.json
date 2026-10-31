@@ -1,0 +1,1521 @@
+{
+  "driver_ids": [
+    "mousn_l4"
+  ],
+  "extractor": {
+    "id": "mousin-around-harness-runs",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.mousin-around.1989"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game <set> --rom-path <vpinmame-roms> --work-dir <new-state-directory> --scenario tools/harness-scenarios/system-11/mousn-<name>.json --boot-wait 0 --output <external-run.json>. Each set's initialization run (mousn-nvram-init.json) starts from an empty state directory and stops on FACTORY SETTING; every other run of that set starts from a new state directory holding only that run's NVRAM. Diagnostic scenarios wait 8 s, set Manual-Down (-6 = 0), pulse Advance (-7) to enter the tests, set Auto-Up (-6 = 1) and pulse Advance until the checkpoint text is displayed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "mousn_l4",
+    "observations": {
+      "named_output_addresses": {
+        "coil-01-outhole": 1,
+        "coil-02-rt-flip-flashers": 25,
+        "coil-03-ball-release": 2,
+        "coil-04-lt-flip-flashers": 26,
+        "coil-05-trap-1-up": 3,
+        "coil-06-left-side-flsher": 27,
+        "coil-07-trap-2-up": 4,
+        "coil-08-backpanel-flsher": 28,
+        "coil-09-trap-1-down": 5,
+        "coil-10-top-rt-flasher": 29,
+        "coil-11-not-used": 6,
+        "coil-12-rt-ramp-flashers": 30,
+        "coil-13-knocker": 7,
+        "coil-14-lt-ramp-flashers": 31,
+        "coil-15-trap-2-down": 8,
+        "coil-16-timer-flasher": 32,
+        "coil-17-insert-g-i": 9,
+        "coil-18-playfield-g-i": 10,
+        "coil-19-standup-motor": 11,
+        "coil-20-a-c-select": 12,
+        "coil-21-kickback": 13,
+        "coil-22-ball-diverter": 14,
+        "coil-23-center-flasher": 15,
+        "coil-24-mouse-hole-eject": 16,
+        "coil-25-left-jet": 17,
+        "coil-26-left-sling": 18,
+        "coil-27-right-jet": 19,
+        "coil-28-right-sling": 20,
+        "coil-29-bottom-jet": 21,
+        "coil-30-shooter-gate": 22,
+        "lamp-01-shoot-again": 1,
+        "lamp-02-trap-2-set": 2,
+        "lamp-03-return-loop-sok": 3,
+        "lamp-04-return-loop-1ook": 4,
+        "lamp-05-return-loop-1sok": 5,
+        "lamp-06-return-loop-2ook": 6,
+        "lamp-07-return-loop-2sok": 7,
+        "lamp-08-jackpot": 8,
+        "lamp-09-cheese-c": 9,
+        "lamp-10-cheese-h": 10,
+        "lamp-11-cheese-e": 11,
+        "lamp-12-cheese-e": 12,
+        "lamp-13-cheese-s": 13,
+        "lamp-14-cheese-e": 14,
+        "lamp-15-bonus-2x": 15,
+        "lamp-16-bonus-3x": 16,
+        "lamp-17-mouse-m": 17,
+        "lamp-18-mouse-o": 18,
+        "lamp-19-mouse-u": 19,
+        "lamp-20-mouse-s": 20,
+        "lamp-21-mouse-e": 21,
+        "lamp-22-top-lanes-l": 22,
+        "lamp-23-top-lanes-m": 23,
+        "lamp-24-top-lanes-r": 24,
+        "lamp-25-trap-t": 25,
+        "lamp-26-trap-r": 26,
+        "lamp-27-trap-a": 27,
+        "lamp-28-trap-p": 28,
+        "lamp-29-cntr-standup-l": 29,
+        "lamp-30-cntr-standup-m": 30,
+        "lamp-31-cntr-standup-r": 31,
+        "lamp-32-timer": 32,
+        "lamp-33-trap-1-set": 33,
+        "lamp-34-playfld-multiply": 34,
+        "lamp-35-spot-cheese-3": 35,
+        "lamp-36-kick-back": 36,
+        "lamp-37-left-outlane": 37,
+        "lamp-38-left-return-lane": 38,
+        "lamp-39-rt-return-lane": 39,
+        "lamp-40-right-outlane": 40,
+        "lamp-41-spot-mill-1": 41,
+        "lamp-42-extra-ball-1": 42,
+        "lamp-43-spot-cheese-1": 43,
+        "lamp-44-spot-mill-2": 44,
+        "lamp-45-extra-ball-2": 45,
+        "lamp-46-spot-cheese-2": 46,
+        "lamp-47-right-standup": 47,
+        "lamp-48-right-ramp": 48,
+        "lamp-49-million-n": 49,
+        "lamp-50-million-o": 50,
+        "lamp-51-million-i": 51,
+        "lamp-52-million-l": 52,
+        "lamp-53-million-l": 53,
+        "lamp-54-million-i": 54,
+        "lamp-55-million-m": 55,
+        "lamp-56-build-jackpot": 56,
+        "lamp-57-jackpot-1-mill": 57,
+        "lamp-58-jackpot-1-s-mill": 58,
+        "lamp-59-jackpot-2-mill": 59,
+        "lamp-60-jackpot-2-s-mill": 60,
+        "lamp-61-jackpot-3-mill": 61,
+        "lamp-62-jackpot-4-mill": 62,
+        "lamp-63-jackpot-s-mill": 63,
+        "lamp-64-not-used": 64
+      },
+      "runs": {
+        "boot-baseline": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1 held from emulator start. Solenoid on-spans: 1: 2.353-2.47 s, 4.641-4.758 s; 5: 6 pulses from 3.722 s to 7.729 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.023 s to 8.029 s, spacing 0.72-0.85 s; 11: 4 pulses from 0.215 s to 17.621 s, spacing 1.75-7.89 s; 13: 0.216-0.266 s; 14: 7 pulses from 0.216 s to 8.129 s, spacing 0.74-3.96 s; 15: 0.216-0.266 s; 16: 0.216-0.266 s, 1.968-2.42 s (observed to 30.036 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-diverter-49": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 49=1 held from emulator start. Solenoid on-spans: 1: 2.351-2.467 s, 4.637-4.755 s; 5: 6 pulses from 3.719 s to 7.726 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.02 s to 8.026 s, spacing 0.72-0.87 s; 11: 4 pulses from 0.214 s to 17.723 s, spacing 1.75-8.0 s; 13: 0.214-0.264 s; 14: 0.214-0.264 s, 2.668-2.768 s, 3.419-3.536 s; 15: 0.214-0.264 s; 16: 0.214-0.264 s, 1.966-2.417 s (observed to 30.058 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-motor-down-50": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 50=1 held from emulator start. Solenoid on-spans: 1: 2.35-2.467 s, 4.637-4.754 s; 5: 6 pulses from 3.719 s to 7.724 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.019 s to 8.026 s, spacing 0.72-0.85 s; 11: 0.214-0.264 s, 1.966-9.612 s, 9.73-9.779 s; 13: 0.214-0.264 s; 14: 7 pulses from 0.214 s to 8.125 s, spacing 0.75-3.95 s; 15: 0.214-0.264 s; 16: 0.214-0.264 s, 1.966-2.416 s (observed to 30.059 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-motor-up-43": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 43=1 held from emulator start. Solenoid on-spans: 1: 2.35-2.467 s, 4.639-4.755 s; 5: 6 pulses from 3.72 s to 7.725 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.02 s to 8.027 s, spacing 0.72-0.85 s; 11: 0.214-0.264 s, 1.966-9.613 s, 9.731-17.512 s; 13: 0.214-0.264 s; 14: 7 pulses from 0.214 s to 8.126 s, spacing 0.74-3.96 s; 15: 0.214-0.264 s; 16: 0.214-0.264 s, 1.966-2.417 s (observed to 30.051 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-mouse-hole-59": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 59=1 held from emulator start. Solenoid on-spans: 1: 2.351-2.468 s, 4.638-4.754 s; 5: 6 pulses from 3.72 s to 7.723 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.02 s to 8.024 s, spacing 0.72-0.87 s; 11: 4 pulses from 0.216 s to 17.503 s, spacing 1.75-7.78 s; 13: 0.216-0.265 s; 14: 7 pulses from 0.216 s to 8.141 s, spacing 0.73-3.95 s; 15: 0.216-0.265 s; 16: 7 pulses from 0.216 s to 10.968 s, spacing 1.75-1.81 s (observed to 30.053 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-mouse-hole-59-61": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 59=1, 60=1, 61=1 held from emulator start. Solenoid on-spans: 1: 2.35-2.467 s, 4.639-4.755 s; 5: 6 pulses from 3.72 s to 7.727 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.021 s to 8.028 s, spacing 0.72-0.87 s; 11: 4 pulses from 0.215 s to 17.494 s, spacing 1.75-7.76 s; 13: 0.215-0.265 s; 14: 7 pulses from 0.215 s to 8.128 s, spacing 0.74-3.96 s; 15: 0.215-0.265 s; 16: 7 pulses from 0.215 s to 10.97 s, spacing 1.75-1.81 s (observed to 30.054 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-outhole-9": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 9=1 held from emulator start. Solenoid on-spans: 1: 10 pulses from 1.7 s to 13.73 s, spacing 0.65-1.57 s; 5: 6 pulses from 3.72 s to 7.826 s, spacing 0.8-0.9 s; 8: 6 pulses from 4.021 s to 8.11 s, spacing 0.78-0.87 s; 11: 4 pulses from 0.215 s to 17.58 s, spacing 1.75-7.85 s; 13: 0.215-0.265 s; 14: 7 pulses from 0.215 s to 8.194 s, spacing 0.8-3.96 s; 15: 0.215-0.265 s; 16: 0.215-0.265 s, 1.967-2.418 s (observed to 30.051 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-shooter-14": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 14=1 held from emulator start. Solenoid on-spans: 1: 2.351-2.467 s, 4.638-4.771 s; 5: 6 pulses from 3.721 s to 7.725 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.021 s to 8.026 s, spacing 0.72-0.87 s; 11: 4 pulses from 0.216 s to 17.582 s, spacing 1.75-7.86 s; 13: 0.216-0.266 s; 14: 7 pulses from 0.216 s to 8.126 s, spacing 0.75-3.96 s; 15: 0.216-0.266 s; 16: 0.216-0.266 s, 1.967-2.418 s (observed to 30.058 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-traps-33-34": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 33=1, 34=1 held from emulator start. Solenoid on-spans: 1: 2.351-2.468 s, 4.588-4.705 s; 3: 6 pulses from 3.119 s to 7.075 s, spacing 0.75-0.82 s; 4: 6 pulses from 3.42 s to 7.443 s, spacing 0.79-0.82 s; 11: 4 pulses from 0.213 s to 17.577 s, spacing 1.75-7.85 s; 13: 0.213-0.263 s; 14: 7 pulses from 0.213 s to 8.295 s, spacing 0.73-4.14 s; 15: 0.213-0.263 s; 16: 0.213-0.263 s, 1.967-2.417 s (observed to 30.034 s).",
+          "solenoid_addresses_seen": [
+            1,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-traps-ball-41-42": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 41=1, 42=1 held from emulator start. Solenoid on-spans: 1: 2.351-2.468 s, 4.64-4.757 s; 5: 6 pulses from 3.722 s to 7.726 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.022 s to 8.028 s, spacing 0.7-0.87 s; 11: 4 pulses from 0.215 s to 17.591 s, spacing 1.75-7.86 s; 13: 0.215-0.266 s; 14: 7 pulses from 0.215 s to 8.128 s, spacing 0.74-3.96 s; 15: 0.215-0.266 s; 16: 0.215-0.266 s, 1.966-2.418 s (observed to 30.061 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-11-13": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1 held from emulator start. Solenoid on-spans: 11: 0.216-0.266 s; 13: 0.216-0.266 s; 14: 0.216-0.266 s; 15: 0.216-0.266 s; 16: 0.216-0.266 s (observed to 30.052 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-diverter-49": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1, 49=1 held from emulator start. Solenoid on-spans: 11: 0.214-0.264 s; 13: 0.215-0.264 s; 14: 0.215-0.264 s; 15: 0.215-0.264 s; 16: 0.215-0.264 s (observed to 30.077 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-motor-down-50": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1, 50=1 held from emulator start. Solenoid on-spans: 11: 0.218-0.268 s; 13: 0.218-0.268 s; 14: 0.218-0.268 s; 15: 0.218-0.268 s; 16: 0.218-0.268 s (observed to 30.079 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-motor-up-43": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1, 43=1 held from emulator start. Solenoid on-spans: 11: 0.214-0.265 s; 13: 0.214-0.265 s; 14: 0.214-0.265 s; 15: 0.214-0.265 s; 16: 0.214-0.265 s (observed to 30.074 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-mouse-hole-59": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1, 59=1 held from emulator start. Solenoid on-spans: 11: 0.215-0.265 s; 13: 0.215-0.265 s; 14: 0.215-0.265 s; 15: 0.215-0.265 s; 16: 0.215-0.265 s (observed to 30.075 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "boot-trough-traps-33-34": {
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Power-up probe with switches -6=1, 11=1, 12=1, 13=1, 33=1, 34=1 held from emulator start. Solenoid on-spans: 11: 0.218-0.267 s; 13: 0.218-0.267 s; 14: 0.218-0.267 s; 15: 0.218-0.267 s; 16: 0.218-0.267 s (observed to 30.088 s).",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "c-side-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 8,
+              "matched_text": "C-SIDE"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Advance walk to the C-Side test: upper display 'C-SIDE SW. TEST', lower display 'O8'. The A/C Select relay (12) was then energized 5 times for 1.918-1.937 s, 1.851-1.854 s apart (31.616-33.553 s, 35.407-37.325 s, 39.179-41.098 s, 42.949-44.868 s, 46.72-48.656 s). 0.2 s after every rise the upper display read 'SELECTED C-SIDE' and the lower 'C-SIDE O8'; 0.2 s after every fall they read 'SELECTED A-SIDE' and 'O8'. Other solenoid on-spans: 1: 2.438-2.554 s, 4.723-4.84 s, 23.557-23.657 s; 5: 6 pulses from 3.806 s to 7.811 s, spacing 0.8-0.8 s; 8: 6 pulses from 4.106 s to 8.112 s, spacing 0.72-0.85 s; 11: 0.301-0.352 s, 2.054-8.479 s; 13: 0.301-0.352 s; 14: 7 pulses from 0.301 s to 8.212 s, spacing 0.73-3.96 s; 15: 0.301-0.352 s; 16: 0.301-0.352 s, 2.054-2.504 s; 23: 8.479-end s (observed to 50.044 s).",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "coil-test": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL"
+            }
+          ],
+          "limitation": "A pulsed address is ROM activity, not proof that a load is fitted.",
+          "note": "Advance walk to COIL TEST (lower display 05), then two identical cycles of 30 named steps. Step:address = upper display: 1:1 = OUTHOLE; 2:25 = RT. FLIP. FLASHERS; 3:2 = BALL RELEASE; 4:26 = LT. FLIP. FLASHERS; 5:3 = TRAP 1 UP; 6:27 = LEFT SIDE FLSHER; 7:4 = TRAP 2 UP; 8:28 = BACKPANEL FLSHER; 9:5 = TRAP 1 DOWN; 10:29 = TOP RT. FLASHER; 11:6 = NOT USED; 12:30 = RT. RAMP FLASHERS; 13:7 = KNOCKER; 14:31 = LT. RAMP FLASHERS; 15:8 = TRAP 2 DOWN; 16:32 = TIMER FLASHER; 17:9 = INSERT G.I.; 18:10 = PLAYFIELD G.I.; 19:11 = STANDUP MOTOR; 20:12 = A/C SELECT; 21:13 = KICKBACK; 22:14 = BALL DIVERTER; 23:15 = CENTER FLASHER; 24:16 = MOUSE HOLE EJECT; 25:17 = LEFT JET; 26:18 = LEFT SLING; 27:19 = RIGHT JET; 28:20 = RIGHT SLING; 29:21 = BOTTOM JET; 30:22 = SHOOTER GATE. The A/C select relay (12) is energized before and held through each step that pulses 25, 26, 27, 28, 29, 30, 31, 32, pulsed by itself in its own A/C SELECT step, and released for every other step.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "gameplay": {
+          "limitation": "The host answers the ROM's drives with fixed, scripted switch changes; a pulse the ROM fires proves only that the address changed under these conditions, not a mechanism's travel time or the physical device's identity.",
+          "note": "Credit button (3) at 13.315 s raised game-on (23) at 13.369 s and the ball shooter lane feeder (2) fired at 13.787 s. switch 52 fired solenoid 17 0.004 s later; switch 53 fired solenoid 19 0.003 s later; switch 54 fired solenoid 21 0.001 s later; switch 55 fired solenoid 18 0.015 s later; switch 56 fired solenoid 20 0.014 s later. TRAP - P (28) at 40.239 s completed MOUSE TRAP: TRAP 1 UP (3) rose at 40.53, 41.331, 42.132, 42.933 s and TRAP 2 UP (4) at 40.646, 41.431, 42.232, 43.033 s while the host held 33 and 34 closed, about every 0.801 s, and neither rose again after the host opened 33 at 42.96 s and 34 at 43.06 s. The third center standup (31) at 49.303 s energized the Motor Relay (11) at 49.328 s; it released at 50.998 s, after the host closed the bank-down switch 50 at 50.724 s. The kickback lane (51) at 53.725 s fired the kickback (13) at 53.737 s. Mouse hole lock 1 (59) closed at 56.467 s: the motor relay rose again at 56.958 s with 43 open and 50 closed, and MOUSE HOLE EJECT (16) fired at 57.392 s. The third plumb-bob closure at 71.31 s dropped game-on (23) at 71.379 s; the outhole (9) at 74.46 s fired the outhole kicker (1) at 75.019 s, and game-on rose again at 76.087 s before the feeder served ball 2 at 76.537 s. Solenoid on-spans: 1: 75.019-75.135 s; 2: 13.787-13.903 s, 76.537-76.671 s, 78.506-78.624 s; 3: 4 pulses from 40.53 s to 42.933 s, spacing 0.8-0.8 s; 4: 4 pulses from 40.646 s to 43.033 s, spacing 0.78-0.8 s; 11: 5 pulses from 0.214 s to 76.12 s, spacing 7.63-35.93 s; 13: 0.214-0.264 s, 53.737-53.837 s; 14: 24 pulses from 0.214 s to 79.042 s, spacing 0.69-39.88 s; 15: 8 pulses from 0.214 s to 49.461 s, spacing 0.13-24.59 s; 16: 0.214-0.264 s, 57.392-57.843 s; 17: 21.55-21.717 s; 18: 26.424-26.491 s; 19: 23.17-23.353 s; 20: 28.044-28.111 s; 21: 24.789-24.972 s; 22: 16.608-76.103 s; 23: 13.369-71.379 s, 76.087-end s (observed to 79.56 s).",
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            30,
+            31
+          ]
+        },
+        "motor-bank-no-switch": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "MOTOR"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Advance walk to MOTOR BANK TEST (lower display 09) with switches held from start: none. Host switch changes after the title: none. 11 on 33.798-49.005 s (15.207 s), lower display 'OO O9' after the rise and 'OO ERROR' after the fall.",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "motor-bank-up-down-up": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "MOTOR"
+            }
+          ],
+          "limitation": "The host answers the ROM's drives with fixed, scripted switch changes; a pulse the ROM fires proves only that the address changed under these conditions, not a mechanism's travel time or the physical device's identity.",
+          "note": "Advance walk to MOTOR BANK TEST (lower display 09) with switches held from start: 43=1. Host switch changes after the title: 43=0 at 33.741 s, 50=1 at 34.741 s, 50=0 at 40.942 s, 43=1 at 41.942 s. 11 on 33.732-34.833 s (1.101 s), lower display 'OO O9' after the rise and 'OO O9' after the fall; 11 on 36.218-42.023 s (5.805 s), lower display 'UP OO O9' after the rise and 'UP OO O9' after the fall; 11 on from 43.409 s and still energized when the run ends at 50.175 s, lower display 'DN O1 O9' after the rise.",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "motor-bank-up-held": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "MOTOR"
+            }
+          ],
+          "limitation": "Static host switches only; the harness never moves a ball or a mechanism, so repeated pulses are ROM retries against a host-held switch.",
+          "note": "Advance walk to MOTOR BANK TEST (lower display 09) with switches held from start: 43=1. Host switch changes after the title: none. 11 on 33.823-33.872 s (0.049 s), lower display 'OO O9' after the rise and 'OO O9' after the fall; 11 on 35.274-42.88 s (7.606 s), lower display 'DN O1 O9' after the rise and 'DN O1 ERROR' after the fall.",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "nvram-init": {
+          "note": "Boot to FACTORY SETTING from an empty state directory; the NVRAM written on stop is the only state later mousn_l4 runs inherit.",
+          "solenoid_addresses_seen": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "single-lamps": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 4,
+              "matched_text": "SINGLE"
+            }
+          ],
+          "note": "Advance walk to SINGLE LAMPS (lower display 04); each Credit press (public 3) steps the designator, and designator n blinks public lamp n alone for every n from 1 to 64. Designator = upper display: 1 = SHOOT AGAIN; 2 = TRAP 2 SET; 3 = RETURN LOOP SOK; 4 = RETURN LOOP 1OOK; 5 = RETURN LOOP 1SOK; 6 = RETURN LOOP 2OOK; 7 = RETURN LOOP 2SOK; 8 = JACKPOT; 9 = CHEESE - C; 10 = CHEESE - H; 11 = CHEESE - E; 12 = CHEESE - E; 13 = CHEESE - S; 14 = CHEESE - E; 15 = BONUS - 2X; 16 = BONUS - 3X; 17 = MOUSE - M; 18 = MOUSE - O; 19 = MOUSE - U; 20 = MOUSE - S; 21 = MOUSE - E; 22 = TOP LANES - L; 23 = TOP LANES - M; 24 = TOP LANES - R; 25 = TRAP - T; 26 = TRAP - R; 27 = TRAP - A; 28 = TRAP - P; 29 = CNTR. STANDUP - L; 30 = CNTR. STANDUP - M; 31 = CNTR. STANDUP - R; 32 = TIMER; 33 = TRAP 1 SET; 34 = PLAYFLD MULTIPLY; 35 = SPOT CHEESE - 3; 36 = KICK BACK; 37 = LEFT OUTLANE; 38 = LEFT RETURN LANE; 39 = RT. RETURN LANE; 40 = RIGHT OUTLANE; 41 = SPOT MILL. - 1; 42 = EXTRA BALL - 1; 43 = SPOT CHEESE - 1; 44 = SPOT MILL. - 2; 45 = EXTRA BALL - 2; 46 = SPOT CHEESE - 2; 47 = RIGHT STANDUP; 48 = RIGHT RAMP; 49 = MILLION - N; 50 = MILLION - O; 51 = MILLION - I; 52 = MILLION - L; 53 = MILLION - L; 54 = MILLION - I; 55 = MILLION - M; 56 = BUILD JACKPOT; 57 = JACKPOT 1 MILL.; 58 = JACKPOT 1.S MILL.; 59 = JACKPOT 2 MILL.; 60 = JACKPOT 2.S MILL.; 61 = JACKPOT 3 MILL.; 62 = JACKPOT 4 MILL.; 63 = JACKPOT S MILL.; 64 = NOT USED.",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23
+          ]
+        },
+        "switch-levels": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 6,
+              "matched_text": "LEVELS"
+            }
+          ],
+          "limitation": "Host-held levels written on every poll; a name shown while public n is held at 1 means the ROM reads that address as active at 1.",
+          "note": "Advance walk to SWITCH LEVELS (lower display 06); each public address 1-64 and 81-88 held at 1 alone for 1.5 s. Address = upper display / lower display while held: 1 = PLUMB TILT / O6 O1; 2 = NOT USED / O6 O2; 3 = CREDIT BUTTON / O6 O3; 4 = RT. COIN SWITCH / O6 O4; 5 = CNTR. COIN SWITCH / O6 OS; 6 = LEFT COIN SWITCH / O6 O6; 7 = SLAM TILT / O6 O7; 8 = HIGH SCORE RESET / O6 O8; 9 = OUTHOLE / O6 O9; 10 = NOT USED / O6 1O; 11 = TROUGH 1 BALL / O6 11; 12 = TROUGH 2 BALLS / O6 12; 13 = TROUGH 3 BALLS / O6 13; 14 = SHOOTER LANE / O6 14; 15 = RIGHT RET. LOOP / O6 1S; 16 = LEFT RET. LOOP / O6 16; 17 = MOUSE - M / O6 17; 18 = MOUSE - O / O6 18; 19 = MOUSE - U / O6 19; 20 = MOUSE - S / O6 2O; 21 = MOUSE - E / O6 21; 22 = TOP LANES - L / O6 22; 23 = TOP LANES - M / O6 23; 24 = TOP LANES - R / O6 24; 25 = TRAP - T / O6 2S; 26 = TRAP - R / O6 26; 27 = TRAP - A / O6 27; 28 = TRAP - P / O6 28; 29 = CNTR. STANDUP - L / O6 29; 30 = CNTR. STANDUP - M / O6 3O; 31 = CNTR. STANDUP - R / O6 31; 32 = ENTER MOUSE HOLE / O6 32; 33 = TRAP 1 UP/DOWN / O6 33; 34 = TRAP 2 UP/DOWN / O6 34; 35 = CENTER RAMP / O6 3S; 36 = RIGHT STANDUP / O6 36; 37 = MADE LEFT RAMP / O6 37; 38 = LEFT RET. LANE / O6 38; 39 = RIGHT RET. LANE / O6 39; 40 = RIGHT OUTLANE / O6 4O; 41 = TRAP 1 BALL / O6 41; 42 = TRAP 2 BALL / O6 42; 43 = CNTR. STANDUPS UP / O6 43; 44 = ENTER RIGHT RAMP / O6 44; 45 = NOT USED / O6 4S; 46 = MADE RIGHT RAMP / O6 46; 47 = ENTER LEFT RAMP / O6 47; 48 = MADE LEFT RAMP / O6 48; 49 = BALL DIVERTER / O6 49; 50 = CNTR. STANDUPS DN / O6 SO; 51 = KICKBACK / O6 S1; 52 = LEFT JET / O6 S2; 53 = RIGHT JET / O6 S3; 54 = BOTTOM JET / O6 S4; 55 = LEFT SLING / O6 SS; 56 = RIGHT SLING / O6 S6; 57 = RIGHT FLIPPER / O6 S7; 58 = LEFT FLIPPER / O6 S8; 59 = HOLE LOCK 1 / O6 S9; 60 = HOLE LOCK 2 / O6 6O; 61 = HOLE LOCK 3 / O6 61; 62 = NOT USED / O6 62; 63 = NOT USED / O6 63; 64 = NOT USED / O6 64; 81 = SWITCH LEVELS / O6; 82 = RIGHT FLIPPER / O6 S7; 83 = SWITCH LEVELS / O6; 84 = LEFT FLIPPER / O6 S8; 85 = SWITCH LEVELS / O6; 86 = SWITCH LEVELS / O6; 87 = SWITCH LEVELS / O6; 88 = SWITCH LEVELS / O6.",
+          "solenoid_addresses_seen": [
+            1,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            23,
+            45,
+            46,
+            47,
+            48
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "name": "nvram-init",
+        "nvram_initialization": "Fresh empty state directory; this is the one retained mousn_l4 initialization run (FACTORY SETTING), whose nvram/mousn_l4.nv is the only state any later mousn_l4 run inherits.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-nvram-init.json",
+        "scenario_sha256": "c5b8a5b4d47e92e6d29c67ac085caae71fb2fe40e1a4b79b906bec1bd918f19e",
+        "self_test_pulses": 0,
+        "sha256": "e9d358ef2dcc0b50530aeea16e32bd7ec106d245a4069c7243fee3d3f8d4e4cd",
+        "snapshot_count": 2,
+        "watch_switches": []
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "coil-test",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-coil-test.json",
+        "scenario_sha256": "cc9a35d77a02600726a585fdfd874cb8b30abf3f1b82f8ee6905631ffbe8306e",
+        "self_test_pulses": 6,
+        "sha256": "b772e16514ff938e2438079772c7a3760c8c4107978ba3ff76a4bf41ae072533",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 70,
+        "boot_wait_s": 0,
+        "name": "single-lamps",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-single-lamps.json",
+        "scenario_sha256": "8eb19a1a00d73322829f527381d257f8464d4e442de3dca6dc4a3e23c4e53ba3",
+        "self_test_pulses": 5,
+        "sha256": "52d165d8c1c44f70be10fc426586d5a6f34b60398af376a58bd3086242275938",
+        "snapshot_count": 71,
+        "watch_switches": [
+          -7,
+          -6,
+          3
+        ]
+      },
+      {
+        "action_count": 78,
+        "boot_wait_s": 0,
+        "name": "switch-levels",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-switch-levels.json",
+        "scenario_sha256": "03ad6449a7dc6fc09491b433da646bafcbf8030abe68280becbe51de8c88d8ae",
+        "self_test_pulses": 7,
+        "sha256": "e22786bcea58938a70119deed32b9022762e19105b696681c52f2cdc6ee7d0aa",
+        "snapshot_count": 151,
+        "watch_switches": [
+          -7,
+          -6,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88
+        ]
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "c-side-test",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-c-side-test.json",
+        "scenario_sha256": "b459a42998aa0da37dc75f9285c51eb832199daa94fb7dd1e17192d400b7a05c",
+        "self_test_pulses": 9,
+        "sha256": "6980b04e3666647f5d938021cc3ce268a92f68bff023a0d31034fa273e166bab",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6,
+          2
+        ]
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "motor-bank-no-switch",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-motor-bank-no-switch.json",
+        "scenario_sha256": "99dbf771b510d7a24c03b6c0dbb451598ac748746324dfc506184ae8aede6cee",
+        "self_test_pulses": 10,
+        "sha256": "e8cd6a6db8a223f4e2d4589b32b8cf33f85f746943dc0fcd879fbd6d2e4e48be",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6,
+          43,
+          50
+        ]
+      },
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "motor-bank-up-held",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-motor-bank-up-held.json",
+        "scenario_sha256": "850245848496bf618db1864e9e3b0c83032106ed4b031455bf90bb9b15b76dcf",
+        "self_test_pulses": 10,
+        "sha256": "aa945a8a746d7f85a2859ed6f739d673735ccc78a0dfd05e16b8e5d7e96bbfca",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6,
+          43,
+          50
+        ]
+      },
+      {
+        "action_count": 12,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "motor-bank-up-down-up",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-motor-bank-up-down-up.json",
+        "scenario_sha256": "42eb94074cf26849b44094ac60aaf99a16d71d6e3491b2641dc11b9a4aba87cc",
+        "self_test_pulses": 10,
+        "sha256": "4f528e073217789a64c2bd7b0a738c74ec4042ddf7f1007934368e0733ed627d",
+        "snapshot_count": 13,
+        "watch_switches": [
+          -7,
+          -6,
+          43,
+          50
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          }
+        ],
+        "name": "boot-baseline",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-baseline.json",
+        "scenario_sha256": "41ab9aefd37d72667012490e21630f5fdda746436e9d157f696c2527147b84df",
+        "self_test_pulses": 0,
+        "sha256": "cb7c70aa02fb2638af0e6e021090dd192852cbd19adae921a83260f297b62ad0",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 9
+          }
+        ],
+        "name": "boot-outhole-9",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-outhole-9.json",
+        "scenario_sha256": "9620d75bb1a39e9efd35023b48323677b5087c864d70b9465d61d2fe0896dc75",
+        "self_test_pulses": 0,
+        "sha256": "0a07f00793e5925f5ed4821b772fe884ef8220d42590bee9e7f616e4d508b29b",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          9
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          }
+        ],
+        "name": "boot-trough-11-13",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-11-13.json",
+        "scenario_sha256": "f38ae8d62c53981bfaca82b54a53db4bf05f3ff63718a9b974ef7c7d6fd91b79",
+        "self_test_pulses": 0,
+        "sha256": "d020b1df3c3630f2216ce3357196ab349a195e98cad2bc8f920ce4cd7102d8ac",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 14
+          }
+        ],
+        "name": "boot-shooter-14",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-shooter-14.json",
+        "scenario_sha256": "1f809a3eec29ac9e817510b08ff39dc22fdc57d94cda186627767b093d359d88",
+        "self_test_pulses": 0,
+        "sha256": "28c46511ed6f95c88814acf459abdaceeb5bd8f12539ce8c003177924bc9db20",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          14
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          }
+        ],
+        "name": "boot-traps-33-34",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-traps-33-34.json",
+        "scenario_sha256": "9f9eb10e9e543574860715eb8d5c4e0f0eb067dab0a3ccdc6d16beb8cc248f0c",
+        "self_test_pulses": 0,
+        "sha256": "e3f8c1a4a5384cb006434ee36fdb518ce153f10ccc8410d7f4c15bbe25caf0f7",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          33,
+          34
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 41
+          },
+          {
+            "state": 1,
+            "switch": 42
+          }
+        ],
+        "name": "boot-traps-ball-41-42",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-traps-ball-41-42.json",
+        "scenario_sha256": "7bfee6651c964a6f1006808552c1f1ba001ba9e4097e0544c8a3bbb6d2449d17",
+        "self_test_pulses": 0,
+        "sha256": "10474a8d9b1e6b17a12f17f18d2a5a1f2830d19d5b0cd392a1c8a4aafeee4465",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          41,
+          42
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 59
+          }
+        ],
+        "name": "boot-mouse-hole-59",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-mouse-hole-59.json",
+        "scenario_sha256": "a86c7b7730797a347c9b7c112f2b26080b8e3d833b06d4bbb185d3f28dbf67e8",
+        "self_test_pulses": 0,
+        "sha256": "fa4a383b6559b38817a16b93c88c53ab232b55183e63d9ba5321d23a71f115d1",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          59
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 59
+          },
+          {
+            "state": 1,
+            "switch": 60
+          },
+          {
+            "state": 1,
+            "switch": 61
+          }
+        ],
+        "name": "boot-mouse-hole-59-61",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-mouse-hole-59-61.json",
+        "scenario_sha256": "beed0db89faf6a5563d6aefe1bcd79c6cd85e99001eea08268df03e8e7d08807",
+        "self_test_pulses": 0,
+        "sha256": "cfecad10028a2dd6b450a2fa31e1f93f3cfcdaa274b504b957d531ba32245292",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          59,
+          60,
+          61
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "boot-motor-up-43",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-motor-up-43.json",
+        "scenario_sha256": "e3303177608aeb5d6a29588686d1698a5fcea87fb6e52c49f526b467563814eb",
+        "self_test_pulses": 0,
+        "sha256": "3d1d4fad0be1d3f41b6303b7b1f524091b85582edc717896ee375331858729bf",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          43
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 50
+          }
+        ],
+        "name": "boot-motor-down-50",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-motor-down-50.json",
+        "scenario_sha256": "afe986dd6420dca248761c9cde402ffb032121f05ba62e2d6f946146101e5534",
+        "self_test_pulses": 0,
+        "sha256": "233d112e98b4e7774167f5f194f83080662adab7fc99c84b337b0273b529b8af",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          50
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 49
+          }
+        ],
+        "name": "boot-diverter-49",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-diverter-49.json",
+        "scenario_sha256": "80b5a594248957999eeba36582fc54055a71638bab06218ed7603bc04347f65a",
+        "self_test_pulses": 0,
+        "sha256": "ba837551ffa5b227c25c392ff57aaa17b12f6ce81e65fb61d772c1014d5dc3ff",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          49
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          }
+        ],
+        "name": "boot-trough-traps-33-34",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-traps-33-34.json",
+        "scenario_sha256": "9521bba8c6c2a17c319f6fa1116163510afbd3f30b5a1b8f0c4657ede87ed3f3",
+        "self_test_pulses": 0,
+        "sha256": "cef36c00ed8ccba6ef9155d71e049a9fd834c508f7b6a2b5a95458f58bf45724",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13,
+          33,
+          34
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "boot-trough-motor-up-43",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-motor-up-43.json",
+        "scenario_sha256": "1a8e086ef1479612f593ccf77480a8486ac2126867ee3e095e555804103d50a5",
+        "self_test_pulses": 0,
+        "sha256": "60b704ca26757386994b6b1c49a795d0f4bd629180e7e23f55c63b7be28ea23b",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13,
+          43
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 50
+          }
+        ],
+        "name": "boot-trough-motor-down-50",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-motor-down-50.json",
+        "scenario_sha256": "cca607ee20a9cd7850aa7a1b34486458ff3259d702d4ed8470bb04ba1d2373a6",
+        "self_test_pulses": 0,
+        "sha256": "9c43f3d704c011aef6d2a456ce04e33dc85d1141916ce4057c0a9a6060551f63",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13,
+          50
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 49
+          }
+        ],
+        "name": "boot-trough-diverter-49",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-diverter-49.json",
+        "scenario_sha256": "09254e6966d2aa805c8b770490e30bd460e75e9514fd8d5602d7f28232e88395",
+        "self_test_pulses": 0,
+        "sha256": "d0eeb08874592bbf26a57041f3c14fc53adfc36314e048ec6c4dbc58f2e422fd",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13,
+          49
+        ]
+      },
+      {
+        "action_count": 1,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 59
+          }
+        ],
+        "name": "boot-trough-mouse-hole-59",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-boot-trough-mouse-hole-59.json",
+        "scenario_sha256": "155aad9711b209a982365355ee9c4806870ab737db82efc9d038ac9ee7a583e1",
+        "self_test_pulses": 0,
+        "sha256": "379fea936d732794204b85fb7ee9dc042b856874798246eff919f6833ae93f1d",
+        "snapshot_count": 2,
+        "watch_switches": [
+          -7,
+          -6,
+          11,
+          12,
+          13,
+          59
+        ]
+      },
+      {
+        "action_count": 53,
+        "boot_wait_s": 0,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": -6
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          },
+          {
+            "state": 1,
+            "switch": 43
+          }
+        ],
+        "name": "gameplay",
+        "nvram_initialization": "Fresh state directory holding only nvram/mousn_l4.nv (SHA-256 8f55eb052021f94e5b9e84d86db958b928e64e7e1b2d686dc0637ba97db2eb71) from the retained mousn_l4 initialization run.",
+        "scenario_path": "tools/harness-scenarios/system-11/mousn-gameplay.json",
+        "scenario_sha256": "ac9520c556a39d5366ecbb80ed22e605caba7a0a6f33728d4faddd0711ab28e3",
+        "self_test_pulses": 0,
+        "sha256": "a4254a26a6e49d641fc118ffbb9283d89ebb60bdf7fb326d7804c9f6f0f045dd",
+        "snapshot_count": 54,
+        "watch_switches": [
+          -6,
+          1,
+          3,
+          6,
+          9,
+          11,
+          12,
+          13,
+          14,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          41,
+          42,
+          43,
+          44,
+          46,
+          47,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          59
+        ]
+      }
+    ],
+    "rom_archive_sha256": "028dbe18f0183a213a88558cbd9e542283acdcbe0c14958ce50a947784923a74"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and NVRAM remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF, of {files: [{path, sha256, size}], format: 'pinmame-external-evidence-manifest', game, version: 1}; files lists every file under source.path recursively (the raw run JSON and log of every run, and every state-directory file including the inherited and written NVRAM) except manifest.json and manifest.sha256, sorted by POSIX relative path. tools/build_external_evidence_manifest.py writes and re-checks it.",
+    "path": "external:pinmame-review-artifacts/mousin-around-1989/runtime",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "64adc22f31458da10678f84a1693ecffd0997ec05cae90018162526a19d787e9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
