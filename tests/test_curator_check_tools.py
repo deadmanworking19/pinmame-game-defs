@@ -116,14 +116,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		# Elvis now has a game-specific manual/ROM/source seed.
 		# Terminator 3 now has a game-specific manual/source/runtime seed.
 		# The Adventures of Rocky and Bullwinkle now has a game-specific manual/source/runtime seed.
-		self.assertEqual(614, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Cyclone now has a game-specific manual/ROM/source/runtime seed.
+		self.assertEqual(613, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(614, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(613, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:

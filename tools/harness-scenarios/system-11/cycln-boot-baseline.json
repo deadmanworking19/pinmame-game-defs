@@ -1,0 +1,22 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Cyclone power-up from the retained initialized NVRAM with every switch open and Auto-Up (-6 = 1), the comparison for the held-switch boot probe.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "observe power-up and attract mode"
+    }
+  ]
+}

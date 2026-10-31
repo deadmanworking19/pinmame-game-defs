@@ -1,0 +1,430 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Cyclone gameplay probe from the retained initialized NVRAM with the ball resting in the outhole (10) and Auto-Up (-6 = 1): two coins and Credit; the outhole kicker serves, the ball is plunged up the shuttle ramp to 100K and falls back into the shooter-lane kickbig (26); the top lanes, ducks, ball toss, spot ball toss, jet bumper, kicker, 10-point, return-lane and ramp switches close one at a time; the spook-house drop target is held down, the spook house scores and a ball waits in the boomerang kickbig (13); the ferris wheel entrance closes; a drain, a second serve, tilt closures and a final drain. The host answers drives only with fixed, scripted switch changes; the mystery wheel opto (41) stays open and PinMAME's mechanics are off.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 10,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    10,
+    13,
+    18,
+    25,
+    26,
+    41,
+    57,
+    58
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 10,
+      "label": "attract mode"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse_until_output",
+      "switch": 3,
+      "channel": "solenoid",
+      "addresses": [
+        23
+      ],
+      "max_pulses": 1,
+      "hold_ms": 150,
+      "settle_s": 1.0,
+      "label": "Credit button raises game-on (23)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 15,
+      "label": "outhole kicker (1) serves the ball from the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball in the shooter lane (25)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "shuttle ramp 100K switch (28)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball falls back into the shooter-lane kickbig (26)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        3
+      ],
+      "active_only": true,
+      "timeout_s": 6,
+      "label": "ball shooter kickbig (3) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 26,
+      "state": 0,
+      "settle_s": 1.5,
+      "label": "ball leaves the kickbig"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "top lane 1 (14)"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "top lane 2 (15)"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "top lane 3 (16)"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ducks top (19)"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ducks middle (20)"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ducks bottom (21)"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ball toss top (22)"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ball toss middle (23)"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "ball toss bottom (24)"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "spot ball toss (59)"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left jet bumper (60)"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right jet bumper (61)"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "bottom jet bumper (62)"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left kicker (63)"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right kicker (64)"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10 pt right bottom (35)"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10 pt right middle (36)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "10 pt right top (37)"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left return lane (55)"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "right return lane (56)"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "enter comet ramp (31)"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "score comet ramp (32)"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "score cyclone ramp (34)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "spook house drop target (18) knocked down"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "score spook house (11)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball in the boomerang kickbig (13)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        4
+      ],
+      "active_only": true,
+      "timeout_s": 8,
+      "label": "boomerang kickbig (4) fires"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "ball leaves the boomerang kickbig"
+    },
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "observe the drop-target reset and the mystery wheel"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "drop target raised"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "ferris wheel entrance (17)"
+    },
+    {
+      "type": "wait",
+      "seconds": 12,
+      "label": "observe the ferris wheel motor (16)"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 120,
+      "settle_s": 1.5,
+      "label": "left outlane (53)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball drains into the outhole (10)"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "active_only": true,
+      "timeout_s": 40,
+      "label": "outhole kicker (1) serves the next ball"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves the outhole"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 1,
+      "settle_s": 2.0,
+      "label": "ball in the shooter lane (25)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 25,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "ball plunged"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "playfield tilt (9)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "plumb bob tilt (1)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 1.0,
+      "label": "plumb bob tilt (1)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 120,
+      "settle_s": 2.0,
+      "label": "plumb bob tilt (1)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 10,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball drains into the outhole (10)"
+    },
+    {
+      "type": "wait",
+      "seconds": 15,
+      "label": "end of ball"
+    }
+  ]
+}

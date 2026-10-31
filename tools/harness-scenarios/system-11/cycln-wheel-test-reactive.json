@@ -1,0 +1,90 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Cyclone Mystery Wheel Test (test 08) with the home opto (public 41) open at start. Once the ROM drives the stepper (13 or 14), the host waits 3 s and then closes 41 for 0.5 s, a synthetic home flag rather than a measurement of the wheel: the run records how the ROM's drive and display react to one home closure.",
+  "initial_switches": [
+    {
+      "switch": 41,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    41
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "WHEEL"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate WHEEL TEST"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        13,
+        14
+      ],
+      "active_only": true,
+      "timeout_s": 20,
+      "label": "the ROM drives the wheel stepper (13 or 14)"
+    },
+    {
+      "type": "wait",
+      "seconds": 3,
+      "label": "wheel stepping"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "home opto closes (synthetic flag)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 41,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "home opto opens"
+    },
+    {
+      "type": "wait",
+      "seconds": 30,
+      "label": "observe the rest of the wheel test"
+    }
+  ]
+}

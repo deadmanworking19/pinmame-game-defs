@@ -300,7 +300,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 294 | 1988 | Slalom Code 0.3 | Stargame | partial | 6% |
 | 295 | 1988 | Space Team | Tecnoplay | partial | 13% |
 | 296 | 1988 | Banzai Run | Williams | partial | 19% |
-| 297 | 1988 | Cyclone | Williams | partial | 19% |
+| 297 | 1988 | Cyclone | Williams | partial | 94% |
 | 298 | 1988 | Jokerz! | Williams | partial | 19% |
 | 299 | 1988 | Swords of Fury | Williams | partial | 88% |
 | 300 | 1988 | Taxi | Williams | partial | 75% |

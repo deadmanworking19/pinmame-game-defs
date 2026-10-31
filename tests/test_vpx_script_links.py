@@ -86,6 +86,7 @@ PINNED_SCRIPTS = {
 	"33aaf9c0d4b89d15b57a0295f568f8fcce3381035f0749a9a0cd05981802e8b6": (STANDALONE_REPOSITORY, STANDALONE_REVISION, "Terminator 3 (Stern 2003) Hanibal v1.5/VP10-Terminator 3 (Stern 2003) Hanibal v1.5.vbs.original"),
 	"6486cf41c8112d9a4dc32463781eabe0aedd4ee6b7ef0016e88364f35b36a7f7": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Adventures of Rocky and Bullwinkle and Friends (Data East 1993) v1.06.vbs"),
 	"c61fcaf9d88b05bb85a9652ed324aed464bc851c5567ebd62dfe1aaaa0a88053": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Rocky & Bullwinkle And Friends 1.0.vbs"),
+	"3b917d098d2756b7889d63de1e69f54f5f185d9ad6c343dcc3cf2bcbbc00086d": (VPXTABLE_REPOSITORY, VPXTABLE_REVISION, "Cyclone (Williams 1988) v1.5.vbs"),
 }
 
 LINE_ENDING_VARIANTS = {

@@ -1,0 +1,42 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Cyclone power-up from the retained initialized NVRAM with a ball held in the outhole (10), the shooter-lane kickbig (26) and the boomerang kickbig (13) and the spook-house drop target down (18), Auto-Up (-6 = 1). Records which outputs the ROM drives while those switches stay held; the host never releases them, so the run shows the ROM's attract-mode reaction, not a ball's travel.",
+  "initial_switches": [
+    {
+      "switch": -6,
+      "state": 1
+    },
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 18,
+      "state": 1
+    },
+    {
+      "switch": 26,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    10,
+    13,
+    18,
+    26
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25,
+      "label": "observe power-up and attract mode"
+    }
+  ]
+}

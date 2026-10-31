@@ -1,0 +1,198 @@
+{
+  "driver_ids": [
+    "cycln_l1"
+  ],
+  "extractor": {
+    "id": "cyclone-harness-runs",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.cyclone.1988"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python -B tools/run_pinmame_harness.py --library <pinned-pinmame64.dll> --game <set> --rom-path <vpinmame-roms> --work-dir <run>/state --scenario tools/harness-scenarios/system-11/cycln-nvram-init.json --output <run>/init.json, then the same command with --scenario tools/harness-scenarios/system-11/cycln-<name>.json --output <run>/run.json in the same, newly created state directory. Diagnostic scenarios wait 8 s, set Manual-Down (-6 = 0), pulse Advance (-7) to enter the tests, set Auto-Up (-6 = 1) and pulse Advance until the test's title is displayed.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "cycln_l1",
+    "observations": {
+      "named_output_addresses": {
+        "coil-01-l-ferris-jackpot": 25,
+        "coil-01-outhole": 1,
+        "coil-02-not-used": 2,
+        "coil-02-r-ferris-c-teeth": 26,
+        "coil-03-bck-mid-l-eye": 27,
+        "coil-03-shuttle-kicker": 3,
+        "coil-04-bomerng-kicker": 4,
+        "coil-04-cats-f-l-b-firew": 28,
+        "coil-05-c-drop-target": 5,
+        "coil-05-duck-f-l-r-firew": 29,
+        "coil-06-ferris-flasher": 30,
+        "coil-06-not-used": 6,
+        "coil-07-knocker": 7,
+        "coil-07-top-rit-r-eye": 31,
+        "coil-08-not-used": 8,
+        "coil-08-spook-h-l-firew": 32,
+        "coil-09-spin-m-w-flasher": 9,
+        "coil-10-playfld-g-i": 10,
+        "coil-11-backbox-g-i": 11,
+        "coil-12-a-c-select": 12,
+        "coil-15-bomerng-1251": 15,
+        "coil-16-ferris-wheel": 16,
+        "coil-17-left-jet": 17,
+        "coil-18-left-kicker": 18,
+        "coil-19-right-jet": 19,
+        "coil-20-right-kicker": 20,
+        "coil-21-bottom-jet": 21,
+        "coil-22-not-used": 22
+      },
+      "runs": {
+        "coil-test-l1": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 5,
+              "matched_text": "COIL"
+            }
+          ],
+          "limitation": "A pulsed address is ROM activity, not proof that a load is fitted: steps 02, 06, 08 and 22 pulse drives the ROM names NOT USED.",
+          "note": "Advance walk to COIL TEST (player 3 display 05), then two identical cycles of 28 pulses. Step:address = player 1 and 2 displays [player 4 display]: 01:1 = OUTHOLE ['A'51dE]; 01:25 = L.FERRIS JACKPOT ['C'51dE]; 02:2 = NOT USED ['A'51dE]; 02:26 = R.FERRIS C. TEETH ['C'51dE]; 03:3 = SHUTTLE KICKER ['A'51dE]; 03:27 = BCK. MID. L. EYE ['C'51dE]; 04:4 = BOMERNG. KICKER ['A'51dE]; 04:28 = CATS F.L. B. FIREW. ['C'51dE]; 05:5 = C. DROP TARGET ['A'51dE]; 05:29 = DUCK F.L. R. FIREW. ['C'51dE]; 06:6 = NOT USED ['A'51dE]; 06:30 = FERRIS FLASHER ['C'51dE]; 07:7 = KNOCKER ['A'51dE]; 07:31 = TOP RIT. R. EYE ['C'51dE]; 08:8 = NOT USED ['A'51dE]; 08:32 = SPOOK H. L. FIREW. ['C'51dE]; 09:9 = SPIN M.W. FLASHER; 10:10 = PLAYFLD. G.I.; 11:11 = BACKBOX G.I.; 12:12 = A/C SELECT; 15:15 = BOMERNG. 12S1; 16:16 = FERRIS WHEEL; 17:17 = LEFT JET; 18:18 = LEFT KICKER; 19:19 = RIGHT JET; 20:20 = RIGHT KICKER; 21:21 = BOTTOM JET; 22:22 = NOT USED. Steps 01-08 pulse the A-side address n with the A/C select relay (12) released and then, with 12 energized, the C-side address n+24 (25, 26, 27, 28, 29, 30, 31, 32); step 12 pulses 12 itself; steps 13 and 14 are skipped.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            25,
+            2,
+            26,
+            3,
+            27,
+            4,
+            28,
+            5,
+            29,
+            6,
+            30,
+            7,
+            31,
+            8,
+            32,
+            9,
+            10,
+            11,
+            12,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 6,
+        "boot_wait_s": 0,
+        "name": "coil-test-l1",
+        "nvram_initialization": "Newly created state directory: the initialization run coil-test-l1/init.json (scenario cycln-nvram-init.json, SHA-256 of its record 594b57dc09a2e07c36baaececbdd5e95162973f625b018b4483f4fef1f645c51) booted cycln_l1 from empty NVRAM and wrote nvram/cycln_l1.nv, which this run inherited and no other run shares.",
+        "scenario_path": "tools/harness-scenarios/system-11/cycln-coil-test.json",
+        "scenario_sha256": "845bce10a89a70bb72d536e3bc5c91fdd33ee8dfe9cb8c12c53f70f8995e269b",
+        "self_test_pulses": 6,
+        "sha256": "301ab8eb4fbdcb736f68a192de3cb57f9fb0bce00cd4913f25c306d2f8f8365a",
+        "snapshot_count": 7,
+        "watch_switches": [
+          -7,
+          -6
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e2d5a524287d35f26257ab33bfc033729036f2efb5652193b122f2e4a700beba"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes and NVRAM remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF, of {files: [{path, sha256, size}], format: 'pinmame-external-evidence-manifest', game, version: 1}; files lists every file under source.path recursively (each run directory's init.json, init.log, run.json and run.log and every state-directory file, including the NVRAM the initialization wrote and the run then rewrote) except manifest.json and manifest.sha256, sorted by POSIX relative path. tools/build_external_evidence_manifest.py writes and re-checks it.",
+    "path": "external:pinmame-review-artifacts/cyclone-1988/harness",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "a483fe6e44935c183d9ee9970ae44b6f5bf967eeb748539f5468bbdc1b4648c0"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

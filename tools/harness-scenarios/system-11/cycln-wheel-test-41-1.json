@@ -1,0 +1,60 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Cyclone Mystery Wheel Test (test 08) with the Mystery Wheel home opto (public 41) held at 1 for the whole run (the Switch Levels test also names 41 while it is closed, so the locator waits for the full test title). The ROM steps the backbox wheel's stepper motor; the host never answers the motor, so the run shows the ROM's drive pattern and its reaction to a static opto, not the mechanism's travel.",
+  "initial_switches": [
+    {
+      "switch": 41,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    -7,
+    -6,
+    41
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 8,
+      "label": "stabilize initialized ROM"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "manual down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 2,
+      "label": "enter diagnostic tests"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.3,
+      "label": "auto up"
+    },
+    {
+      "type": "pulse_until_display",
+      "switch": -7,
+      "texts": [
+        "WHEEL TEST"
+      ],
+      "max_pulses": 14,
+      "hold_ms": 200,
+      "settle_s": 2.5,
+      "label": "locate WHEEL TEST"
+    },
+    {
+      "type": "wait",
+      "seconds": 45,
+      "label": "observe the automatic wheel test"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Initialize factory defaults in one newly created isolated state directory: a Cyclone ROM booted from empty NVRAM initializes its audits and adjustments, so this run supplies the only NVRAM every later run of the same driver inherits. No host switches.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "allow factory-settings initialization"
+    }
+  ]
+}
