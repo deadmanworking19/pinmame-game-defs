@@ -168,7 +168,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 162 | 1994 | Mach 2 | Spinball (Spain) | partial | 13% |
 | 163 | 1994 | Demolition Man | Williams | partial | 88% |
 | 164 | 1994 | Red and Ted's Road Show | Williams | partial | 19% |
-| 165 | 1994 | The Flintstones | Williams | partial | 19% |
+| 165 | 1994 | The Flintstones | Williams | partial | 94% |
 | 166 | 1993 | Dinosaur Eggs (R02) | Alvin G | partial | 6% |
 | 167 | 1993 | Mystery Castle | Alvin G | partial | 81% |
 | 168 | 1993 | Pistol Poker | Alvin G | partial | 13% |
