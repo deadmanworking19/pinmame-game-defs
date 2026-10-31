@@ -1,0 +1,38 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 30.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 300,
+      "label": "self-test button press 1",
+      "settle_s": 1.5,
+      "switch": -7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "self-test button press 2",
+      "settle_s": 1.5,
+      "switch": -7,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 300,
+      "label": "self-test button press 3",
+      "settle_s": 1.5,
+      "switch": -7,
+      "type": "pulse"
+    },
+    {
+      "label": "solenoid test: observe two cycles",
+      "seconds": 42.0,
+      "type": "wait"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "notes": "Boot a Harlem Globetrotters On Tour ROM (either driver) from empty NVRAM, wait out the power-up test, and press Self Test (-7) three times: lamp test, display test, then the cycling solenoid test, which fires one output at a time and shows its self-test number on every player display. Observe two full cycles.",
+  "version": 1
+}

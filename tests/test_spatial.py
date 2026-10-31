@@ -510,7 +510,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Gold's complete physical inventory and disclosed placements remove one gap.
 		# The separate Wild Texas conversion also lacks spatial evidence.
 		# Congo's switch-25 placement and its promotion remove one more.
-		self.assertEqual(720, report["missing_requirement_counts"]["spatial_placement"])
+		# Harlem Globetrotters' legacy record omitted it too; its curated partial names the 53 playfield
+		# lamps the retained table draws without bulbs, adding one.
+		self.assertEqual(721, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just

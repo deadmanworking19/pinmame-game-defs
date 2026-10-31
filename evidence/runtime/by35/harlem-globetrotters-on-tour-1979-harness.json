@@ -1,0 +1,1364 @@
+{
+  "driver_ids": [
+    "hglbtrtr",
+    "hglbtrtb"
+  ],
+  "extractor": {
+    "id": "tools/harlem_globetrotters_runtime_summary.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.harlem-globetrotters-on-tour.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game <driver> --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics 0 --scenario tools/harness-scenarios/by35/<scenario>.json --output <external-run.json>; keyboard handling off for every run. Runs of hglbtrtb used the ROM archive with SHA-256 a97ca0ec417a0edd442994934f3829638ec0860ca56e16a8ed671de152edaffa. Each set_switch or pulse is a host stimulus, never a ROM observation; the display values are the harness's seven-segment words read as digits, and every cited one is pinned in tools/seeds/bally/harlem-globetrotters-on-tour-1979-frame-readings.json (SHA-256 b7aaf24076d0e3fd35f61c3a24f412c5bd82e0062f8203148e86321554097d5b). observations.switch_to_lamp lists the lamp each closure lit in the hglbtrtr gameplay run; the lamps closures put out and the coils they fired are in the gameplay run note and named_action_observations.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+      "sha256": "8044e4dfbcd66dd2d686075f2b942d8c60c4a04899c603d2d67a9b2ff6103cd5"
+    },
+    "game": "hglbtrtr",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "gameplay: coin chute I (public 10)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "gameplay: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            15,
+            17,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: public 8 ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            37
+          ],
+          "input_address": 37,
+          "input_kind": "switch",
+          "label": "gameplay: public 37 left slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            11
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            36
+          ],
+          "input_address": 36,
+          "input_kind": "switch",
+          "label": "gameplay: public 36 right slingshot",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            12
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            40
+          ],
+          "input_address": 40,
+          "input_kind": "switch",
+          "label": "gameplay: public 40 left thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            39
+          ],
+          "input_address": 39,
+          "input_kind": "switch",
+          "label": "gameplay: public 39 right thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            38
+          ],
+          "input_address": 38,
+          "input_kind": "switch",
+          "label": "gameplay: public 38 bottom thumper bumper",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: public 24 globe saucer: ball enters",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            13
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            24
+          ],
+          "input_address": 24,
+          "input_kind": "switch",
+          "label": "gameplay: public 24 globe saucer: ball leaves",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "gameplay: public 4 drop target A (bottom) down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "gameplay: public 3 drop target B down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "gameplay: public 2 drop target C down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "gameplay: public 1 drop target D (top) down",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "gameplay: public 32 target (free throw) saucer: ball enters",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            14,
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            32
+          ],
+          "input_address": 32,
+          "input_kind": "switch",
+          "label": "gameplay: public 32 target (free throw) saucer: ball leaves",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            4
+          ],
+          "input_address": 4,
+          "input_kind": "switch",
+          "label": "gameplay: public 4 drop target A reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            3
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "gameplay: public 3 drop target B reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            2
+          ],
+          "input_address": 2,
+          "input_kind": "switch",
+          "label": "gameplay: public 2 drop target C reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            1
+          ],
+          "input_address": 1,
+          "input_kind": "switch",
+          "label": "gameplay: public 1 drop target D reset up",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            17
+          ],
+          "input_address": 17,
+          "input_kind": "switch",
+          "label": "gameplay: public 17 left side spinner",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            25
+          ],
+          "input_address": 25,
+          "input_kind": "switch",
+          "label": "gameplay: public 25 center right spinner",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            33
+          ],
+          "input_address": 33,
+          "input_kind": "switch",
+          "label": "gameplay: public 33 center left spinner",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            26
+          ],
+          "input_address": 26,
+          "input_kind": "switch",
+          "label": "gameplay: public 26 target \"1\" (bottom)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            27
+          ],
+          "input_address": 27,
+          "input_kind": "switch",
+          "label": "gameplay: public 27 target \"2\"",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            28
+          ],
+          "input_address": 28,
+          "input_kind": "switch",
+          "label": "gameplay: public 28 target \"3\"",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            29
+          ],
+          "input_address": 29,
+          "input_kind": "switch",
+          "label": "gameplay: public 29 target \"4\"",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            30
+          ],
+          "input_address": 30,
+          "input_kind": "switch",
+          "label": "gameplay: public 30 target \"5\" (top)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            35
+          ],
+          "input_address": 35,
+          "input_kind": "switch",
+          "label": "gameplay: public 35 dunk shot target",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            22
+          ],
+          "input_address": 22,
+          "input_kind": "switch",
+          "label": "gameplay: public 22 flip feed lane (right)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            31
+          ],
+          "input_address": 31,
+          "input_kind": "switch",
+          "label": "gameplay: public 31 left outlane",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            34
+          ],
+          "input_address": 34,
+          "input_kind": "switch",
+          "label": "gameplay: public 34 300 point rebound",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            23
+          ],
+          "input_address": 23,
+          "input_kind": "switch",
+          "label": "gameplay: public 23 right outlane",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19,
+            47,
+            48
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "gameplay: public 84 left flipper button held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "gameplay: public 84 left flipper button released",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19,
+            45,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "gameplay: public 82 right flipper button held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "gameplay: public 82 right flipper button released",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            83
+          ],
+          "input_address": 83,
+          "input_kind": "switch",
+          "label": "gameplay: public 83 upper left generic position held",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            83
+          ],
+          "input_address": 83,
+          "input_kind": "switch",
+          "label": "gameplay: public 83 upper left generic position released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "gameplay: public 81 upper right generic position held",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            81
+          ],
+          "input_address": 81,
+          "input_kind": "switch",
+          "label": "gameplay: public 81 upper right generic position released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: outhole drain: public 8 closed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "gameplay: public 8 outhole hold closed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            15,
+            18
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            10
+          ],
+          "input_address": 10,
+          "input_kind": "switch",
+          "label": "tilt: coin chute I (public 10)",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            6
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "tilt: credit button (public 6)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            15,
+            17,
+            19
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "tilt: public 8 ball leaves the outhole",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19,
+            45,
+            46
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: public 82 right flipper button held",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            7
+          ],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "tilt: public 7 tilt",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            17,
+            19,
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            82
+          ],
+          "input_address": 82,
+          "input_kind": "switch",
+          "label": "tilt: public 82 right flipper button released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "tilt: public 84 left flipper button held after tilt",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            18
+          ],
+          "host_stimulus_switch_addresses": [
+            84
+          ],
+          "input_address": 84,
+          "input_kind": "switch",
+          "label": "tilt: public 84 left flipper button released",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [
+            17,
+            18,
+            19
+          ],
+          "host_stimulus_switch_addresses": [
+            8
+          ],
+          "input_address": 8,
+          "input_kind": "switch",
+          "label": "tilt: public 8 ball drains to the outhole",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7,
+            15,
+            17,
+            18,
+            19
+          ]
+        }
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 7,
+        "10": 15,
+        "11": 18,
+        "12": 19,
+        "13": 17,
+        "2": 6,
+        "3": 13,
+        "4": 14,
+        "5": 12,
+        "6": 11,
+        "7": 9,
+        "8": 8,
+        "9": 10
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "runs": {
+        "gameplay-hglbtrtb": {
+          "note": "The same stimuli fired the same solenoids at every step as on hglbtrtr, including the coin lockout's behaviour during the bonus count; lamp observations are cited from hglbtrtr only."
+        },
+        "gameplay-hglbtrtr": {
+          "note": "Coin on public 10, credit on public 6 with the ball held on the outhole (8): the start fired 7 and 15 and raised 17 and 19. One closure at a time: slingshots 37 and 36 fired 11 and 12; thumper bumpers 40, 39 and 38 fired 9, 8 and 10; the globe saucer 24 fired 13 and lit the centre G (15). Drop targets 4, 3, 2 and 1 fired nothing; the second lit 2X (12), the third 3X (28) and the fourth 5X (44). The target saucer 32 with all four down fired 14 and 15 and lit the saucer target special (56). The centre right spinner 25 lit lamp 20. Players targets 26, 27, 28 and 29 put out lamps 10, 57, 41 and 25; the fifth (30) relit them and lit lamp 58. The dunk shot target 35 dropped 17 and lit lamp 37; the right outlane 23 raised 17 again and put 37 out. Holding 84 raised 47 and 48 and holding 82 raised 45 and 46; holding 81 or 83 changed no output. The drain fired 7 and 15. While the outhole bonus counted down, the ROM dropped the coin lockout (18) and raised it 5 times before the outhole kick, each time for a few tens of milliseconds except the last, which it held."
+        },
+        "solenoid-test-hglbtrtb": {
+          "note": "Same pairing, cycle and published lamp and solenoid addresses as hglbtrtr. The player displays carry seven digits, and at power-up player 1 shows 090, the conversion's revision."
+        },
+        "solenoid-test-hglbtrtr": {
+          "note": "Self-test pressed three times after a 30 s boot; the solenoid test then fires one output at a time while showing its number on every player display. Paired with the number on player 1's display 0.25 s after each pulse, in test order 1 to 13: 1->7, 2->6, 3->13, 4->14, 5->12, 6->11, 7->9, 8->8, 9->10, 10->15, 11->18, 12->19, 13->17. Every later pulse of the run follows the same order (3 full cycles). Before the test the power-on reset pulsed outputs 17, 18, 19, 20 together, and the ROM's start-up fired the saucer kickers (13, 14) and the drop-target reset (15) and raised the gate (17), the coin lockout (18) and the flipper relay (19).",
+          "ordered_solenoid_on_sequence": [
+            7,
+            6,
+            13,
+            14,
+            12,
+            11,
+            9,
+            8,
+            10,
+            15,
+            18,
+            19,
+            17
+          ]
+        },
+        "switch-test-hglbtrtb": {
+          "note": "Same as hglbtrtr: 1 to 40 shown, 41 to 48 not, and the same slingshot and bumper coils fired."
+        },
+        "switch-test-hglbtrtr": {
+          "note": "Self-test pressed five times (the fourth press ends the cycling solenoid test, the fifth starts the switch test). Closing each of public 1 to 40 alone made the ROM show that number on the player displays; closing 41 to 48 showed nothing. The ROM fired the slingshot and thumper bumper coils for their switches in the switch test too (36->12, 37->11, 38->10, 39->8, 40->9)."
+        },
+        "tilt-hglbtrtr": {
+          "note": "With a game running and the right flipper button held (45 and 46 up), pulsing the tilt (7) dropped 17, 19, 45 and 46 and lit lamp 61 (TILT); holding 84 afterwards raised nothing. At the drain the next ball fired 7 and 15, raised 17 and 19 and put 61 out."
+        }
+      },
+      "solenoid_addresses_seen": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20
+      ],
+      "switch_to_lamp": {
+        "1": 44,
+        "2": 28,
+        "24": 15,
+        "25": 20,
+        "3": 12,
+        "30": 58,
+        "32": 56,
+        "35": 37
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 5,
+        "name": "solenoid-test-hglbtrtr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/solenoid-test/hglbtrtr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-solenoid-test.json",
+        "scenario_sha256": "c934369c2a57e0fdfc52cbc4a6b6057b1d3acea3b9d6e632a4adfa16b9bf0c3b",
+        "self_test_pulses": 3,
+        "sha256": "e438d084f3fde38c69c58b1c7d087cd4b2049729e1b9d01cb017d47170c3e5fb",
+        "snapshot_count": 6,
+        "watch_switches": [
+          -7
+        ]
+      },
+      {
+        "action_count": 5,
+        "name": "solenoid-test-hglbtrtb",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/solenoid-test/hglbtrtb/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-solenoid-test.json",
+        "scenario_sha256": "c934369c2a57e0fdfc52cbc4a6b6057b1d3acea3b9d6e632a4adfa16b9bf0c3b",
+        "self_test_pulses": 3,
+        "sha256": "6d998619903e00bd4cecf20013d6f49eb16aafc7973a26f2c66271912b64d4c4",
+        "snapshot_count": 6,
+        "watch_switches": [
+          -7
+        ]
+      },
+      {
+        "action_count": 103,
+        "name": "switch-test-hglbtrtr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/switch-test/hglbtrtr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-switch-test.json",
+        "scenario_sha256": "99abdf16fc92a7311eb8bd28f7c0dedc173e2817e385655a4c39b7639274517e",
+        "self_test_pulses": 5,
+        "sha256": "99f820df20c44fbf26720da16e1564e2fde41104ef7a4a79bb6ce693672910b4",
+        "snapshot_count": 104,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48
+        ]
+      },
+      {
+        "action_count": 103,
+        "name": "switch-test-hglbtrtb",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/switch-test/hglbtrtb/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-switch-test.json",
+        "scenario_sha256": "99abdf16fc92a7311eb8bd28f7c0dedc173e2817e385655a4c39b7639274517e",
+        "self_test_pulses": 5,
+        "sha256": "48c9b14cf85080fd36f2d96ba492cf2f02a35f39b4603ab27c04be9c65d1b996",
+        "snapshot_count": 104,
+        "watch_switches": [
+          -7,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48
+        ]
+      },
+      {
+        "action_count": 44,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "gameplay-hglbtrtr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/gameplay/hglbtrtr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-gameplay.json",
+        "scenario_sha256": "62caff91cfda7cc52c6c6c924c0b18dd69d39fe5e58aebdf76e22ba04d598c57",
+        "self_test_pulses": 0,
+        "sha256": "6285f2c8f6fe86a59e5bcd516cc651b29599ca81d88f526b9a86d56e14c3bd92",
+        "snapshot_count": 45,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          17,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          81,
+          82,
+          83,
+          84
+        ]
+      },
+      {
+        "action_count": 44,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "gameplay-hglbtrtb",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/gameplay/hglbtrtb/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-gameplay.json",
+        "scenario_sha256": "62caff91cfda7cc52c6c6c924c0b18dd69d39fe5e58aebdf76e22ba04d598c57",
+        "self_test_pulses": 0,
+        "sha256": "dc52fdea465ab962085954973acc2849b8911ccb91e1bb971b32321c85269545",
+        "snapshot_count": 45,
+        "watch_switches": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          10,
+          17,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          81,
+          82,
+          83,
+          84
+        ]
+      },
+      {
+        "action_count": 10,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 8
+          }
+        ],
+        "name": "tilt-hglbtrtr",
+        "nvram_initialization": "empty; the run created its own isolated PinMAME state directory (state/ beside run.json) and sends no keyboard input",
+        "retained_from": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs/tilt/hglbtrtr/run.json",
+        "scenario_path": "tools/harness-scenarios/by35/hglbtrtr-tilt.json",
+        "scenario_sha256": "187d4cf053cafd9cf0ad4e339ea26ea41ede542fb18f94be4a5423bfca73a4df",
+        "self_test_pulses": 0,
+        "sha256": "05dea8f262b4164f18bd28aba10ce8e327ec2faa2dc06a557ba085aacb68d4a5",
+        "snapshot_count": 11,
+        "watch_switches": [
+          6,
+          7,
+          8,
+          10,
+          82,
+          84
+        ]
+      }
+    ],
+    "rom_archive_sha256": "e1bf1c869aa00e0cfc2d526eac265aca42cea94726192f974b0bf7b178083fad"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external. PinMAME raises its generic flipper outputs in pairs, 45 with 46 for the right button and 47 with 48 for the left, and the observations keep both members of each pair.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: the SHA-256 recorded in manifest.sha256 beside manifest.json, built by tools/build_external_evidence_manifest.py, which lists every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sorted by path, serialised as compact canonical JSON (separators=(',',':'), sort_keys=True, ensure_ascii=False) plus a newline, encoded UTF-8. At capture time the tree held 42 files totalling 4701276 bytes. Individual run hashes are in runtime.raw_runs[].sha256.",
+    "path": "external:pinmame-review-artifacts/harlem-globetrotters-on-tour-1979/runs",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "46e1a01a0f73dc5ce163d98db1ae435883ecc450",
+    "sha256": "57290e60c2d8cf3ed545cdcdfc205809249db6961d40a2e0f1aee2761ca14319"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

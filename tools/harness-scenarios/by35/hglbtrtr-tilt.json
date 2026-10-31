@@ -1,0 +1,84 @@
+{
+  "actions": [
+    {
+      "label": "boot",
+      "seconds": 25.0,
+      "type": "wait"
+    },
+    {
+      "hold_ms": 150,
+      "label": "coin chute I (public 10)",
+      "settle_s": 1.5,
+      "switch": 10,
+      "type": "pulse"
+    },
+    {
+      "hold_ms": 150,
+      "label": "credit button (public 6)",
+      "settle_s": 5.0,
+      "switch": 6,
+      "type": "pulse"
+    },
+    {
+      "label": "public 8 ball leaves the outhole",
+      "settle_s": 3.0,
+      "state": 0,
+      "switch": 8,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 82 right flipper button held",
+      "settle_s": 1.0,
+      "state": 1,
+      "switch": 82,
+      "type": "set_switch"
+    },
+    {
+      "hold_ms": 300,
+      "label": "public 7 tilt",
+      "settle_s": 3.0,
+      "switch": 7,
+      "type": "pulse"
+    },
+    {
+      "label": "public 82 right flipper button released",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 82,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 84 left flipper button held after tilt",
+      "settle_s": 1.0,
+      "state": 1,
+      "switch": 84,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 84 left flipper button released",
+      "settle_s": 1.0,
+      "state": 0,
+      "switch": 84,
+      "type": "set_switch"
+    },
+    {
+      "label": "public 8 ball drains to the outhole",
+      "settle_s": 6.0,
+      "state": 1,
+      "switch": 8,
+      "type": "set_switch"
+    }
+  ],
+  "format": "pinmame-harness-scenario",
+  "initial_switches": [
+    {
+      "state": 1,
+      "switch": 8
+    }
+  ],
+  "notes": "Tilt probe: start a game with the ball in the outhole, release it, hold the right flipper button, pulse the tilt input (public 7) and check that the flipper-enable relay (19) and the right flipper output drop; then hold the left flipper button after the tilt.",
+  "version": 1,
+  "watch_switches": [
+    8
+  ]
+}

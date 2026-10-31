@@ -28,13 +28,6 @@ PAIRED = {
 # every closure to score the same; "award" requires the address's closure to light lamps no member's closure lit;
 # "reset" names the bank reset coil that only the address's closure fires.
 BANKS = {
-	("runtime.harlem-globetrotters-on-tour.hglbtrtr.switch-2-in-play", 2): {
-		"members": {1: "drop target 1 down", 3: "drop target 3 down", 4: "drop target 4 down"},
-		"step": "public 2 closed",
-		"relay": 19,
-		"points": 5000,
-		"award": True,
-	},
 	("runtime.skateball.skatebll.switch-2-and-19-in-play", 2): {
 		"members": {3: "center drop target 3 down", 4: "center drop target 4 down"},
 		"step": "public 2 closed fires 10",
