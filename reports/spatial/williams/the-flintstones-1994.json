@@ -1,6 +1,7 @@
 {
   "blockers": [
-    "Every placement comes from one community table's named objects and none was checked against the manual's switch, lamp or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings. The lamp placements are the table's bulb lights, which sit at its insert centres and draw no bulb mesh; until that check, nothing but the table puts a socket there.",
+    "Every placement comes from one community table's named objects and none was checked against the manual's switch, lamp or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings.",
+    "Lamps 11-86 have no coordinate: the retained table draws each insert with a classic LTnn overlay and binds a bulb-mode light beside it (LTnna, LTnnc/LTnnd, LT67, LT68) that shows no bulb mesh, so neither marks a socket. Placing them needs a reproducible measurement on the lamp location drawing or a table that models the insert bulbs.",
     "Flashers 17-22, 24, 25 and 28 have no coordinate: the retained table drives light objects (Fl17-Fl28 and full-playfield FlPf overlays) that paint light rather than mark sockets, and no socket was measured on the location drawing.",
     "The Left Up/Down Gate (36) has no coordinate: the location drawing's callout 36 ends at the rear left beside the Boulder Machine, about 0.3 of the table width from the Gate4 the retained script binds it to.",
     "G.I. strings 1-5 have no coordinate: the manual prints no per-string socket list and the retained table places no G.I. bulb per string.",
@@ -33,7 +34,7 @@
   "excluded_object_classes": [
     "Flasher lights Fl17-Fl28 and the full-playfield FlPf17-FlPf28 overlays, which paint flasher light and are not sockets.",
     "Baked primitives whose object origin is not a device position (origins at 0,0 or outside the playfield); the four primitives above are placed at their mesh's vertex bounds instead.",
-    "The insert overlays LTnn (single-bulb lamps) and LTnna/LTnnb (two-bulb lamps): classic lights that draw the insert image over the insert's outline. Each lamp is placed on its bulb light instead (LTnna, LTnnc/LTnnd, LT67, LT68), which the script binds to the same lamp. The LT11b-LT13b Flasher ambience sprites lie off the playfield."
+    "The insert overlays LTnn (single-bulb lamps) and LTnna/LTnnb (two-bulb lamps): classic lights that draw the insert image over the insert's outline. The bulb-mode lights the script binds beside them (LTnna, LTnnc/LTnnd, LT67, LT68) show no bulb mesh, so they mark no socket either. The LT11b-LT13b Flasher ambience sprites lie off the playfield."
   ],
   "extraction": {
     "fail_closed": true,
@@ -232,6 +233,166 @@
     78
   ],
   "observed_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 72,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected to the mean of the three 3-bank drop targets (HitTarget Sw45-Sw47): the reset coil sits under the bank and the retained table models no coil object."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected to the mean of the four 4-bank drop targets (HitTarget Sw41-Sw44): the reset coil sits under the bank and the retained table models no coil object."
+    }
+  ],
+  "resolved_input_addresses": [],
+  "resolved_output_bindings": [],
+  "source_hashes": {
+    "embedded_script_sha256": "352efc7660b8257df9f3534c5b01262de8ce10934047907e1a5a8e64e124f94d",
+    "manual_sha256": "6c615147ac98e217585858ad17c2dfc56d86897ee6934ea03f2e58a1599d94bb",
+    "table_sha256": "88c7a36ade06cf2df8aa78e2ede85d040b11330e45dff69897cc3402f2105384"
+  },
+  "status": "observed",
+  "unplaced_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
     {
       "address": 11,
       "group": "pinmame.output.lamp"
@@ -479,166 +640,6 @@
     {
       "address": 86,
       "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 2,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 3,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 4,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 5,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 6,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 8,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 9,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 10,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 11,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 12,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 13,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 16,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 23,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 33,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 34,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 35,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 45,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 46,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 47,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 48,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
-  "placement_count": 140,
-  "projections": [
-    {
-      "address": 31,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
-    },
-    {
-      "address": 32,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
-    },
-    {
-      "address": 33,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
-    },
-    {
-      "address": 34,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
-    },
-    {
-      "address": 35,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the trough exit kicker BallRelease: the retained table models no trough opto objects (its cvpmTrough holds the balls virtually and exits them at BallRelease), so the five trough optos share the exit position."
-    },
-    {
-      "address": 5,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected to the mean of the three 3-bank drop targets (HitTarget Sw45-Sw47): the reset coil sits under the bank and the retained table models no coil object."
-    },
-    {
-      "address": 6,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected to the mean of the four 4-bank drop targets (HitTarget Sw41-Sw44): the reset coil sits under the bank and the retained table models no coil object."
-    }
-  ],
-  "resolved_input_addresses": [],
-  "resolved_output_bindings": [],
-  "source_hashes": {
-    "embedded_script_sha256": "352efc7660b8257df9f3534c5b01262de8ce10934047907e1a5a8e64e124f94d",
-    "manual_sha256": "6c615147ac98e217585858ad17c2dfc56d86897ee6934ea03f2e58a1599d94bb",
-    "table_sha256": "88c7a36ade06cf2df8aa78e2ede85d040b11330e45dff69897cc3402f2105384"
-  },
-  "status": "observed",
-  "unplaced_output_bindings": [
-    {
-      "address": 0,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 1,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 2,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 3,
-      "group": "pinmame.output.gi"
-    },
-    {
-      "address": 4,
-      "group": "pinmame.output.gi"
     },
     {
       "address": 17,

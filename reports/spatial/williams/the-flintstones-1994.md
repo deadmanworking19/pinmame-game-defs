@@ -1,19 +1,20 @@
 # The Flintstones (Williams, 1994) spatial review
 
-Status: observed. Every switch, coil, motor and lamp that has a playfield location is placed from the retained table or carries a controlled `not_applicable` record, except the playfield flashers, the left up/down gate and the G.I. strings, which have no coordinate. No placement was checked against the manual's location drawings, so every placement stays `observed` and the record stays at `machines/partial/williams/the-flintstones-1994.json`.
+Status: observed. Every switch, coil and motor that has a playfield location is placed from the retained table or carries a controlled `not_applicable` record, except the left up/down gate; the playfield lamps, the playfield flashers and the G.I. strings have no coordinate. No placement was checked against the manual's location drawings, so every placement stays `observed` and the record stays at `machines/partial/williams/the-flintstones-1994.json`.
 
 The geometry source is the retained known-working `The Flintstones (Williams 1994) v1.25.7.vpx` (SHA-256 `88c7a36ade06cf2df8aa78e2ede85d040b11330e45dff69897cc3402f2105384`); its embedded script (SHA-256 `352efc7660b8257df9f3534c5b01262de8ce10934047907e1a5a8e64e124f94d`) is the runtime binding authority. Exact playfield bounds are `left=0 top=0 right=964 bottom=2162`; every table coordinate is x/964 and y/2162 rounded to six places.
 
 ## Evidence decisions
 
 - The embedded script is the runtime authority; the July 1994 operations manual and its two bulletins are the physical inventory, construction and wiring authority; the game ROM's own name tables settle the semantic names where the printed tables disagree; pinned PinMAME owns controller topology; the retained table supplies geometry for named objects.
-- The script's InitLamps binds each light of its Lamps collection by the two digits of its name (LTnn), so every lamp placement names its object. Each lamp sits on its bulb light (is_bulb_light, no image), not on the LTnn insert overlay beside it; the six two-bulb lamps are placed at both bulbs.
+- The script's InitLamps binds each light of its Lamps collection by the two digits of its name (LTnn), so every lamp note names its objects. Neither the LTnn insert overlay nor the bulb-mode light beside it (is_bulb_light, no image, no bulb mesh) marks a socket, so no lamp is placed.
 - The trough optos, the drop-target reset coils and the two right flippers' shared button are documented in the definition's device notes.
 - Flashers 17-21 also light #906 backbox insert flashers, and 26/27 are backbox-only; G.I. strings 2-4 also feed #555 backbox bulbs. None of those is placed.
 
 ## Blockers
 
-- Every placement comes from one community table's named objects and none was checked against the manual's switch, lamp or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings. The lamp placements are the table's bulb lights, which sit at its insert centres and draw no bulb mesh; until that check, nothing but the table puts a socket there.
+- Every placement comes from one community table's named objects and none was checked against the manual's switch, lamp or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings.
+- Lamps 11-86 have no coordinate: the retained table draws each insert with a classic LTnn overlay and binds a bulb-mode light beside it (LTnna, LTnnc/LTnnd, LT67, LT68) that shows no bulb mesh, so neither marks a socket. Placing them needs a reproducible measurement on the lamp location drawing or a table that models the insert bulbs.
 - Flashers 17-22, 24, 25 and 28 have no coordinate: the retained table drives light objects (Fl17-Fl28 and full-playfield FlPf overlays) that paint light rather than mark sockets, and no socket was measured on the location drawing.
 - The Left Up/Down Gate (36) has no coordinate: the location drawing's callout 36 ends at the rear left beside the Boulder Machine, about 0.3 of the table width from the Gate4 the retained script binds it to.
 - G.I. strings 1-5 have no coordinate: the manual prints no per-string socket list and the retained table places no G.I. bulb per string.
@@ -31,12 +32,12 @@ The geometry source is the retained known-working `The Flintstones (Williams 199
 
 ## Counts
 
-- Placements: 140
+- Placements: 72
 - Validated input addresses: 0
 - Observed-only input addresses: 46
 - Validated output bindings: 0
-- Observed-only output bindings: 85
-- Output bindings with no coordinate: 15
+- Observed-only output bindings: 23
+- Output bindings with no coordinate: 77
 - Inputs with a controlled `cabinet_or_service` record: 18
 - Inputs with a controlled `constant` record: 1
 - Inputs with a controlled `dip_switch` record: 8

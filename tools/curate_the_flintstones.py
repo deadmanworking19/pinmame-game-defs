@@ -464,8 +464,9 @@ LAMP_ASSEMBLIES = {
 	87: "20-9663-18", 88: "20-9663-14",
 }
 TWIN_BULB_LAMPS = {41, 52, 63, 64, 72, 86}
-# Each lamp is placed on its bulb light: the is_bulb_light Light without an image that the script's Lamps collection binds
-# beside the LTnn insert overlay (a classic light drawing g5k_insertsdim over the insert). Two-bulb lamps list (left, right).
+# The bulb light the script's Lamps collection binds for each lamp, beside the LTnn insert overlay (a classic light drawing
+# g5k_insertsdim over the insert): an is_bulb_light Light without an image that shows no bulb mesh, so it marks no socket
+# and the lamp is not placed (docs/SPATIAL.md, picking the bulb). Two-bulb lamps list (left, right).
 TWIN_BULB_OBJECTS = {41: ("LT41d", "LT41c"), 52: ("LT52d", "LT52c"), 63: ("LT63d", "LT63c"), 64: ("LT64d", "LT64c"), 72: ("LT72c", "LT72d"), 86: ("LT86d", "LT86c")}
 
 
@@ -484,25 +485,6 @@ LAMP_ROW_WIRING = {
 	1: ("Red-Brown", "J134-1", "Q90"), 2: ("Red-Black", "J134-2", "Q89"), 3: ("Red-Orange", "J134-4", "Q88"),
 	4: ("Red-Yellow", "J134-5", "Q87"), 5: ("Red-Green", "J134-6", "Q86"), 6: ("Red-Blue", "J134-7", "Q85"),
 	7: ("Red-Violet", "J134-8", "Q84"), 8: ("Red-Gray", "J134-9", "Q83"),
-}
-LAMP_POSITIONS = {
-	11: [(0.602409, 0.047526)], 12: [(0.698912, 0.042131)], 13: [(0.792464, 0.037789)], 14: [(0.483254, 0.472873)],
-	15: [(0.476818, 0.521591)], 16: [(0.476138, 0.559205)], 17: [(0.475931, 0.597621)], 18: [(0.476545, 0.637373)],
-	21: [(0.233797, 0.229754)], 22: [(0.287346, 0.223298)], 23: [(0.340076, 0.21672)], 24: [(0.40847, 0.211319)], 25: [(0.407832, 0.247954)],
-	26: [(0.408507, 0.272931)], 27: [(0.263303, 0.291378)], 28: [(0.227521, 0.267552)],
-	31: [(0.293546, 0.723829)], 32: [(0.329643, 0.707164)], 33: [(0.375324, 0.695616)], 34: [(0.426224, 0.689502)],
-	35: [(0.480849, 0.689502)], 36: [(0.531961, 0.695769)], 37: [(0.577003, 0.707592)], 38: [(0.61342, 0.723829)],
-	41: [(0.102944, 0.676695), (0.805087, 0.676411)], 42: [(0.36057, 0.452959)], 43: [(0.36015, 0.48055)], 44: [(0.360486, 0.50741)],
-	45: [(0.434424, 0.309029)], 46: [(0.459103, 0.334639)], 47: [(0.48197, 0.358707)], 48: [(0.505636, 0.383842)],
-	51: [(0.290516, 0.659931)], 52: [(0.12622, 0.589638), (0.781083, 0.589187)], 53: [(0.303966, 0.550163)], 54: [(0.326364, 0.581406)],
-	55: [(0.238972, 0.573126)], 56: [(0.256312, 0.602205)], 57: [(0.273622, 0.631061)], 58: [(0.137854, 0.567662)],
-	61: [(0.171253, 0.599431)], 62: [(0.208312, 0.629727)], 63: [(0.12622, 0.614221), (0.781077, 0.613895)],
-	64: [(0.12622, 0.639359), (0.78195, 0.637975)], 65: [(0.408655, 0.166715)], 66: [(0.452775, 0.892707)], 67: [(0.274445, 0.240951)],
-	68: [(0.32203, 0.235338)],
-	71: [(0.722086, 0.457331)], 72: [(0.224908, 0.35838), (0.818585, 0.416881)], 73: [(0.638892, 0.461747)], 74: [(0.651818, 0.432067)],
-	75: [(0.626183, 0.490851)], 76: [(0.611513, 0.521365)], 77: [(0.741862, 0.425156)], 78: [(0.799597, 0.44371)],
-	81: [(0.26107, 0.326049)], 82: [(0.310148, 0.35087)], 83: [(0.274084, 0.382712)], 84: [(0.312007, 0.401065)], 85: [(0.779444, 0.468183)],
-	86: [(0.351201, 0.420811), (0.764099, 0.496142)],
 }
 LAMP_CONNECTOR_NOTE = (
 	" Connectors follow the lamp matrix, which all three printed copies print alike; the power driver board connector list "
@@ -823,7 +805,8 @@ def source_records() -> list[dict[str, Any]]:
 				f"playfield bounds are {TABLE_BOUNDS}; normalized coordinates are x/964 and y/2162. Geometry authority for named table "
 				"objects only. Primitive placements use the centre of the mesh's vertex bounds (world x = pos.x + size.x * vx, "
 				"y = pos.y - size.y * vy for these X-rotated meshes). Its flasher lights Fl17-Fl28 and full-playfield FlPf overlays "
-				"paint light and are not sockets, and lamps sit on its bulb lights, not on the LTnn insert overlays."
+				"paint light and are not sockets, and neither its LTnn insert overlays nor the bulb-mode lamp lights beside them, which "
+				"show no bulb mesh, mark a lamp socket."
 			),
 			"license": "NOASSERTION",
 			"attribution": "g5k, 3rdAxis and DJRobX",
@@ -1466,17 +1449,20 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					left, right = TWIN_BULB_OBJECTS[address]
 					notes += (
 						" Two sockets on one address: the lamp list prints a second, unnumbered row for the right-hand bulb and the "
-						f"drawing calls the number out twice. Placement: retained table bulb lights {left} (left) and {right} (right)."
+						f"drawing calls the number out twice. The retained table binds the bulb lights {left} (left) and {right} "
+						"(right), which show no bulb mesh, so they mark no socket and the lamp is not placed."
 					)
 				else:
-					notes += f" Placement: retained table bulb light {lamp_bulb_objects(address)[0]}."
+					notes += (
+						f" The retained table binds the bulb light {lamp_bulb_objects(address)[0]}, which shows no bulb mesh, so it "
+						"marks no socket and the lamp is not placed."
+					)
 				if address in {31, 34}:
 					notes += " One of the two C inserts of the CONCRETE row; the ROM numbers the letters left to right."
 				if address in {36, 38}:
 					notes += " One of the two E inserts of the CONCRETE row; the ROM numbers the letters left to right."
 				if address == 66:
 					notes += " The matrix prints 'Shoot Again'; the lamp list and the ROM call it Rock Again."
-				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
 			physical["notes"] = notes
 			items.append(_device(identifier, LAMP_LABELS[address], "lamp", "pinmame.output.lamp", address, "used", refs, **extra))
 	return items
@@ -1833,9 +1819,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"status": "observed",
 		"blockers": [
 			"Every placement comes from one community table's named objects and none was checked against the manual's switch, lamp "
-			"or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings. The lamp "
-			"placements are the table's bulb lights, which sit at its insert centres and draw no bulb mesh; until that check, nothing "
-			"but the table puts a socket there.",
+			"or solenoid location drawings, so all of them stay observed. Promotion needs a callout check of those drawings.",
+			"Lamps 11-86 have no coordinate: the retained table draws each insert with a classic LTnn overlay and binds a bulb-mode "
+			"light beside it (LTnna, LTnnc/LTnnd, LT67, LT68) that shows no bulb mesh, so neither marks a socket. Placing them needs "
+			"a reproducible measurement on the lamp location drawing or a table that models the insert bulbs.",
 			"Flashers 17-22, 24, 25 and 28 have no coordinate: the retained table drives light objects (Fl17-Fl28 and full-playfield "
 			"FlPf overlays) that paint light rather than mark sockets, and no socket was measured on the location drawing.",
 			"The Left Up/Down Gate (36) has no coordinate: the location drawing's callout 36 ends at the rear left beside the Boulder "
@@ -1888,8 +1875,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Baked primitives whose object origin is not a device position (origins at 0,0 or outside the playfield); the four "
 			"primitives above are placed at their mesh's vertex bounds instead.",
 			"The insert overlays LTnn (single-bulb lamps) and LTnna/LTnnb (two-bulb lamps): classic lights that draw the insert "
-			"image over the insert's outline. Each lamp is placed on its bulb light instead (LTnna, LTnnc/LTnnd, LT67, LT68), "
-			"which the script binds to the same lamp. The LT11b-LT13b Flasher ambience sprites lie off the playfield.",
+			"image over the insert's outline. The bulb-mode lights the script binds beside them (LTnna, LTnnc/LTnnd, LT67, LT68) "
+			"show no bulb mesh, so they mark no socket either. The LT11b-LT13b Flasher ambience sprites lie off the playfield.",
 		],
 	}
 
@@ -1898,9 +1885,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# The Flintstones (Williams, 1994) spatial review",
 		"",
-		f"Status: {report['status']}. Every switch, coil, motor and lamp that has a playfield location is placed from the retained "
-		"table or carries a controlled `not_applicable` record, except the playfield flashers, the left up/down gate and the G.I. "
-		"strings, which have no coordinate. No placement was checked against the manual's location drawings, so every placement "
+		f"Status: {report['status']}. Every switch, coil and motor that has a playfield location is placed from the retained "
+		"table or carries a controlled `not_applicable` record, except the left up/down gate; the playfield lamps, the playfield "
+		"flashers and the G.I. strings have no coordinate. No placement was checked against the manual's location drawings, so every placement "
 		"stays `observed` and the record stays at `machines/partial/williams/the-flintstones-1994.json`.",
 		"",
 		f"The geometry source is the retained known-working `The Flintstones (Williams 1994) v1.25.7.vpx` (SHA-256 "
@@ -1913,8 +1900,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"inventory, construction and wiring authority; the game ROM's own name tables settle the semantic names where the printed "
 		"tables disagree; pinned PinMAME owns controller topology; the retained table supplies geometry for named objects.",
 		"- The script's InitLamps binds each light of its Lamps collection by the two digits of its name (LTnn), so every lamp "
-		"placement names its object. Each lamp sits on its bulb light (is_bulb_light, no image), not on the LTnn insert overlay "
-		"beside it; the six two-bulb lamps are placed at both bulbs.",
+		"note names its objects. Neither the LTnn insert overlay nor the bulb-mode light beside it (is_bulb_light, no image, no "
+		"bulb mesh) marks a socket, so no lamp is placed.",
 		"- The trough optos, the drop-target reset coils and the two right flippers' shared button are documented in the "
 		"definition's device notes.",
 		"- Flashers 17-21 also light #906 backbox insert flashers, and 26/27 are backbox-only; G.I. strings 2-4 also feed #555 "

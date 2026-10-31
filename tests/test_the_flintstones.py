@@ -246,7 +246,9 @@ class TheFlintstonesTests(unittest.TestCase):
 			physical = self.lamps[address]["physical"]
 			expected = 2 if address in TWIN_BULB_LAMPS else 1
 			self.assertEqual(expected, physical["quantity"], address)
-			self.assertEqual(expected, len(self.lamps[address]["spatial"]["placements"]), address)
+			# No table object marks a lamp socket, so no lamp is placed.
+			self.assertNotIn("spatial", self.lamps[address], address)
+			self.assertRegex(physical["notes"], r"marks? no socket", address)
 		for address in (87, 88):
 			self.assertNotIn("quantity", self.lamps[address]["physical"])
 			self.assertEqual("cabinet_or_service", self.lamps[address]["spatial"]["reason"])
@@ -256,20 +258,14 @@ class TheFlintstonesTests(unittest.TestCase):
 
 	def test_geometric_ordering(self) -> None:
 		switch = {address: first_xy(device) for address, device in self.switches.items() if device["spatial"]["status"] != "not_applicable"}
-		lamp = {address: first_xy(device) for address, device in self.lamps.items() if device["spatial"]["status"] != "not_applicable"}
-		# D-I-G rollovers and lamps run left to right along the top.
+		# D-I-G rollovers run left to right along the top.
 		self.assertLess(switch[66][0], switch[67][0])
 		self.assertLess(switch[67][0], switch[68][0])
-		self.assertLess(lamp[11][0], lamp[12][0])
-		self.assertLess(lamp[12][0], lamp[13][0])
 		# B-E-D: B at the rear, D at the front. R-O-C-K: R at the rear left, K at the front right.
 		self.assertLess(switch[47][1], switch[46][1])
 		self.assertLess(switch[46][1], switch[45][1])
 		self.assertLess(switch[41][0], switch[44][0])
 		self.assertLess(switch[41][1], switch[44][1])
-		# CONCRETE reads left to right.
-		xs = [lamp[address][0] for address in range(31, 39)]
-		self.assertEqual(sorted(xs), xs)
 		# Side 3-bank targets: 51 upper, 53 lower, on both sides.
 		for side in (0, 1):
 			ys = [self.switches[address]["spatial"]["placements"][side]["y"] for address in (51, 52, 53)]
@@ -305,6 +301,7 @@ class TheFlintstonesTests(unittest.TestCase):
 		self.assertEqual(len(ids), len(set(ids)))
 		expected = {("pinmame.output.solenoid", address) for address in PLAYFIELD_FLASHERS | {36}}
 		expected |= {("pinmame.output.gi", address) for address in range(5)}
+		expected |= {("pinmame.output.lamp", address) for address in MATRIX_ADDRESSES - {87, 88}}
 		self.assertEqual(expected, unplaced)
 		report = load_json(SPATIAL_REPORT_PATH)
 		self.assertEqual(sorted(({"group": group, "address": address} for group, address in expected), key=lambda item: (item["group"], item["address"])), report["unplaced_output_bindings"])
@@ -434,27 +431,25 @@ class TheFlintstonesRetainedEvidenceTests(unittest.TestCase):
 
 		curator.verify_extraction_manifest(self._root("PINMAME_VPX_SOURCES_ROOT"))
 
-	def test_lamps_sit_on_script_bound_bulb_lights_not_insert_overlays(self) -> None:
+	def test_lamp_lights_draw_no_bulb_so_no_lamp_is_placed(self) -> None:
 		import curate_the_flintstones as curator
 
 		extraction = self._root("PINMAME_VPX_SOURCES_ROOT") / "williams" / "the-flintstones-1994" / "extracted-vpxtool"
 		lamps_collection = next(item["items"] for item in load_json(extraction / "collections.json") if item["name"] == "Lamps")
 		definition = load_json(DEFINITION_PATH)
 		lamps = by_address(definition, "outputs", "pinmame.output.lamp")
-		placed = {address: device for address, device in lamps.items() if device["spatial"]["status"] != "not_applicable"}
-		self.assertEqual(set(curator.LAMP_POSITIONS), set(placed))
-		for address, device in sorted(placed.items()):
-			names = curator.lamp_bulb_objects(address)
-			points = []
-			for name in names:
+		unplaced = {address: device for address, device in lamps.items() if address not in {87, 88}}
+		for address, device in sorted(unplaced.items()):
+			self.assertNotIn("spatial", device, address)
+			for name in curator.lamp_bulb_objects(address):
 				light = load_json(extraction / "gameitems" / f"Light.{name}.json")["Light"]
+				# The light the script binds is a bulb-mode light that shows no bulb mesh, so it marks no socket.
 				self.assertTrue(light["is_bulb_light"], name)
+				self.assertFalse(light["show_bulb_mesh"], name)
 				self.assertEqual("", light["image"], name)
 				self.assertIn(name, lamps_collection)
 				self.assertEqual(address, int(name[2:4]))
-				points.append((round(light["center"]["x"] / 964, 6), round(light["center"]["y"] / 2162, 6)))
-			self.assertEqual(points, [(placement["x"], placement["y"]) for placement in device["spatial"]["placements"]], address)
-			self.assertIn(names[0], device["physical"]["notes"])
+				self.assertIn(name, device["physical"]["notes"])
 		# The overlay each single-bulb lamp is bound beside is a classic light that draws the insert image.
 		self.assertFalse(load_json(extraction / "gameitems" / "Light.LT11.json")["Light"]["is_bulb_light"])
 

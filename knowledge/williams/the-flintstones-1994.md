@@ -4,8 +4,9 @@ Coverage: **partial**. Every address is enumerated and named, and construction, 
 and variant facts are validated from the factory operations manual, its two service bulletins, the game
 ROM's own name tables, pinned PinMAME and the retained known-working table, and no conflict is open. It
 stays partial on spatial placement alone: every coordinate comes from one community table and none was
-checked against the manual's location drawings; the playfield flashers have no socket coordinate; the
-left up/down gate's drawing callout and the table's gate disagree; and no G.I. string is placed.
+checked against the manual's location drawings; the playfield lamps and flashers have no socket
+coordinate; the left up/down gate's drawing callout and the table's gate disagree; and no G.I. string
+is placed.
 
 ## Identity and drivers
 
@@ -176,6 +177,7 @@ CHANGE or starts SEARCH AND RESCUE. The figure's travel is table-owned.
 
 A callout check of the manual's switch, lamp and solenoid location drawings against the table's
 coordinates, which would promote the placements from observed to validated; socket positions for
-flashers 17-22, 24, 25 and 28; a settled position for the left up/down gate (36), whose drawing callout
-ends near the Boulder Machine while the retained table's gate sits about a third of the playfield to the
-right; and per-string G.I. bulb positions.
+lamps 11-86, whose table lights show no bulb mesh, and for flashers 17-22, 24, 25 and 28; a settled
+position for the left up/down gate (36), whose drawing callout ends near the Boulder Machine while the
+retained table's gate sits about a third of the playfield to the right; and per-string G.I. bulb
+positions.
